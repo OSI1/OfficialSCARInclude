@@ -1,0 +1,46 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                  Include File
+--------------------------------------------------------------------------------
+ * procedure SetupOSI;
+     By: The OSI Dev Team
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$IFDEF RS2}
+  {.include OSI\RS2\Core\Globals.scar}
+  {.include OSI\RS2\Core\Players.scar}
+  {.include OSI\RS2\Core\Text.scar}
+  {.include OSI\RS2\Core\Amount.scar}
+  {.include OSI\RS2\Core\GameTabs.scar}
+  {.include OSI\RS2\Core\WorldSwitcher.scar}
+  {.include OSI\RS2\Core\Login.scar}
+  {.include OSI\RS2\Core\Chat.scar}
+  {.include OSI\RS2\Core\Inventory.scar}
+  {.include OSI\RS2\Core\Bank.scar}
+  {.include OSI\RS2\Core\Map.scar}
+  {$IFDEF OSI_Color_Anti-Randoms}
+    {.include OSI\RS2\Anti-Randoms\Anti-Randoms.scar}
+  {$ENDIF}
+{$ENDIF}
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SetUpOSI;
+Contributors: Wanted
+Description: Sets up OSI.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 7th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SetUpOSI;
+begin
+  {$IFDEF RS2}
+    WriteLn('OSI RS2 routines enabled');
+    {$IFDEF OSI_Color_Anti-Randoms}
+      WriteLn('OSI RS2 color random detection and solving enabled');
+    {$ENDIF}
+    {$IFNDEF OSI_Color_Anti-Randoms}
+      WriteLn('OSI RS2 color random detection and solving disabled');
+    {$ENDIF}
+  {$ENDIF}
+end;

@@ -1,0 +1,33 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                           Include Compile Testing File
+--------------------------------------------------------------------------------
+ * procedure TestCompileOSI;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2}
+{$DEFINE OSI_Color_Anti-Randoms}
+
+{.include OSI\OSI.scar}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TestCompileOSI;
+Contributors: Wanted
+Description: Test compiles all of OSI. Comment out every combination of defines.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 7th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TestCompileOSI;
+var
+  I: LongInt;
+begin
+  I := GetSystemTime;
+  SetUpOSI;
+  WriteLn('OSI Succefully compiled (' + IntToStr(GetSystemTime - I) + ' ms)');
+end;
+
+begin
+  TestCompileOSI;
+end.

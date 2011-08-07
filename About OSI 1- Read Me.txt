@@ -1,0 +1,16 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  *  OSI stands for Official SCAR Include.
+
+  *  OSI is a library of commonly used functions and procedures that make it
+     easier for code writers, while providing global standardization.
+
+  *  OSI 1 is the first public release that is used for SCAR 3.25.XX-3.XX.XX
+
+  *  OSI 2 and onward will be for SCAR 4 Titan.
+
+  *  OSI is currently the combined works of Timer, Freddy1990, and Wanted.
+
+  *  OSI's Official homepage is http://scar-divi.com and http://freddy1990.com
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

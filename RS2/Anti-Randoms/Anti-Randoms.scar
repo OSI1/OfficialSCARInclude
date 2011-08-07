@@ -1,0 +1,61 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                             Official SCAR Include
+                                 Runescape 2
+                            Random Solving routines
+--------------------------------------------------------------------------------
+ * type TRandomInfo = record
+ * function OSIFindRandoms: TRandomInfo;
+     By: The OSI Dev Team
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{.include OSI\RS2\Anti-Randoms\Abyssal.scar}
+{.include OSI\RS2\Anti-Randoms\BeeKeeper.scar}
+{.include OSI\RS2\Anti-Randoms\CapnArnav.scar}
+{.include OSI\RS2\Anti-Randoms\Demon.scar}
+{.include OSI\RS2\Anti-Randoms\EvilBob.scar}
+{.include OSI\RS2\Anti-Randoms\Forester.scar}
+{.include OSI\RS2\Anti-Randoms\Frog.scar}
+{.include OSI\RS2\Anti-Randoms\Leo.scar}
+{.include OSI\RS2\Anti-Randoms\Maze.scar}
+{.include OSI\RS2\Anti-Randoms\Mime.scar}
+{.include OSI\RS2\Anti-Randoms\Molly.scar}
+{.include OSI\RS2\Anti-Randoms\Mordaut.scar}
+{.include OSI\RS2\Anti-Randoms\Pillory.scar}
+{.include OSI\RS2\Anti-Randoms\Pinball.scar}
+{.include OSI\RS2\Anti-Randoms\PrisonPete.scar}
+{.include OSI\RS2\Anti-Randoms\Quiz.scar}
+{.include OSI\RS2\Anti-Randoms\Sandwich.scar}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+type TRandomInfo
+Contributors: Wanted
+Description: Record of what happened, what random, etc.
+Date Created: August 7th, 2011. By Wanted
+Last Modification: August 7th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+type TRandomInfo = record
+  TimeIn: LongInt;
+  Found, Solved, Failed: Boolean;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OSIFindRandoms: TRandomInfo;
+Contributors: Wanted
+Description: Handles all of OSI's random rountines.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 7th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OSIFindRandoms: TRandomInfo;
+var
+  InitTime: LongInt;
+  //InitCompass: Extended;
+begin
+  Exit; // To be replaced with random finders.
+  InitTime := GetSystemTime;
+  //InitCompass := GetCompassAngleDegrees;
+  Result.TimeIn := GetSystemTime - InitTime;
+  //MakeCompass(InitCompass);
+end;
