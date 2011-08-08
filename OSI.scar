@@ -2,8 +2,10 @@
                               Official SCAR Include
                                   Include File
 --------------------------------------------------------------------------------
- * procedure SetUpOSI;
-     By: The OSI Dev Team
+ * procedure SetupOSI;
+     By: Wanted
+ * procedure FreeOSI;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$IFDEF RS2}
@@ -23,16 +25,32 @@
   {$ENDIF}
 {$ENDIF}
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure FreeOSI;
+Contributors: Wanted
+Description: Frees things that are loaded into memory upon OSI setup.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure FreeOSI;
+begin
+  {$IFDEF RS2}
+    FreeRS2Fonts;
+  {$ENDIF}
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure SetUpOSI;
+procedure SetupOSI;
 Contributors: Wanted
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure SetUpOSI;
+procedure SetupOSI;
+var
+  RS2FontFolder: string;
 begin
   {$IFDEF RS2}
     WriteLn('OSI RS2 routines enabled');
@@ -41,6 +59,32 @@ begin
     {$ENDIF}
     {$IFNDEF OSI_Color_Anti-Randoms}
       WriteLn('OSI RS2 color random detection and solving disabled');
+    {$ENDIF}
+    {$IFNDEF DisableRS2Fonts}
+      RS2FontFolder := IncludesPath + 'OSI\RS2\Fonts\';
+      if (not (DirectoryExists(RS2FontFolder))) then
+        RS2FontFolder := FontsPath;
+      rs_LoadUpChars(RS2FontFolder + 'UpChars\');
+      NPCChars := LoadChars2(RS2FontFolder + 'CharsNPC\');
+      UpChars := LoadChars2(RS2FontFolder + 'UpChars\');
+      SmallChars := LoadChars2(RS2FontFolder + 'SmallChars\');
+      StatChars := LoadChars2(RS2FontFolder + 'StatChars\');
+      FriendChars := LoadChars2(RS2FontFolder + 'FriendChars\');
+      BigChars := LoadChars2(RS2FontFolder + 'BigChars\');
+      LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
+      XPChars := LoadChars2(RS2FontFolder + 'XPChars\');
+      WriteLn('Loaded RS2 Fonts: NPCChars, UpChars, SmallChars, StatChars, FriendChars, BigChars, LoginChars, XPChars');
+    {$ENDIF}
+    {$IFDEF DisableRS2Fonts}
+      WriteLn('Font loading disabled.');
+      NPCChars := 0;
+      UpChars := 0;
+      SmallChars := 0;
+      StatChars := 0;
+      FriendChars := 0;
+      BigChars := 0;
+      LoginChars := 0;
+      XPChars := 0;
     {$ENDIF}
   {$ENDIF}
 end;

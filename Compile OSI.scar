@@ -8,6 +8,7 @@
 
 {$DEFINE RS2}
 {$DEFINE OSI_Color_Anti-Randoms}
+//{$DEFINE DisableRS2Fonts}
 
 {.include OSI\OSI.scar}
 
@@ -16,18 +17,19 @@ procedure TestCompileOSI;
 Contributors: Wanted
 Description: Test compiles all of OSI. Comment out every combination of defines.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TestCompileOSI;
 var
-  I: LongInt;
+  T: LongInt;
 begin
-  I := GetSystemTime;
+  T := GetSystemTime;
   SetUpOSI;
-  WriteLn('OSI Succefully compiled (' + IntToStr(GetSystemTime - I) + ' ms)');
+  WriteLn('OSI Succefully Setup (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 
 begin
   TestCompileOSI;
+  FreeOSI;
 end.

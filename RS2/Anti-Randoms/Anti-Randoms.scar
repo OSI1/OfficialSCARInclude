@@ -5,7 +5,7 @@
 --------------------------------------------------------------------------------
  * type TRandomInfo = record
  * function OSIFindRandoms: TRandomInfo;
-     By: The OSI Dev Team
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {.include OSI\RS2\Anti-Randoms\Abyssal.scar}
@@ -38,7 +38,6 @@ type TRandomInfo = record
   TimeIn: LongInt;
   Found, Solved, Failed: Boolean;
 end;
-
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OSIFindRandoms: TRandomInfo;

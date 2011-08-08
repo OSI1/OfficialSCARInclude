@@ -4,6 +4,11 @@
                                Global routines
 --------------------------------------------------------------------------------
  * const Useful in game boundries, points, areas, widths, etc. etc.
+     By: Wanted
+ * var Font Variables
+     By: Wanted
+ * procedure FreeRS2Fonts;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -14,7 +19,7 @@ Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const            // Description                 Modified            By              Build #
+const            // Description                  Modified            By              Build #
 
   MSCX = 260;    // Main Screen Center Points // August 7, 2011      Wanted          660
   MSCY = 171;                                 // August 7, 2011      Wanted          660
@@ -72,8 +77,7 @@ const            // Description                 Modified            By          
   MBPH = 206;    // Bank Screen Height        // August 8, 2011      Wanted          660
   MBPA = 101146; // Pixel Area                // August 8, 2011      Wanted          660
 
-
-  MDCX - 269;    // Deposit Box Center Points // August 8, 2011      Wanted          660
+  MDCX = 269;    // Deposit Box Center Points // August 8, 2011      Wanted          660
   MDCY = 162;                                 // August 8, 2011      Wanted          660
   MDX1 = 100;    // Deposit Box Edge Points   // August 8, 2011      Wanted          660
   MDY1 = 65;                                  // August 8, 2011      Wanted          660
@@ -82,3 +86,37 @@ const            // Description                 Modified            By          
   MDPH = 337;   // Deposit Box Width          // August 8, 2011      Wanted          660
   MDPW = 193;   // Deposit Box Height         // August 8, 2011      Wanted          660
   MDPA = 65041; // Deposit Box Area           // August 8, 2011      Wanted          660
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var Font Variables
+Contributors: Wanted
+Description: Variables for RS2 fonts memory handles.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  NPCChars, UpChars, SmallChars, StatChars, FriendChars, BigChars, LoginChars, XPChars: LongInt;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure FreeRS2Fonts;
+Contributors: Wanted
+Description: Frees RS2 fonts from memory.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure FreeRS2Fonts;
+begin
+  {$IFNDEF DisableRS2Fonts}
+    FreeChars2(NPCChars);
+    FreeChars2(UpChars);
+    FreeChars2(SmallChars);
+    FreeChars2(StatChars);
+    FreeChars2(FriendChars);
+    FreeChars2(BigChars);
+    FreeChars2(LoginChars);
+    FreeChars2(XPChars);
+    WriteLn('Freed RS2 Fonts');
+  {$ENDIF}
+end;
