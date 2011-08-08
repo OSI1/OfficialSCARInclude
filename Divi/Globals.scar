@@ -1,0 +1,18 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                 Global Routines
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=
+Click Actions, decide a click.
+=-=-=-=-=-=-=-=-=-=-=-=}
+
+type
+  ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
+
+{=-=-=-=-=-=-=-=-=-=-=-=
+Global MouseSpeed.
+=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  MouseSpeed: Integer;

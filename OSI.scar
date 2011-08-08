@@ -8,6 +8,8 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{.include OSI\Divi\Globals.scar}
+{.include OSI\Divi\Mouse.scar}
 {$IFDEF RS2}
   {.include OSI\RS2\Core\Globals.scar}
   {.include OSI\RS2\Core\Players.scar}
@@ -78,4 +80,5 @@ begin
     {$ENDIF}
     SetLength(Players, 1);
   {$ENDIF}
+  MouseSpeed := 15;
 end;
