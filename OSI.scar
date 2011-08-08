@@ -56,8 +56,7 @@ begin
     WriteLn('OSI RS2 routines enabled');
     {$IFDEF OSI_Color_Anti-Randoms}
       WriteLn('OSI RS2 color random detection and solving enabled');
-    {$ENDIF}
-    {$IFNDEF OSI_Color_Anti-Randoms}
+    {$ELSE}
       WriteLn('OSI RS2 color random detection and solving disabled');
     {$ENDIF}
     {$IFNDEF DisableRS2Fonts}
@@ -74,17 +73,9 @@ begin
       LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
       XPChars := LoadChars2(RS2FontFolder + 'XPChars\');
       WriteLn('Loaded RS2 Fonts: NPCChars, UpChars, SmallChars, StatChars, FriendChars, BigChars, LoginChars, XPChars');
-    {$ENDIF}
-    {$IFDEF DisableRS2Fonts}
+    {$ELSE}
       WriteLn('Font loading disabled.');
-      NPCChars := 0;
-      UpChars := 0;
-      SmallChars := 0;
-      StatChars := 0;
-      FriendChars := 0;
-      BigChars := 0;
-      LoginChars := 0;
-      XPChars := 0;
     {$ENDIF}
+    SetLength(Players, 1);
   {$ENDIF}
 end;

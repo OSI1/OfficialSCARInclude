@@ -1,0 +1,13 @@
+program New;
+
+{$DEFINE RS2}
+{.include OSI\OSI.scar}
+
+procedure ScriptTerminate;
+begin
+  FreeOSI;
+end;
+
+begin
+  SetUpOSI;
+end.

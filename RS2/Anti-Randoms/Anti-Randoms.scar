@@ -31,18 +31,19 @@ type TRandomInfo
 Contributors: Wanted
 Description: Record of what happened, what random, etc.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-type TRandomInfo = record
-  TimeIn: LongInt;
-  Found, Solved, Failed: Boolean;
-end;
+type
+  TRandomInfo = record
+    TimeIn: LongInt;
+    Found, Solved, Failed: Boolean;
+  end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OSIFindRandoms: TRandomInfo;
 Contributors: Wanted
-Description: Handles all of OSI's random rountines.
+Description: Handles all of OSI's RS2 anti-random rountines.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
 Last Modified: August 7th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

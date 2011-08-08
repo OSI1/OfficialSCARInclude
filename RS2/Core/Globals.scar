@@ -5,6 +5,8 @@
 --------------------------------------------------------------------------------
  * const Useful in game boundries, points, areas, widths, etc. etc.
      By: Wanted
+ * const Skill_ Indexes
+     By: Wanted
  * var Font Variables
      By: Wanted
  * procedure FreeRS2Fonts;
@@ -86,6 +88,45 @@ const            // Description                  Modified            By         
   MDPH = 337;   // Deposit Box Width          // August 8, 2011      Wanted          660
   MDPW = 193;   // Deposit Box Height         // August 8, 2011      Wanted          660
   MDPA = 65041; // Deposit Box Area           // August 8, 2011      Wanted          660
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Skill_ Indexes
+Contributors: Wanted
+Description: Index handles for various RS2 skills.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Skill_Count         = 26;
+  Skill_Attack        = 0;
+  Skill_Defense       = 1;
+  Skill_Defence       = 1;
+  Skill_Strength      = 2;
+  Skill_Hitpoints     = 3;
+  Skill_HP            = 3;
+  Skill_Constitution  = 3;
+  Skill_Range         = 4;
+  Skill_Prayer        = 5;
+  Skill_Magic         = 6;
+  Skill_Cooking       = 7;
+  Skill_Woodcutting   = 8;
+  Skill_Fletching     = 9;
+  Skill_Fishing       = 10;
+  Skill_Firemaking    = 11;
+  Skill_Crafting      = 12;
+  Skill_Ssmithing     = 13;
+  Skill_Mining        = 14;
+  Skill_Herblore      = 15;
+  Skill_Agility       = 16;
+  Skill_Thieving      = 17;
+  Skill_Slayer        = 18;
+  Skill_Farming       = 19;
+  Skill_Runecrafting  = 20;
+  Skill_Hunter        = 21;
+  Skill_Construction  = 22;
+  Skill_Summoning     = 23;
+  Skill_Dungeoneering = 24;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Font Variables

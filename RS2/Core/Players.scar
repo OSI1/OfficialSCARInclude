@@ -3,5 +3,112 @@
                                  Runescape 2
                                Player routines
 --------------------------------------------------------------------------------
- *
+ * type TRS2Player = record
+     By: Wanted
+ * var Players: array of TRS2Player;
+     By: Wanted
+ * function LoggedIn: Boolean;
+     By: Wanted
+ * function ActivePlayers: Integer;
+     By: Wanted
+ * function AllPlayersInActive: Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+type TRS2Player = record
+Contributors: Wanted
+Description: Handles all of player related info and variables.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+type
+  TRS2Player = record
+    Name: string;                   // In-game handle
+    Login: string;                  // Login handle
+    Pass: string;                   // Login password
+    Pin: string;                    // Bank Pin
+    Loc: string;                    // Player location
+    Status: string;                 // Player status
+    LampSkill: string;              // Skill for lamp/exp randoms
+    Rand: string;                   // Current Random
+    Worked: Integer;                // Time player has worked
+    Banked: Integer;                // Number of times player banked
+    Level: array[0..24] of Integer; // Levels of all skills
+    Member: Boolean;                // Members
+    Active: Boolean;                // Player active
+    BoxRewards: TStringArray;       // Partial texts for rewards, place in desired order
+    WorldInfo: TVariantArray;       // [Members {Boolean}, World {Integer}, PVP {Boolean}]
+    Booleans: array of Boolean;     // Boolean records
+    Integers: array of Integer;     // Integer records
+    Strings: array of string;       // String records
+    Extendeds: array of Extended;   // Extended records
+    Arrays: array of TVariantArray; // Custom records
+  end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var Players: array of TRS2Player;
+Contributors: Wanted
+Description: Handles all of player related info and variables.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  Players: array of TRS2Player;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var CurrentPlayer: LongInt;
+Contributors: Wanted
+Description: Variable used to keep track of your current RS2 player index.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  CurrentPlayer: LongInt;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoggedIn: Boolean;
+Contributors: Wanted
+Description: Returns true if current Logged In.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoggedIn: Boolean;
+begin
+  Result := (CountColor(clWhite, 471, 486, 506, 497) = 69);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ActivePlayers: Integer;
+Contributors: Wanted
+Description: Returns the number of active players.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ActivePlayers: Integer;
+var
+  I, H: Integer;
+begin
+  H := High(Players);
+  for I := 0 to H do
+    if (Players[I].Active) then
+      Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function AllPlayersInActive: Boolean;
+Contributors: Wanted
+Description: Returns true if all players are in-active
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function AllPlayersInActive: Boolean;
+begin
+  Result := (ActivePlayers = 0);
+end;
