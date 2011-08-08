@@ -3,5 +3,82 @@
                                  Runescape 2
                                Global routines
 --------------------------------------------------------------------------------
- *
+ * const Useful in game boundries, points, areas, widths, etc. etc.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Useful in game boundries, points, areas, widths, etc. etc.
+Contributors: Wanted
+Description: MMX1, MSCX, etc. etc.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const            // Description                 Modified            By              Build #
+
+  MSCX = 260;    // Main Screen Center Points // August 7, 2011      Wanted          660
+  MSCY = 171;                                 // August 7, 2011      Wanted          660
+  MSX1 = 4;      // Main Screen Edge Points   // August 7, 2011      Wanted          660
+  MSY1 = 4;                                   // August 7, 2011      Wanted          660
+  MSX2 = 515;                                 // August 7, 2011      Wanted          660
+  MSY2 = 337;                                 // August 7, 2011      Wanted          660
+  MSPW = 511;    // Main Screen Width         // August 7, 2011      Wanted          660
+  MSPH = 333;    // Main Screen Height        // August 7, 2011      Wanted          660
+  MSPA = 170163; // Main Screen Pixel Area    // August 7, 2011      Wanted          660
+  MSCXe = 259.5;                              // August 7, 2011      Wanted          660
+  MSCYe = 170.5;                              // August 7, 2011      Wanted          660
+
+  MMCX = 627;    // Map Center Points         // August 7, 2011      Wanted          660
+  MMCY = 85;                                  // August 7, 2011      Wanted          660
+  MMX1 = 551;    // Map Edge Points           // August 7, 2011      Wanted          660
+  MMY1 = 9;                                   // August 7, 2011      Wanted          660
+  MMX2 = 702;                                 // August 7, 2011      Wanted          660
+  MMY2 = 160;                                 // August 7, 2011      Wanted          660
+  MMRD = 75;     // Map Radius                // August 7, 2011      Wanted          660
+  MMDI = 151;    // Map Diameter              // August 7, 2011      Wanted          660
+  MMPA = 17907;  // Approx. Pixel Area        // August 7, 2011      Wanted          660
+  MMCXe = 626.5;                              // August 7, 2011      Wanted          660
+  MMCYe = 84.5;                               // August 7, 2011      Wanted          660
+  MMRDe = 75.5;                               // August 7, 2011      Wanted          660
+  MMPAe = 17907.8635236252;                   // August 7, 2011      Wanted          660
+
+  MICX = 642;    // Inventory Center Points   // August 7, 2011      Wanted          660
+  MICY = 336;                                 // August 7, 2011      Wanted          660
+  MIX1 = 550;    // Inventory Edge Points     // August 7, 2011      Wanted          660
+  MIY1 = 206;                                 // August 7, 2011      Wanted          660
+  MIX2 = 733;                                 // August 7, 2011      Wanted          660
+  MIY2 = 465;                                 // August 7, 2011      Wanted          660
+  MIPW = 183;    // Inventory Width           // August 7, 2011      Wanted          660
+  MIPH = 259;    // Inventory Height          // August 7, 2011      Wanted          660
+  MIPA = 47397;  // Pixel Area                // August 7, 2011      Wanted          660
+
+  MCCX = 251;    // Chat Box Center Points    // August 8, 2011      Wanted          660
+  MCCY = 412;                                 // August 8, 2011      Wanted          660
+  MCX1 = 7;      // Chat Box Edge Points      // August 8, 2011      Wanted          660
+  MCY1 = 345;                                 // August 8, 2011      Wanted          660
+  MCX2 = 494;                                 // August 8, 2011      Wanted          660
+  MCY2 = 478;                                 // August 8, 2011      Wanted          660
+  MCPW = 487;    // Chat Box Width            // August 8, 2011      Wanted          660
+  MCPH = 133;    // Chat Box Height           // August 8, 2011      Wanted          660
+  MCPA = 64771;  // Chat Box Area             // August 8, 2011      Wanted          660
+
+  MBCX = 272;    // Bank Screen Center Points // August 8, 2011      Wanted          660
+  MBCY = 189;                                 // August 8, 2011      Wanted          660
+  MBX1 = 26;     // Bank Screen Edge Points   // August 8, 2011      Wanted          660
+  MBY1 = 86;                                  // August 8, 2011      Wanted          660
+  MBX2 = 517;                                 // August 8, 2011      Wanted          660
+  MBY2 = 292;                                 // August 8, 2011      Wanted          660
+  MBPW = 491;    // Bank Screen Width         // August 8, 2011      Wanted          660
+  MBPH = 206;    // Bank Screen Height        // August 8, 2011      Wanted          660
+  MBPA = 101146; // Pixel Area                // August 8, 2011      Wanted          660
+
+
+  MDCX - 269;    // Deposit Box Center Points // August 8, 2011      Wanted          660
+  MDCY = 162;                                 // August 8, 2011      Wanted          660
+  MDX1 = 100;    // Deposit Box Edge Points   // August 8, 2011      Wanted          660
+  MDY1 = 65;                                  // August 8, 2011      Wanted          660
+  MDX2 = 437;                                 // August 8, 2011      Wanted          660
+  MDY2 = 258;                                 // August 8, 2011      Wanted          660
+  MDPH = 337;   // Deposit Box Width          // August 8, 2011      Wanted          660
+  MDPW = 193;   // Deposit Box Height         // August 8, 2011      Wanted          660
+  MDPA = 65041; // Deposit Box Area           // August 8, 2011      Wanted          660

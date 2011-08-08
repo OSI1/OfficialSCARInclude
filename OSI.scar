@@ -2,7 +2,7 @@
                               Official SCAR Include
                                   Include File
 --------------------------------------------------------------------------------
- * procedure SetupOSI;
+ * procedure SetUpOSI;
      By: The OSI Dev Team
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 

@@ -30,8 +30,8 @@
 type TRandomInfo
 Contributors: Wanted
 Description: Record of what happened, what random, etc.
-Date Created: August 7th, 2011. By Wanted
-Last Modification: August 7th, 2011. By Wanted
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 7th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type TRandomInfo = record
