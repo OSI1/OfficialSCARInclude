@@ -5,3 +5,52 @@
 --------------------------------------------------------------------------------
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetUpText: String;
+Contributors: Freddy1990, Wanted
+Description: Returns text in upperleft corner.
+Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetUpText: string;
+begin
+  Result := rs_GetUpTextAt(8, 8);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsUpText(UpText: string): Boolean;
+Contributors: Freddy1990
+Description: Returns true if uptext is found.
+Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
+Last Modified: August 7th, 2011. By Freddy1990. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsUpText(UpText: string): Boolean;
+begin
+  Result := (Pos(UpText, GetUpText) > 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsUpTextMulti(Text: TStringArray): Boolean;
+Contributors: Freddy1990, Wanted
+Description: Checks for the occurance of any of the strings in the array.
+Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsUpTextMulti(Text: TStringArray): Boolean;
+var
+  TheText: string;
+  I, H: Integer;
+begin
+  TheText := GetUpText;
+  H := High(Text);
+  for I := 0 to H do
+    if (Pos(Text[I], TheText) > 0) then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;

@@ -128,6 +128,13 @@ const
   Skill_Summoning     = 23;
   Skill_Dungeoneering = 24;
 
+const
+  clMessage = clBlack;
+  clAssist  = 14822282;
+  clChat    = clBlue;
+  clTrade   = clPurple;
+  clFriend  = 128;
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Font Variables
 Contributors: Wanted

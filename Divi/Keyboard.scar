@@ -1,0 +1,70 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                Keyboard routines
+--------------------------------------------------------------------------------
+ * procedure TypeByte(k: Byte);
+     By: Wanted
+ * procedure TypeSend(s: string);
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure PushKey(C: Char);
+Contributors: Wanted
+Description: Types one char human like.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure PushKey(C: Char);
+var
+  B: Byte;
+begin
+  B := GetKeyCode(C);
+  KeyDown(B);
+  Wait(10 + Random(51));
+  KeyUp(B);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TypeSend(Text: string);
+Contributors: Wanted
+Description: Types human like, presses enter.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TypeSend(Text: string);
+var
+  UseShiftKey: Boolean;
+  I, L: Integer;
+  S: string;
+begin
+  S := 'ABCDEFGHIJKLMNOPQRSTUVWXZ~!@#$%^&*()_+{}|:"<>?';
+  L := Length(Text);
+  for I := 1 to L do
+  begin
+    UseShiftKey := (Pos(Text[I], S) > 0);
+    if (UseShiftKey) then
+    begin
+ 	    Wait(40 + Random(41));
+      while (Pos(Text[I], S) > 0) and (I <= L) do
+      begin
+        PushKey(Text[I]);
+        Wait(40 + Random(41));
+        Inc(I);
+        if (I > L) then
+          Break;
+      end;
+    end;
+    if (UseShiftKey) then
+      KeyUp(VK_SHIFT);
+    Wait(40 + Random(41));
+    if (I <= L) then
+    begin
+      PushKey(Text[I]);
+      Wait(40 + Random(41));
+    end;
+  end;
+  PushKey(Chr(13));
+end;
