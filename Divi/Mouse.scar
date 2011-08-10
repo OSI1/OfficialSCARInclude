@@ -14,8 +14,8 @@
 procedure MMouse(x, y, rx, ry: Integer);
 Contributors: Timer
 Description: Moves the mouse humanly.
-Date Created: August 7th, 2011. By Timer. RS2 Build 660.
-Last Modification: August 7th, 2011. By Timer. RS2 Build 660.
+Date Created: August 7th, 2011. By Timer
+Last Modification: August 7th, 2011. By Timer
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
@@ -30,8 +30,8 @@ end;
 procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
 Contributors: Anonymous, Timer, Wanted.
 Description: Moves the mouse and clicks humanly.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous
+Last Modification: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
@@ -56,8 +56,8 @@ end;
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
 Contributors: Anonymous, Timer, Wanted
 Description: Clicks/moves the mouse in a specified area.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous
+Last Modification: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);

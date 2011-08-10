@@ -12,8 +12,8 @@
 procedure PushKey(C: Char);
 Contributors: Anonymous, Wanted.
 Description: Types one char human like.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous
+Last Modification: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure PushKey(C: Char);
@@ -30,8 +30,8 @@ end;
 procedure TypeSend(Text: string);
 Contributors: Anonymous, Wanted.
 Description: Types human like, presses enter.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous
+Last Modification: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TypeSend(Text: string);

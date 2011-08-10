@@ -34,8 +34,8 @@
 procedure FreeOSI;
 Contributors: Wanted
 Description: Frees things that are loaded into memory upon OSI setup.
-Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 8th, 2011. By Wanted
+Last Modified: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeOSI;
@@ -49,8 +49,8 @@ end;
 procedure SetupOSI;
 Contributors: Wanted, Timer.
 Description: Sets up OSI.
-Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Wanted
+Last Modified: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetupOSI;

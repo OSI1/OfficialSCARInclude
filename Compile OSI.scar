@@ -18,8 +18,8 @@
 procedure TestCompileOSI;
 Contributors: Wanted
 Description: Test compiles all of OSI. Comment out every combination of defines.
-Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Wanted
+Last Modified: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TestCompileOSI;
