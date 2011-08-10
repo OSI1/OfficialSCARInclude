@@ -1,18 +1,31 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Official SCAR Include
                                  Global Routines
+--------------------------------------------------------------------------------
+ * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
+     By: Anonymous
+ * var MouseSpeed: Integer;
+     By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{=-=-=-=-=-=-=-=-=-=-=-=
-Click Actions, decide a click.
-=-=-=-=-=-=-=-=-=-=-=-=}
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
+Contributors: Anonymous, Timer.
+Description: Click Actions, decide a click.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: August 7th, 2011. By Timer. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
   ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
 
-{=-=-=-=-=-=-=-=-=-=-=-=
-Global MouseSpeed.
-=-=-=-=-=-=-=-=-=-=-=-=}
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var MouseSpeed: Integer;
+Contributors: Anonymous, Timer.
+Description: Global MouseSpeed.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: August 7th, 2011. By Timer. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
   MouseSpeed: Integer;

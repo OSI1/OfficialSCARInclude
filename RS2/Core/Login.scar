@@ -3,5 +3,54 @@
                                  Runescape 2
                                Login routines
 --------------------------------------------------------------------------------
- *
+ * function LoggedIn: Boolean;
+     By: Wanted
+ * function ActivePlayers: Integer;
+     By: Anonymous
+ * function AllPlayersInActive: Boolean;
+     By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoggedIn: Boolean;
+Contributors: Wanted
+Description: Returns true if current Logged In.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoggedIn: Boolean;
+begin
+  Result := (CountColor(clWhite, 471, 486, 506, 497) = 69);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ActivePlayers: Integer;
+Contributors: Anonymous, Wanted.
+Description: Returns the number of active players.
+Date Created: August 8th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ActivePlayers: Integer;
+var
+  I, H: Integer;
+begin
+  H := High(Players);
+  for I := 0 to H do
+    if (Players[I].Active) then
+      Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function AllPlayersInActive: Boolean;
+Contributors: Anonymous, Wanted.
+Description: Returns true if all players are in-active
+Date Created: August 8th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function AllPlayersInActive: Boolean;
+begin
+  Result := (ActivePlayers = 0);
+end;

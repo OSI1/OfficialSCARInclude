@@ -3,12 +3,17 @@
                                  Runescape 2
                                 Text routines
 --------------------------------------------------------------------------------
- *
+ * function GetUpText: String;
+     By: Freddy1990
+ * function IsUpText(UpText: string): Boolean;
+     By: Freddy1990
+ * function IsUpTextMulti(Text: TStringArray): Boolean;
+     By: Freddy1990
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetUpText: String;
-Contributors: Freddy1990, Wanted
+Contributors: Freddy1990, Wanted.
 Description: Returns text in upperleft corner.
 Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
 Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
@@ -34,7 +39,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function IsUpTextMulti(Text: TStringArray): Boolean;
-Contributors: Freddy1990, Wanted
+Contributors: Freddy1990, Wanted.
 Description: Checks for the occurance of any of the strings in the array.
 Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
 Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.

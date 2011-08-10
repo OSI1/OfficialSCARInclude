@@ -3,16 +3,16 @@
                                 Keyboard routines
 --------------------------------------------------------------------------------
  * procedure TypeByte(k: Byte);
-     By: Wanted
+     By: Anonymous
  * procedure TypeSend(s: string);
-     By: Wanted
+     By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure PushKey(C: Char);
-Contributors: Wanted
+Contributors: Anonymous, Wanted.
 Description: Types one char human like.
-Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -28,9 +28,9 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TypeSend(Text: string);
-Contributors: Wanted
+Contributors: Anonymous, Wanted.
 Description: Types human like, presses enter.
-Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 

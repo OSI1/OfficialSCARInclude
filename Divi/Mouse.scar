@@ -5,17 +5,17 @@
  * procedure MMouse(x, y, rx, ry: Integer);
      By: Timer
  * procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
-     By: Timer
+     By: Anonymous
  * procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
-     By: Timer
+     By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MMouse(x, y, rx, ry: Integer);
-Contributors: Timer, Wanted
+Contributors: Timer
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer. RS2 Build 660.
-Last Modification: August 7th, 2011. By Timer . RS2 Build 660.
+Last Modification: August 7th, 2011. By Timer. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
@@ -28,10 +28,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
-Contributors: Timer, Wanted
+Contributors: Anonymous, Timer, Wanted.
 Description: Moves the mouse and clicks humanly.
-Date Created: August 7th, 2011. By Timer. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
@@ -54,10 +54,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
-Contributors: Timer, Wanted
+Contributors: Anonymous, Timer, Wanted
 Description: Clicks/moves the mouse in a specified area.
-Date Created: August 7th, 2011. By Timer. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted . RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
