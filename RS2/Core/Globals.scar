@@ -1,7 +1,7 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                               Global routines
+                              Official SCAR Include
+                                   Runescape 2
+                                 Global Routines
 --------------------------------------------------------------------------------
  * const Useful in game boundries, points, areas, widths, etc. etc.
      By: Anonymous & Wanted.
@@ -238,3 +238,6 @@ begin
     WriteLn('Freed RS2 Fonts');
   {$ENDIF}
 end;
+
+//INDEXES, LOTS OF THEM
+//more colors outline/black etc. *FlagColor

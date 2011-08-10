@@ -1,7 +1,21 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                             World Switch routines
+                              Official SCAR Include
+                                   Runescape 2
+                              World Switch Routines
 --------------------------------------------------------------------------------
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+//WorldScreen
+//OpenWorldScreen
+//UpdateWorlds
+//LoadWorlds
+//FindWorld
+//GetWorldInfo
+//WS_CurrentWorld
+//GetWorldInfo
+//SelectWorld
+//RandomWorld
+//ChangeWorld
+//OrderWorlds
+//ChooseWorldBy

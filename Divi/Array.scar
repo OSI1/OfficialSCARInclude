@@ -1,10 +1,9 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Official SCAR Include
-                                   Runescape 2
-                     Evil Bob Island Random Solving Routines
+                                  Array Routines
 --------------------------------------------------------------------------------
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-//InEvilBob;
-//SolveEvilBob;
+//InStrArrEx
+//DeleteVavlueInBlahBlahBlah

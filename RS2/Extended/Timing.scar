@@ -1,10 +1,14 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Official SCAR Include
                                    Runescape 2
-                     Evil Bob Island Random Solving Routines
+                             Extended Timing Routines
 --------------------------------------------------------------------------------
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-//InEvilBob;
-//SolveEvilBob;
+//WaitOptionMulti
+//WaitUpTextMulti
+//WaitColor
+//WaitFindColor
+//WaitFindColors
+//WaitCountColor

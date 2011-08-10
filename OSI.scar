@@ -9,17 +9,19 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {.include OSI\Divi\Globals.scar}
+{.include OSI\Divi\Array.scar}
+{.include OSI\Divi\Math.scar}
+{.include OSI\Divi\Timing.scar}
 {.include OSI\Divi\Mouse.scar}
 {.include OSI\Divi\Keyboard.scar}
 {$IFDEF RS2}
   {.include OSI\RS2\Core\Globals.scar}
-  {.include OSI\RS2\Core\Players.scar}
   {.include OSI\RS2\Core\Text.scar}
-  {.include OSI\RS2\Core\Amount.scar}
   {.include OSI\RS2\Core\GameTabs.scar}
+  {.include OSI\RS2\Core\Chat.scar}
+  {.include OSI\RS2\Core\Amount.scar}
   {.include OSI\RS2\Core\WorldSwitcher.scar}
   {.include OSI\RS2\Core\Login.scar}
-  {.include OSI\RS2\Core\Chat.scar}
   {.include OSI\RS2\Core\Inventory.scar}
   {.include OSI\RS2\Core\Bank.scar}
   {.include OSI\RS2\Core\Map.scar}

@@ -1,7 +1,7 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                            Random Solving routines
+                              Official SCAR Include
+                                   Runescape 2
+                             Random Solving Routines
 --------------------------------------------------------------------------------
  * type TRandomInfo = record
  * function OSIFindRandoms: TRandomInfo;
@@ -59,3 +59,5 @@ begin
   Result.TimeIn := GetSystemTime - InitTime;
   //MakeCompass(InitCompass);
 end;
+
+//LoadTeleportRandoms;

@@ -7,10 +7,12 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE RS2}
-{$DEFINE OSI_Color_Anti-Randoms}
-//{$DEFINE DisableRS2Fonts}
+{$DEFINE OSI_Color_Anti)_Randoms}
 
 {.include OSI\OSI.scar}
+{.include OSI\RS2\Extended\Timing.scar} // Comment out in in-depth testing
+{.include OSI\RS2\Misc\Anti-Ban.scar}   // Comment out in in-depth testing
+{.include OSI\RS2\Misc\Symbols.scar}    // Comment out in in-depth testing
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TestCompileOSI;
@@ -25,7 +27,7 @@ var
   T: LongInt;
 begin
   T := GetSystemTime;
-  SetUpOSI;
+  SetupOSI;
   WriteLn('OSI Succefully Setup (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 

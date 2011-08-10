@@ -1,6 +1,6 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Official SCAR Include
-                                Keyboard routines
+                                Keyboard Routines
 --------------------------------------------------------------------------------
  * procedure TypeByte(k: Byte);
      By: Anonymous

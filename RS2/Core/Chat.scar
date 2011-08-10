@@ -1,7 +1,22 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                                Chat routines
+                              Official SCAR Include
+                                   Runescape 2
+                                  Chat Routines
 --------------------------------------------------------------------------------
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+//CurrentChat
+//CurrentChatStatus
+//SetChat
+//SetChats
+//ClickContinueEx
+//ClickContinue
+//TextLineCoords
+//GetChatText
+//IsChatTextUp
+//IsChatTextUpBetween
+//GetAllChatTextArr
+//InChat
+//InChatMulti
+//FixChat

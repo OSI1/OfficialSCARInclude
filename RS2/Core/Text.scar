@@ -1,7 +1,7 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                                Text routines
+                              Official SCAR Include
+                                   Runescape 2
+                                  Text Routines
 --------------------------------------------------------------------------------
  * function GetUpText: String;
      By: Freddy1990
@@ -59,3 +59,12 @@ begin
       Exit;
     end;
 end;
+
+//FindText
+//ClickText
+//ChooseOptionMulti
+//GetOptions
+//OptionExist
+//ChooseOption
+//GetNPCChatText
+//FindNPCChatText

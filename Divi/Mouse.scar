@@ -68,3 +68,5 @@ begin
     MoveTo: MMouse(RandomRange(x1, x2), RandomRange(y1, y2), 0, 0);
   end;
 end;
+
+//DragMouse

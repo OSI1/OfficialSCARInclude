@@ -1,7 +1,12 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                               Anti-Ban routines
+                              Official SCAR Include
+                                   Runescape 2
+                                Anti-Ban routines
 --------------------------------------------------------------------------------
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+//SleepAndMoveMouse <- simulate
+//IdleTime <- simulate
+//SpiralMouse
+//OvalMouse

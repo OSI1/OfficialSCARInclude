@@ -1,7 +1,7 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                               Login routines
+                              Official SCAR Include
+                                   Runescape 2
+                                 Login Routines
 --------------------------------------------------------------------------------
  * function LoggedIn: Boolean;
      By: Wanted
@@ -54,3 +54,14 @@ function AllPlayersInActive: Boolean;
 begin
   Result := (ActivePlayers = 0);
 end;
+
+//RSReady
+//LobbyScreen
+//ExitToLobby
+//LeaveLobby
+//Logout
+//LoginPlayerToLobby
+//LoginPlayer
+//SwitchToPlayer
+//NextPlayer
+//RandomNextPlayer

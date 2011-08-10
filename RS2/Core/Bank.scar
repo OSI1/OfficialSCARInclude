@@ -1,7 +1,29 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                                Bank routines
+                              Official SCAR Include
+                                   Runescape 2
+                                 Bank routines
 --------------------------------------------------------------------------------
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+//BankScreen
+//DepositScreen
+//PinScreen
+//InPin
+//BankSlotToPoint
+//PointToBankSlot
+//BankSlotToBox
+//DepositSlotToBox
+//FixBank
+//FixBankTab
+//CurrentBankTab
+//BankTabExists
+//BankTab
+//Deposit
+//Withdraw
+//DepositAll(Inv, Equip, Summon: Boolean)
+//UseNotes(Use: Boolean);
+//CloseBank
+//OpenBank
+//FindBank
+//OpenDepositBox

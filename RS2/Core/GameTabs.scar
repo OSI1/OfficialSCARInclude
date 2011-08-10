@@ -1,7 +1,42 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                             Official SCAR Include
-                                 Runescape 2
-                              Game Tab routines
+                              Official SCAR Include
+                                   Runescape 2
+                                Game Tab Routines
 --------------------------------------------------------------------------------
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+//DidClick
+//GetCurrentTab
+//TabExists
+//SetGameTab
+//SetFightMode
+//GetCombatLevel
+//SetRetaliate
+//SkillToCoords
+//GetSkillInfo
+//GetSkillLevel
+//IsResting
+//GetMMLevels
+//GetXP
+//GetXPTillNextLevel
+//HPPercent
+//GetAllLevels
+//GetEquipmentBounds
+//EquipmentToCords
+//ClickEquipedItem
+//IsSlotEquipped
+//GetCurrentWorld
+//SetRun
+//GetEnergy
+//SetRest
+//RestUntil
+//AdjustSettings
+//FixAllSettings
+//DoEmotion
+//GetLobbyTab
+//LobbyTab
+//IsXPBarOpen
+//ToggleXPBar
+//GetXPBarTotal
+//ResetXPTotal
