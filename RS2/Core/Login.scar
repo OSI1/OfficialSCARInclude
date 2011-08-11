@@ -5,6 +5,8 @@
 --------------------------------------------------------------------------------
  * function LoginScreen: Boolean;
      By: Wanted
+ * function LobbyScreen: Boolean;
+     By: Wanted
  * function LoggedIn: Boolean;
      By: Wanted
  * function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
@@ -26,6 +28,19 @@ Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
 function LoginScreen: Boolean;
 begin
   Result := (CountColor(clLoginText, 358, 128, 404, 147) = 160); // Big "Login" word
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LobbyScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at lobby screen.
+Date Created: August 11th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 11th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LobbyScreen: Boolean;
+begin
+  Result := InRange(CurrentLobbyTab, 0, 5);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -94,30 +109,25 @@ var
 label
   ProcStart;
 begin
-//if ((LobbyScreen) or (LoggedIn)) then                       // FIX
-//begin
-//  Result := True;
-//  Exit;
-//end;
+  if ((LobbyScreen) or (LoggedIn)) then
+  begin
+    Result := True;
+    Exit;
+  end;
   if (AllPlayersInActive) then
   begin
     WriteLn('No active players to login!');
     Exit;
   end;
   I := High(Players);
-  repeat
-    if (not (Players[CurrentPlayer].Active)) then
-      if (CurrentPlayer < I) then
-        Inc(CurrentPlayer)
-      else
-        CurrentPlayer := 0;
-  until (False);
+  CurrentPlayer := NextActivePlayerIndex;
+  ProcStart:                                                  // Retry Login Mark
   if (CountColor(10141389, 345, 293, 418, 305) = 143) then    // Leave Alone
   begin
     MouseBox(349, 298, 414, 300, ClickLeft);
     T := GetSystemTime + RandomRange(1500, 2500);
     repeat
-      B := CountColor(clLoginText, 202, 64, 390, 81) = 568;      // Create a Free Account
+      B := CountColor(clLoginText, 202, 64, 390, 81) = 568;   // Create a Free Account
       WaitRR(200, 400);
     until ((GetSystemTime > T) or (B));
     if (B) then
@@ -125,8 +135,7 @@ begin
         0: MouseBox(544, 67, 556, 78, ClickLeft);             // Exit
         1: MouseBox(165, 428, 428, 430, ClickLeft);           // Already have an account
       end;
-  end;                                                        // Retry Login Mark
-  ProcStart:
+  end;
   if (not (WaitFunc(@LoginScreen, 250, 400, 3500, 4500))) then
   begin
     WriteLn('Could not find Login Screen!');
@@ -199,7 +208,7 @@ begin
       Exit;
     end;
     Wait(100);
-    //Result := (LobbyScreen) or (LoggedIn);                  // FIX
+    Result := ((LobbyScreen) or (LoggedIn));
   until (Result);
   if (RetryLogin) then
   begin
@@ -211,12 +220,8 @@ begin
 end;
 
 //RSReady
-//LobbyScreen
 //ExitToLobby
 //LeaveLobby
 //Logout
-//LoginPlayerToLobby
 //LoginPlayer
-//SwitchToPlayer
-//NextPlayer
 //RandomNextPlayer

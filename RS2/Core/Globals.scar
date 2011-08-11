@@ -7,6 +7,8 @@
      By: Anonymous & Wanted.
  * const Skill_ Indexes
      By: Anonymous
+ * const Tab_ Indexes
+     By: Wanted
  * const Useful in game colors
      By: Anonymous
  * type TRS2Player = record
@@ -144,6 +146,22 @@ const
   Skill_Construction  = 22;
   Skill_Summoning     = 23;
   Skill_Dungeoneering = 24;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Tab Indexes
+Contributors: Wanted.
+Description: Index handles for various RS2 tabs.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Tab_Lobby_PlayerInfo  = 0;
+  Tab_Lobby_WorldSelect = 1;
+  Tab_Lobby_Friends     = 2;
+  Tab_Lobby_FriendsChat = 3;
+  Tab_Lobby_ClanChat    = 4;
+  Tab_Lobby_Options     = 5;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors

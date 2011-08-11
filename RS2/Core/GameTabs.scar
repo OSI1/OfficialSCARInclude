@@ -3,8 +3,47 @@
                                    Runescape 2
                                 Game Tab Routines
 --------------------------------------------------------------------------------
- *
+ * function CurrentLobbyTab: Integer;
+     By: Wanted
+ * function LobbyTab(Tab: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CurrentLobbyTab: Integer;
+Contributors: Wanted
+Description: Returns what tab you have open at the lobby screen. 6 if failed.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CurrentLobbyTab: Integer;
+begin
+  for Result := 0 to 5 do
+    if (GetColor(109 + (Result * 100), 21) = 8029324) then
+      Break;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LobbyTab(Tab: Integer): Boolean;
+Contributors: Wanted
+Description: Clicks on a lobby tab, if not already open.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LobbyTab(Tab: Integer): Boolean;
+var
+  I: Integer;
+begin
+  I := CurrentLobbyTab;
+  Result := I = Tab;
+  if ((Result) or (I = 6)) then
+    Exit;
+  MouseBox(67 + (Tab * 102), 26, 162 + (Tab * 102), 48, ClickLeft);
+  WaitRR(250, 400);
+  Result := CurrentLobbyTab = Tab;
+end;
 
 //DidClick
 //GetCurrentTab
@@ -34,7 +73,6 @@
 //AdjustSettings
 //FixAllSettings
 //DoEmotion
-//GetLobbyTab
 //LobbyTab
 //IsXPBarOpen
 //ToggleXPBar

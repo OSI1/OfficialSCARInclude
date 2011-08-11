@@ -8,6 +8,14 @@
      By: Wanted
  * procedure WaitNone;
      By: Wanted
+ * function TheTime: string;
+     By: Timer
+ * function TheDate: string;
+     By: Timer
+ * function TheMonth: string;
+     By: Timer
+ * function STimeRunning: string;
+     By: Timer
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -63,7 +71,141 @@ procedure DoNothing;
 begin
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TheTime: string;
+By: Timer
+Description: Gets the Time.
+Date Created: August 7th, 2011. By Timer
+Last Modified: August 7th, 2011. By Timer
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TheTime: string;
+var
+  Hour, Minz, Sec, MSec: Word;
+  Padding: string;
+begin
+  DecodeTime(Now, Hour, Minz, Sec, MSec);
+  Padding := 'AM';
+  if (Hour > 12) then
+  begin
+    Hour := Hour - 12;
+    Padding := 'PM';
+  end else
+    if (Hour = 12) then
+      Padding := 'PM';
+  Result := IntToStr(Hour) + ':' + IntToStr(Minz) + ':' + IntToStr(Sec) + ' ' + Padding;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TheDate: string;
+By: Timer
+Description: Gets the Date.
+Date Created: August 7th, 2011. By Timer
+Last Modified: August 7th, 2011. By Timer
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TheDate: string;
+var
+  Year, Month, Day: Word;
+  Months, suffixs: TStringArray;
+  suffix: string;
+begin
+  DecodeDate(Date, Year, Month, Day);
+  Months := ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+            'August', 'September', 'October', 'November', 'December'];
+  suffixs := ['st', 'nd', 'rd'];
+  if (InRange(Day mod 10, 1, 3)) and (not InRange(Day, 11, 13)) then
+    suffix := suffixs[(Day mod 10) - 1]
+  else
+    suffix := 'th';
+  Result := Months[Month - 1] + ' ' + IntToStr(Day) + suffix + ', ' + IntToStr(Year);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TheMonth: string;
+By: Timer
+Description: Gets the Month.
+Date Created: August 7th, 2011. By Timer
+Last Modified: August 7th, 2011. By Timer
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TheMonth: string;
+var
+  Year, Month, Day: Word;
+  Months: TStringArray;
+begin
+  DecodeDate(Date, Year, Month, Day);
+  Months := ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+            'August', 'September', 'October', 'November', 'December'];
+  Result := Months[Month - 1];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function STimeRunning: string;
+By: Timer
+Description: Returns time running.
+Date Created: August 7th, 2011. By Timer
+Last Modified: August 7th, 2011. By Timer
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function STimeRunning: string;
+var
+  tr: LongInt;
+  tD, tH, tM, tS: LongInt;
+  TheTimeRInfo: array[0..3] of TStringArray;
+  tDD, tHH, tMM, tSS: Boolean;
+begin
+  tr := GetTimeRunning;
+  ConvertTime(tr, tH, tM, tS);
+  TheTimeRInfo[0] := [' day, ', ' days, ', ' day ', ' days '];
+  TheTimeRInfo[1] := [' hour, ', ' hours, ', ' hour ', ' hours'];
+  TheTimeRInfo[2] := [' minute, ', ' minutes, ', ' minute', ' minutes '];
+  TheTimeRInfo[3] := [' second', ' seconds'];
+  tD := tH div 24;
+  tDD := tD > 0;
+  tHH := tH > 0;
+  tMM := tM > 0;
+  tSS := tS > 0;
+  if (tDD) then
+    tH := tH - (tD * 24);
+  if (tDD) then
+    if (tD > 1) then
+      if (tHH) or (tMM) or (tSS) then
+        Result := Result + IntToStr(tD) + TheTimeRInfo[0][1]
+      else
+        Result := Result + IntToStr(tD) + TheTimeRInfo[0][3]
+    else
+      if (tHH) or (tMM) or (tSS) then
+        Result := Result + IntToStr(tD) + TheTimeRInfo[0][0]
+      else
+        Result := Result + IntToStr(tD) + TheTimeRInfo[0][2];
+  if (tHH) then
+    if (tH > 1) then
+      if (tMM) or (tSS) then
+        Result := Result + IntToStr(tH) + TheTimeRInfo[1][1]
+      else
+        Result := Result + IntToStr(tH) + TheTimeRInfo[1][3]
+    else
+      if (tMM) or (tSS) then
+        Result := Result + IntToStr(tH) + TheTimeRInfo[1][0]
+      else
+        Result := Result + IntToStr(tH) + TheTimeRInfo[1][2];
+  if (tMM) then
+    if (tM > 1) then
+      if (tSS) then
+        Result := Result + IntToStr(tM) + TheTimeRInfo[2][1]
+      else
+        Result := Result + IntToStr(tM) + TheTimeRInfo[2][3]
+    else
+      if (tSS) then
+        Result := Result + IntToStr(tM) + TheTimeRInfo[2][0]
+      else
+        Result := Result + IntToStr(tM) + TheTimeRInfo[2][2];
+  if (tSS) then
+    if (tS > 1) then
+      Result := Result + IntToStr(tS) + TheTimeRInfo[3][1]
+    else
+      Result := Result + IntToStr(tS) + TheTimeRInfo[3][0];
+end;
+
 //MSToTime
-//TimeRunning
-//TheTime
-//TheDate

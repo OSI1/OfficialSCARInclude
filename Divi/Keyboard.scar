@@ -2,7 +2,7 @@
                               Official SCAR Include
                                 Keyboard Routines
 --------------------------------------------------------------------------------
- * procedure TypeByte(k: Byte);
+ * procedure PushKey(C: Char);
      By: Anonymous
  * procedure TypeSend(s: string);
      By: Anonymous
