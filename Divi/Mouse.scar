@@ -31,24 +31,20 @@ procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
 Contributors: Anonymous, Timer, Wanted.
 Description: Moves the mouse and clicks humanly.
 Date Created: August 7th, 2011. By Anonymous
-Last Modification: August 8th, 2011. By Wanted
+Last Modification: August 11th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
 var
   cx, cy: Integer;
-  uWith: TMouseButton;
 begin
-  if (Left) then
-    uWith := mbLeft
-  else
-    uWith := mbRight;
   MMouse(x, y, rx, ry);
   Wait(60 + Random(31));
   GetMousePos(cx, cy);
-  HoldMouse(cx, cy, uWith);
+  HoldMouse(cx, cy, Left);
   Wait(RandomRange(80, 120));
-  ReleaseMouse(cx, cy, uWith);
+  GetMousePos(cx, cy);
+  ReleaseMouse(cx, cy, Left);
   Wait(100 + Random(101));
 end;
 

@@ -98,8 +98,8 @@ Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
 
 function LoginPlayerToLobby: Boolean;
 var
+  B, B2, B3, B4, RetryLogin: Boolean;
   T, I, Attempts: LongInt;
-  B, RetryLogin: Boolean;
   Actions: TVariantArray;
   TPA: TPointArray;
   TBA: TBoxArray;
@@ -122,12 +122,29 @@ begin
   I := High(Players);
   CurrentPlayer := NextActivePlayerIndex;
   ProcStart:                                                  // Retry Login Mark
-  if (CountColor(10141389, 345, 293, 418, 305) = 143) then    // Leave Alone
+  B := False;
+  B2 := False;
+  B3 := False;
+  B4 := False;
+  if (CountColor(10141389, 345, 293, 418, 305) = 143) then    // Autograhpics
+    B3 := True
+  else
+    B4 := (CountColor(10141389, 343, 303, 418, 315) = 143);   // Available changed
+  if ((B3) or (B4)) then
   begin
-    MouseBox(349, 298, 414, 300, ClickLeft);
-    T := GetSystemTime + RandomRange(1500, 2500);
+    if (B3) then
+      MouseBox(349, 298, 414, 300, ClickLeft)                 // Leave Alone
+    else
+      MouseBox(349, 309, 414, 312, ClickLefT);
+    T := GetSystemTime + RandomRange(3500, 4500);
     repeat
       B := CountColor(clLoginText, 202, 64, 390, 81) = 568;   // Create a Free Account
+      if (not (B)) then
+      begin
+        B2 := LoginScreen;
+        if (B2) then
+          Break;
+      end;
       WaitRR(200, 400);
     until ((GetSystemTime > T) or (B));
     if (B) then
@@ -136,12 +153,21 @@ begin
         1: MouseBox(165, 428, 428, 430, ClickLeft);           // Already have an account
       end;
   end;
-  if (not (WaitFunc(@LoginScreen, 250, 400, 3500, 4500))) then
-  begin
-    WriteLn('Could not find Login Screen!');
-    Exit;
-  end;
-  TBA := [Box(280, 176, 487, 197), Box(280, 220, 487, 244)];  // User / Pass Boxes
+  if (not (B2)) then
+    if (not (WaitFunc(@LoginScreen, 250, 400, 3500, 4500))) then
+    begin
+      WriteLn('Could not find Login Screen!');
+      Exit;
+    end;
+  {$IFNDEF SMART}
+    if (not ((B3) or (B4))) then                                         // Needs testing
+      if (not (FindColor(P.X, P.Y, clLoginText, 280, 176, 487, 197))) then
+      begin
+        MouseBox(485, 176, 487, 197, ClickLeft);
+        WaitRR(100, 250);
+      end;
+  {$ENDIF}
+  TBA := [IntToBox(280, 176, 487, 197), IntToBox(280, 220, 487, 244)];  // User / Pass Boxes
   B := False;
   for I := 0 to 1 do
   begin
@@ -149,13 +175,15 @@ begin
     begin
       B := True;
       TB := GetTPABounds(TPA);
-      MouseBox(TB.X2 + 2, TBA[I].Y1, TB.X2 + 5, TBA[I].Y2, ClickLeft);
+      if (I = 0) then
+        MouseBox(TB.X2 + 2, TBA[I].Y1, TB.X2 + 5, TBA[I].Y2, ClickLeft);
       WaitRR(250, 400);
-      KeyDown(VK_Back);                                       // Clear Boxes
-      T := GetSystemTime + RandomRange(3500, 4500);
+      T := GetSystemTime + RandomRange(8500, 9500);
       while ((FindColor(P.X, P.Y, clLoginText, TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2)) and (GetSystemTime < T)) do
-        WaitRR(250, 400);
-      KeyUp(VK_Back);
+      begin
+        PushKey(VK_Back);                                     // Clear Boxes
+        WaitRR(175, 225);
+      end;
       WaitRR(250, 400);
     end;
     if (I = 0) then
@@ -174,7 +202,7 @@ begin
   repeat
     SetLength(Actions, 0);
     if (GetSystemTime > T) then // Response                   Wait  Retrys  Action           [CurrentPlayer].Loc     Modified            By              Build #  Status
-      Actions :=       ['About one minute has passed...',     0,    5,      'PlayerFalse', 'Login Failed']        // August 10, 2011     Wanted          661      confirmed
+      Actions :=       ['About one minute has passed...',     0,    0,      'PlayerFalse', 'Login Failed']        // August 10, 2011     Wanted          661      confirmed
     else
     case (CountColor(clLoginText, 260, 140, 506, 395)) of
       364: Actions :=  ['Error Connecting.',              20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
@@ -189,6 +217,8 @@ begin
     end;
     if (Length(Actions) > 0) then
     begin
+      WaitRR(500, 1500);
+      PushKey(VK_Escape);
       WriteLn(Actions[0]);
       Wait(Actions[1] + Random(100));
       if (Actions[2] <> 0) then
@@ -216,7 +246,6 @@ begin
     Inc(Attempts);
     goto ProcStart;                                           // Go to Retry Login Mark
   end;
-  Result := False;                                            // REMOVE LINE
 end;
 
 //RSReady
