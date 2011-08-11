@@ -2,14 +2,68 @@
                               Official SCAR Include
                                  Timing Routines
 --------------------------------------------------------------------------------
- *
+ * procedure WaitRR(Min, Max);
+     By: Wanted
+ * function WaitFunc(Func: function: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+     By: Wanted
+ * procedure WaitNone;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure WaitRR(Min, Max: LongInt);
+Contributors: Wanted
+Description: Waits/sleeps a random amount of time.
+Date Created: August 10th, 2011. By Wanted
+Last Modified: August 10th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure WaitRR(Min, Max: LongInt);
+var
+  T: LongInt;
+begin
+  T := RandomRange(Min, Max);
+  if (T > 9999) then
+    Sleep(T)
+  else
+    Wait(T);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WaitFunc(Func: function: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+Contributors: Wanted
+Description: Repeats a function until true.
+Date Created: August 10th, 2011. By Wanted
+Last Modified: August 10th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WaitFunc(Func: function: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+var
+  T: LongInt;
+begin
+  Result := True;
+  T := GetSystemTime + MaxWait;
+  while (GetSystemTime < T) do
+    if (Func()) then
+      Exit
+    else
+      WaitRR(MinWait, MaxWait);
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure WaitNone;
+Contributors: Wanted
+Description: For use with while (this) do DoNothing
+Date Created: August 10th, 2011. By Wanted
+Last Modified: August 10th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DoNothing;
+begin
+end;
 
 //MSToTime
 //TimeRunning
-//MarkTime
-//TimeFromMark
 //TheTime
 //TheDate
-//WaitFunc
-//WaitNone;
