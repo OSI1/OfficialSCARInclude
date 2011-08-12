@@ -93,7 +93,7 @@ function LoginPlayerToLobby: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 11th, 2011. By Wanted. RS2 Build 661.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginPlayerToLobby: Boolean;
@@ -160,7 +160,7 @@ begin
       Exit;
     end;
   {$IFNDEF SMART}
-    if (not ((B3) or (B4))) then                                         // Needs testing
+    if (not ((B3) or (B4))) then                              // Needs testing
       if (not (FindColor(P.X, P.Y, clLoginText, 280, 176, 487, 197))) then
       begin
         MouseBox(485, 176, 487, 197, ClickLeft);
@@ -201,7 +201,7 @@ begin
   T := GetSystemTime + RandomRange(50000, 70000);
   repeat
     SetLength(Actions, 0);
-    if (GetSystemTime > T) then // Response                   Wait  Retrys  Action           [CurrentPlayer].Loc     Modified            By              Build #  Status
+    if (GetSystemTime > T) then // Response                   Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
       Actions :=       ['About one minute has passed...',     0,    0,      'PlayerFalse', 'Login Failed']        // August 10, 2011     Wanted          661      confirmed
     else
     case (CountColor(clLoginText, 260, 140, 506, 395)) of

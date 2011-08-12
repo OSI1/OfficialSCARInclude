@@ -168,17 +168,19 @@ const Useful in game colors
 Contributors: Anonymous, Wanted.
 Description: Static useful in game colors
 Date Created: August 8th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: August 9th, 2011. By Wanted. RS2 Build 661.
+Last Modified: August 11th, 2011. By Wanted. RS2 Build 661.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const
-  clMessage   = clBlack;
-  clAssist    = 14822282;
-  clChat      = clBlue;
-  clTrade     = clPurple;
-  clFriend    = 128;
+const                       // Modified            By              Build #
+  clMessage   = clBlack;    // August 7, 2011      Wanted          660
+  clAssist    = 14822282;   // August 7, 2011      Wanted          660
+  clChat      = clBlue;     // August 7, 2011      Wanted          660
+  clTrade     = clPurple;   // August 7, 2011      Wanted          660
+  clFriend    = 128;        // August 7, 2011      Wanted          660
 
-  clLoginText = 12378347;
+  clLoginText = 12378347;   // August 10, 2011     Wanted          661
+  clF2PWorld  = 16579836;   // August 11, 2011     Wanted          661
+  clP2PWorld  = 6618364;    // August 11, 2011     Wanted          661
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS2Player = record

@@ -6,7 +6,19 @@
  *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-//WorldScreen
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WorldScreen: Boolean;
+Contributors: Wanted.
+Description: Returns true if world select tab is open.
+Date Created: August 11th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 11th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WorldScreen: Boolean;
+begin
+  Result := (CurrentLobbyTab = Tab_Lobby_WorldSelect);
+end;
+
 //OpenWorldScreen
 //UpdateWorlds
 //LoadWorlds
