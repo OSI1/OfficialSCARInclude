@@ -3,7 +3,12 @@
                                    Runescape 2
                               World Switch Routines
 --------------------------------------------------------------------------------
- *
+ * function WorldScreen: Boolean;
+     By: Wanted
+ * function WS_CurrentWorld: Boolean;
+     By: Wanted
+ * function WS_MemberWorld: Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -19,12 +24,44 @@ begin
   Result := (CurrentLobbyTab = Tab_Lobby_WorldSelect);
 end;
 
+{*******************************************************************************
+function WS_CurrentWorld: Boolean;
+by: Wanted
+Description: Returns world number, returns -1 if failed. Only works at world screen.
+Date Created: August 14th, 2011. By Wanted. RS2 Build 661.
+Last Modified: August 14th, 2011. By Wanted RS2 Build 661.
+*******************************************************************************}
+
+function WS_CurrentWorld: Integer;
+var
+  P: TPoint;
+begin
+  Result := -1;
+  if (not (WorldScreen)) then
+    Exit;
+  Result := StrToIntDef(GetNumbers(Trim(GetTextAtEx(653, 78, 0, LoginChars, False, False, 0, 1, clLoginText, 15, False, tr_AllChars))), -1);
+end;
+
+{*******************************************************************************
+function WS_MemberWorld: Boolean;
+by: Wanted
+Description: Returns true if current world is members. Only works at world screen.
+Date Created: August 14th, 2011. By Wanted. RS2 Build 661.
+Last Modified: August 14th, 2011. By Wanted RS2 Build 661.
+*******************************************************************************}
+
+function WS_MemberWorld: Boolean;
+begin
+  if (not (WorldScreen)) then
+    Exit;
+  Result := (GetColor(628, 82) = 3927547);
+end;
+
 //OpenWorldScreen
 //UpdateWorlds
 //LoadWorlds
 //FindWorld
 //GetWorldInfo
-//WS_CurrentWorld
 //GetWorldInfo
 //SelectWorld
 //RandomWorld

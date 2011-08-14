@@ -14,13 +14,13 @@ function CurrentLobbyTab: Integer;
 Contributors: Wanted
 Description: Returns what tab you have open at the lobby screen. 6 if failed.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 14th, 2011. By Wanted. RS2 Build 661.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CurrentLobbyTab: Integer;
 begin
   for Result := 0 to 5 do
-    if (GetColor(109 + (Result * 100), 21) = 8029324) then
+    if (SimilarColors(GetColor(109 + (Result * 100), 21), 8029324, 5)) then
       Break;
 end;
 
