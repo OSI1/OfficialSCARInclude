@@ -5,10 +5,14 @@
 --------------------------------------------------------------------------------
  * function WorldScreen: Boolean;
      By: Wanted
+* function OpenWorldScreen: Boolean;
+     By: Wanted
  * function WS_CurrentWorld: Boolean;
      By: Wanted
  * function WS_MemberWorld: Boolean;
      By: Wanted
+ * procedure LoadRS2WorldArray;
+     By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -24,17 +28,47 @@ begin
   Result := (CurrentLobbyTab = Tab_Lobby_WorldSelect);
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OpenWorldScreen: Boolean;
+Contributors: Wanted.
+Description: Returns true if world select tab is open.
+Date Created: August 14th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 14th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OpenWorldScreen: Boolean;
+var
+  B: Boolean;
+  P: TPoint;
+begin
+  if (not (WorldScreen)) then
+    if (not (LobbyTab(Tab_Lobby_WorldSelect))) then
+      Exit;
+  Result := True;
+  WaitRR(400, 600);
+  if (GetColor(81, 130) = 136819) then
+  begin
+    B := (GetColor(75, 150) = 136819);
+    MouseBox(75, 131, 81, 136, ClickLeft);
+    WaitRR(400, 600);
+    if (B) then
+    begin
+      GetMousePos(P.X, P.Y);
+      Mouse(P.X, P.Y, 0, 0, True);
+      WaitRR(400, 600);
+    end;
+  end;
+end;
+
 {*******************************************************************************
 function WS_CurrentWorld: Boolean;
-by: Wanted
+Contributors: Wanted
 Description: Returns world number, returns -1 if failed. Only works at world screen.
 Date Created: August 14th, 2011. By Wanted. RS2 Build 661.
 Last Modified: August 14th, 2011. By Wanted RS2 Build 661.
 *******************************************************************************}
 
 function WS_CurrentWorld: Integer;
-var
-  P: TPoint;
 begin
   Result := -1;
   if (not (WorldScreen)) then
@@ -44,7 +78,7 @@ end;
 
 {*******************************************************************************
 function WS_MemberWorld: Boolean;
-by: Wanted
+Contributors: Wanted
 Description: Returns true if current world is members. Only works at world screen.
 Date Created: August 14th, 2011. By Wanted. RS2 Build 661.
 Last Modified: August 14th, 2011. By Wanted RS2 Build 661.
@@ -57,11 +91,45 @@ begin
   Result := (GetColor(628, 82) = 3927547);
 end;
 
+{*******************************************************************************
+procedure LoadRS2WorldArray;
+Contributors: Wanted, Anonymous.
+Description: Loads the worlds from Worlds.INI into RS2WorldArray.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
+Last Modified: August 14th, 2011. By Wanted. RS2 Build 660.
+*******************************************************************************}
+
+procedure LoadRS2WorldArray;
+var
+  FilePath, S: string;
+  H, Hw, I: Integer;
+begin
+  FilePath := IncludesPath + 'OSI\RS2\Core\Worlds.ini';
+  try
+    H := StrToInt(ReadINI('Worlds', 'High', FilePath));
+  except
+    WriteLn('*WARNING* procedure LoadRS2WorldArray failed!');
+    Exit;
+  end;
+  SetLength(RS2WorldArray, H + 1);
+  for I := 1 to H do
+    if not (ReadINI('World' + IntToStr(I), 'Prefix', FilePath) = '') then
+    begin
+      S := 'World' + IntToStr(I);
+      RS2WorldArray[Hw].Number := I;
+      RS2WorldArray[Hw].Prefix := ReadINI(S, 'Prefix', FilePath);
+      RS2WorldArray[Hw].Members := (ReadINI(S, 'Type', FilePath) = 'Members');
+      RS2WorldArray[Hw].LootShare := StrToBool(ReadINI(S, 'Lootshare', FilePath));
+      RS2WorldArray[Hw].QuickChat := StrToBool(ReadINI(S, 'Quickchat', FilePath));
+      RS2WorldArray[Hw].PVP := StrToBool(LowerCase(ReadINI(S, 'PvP', FilePath)));
+      RS2WorldArray[Hw].Language := ReadINI(S, 'ServLang', FilePath);
+      Inc(Hw);
+    end;
+  SetLength(RS2WorldArray, Hw);
+end;
+
 //OpenWorldScreen
-//UpdateWorlds
-//LoadWorlds
 //FindWorld
-//GetWorldInfo
 //GetWorldInfo
 //SelectWorld
 //RandomWorld

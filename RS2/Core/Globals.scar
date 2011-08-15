@@ -13,8 +13,8 @@
      By: Anonymous
  * type TRS2Player = record
      By: Anonymous
- * type TRS2Player = record
-     By: Anonymous & Wanted.
+ * type TRS2World = record
+     By: Anonymous
  * var Players: array of TRS2Player;
      By: Anonymous
  * var Font Variables
@@ -112,7 +112,7 @@ const             // Description                  Modified            By        
 const Skill_ Indexes
 Contributors: Anonymous, Wanted.
 Description: Index handles for various RS2 skills.
-Date Created: August 8th, 2011. By Anonymous. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -167,7 +167,7 @@ const
 const Useful in game colors
 Contributors: Anonymous, Wanted.
 Description: Static useful in game colors
-Date Created: August 8th, 2011. By Anonymous. RS2 Build 661.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
 Last Modified: August 11th, 2011. By Wanted. RS2 Build 661.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -186,7 +186,7 @@ const                       // Modified            By              Build #
 type TRS2Player = record
 Contributors: Anonymous, Wanted.
 Description: Handles all of player related info and variables.
-Date Created: August 8th, 2011. By Anonymous. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -215,10 +215,27 @@ type
   end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+type TRS2World = record
+Contributors: Anonymous, Wanted.
+Description: Handles all of RS2 world related info and variables.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Last Modified: August 14th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+type
+  TRS2World = record
+    Number, PlayerNo: Integer;
+    Members: Boolean;
+    Prefix, Location, Activity, Language: string;
+    LootShare, QuickChat, PVP: Boolean;
+  end;
+  TRS2WorldArray = array of TRS2World;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Players: array of TRS2Player;
 Contributors: Anonymous, Wanted.
 Description: Handles all of player related info and variables.
-Date Created: August 8th, 2011. By Anonymous & Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
 Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -240,12 +257,23 @@ var
 var Font Variables
 Contributors: Anonymous, Wanted.
 Description: Variables for RS2 fonts memory handles.
-Date Created: August 8th, 2011. By Anonymous. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
   NPCChars, UpChars, SmallChars, StatChars, FriendChars, BigChars, LoginChars, XPChars: LongInt;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var RS2WorldArray: TWorldArray
+Contributors: Anonymous, Wanted.
+Description: Variables for RS2 fonts memory handles.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: August 14th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  RS2WorldArray: TRS2WorldArray;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FreeRS2Fonts;
@@ -274,7 +302,7 @@ end;
 function ActivePlayers: Integer;
 Contributors: Anonymous, Wanted.
 Description: Returns the number of active players.
-Date Created: August 8th, 2011. By Anonymous. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -292,7 +320,7 @@ end;
 function AllPlayersInActive: Boolean;
 Contributors: Anonymous, Wanted.
 Description: Returns true if all players are in-active
-Date Created: August 8th, 2011. By Anonymous. RS2 Build 660.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
