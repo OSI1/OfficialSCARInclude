@@ -4,26 +4,56 @@
 --------------------------------------------------------------------------------
  * procedure MMouse(x, y, rx, ry: Integer);
      By: Timer
+ * procedure HoldMouseWait(x, y, rx, ry, MinTime, MaxTime: Integer; Left: Boolean);
+     By: Wanted
  * procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
      By: Anonymous
+ * procedure HoldMouseWaitBox(x1, y1, x2, y2, MinTime, MaxTime: Integer; Left: Boolean);
+     By: Wanted
  * procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
      By: Anonymous
+ * procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
+     By: Naum
+ * procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MMouse(x, y, rx, ry: Integer);
-Contributors: Timer
+Contributors: Timer, Wanted.
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modification: August 7th, 2011. By Timer
+Last Modification: August 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
 begin
   if (not MouseSpeed = 0) then
-    MoveWindMouseEx(x, y, rx, ry, MouseSpeed)
+    MoveWindMouseEx(RandomRange(X - RX, X + RX), RandomRange(Y - RY, Y + RY), 0, 0, MouseSpeed)
   else
-    MoveWindMouse(x, y, rx, ry);
+    MoveWindMouse(RandomRange(X - RX, X + RX), RandomRange(Y - RY, Y + RY), 0, 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure HoldMouseWait(x, y, rx, ry, MinTime, MaxTime: Integer; Left: Boolean);
+Contributors: Wanted, Timer, Anonymous.
+Description: Moves the mouse and clicks + holds humanly.
+Date Created: August 19th, 2011. By Wanted
+Last Modification: August 19th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure HoldMouseWait(x, y, rx, ry, MinTime, MaxTime: Integer; Left: Boolean);
+var
+  cx, cy: Integer;
+begin
+  MMouse(x, y, rx, ry);
+  WaitRR(60, 90);
+  GetMousePos(cx, cy);
+  HoldMouse(cx, cy, Left);
+  WaitRR(MinTime, MaxTime);
+  GetMousePos(cx, cy);
+  ReleaseMouse(cx, cy, Left);
+  WaitRR(100, 200);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -31,26 +61,30 @@ procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
 Contributors: Anonymous, Timer, Wanted.
 Description: Moves the mouse and clicks humanly.
 Date Created: August 7th, 2011. By Anonymous
-Last Modification: August 11th, 2011. By Wanted
+Last Modification: August 19th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
-var
-  cx, cy: Integer;
 begin
-  MMouse(x, y, rx, ry);
-  Wait(60 + Random(31));
-  GetMousePos(cx, cy);
-  HoldMouse(cx, cy, Left);
-  Wait(RandomRange(80, 120));
-  GetMousePos(cx, cy);
-  ReleaseMouse(cx, cy, Left);
-  Wait(100 + Random(101));
+  HoldMouseWait(x, y, rx, ry, 80, 120, Left);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure HoldMouseWaitBox(x1, y1, x2, y2, MinTime, MaxTime: Integer; Left: Boolean);
+Contributors: Wanted
+Description: Moves the mouse and clicks + holds humanly.
+Date Created: August 19th, 2011. By Wanted
+Last Modification: August 19th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure HoldMouseWaitBox(x1, y1, x2, y2, MinTime, MaxTime: Integer; Left: Boolean);
+begin
+  HoldMouseWait(RandomRange(x1, x2), RandomRange(y1, y2), 0, 0, MinTime, MaxTime, Left);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
-Contributors: Anonymous, Timer, Wanted
+Contributors: Anonymous, Timer, Wanted.
 Description: Clicks/moves the mouse in a specified area.
 Date Created: August 7th, 2011. By Anonymous
 Last Modification: August 8th, 2011. By Wanted
@@ -65,4 +99,50 @@ begin
   end;
 end;
 
-//DragMouse
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
+Contributors: Naum, Wanted.
+Description: Clicks and holds the mouse and then drags it and releases it.
+Date Created: August 7th, 2011. By Naum
+Last Modification: August 19th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
+var
+  cx, cy: Integer;
+begin
+  MMouse(sX, sY, sRX, sRY);
+  WaitRR(60, 90);
+  GetMousePos(cx, cy);
+  HoldMouse(cx, cy, Left);
+  Wait(RandomRange(80, 120));
+  MMouse(eX, eY, eRX, eRY);
+  WaitRR(60, 90);
+  GetMousePos(cx, cy);
+  ReleaseMouse(cx, cy, Left);
+  WaitRR(100, 200);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);
+Contributors: Wanted
+Description: See DragMouse. Except for does in box areas.
+Date Created: August 19th, 2011. By Wanted
+Last Modification: August 19th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);
+var
+  cx, cy: Integer;
+begin
+  MouseBox(sX1, sY1, sX2, sY2, MoveTo);
+  WaitRR(60, 90);
+  GetMousePos(cx, cy);
+  HoldMouse(cx, cy, Left);
+  Wait(RandomRange(80, 120));
+  MouseBox(eX1, eY1, eX2, eY2, MoveTo);
+  WaitRR(60, 90);
+  GetMousePos(cx, cy);
+  ReleaseMouse(cx, cy, Left);
+  WaitRR(100, 200);
+end;

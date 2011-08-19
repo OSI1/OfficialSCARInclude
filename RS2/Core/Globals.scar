@@ -9,6 +9,8 @@
      By: Anonymous
  * const Tab_ Indexes
      By: Wanted
+ * const World Switcher Indexes
+     By: Wanted
  * const Useful in game colors
      By: Anonymous
  * type TRS2Player = record
@@ -164,6 +166,24 @@ const
   Tab_Lobby_Options     = 5;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const World Switcher Indexes
+Contributors: Wanted.
+Description: Index handles for various worldswitcher routines.
+Date Created: August 18th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 18th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  WS_World              = 0;
+  WS_Players            = 1;
+  WS_Location           = 2;
+  WS_Activity           = 2;
+  WS_Type               = 3;
+  WS_Members            = 3;
+  WS_LootShare          = 4;
+  WS_Ping               = 5;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors
 Contributors: Anonymous, Wanted.
 Description: Static useful in game colors
@@ -181,6 +201,8 @@ const                       // Modified            By              Build #
   clLoginText = 12378347;   // August 10, 2011     Wanted          661
   clF2PWorld  = 16579836;   // August 11, 2011     Wanted          661
   clP2PWorld  = 6618364;    // August 11, 2011     Wanted          661
+  clWSArrow   = 1008783;    // August 18, 2011     Wanted          661
+  clWSBar     = 1250841;    // August 18, 2011     Wanted          661
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS2Player = record
