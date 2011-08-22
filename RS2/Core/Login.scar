@@ -34,8 +34,8 @@ end;
 function LobbyScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at lobby screen.
-Date Created: August 11th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 11th, 2011. By Wanted. RS2 Build 661.
+Date Created: August 11th, 2011. By Wanted. RS2 Build 662.
+Last Modification: August 11th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LobbyScreen: Boolean;
@@ -93,7 +93,7 @@ function LoginPlayerToLobby: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 11th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 11th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginPlayerToLobby: Boolean;

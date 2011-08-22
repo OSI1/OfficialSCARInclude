@@ -21,8 +21,8 @@
 function WorldScreen: Boolean;
 Contributors: Wanted.
 Description: Returns true if world select tab is open.
-Date Created: August 11th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 11th, 2011. By Wanted. RS2 Build 661.
+Date Created: August 11th, 2011. By Wanted. RS2 Build 662.
+Last Modification: August 11th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WorldScreen: Boolean;
@@ -34,8 +34,8 @@ end;
 function OpenWorldScreen: Boolean;
 Contributors: Wanted.
 Description: Returns true if world select tab is open.
-Date Created: August 14th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 14th, 2011. By Wanted. RS2 Build 661.
+Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
+Last Modification: August 14th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenWorldScreen: Boolean;
@@ -66,8 +66,8 @@ end;
 function WS_CurrentWorld: Boolean;
 Contributors: Wanted
 Description: Returns world number, returns -1 if failed. Only works at world screen.
-Date Created: August 14th, 2011. By Wanted. RS2 Build 661.
-Last Modified: August 14th, 2011. By Wanted RS2 Build 661.
+Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
+Last Modified: August 14th, 2011. By Wanted RS2 Build 662.
 *******************************************************************************}
 
 function WS_CurrentWorld: Integer;
@@ -82,8 +82,8 @@ end;
 function WS_MemberWorld: Boolean;
 Contributors: Wanted
 Description: Returns true if current world is members. Only works at world screen.
-Date Created: August 14th, 2011. By Wanted. RS2 Build 661.
-Last Modified: August 14th, 2011. By Wanted RS2 Build 661.
+Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
+Last Modified: August 14th, 2011. By Wanted RS2 Build 662.
 *******************************************************************************}
 
 function WS_MemberWorld: Boolean;
@@ -98,7 +98,7 @@ procedure LoadRS2WorldArray;
 Contributors: Wanted, Anonymous.
 Description: Loads the worlds from Worlds.INI into RS2WorldArray.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: August 14th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 20th, 2011. By Wanted. RS2 Build 662.
 *******************************************************************************}
 
 procedure LoadRS2WorldArray;
@@ -134,8 +134,8 @@ end;
 procedure OrderWorlds(By: Integer; Descending: Boolean);
 Contributors: Wanted, Naum.
 Description: Sorts world By (WS_ Indexes)
-Date Created: August 18th, 2011. By Wanted & Naum. RS2 Build 661.
-Last Modified: August 18th, 2011. By Wanted. RS2 Build 661.
+Date Created: August 18th, 2011. By Wanted & Naum. RS2 Build 662.
+Last Modified: August 22nd, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OrderWorlds(By: Integer; Descending: Boolean);
@@ -174,8 +174,6 @@ begin
   FindColor(CurB.X, CurB.Y, clWSBar, 689, 154, 690, 394);
   if (not (InRange(CurB.Y, 154, 394))) then
     Exit;
-  if (Length(RS2WorldArray) = 0) then
-    LoadRS2WorldArray;
   H := High(RS2WorldArray);
   for I := 0 to H do
     if (RS2WorldArray[I].Number = World) then
@@ -186,7 +184,7 @@ begin
         TextColor := clF2PWorld;
       Break;
     end;
-  if (World < 16) then
+  if (World < RS2WorldArray[15].Number) then
   begin
       if ((CurB.Y - 154) < 2) then
       begin
@@ -197,17 +195,23 @@ begin
       end
       else
       begin
-        P := Point(RandomRange(683, 696), RandomRange(CurB.Y + 1, CurB.Y + 24));
+        P := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
         DragMouse(P.X, P.Y, 0, 0, RandomRange(683, 696), 152 + (P.Y - Curb.Y), 0, 0, True);
       end;
   end
   else
+  if (World > RS2WorldArray[H - 15].Number) then
   begin
-    SCPos := (154 +  Round((I + 0.0) / (H + 1.0) * 240.0));
-    P := Point(RandomRange(683, 696), RandomRange(CurB.Y + 1, CurB.Y + 24));
+    P := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
+    DragMouse(P.X, P.Y, 0, 0, RandomRange(683, 696), 394 + (P.Y - Curb.Y), 0, 0, True);
+  end
+  else
+  begin
+    SCPos := Round(RandomRange(132, 150) + (((I + 0.0) / ((H - 15.0) + 1.0)) * 240.0));
+    P := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
     DragMouse(P.X, P.Y, 0, 0, RandomRange(683, 696), SCPos + (P.Y - Curb.Y), 0, 0, True);
   end;
-end;                                                        // UNFINISHED =/
+end;
 
 //FindWorld
 //GetWorldInfo

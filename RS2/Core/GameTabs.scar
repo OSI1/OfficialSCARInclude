@@ -14,7 +14,7 @@ function CurrentLobbyTab: Integer;
 Contributors: Wanted
 Description: Returns what tab you have open at the lobby screen. 6 if failed.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 14th, 2011. By Wanted. RS2 Build 661.
+Last Modification: August 14th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CurrentLobbyTab: Integer;
