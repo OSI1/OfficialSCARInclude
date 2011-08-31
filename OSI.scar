@@ -25,7 +25,7 @@
   {.include OSI\RS2\Core\Inventory.scar}
   {.include OSI\RS2\Core\Bank.scar}
   {.include OSI\RS2\Core\Map.scar}
-  {$IFDEF OSI_Color_Anti-Randoms}
+  {$IFDEF OSI_Color_Anti_Randoms}
     {.include OSI\RS2\Anti-Randoms\Anti-Randoms.scar}
   {$ENDIF}
 {$ENDIF}
@@ -61,7 +61,7 @@ var
 begin
   {$IFDEF RS2}
     WriteLn('OSI RS2 routines enabled');
-    {$IFDEF OSI_Color_Anti-Randoms}
+    {$IFDEF OSI_Color_Anti_Randoms}
       WriteLn('OSI RS2 color random detection and solving enabled');
     {$ELSE}
       WriteLn('OSI RS2 color random detection and solving disabled');

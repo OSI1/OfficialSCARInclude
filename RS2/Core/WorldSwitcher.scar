@@ -15,6 +15,8 @@
      By: Anonymous
  * procedure OrderWorlds(By: Integer; Descending: Boolean);
      By: Wanted & Naum.
+ * function FindWorld(var P: TPoint; World: Integer): Boolean;
+     By: By Wanted & Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -157,10 +159,18 @@ begin
   Mouse(P.X, P.Y, 0, 0, True);
 end;
 
-function FindWorld(World: Integer): Boolean;
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindWorld(var P: TPoint; World: Integer): Boolean;
+Contributors: Wanted, Anonymous.
+Description: Sorts world By (WS_ Indexes)
+Date Created: August 19th, 2011. By Wanted & Anonymous. RS2 Build 662.
+Last Modified: August 30th, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindWorld(var P: TPoint; World: Integer): Boolean;
 var
   TextColor, I, H, ScPos: Integer;
-  CurB, P: TPoint;
+  CurB, SBP: TPoint;
 begin
   if (not (OpenWorldScreen)) then
     Exit;
@@ -169,11 +179,6 @@ begin
     Result := True;
     Exit;
   end;
-  OrderWorlds(WS_World, False);
-  WaitRR(400, 600);
-  FindColor(CurB.X, CurB.Y, clWSBar, 689, 154, 690, 394);
-  if (not (InRange(CurB.Y, 154, 394))) then
-    Exit;
   H := High(RS2WorldArray);
   for I := 0 to H do
     if (RS2WorldArray[I].Number = World) then
@@ -184,6 +189,22 @@ begin
         TextColor := clF2PWorld;
       Break;
     end;
+  if (I > H) then
+  begin
+    WriteLn('World number ' + IntToStr(World) + ' is invalid!');
+    Exit;
+  end;
+  Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
+  if (Result) then
+    Exit;
+  OrderWorlds(WS_World, False);
+  WaitRR(400, 600);
+    Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
+  if (Result) then
+    Exit;
+  FindColor(CurB.X, CurB.Y, clWSBar, 689, 154, 690, 394);
+  if (not (InRange(CurB.Y, 154, 394))) then
+    Exit;
   if (World < RS2WorldArray[15].Number) then
   begin
       if ((CurB.Y - 154) < 2) then
@@ -195,22 +216,23 @@ begin
       end
       else
       begin
-        P := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
-        DragMouse(P.X, P.Y, 0, 0, RandomRange(683, 696), 152 + (P.Y - Curb.Y), 0, 0, True);
+        SBP := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
+        DragMouse(SBP.X, SBP.Y, 0, 0, RandomRange(683, 696), 152 + (SBP.Y - Curb.Y), 0, 0, True);
       end;
   end
   else
   if (World > RS2WorldArray[H - 15].Number) then
   begin
-    P := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
-    DragMouse(P.X, P.Y, 0, 0, RandomRange(683, 696), 394 + (P.Y - Curb.Y), 0, 0, True);
+    SBP := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
+    DragMouse(SBP.X, SBP.Y, 0, 0, RandomRange(683, 696), 394 + (SBP.Y - Curb.Y), 0, 0, True);
   end
   else
   begin
     SCPos := Round(RandomRange(132, 150) + (((I + 0.0) / ((H - 15.0) + 1.0)) * 240.0));
-    P := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
-    DragMouse(P.X, P.Y, 0, 0, RandomRange(683, 696), SCPos + (P.Y - Curb.Y), 0, 0, True);
+    SBP := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
+    DragMouse(SBP.X, SBP.Y, 0, 0, RandomRange(683, 696), SCPos + (SBP.Y - Curb.Y), 0, 0, True);
   end;
+  Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
 end;
 
 //FindWorld
