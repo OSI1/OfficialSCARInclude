@@ -7,8 +7,10 @@
      By: Anonymous & Wanted.
  * const Skill_ Indexes
      By: Anonymous
- * const Tab_ Indexes
+ * const Lobby_Tab_ Indexes
      By: Wanted
+ * const Game Tab Indexes
+     By: Dynamite
  * const World Switcher Indexes
      By: Wanted
  * const Useful in game colors
@@ -150,7 +152,7 @@ const
   Skill_Dungeoneering = 24;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const Tab Indexes
+const Lobby Tab Indexes
 Contributors: Wanted.
 Description: Index handles for various RS2 tabs.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
@@ -164,6 +166,33 @@ const
   Tab_Lobby_FriendsChat = 3;
   Tab_Lobby_ClanChat    = 4;
   Tab_Lobby_Options     = 5;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Game Tab Indexes
+Contributors: Dynamite.
+Description: Index handles for Game RS2 tabs.
+Date Created: August 31st, 2011. By Dynamite. RS2 Build 661.
+Last Modification: August 31st, 2011. By Dynamite. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Tab_Combat            = 0;
+  Tab_Task              = 1;
+  Tab_Stats             = 2;
+  Tab_Quest             = 3;
+  Tab_Inv               = 4;
+  Tab_Equip             = 5;
+  Tab_Prayer            = 6;
+  Tab_Magic             = 7;
+  Tab_Objectives        = 8;
+  Tab_Friends           = 9;
+  Tab_FriendChat        = 10;
+  Tab_Clan              = 11;
+  Tab_Options           = 12;
+  Tab_Emotes            = 13;
+  Tab_Music             = 14;
+  Tab_Notes             = 15;
+  Tab_Logout            = 16;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const World Switcher Indexes

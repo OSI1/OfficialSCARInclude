@@ -7,6 +7,14 @@
      By: Wanted
  * function LobbyTab(Tab: Integer): Boolean;
      By: Wanted
+ * function GetCurrentTab: Integer;
+     By: Dynamite & Wanted.
+ * function GetTabBounds(Tab: Integer): TBox;
+     By: Wanted
+ * function TabExists(Tab: Integer): Boolean;
+     By: Wanted
+ * function SetGameTab(Tab: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -45,10 +53,95 @@ begin
   Result := CurrentLobbyTab = Tab;
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCurrentTab: Integer;
+Contributors: Dynamite, Wanted.
+Description: Returns current tab.
+Date Created: August 31st, 2011. By Dynamite & Wanted. RS2 Build 662.
+Last Modification: August 31st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCurrentTab: Integer;
+begin
+  for Result := 0 to 15 do
+    if (GetColor(535 + ((Result mod 8) * 30), 169 + ((Result div 8) * 298)) = 3775974) then
+      Exit;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetTabBounds(Tab: Integer): TBox;
+Contributors: Wanted
+Description: Returns tab boundries.
+Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
+Last Modification: August 31st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetTabBounds(Tab: Integer): TBox;
+var
+  P: TPoint;
+begin
+  if (Tab = Tab_Logout) then
+  begin
+    Result := Box(746, 0, 764, 19);
+    Exit;
+  end;
+  P := Point(537 + ((Tab mod 8) * 30), 187 + ((Tab div 8) * 298));
+  Result := Box(P.X - 12, P.Y - 14, P.X + 12, P.Y + 14);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TabExists(Tab: Integer): Integer;
+Contributors: Wanted, Dynamite.
+Description: Returns True if the Tab exists.
+Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
+Last Modification: August 31st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TabExists(Tab: Integer): Boolean;
+var
+  TB: TBox;
+begin
+  if (Tab = Tab_Logout) then
+  begin
+    Result := (GetColor(746, 0) = 65536);
+    Exit;
+  end;
+  TB := GetTabBounds(Tab);
+  Result := (CountColorTolerance(5268337, TB.X1, TB.Y1, TB.X2, TB.Y2, 18) < 500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetGameTab(Tab: Integer): Integer;
+Contributors: Wanted, Dynamite.
+Description: Switches to a specific game tab.
+Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
+Last Modification: August 31st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetGameTab(Tab: Integer): Boolean;
+var
+  T: Integer;
+  TB: TBox;
+begin
+  Result := (GetCurrentTab = Tab);
+  if (Result) then
+    Exit;
+  if (not (TabExists(Tab))) then
+    Exit;
+  TB := GetTabBounds(Tab);
+  MouseBox(TB.X1, TB.Y1, TB.X2, TB.Y2, ClickLeft);
+  T := GetSystemTime + RandomRange(2500, 3500);
+  repeat
+    if (GetCurrentTab = Tab) then
+    begin
+      Result := True;
+      Exit;
+    end;
+    WaitRR(50, 150);
+  until (T > GetSystemTime);
+end;
+
 //DidClick
-//GetCurrentTab
-//TabExists
-//SetGameTab
 //SetFightMode
 //GetCombatLevel
 //SetRetaliate

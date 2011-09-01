@@ -199,7 +199,7 @@ begin
     Exit;
   OrderWorlds(WS_World, False);
   WaitRR(400, 600);
-    Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
+  Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
   if (Result) then
     Exit;
   FindColor(CurB.X, CurB.Y, clWSBar, 689, 154, 690, 394);
@@ -232,6 +232,7 @@ begin
     SBP := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
     DragMouse(SBP.X, SBP.Y, 0, 0, RandomRange(683, 696), SCPos + (SBP.Y - Curb.Y), 0, 0, True);
   end;
+  WaitRR(400, 600);
   Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
 end;
 
