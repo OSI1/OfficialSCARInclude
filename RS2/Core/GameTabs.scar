@@ -15,6 +15,14 @@
      By: Wanted
  * function SetGameTab(Tab: Integer): Boolean;
      By: Wanted
+ * function EquipmentToCoords(Slot: Integer): TPoint;
+     By: Wanted & Home.
+ * function GetEquipmentBounds(Slot: Integer): TBox;
+     By: Home
+ * function IsSlotEquipped(Slot: Integer): Boolean;
+     By: Home & Wanted.
+ * function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
+     By: Wanted $ Home.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -141,6 +149,95 @@ begin
   until (T > GetSystemTime);
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function EquipmentToCoords(Slot: Integer): TPoint;
+Contributors: Wanted, Home.
+Description: Returns the middle point of any Tab_Equip_ slot.
+Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
+Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function EquipmentToCoords(Slot: Integer): TPoint;
+var
+  TPA: TPointArray;
+begin
+  TPA := [Point(574, 227), Point(642, 227), Point(601, 266), Point(641, 266),
+          Point(684, 266), Point(586, 304), Point(643, 304), Point(697, 304),
+          Point(641, 344), Point(586, 385), Point(642, 385), Point(698, 385)];
+  if (InRange(Slot, 0, 11)) then
+    Result := TPA[Slot];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetEquipmentBounds(Slot: Integer): TBox;
+Contributors: Home, Wanted.
+Description: Returns any Tab_Equip slot boundries.
+Date Created: September 1st, 2011. By Home. RS2 Build 662.
+Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetEquipmentBounds(Slot: Integer): TBox;
+var
+  P: TPoint;
+begin
+  P := EquipmentToCoords(Slot);
+  Result := IntToBox(P.X - 12, P.Y - 12, P.X + 12, P.X + 12);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsSlotEquipped(Slot: Integer): Boolean;
+Contributors: Home, Wanted.
+Description: Returns true if a Tab_Equip_ slot is equipped with something.
+Date Created: September 1st, 2011. By Home & Wanted. RS2 Build 662.
+Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsSlotEquipped(Slot: Integer): Boolean;
+var
+  P: TPoint;
+  TB: TBox;
+begin
+  if (not (SetGameTab(Tab_Equip))) then
+    Exit;
+  TB := GetEquipmentBounds(Slot);
+  Result := FindColor(P.X, P.Y, clObjectOutline, TB.X1, TB.Y1, TB.X2, TB.Y2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
+Contributors: Wanted, Home.
+Description: Clicks a Tab_Equip_ slot.
+Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
+Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
+var
+  T: Integer;
+  B : TBox;
+begin
+  B := GetEquipmentBounds(Slot);
+  if (not (IsSlotEquipped(Slot))) then
+    Exit;
+  MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
+  T := GetSystemTime + RandomRange(1500, 2500);
+  Result := (TypeC = MoveTo);
+  repeat
+    case TypeC of
+      ClickLeft: Result := (not (IsSlotEquipped(Slot)));
+      //ClickRight: Result := OptionTextAvilable; //                        FIX
+      ClickRight: begin                           //                        FIX
+                    WaitRR(150, 250);             //                        FIX
+                    Result := True;               //                        FIX
+                    Exit;                         //                        FIX
+                  end;                            //                        FIX
+    end;
+    if (Result) then
+      Exit;
+    WaitRR(50, 150);
+  until (T > GetSystemTime);
+end;
+
 //DidClick
 //SetFightMode
 //GetCombatLevel
@@ -154,10 +251,6 @@ end;
 //GetXPTillNextLevel
 //HPPercent
 //GetAllLevels
-//GetEquipmentBounds
-//EquipmentToCords
-//ClickEquipedItem
-//IsSlotEquipped
 //GetCurrentWorld
 //SetRun
 //GetEnergy

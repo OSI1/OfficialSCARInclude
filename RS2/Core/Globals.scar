@@ -10,7 +10,9 @@
  * const Lobby_Tab_ Indexes
      By: Wanted
  * const Game Tab Indexes
-     By: Dynamite
+     By: Dynamite & Wanted.
+ * const Equip Tab Indexes
+     By: Wanted
  * const World Switcher Indexes
      By: Wanted
  * const Useful in game colors
@@ -169,10 +171,10 @@ const
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Game Tab Indexes
-Contributors: Dynamite.
+Contributors: Dynamite, Wanted.
 Description: Index handles for Game RS2 tabs.
-Date Created: August 31st, 2011. By Dynamite. RS2 Build 661.
-Last Modification: August 31st, 2011. By Dynamite. RS2 Build 661.
+Date Created: August 31st, 2011. By Dynamite & Wanted. RS2 Build 662.
+Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -193,6 +195,41 @@ const
   Tab_Music             = 14;
   Tab_Notes             = 15;
   Tab_Logout            = 16;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Equip Tab Indexes
+Contributors: Wanted
+Description: Index handles for Game RS2 tabs.
+Date Created: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+  Tab_Equip_Aura        = 0;
+  Tab_Equip_Head        = 1;
+  Tab_Equip_Hat         = 1;
+  Tab_Equip_Helmet      = 1;
+  Tab_Equip_Cape        = 2;
+  Tab_Equip_Neck        = 3;
+  Tab_Equip_Necklace    = 3;
+  Tab_Equip_Quiver      = 4;
+  Tab_Equip_Arrows      = 4;
+  Tab_Equip_Sword       = 5;
+  Tab_Equip_Right_Hand  = 5;
+  Tab_Equip_Right_Arm   = 5;
+  Tab_Equip_Chest       = 6;
+  Tab_Equip_Body        = 6;
+  Tab_Equip_Torso       = 6;
+  Tab_Equip_Shield      = 7;
+  Tab_Equip_Left_Hand   = 7;
+  Tab_Equip_Left_Arm    = 7;
+  Tab_Equip_Legs        = 8;
+  Tab_Equip_Hands       = 9;
+  Tab_Equip_Wristes     = 9;
+  Tab_Euip_Gloves       = 9;
+  Tab_Equip_Shoes       = 10;
+  Tab_Equip_Boots       = 10;
+  Tab_Equip_Feet        = 10;
+  Tab_Equip_Ring        = 11;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const World Switcher Indexes
@@ -217,21 +254,23 @@ const Useful in game colors
 Contributors: Anonymous, Wanted.
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: August 11th, 2011. By Wanted. RS2 Build 662.
+Last Modified: September 1st, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const                       // Modified            By              Build #
-  clMessage   = clBlack;    // August 7, 2011      Wanted          660
-  clAssist    = 14822282;   // August 7, 2011      Wanted          660
-  clChat      = clBlue;     // August 7, 2011      Wanted          660
-  clTrade     = clPurple;   // August 7, 2011      Wanted          660
-  clFriend    = 128;        // August 7, 2011      Wanted          660
+const                           // Modified            By              Build #
+  clMessage       = clBlack;    // August 7, 2011      Wanted          660
+  clAssist        = 14822282;   // August 7, 2011      Wanted          660
+  clChat          = clBlue;     // August 7, 2011      Wanted          660
+  clTrade         = clPurple;   // August 7, 2011      Wanted          660
+  clFriend        = 128;        // August 7, 2011      Wanted          660
 
-  clLoginText = 12378347;   // August 10, 2011     Wanted          661
-  clF2PWorld  = 16579836;   // August 11, 2011     Wanted          662
-  clP2PWorld  = 6618364;    // August 11, 2011     Wanted          662
-  clWSArrow   = 1008783;    // August 18, 2011     Wanted          662
-  clWSBar     = 1250841;    // August 18, 2011     Wanted          662
+  clLoginText     = 12378347;   // August 10, 2011     Wanted          661
+  clF2PWorld      = 16579836;   // August 11, 2011     Wanted          662
+  clP2PWorld      = 6618364;    // August 11, 2011     Wanted          662
+  clWSArrow       = 1008783;    // August 18, 2011     Wanted          662
+  clWSBar         = 1250841;    // August 18, 2011     Wanted          662
+
+  clObjectOutline = 131072;     // September 1st, 2011 Wanted          662
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS2Player = record
