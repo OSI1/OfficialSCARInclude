@@ -238,6 +238,33 @@ begin
   until (T > GetSystemTime);
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCurrentMusic : String;
+Contributors: Zyt3x
+Description: Returns the current music that's playing.
+Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function GetCurrentMusic : String;
+var
+  STab : Integer;
+  B : TBox;
+  TPA : TPointArray;
+begin
+  STab := GetCurrentTab;
+  if (STab <> tab_Music) then
+    SetGameTab(tab_Music);
+
+  if (FindColorsTolerance(TPA, 39401, 547, 241, 736, 264, 0)) then
+  begin
+    B := GetTPABounds(TPA);
+    Result := Trim(GetTextAtEx(B.X1-1, 245, 0, UpChars, False, False, 0, 1, 39401, 50, False, tr_AllChars));
+  end;
+
+  if (STab <> tab_Music) then
+    SetGameTab(STab);
+end;
+
 //DidClick
 //SetFightMode
 //GetCombatLevel
