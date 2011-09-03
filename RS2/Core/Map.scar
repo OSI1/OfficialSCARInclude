@@ -35,7 +35,7 @@ Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 function FindMinimapDotEx(var X, Y : Integer; dotColor : Integer; XS, YS, XE, YE : Integer): Boolean;
 begin
-  Result := FindColorSpiralTolerance(X, Y, dotColor, XS, YS, XE, YE);
+  Result := FindColorSpiralTolerance(X, Y, dotColor, XS, YS, XE, YE, 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -47,7 +47,7 @@ Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 function FindMinimapDot(var X, Y : Integer; dotColor : Integer): Boolean;
 begin
-  Result := FindColorSpiralTolerance(X, Y, dotColor, MMXS, MMYS, MMXE, MMYE);
+  Result := FindColorSpiralTolerance(X, Y, dotColor, MMXS, MMYS, MMXE, MMYE, 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
