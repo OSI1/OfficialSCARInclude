@@ -3,7 +3,12 @@
                                    Runescape 2
                                   Map Routines
 --------------------------------------------------------------------------------
- *
+ * function FindMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
+     By: Zyt3x
+ * function FindMinimapDots(dotColor : Integer): TPointArray;
+     By: Zyt3x
+ * function CountMinimapDots(dotColor : Integer): Integer;
+     By: Zyt3x
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 //MMToMS
@@ -18,13 +23,13 @@
 //RadarRoadWalk
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
+function FindMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
 Contributors: Zyt3x
 Description: Returns minimap dots by color "dotColor" in boundaries XS, YS, XE, YE.
 Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
 Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function GetMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
+function FindMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
 begin
   SetLength(Result, 0);
 
@@ -37,15 +42,15 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetMinimapDots(dotColor : Integer): TPointArray;
+function FindMinimapDots(dotColor : Integer): TPointArray;
 Contributors: Zyt3x
 Description: Returns minimap dots by color "dotColor".
 Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
 Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function GetMinimapDots(dotColor : Integer): TPointArray;
+function FindMinimapDots(dotColor : Integer): TPointArray;
 begin
-  Result := GetMinimapDotsEx(dotColor, MMXS, MMYS, MMXE, MMYE);
+  Result := FindMinimapDotsEx(dotColor, MMXS, MMYS, MMXE, MMYE);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -57,19 +62,5 @@ Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 function CountMinimapDots(dotColor : Integer): Integer;
 begin
-  Result := Length(GetMinimapDots(dotColor));
+  Result := Length(FindMinimapDots(dotColor));
 end;
-
-// [DELETE]?
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetMinimapDotCount(dotColor : Integer): Integer;
-Contributors: Zyt3x
-Description: Alias for CountMinimapDots();
-Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function GetMinimapDotCount(dotColor : Integer): Integer;
-begin
-  Result := Length(GetMinimapDots(dotColor));
-end;
-// [/DELETE]?
