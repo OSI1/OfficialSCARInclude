@@ -16,3 +16,60 @@
 //FlagDistance
 //Flag
 //RadarRoadWalk
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
+Contributors: Zyt3x
+Description: Returns minimap dots by color "dotColor" in boundaries XS, YS, XE, YE.
+Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function GetMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
+begin
+  SetLength(Result, 0);
+
+  FindColorsSpiralTolerance(MMCX, MMCY, Result, dotColor, XS, YS, XE, YE, 0);
+  RAaSTPA(Result, 4);
+
+  if (Length(Result) > 0) then
+    if (dotColor = clWhiteDot) then
+      Delete(Result, 0, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMinimapDots(dotColor : Integer): TPointArray;
+Contributors: Zyt3x
+Description: Returns minimap dots by color "dotColor".
+Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function GetMinimapDots(dotColor : Integer): TPointArray;
+begin
+  Result := GetMinimapDotsEx(dotColor, MMXS, MMYS, MMXE, MMYE);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountMinimapDots(dotColor : Integer): Integer;
+Contributors: Zyt3x
+Description: Counts minimap dots by color "dotColor".
+Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function CountMinimapDots(dotColor : Integer): Integer;
+begin
+  Result := Length(GetMinimapDots(dotColor));
+end;
+
+// [DELETE]?
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMinimapDotCount(dotColor : Integer): Integer;
+Contributors: Zyt3x
+Description: Alias for CountMinimapDots();
+Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function GetMinimapDotCount(dotColor : Integer): Integer;
+begin
+  Result := Length(GetMinimapDots(dotColor));
+end;
+// [/DELETE]?
