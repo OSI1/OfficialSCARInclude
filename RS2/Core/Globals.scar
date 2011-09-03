@@ -292,7 +292,7 @@ const                             // Modified            By              Build #
   clWSBar         = 1250841;      // August 18, 2011     Wanted          662
 
   clRedDot        = 2105598;      // September 3, 2011   Zyt3x           663
-  clWhiteDot      = 16711422      // September 3, 2011   Zyt3x           663
+  clWhiteDot      = 16711422;     // September 3, 2011   Zyt3x           663
   clGreenDot      = 64768;        // September 3, 2011   Zyt3x           663
   clYellowDot     = 1179390;      // September 3, 2011   Zyt3x           663
   clBlueDot       = 13667166;     // September 3, 2011   Zyt3x           663
