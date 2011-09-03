@@ -119,18 +119,15 @@ const Skill_ Indexes
 Contributors: Anonymous, Wanted.
 Description: Index handles for various RS2 skills.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
-  Skill_Count         = 26;
+  Skill_Count         = 25;
   Skill_Attack        = 0;
-  Skill_Defense       = 1;
-  Skill_Defence       = 1;
+  Skill_Defense       = 1;   Skill_Defence       = 1;
   Skill_Strength      = 2;
-  Skill_Hitpoints     = 3;
-  Skill_HP            = 3;
-  Skill_Constitution  = 3;
+  Skill_Hitpoints     = 3;   Skill_HP            = 3;  Skill_Constitution  = 3;
   Skill_Range         = 4;
   Skill_Prayer        = 5;
   Skill_Magic         = 6;
@@ -140,7 +137,7 @@ const
   Skill_Fishing       = 10;
   Skill_Firemaking    = 11;
   Skill_Crafting      = 12;
-  Skill_Ssmithing     = 13;
+  Skill_Smithing      = 13;
   Skill_Mining        = 14;
   Skill_Herblore      = 15;
   Skill_Agility       = 16;
