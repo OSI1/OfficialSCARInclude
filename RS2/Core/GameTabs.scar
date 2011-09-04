@@ -23,6 +23,10 @@
      By: Home & Wanted.
  * function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
      By: Wanted $ Home.
+ * function GetCurrentMusic : String;
+     By: Zyt3x
+ * function SetRun(Run : Boolean): Boolean;
+     By: Zyt3x
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -279,7 +283,19 @@ end;
 //HPPercent
 //GetAllLevels
 //GetCurrentWorld
-//SetRun
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetRun(Run : Boolean): Boolean;
+Contributors: Zyt3x
+Description: Sets run to desired state.
+Date Created: September 4th, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 4th, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function SetRun(Run : Boolean): Boolean;
+begin
+  Result := not (SimilarColors(GetColor(720, 110), 8822677, 10) xor Run);
+  if Result then
+    MouseCircle(724, 108, 15, ClickLeft);
+end;
 //GetEnergy
 //SetRest
 //RestUntil
