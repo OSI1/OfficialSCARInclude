@@ -25,7 +25,13 @@
      By: Wanted $ Home.
  * function GetCurrentMusic : String;
      By: Zyt3x
+ * function IsRunning : Boolean;
+     By: Zyt3x
  * function SetRun(Run : Boolean): Boolean;
+     By: Zyt3x
+ * function IsResting : Boolean;
+     By: Zyt3x
+  * function SetRest(Rest : Boolean): Boolean;
      By: Zyt3x
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -276,13 +282,24 @@ end;
 //SkillToCoords
 //GetSkillInfo
 //GetSkillLevel
-//IsResting
 //GetMMLevels
 //GetXP
 //GetXPTillNextLevel
 //HPPercent
 //GetAllLevels
 //GetCurrentWorld
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsRunning : Boolean;
+Contributors: Zyt3x
+Description: Returns true if running.
+Date Created: September 4th, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 4th, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function IsRunning : Boolean;
+begin
+  Result := not SimilarColors(GetColor(718, 110), 8822677, 10);
+end;
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function SetRun(Run : Boolean): Boolean;
 Contributors: Zyt3x
@@ -292,12 +309,39 @@ Last Modification: September 4th, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 function SetRun(Run : Boolean): Boolean;
 begin
-  Result := not (SimilarColors(GetColor(718, 110), 8822677, 10) xor Run);
+  Result := IsRunning xor Run;
   if Result then
     MouseCircle(724, 108, 15, ClickLeft);
 end;
 //GetEnergy
-//SetRest
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsResting : Boolean;
+Contributors: Zyt3x
+Description: Returns true if resting.
+Date Created: September 4th, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 4th, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function IsResting : Boolean;
+begin
+  Result := CountColorTolerance(2720921, 714, 98, 734, 118, 10) > 15;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetRest(Rest : Boolean): Boolean;
+Contributors: Zyt3x
+Description: Sets rest to desired state.
+Date Created: September 4th, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 4th, 2011. By Zyt3x. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+function SetRest(Rest : Boolean): Boolean;
+begin
+  Result := IsResting xor Rest;
+  if Result then
+  begin
+    //MouseCircle(724, 108, 15, ClickRight); // Uncomment when WaitOption exists!
+    Result := False;//WaitOption('Rest', 500); // Uncomment when WaitOption exists!
+  end;
+end;
 //RestUntil
 //AdjustSettings
 //FixAllSettings
