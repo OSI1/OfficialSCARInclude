@@ -292,7 +292,7 @@ Last Modification: September 4th, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 function SetRun(Run : Boolean): Boolean;
 begin
-  Result := not (SimilarColors(GetColor(720, 110), 8822677, 10) xor Run);
+  Result := not (SimilarColors(GetColor(718, 110), 8822677, 10) xor Run);
   if Result then
     MouseCircle(724, 108, 15, ClickLeft);
 end;
