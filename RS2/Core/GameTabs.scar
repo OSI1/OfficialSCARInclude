@@ -334,6 +334,7 @@ Last Modification: September 5th, 2011. By Wanted. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetRest: Boolean;
+var
   T: Integer;
 begin
   Result := (IsResting);
