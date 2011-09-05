@@ -37,26 +37,14 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const Useful in game boundries, points, areas, widths, etc. etc.
-Contributors: Anonymous, Wanted.
-Description: MMX1, MSCX, etc. etc.
-Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
-Last Modification: September 3th, 2011. By Zyt3x. RS2 Build 663.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
 const             // Description                  Modified            By              Build #
 
   MSCX  = 260;    // Main Screen Center Points // August 7, 2011      Wanted          660
   MSCY  = 171;                                 // August 7, 2011      Wanted          660
   MSX1  = 4;      // Main Screen Edge Points   // August 7, 2011      Wanted          660
-  MSXS  = MSX1;                                // September 3, 2011   Zyt3x           663
   MSY1  = 4;                                   // August 7, 2011      Wanted          660
-  MSYS  = MSY1;                                // September 3, 2011   Zyt3x           663
   MSX2  = 515;                                 // August 7, 2011      Wanted          660
-  MSXE  = MSX2;                                // September 3, 2011   Zyt3x           663
   MSY2  = 337;                                 // August 7, 2011      Wanted          660
-  MSYE  = MSY2;                                // September 3, 2011   Zyt3x           663
   MSPW  = 511;    // Main Screen Width         // August 7, 2011      Wanted          660
   MSPH  = 333;    // Main Screen Height        // August 7, 2011      Wanted          660
   MSPA  = 170163; // Main Screen Pixel Area    // August 7, 2011      Wanted          660
@@ -66,13 +54,9 @@ const             // Description                  Modified            By        
   MMCX  = 627;    // Map Center Points         // August 7, 2011      Wanted          660
   MMCY  = 85;                                  // August 7, 2011      Wanted          660
   MMX1  = 551;    // Map Edge Points           // August 7, 2011      Wanted          660
-  MMXS  = MMX1;                                // September 3, 2011   Zyt3x           663
   MMY1  = 9;                                   // August 7, 2011      Wanted          660
-  MMYS  = MMY1;                                // September 3, 2011   Zyt3x           663
   MMX2  = 702;                                 // August 7, 2011      Wanted          660
-  MMXE  = MMX2;                                // September 3, 2011   Zyt3x           663
   MMY2  = 160;                                 // August 7, 2011      Wanted          660
-  MMYE  = MMY2;                                // September 3, 2011   Zyt3x           663
   MMRD  = 75;     // Map Radius                // August 7, 2011      Wanted          660
   MMDI  = 151;    // Map Diameter              // August 7, 2011      Wanted          660
   MMPA  = 17907;  // Approx. Pixel Are         // August 7, 2011      Wanted          660
@@ -85,13 +69,9 @@ const             // Description                  Modified            By        
   MICX = 642;     // Inventory Center Points   // August 7, 2011      Wanted          660
   MICY = 336;                                  // August 7, 2011      Wanted          660
   MIX1 = 550;     // Inventory Edge Points     // August 7, 2011      Wanted          660
-  MIXS = MIX1;                                 // September 3, 2011   Zyt3x           663
   MIY1 = 206;                                  // August 7, 2011      Wanted          660
-  MIYS = MIY1;                                 // September 3, 2011   Zyt3x           663
   MIX2 = 733;                                  // August 7, 2011      Wanted          660
-  MIXE = MIX2;                                 // September 3, 2011   Zyt3x           663
   MIY2 = 465;                                  // August 7, 2011      Wanted          660
-  MIYE = MIY2;                                 // September 3, 2011   Zyt3x           663
   MIPW = 183;     // Inventory Width           // August 7, 2011      Wanted          660
   MIPH = 259;     // Inventory Height          // August 7, 2011      Wanted          660
   MIPA = 47397;   // Pixel Area                // August 7, 2011      Wanted          660
@@ -99,13 +79,9 @@ const             // Description                  Modified            By        
   MCCX = 251;     // Chat Box Center Points    // August 8, 2011      Wanted          660
   MCCY = 412;                                  // August 8, 2011      Wanted          660
   MCX1 = 7;       // Chat Box Edge Points      // August 8, 2011      Wanted          660
-  MCXS = MCX1;                                 // September 3, 2011   Zyt3x           663
   MCY1 = 345;                                  // August 8, 2011      Wanted          660
-  MCYS = MCY1;                                 // September 3, 2011   Zyt3x           663
   MCX2 = 494;                                  // August 8, 2011      Wanted          660
-  MCXE = MCX2;                                 // September 3, 2011   Zyt3x           663
   MCY2 = 478;                                  // August 8, 2011      Wanted          660
-  MCYE = MCY2;                                 // September 3, 2011   Zyt3x           663
   MCPW = 487;     // Chat Box Width            // August 8, 2011      Wanted          660
   MCPH = 133;     // Chat Box Height           // August 8, 2011      Wanted          660
   MCPA = 64771;   // Chat Box Area             // August 8, 2011      Wanted          660
@@ -113,13 +89,9 @@ const             // Description                  Modified            By        
   MBCX = 272;     // Bank Screen Center Points // August 8, 2011      Wanted          660
   MBCY = 189;                                  // August 8, 2011      Wanted          660
   MBX1 = 26;      // Bank Screen Edge Points   // August 8, 2011      Wanted          660
-  MBXS = MBX1;                                 // September 3, 2011   Zyt3x           663
   MBY1 = 86;                                   // August 8, 2011      Wanted          660
-  MBYS = MBY1;                                 // September 3, 2011   Zyt3x           663
   MBX2 = 517;                                  // August 8, 2011      Wanted          660
-  MBXE = MBX2;                                 // September 3, 2011   Zyt3x           663
   MBY2 = 292;                                  // August 8, 2011      Wanted          660
-  MBYE = MBY2;                                 // September 3, 2011   Zyt3x           663
   MBPW = 491;     // Bank Screen Width         // August 8, 2011      Wanted          660
   MBPH = 206;     // Bank Screen Height        // August 8, 2011      Wanted          660
   MBPA = 101146;  // Pixel Area                // August 8, 2011      Wanted          660
@@ -127,31 +99,30 @@ const             // Description                  Modified            By        
   MDCX = 269;     // Deposit Box Center Points // August 8, 2011      Wanted          660
   MDCY = 162;                                  // August 8, 2011      Wanted          660
   MDX1 = 100;     // Deposit Box Edge Points   // August 8, 2011      Wanted          660
-  MDXS = MDX1;                                 // September 3, 2011   Zyt3x           663
   MDY1 = 65;                                   // August 8, 2011      Wanted          660
-  MDYS = MDY1;                                 // September 3, 2011   Zyt3x           663
   MDX2 = 437;                                  // August 8, 2011      Wanted          660
-  MDXE = MDX2;                                 // September 3, 2011   Zyt3x           663
   MDY2 = 258;                                  // August 8, 2011      Wanted          660
-  MDYE = MDY2;                                 // September 3, 2011   Zyt3x           663
   MDPH = 337;     // Deposit Box Width         // August 8, 2011      Wanted          660
   MDPW = 193;     // Deposit Box Height        // August 8, 2011      Wanted          660
   MDPA = 65041;   // Deposit Box Area          // August 8, 2011      Wanted          660
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Skill_ Indexes
-Contributors: Anonymous, Wanted.
+Contributors: Anonymous, Wanted, Zyt3x.
 Description: Index handles for various RS2 skills.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: September 5th, 2011. By Wanted. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
   Skill_Count         = 25;
   Skill_Attack        = 0;
-  Skill_Defense       = 1;   Skill_Defence = 1;
+  Skill_Defense       = 1;
+  Skill_Defence       = 1;
   Skill_Strength      = 2;
-  Skill_Hitpoints     = 3;   Skill_HP      = 3;  Skill_Constitution = 3;
+  Skill_Hitpoints     = 3;
+  Skill_HP            = 3;
+  Skill_Constitution  = 3;
   Skill_Range         = 4;
   Skill_Prayer        = 5;
   Skill_Magic         = 6;
@@ -272,10 +243,10 @@ const
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors
-Contributors: Anonymous, Wanted.
+Contributors: Anonymous, Wanted, Zyt3x.
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modified: September 3rd, 2011. By Zyt3x. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                             // Modified            By              Build #
@@ -296,16 +267,16 @@ const                             // Modified            By              Build #
   clGreenDot      = 64768;        // September 3, 2011   Zyt3x           663
   clYellowDot     = 1179390;      // September 3, 2011   Zyt3x           663
   clBlueDot       = 13667166;     // September 3, 2011   Zyt3x           663
-  clPurpleDot     = -1;           // September 3, 2011   Zyt3x           663
-  clOrangeDot     = -1;           // September 3, 2011   Zyt3x           663
+  //clPurpleDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
+  //clOrangeDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
 
   clPlayerDot     = clWhiteDot;   // September 3, 2011   Zyt3x           663
   clNPCDot        = clYellowDot;  // September 3, 2011   Zyt3x           663
   clFriendDot     = clGreenDot;   // September 3, 2011   Zyt3x           663
   clItemDot       = clRedDot;     // September 3, 2011   Zyt3x           663
   clCapeDot       = clBlueDot;    // September 3, 2011   Zyt3x           663
-  clFriendChatDot = clPurpleDot;  // September 3, 2011   Zyt3x           663
-  clClanChatDot   = clOrangeDot;  // September 3, 2011   Zyt3x           663
+  //clFriendChatDot = clPurpleDot;  // September 3, 2011   Zyt3x           663  FIX
+  //clClanChatDot   = clOrangeDot;  // September 3, 2011   Zyt3x           663  FIX
 
   clObjectOutline = 131072;       // September 1st, 2011 Wanted          662
 

@@ -12,8 +12,8 @@
      By: Wanted
  * procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
      By: Anonymous
- * procedure MouseCircle(X, Y, Radius : Integer; TypeC : ClickActions);
-     By: Zyt3x
+ * procedure MouseCircle(X, Y, Radius: Integer; TypeC: ClickActions);
+     By: Zyt3x & Wanted.
  * procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
      By: Naum
  * procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);
@@ -102,23 +102,26 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure MouseCircle(X, Y, Radius : Integer; TypeC : ClickActions);
-Contributors: Zyt3x
+procedure MouseCircle(X, Y, Radius: Integer; TypeC: ClickActions);
+Contributors: Zyt3x, Wanted.
 Description: Clicks/moves the mouse in a circle with a specified radius.
-Date Created: September 4th, 2011. By Zyt3x
-Last Modification: September 4th, 2011. By Zyt3x
+Date Created: September 4th, 2011. By Zyt3x & Wanted.
+Last Modification: September 5th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-procedure MouseCircle(X, Y, Radius : Integer; TypeC : ClickActions);
+
+procedure MouseCircle(X, Y, Radius: Integer; TypeC: ClickActions);
 var
-  tx, ty, r : Integer;
+  E: Extended;
+  R: Integer;
+  P: TPoint;
 begin
-  r := Random(360);
-  tx := Round( Radius*Sin(r*Pi / 180)) + X;
-  ty := Round(-Radius*Cos(r*Pi / 180)) + Y;
+  E := ((Random(360) * Pi) / 180);
+  R := RandomRange(0, Radius);
+  P := Point(Round(R * Sin(E)) + X, Round(R * Cos(E)) + Y);
   case TypeC of
-    ClickLeft: Mouse(RandomRange(tx, X), RandomRange(ty, Y), 0, 0, True);
-    ClickRight: Mouse(RandomRange(tx, X), RandomRange(ty, Y), 0, 0, False);
-    MoveTo: MMouse(RandomRange(tx, X), RandomRange(ty, Y), 0, 0);
+    ClickLeft: Mouse(P.X, P.Y, 0, 0, True);
+    ClickRight: Mouse(P.X, P.Y, 0, 0, False);
+    MoveTo: MMouse(P.X, P.Y, 0, 0);
   end;
 end;
 

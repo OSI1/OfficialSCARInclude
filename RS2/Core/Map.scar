@@ -3,16 +3,7 @@
                                    Runescape 2
                                   Map Routines
 --------------------------------------------------------------------------------
- * function FindMinimapDotEx(var X, Y : Integer; dotColor : Integer; XS, YS, XE, YE : Integer): Boolean;
-     By: Zyt3x
- * function FindMinimapDot(var X, Y : Integer; dotColor : Integer): Boolean;
-     By: Zyt3x
- * function FindMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
-     By: Zyt3x
- * function FindMinimapDots(dotColor : Integer): TPointArray;
-     By: Zyt3x
- * function CountMinimapDots(dotColor : Integer): Integer;
-     By: Zyt3x
+ *
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 //MMToMS
@@ -25,70 +16,3 @@
 //FlagDistance
 //Flag
 //RadarRoadWalk
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMinimapDotEx(var X, Y : Integer; dotColor : Integer; XS, YS, XE, YE : Integer): Boolean;
-Contributors: Zyt3x
-Description: Returns the first minimap dot by color "dotColor" in boundaries XS, YS, XE, YE.
-Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function FindMinimapDotEx(var X, Y : Integer; dotColor : Integer; XS, YS, XE, YE : Integer): Boolean;
-begin
-  Result := FindColorSpiralTolerance(X, Y, dotColor, XS, YS, XE, YE, 0);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMinimapDot(var X, Y : Integer; dotColor : Integer): Boolean;
-Contributors: Zyt3x
-Description: Returns the first minimap dot by color "dotColor".
-Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function FindMinimapDot(var X, Y : Integer; dotColor : Integer): Boolean;
-begin
-  Result := FindColorSpiralTolerance(X, Y, dotColor, MMXS, MMYS, MMXE, MMYE, 0);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
-Contributors: Zyt3x
-Description: Returns all minimap dots by color "dotColor" in boundaries XS, YS, XE, YE.
-Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function FindMinimapDotsEx(dotColor : Integer; XS, YS, XE, YE : Integer): TPointArray;
-begin
-  SetLength(Result, 0);
-
-  FindColorsSpiralTolerance(MMCX, MMCY, Result, dotColor, XS, YS, XE, YE, 0);
-  RAaSTPA(Result, 4);
-
-  if (Length(Result) > 0) then
-    if (dotColor = clWhiteDot) then
-      Delete(Result, 0, 1);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMinimapDots(dotColor : Integer): TPointArray;
-Contributors: Zyt3x
-Description: Returns all minimap dots by color "dotColor".
-Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function FindMinimapDots(dotColor : Integer): TPointArray;
-begin
-  Result := FindMinimapDotsEx(dotColor, MMXS, MMYS, MMXE, MMYE);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CountMinimapDots(dotColor : Integer): Integer;
-Contributors: Zyt3x
-Description: Counts minimap dots by color "dotColor".
-Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function CountMinimapDots(dotColor : Integer): Integer;
-begin
-  Result := Length(FindMinimapDots(dotColor));
-end;
