@@ -37,6 +37,14 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Useful in game boundries, points, areas, widths, etc. etc.
+Contributors: Anonymous, Wanted.
+Description: MMX1, MSCX, etc. etc.
+Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
+Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
 const             // Description                  Modified            By              Build #
 
   MSCX  = 260;    // Main Screen Center Points // August 7, 2011      Wanted          660
@@ -111,7 +119,7 @@ const Skill_ Indexes
 Contributors: Anonymous, Wanted, Zyt3x.
 Description: Index handles for various RS2 skills.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: September 5th, 2011. By Wanted. RS2 Build 663.
+Last Modification: September 5th, 2011. By Zyt3x. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
