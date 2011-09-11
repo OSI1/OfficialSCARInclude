@@ -330,10 +330,10 @@ Last Modified: August 14th, 2011. By Wanted. RS2 Build 662.
 
 type
   TRS2World = record
-    Number, PlayerNo: Integer;
+    Number, Players, Ping: Integer;
     Members: Boolean;
     Prefix, Location, Activity, Language: string;
-    LootShare, QuickChat, PVP: Boolean;
+    LootShare, QuickChat, HRW: Boolean;
   end;
   TRS2WorldArray = array of TRS2World;
 

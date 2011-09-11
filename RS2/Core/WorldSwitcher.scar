@@ -16,7 +16,15 @@
  * procedure OrderWorlds(By: Integer; Descending: Boolean);
      By: Wanted & Naum.
  * function FindWorld(var P: TPoint; World: Integer): Boolean;
-     By: By Wanted & Anonymous
+     By: Wanted & Anonymous
+ * function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
+     By: Wanted
+ * function SelectWorld(World: Integer): Boolean;
+     By: Wanted
+ * procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
+     By: Wanted
+ * function RandomWorld(Members, HRW, QuickChat, LootShare: Integer): Integer;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -123,9 +131,9 @@ begin
       RS2WorldArray[Hw].Number := I;
       RS2WorldArray[Hw].Prefix := ReadINI(S, 'Prefix', FilePath);
       RS2WorldArray[Hw].Members := (ReadINI(S, 'Type', FilePath) = 'Members');
-      RS2WorldArray[Hw].LootShare := StrToBool(ReadINI(S, 'Lootshare', FilePath));
-      RS2WorldArray[Hw].QuickChat := StrToBool(ReadINI(S, 'Quickchat', FilePath));
-      RS2WorldArray[Hw].PVP := StrToBool(LowerCase(ReadINI(S, 'PvP', FilePath)));
+      RS2WorldArray[Hw].LootShare := StrToBoolDef(ReadINI(S, 'Lootshare', FilePath), False);
+      RS2WorldArray[Hw].QuickChat := StrToBoolDef(ReadINI(S, 'Quickchat', FilePath), False);
+      RS2WorldArray[Hw].HRW := StrToBoolDef(LowerCase(ReadINI(S, 'HRW', FilePath)), False);
       RS2WorldArray[Hw].Language := ReadINI(S, 'ServLang', FilePath);
       Inc(Hw);
     end;
@@ -162,7 +170,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindWorld(var P: TPoint; World: Integer): Boolean;
 Contributors: Wanted, Anonymous.
-Description: Sorts world By (WS_ Indexes)
+Description: Finds the world in the world switcher and returns the point.
 Date Created: August 19th, 2011. By Wanted & Anonymous. RS2 Build 662.
 Last Modified: August 30th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -174,11 +182,6 @@ var
 begin
   if (not (OpenWorldScreen)) then
     Exit;
-  if (WS_CurrentWorld = World) then
-  begin
-    Result := True;
-    Exit;
-  end;
   H := High(RS2WorldArray);
   for I := 0 to H do
     if (RS2WorldArray[I].Number = World) then
@@ -194,12 +197,14 @@ begin
     WriteLn('World number ' + IntToStr(World) + ' is invalid!');
     Exit;
   end;
-  Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
+  if (World > 9) then
+    Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
   if (Result) then
     Exit;
   OrderWorlds(WS_World, False);
   WaitRR(400, 600);
-  Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
+  if (World > 9) then
+    Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
   if (Result) then
     Exit;
   FindColor(CurB.X, CurB.Y, clWSBar, 689, 154, 690, 394);
@@ -211,7 +216,7 @@ begin
       begin
         if (World = 1) then
           HoldMouseWaitBox(683, 139, 696, 152, 500, 1000, True);
-        Result := True
+        Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
         Exit;
       end
       else
@@ -236,9 +241,148 @@ begin
   Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);
 end;
 
-//FindWorld
-//GetWorldInfo
-//SelectWorld
-//RandomWorld
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
+Contributors: Wanted
+Description: Returns RS2WorldArray information + updated world switcher screen info.
+Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
+var
+  I, H, TextColor: Integer;
+  PlayerAmount: string;
+  P, LS: TPoint;
+begin
+  Result := FindWorld(P, World);
+  if (not (Result)) then
+    Exit;
+  H := High(RS2WorldArray);
+  for I := 0 to H do
+    if (RS2WorldArray[I].Number = World) then
+    begin
+      if (RS2WorldArray[I].Members) then
+        TextColor := clP2PWorld
+      else
+        TextColor := clF2PWorld;
+      Break;
+    end;
+  WriteLn(IntToStr(P.X) + ', ' + IntToStr(P.Y));
+  WorldInfo := RS2WorldArray[I];
+  WorldInfo.Number := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 4, False, tr_AllChars)), 0);
+  PlayerAmount := GetTextAtEx(P.X + 30, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 5, False, tr_AllChars);
+  if (Trim(PlayerAmount) = 'FULL') then
+    WorldInfo.Players := 2000
+  else
+    WorldInfo.Players := StrToIntDef(GetNumbers(PlayerAmount), -1);
+  WorldInfo.Location := Trim(GetTextAtEx(P.X + 133, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 50, False, tr_AllChars));
+  WorldInfo.Activity := WorldInfo.Location;
+  WorldInfo.Members := (Trim(GetTextAtEx(P.X + 413, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 8, False, tr_AllChars)) = 'Members');
+  WorldInfo.LootShare := FindColorTolerance(LS.X, LS.Y, 4824144, P.X + 490, P.Y, P.X + 499, P.Y + 10, 40);
+  WorldInfo.Ping := StrToIntDef(GetNumbers(GetTextAtEx(P.X + 520, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 4, False, tr_AllChars)), 0);
+  WorldInfo.QuickChat := ((Pos('uick', WorldInfo.Activity) > 0) or (RS2WorldArray[I].QuickChat));
+  WorldInfo.HRW := (Pos('derness', WorldInfo.Activity) > 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SelectWorld(World: Integer): Boolean;
+Contributors: Wanted
+Description: Selects specified world.
+Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SelectWorld(World: Integer): Boolean;
+var
+  P: TPoint;
+begin
+  if (WS_CurrentWorld = World) then
+  begin
+    Result := True;
+    Exit;
+  end;
+  if (not (FindWorld(P, World))) then
+    Exit;
+  MouseBox(P.X - 20, P.Y - 3, P.X + 565, P.Y + 15, ClickLeft);
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
+Contributors: Wanted
+Description: Deletes an index from a TRS2WorldArray. For use with random world.
+Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
+var
+  NewArray: TRS2WorldArray;
+  I, II, H: Integer;
+begin
+  H := High(WorldArray);
+  SetLength(NewArray, H);
+  for I := 0 to H do
+    if (I <> Index) then
+    begin
+      NewArray[II] := WorldArray[I];
+      Inc(II);
+    end;
+  WorldArray := NewArray;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomWorld(Members, HRW, QuickChat, LootShare: Integer): Integer;
+Contributors: Wanted
+Description: Generates a random world number. 0 for False, 1 for True, 2 for either.
+Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomWorld(Members, HRW, QuickChat, LootShare: Integer): Integer;
+var
+  NewArray: TRS2WorldArray;
+  I, II, H: Integer;
+begin
+  NewArray := RS2WorldArray;
+  H := High(NewArray);
+  for I := 0 to H do
+  begin
+    if (Members < 2) then
+      if (Integer(RS2WorldArray[I].Members) <> Members) then
+      begin
+        DeleteInTRS2WorldArray(II, NewArray);
+        Continue;
+      end;
+    if (HRW < 2) then
+      if (Integer(RS2WorldArray[I].HRW) <> HRW) then
+      begin
+        DeleteInTRS2WorldArray(II, NewArray);
+        Continue;
+      end;
+    if (QuickChat < 2) then
+      if (Integer(RS2WorldArray[I].QuickChat) <> QuickChat) then
+      begin
+        DeleteInTRS2WorldArray(II, NewArray);
+        Continue;
+      end;
+    if (LootShare < 2) then
+      if (Integer(RS2WorldArray[I].LootShare) <> LootShare) then
+      begin
+        DeleteInTRS2WorldArray(II, NewArray);
+        Continue;
+      end;
+    Inc(II);
+  end;
+  if (Length(NewArray) < 1) then
+  begin
+    WriteLn('No world met this criteria!');
+    Result := 0;
+    Exit;
+  end;
+  Result := NewArray[Random(Length(NewArray))].Number;
+end;
+
 //ChangeWorld
 //ChooseWorldBy

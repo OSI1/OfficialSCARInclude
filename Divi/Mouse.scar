@@ -25,15 +25,18 @@ procedure MMouse(x, y, rx, ry: Integer);
 Contributors: Timer, Wanted.
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modification: August 18th, 2011. By Wanted
+Last Modification: September 11th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
+var
+  P: TPoint;
 begin
-  if (not MouseSpeed = 0) then
-    MoveWindMouseEx(RandomRange(X - RX, X + RX), RandomRange(Y - RY, Y + RY), 0, 0, MouseSpeed)
+  P := Point(RandomRange(X - RX, X + RX), RandomRange(Y - RY, Y + RY));
+  if (not (MouseSpeed = 0)) then
+    MoveWindMouseEx(P.X, P.Y, 0, 0, MouseSpeed)
   else
-    MoveWindMouse(RandomRange(X - RX, X + RX), RandomRange(Y - RY, Y + RY), 0, 0);
+    MoveWindMouse(P.X, P.Y, 0, 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -89,15 +92,18 @@ procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
 Contributors: Anonymous, Timer, Wanted.
 Description: Clicks/moves the mouse in a specified area.
 Date Created: August 7th, 2011. By Anonymous
-Last Modification: August 8th, 2011. By Wanted
+Last Modification: September 11th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
+var
+  P: TPoint;
 begin
+  P := Point(RandomRange(x1, x2), RandomRange(y1, y2));
   case (TypeC) of
-    ClickLeft: Mouse(RandomRange(x1, x2), RandomRange(y1, y2), 0, 0, True);
-    ClickRight: Mouse(RandomRange(x1, x2), RandomRange(y1, y2), 0, 0, False);
-    MoveTo: MMouse(RandomRange(x1, x2), RandomRange(y1, y2), 0, 0);
+    ClickLeft: Mouse(P.X, P.Y, 0, 0, True);
+    ClickRight: Mouse(P.X, P.Y, 0, 0, False);
+    MoveTo: MMouse(P.X, P.Y, 0, 0);
   end;
 end;
 
