@@ -21,6 +21,10 @@
      By: Anonymous
  * type TRS2World = record
      By: Anonymous
+ * var RS2WorldArray
+     By: Wanted
+ * var World switching related defaults
+     By: Wanted
  * var Players: array of TRS2Player;
      By: Anonymous
  * var Font Variables
@@ -371,7 +375,7 @@ var
   NPCChars, UpChars, SmallChars, StatChars, FriendChars, BigChars, LoginChars, XPChars: LongInt;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-var RS2WorldArray: TWorldArray
+var RS2WorldArray: TWorldArray;
 Contributors: Anonymous, Wanted.
 Description: Variables for RS2 fonts memory handles.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
@@ -380,6 +384,17 @@ Last Modification: August 14th, 2011. By Wanted. RS2 Build 662.
 
 var
   RS2WorldArray: TRS2WorldArray;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var World switching related defaults
+Contributors: Wanted.
+Description: Variables for worldswitching defaults.
+Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  AllowHRW, AllowQuickChat, AllowLootShare: Boolean;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FreeRS2Fonts;

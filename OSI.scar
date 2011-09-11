@@ -85,6 +85,8 @@ begin
     {$ENDIF}
     SetLength(Players, 1);
     LoadRS2WorldArray;
+    AllowQuickChat := True;
+    AllowLootShare := True;
   {$ENDIF}
   MouseSpeed := 15;
 end;

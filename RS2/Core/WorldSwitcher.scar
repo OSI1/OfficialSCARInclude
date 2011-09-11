@@ -23,7 +23,9 @@
      By: Wanted
  * procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
      By: Wanted
- * function RandomWorld(Members, HRW, QuickChat, LootShare: Integer): Integer;
+ * function RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
+     By: Wanted
+ * function RandomWorld(Members: Boolean): Integer;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -333,14 +335,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function RandomWorld(Members, HRW, QuickChat, LootShare: Integer): Integer;
+function RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
 Contributors: Wanted
 Description: Generates a random world number. 0 for False, 1 for True, 2 for either.
 Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
 Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function RandomWorld(Members, HRW, QuickChat, LootShare: Integer): Integer;
+function RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
 var
   NewArray: TRS2WorldArray;
   I, II, H: Integer;
@@ -382,6 +384,27 @@ begin
     Exit;
   end;
   Result := NewArray[Random(Length(NewArray))].Number;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomWorld(Members: Boolean): Integer;
+Contributors: Wanted
+Description: Generates a random world number.
+Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomWorld(Members: Boolean): Integer;
+var
+  A, B, C: Integer;
+begin
+  if (AllowHRW) then
+    A := 2;
+  if (AllowQuickChat) then
+    B := 2;
+  if (AllowLootShare) then
+    C := 2;
+  Result := RandomWorldEx(Integer(Members), A, B, C);
 end;
 
 //ChangeWorld
