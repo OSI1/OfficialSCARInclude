@@ -293,7 +293,7 @@ function SetRun(Run: Boolean): Boolean;
 Contributors: Zyt3x, Wanted.
 Description: Sets run to desired state.
 Date Created: September 4th, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 5th, 2011. By Wanted. RS2 Build 663.
+Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetRun(Run: Boolean): Boolean;
@@ -302,7 +302,7 @@ var
 begin
   Result := ((IsRunning) xor (Run));
   if (Result) then
-    MouseCircle(724, 108, 15, ClickLeft);
+    MouseCircle(15, 724, 108, ClickLeft);
   T := GetSystemTime + RandomRange(1500, 2500);  // FIX WaitFunc
   repeat
     Result := (IsRunning <> Run);
@@ -330,7 +330,7 @@ function SetRest(Rest: Boolean): Boolean;
 Contributors: Wanted, Zyt3x.
 Description: Sets rest on.
 Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
-Last Modification: September 5th, 2011. By Wanted. RS2 Build 663.
+Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetRest: Boolean;
@@ -341,7 +341,7 @@ begin
   if (Result) then
     Exit;
   Exit;                                                               // FIX
-  MouseCircle(724, 108, 15, ClickRight);
+  MouseCircle(15, 724, 108, ClickRight);
   Result := False;//WaitOption('Rest', 500);                          // FIX
   T := GetSystemTime + RandomRange(1500, 2500);
   repeat

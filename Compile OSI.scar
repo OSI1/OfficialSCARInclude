@@ -8,6 +8,7 @@
 
 {$DEFINE RS2}
 {$DEFINE OSI_Color_Anti_Randoms}
+{$DEFINE SMART}
 
 {.include OSI\OSI.scar}
 {.include OSI\RS2\Extended\Timing.scar} // Comment out in in-depth testing

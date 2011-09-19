@@ -21,6 +21,8 @@
      By: Anonymous
  * type TRS2World = record
      By: Anonymous
+ * var SMART Related vars
+     By: Wanted
  * var RS2WorldArray
      By: Wanted
  * var World switching related defaults
@@ -29,6 +31,8 @@
      By: Anonymous
  * var Font Variables
      By: Anonymous
+ * function WorldsINIPath: string;
+     By: Wanted
  * procedure FreeRS2Fonts;
      By: Wanted
  * function ActivePlayers: Integer;
@@ -342,6 +346,18 @@ type
   TRS2WorldArray = array of TRS2World;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var SMART Related vars
+Contributors: Wanted, Anonymous.
+Description: Handles all of SMART related info and variables.
+Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
+Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  NonAutomaticSMART, SMART_Members, SMART_Signed, SMART_SuperDetail: Boolean;
+  SMART_Server: Integer;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Players: array of TRS2Player;
 Contributors: Anonymous, Wanted.
 Description: Handles all of player related info and variables.
@@ -387,7 +403,7 @@ var
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var World switching related defaults
-Contributors: Wanted.
+Contributors: Wanted
 Description: Variables for worldswitching defaults.
 Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
 Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
@@ -395,6 +411,19 @@ Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
 
 var
   AllowHRW, AllowQuickChat, AllowLootShare: Boolean;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WorldsINIPath: string;
+Contributors: Wanted
+Description: Variables for worldswitching defaults.
+Date Created: September 18th, 2011. By Wanted. RS2 Build 663.
+Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WorldsINIPath: string;
+begin
+  Result := IncludesPath + 'OSI\RS2\Core\Worlds.ini';
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FreeRS2Fonts;

@@ -12,7 +12,7 @@
      By: Wanted
  * procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
      By: Anonymous
- * procedure MouseCircle(X, Y, Radius: Integer; TypeC: ClickActions);
+ * procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
      By: Zyt3x & Wanted.
  * procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
      By: Naum
@@ -25,14 +25,14 @@ procedure MMouse(x, y, rx, ry: Integer);
 Contributors: Timer, Wanted.
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modification: September 11th, 2011. By Wanted
+Last Modification: September 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
 var
   P: TPoint;
 begin
-  P := Point(RandomRange(X - RX, X + RX), RandomRange(Y - RY, Y + RY));
+  P := RRectanglePoint(X - RX, Y - RY, X + RX, Y + RY);
   if (not (MouseSpeed = 0)) then
     MoveWindMouseEx(P.X, P.Y, 0, 0, MouseSpeed)
   else
@@ -79,12 +79,15 @@ procedure HoldMouseWaitBox(x1, y1, x2, y2, MinTime, MaxTime: Integer; Left: Bool
 Contributors: Wanted
 Description: Moves the mouse and clicks + holds humanly.
 Date Created: August 19th, 2011. By Wanted
-Last Modification: August 19th, 2011. By Wanted
+Last Modification: September 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure HoldMouseWaitBox(x1, y1, x2, y2, MinTime, MaxTime: Integer; Left: Boolean);
+var
+  P: TPoint;
 begin
-  HoldMouseWait(RandomRange(x1, x2), RandomRange(y1, y2), 0, 0, MinTime, MaxTime, Left);
+  P := RRectanglePoint(X1, Y1, X2, Y2);
+  HoldMouseWait(P.X, P.Y, 0, 0, MinTime, MaxTime, Left);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -92,14 +95,14 @@ procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
 Contributors: Anonymous, Timer, Wanted.
 Description: Clicks/moves the mouse in a specified area.
 Date Created: August 7th, 2011. By Anonymous
-Last Modification: September 11th, 2011. By Wanted
+Last Modification: September 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
 var
   P: TPoint;
 begin
-  P := Point(RandomRange(x1, x2), RandomRange(y1, y2));
+  P := RRectanglePoint(X1, Y1, X2, Y2);
   case (TypeC) of
     ClickLeft: Mouse(P.X, P.Y, 0, 0, True);
     ClickRight: Mouse(P.X, P.Y, 0, 0, False);
@@ -108,22 +111,18 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure MouseCircle(X, Y, Radius: Integer; TypeC: ClickActions);
+procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
 Contributors: Zyt3x, Wanted.
 Description: Clicks/moves the mouse in a circle with a specified radius.
 Date Created: September 4th, 2011. By Zyt3x & Wanted.
-Last Modification: September 5th, 2011. By Wanted
+Last Modification: September 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure MouseCircle(X, Y, Radius: Integer; TypeC: ClickActions);
+procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
 var
-  E: Extended;
-  R: Integer;
   P: TPoint;
 begin
-  E := ((Random(360) * Pi) / 180);
-  R := RandomRange(0, Radius);
-  P := Point(Round(R * Sin(E)) + X, Round(R * Cos(E)) + Y);
+  P := RCirclePoint(Radius, CX, CY);
   case TypeC of
     ClickLeft: Mouse(P.X, P.Y, 0, 0, True);
     ClickRight: Mouse(P.X, P.Y, 0, 0, False);

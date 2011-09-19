@@ -2,8 +2,42 @@
                               Official SCAR Include
                                   Math Routines
 --------------------------------------------------------------------------------
- *
+ * function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
+     By: Wanted
+ * function RCirclePoint(Radius, CX, CY: Integer): TPoint;
+     By: Wanted & Zyt3x.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
+Contributors: Wanted
+Description: Outputs a random point within a rectangle.
+Date Created: September 18th, 2011. By Wanted
+Last Modification: September 18th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
+begin
+  Result := Point(RandomRange(X1, X2), RandomRange(Y1, Y2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RCirclePoint(Radius, CX, CY: Integer): TPoint;
+Contributors: Wanted, Zyt3x.
+Description: Outputs a random point within a circle.
+Date Created: September 4th, 2011. By Wanted & Zyt3x.
+Last Modification: September 18th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RCirclePoint(Radius, CX, CY: Integer): TPoint;
+var
+  E: Extended;
+  R: Integer;
+begin
+  E := ((Random(360) * Pi) / 180);
+  R := RandomRange(0, Radius);
+  Result := Point(Round(R * Sin(E)) + CX, Round(R * Cos(E)) + CY);
+end;
 
 //InAbstractBox
 //GroupDigits (123456778 -> 123,456,778

@@ -5,7 +5,7 @@
 --------------------------------------------------------------------------------
  * function WorldScreen: Boolean;
      By: Wanted
-* function OpenWorldScreen: Boolean;
+ * function OpenWorldScreen: Boolean;
      By: Wanted
  * function WS_CurrentWorld: Boolean;
      By: Wanted
@@ -110,33 +110,32 @@ procedure LoadRS2WorldArray;
 Contributors: Wanted, Anonymous.
 Description: Loads the worlds from Worlds.INI into RS2WorldArray.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: August 20th, 2011. By Wanted. RS2 Build 662.
+Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
 *******************************************************************************}
 
 procedure LoadRS2WorldArray;
 var
-  FilePath, S: string;
   H, Hw, I: Integer;
+  S: string;
 begin
-  FilePath := IncludesPath + 'OSI\RS2\Core\Worlds.ini';
   try
-    H := StrToInt(ReadINI('Worlds', 'High', FilePath));
+    H := StrToInt(ReadINI('Worlds', 'High', WorldsINIPath));
   except
     WriteLn('*WARNING* procedure LoadRS2WorldArray failed!');
     Exit;
   end;
   SetLength(RS2WorldArray, H + 1);
   for I := 1 to H do
-    if not (ReadINI('World' + IntToStr(I), 'Prefix', FilePath) = '') then
+    if not (ReadINI('World' + IntToStr(I), 'Prefix', WorldsINIPath) = '') then
     begin
       S := 'World' + IntToStr(I);
       RS2WorldArray[Hw].Number := I;
-      RS2WorldArray[Hw].Prefix := ReadINI(S, 'Prefix', FilePath);
-      RS2WorldArray[Hw].Members := (ReadINI(S, 'Type', FilePath) = 'Members');
-      RS2WorldArray[Hw].LootShare := StrToBoolDef(ReadINI(S, 'Lootshare', FilePath), False);
-      RS2WorldArray[Hw].QuickChat := StrToBoolDef(ReadINI(S, 'Quickchat', FilePath), False);
-      RS2WorldArray[Hw].HRW := StrToBoolDef(LowerCase(ReadINI(S, 'HRW', FilePath)), False);
-      RS2WorldArray[Hw].Language := ReadINI(S, 'ServLang', FilePath);
+      RS2WorldArray[Hw].Prefix := ReadINI(S, 'Prefix', WorldsINIPath);
+      RS2WorldArray[Hw].Members := (ReadINI(S, 'Type', WorldsINIPath) = 'Members');
+      RS2WorldArray[Hw].LootShare := StrToBoolDef(ReadINI(S, 'Lootshare', WorldsINIPath), False);
+      RS2WorldArray[Hw].QuickChat := StrToBoolDef(ReadINI(S, 'Quickchat', WorldsINIPath), False);
+      RS2WorldArray[Hw].HRW := StrToBoolDef(LowerCase(ReadINI(S, 'HRW', WorldsINIPath)), False);
+      RS2WorldArray[Hw].Language := ReadINI(S, 'ServLang', WorldsINIPath);
       Inc(Hw);
     end;
   SetLength(RS2WorldArray, Hw);
