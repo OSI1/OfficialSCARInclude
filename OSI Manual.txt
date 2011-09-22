@@ -1,1 +1,1 @@
-We really need a parser that creates an automatic Compiled HTML file.
+http://wiki.scar-divi.com/osi/index.php?title=OSI_Manual

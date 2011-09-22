@@ -50,7 +50,7 @@ var
   T: LongInt;
 begin
   Result := True;
-  T := GetSystemTime + MaxWait;
+  T := GetSystemTime + RandomRange(MinTotalWait, MaxTotalWait);
   while (GetSystemTime < T) do
     if (Func()) then
       Exit

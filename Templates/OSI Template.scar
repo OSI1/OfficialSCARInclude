@@ -1,0 +1,12 @@
+program New;
+
+{.include OSI\OSI.scar}
+
+procedure ScriptTerminate;
+begin
+  FreeOSI;
+end;
+
+begin
+  SetupOSI;
+end.
