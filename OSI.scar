@@ -8,6 +8,12 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{$IFNDEF RS2}
+  {$IFNDEF OverrideVariance}
+    {$DEFINE NoVariance}
+  {$ENDIF}
+{$ENDIF}
+
 {.include OSI\Divi\Globals.scar}
 {.include OSI\Divi\Array.scar}
 {.include OSI\Divi\Math.scar}

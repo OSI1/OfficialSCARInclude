@@ -2,41 +2,63 @@
                               Official SCAR Include
                                   Math Routines
 --------------------------------------------------------------------------------
+ * function RR(Min, Max: Integer): Integer;
+     By: Wanted
  * function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
      By: Wanted
- * function RCirclePoint(Radius, CX, CY: Integer): TPoint;
+ * function RCirclePoint(CX, CY, Radius: Integer): TPoint;
      By: Wanted & Zyt3x.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
-Contributors: Wanted
-Description: Outputs a random point within a rectangle.
-Date Created: September 18th, 2011. By Wanted
-Last Modification: September 18th, 2011. By Wanted
+function RR(Min, Max: Integer): Integer;
+Contributors: Freddy, Wanted.
+Description: Outputs a value within a range.
+Date Created: September 22nd, 2011. By Wanted
+Last Modification: September 22nd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
+function RR(Min, Max: Integer): Integer;
 begin
-  Result := Point(RandomRange(X1, X2), RandomRange(Y1, Y2));
+  {$IFDEF NoVariance}
+    Result := RandomRange(Min, Max);
+  {$ELSE}
+    Result := RandomRangeG(Min, Max, OSI_Variance);
+  {$ENDIF}
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function RCirclePoint(Radius, CX, CY: Integer): TPoint;
-Contributors: Wanted, Zyt3x.
-Description: Outputs a random point within a circle.
-Date Created: September 4th, 2011. By Wanted & Zyt3x.
-Last Modification: September 18th, 2011. By Wanted
+function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
+Contributors: Freddy, Wanted.
+Description: Outputs a random point within a rectangle.
+Date Created: September 18th, 2011. By Wanted
+Last Modification: September 22nd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function RCirclePoint(Radius, CX, CY: Integer): TPoint;
-var
-  E: Extended;
-  R: Integer;
+function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
 begin
-  E := ((Random(360) * Pi) / 180);
-  R := RandomRange(0, Radius);
-  Result := Point(Round(R * Sin(E)) + CX, Round(R * Cos(E)) + CY);
+  {$IFDEF NoVariance}
+    Result := RndBoxPoint(Box(X1, Y1, X2, Y2));
+  {$ELSE}
+    Result := RndBoxPointG(Box(X1, Y1, X2, Y2), OSI_Variance);
+  {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RCirclePoint(CX, CY, Radius: Integer): TPoint;
+Contributors: Freddy, Wanted, Zyt3x.
+Description: Outputs a random point within a circle.
+Date Created: September 4th, 2011. By Wanted & Zyt3x.
+Last Modification: September 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RCirclePoint(CX, CY, Radius: Integer): TPoint;
+begin
+  {$IFDEF NoVariance}
+    Result := RndCirclePoint(CX, CY, Radius);
+  {$ELSE}
+    Result := RndCirclePointG(CX, CY, Radius, OSI_Variance);
+  {$ENDIF}
 end;
 
 //InAbstractBox

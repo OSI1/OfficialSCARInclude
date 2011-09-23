@@ -2,11 +2,25 @@
                               Official SCAR Include
                                  Global Routines
 --------------------------------------------------------------------------------
+ * const OSI_Variance
+     By: Wanted
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
      By: Anonymous
  * var MouseSpeed: Integer;
      By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const OSI_Variance
+Contributors: Wanted, Freddy.
+Description: The default level of variance, or tendency, for randomized values
+in human simulating instance to be towards the center.
+Date Created: September 22nd, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 22nd, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  OSI_Variance = 3.0;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);

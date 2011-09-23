@@ -22,7 +22,7 @@ var
 begin
   B := GetKeyCode(C);
   KeyDown(B);
-  Wait(10 + Random(51));
+  WaitRR(10, 60);
   KeyUp(B);
 end;
 
@@ -47,11 +47,11 @@ begin
     UseShiftKey := (Pos(Text[I], S) > 0);
     if (UseShiftKey) then
     begin
- 	    Wait(40 + Random(41));
+		WaitRR(40, 80);
       while (Pos(Text[I], S) > 0) and (I <= L) do
       begin
         PushKey(Text[I]);
-        Wait(40 + Random(41));
+		WaitRR(40, 80);
         Inc(I);
         if (I > L) then
           Break;
@@ -59,11 +59,11 @@ begin
     end;
     if (UseShiftKey) then
       KeyUp(VK_SHIFT);
-    Wait(40 + Random(41));
+	WaitRR(40, 80);
     if (I <= L) then
     begin
       PushKey(Text[I]);
-      Wait(40 + Random(41));
+	  WaitRR(40, 80);
     end;
   end;
   PushKey(Chr(13));

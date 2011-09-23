@@ -222,21 +222,21 @@ begin
       end
       else
       begin
-        SBP := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
-        DragMouse(SBP.X, SBP.Y, 0, 0, RandomRange(683, 696), 152 + (SBP.Y - Curb.Y), 0, 0, True);
+        SBP := Point(RR(683, 696), RR(CurB.Y + 4, CurB.Y + 20));
+        DragMouse(SBP.X, SBP.Y, 0, 0, RR(683, 696), 152 + (SBP.Y - Curb.Y), 0, 0, True);
       end;
   end
   else
   if (World > RS2WorldArray[H - 15].Number) then
   begin
-    SBP := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
-    DragMouse(SBP.X, SBP.Y, 0, 0, RandomRange(683, 696), 394 + (SBP.Y - Curb.Y), 0, 0, True);
+    SBP := Point(RR(683, 696), RR(CurB.Y + 4, CurB.Y + 20));
+    DragMouse(SBP.X, SBP.Y, 0, 0, RR(683, 696), 394 + (SBP.Y - Curb.Y), 0, 0, True);
   end
   else
   begin
-    SCPos := Round(RandomRange(132, 150) + (((I + 0.0) / ((H - 15.0) + 1.0)) * 240.0));
-    SBP := Point(RandomRange(683, 696), RandomRange(CurB.Y + 4, CurB.Y + 20));
-    DragMouse(SBP.X, SBP.Y, 0, 0, RandomRange(683, 696), SCPos + (SBP.Y - Curb.Y), 0, 0, True);
+    SCPos := Round(RR(132, 150) + (((I + 0.0) / ((H - 15.0) + 1.0)) * 240.0));
+    SBP := Point(RR(683, 696), RR(CurB.Y + 4, CurB.Y + 20));
+    DragMouse(SBP.X, SBP.Y, 0, 0, RR(683, 696), SCPos + (SBP.Y - Curb.Y), 0, 0, True);
   end;
   WaitRR(400, 600);
   Result := IsTextInAreaEx(92, 138, 146, 435, P.X, P.Y, IntToStr(World) + ' ', 0, StatChars, False, False, -1, 2, TextColor);

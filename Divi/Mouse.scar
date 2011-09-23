@@ -146,7 +146,7 @@ begin
   WaitRR(60, 90);
   GetMousePos(cx, cy);
   HoldMouse(cx, cy, Left);
-  Wait(RandomRange(80, 120));
+  WaitRR(80, 120);
   MMouse(eX, eY, eRX, eRY);
   WaitRR(60, 90);
   GetMousePos(cx, cy);
@@ -170,7 +170,7 @@ begin
   WaitRR(60, 90);
   GetMousePos(cx, cy);
   HoldMouse(cx, cy, Left);
-  Wait(RandomRange(80, 120));
+  WaitRR(80, 120);
   MouseBox(eX1, eY1, eX2, eY2, MoveTo);
   WaitRR(60, 90);
   GetMousePos(cx, cy);

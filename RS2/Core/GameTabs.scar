@@ -148,7 +148,7 @@ begin
     Exit;
   TB := GetTabBounds(Tab);
   MouseBox(TB.X1, TB.Y1, TB.X2, TB.Y2, ClickLeft);
-  T := GetSystemTime + RandomRange(2500, 3500);
+  T := GetSystemTime + RR(2500, 3500);
   repeat
     if (GetCurrentTab = Tab) then
     begin
@@ -230,7 +230,7 @@ begin
   if (not (IsSlotEquipped(Slot))) then
     Exit;
   MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
-  T := GetSystemTime + RandomRange(1500, 2500);
+  T := GetSystemTime + RR(1500, 2500);
   Result := (TypeC = MoveTo);
   repeat
     case TypeC of
@@ -303,7 +303,7 @@ begin
   Result := ((IsRunning) xor (Run));
   if (Result) then
     MouseCircle(15, 724, 108, ClickLeft);
-  T := GetSystemTime + RandomRange(1500, 2500);  // FIX WaitFunc
+  T := GetSystemTime + RR(1500, 2500);  // FIX WaitFunc
   repeat
     Result := (IsRunning <> Run);
     if (Result) then
@@ -343,7 +343,7 @@ begin
   Exit;                                                               // FIX
   MouseCircle(15, 724, 108, ClickRight);
   Result := False;//WaitOption('Rest', 500);                          // FIX
-  T := GetSystemTime + RandomRange(1500, 2500);
+  T := GetSystemTime + RR(1500, 2500);
   repeat
     Result := IsResting;
     if (Result) then

@@ -30,7 +30,7 @@ procedure WaitRR(Min, Max: LongInt);
 var
   T: LongInt;
 begin
-  T := RandomRange(Min, Max);
+  T := RR(Min, Max);
   if (T > 9999) then
     Sleep(T)
   else
@@ -42,7 +42,7 @@ function WaitFunc(Func: function: Boolean; MinWait, MaxWait, MinTotalWait, MaxTo
 Contributors: Wanted
 Description: Repeats a function until true.
 Date Created: August 10th, 2011. By Wanted
-Last Modified: August 10th, 2011. By Wanted
+Last Modified: September 21st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WaitFunc(Func: function: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
@@ -50,7 +50,7 @@ var
   T: LongInt;
 begin
   Result := True;
-  T := GetSystemTime + RandomRange(MinTotalWait, MaxTotalWait);
+  T := GetSystemTime + RR(MinTotalWait, MaxTotalWait);
   while (GetSystemTime < T) do
     if (Func()) then
       Exit

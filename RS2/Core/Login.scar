@@ -136,7 +136,7 @@ begin
       MouseBox(349, 298, 414, 300, ClickLeft)                 // Leave Alone
     else
       MouseBox(349, 309, 414, 312, ClickLefT);
-    T := GetSystemTime + RandomRange(3500, 4500);
+    T := GetSystemTime + RR(3500, 4500);
     repeat
       B := CountColor(clLoginText, 202, 64, 390, 81) = 568;   // Create a Free Account
       if (not (B)) then
@@ -178,7 +178,7 @@ begin
       if (I = 0) then
         MouseBox(TB.X2 + 2, TBA[I].Y1, TB.X2 + 5, TBA[I].Y2, ClickLeft);
       WaitRR(250, 400);
-      T := GetSystemTime + RandomRange(8500, 9500);
+      T := GetSystemTime + RR(8500, 9500);
       while ((FindColor(P.X, P.Y, clLoginText, TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2)) and (GetSystemTime < T)) do
       begin
         PushKey(VK_Back);                                     // Clear Boxes
@@ -198,7 +198,7 @@ begin
     else
       TypeSend(Players[CurrentPlayer].Pass);
   end;
-  T := GetSystemTime + RandomRange(50000, 70000);
+  T := GetSystemTime + RR(50000, 70000);
   repeat
     SetLength(Actions, 0);
     if (GetSystemTime > T) then // Response                   Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
@@ -220,12 +220,12 @@ begin
       WaitRR(500, 1500);
       PushKey(VK_Escape);
       WriteLn(Actions[0]);
-      Wait(Actions[1] + Random(100));
+      WaitRR(Actions[1], Actions[1] + 100);
       if (Actions[2] <> 0) then
         if (Attempts < Actions[2]) then
         begin
           RetryLogin := True;
-          Wait(2000 + Random(1000));
+          WaitRR(2000, 3000);
           Break;
         end;
       if (Actions[4] <> '') then
