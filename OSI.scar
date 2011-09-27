@@ -110,6 +110,7 @@ begin
       if (not (NonAutomaticSMART)) then
         InitiateSMART;
     {$ENDIF}
+    PlayerStartTime := GetSystemTime;
   {$ENDIF}
   MouseSpeed := 15;
 end;

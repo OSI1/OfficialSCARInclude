@@ -230,7 +230,7 @@ begin
   if (not (IsSlotEquipped(Slot))) then
     Exit;
   MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
-  T := GetSystemTime + RR(1500, 2500);
+  T := GetSystemTime + RR(1500, 2500);            // WaitFunc ?
   Result := (TypeC = MoveTo);
   repeat
     case TypeC of
@@ -293,23 +293,15 @@ function SetRun(Run: Boolean): Boolean;
 Contributors: Zyt3x, Wanted.
 Description: Sets run to desired state.
 Date Created: September 4th, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 26th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetRun(Run: Boolean): Boolean;
-var
-  T: Integer;
 begin
   Result := ((IsRunning) xor (Run));
   if (Result) then
     MouseCircle(15, 724, 108, ClickLeft);
-  T := GetSystemTime + RR(1500, 2500);  // FIX WaitFunc
-  repeat
-    Result := (IsRunning <> Run);
-    if (Result) then
-      Exit;
-    WaitRR(50, 150);
-  until (T > GetSystemTime);
+  Result := WaitFunc(@IsRunning, False, 50, 150, 1500, 2500);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -330,26 +322,18 @@ function SetRest(Rest: Boolean): Boolean;
 Contributors: Wanted, Zyt3x.
 Description: Sets rest on.
 Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
-Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 26th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetRest: Boolean;
-var
-  T: Integer;
 begin
   Result := (IsResting);
   if (Result) then
     Exit;
   Exit;                                                               // FIX
   MouseCircle(15, 724, 108, ClickRight);
-  Result := False;//WaitOption('Rest', 500);                          // FIX
-  T := GetSystemTime + RR(1500, 2500);
-  repeat
-    Result := IsResting;
-    if (Result) then
-      Exit;
-    WaitRR(50, 150);
-  until (T > GetSystemTime);
+  Result := False;//WaitOption('Rest', 500);                         // FIX
+  WaitFunc(@IsResting, True, 50, 150, 1500, 2500);
 end;
 
 //DidClick

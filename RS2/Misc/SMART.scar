@@ -219,12 +219,13 @@ function SmartSetupEx(Server: Integer; Members, Signed, SuperDetail: Boolean): B
 Contributors: BenLand100, Wanted.
 Description: Initiates SMART.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 26th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SmartSetupEx(Server: Integer; Members, Signed, SuperDetail: Boolean): Boolean;
 var
   Prefix: string;
+  P: TPoint;
 begin
   try
     Prefix := ReadINI('World' + IntToStr(Server), 'Prefix', WorldsINIPath);
@@ -234,11 +235,12 @@ begin
       WriteLn('Failed to load SMART!');
       Exit;
     end;
-    Result := True;
     SmartSetup('http://' + Prefix + '.runescape.com/', 'plugin.js?param=o0,a' + IntToStr((Integer(not (Signed)) + 1) * Integer(not ((SuperDetail and Signed)))) + ',m' + IntToStr(Integer(Members)), 765, 503, 's');
   except
     WriteLn('Failed to load SMART!');
   end;
+  SetTargetDC(SmartGetDC);
+  Result := WaitFindColorTolerance(P.X, P.Y, 12312554, 698, 15, 700, 17, 5, True, 100, 250, 90000, 120000);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

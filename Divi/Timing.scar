@@ -4,7 +4,11 @@
 --------------------------------------------------------------------------------
  * procedure WaitRR(Min, Max);
      By: Wanted
- * function WaitFunc(Func: function: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+ * function WaitFunc(Func: function: Boolean; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+     By: Wanted
+ * function WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+     By: Wanted
+ * function WaitFindColorTolerance(var X, Y: Integer; Color, X1, Y1, X2, Y2, Tol: Integer; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
      By: Wanted
  * procedure WaitNone;
      By: Wanted
@@ -38,21 +42,65 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function WaitFunc(Func: function: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+function WaitFunc(Func: function: Boolean; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
 Contributors: Wanted
-Description: Repeats a function until true.
+Description: Repeats a function until DesiredResult.
 Date Created: August 10th, 2011. By Wanted
-Last Modified: September 21st, 2011. By Wanted
+Last Modified: September 26th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function WaitFunc(Func: function: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+function WaitFunc(Func: function: Boolean; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
 var
   T: LongInt;
 begin
   Result := True;
   T := GetSystemTime + RR(MinTotalWait, MaxTotalWait);
   while (GetSystemTime < T) do
-    if (Func()) then
+    if (Func() = DesiredResult) then
+      Exit
+    else
+      WaitRR(MinWait, MaxWait);
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+Contributors: Wanted
+Description: Repeats a function until DesiredResult.
+Date Created: August 10th, 2011. By Wanted
+Last Modified: September 26th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+var
+  T: LongInt;
+begin
+  Result := True;
+  T := GetSystemTime + RR(MinTotalWait, MaxTotalWait);
+  while (GetSystemTime < T) do
+    if (CallProc(Func, Parameters) = DesiredResult) then
+      Exit
+    else
+      WaitRR(MinWait, MaxWait);
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WaitFindColorTolerance(var X, Y: Integer; Color, X1, Y1, X2, Y2, Tol: Integer; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+Contributors: Wanted
+Description: Repeats FindColorTolerance until DesiredResult.
+Date Created: September 26th, 2011. By Wanted
+Last Modified: September 26th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WaitFindColorTolerance(var X, Y: Integer; Color, X1, Y1, X2, Y2, Tol: Integer; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+var
+  T: LongInt;
+begin
+  Result := True;
+  T := GetSystemTime + RR(MinTotalWait, MaxTotalWait);
+  while (GetSystemTime < T) do
+    if (FindColorTolerance(X, Y, Color, X1, Y1, X2, Y2, Tol) = DesiredResult) then
       Exit
     else
       WaitRR(MinWait, MaxWait);

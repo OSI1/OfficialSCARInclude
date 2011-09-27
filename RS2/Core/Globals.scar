@@ -27,7 +27,7 @@
      By: Wanted
  * var World switching related defaults
      By: Wanted
- * var Players: array of TRS2Player;
+ * var CurrentPlayer: LongInt; & PlayerStartTime
      By: Anonymous
  * var Font Variables
      By: Anonymous
@@ -283,16 +283,16 @@ const                             // Modified            By              Build #
   clGreenDot      = 64768;        // September 3, 2011   Zyt3x           663
   clYellowDot     = 1179390;      // September 3, 2011   Zyt3x           663
   clBlueDot       = 13667166;     // September 3, 2011   Zyt3x           663
-  //clPurpleDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
-  //clOrangeDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
+//clPurpleDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
+//clOrangeDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
 
   clPlayerDot     = clWhiteDot;   // September 3, 2011   Zyt3x           663
   clNPCDot        = clYellowDot;  // September 3, 2011   Zyt3x           663
   clFriendDot     = clGreenDot;   // September 3, 2011   Zyt3x           663
   clItemDot       = clRedDot;     // September 3, 2011   Zyt3x           663
   clCapeDot       = clBlueDot;    // September 3, 2011   Zyt3x           663
-  //clFriendChatDot = clPurpleDot;  // September 3, 2011   Zyt3x           663  FIX
-  //clClanChatDot   = clOrangeDot;  // September 3, 2011   Zyt3x           663  FIX
+//clFriendChatDot = clPurpleDot;  // September 3, 2011   Zyt3x           663  FIX
+//clClanChatDot   = clOrangeDot;  // September 3, 2011   Zyt3x           663  FIX
 
   clObjectOutline = 131072;       // September 1st, 2011 Wanted          662
 
@@ -320,7 +320,7 @@ type
     Member: Boolean;                // Members
     Active: Boolean;                // Player active
     BoxRewards: TStringArray;       // Partial texts for rewards, place in desired order
-    WorldInfo: TVariantArray;       // [Members {Boolean}, World {Integer}, PVP {Boolean}]
+    WorldInfo: TVariantArray;       // [Members {Boolean}, World {Integer}, HRW {Boolean}]
     Booleans: array of Boolean;     // Boolean records
     Integers: array of Integer;     // Integer records
     Strings: array of string;       // String records
@@ -369,15 +369,16 @@ var
   Players: array of TRS2Player;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-var CurrentPlayer: LongInt;
+var CurrentPlayer: LongInt; & PlayerStartTime
 Contributors: Anonymous, Wanted.
 Description: Variable used to keep track of your current RS2 player index.
+PlayerStartTime is for keeping track of Players[].Worked
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  CurrentPlayer: LongInt;
+  CurrentPlayer, PlayerStartTime: LongInt;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Font Variables
@@ -410,7 +411,7 @@ Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  AllowHRW, AllowQuickChat, AllowLootShare: Boolean;
+  AllowHRW, AllowQuickChat, AllowLootShare, LoginWorldSwitcher: Boolean;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function WorldsINIPath: string;

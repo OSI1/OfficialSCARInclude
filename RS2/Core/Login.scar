@@ -9,13 +9,29 @@
      By: Wanted
  * function LoggedIn: Boolean;
      By: Wanted
+ * function LoginToLobby: Boolean;
+     By: Wanted
+ * function Login: Boolean;
+     By: Wanted
+ * function ExitToLobby: Boolean;
+     By: Wanted
+ * function LeaveLobby: Boolean;
+     By: Wanted
+ * function Logout: Boolean;
+     By: Wanted
  * function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
-     By: Anonymous & Wanted.
+     By: Wanted
  * function NextPlayer(Active: Boolean): Boolean;
-     By: Wanted & Anonymous.
- * function LoginPlayerToLobby: Boolean;
+     By: Wanted
+ * function RandomNextPlayer(Active: Boolean): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               Login.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NextPlayer(Active: Boolean): Boolean; forward;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoginScreen: Boolean;
@@ -46,7 +62,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoggedIn: Boolean;
 Contributors: Wanted
-Description: Returns true if current Logged In.
+Description: Returns true if Logged In.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -57,46 +73,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
-Contributors: Anonymous, Wanted.
-Description: Returns true if current Logged In.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
-begin
-  WriteLn('SwitchToPlayer(Players[' + Players[CurrentPlayer].Name + ', ' + BoolToStr(Active) + ');');
-  Players[CurrentPlayer].Active := Active;
-  //Player.Worked                                             // FIX
-  //Result := LoginPlayer;                                    // FIX
-  Result := False;                                            // FIX
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function NextPlayer(Active: Boolean): Boolean;
-Contributors: Anonymous, Wanted.
-Description: Returns true if current Logged In.
-Date Created: August 10th, 2011. By Wanted & Anonymous. RS2 Build 661.
-Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function NextPlayer(Active: Boolean): Boolean;                // FIX ?
-begin
-  WriteLn('NextPlayer(' + BoolToStr(Active) + ');');
-  //Logout;                                                   // FIX
-  Result := SwitchToPlayer(NextActivePlayerIndex, Active);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function LoginPlayerToLobby: Boolean;
+function LoginToLobby: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 11th, 2011. By Wanted. RS2 Build 662.
+Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function LoginPlayerToLobby: Boolean;
+function LoginToLobby: Boolean;
 var
   B, B2, B3, B4, RetryLogin: Boolean;
   T, I, Attempts: LongInt;
@@ -109,6 +93,7 @@ var
 label
   ProcStart;
 begin
+  WriteLn('Logging in ' + Players[CurrentPlayer].Name + '...');
   if ((LobbyScreen) or (LoggedIn)) then
   begin
     Result := True;
@@ -126,46 +111,43 @@ begin
   B2 := False;
   B3 := False;
   B4 := False;
-  if (CountColor(10141389, 345, 293, 418, 305) = 143) then    // Autograhpics
-    B3 := True
-  else
+  B3 := (CountColor(10141389, 345, 293, 418, 305) = 143);     // Autographics
+  if (not (B3)) then
     B4 := (CountColor(10141389, 343, 303, 418, 315) = 143);   // Available changed
-  if ((B3) or (B4)) then
-  begin
-    if (B3) then
-      MouseBox(349, 298, 414, 300, ClickLeft)                 // Leave Alone
-    else
-      MouseBox(349, 309, 414, 312, ClickLefT);
-    T := GetSystemTime + RR(3500, 4500);
-    repeat
-      B := CountColor(clLoginText, 202, 64, 390, 81) = 568;   // Create a Free Account
-      if (not (B)) then
-      begin
-        B2 := LoginScreen;
-        if (B2) then
-          Break;
-      end;
-      WaitRR(200, 400);
-    until ((GetSystemTime > T) or (B));
-    if (B) then
-      case (Random(2)) of
-        0: MouseBox(544, 67, 556, 78, ClickLeft);             // Exit
-        1: MouseBox(165, 428, 428, 430, ClickLeft);           // Already have an account
-      end;
+  if (B3) then
+    MouseBox(349, 298, 414, 300, ClickLeft)
+  else
+    if (B4) then
+      MouseBox(349, 309, 414, 312, ClickLeft);
+  T := GetSystemTime + RR(1500, 2500);
+  repeat
+    B := CountColor(clLoginText, 202, 64, 390, 81) = 568;     // Create a Free Account
+    if (not (B)) then
+    begin
+      B2 := LoginScreen;
+      if (B2) then
+        Break;
+    end;
+    WaitRR(200, 400);
+  until ((GetSystemTime > T) or (B));
+  if (B) then
+  case (Random(2)) of
+    0: MouseBox(544, 67, 556, 78, ClickLeft);                 // Exit
+    1: MouseBox(165, 428, 428, 430, ClickLeft);               // Already have an account
   end;
   if (not (B2)) then
-    if (not (WaitFunc(@LoginScreen, 250, 400, 3500, 4500))) then
+    if (not (WaitFunc(@LoginScreen, True, 250, 400, 3500, 4500))) then
     begin
       WriteLn('Could not find Login Screen!');
       Exit;
     end;
   {$IFNDEF SMART}
-    if (not ((B3) or (B4))) then                              // Needs testing
-      if (not (FindColor(P.X, P.Y, clLoginText, 280, 176, 487, 197))) then
-      begin
-        MouseBox(485, 176, 487, 197, ClickLeft);
-        WaitRR(100, 250);
-      end;
+  if (not ((B3) or (B4))) then
+    if (not (FindColor(P.X, P.Y, clLoginText, 280, 176, 487, 197))) then
+    begin
+      MouseBox(280, 176, 487, 197, ClickLeft);
+      WaitRR(100, 250);
+    end;
   {$ENDIF}
   TBA := [IntToBox(280, 176, 487, 197), IntToBox(280, 220, 487, 244)];  // User / Pass Boxes
   B := False;
@@ -192,7 +174,6 @@ begin
         S := Players[CurrentPlayer].Login
       else
         S := Players[CurrentPlayer].Name;
-      WriteLn(S);
       TypeSend(S);
     end
     else
@@ -201,26 +182,26 @@ begin
   T := GetSystemTime + RR(50000, 70000);
   repeat
     SetLength(Actions, 0);
-    if (GetSystemTime > T) then // Response                   Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
-      Actions :=       ['About one minute has passed...',     0,    0,      'PlayerFalse', 'Login Failed']        // August 10, 2011     Wanted          661      confirmed
+    if (GetSystemTime > T) then // Response                  Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
+      Actions :=       ['About one minute has passed...',    0,    0,      'PlayerFalse', 'Login Failed']        // August 10, 2011     Wanted          661      confirmed
     else
     case (CountColor(clLoginText, 260, 140, 506, 395)) of
-      364: Actions :=  ['Error Connecting.',              20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
-      732: Actions :=  ['Runescape has been updated.',        0,    0,      'Exit',        'RS updated'];         // August 7, 2011      Anonymous       660      unconfirmed
+      364: Actions :=  ['Error connecting',              20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
+      732: Actions :=  ['Runescape has been updated',        0,    0,      'Exit',        'RS updated'];         // August 7, 2011      Anonymous       660      unconfirmed
       763, 2348, 2299:
-            Actions := ['Invalid Username / Password',        0,    2,      'PlayerFalse', 'Wrong User/Pass'];    // August 10, 2011     Wanted          661      confirmed
-      777: Actions :=  ['Login limit exceeded.',          20000,   10,      '',            'Waiting for login.']; // August 7, 2011      Anonymous       660      unconfirmed
-      951: Actions :=  ['Your account is already logged in',  5,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
-      1057: Actions := ['Too many incorrect logins.', 5 * 60000,    2,      'PlayerFalse', 'Too many logins'];    // August 7, 2011      Anonymous       660      unconfirmed
-      1088: Actions := ['Your account has been disabled',     0,    0,      'PlayerFalse', 'Acc Disabled'];       // August 7, 2011      Anonymous       660      unconfirmed
-      1535: Actions := ['Your Account has been locked.',      0,    0,      'PlayerFalse', 'Acc Locked'];         // August 10, 2011     Wanted          661      confirmed
+            Actions := ['Invalid username / password',       0,    2,      'PlayerFalse', 'Wrong User/Pass'];    // August 10, 2011     Wanted          661      confirmed
+      777: Actions :=  ['Login limit exceeded',          20000,   10,      '',            'Waiting for login.']; // August 7, 2011      Anonymous       660      unconfirmed
+      951: Actions :=  ['Your account is already logged in', 5,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
+      1057: Actions := ['Too many incorrect logins', 5 * 60000,    2,      'PlayerFalse', 'Too many logins'];    // August 7, 2011      Anonymous       660      unconfirmed
+      1088: Actions := ['Your account has been disabled',    0,    0,      'PlayerFalse', 'Acc Disabled'];       // August 7, 2011      Anonymous       660      unconfirmed
+      1535: Actions := ['Your account has been locked',      0,    0,      'PlayerFalse', 'Acc Locked'];         // August 10, 2011     Wanted          661      confirmed
     end;
     if (Length(Actions) > 0) then
     begin
       WaitRR(500, 1500);
       PushKey(VK_Escape);
       WriteLn(Actions[0]);
-      WaitRR(Actions[1], Actions[1] + 100);
+      WaitRR(Actions[1] - 100, Actions[1] + 100);
       if (Actions[2] <> 0) then
         if (Attempts < Actions[2]) then
         begin
@@ -248,9 +229,251 @@ begin
   end;
 end;
 
-//RSReady
-//ExitToLobby
-//LeaveLobby
-//Logout
-//LoginPlayer
-//RandomNextPlayer
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Login: Boolean;
+Contributors: Wanted, Anonymous.
+Description: Logins in current active player.
+Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Login: Boolean;
+var
+  B, BB, RetryLogin: Boolean;
+  Actions: TVariantArray;
+  T, Attempts: Integer;
+label
+  ProcStart;
+begin
+  ProcStart:
+  Result := LoggedIn;
+  if (Result) then
+  begin
+    WriteLn(Players[CurrentPlayer].Name + ' logged in.');
+    PlayerStartTime := GetSystemTime;
+    Exit;
+  end;
+  if (not (LoginToLobby)) then                                // Get to / At lobby screen
+    Exit;
+  WaitRR(500, 1000);
+  if (Length(Players[CurrentPlayer].WorldInfo) > 0) then      // World Switching
+    if (Players[CurrentPlayer].WorldInfo[0]) then
+      Players[CurrentPlayer].Member := True
+    else
+      Players[CurrentPlayer].Member := False;
+  if (LoginWorldSwitcher) then
+    if (Length(Players[CurrentPlayer].WorldInfo) < 1) then
+      Players[CurrentPlayer].WorldInfo := [Players[CurrentPlayer].Member, 0, AllowHRW];
+  case Length(Players[CurrentPlayer].WorldInfo) of
+    2: SelectWorld(Players[CurrentPlayer].WorldInfo[1]);
+    3: begin
+         if (Players[CurrentPlayer].WorldInfo[0]) then
+           B := True
+         else
+           B := False;
+         BB := AllowHRW;
+         if (Players[CurrentPlayer].WorldInfo[2]) then
+           AllowHRW := True
+         else
+           AllowHRW := False;
+         SelectWorld(RandomWorld(B));
+         AllowHRW := BB;
+       end;
+  end;
+  if (LobbyScreen) then
+    MouseBox(256, 442, 507, 478, ClickLeft);                  // Click to Play
+  T := GetSystemTime + RR(50000, 70000);                      // Check Response
+  repeat
+    SetLength(Actions, 0);
+    if (GetSystemTime > T) then // Response                          Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
+      Actions :=       ['About one minute has passed...',            0,    0,      'NextPlayer',  'Login Failed']        // September 25, 2011  Wanted          666      confirmed
+    else
+      case CountColor(clLoginText, 260, 140, 510, 400) of
+      //-1: Actions :=   ['You need 20 combat for PvP',              0,    1,      'PlayerFalse', 'PvP warning'];        // August 7, 2011      Anonymous       660      unconfirmed
+      //-1: Actions :=   ['You need skill total of 1500.',           0,    9,      'PlayerTrue',  '1500 skill club'];    // August 7, 2011      Anonymous       660      unconfirmed
+        364: Actions :=  ['Error connecting',                    20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
+        777: Actions :=  ['Login limit exceeded',                    0,    10,     '',            'Waiting for login.']; // August 7, 2011      Anonymous       660      unconfirmed
+        850: Actions :=  ['You need skill total of 1000',            0,    9,      'PlayerTrue',  '1000 skill club'];    // August 7, 2011      Anonymous       660      unconfirmed
+        951: Actions :=  ['Your account is already logged in',    5000,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
+        1028: Actions := ['You are standing in a members only area', 0,    1,      'PlayerFalse', 'In Mems-Only Area'];  // August 7, 2011      Anonymous       660      unconfirmed
+        1239: Actions := ['Not a members account',                   0,    1,      'PlayerFalse', 'Non-member'];         // September 25, 2011  Wanted          666      confirmed
+      end;
+    if (Length(Actions) > 0) then                             // Respond
+    begin
+      WaitRR(500, 1500);
+      PushKey(VK_Escape);
+      WriteLn(Actions[0]);
+      WaitRR(Actions[1] - 100, Actions[1] + 100);
+      if (Actions[2] > 0) then
+        if (Attempts < Actions[2]) then
+        begin
+          case Actions[0] of
+            'You are standing in a members only area': begin
+                                                         Players[CurrentPlayer].Member := False;
+                                                         Players[CurrentPlayer].WorldInfo := [False, 0, AllowHRW];
+                                                       end;
+          //'You need 20 combat for PvP': Players[CurrentPlayer].WorldInfo := [Players[CurrentPlayer].Member, 0, False];
+            'Not a members account': begin
+                                       Players[CurrentPlayer].Member := False;
+                                       Players[CurrentPlayer].WorldInfo := [False, 0, AllowHRW];
+                                     end;
+            'You need skill total of 1000': Players[CurrentPlayer].WorldInfo := [Players[CurrentPlayer].Member, 0, AllowHRW];
+          end;
+          RetryLogin := True;
+          WaitRR(2000, 3000);
+          Break;
+        end;
+      if (Actions[4] <> '') then
+        Players[CurrentPlayer].Loc := Actions[4];
+      case Actions[3] of
+        'PlayerFalse': NextPlayer(False);
+        'PlayerTrue': NextPlayer(True);
+        'Exit': Exit;
+      end;
+      Exit;
+    end;
+    Wait(100);
+    Result := LoggedIn;
+  until (Result);
+  if (RetryLogin) then                                        // Back to lobby screen
+  begin
+    RetryLogin := False;
+    Inc(Attempts);
+    goto ProcStart;
+  end;
+  if (Result) then                                            // Set player start time etc.
+    goto ProcStart;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ExitToLobby: Boolean;
+Contributors: Wanted
+Description: Logs out current active player to lobby if not unsigned.
+Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ExitToLobby: Boolean;
+var
+  P: TPoint;
+begin
+  repeat
+    Result := LobbyScreen;
+    if (Result) then
+      Break;
+    if (not (SetGameTab(Tab_Logout))) then
+      Exit;
+    WaitRR(100, 250);
+    if (IsTextInAreaEx(594, 352, 690, 375, P.X, P.Y, 'obby', 75, UpChars, False, False, -1, 2, clWhite)) then
+      MouseBox(569, 348, 714, 374, ClickLeft)
+    else
+      Exit;
+    Result := WaitFunc(@LobbyScreen, True, 250, 500, 3500, 4500);
+    if (not (Result)) then
+      Exit;
+  until (True);
+  WriteLn(Players[CurrentPlayer].Name + ' exited to lobby.');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LeaveLobby: Boolean;
+Contributors: Wanted
+Description: If at the lobby screen goes back to login screen.
+Date Created: September 26th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 26th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LeaveLobby: Boolean;
+begin
+  Result := (not (LobbyScreen));
+  if (Result) then
+    Exit;
+  MouseBox(681, 26, 699, 42, ClickLeft);
+  Result := WaitFunc(@LobbyScreen, False, 250, 500, 3500, 4500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Logout: Boolean;
+Contributors: Wanted, Anonymous.
+Description: Logs out current active player.
+Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Logout: Boolean;
+var
+  P: TPoint;
+begin
+  IncEx(Players[CurrentPlayer].Worked, GetSystemTime - PlayerStartTime);
+  PlayerStartTime := GetSystemTime;
+  if (LobbyScreen) then
+    Result := LeaveLobby
+  else
+    Result := (not (LoggedIn));
+  repeat
+    if (Result) then
+      Break;
+    if (not (SetGameTab(Tab_Logout))) then
+      Exit;
+    WaitRR(100, 250);
+    if (IsTextInAreaEx(594, 396, 691, 419, P.X, P.Y, 'ogin', 75, UpChars, False, False, -1, 2, clWhite)) then
+      MouseBox(568, 392, 715, 419, ClickLeft)
+    else
+      if (IsTextInAreaEx(MIX1, MIY1, MIX2, MIY2, P.X, P.Y, 'lick', 75, UpChars, False, False, -1, 2, clWhite)) then  // FIX ?
+        MouseBox(569, 349, 713, 375, ClickLeft)
+      else
+        Exit;
+    Result := WaitFunc(@LoggedIn, False, 250, 500, 3500, 4500);
+    if (not (Result)) then
+      Exit;
+  until (True);
+  WriteLn('Logged out ' + Players[CurrentPlayer].Name + '.');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
+Contributors: Wanted
+Description: Switches to player, Sets CurrentPlayer to 'Active'. True if login successful.
+Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
+begin
+  WriteLn('SwitchToPlayer(' + Players[Player].Name + ', ' + BoolToStr(Active) + ');');
+  Players[CurrentPlayer].Active := Active;
+  Result := Login;
+  CurrentPlayer := Player;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function NextPlayer(Active: Boolean): Boolean;
+Contributors: Wanted
+Description: Switches to next active player, Sets CurrentPlayer to 'Active'.
+True if login successful.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NextPlayer(Active: Boolean): Boolean;
+begin
+  WriteLn('NextPlayer(' + BoolToStr(Active) + ');');
+  Logout;
+  Result := SwitchToPlayer(NextActivePlayerIndex, Active);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomNextPlayer(Active: Boolean): Boolean;
+Contributors: Wanted
+Description: Switches to a random active player, Sets CurrentPlayer to 'Active'.
+True if login successful.
+Date Created: August 10th, 2011. By Wanted & Anonymous. RS2 Build 661.
+Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomNextPlayer(Active: Boolean): Boolean;
+begin
+  WriteLn('NextPlayer(' + BoolToStr(Active) + ');');
+  Logout;
+  Result := SwitchToPlayer(Random(Length(Players)), Active);
+end;

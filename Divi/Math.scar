@@ -37,11 +37,11 @@ Last Modification: September 22nd, 2011. By Wanted
 
 function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
 begin
-  {$IFDEF NoVariance}
+  //{$IFDEF NoVariance}                         // TEMPORARY FIX
     Result := RndBoxPoint(Box(X1, Y1, X2, Y2));
-  {$ELSE}
-    Result := RndBoxPointG(Box(X1, Y1, X2, Y2), OSI_Variance);
-  {$ENDIF}
+  //{$ELSE}
+    //Result := RndBoxPointG(Box(X1, Y1, X2, Y2), OSI_Variance);
+  //{$ENDIF}
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
