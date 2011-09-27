@@ -32,16 +32,16 @@ function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
 Contributors: Freddy, Wanted.
 Description: Outputs a random point within a rectangle.
 Date Created: September 18th, 2011. By Wanted
-Last Modification: September 22nd, 2011. By Wanted
+Last Modification: September 27th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
 begin
-  //{$IFDEF NoVariance}                         // TEMPORARY FIX
+  {$IFDEF NoVariance}
     Result := RndBoxPoint(Box(X1, Y1, X2, Y2));
-  //{$ELSE}
-    //Result := RndBoxPointG(Box(X1, Y1, X2, Y2), OSI_Variance);
-  //{$ENDIF}
+  {$ELSE}
+    Result := RndBoxPointG(Box(X1, Y1, X2, Y2), OSI_Variance);
+  {$ENDIF}
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
