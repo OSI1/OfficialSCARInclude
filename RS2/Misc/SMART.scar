@@ -219,13 +219,12 @@ function SmartSetupEx(Server: Integer; Members, Signed, SuperDetail: Boolean): B
 Contributors: BenLand100, Wanted.
 Description: Initiates SMART.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: September 26th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 30th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SmartSetupEx(Server: Integer; Members, Signed, SuperDetail: Boolean): Boolean;
 var
   Prefix: string;
-  P: TPoint;
 begin
   try
     Prefix := ReadINI('World' + IntToStr(Server), 'Prefix', WorldsINIPath);
@@ -239,8 +238,7 @@ begin
   except
     WriteLn('Failed to load SMART!');
   end;
-  SetTargetDC(SmartGetDC);
-  Result := WaitFindColorTolerance(P.X, P.Y, 12312554, 698, 15, 700, 17, 5, True, 100, 250, 90000, 120000);
+  Result := True;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -248,10 +246,12 @@ function InitiateSMART: Boolean;
 Contributors: Wanted
 Description: Initiates SMART more simply.
 Date Created: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 30th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InitiateSMART: Boolean;
+var
+  P: TPoint;
 begin
   if (SMART_Server = 0) then
   begin
@@ -260,7 +260,10 @@ begin
     SMART_Signed := True;
     SMART_SuperDetail := False;
   end;
-  Result := SmartSetupEx(SMART_Server, SMART_Members, SMART_Signed, SMART_SuperDetail);
+  if (not (SmartSetupEx(SMART_Server, SMART_Members, SMART_Signed, SMART_SuperDetail))) then
+    Exit;
+  SetTargetDC(SmartGetDC);
+  Result := WaitFindColorTolerance(P.X, P.Y, 12312554, 698, 15, 700, 17, 5, True, 100, 250, 90000, 120000);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

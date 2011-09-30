@@ -71,6 +71,7 @@ var
   RS2FontFolder: string;
 {$ENDIF}
 begin
+  OSI_Variance := 3.0;
   {$IFDEF RS2}
     WriteLn('OSI RS2 routines enabled');
     {$IFDEF OSI_Color_Anti_Randoms}

@@ -67,7 +67,7 @@ end;
 function WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
 Contributors: Wanted
 Description: Repeats a function until DesiredResult.
-Date Created: August 10th, 2011. By Wanted
+Date Created: September 26th, 2011. By Wanted
 Last Modified: September 26th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 

@@ -2,7 +2,7 @@
                               Official SCAR Include
                                  Global Routines
 --------------------------------------------------------------------------------
- * const OSI_Variance
+ * var OSI_Variance
      By: Wanted
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
      By: Anonymous
@@ -11,16 +11,16 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const OSI_Variance
+var OSI_Variance
 Contributors: Wanted, Freddy.
 Description: The default level of variance, or tendency, for randomized values
-in human simulating instance to be towards the center.
+in human simulating instance to be towards the center is 3.0 .
 Date Created: September 22nd, 2011. By Wanted. RS2 Build 666.
-Last Modification: September 22nd, 2011. By Wanted. RS2 Build 666.
+Last Modification: September 30th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const
-  OSI_Variance = 3.0;
+var
+  OSI_Variance: Extended;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
