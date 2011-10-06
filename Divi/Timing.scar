@@ -115,7 +115,7 @@ Date Created: August 10th, 2011. By Wanted
 Last Modified: August 10th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure DoNothing;
+procedure WaitNone;
 begin
 end;
 
