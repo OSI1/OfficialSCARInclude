@@ -89,10 +89,9 @@ begin
       SmallChars := LoadChars2(RS2FontFolder + 'SmallChars\');
       StatChars := LoadChars2(RS2FontFolder + 'StatChars\');
       FriendChars := LoadChars2(RS2FontFolder + 'FriendChars\');
-      BigChars := LoadChars2(RS2FontFolder + 'BigChars\');
       LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
       XPChars := LoadChars2(RS2FontFolder + 'XPChars\');
-      WriteLn('Loaded RS2 Fonts: NPCChars, UpChars, SmallChars, StatChars, FriendChars, BigChars, LoginChars, XPChars');
+      WriteLn('Loaded RS2 Fonts: NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
     {$ELSE}
       WriteLn('Font loading disabled.');
     {$ENDIF}

@@ -389,7 +389,7 @@ Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  NPCChars, UpChars, SmallChars, StatChars, FriendChars, BigChars, LoginChars, XPChars: LongInt;
+  NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars: LongInt;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var RS2WorldArray: TWorldArray;
@@ -442,7 +442,6 @@ begin
     FreeChars2(SmallChars);
     FreeChars2(StatChars);
     FreeChars2(FriendChars);
-    FreeChars2(BigChars);
     FreeChars2(LoginChars);
     FreeChars2(XPChars);
     WriteLn('Freed RS2 Fonts');
