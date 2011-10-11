@@ -3,7 +3,7 @@
                                    Runescape 2
                                  Global Routines
 --------------------------------------------------------------------------------
- * const Useful in game boundries, points, areas, widths, etc. etc.
+ * const Useful in game boundaries, points, areas, widths, etc. etc.
      By: Anonymous & Wanted.
  * const Skill_ Indexes
      By: Anonymous
@@ -46,7 +46,7 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const Useful in game boundries, points, areas, widths, etc. etc.
+const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Anonymous, Wanted.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
@@ -416,7 +416,7 @@ var
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function WorldsINIPath: string;
 Contributors: Wanted
-Description: Variables for worldswitching defaults.
+Description: Path of the worlds.ini file for world switching.
 Date Created: September 18th, 2011. By Wanted. RS2 Build 663.
 Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -469,7 +469,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function AllPlayersInActive: Boolean;
 Contributors: Anonymous, Wanted.
-Description: Returns true if all players are in-active
+Description: Returns true if all players are in-active.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

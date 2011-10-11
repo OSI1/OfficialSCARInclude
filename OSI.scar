@@ -32,8 +32,8 @@
   {.include OSI\RS2\Core\GameTabs.scar}
   {.include OSI\RS2\Core\Chat.scar}
   {.include OSI\RS2\Core\Amount.scar}
-  {.include OSI\RS2\Core\WorldSwitcher.scar}
   {.include OSI\RS2\Core\Login.scar}
+  {.include OSI\RS2\Core\WorldSwitcher.scar}
   {.include OSI\RS2\Core\Inventory.scar}
   {.include OSI\RS2\Core\Bank.scar}
   {.include OSI\RS2\Core\Map.scar}

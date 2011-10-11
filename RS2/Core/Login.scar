@@ -34,6 +34,13 @@
 function NextPlayer(Active: Boolean): Boolean; forward;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               WorldSwitcher.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SelectWorld(World: Integer): Boolean; forward;
+function RandomWorld(Members: Boolean): Integer; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoginScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the screen to type in user/pass.
@@ -475,5 +482,5 @@ function RandomNextPlayer(Active: Boolean): Boolean;
 begin
   WriteLn('NextPlayer(' + BoolToStr(Active) + ');');
   Logout;
-  Result := SwitchToPlayer(Random(Length(Players)), Active);
+  Result := SwitchToPlayer(Random(Length(Players)), Active);            // FIX
 end;

@@ -21,6 +21,8 @@
      By: Wanted
  * function SelectWorld(World: Integer): Boolean;
      By: Wanted
+ * function SwitchWorld(World: Integer): Boolean;
+     By: Wanted
  * procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
      By: Wanted
  * function RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
@@ -45,7 +47,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OpenWorldScreen: Boolean;
 Contributors: Wanted.
-Description: Returns true if world select tab is open.
+Description: Opens world screen and removes any favorite worlds.
 Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
 Last Modification: August 14th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -310,9 +312,34 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SwitchWorld(World: Integer): Boolean;
+Contributors: Wanted
+Description: Selects specified world, logs out to lobby or mainscreen if needed.
+Date Created: October 10th, 2011. By Wanted. RS2 Build 667.
+Last Modified: October 10th, 2011. By Wanted. RS2 Build 667.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SwitchWorld(World: Integer): Boolean;
+begin
+  Result := SelectWorld(World);
+  if (Result) then
+    Exit;
+  if (LoggedIn) then
+  begin
+    if (not (ExitToLobby)) then
+      if (not (Logout)) then
+        Exit
+      else
+        LoginToLobby;
+    if (SelectWorld(World)) then
+      Result := Login;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
 Contributors: Wanted
-Description: Deletes an index from a TRS2WorldArray. For use with random world.
+Description: Deletes an index from a TRS2WorldArray. For use with RandomWorld.
 Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
 Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
