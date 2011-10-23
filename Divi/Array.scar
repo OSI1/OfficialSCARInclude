@@ -2,8 +2,207 @@
                               Official SCAR Include
                                   Array Routines
 --------------------------------------------------------------------------------
- *
+ * function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+     By: Wanted
+ * function TBToTPA(TB: TBox): TPointArray;
+     By: Wanted
+ * function TBAToATPA(TBA: TBoxArray): T2DPointArray;
+     By: Wanted
+ * function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
+     By: Anonymous
+ * function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+     By: Wanted
+ * procedure SortATPAFrom(var ATPA: T2DPointArray; P: TPoint);
+     By: Wanted
+ * procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-//InStrArrEx
-//DeleteVavlueInBlahBlahBlah
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if the string is in the array and returns position.
+Date Created: October 10th, 2011. By Wanted
+Last Modified: October 10th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+var
+  H, L: Integer;
+  SS: string;
+begin
+  Result := True;
+  H := High(Arr);
+  L := Low(Arr);
+  if (not (CaseSenstive)) then
+  begin
+    SS := LowerCase(S);
+    for Pos := L to H do
+      if (SS = LowerCase(Arr[Pos])) then
+        Exit;
+  end
+  else
+    for Pos := L to H do
+      if (S = Arr[Pos]) then
+        Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBToTPA(TB: TBox): TPointArray;
+Contributors: Wanted
+Description: Turns the outline of a TBox into a TPA.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBToTPA(TB: TBox): TPointArray;
+var
+  I, II, Hi, Lo: Integer;
+begin
+  SetLength(Result, (((TB.X2 - TB.X1) * 2) + ((TB.Y2 - TB.Y1) * 2)));
+  if (Length(Result) < 1) then
+    Exit;
+  for I := TB.X1 to TB.X2 do
+  begin
+    Result[II] := Point(I, TB.Y1);
+    Inc(II);
+  end;
+  Lo := TB.Y1 + 1;
+  Hi := TB.Y2 - 1;
+  for I := Lo to Hi do
+  begin
+    Result[II] := Point(TB.X2, I);
+    Inc(II);
+  end;
+  for I := TB.X2 downto TB.X1 do
+  begin
+    Result[II] := Point(I, TB.Y2);
+    Inc(II);
+  end;
+  for I := Hi downto Lo do
+  begin
+    Result[II] := Point(TB.X1, I);
+    Inc(II);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBAToATPA(TBA: TBoxArray): T2DPointArray;
+Contributors: Wanted
+Description: Turns the outline of multiple TBoxes into multi TPAs.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBAToATPA(TBA: TBoxArray): T2DPointArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TBA);
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := TBToTPA(TBA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
+Contributors: Anonymous, Wanted.
+Description: Turns a line of text into an array of points.
+Date Created: August 7th, 2011. By Anonymous
+Last Modified: October 19th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
+var
+  CTS, W, H, bmpText: Integer;
+  DC: HDC;
+begin
+  if (Length(Text) < 1) then
+    Exit;
+  bmpText := CreateBitmapMaskFromText(Text, Chars);
+  DC := GetClientCanvas.Handle;
+  CTS := GetColorToleranceSpeed;
+  GetBitmapSize(bmpText, W, H);
+  ColorToleranceSpeed(0);
+  SetTargetDC(GetBitmapDC(bmpText));
+  FindColors(Result, clWhite, 0, 0, W + 1, H + 1);
+  SetTargetDC(DC);
+  ColorToleranceSpeed(CTS);
+  FreeBitmap(bmpText);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+Contributors: Wanted, Freddy.
+Description: Checks a TPA to see if contains the a line of text using its TPA.
+Date Created: October 20th, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+var
+  TextTPA, TPA: TPointArray;
+begin
+  TextTPA := LoadTextTPA(Text, Chars);
+  if (not (TPAInTPARelEx(TextTPA, SearchTPA, TPA))) then
+    Exit;
+  X := TPA[0].X;
+  Y := TPA[0].Y;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SortATPAFrom(var ATPA: T2DPointArray; P: TPoint);
+Contributors: Wanted
+Description: Sorts the TPAs from closest to point based on MiddleTPAs.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SortATPAFrom(var ATPA: T2DPointArray; P: TPoint);
+var
+  NewATPA: T2DPointArray;
+  TPA, TPA2: TPointArray;
+  I, II, H: Integer;
+begin
+  H := High(ATPA);
+  SetLength(TPA, H + 1);
+  SetLength(NewATPA, H + 1);
+  for I := 0 to H do
+    TPA[I] := MiddleTPA(ATPA[I]);
+  TPA2 := CopyTPA(TPA);
+  SortTPAEx(TPA, P);
+  for I := 0 to H do
+    for II := 0 to H do
+      if (TPA2[II].X = TPA[I].X) then
+        if (TPA2[II].Y = TPA[I].Y) then
+        begin
+          NewATPA[I] := CopyTPA(ATPA[II]);
+          Break
+        end;
+  ATPA := NewATPA;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+Contributors: Wanted, Freddy.
+Description: Sorts ATPAs based in their TPA lengths.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+var
+  NewATPA: T2DPointArray;
+  I, H: LongInt;
+begin
+  SortATPABySize(ATPA);
+  if (not (BigFirst)) then
+    Exit;
+  H := High(ATPA);
+  SetLength(NewATPA, H + 1);
+  for I := 0 to H do
+    NewATPA[H - I] := CopyTPA(ATPA[I]);
+  ATPA := NewATPA;
+end;

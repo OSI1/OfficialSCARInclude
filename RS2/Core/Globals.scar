@@ -50,10 +50,20 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Anonymous, Wanted.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: October 16th, 2011. By Wanted. RS2 Build 667.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const             // Description                  Modified            By              Build #
+const             // Description                  Modified            By             Build #
+
+  RSCX = 383;     // RS2 Client Center Points  // October 16, 2011    Wanted          667
+  RSCY = 252;                                  // October 16, 2011    Wanted          667
+  RSX1 = 0;       // RS2 Client Edge Points    // October 16, 2011    Wanted          667
+  RSY1 = 0;                                    // October 16, 2011    Wanted          667
+  RSX2 = 766;                                  // October 16, 2011    Wanted          667
+  RSY2 = 504;                                  // October 16, 2011    Wanted          667
+  RSPW = 766;     // RS2 Client Width          // October 16, 2011    Wanted          667
+  RSPH = 504;     // RS2 Client Height         // October 16, 2011    Wanted          667
+  RSPA = 381024;  // RS2 Client Pixel Area     // October 16, 2011    Wanted          667
 
   MSCX  = 260;    // Main Screen Center Points // August 7, 2011      Wanted          660
   MSCY  = 171;                                 // August 7, 2011      Wanted          660
@@ -262,7 +272,7 @@ const Useful in game colors
 Contributors: Anonymous, Wanted, Zyt3x.
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: September 3rd, 2011. By Zyt3x. RS2 Build 662.
+Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                             // Modified            By              Build #
@@ -284,7 +294,7 @@ const                             // Modified            By              Build #
   clYellowDot     = 1179390;      // September 3, 2011   Zyt3x           663
   clBlueDot       = 13667166;     // September 3, 2011   Zyt3x           663
 //clPurpleDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
-//clOrangeDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
+  clOrangeDot     = 35583;        // October 16th, 2011  Wanted          667
 
   clPlayerDot     = clWhiteDot;   // September 3, 2011   Zyt3x           663
   clNPCDot        = clYellowDot;  // September 3, 2011   Zyt3x           663
@@ -292,9 +302,16 @@ const                             // Modified            By              Build #
   clItemDot       = clRedDot;     // September 3, 2011   Zyt3x           663
   clCapeDot       = clBlueDot;    // September 3, 2011   Zyt3x           663
 //clFriendChatDot = clPurpleDot;  // September 3, 2011   Zyt3x           663  FIX
-//clClanChatDot   = clOrangeDot;  // September 3, 2011   Zyt3x           663  FIX
+  clClanChatDot   = 35583;        // October 16th, 2011  Wanted          667
+
+  clNPCOption     = clYellow;     // October 20th, 2011  Wanted          668
+  clObjectOption  = 16776960;     // October 20th, 2011  Wanted          668
+  clPlayerOption  = clWhite;      // October 20th, 2011  Wanted          668
+  clActionOption  = 9812166;      // October 20th, 2011  Wanted          668
+  clItemOption    = 4231423;      // October 20th, 2011  Wanted          668
 
   clObjectOutline = 131072;       // September 1st, 2011 Wanted          662
+  clOptionsBox    = 1845035;      // October 16th, 2011  Wanted          667
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS2Player = record

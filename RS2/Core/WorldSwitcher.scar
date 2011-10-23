@@ -165,7 +165,7 @@ begin
   TB := IntToBox(TIA[By], 123, TIA[By] + 22, 133);
   FindColors(TPA, clWSArrow, TB.X1, TB.Y1, TB.X2, TB.Y2);
   ATPA := SplitTPA(TPA, 2);
-  SortATPAFromFirstPoint(ATPA, Point(95, 131));
+  SortATPAFrom(ATPA, Point(95, 131));
   P := ATPA[Integer(not (Descending))][Random(Length(ATPA[Integer(not (Descending))]))];
   Mouse(P.X, P.Y, 0, 0, True);
 end;

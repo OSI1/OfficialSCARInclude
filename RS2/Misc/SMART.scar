@@ -53,7 +53,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MoveMouse(X, Y: Integer);
 Contributors: BenLand100, Wanted.
-Description: SSMART override for MoveMouse.
+Description: SMART override for MoveMouse.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
 Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

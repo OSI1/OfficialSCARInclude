@@ -1,0 +1,187 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                               Debugging Routines
+--------------------------------------------------------------------------------
+ * procedure DebugBitmap2(bmpDebug: Integer);
+     By: Wanted
+ * procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
+     By: Wanted
+ * procedure DebugATPABounds(ATPA: T2DPointArray);
+     By: Wanted
+ * procedure DebugATPA(ATPA: T2DPointArray);
+     By: Wanted
+ * procedure DebugTPA(TPA: TPointArray);
+     By: Wanted
+ * procedure DebugTBA(TBA: TBoxArray);
+     By: Wanted
+ * procedure DebugTB(TB: TBox);
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DebugBitmap2(bmpDebug: Integer);
+Contributors: Wanted
+Description: Simply debugs a bitmap by displaying it on the debug window.
+Date Created: October 21st, 2011. By Wanted
+Last Modified: October 21st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DebugBitmap2(bmpDebug: Integer);
+var
+  W, H: Integer;
+begin
+  GetBitmapSize(bmpDebug, W, H);
+  DisplayDebugImgWindow(W, H);
+  SafeDrawBitmap(bmpDebug, GetDebugCanvas, 0, 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
+Contributors: Wanted
+Description: Debugs an ATPA to the debug window with tons of options.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
+var
+  Width, Height, bmpDebug, I, II, H, HH, Col: Integer;
+  mTPA, TPA: TPointArray;
+  B, BB: TBox;
+begin
+  mTPA := MergeATPA(ATPA);
+  B := GetTPABounds(mTPA);
+  TPADimensions(mTPA, Width, Height);
+  DecEx(B.X1, Round(Width * 0.25));
+  if (B.X1 < 0) then
+    B.X1 := 0;
+  DecEx(B.Y1, Round(Height * 0.25));
+  if (B.Y1 < 0) then
+    B.Y1 := 0;
+  IncEx(B.X2, Round(Width * 0.25));
+  IncEx(B.Y2, Round(Height * 0.25));
+  Width := B.X2 - B.X1 + 1;
+  Height := B.Y2 - B.Y1 + 1;
+  bmpDebug := BitmapFromString(Width, Height, '');
+  if (ShowClient) then
+    CopyClientToBitmap(bmpDebug, B.X1, B.Y1, B.X2, B.Y2);
+  if ((ShowTPAs) or (ShowTPABorders) or (ShowTPAIndexes)) then
+  begin
+    H := High(ATPA);
+    for I := 0 to H do
+    begin
+      Col := Random(clWhite + 1);
+      OffsetTPA(ATPA[I], -B.X1, -B.Y1);
+      HH := High(ATPA[I]);
+      if (ShowTPAs) then
+        for II := 0 to HH do
+          FastSetPixel(bmpDebug, ATPA[I][II].X, ATPA[I][II].Y, Col);
+      if ((ShowTPABorders) or (ShowTPAIndexes)) then
+        Col := Random(clWhite + 1);
+      if (ShowTPABorders) then
+      begin
+        TPA := TBToTPA(GetTPABounds(ATPA[I]));
+        HH := High(TPA);
+          for II := 0 to HH do
+            FastSetPixel(bmpDebug, TPA[II].X, TPA[II].Y, Col);
+      end;
+      if (ShowTPAIndexes) then
+      begin
+        TPA := LoadTextTPA(IntToStr(I), StatChars);
+        BB := GetTPABounds(ATPA[I]);
+        OffsetTPA(TPA, BB.X1 + 2, BB.Y1 + 2);
+        HH := High(TPA);
+          for II := 0 to HH do
+            FastSetPixel(bmpDebug, TPA[II].X, TPA[II].Y, Col);
+      end;
+    end;
+    if (ShowATPABorder) then
+    begin
+      TPA := TBToTPA(ATPABounds(ATPA));
+      H := High(TPA);
+      for I := 0 to H do
+        FastSetPixel(bmpDebug, TPA[I].X, TPA[I].Y, clBlue);
+    end;
+  end;
+  DebugBitmap2(bmpDebug);
+  if (FileName <> '') then
+  begin
+    if (not (DirectoryExists(ScriptPath + 'Debug\'))) then
+      SaveBitmap(bmpDebug, ScriptPath + FileName + '.bmp')
+    else
+      SaveBitmap(bmpDebug, ScriptPath + 'Debug\' + FileName + '.bmp');
+  end;
+  FreeBitmap(bmpDebug);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DebugATPABounds(ATPA: T2DPointArray);
+Contributors: Wanted
+Description: Debugs an ATPA to the debug window with all options enabled.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DebugATPABounds(ATPA: T2DPointArray);
+begin
+  DebugATPABoundsEx(ATPA, True, True, True, True, True, '');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DebugATPA(ATPA: T2DPointArray);
+Contributors: Wanted
+Description: Debugs an ATPA to the debug window.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DebugATPA(ATPA: T2DPointArray);
+begin
+  DebugATPABoundsEx(ATPA, True, True, True, False, False, '');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DebugTPA(TPA: TPointArray);
+Contributors: Wanted
+Description: Debugs a TPA to the debug window.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DebugTPA(TPA: TPointArray);
+begin
+  DebugATPA([TPA]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DebugTBA(TBA: TBoxArray);
+Contributors: Wanted
+Description: Debugs a TBoxArray
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DebugTBA(TBA: TBoxArray);
+var
+  ATPA: T2DPointArray;
+  I, H: LongInt;
+begin
+  H := High(TBA);
+  SetLength(ATPA, H + 1);
+  for I := 0 to H do
+    ATPA[I] := [Point(TBA[I].X1, TBA[I].Y1), Point(TBA[I].X2, TBA[I].Y2)];
+  DebugATPABoundsEx(ATPA, True, False, False, True, True, '');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DebugTB(TB: TBox);
+Contributors: Wanted
+Description: Debugs a TBox.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DebugTB(TB: TBox);
+begin
+  DebugTBA([TB]);
+end;
