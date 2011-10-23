@@ -20,9 +20,9 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure DebugBitmap2(bmpDebug: Integer);
-Contributors: Wanted
+Contributors: Anonymous, Wanted.
 Description: Simply debugs a bitmap by displaying it on the debug window.
-Date Created: October 21st, 2011. By Wanted
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
 Last Modified: October 21st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 

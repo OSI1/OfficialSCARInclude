@@ -90,15 +90,10 @@ Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionBoxExistsEx(var OptionBoxTPA: TPointArray): Boolean;
-var
-  ATPA: T2DPointArray;
 begin
   FindColors(OptionBoxTPA, clOptionsBox, RSX1, RSY1, RSX2, RSY2);
   if (Length(OptionBoxTPA) < 1500) then
     Exit;
-  ATPA := SplitTPA(OptionBoxTPA, 2);
-  SortATPASize(ATPA, True);
-  OptionBoxTPA := ATPA[0];
   Result := True;
 end;
 
