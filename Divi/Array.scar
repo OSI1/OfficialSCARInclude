@@ -12,8 +12,6 @@
      By: Anonymous
  * function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
      By: Wanted
- * procedure SortATPAFrom(var ATPA: T2DPointArray; P: TPoint);
-     By: Wanted
  * procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -153,56 +151,16 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure SortATPAFrom(var ATPA: T2DPointArray; P: TPoint);
-Contributors: Wanted
-Description: Sorts the TPAs from closest to point based on MiddleTPAs.
-Date Created: October 22nd, 2011. By Wanted
-Last Modified: October 22nd, 2011. By Wanted
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure SortATPAFrom(var ATPA: T2DPointArray; P: TPoint);
-var
-  NewATPA: T2DPointArray;
-  TPA, TPA2: TPointArray;
-  I, II, H: Integer;
-begin
-  H := High(ATPA);
-  SetLength(TPA, H + 1);
-  SetLength(NewATPA, H + 1);
-  for I := 0 to H do
-    TPA[I] := MiddleTPA(ATPA[I]);
-  TPA2 := CopyTPA(TPA);
-  SortTPAEx(TPA, P);
-  for I := 0 to H do
-    for II := 0 to H do
-      if (TPA2[II].X = TPA[I].X) then
-        if (TPA2[II].Y = TPA[I].Y) then
-        begin
-          NewATPA[I] := CopyTPA(ATPA[II]);
-          Break
-        end;
-  ATPA := NewATPA;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
 Contributors: Wanted, Freddy.
 Description: Sorts ATPAs based in their TPA lengths.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: October 22nd, 2011. By Wanted
+Last Modified: October 23rd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
-var
-  NewATPA: T2DPointArray;
-  I, H: LongInt;
 begin
   SortATPABySize(ATPA);
-  if (not (BigFirst)) then
-    Exit;
-  H := High(ATPA);
-  SetLength(NewATPA, H + 1);
-  for I := 0 to H do
-    NewATPA[H - I] := CopyTPA(ATPA[I]);
-  ATPA := NewATPA;
+  if (BigFirst) then
+    InvertATPA(ATPA);
 end;
