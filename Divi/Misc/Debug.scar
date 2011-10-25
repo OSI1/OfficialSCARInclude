@@ -48,6 +48,9 @@ var
   Width, Height, bmpDebug, I, II, H, HH, Col: Integer;
   mTPA, TPA: TPointArray;
   B, BB: TBox;
+  {$IFNDEF RS2}
+    Arial: Integer;
+  {$ENDIF}
 begin
   mTPA := MergeATPA(ATPA);
   B := GetTPABounds(mTPA);
@@ -87,7 +90,12 @@ begin
       end;
       if (ShowTPAIndexes) then
       begin
-        TPA := LoadTextTPA(IntToStr(I), StatChars);
+        {$IFDEF RS2}
+          TPA := LoadTextTPA(IntToStr(I), StatChars);
+        {$ELSE}
+          Arial := LoadCharsFromFont2('Arial', 8, True, False, False, False);
+          TPA := LoadTextTPA(IntToStr(I), Arial);
+        {$ENDIF}
         BB := GetTPABounds(ATPA[I]);
         OffsetTPA(TPA, BB.X1 + 2, BB.Y1 + 2);
         HH := High(TPA);
