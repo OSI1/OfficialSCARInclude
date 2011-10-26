@@ -1,16 +1,31 @@
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+OSI - The Official SCAR Include is licensed under BSD. http://en.wikipedia.org/wiki/BSD_licenses
 
-  *  OSI stands for Official SCAR Include.
 
-  *  OSI is a library of commonly used functions and procedures that make it
-     easier for code writers, while providing global standardization.
+The official documentation/manual/wiki of OSI can be found http://wiki.scar-divi.com/osi/index.php?title=OSI_Manual
 
-  *  OSI 1 is the first public release that is used for SCAR 3.25.XX-3.XX.XX
+The official project location of OSI is https://github.com/OSI1/OSI1
 
-  *  OSI 2 and onward will be for SCAR 4 Titan.
+The official homepage of OSI is http://scar-divi.com
 
-  *  OSI is currently the combined works of Timer, Freddy1990, and Wanted.
+The official fourms of OSI are http://forums.scar-divi.com/
 
-  *  OSI's Official homepage is http://scar-divi.com and http://freddy1990.com
 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+OSI is credited to a selected group of developers under the lead of James Ryan Bolduc (alias Wanted) and Frédéric Hannes (alias Freddy1990).
+
+including 
+
+Developers: c0de, Home, Naum, Timer, TRiLeZ, & Zyt3x.
+Contributors Camaro, Dynamite, fuzz357, & wundertüte.
+
+
+Special thanks to selected testing group
+
+including
+
+Testers: footballjds, Jakkle, Janilabo, King of the Nites, King Kong, mormonman, Neron, YoHoJo, & zippoxer.
+
+New qualifying recruits welcome in all areas. See official forums for details.
+
+
+
+-Wanted
