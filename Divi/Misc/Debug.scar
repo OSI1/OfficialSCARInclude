@@ -83,7 +83,7 @@ begin
         Col := Random(clWhite + 1);
       if (ShowTPABorders) then
       begin
-        TPA := TBToTPA(GetTPABounds(ATPA[I]));
+        TPA := TBOutlineToTPA(GetTPABounds(ATPA[I]));
         HH := High(TPA);
           for II := 0 to HH do
             FastSetPixel(bmpDebug, TPA[II].X, TPA[II].Y, Col);
@@ -105,7 +105,7 @@ begin
     end;
     if (ShowATPABorder) then
     begin
-      TPA := TBToTPA(ATPABounds(ATPA));
+      TPA := TBOutlineToTPA(ATPABounds(ATPA));
       H := High(TPA);
       for I := 0 to H do
         FastSetPixel(bmpDebug, TPA[I].X, TPA[I].Y, clBlue);

@@ -4,9 +4,9 @@
 --------------------------------------------------------------------------------
  * function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
      By: Wanted
- * function TBToTPA(TB: TBox): TPointArray;
+ * function TBOutlineToTPA(TB: TBox): TPointArray;
      By: Wanted
- * function TBAToATPA(TBA: TBoxArray): T2DPointArray;
+ * function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
      By: Wanted
  * function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
      By: Anonymous
@@ -47,14 +47,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBToTPA(TB: TBox): TPointArray;
+function TBOutlineToTPA(TB: TBox): TPointArray;
 Contributors: Wanted
 Description: Turns the outline of a TBox into a TPA.
 Date Created: October 22nd, 2011. By Wanted
 Last Modified: October 22nd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function TBToTPA(TB: TBox): TPointArray;
+function TBOutlineToTPA(TB: TBox): TPointArray;
 var
   I, II, Hi, Lo: Integer;
 begin
@@ -86,21 +86,21 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBAToATPA(TBA: TBoxArray): T2DPointArray;
+function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
 Contributors: Wanted
 Description: Turns the outline of multiple TBoxes into multi TPAs.
 Date Created: October 22nd, 2011. By Wanted
 Last Modified: October 22nd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function TBAToATPA(TBA: TBoxArray): T2DPointArray;
+function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
 var
   I, H: LongInt;
 begin
   H := High(TBA);
   SetLength(Result, H + 1);
   for I := 0 to H do
-    Result[I] := TBToTPA(TBA[I]);
+    Result[I] := TBOutlineToTPA(TBA[I]);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
