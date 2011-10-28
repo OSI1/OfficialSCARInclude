@@ -15,6 +15,8 @@
      By: Wanted
  * const World Switcher Indexes
      By: Wanted
+ * const Chat function indexes
+     By: Wanted
  * const Useful in game colors
      By: Anonymous
  * type TRS2Player = record
@@ -266,6 +268,33 @@ const
   WS_Members            = 3;
   WS_LootShare          = 4;
   WS_Ping               = 5;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Chat function indexes
+Contributors: Wanted.
+Description: Index handles for various chat routines.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Chat_On               = 0;
+  Chat_All              = 0;
+  Chat_Filter           = 1;
+  Chat_Friends          = 1;
+  Chat_Off              = 2;
+  Chat_Hide             = 3;
+  Chat_XPEarned         = 4;
+  Chat_View             = 5;
+  Chat_All_Tab          = 0;
+  Chat_Game_Tab         = 1;
+  Chat_Public_Tab       = 2;
+  Chat_Private_Tab      = 3;
+  Chat_Frineds_Tab      = 4;
+  Chat_Clan_Tab         = 5;
+  Chat_Trade_Tab        = 6;
+  Chat_Assist_Tab       = 7;
+  Chat_Report_Tab       = 8;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors

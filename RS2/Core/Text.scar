@@ -218,17 +218,20 @@ function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; Typ
 Contributors: Wanted
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: October 28th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; TypeC: ClickActions): Boolean;
 var
   TBoA: TBooleanArray;
+  TPA: TPointArray;
   TBA: TBoxArray;
   I, H: LongInt;
+  P: TPoint;
+  B: TBox;
 begin
   TBoA := OptionsExistsEx(Options, Colors, TBA);
-  H := High(Options);
+  H := High(TBoA);
   for I := 0 to H do
     if (TBoA[I]) then
     begin
@@ -236,6 +239,13 @@ begin
       Result := True;
       Exit;
     end;
+  FindColors(TPA, clOptionsBox, RSX1, RSY1, RSX2, RSY2);
+  B := GetTPABounds(TPA);
+  B := Box(B.X1 - 10, B.Y1 - 10, B.X2 + 10, B.Y2 + 10);
+  TPA := TPAFromBox(Box(B.X1 - 35, B.Y1 - 35, B.X2 + 35, B.Y2 + 35));
+  TPAFilterBoxes(TPA, [B]);
+  P := TPA[Random(Length(TPA))];
+  MMouse(P.X, P.Y, 0, 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

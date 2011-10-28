@@ -3,12 +3,115 @@
                                    Runescape 2
                                   Chat Routines
 --------------------------------------------------------------------------------
- *
+ * function GetCurrentChat: Integer;
+     By: Wanted
+ * function GetChatTabBounds(ChatTab: Integer): TBox;
+     By: Wanted
+ * function GetChatStatus(Chat: Integer): Integer;
+     By: Wanted
+ * function SetChat(Chat, State: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-//CurrentChat
-//CurrentChatStatus
-//SetChat
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCurrentChat: Integer;
+Contributors: Wanted
+Description: Returns the current chat you have open.
+Date Created:  October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCurrentChat: Integer;
+begin
+  for Result := 0 to 7 do
+    if (not (InIntArray([5399409, 6965324, 5342384], GetColor(9 + (57 * Result), 484)))) then
+      Break;
+  if (Result > 7) then
+    Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatTabBounds(ChatTab: Integer): TBox;
+Contributors: Wanted
+Description: Returns the boundries of the chat tab you want.
+Date Created:  October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatTabBounds(ChatTab: Integer): TBox;
+begin
+  Result := IntToBox(9 + (57 * ChatTab), 481, 56 + (57 * ChatTab), 502);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatStatus(Chat: Integer): Integer;
+Contributors: Wanted
+Description: Returns the stats of the chat you enter.
+Date Created:  October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatStatus(Chat: Integer): Integer;
+var
+  Colors: TIntegerArray;
+  P: TPoint;
+  B: TBox;
+begin
+  if (Chat = 0) then
+  begin
+    Result := 0;
+    Exit;
+  end;
+  Colors := [65280, 65535, 255, 16776960];
+  B := GetChatTabBounds(Chat);
+  for Result := 0 to 3 do
+    if (FindColor(P.X, P.Y, Colors[Result], B.X1, B.Y1, B.X2, B.Y2)) then
+      Exit;
+  if (Result > 3) then
+    Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetChat(Chat, State: Integer): Boolean;
+Contributors: Wanted
+Description: Sets the desired chat to the desired state.
+Date Created:  October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetChat(Chat, State: Integer): Boolean;
+var
+  CurrentState, CurrentChat: Integer;
+  Options: T2DStringArray;
+  TypeC: ClickActions;
+  B: TBox;
+begin
+  Result := True;
+  CurrentChat := GetCurrentChat;
+  CurrentState := GetChatStatus(Chat);
+  if (CurrentChat = Chat) then
+    if (State = Chat_View) then
+      Exit;
+  if (CurrentState = State) then
+    Exit;
+  Result := False;
+  B := GetChatTabBounds(Chat);
+  if (((State = 0) and (Chat = 0)) or (State = 5)) then
+    TypeC := ClickLeft
+  else
+    TypeC := ClickRight;
+  MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
+  if (TypeC = ClickLeft) then
+  begin
+    Result := True;
+    Exit;
+  end;
+  Options := [TStringArray(['All', 'On']), TStringArray(['ilter', 'iend', 'Fri']), TStringArray(['Off', 'ff', 'Of']),
+              TStringArray(['ide', 'Hi', 'id']), TStringArray(['XP', 'arned', 'ime'])];
+  if (InRange(State, 0, High(Options))) then
+    Result := ChooseOptionMulti(Options[State]);
+end;
+
 //SetChats
 //ClickContinueEx
 //ClickContinue

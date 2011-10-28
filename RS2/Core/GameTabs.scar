@@ -33,6 +33,14 @@
      By: Wanted
  * function SetRest(Rest: Boolean): Boolean;
      By: Wanted
+ * function IsXPBarOpen: Boolean;
+     By: Wanted
+ * function ToggleXPBar(Open: Boolean): Boolean;
+     By: Wanted
+ * function GetXPBarTotal: LongInt;
+     By: Wanted
+ * function ResetXPBar: Boolean;
+     By: Wanted
  * function ConvertXPToLevel(xp: Integer): Integer;
      By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
