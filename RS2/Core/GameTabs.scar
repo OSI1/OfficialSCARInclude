@@ -338,6 +338,101 @@ begin
   WaitFunc(@IsResting, True, 50, 150, 1500, 2500);
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsXPBarOpen: Boolean;
+Contributors: Wanted, Anonymous.
+Description: Returns true if the XP counter bar is open.
+Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsXPBarOpen: Boolean;
+begin
+  Result := CountColor(clWhite, 342, 55, 510, 69) > 40;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleXPBar(Open: Boolean): Boolean;
+Contributors: Wanted, Anonymous.
+Description: Opens or closes the XP Bar, true if had to toggle.
+Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleXPBar(Open: Boolean): Boolean;
+begin
+  Result := IsXPBarOpen <> Open;
+  if (not (Result)) then
+    Exit;
+  MouseCircle(12, 534, 63, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetXPBarTotal: LongInt;
+Contributors: Wanted, Anonymous.
+Description: Returns the number from your XP Bar.
+Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetXPBarTotal: LongInt;
+var
+  Previous: Boolean;
+  TPA: TPointArray;
+  B: TBox;
+  P: TPoint;
+begin
+  Previous := IsXPBarOpen;
+  if (ToggleXPBar(True)) then
+    WaitFunc(@IsXPBarOpen, True, 10, 15, 1500, 1750);
+  FindColorsTolerance(TPA, clWhite, 342, 55, 510, 69, 1);
+  B := GetTPABounds(TPA);
+  B := IntToBox(B.X1 - 2, B.Y1 - 2, B.X2 + 2, B.Y2 + 2);
+  IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, 'XP', 0, XPChars, False, False, 0, 1, clWhite);
+  Result := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 1, XPChars, False, False, 0, 2, clWhite, 60, False, tr_AllChars)), 0);
+  if (not (Previous)) then
+    Wait(RandomRange(500, 1500));
+  ToggleXPBar(Previous);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ResetXPBar: Boolean;
+Contributors: Wanted, Anonymous.
+Description: Resets the XP Bar.
+Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ResetXPBar: Boolean;
+begin
+  MouseCircle(12, 534, 63, ClickRight);
+  Result := ChooseOptionMulti(['Res', 'ese', 'set']);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ConvertXPToLevel(xp: Integer): Integer;
+Contributors: Anonymous
+Description: Returns skill level based on experience points.
+Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: August 7th, 2011. By Anonymous. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ConvertXPToLevel(xp: Integer): Integer;
+var
+  level, exp: Integer;
+begin
+  for level := 1 to 99 do
+  begin
+    exp := exp + Trunc(level + 300 * Pow(2, level / 7));
+    if ((exp / 4) > xp) then
+    begin
+      Result := level;
+      Exit;
+    end;
+  end;
+  Result := 99;
+end;
+
 //DidClick
 //SetFightMode
 //GetCombatLevel
@@ -360,7 +455,3 @@ end;
 //FixAllSettings
 //DoEmotion
 //LobbyTab
-//IsXPBarOpen
-//ToggleXPBar
-//GetXPBarTotal
-//ResetXPTotal

@@ -10,6 +10,8 @@
      By: Wanted
  * function WaitFindColorTolerance(var X, Y: Integer; Color, X1, Y1, X2, Y2, Tol: Integer; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
      By: Wanted
+ * function WaitFindColorsTolerance(var TPA: TPointArray; Color, X1, Y1, X2, Y2, Tol, DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+     By: Wanted
  * procedure WaitNone;
      By: Wanted
  * function TheTime: string;
@@ -104,6 +106,37 @@ begin
       Exit
     else
       WaitRR(MinWait, MaxWait);
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WaitFindColorsTolerance(var TPA: TPointArray; Color, X1, Y1, X2, Y2, Tol, DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+Contributors: Wanted
+Description: Repeats FindColorsTolerance until greater or les than  Count.
+Date Created: October 28th, 2011. By Wanted
+Last Modified: October 28th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WaitFindColorsTolerance(var TPA: TPointArray; Color, X1, Y1, X2, Y2, Tol, DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+var
+  T, L: LongInt;
+begin
+  Result := True;
+  T := GetSystemTime + RR(MinTotalWait, MaxTotalWait);
+  while (GetSystemTime < T) do
+  begin
+    FindColorsTolerance(TPA, Color, X1, Y1, X2, Y2, Tol);
+    L := Length(TPA);
+    if (GreaterThan) then
+    begin
+      if (L > DesiredCount) then
+        Exit;
+    end
+    else
+      if (L < DesiredCount) then
+        Exit;
+    WaitRR(MinWait, MaxWait);
+  end;
   Result := False;
 end;
 

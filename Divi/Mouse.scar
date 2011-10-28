@@ -122,7 +122,7 @@ procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
 var
   P: TPoint;
 begin
-  P := RCirclePoint(Radius, CX, CY);
+  P := RCirclePoint(CX, CY, Radius);
   case TypeC of
     ClickLeft: Mouse(P.X, P.Y, 0, 0, True);
     ClickRight: Mouse(P.X, P.Y, 0, 0, False);

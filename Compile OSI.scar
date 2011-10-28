@@ -30,7 +30,7 @@ var
 begin
   T := GetSystemTime;
   SetUpOSI;
-  WriteLn('OSI Succefully Set up (' + IntToStr(GetSystemTime - T) + ' ms)');
+  WriteLn('OSI Succefully set up (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 
 begin

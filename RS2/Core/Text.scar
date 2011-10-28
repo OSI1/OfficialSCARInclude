@@ -86,15 +86,12 @@ Contributors: Wanted
 Description: Returns true if the box that contains the ChooseOptions is up.
 OptionBoxTPA contains all the points within that match clOptionsBox.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: October 28th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionBoxExistsEx(var OptionBoxTPA: TPointArray): Boolean;
 begin
-  FindColors(OptionBoxTPA, clOptionsBox, RSX1, RSY1, RSX2, RSY2);
-  if (Length(OptionBoxTPA) < 1500) then
-    Exit;
-  Result := True;
+  Result := WaitFindColorsTolerance(OptionBoxTPA, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 1500, True, 50, 150, 1500, 2500);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
