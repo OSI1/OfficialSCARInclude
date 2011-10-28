@@ -3,8 +3,37 @@
                                    Runescape 2
                                   Map Routines
 --------------------------------------------------------------------------------
- *
+ * function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
+     By: Wanted
+ * function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
+Contributors: Wanted
+Description: Finds color within minimap circle.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
+begin
+  Result := FindColorCircleTolerance(X, Y, Color, MMCX, MMCY, MMRD, Tol);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
+Contributors: Wanted
+Description: Finds colors within minimap circle.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
+begin
+  Result := FindColorsCircleTolerance(Points, Color, Tol, MMCXe, MMCYe, MMRDe);
+end;
 
 //MMToMS
 //MSToMM

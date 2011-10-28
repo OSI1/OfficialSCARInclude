@@ -14,6 +14,10 @@
      By: Wanted
  * procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
      By: Wanted
+ * procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+     By: Wanted
+ * function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -163,4 +167,61 @@ begin
   SortATPABySize(ATPA);
   if (BigFirst) then
     InvertATPA(ATPA);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+Contributors: Wanted
+Description: Removes all points not within distance.
+Date Created: October 28th, 2011. By Wanted
+Last Modified: October 28th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+var
+  H, L, I, HH: Integer;
+  NewTPA: TPointArray;
+  Dist: Extended;
+begin
+  H := High(Points);
+  L := Low(Points);
+  for I := L to H do
+  begin
+    Dist := (Sqrt(Sqr(Points[I].X - CX) + Sqr(Points[I].Y - CY)));
+    if (Dist >= MinDist) then
+      if (Dist <= MaxDist) then
+      begin
+        SetLength(NewTPA, HH + 1);
+        NewTPA[HH] := Points[I];
+        Inc(HH);
+      end;
+  end;
+  Points := NewTPA;
+end;
+
+{procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng, CX, CY: Extended);
+var
+  H, L, I, HH: Integer;
+  NewTPA: TPointArray;
+begin
+  FilterPointsDist(Point, SRad, ERad, CX, CY);
+  H := High(Points);
+  L := Low(Points);
+  for I := L to H do
+
+end; }
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+Contributors: Wanted
+Description: Finds colors within circle.
+Date Created: October 28th, 2011. By Wanted
+Last Modified: October 28th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+begin
+  FindColorsTolerance(Points, Color, Floor(CX - R), Floor(CY - R), Ceil(CX + R), Ceil(CY + R), Tol);
+  FilterPointsDist(Points, 0, R, CX, CY);
+  Result := (Length(Points) > 1);
 end;

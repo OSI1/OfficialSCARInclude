@@ -29,8 +29,8 @@ var
   T: LongInt;
 begin
   T := GetSystemTime;
-  SetupOSI;
-  WriteLn('OSI Succefully Setup (' + IntToStr(GetSystemTime - T) + ' ms)');
+  SetUpOSI;
+  WriteLn('OSI Succefully Set up (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 
 begin

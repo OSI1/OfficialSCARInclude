@@ -12,5 +12,5 @@ begin
 end;
 
 begin
-  SetupOSI;
+  SetUpOSI;
 end.

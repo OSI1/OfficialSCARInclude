@@ -33,6 +33,8 @@
      By: Wanted
  * function SetRest(Rest: Boolean): Boolean;
      By: Wanted
+ * function ConvertXPToLevel(xp: Integer): Integer;
+     By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

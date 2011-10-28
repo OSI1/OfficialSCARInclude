@@ -8,6 +8,8 @@
      By: Wanted
  * function RCirclePoint(CX, CY, Radius: Integer): TPoint;
      By: Wanted & Zyt3x.
+ * function AngleBetweenPointsDegress(P1, P2: TPoint): Extended;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -58,6 +60,22 @@ begin
     Result := RndCirclePoint(CX, CY, Radius);
   {$ELSE}
     Result := RndCirclePointG(CX, CY, Radius, OSI_Variance);
+  {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function AngleBetweenPointsExDegress(P1, P2: TPoint): Extended;
+Contributors: Wanted
+Description: Calculates the relative angle between two points in degrees.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function AngleBetweenPointsExDegress(P1, P2: TPoint): Extended;
+begin
+  Result := Degrees(ArcTan2(P1.Y - P2.Y, P1.X - P2.X));
+  {$IFDEF RS2}
+    Result := Result + 90.0;
   {$ENDIF}
 end;
 
