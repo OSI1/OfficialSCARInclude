@@ -86,12 +86,16 @@ Contributors: Wanted
 Description: Returns true if the box that contains the ChooseOptions is up.
 OptionBoxTPA contains all the points within that match clOptionsBox.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modified: October 30th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionBoxExistsEx(var OptionBoxTPA: TPointArray): Boolean;
+var
+  TPA: TPointArray;
 begin
   Result := WaitFindColorsTolerance(OptionBoxTPA, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 1500, True, 50, 150, 1500, 2500);
+  FindColors(TPA, clOptionsBoxSel, RSX1, RSY1, RSX2, RSY2);
+  OptionBoxTPA := CombineTPA(OptionBoxTPA, TPA);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -156,12 +160,12 @@ function AllOptionColors: TIntegerArray;
 Contributors: Wanted
 Description: Returns all the possible text colors for options except for player levels.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: October 30th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function AllOptionColors: TIntegerArray;
 begin
-  Result := [clNPCOption, clObjectOption, clPlayerOption, clActionOption, clItemOption];
+  Result := [clNPCOption, clObjectOption, clPlayerOption, clActionOption, clActionOption2, clItemOption];
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -218,7 +222,7 @@ function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; Typ
 Contributors: Wanted
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modified: October 30th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; TypeC: ClickActions): Boolean;
@@ -239,7 +243,7 @@ begin
       Result := True;
       Exit;
     end;
-  FindColors(TPA, clOptionsBox, RSX1, RSY1, RSX2, RSY2);
+  OptionBoxExistsEx(TPA);
   B := GetTPABounds(TPA);
   B := Box(B.X1 - 10, B.Y1 - 10, B.X2 + 10, B.Y2 + 10);
   TPA := TPAFromBox(Box(B.X1 - 35, B.Y1 - 35, B.X2 + 35, B.Y2 + 35));
