@@ -7,10 +7,14 @@
      By: BenLand100
  * procedure MoveMouse(X, Y: Integer);
      By: BenLand100
- * procedure MoveWindMouse(x, y, rx, ry: Integer);
-     By: Wanted
+ * procedure GetMousePos(var X, Y: Integer);
+     By: BenLand100
+ * procedure WindMouse(xs, ys, xe, ye, gravity, wind, minWait, maxWait, maxStep, targetArea: extended);
+     By: BenLand100
  * procedure MoveWindMouseEx(x, y, rx, ry: Integer);
-     By: Wanted
+     By: BenLand100
+ * procedure MoveWindMouse(x, y, rx, ry: Integer);
+     By: BenLand100
  * procedure HoldMouse(X, Y: Integer; Left: Boolean);
      By: BenLand100
  * procedure ReleaseMouse(X, Y: Integer; Left: Boolean);
@@ -20,8 +24,6 @@
  * procedure KeyDown(Key: Byte);
      By: BenLand100
  * procedure SendKeys(S: string);
-     By: BenLand100
- * procedure GetMousePos(var X, Y: Integer);
      By: BenLand100
  * function GetColor(X, Y: Integer): Integer;
      By: BenLand100
@@ -68,8 +70,105 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure GetMousePos(var X, Y: Integer);
+Contributors: BenLand100, Wanted.
+Description: SMART override for GetMousePos.
+Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
+Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure GetMousePos(var X, Y: Integer);
+begin
+  SmartGetMousePos(X, Y);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure WindMouse(xs, ys, xe, ye, gravity, wind, minWait, maxWait, maxStep, targetArea: extended);
+Contributors: BenLand100
+Description: The infamous source code to WindMouse.
+Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure WindMouse(xs, ys, xe, ye, gravity, wind, minWait, maxWait, maxStep, targetArea: extended);
+var
+  veloX, veloY, windX, windY, veloMag, dist, randomDist, lastDist, step: extended;
+  lastX, lastY: integer;
+  sqrt2, sqrt3, sqrt5: extended;
+begin
+  sqrt2:= sqrt(2);
+  sqrt3:= sqrt(3);
+  sqrt5:= sqrt(5);
+  while hypot(xs - xe, ys - ye) > 1 do
+  begin
+    dist:= hypot(xs - xe, ys - ye);
+    wind:= minE(wind, dist);
+    if dist >= targetArea then
+    begin
+      windX:= windX / sqrt3 + (random(round(wind) * 2 + 1) - wind) / sqrt5;
+      windY:= windY / sqrt3 + (random(round(wind) * 2 + 1) - wind) / sqrt5;
+    end else
+    begin
+      windX:= windX / sqrt2;
+      windY:= windY / sqrt2;
+      if (maxStep < 3) then
+      begin
+        maxStep:= random(3) + 3.0;
+      end else
+      begin
+        maxStep:= maxStep / sqrt5;
+      end;
+    end;
+    veloX:= veloX + windX;
+    veloY:= veloY + windY;
+    veloX:= veloX + gravity * (xe - xs) / dist;
+    veloY:= veloY + gravity * (ye - ys) / dist;
+    if hypot(veloX, veloY) > maxStep then
+    begin
+      randomDist:= maxStep / 2.0 + random(round(maxStep) div 2);
+      veloMag:= sqrt(veloX * veloX + veloY * veloY);
+      veloX:= (veloX / veloMag) * randomDist;
+      veloY:= (veloY / veloMag) * randomDist;
+    end;
+    lastX:= Round(xs);
+    lastY:= Round(ys);
+    xs:= xs + veloX;
+    ys:= ys + veloY;
+    if (lastX <> Round(xs)) or (lastY <> Round(ys)) then
+      MoveMouse(Round(xs), Round(ys));
+    step:= hypot(xs - lastX, ys - lastY);
+    wait(round((maxWait - minWait) * (step / maxStep) + minWait));
+    lastdist:= dist;
+  end;
+  if (Round(xe) <> Round(xs)) or (Round(ye) <> Round(ys)) then
+    MoveMouse(Round(xe), Round(ye));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure MoveWindMouseEx(x, y, rx, ry, MouseSpeed: Integer);
+Contributors: BenLand100, Wanted.
+Description: SMART override for MoveWindMouseEx.
+Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
+Last Modification: October 39th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure MoveWindMouseEx(x, y, rx, ry, MouseSpeed: Integer);
+var
+  cx, cy: integer;
+  randSpeed: Extended;
+begin
+  GetMousePos(cx, cy);
+  randSpeed:= (random(MouseSpeed) / 2.0 + MouseSpeed) / 10.0;
+  if randSpeed = 0.0 then
+    randSpeed := 0.1;
+  X := x + random(rx);
+  Y := y + random(ry);
+  WindMouse(cx,cy,x,y,9.0,3.0,10.0/randSpeed,15.0/randSpeed,10.0*randSpeed,10.0*randSpeed);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MoveWindMouse(x, y, rx, ry: Integer);
-Contributors: Wanted, BenLand100.
+Contributors: BenLand100, Wanted.
 Description: SMART override for MoveWindMouse.
 Date Created: October 39th, 2011. By Wanted. RS2 Build 669.
 Last Modification: October 39th, 2011. By Wanted. RS2 Build 669.
@@ -77,20 +176,7 @@ Last Modification: October 39th, 2011. By Wanted. RS2 Build 669.
 
 procedure MoveWindMouse(x, y, rx, ry: Integer);
 begin
-  SmartWindMouse(x, y)
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure MoveWindMouseEx(x, y, rx, ry, MouseSpeed: Integer);
-Contributors: Wanted, BenLand100.
-Description: SMART override for MoveWindMouseEx.
-Date Created: October 39th, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 39th, 2011. By Wanted. RS2 Build 669.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure MoveWindMouseEx(x, y, rx, ry, MouseSpeed: Integer);
-begin
-  SmartWindMouse(x, y)
+  MoveWindMouseEx(x, y, rx, ry, 15);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -160,19 +246,6 @@ Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
 procedure SendKeys(S: string);
 begin
   SmartSendKeys(S);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure GetMousePos(var X, Y: Integer);
-Contributors: BenLand100, Wanted.
-Description: SMART override for GetMousePos.
-Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure GetMousePos(var X, Y: Integer);
-begin
-  SmartGetMousePos(X, Y);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -254,10 +327,16 @@ Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
 
 function SmartSetupEx(Server: Integer; SafeMode: Boolean): Boolean;
 var
-  Prefix, S: string;
+  Prefix, S, S2: string;
 begin
   if (SafeMode) then
+  begin
     S := 's';
+    S2 := 'safe mode enabled';
+  end
+  else
+    S2 := 'safe mode disbaled';
+  WriteLn('Initating SMART Runescape Server ' + IntToStr(Server) + ' with ' + S2 + '...');
   try
     Prefix := ReadINI('World' + IntToStr(Server), 'Prefix', WorldsINIPath);
     if (Prefix = '') then
