@@ -62,7 +62,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: August 20th, 2011. By Wanted
+Last Modified: October 30th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -99,13 +99,6 @@ begin
     LoadRS2WorldArray;
     AllowQuickChat := True;
     AllowLootShare := True;
-    if (SMART_Server = 0) then
-    begin
-      SMART_Server := 11;
-      SMART_Members := False;
-      SMART_Signed := True;
-      SMART_SuperDetail := False;
-    end;
     {$IFDEF SMART}
       if (not (NonAutomaticSMART)) then
         InitiateSMART;

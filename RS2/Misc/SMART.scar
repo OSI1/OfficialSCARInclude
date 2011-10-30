@@ -7,6 +7,10 @@
      By: BenLand100
  * procedure MoveMouse(X, Y: Integer);
      By: BenLand100
+ * procedure MoveWindMouse(x, y, rx, ry: Integer);
+     By: Wanted
+ * procedure MoveWindMouseEx(x, y, rx, ry: Integer);
+     By: Wanted
  * procedure HoldMouse(X, Y: Integer; Left: Boolean);
      By: BenLand100
  * procedure ReleaseMouse(X, Y: Integer; Left: Boolean);
@@ -61,6 +65,32 @@ Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
 procedure MoveMouse(X, Y: Integer);
 begin
   SmartMoveMouse(X, Y);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure MoveWindMouse(x, y, rx, ry: Integer);
+Contributors: Wanted, BenLand100.
+Description: SMART override for MoveWindMouse.
+Date Created: October 39th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 39th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure MoveWindMouse(x, y, rx, ry: Integer);
+begin
+  SmartWindMouse(x, y)
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure MoveWindMouseEx(x, y, rx, ry, MouseSpeed: Integer);
+Contributors: Wanted, BenLand100.
+Description: SMART override for MoveWindMouseEx.
+Date Created: October 39th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 39th, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure MoveWindMouseEx(x, y, rx, ry, MouseSpeed: Integer);
+begin
+  SmartWindMouse(x, y)
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -163,14 +193,14 @@ procedure SmartSetTarget;
 Contributors: BenLand100, Wanted.
 Description: Makes SMART SCAR's canvas target.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SmartSetTarget;
 var
   Smart_Bitmap: Integer;
 begin
-  Smart_Bitmap:= BitmapFromString(765, 503, '');
+  Smart_Bitmap:= BitmapFromString(RSPW - 1, RSPH - 1, '');
   GetBitmapCanvas(Smart_Bitmap).Handle:= SmartGetDC;
   SetTargetBitmap(Smart_Bitmap);
   FreeBitmap(Smart_Bitmap);
@@ -219,10 +249,10 @@ function SmartSetupEx(Server: Integer; Members, Signed, SuperDetail: Boolean): B
 Contributors: BenLand100, Wanted.
 Description: Initiates SMART.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: October 2nd, 2011. By Wanted. RS2 Build 666.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function SmartSetupEx(Server: Integer; Members, Signed, SuperDetail, SafeMode: Boolean): Boolean;
+function SmartSetupEx(Server: Integer; SafeMode: Boolean): Boolean;
 var
   Prefix, S: string;
 begin
@@ -236,7 +266,7 @@ begin
       WriteLn('Failed to load SMART!');
       Exit;
     end;
-    SmartSetup('http://' + Prefix + '.runescape.com/', 'plugin.js?param=o0,a' + IntToStr((Integer(not (Signed)) + 1) * Integer(not ((SuperDetail and Signed)))) + ',m' + IntToStr(Integer(Members)), 765, 503, S);
+    SmartSetup('http://' + Prefix + '.runescape.com/', ',f5', RSPW - 1, RSPH - 1, S);
   except
     WriteLn('Failed to load SMART!');
   end;
@@ -248,7 +278,7 @@ function InitiateSMART: Boolean;
 Contributors: Wanted
 Description: Initiates SMART more simply.
 Date Created: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modification: October 2nd, 2011. By Wanted. RS2 Build 666.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InitiateSMART: Boolean;
@@ -256,13 +286,8 @@ var
   P: TPoint;
 begin
   if (SMART_Server = 0) then
-  begin
     SMART_Server := 11;
-    SMART_Members := False;
-    SMART_Signed := True;
-    SMART_SuperDetail := False;
-  end;
-  if (not (SmartSetupEx(SMART_Server, SMART_Members, SMART_Signed, SMART_SuperDetail, True))) then
+  if (not (SmartSetupEx(SMART_Server, True))) then
     Exit;
   SetTargetDC(SmartGetDC);
   Result := WaitFindColorTolerance(P.X, P.Y, 12312554, 698, 15, 700, 17, 5, True, 100, 250, 90000, 120000);
