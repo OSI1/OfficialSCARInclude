@@ -25,6 +25,10 @@
      By: Wanted
  * function Flag: Boolean;
      By: Wanted
+ * function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
+     By: Wanted
+ * function MouseFlag(X, Y, RX, RY: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -174,9 +178,8 @@ Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
 function FlagEx(Distance: Extended): Boolean;
 var
   T: LongInt;
-  I: Integer;
 begin
-  T := GetSystemTime + RR(15000, 20000);
+  T := GetSystemTime + RR(25000, 30000);
   while (GetFlagDistance > Distance) do
   begin
     if (GetSystemTime > T) then
@@ -184,12 +187,11 @@ begin
     WaitRR(100, 200);
   end;
   Result := True;
-  I := Round(Distance * 100);
   if (Distance < 10.5) then
     if (IsRunning) then
-      WaitRR(1050 - I, 1150 - I)
+      WaitRR(1050 - Round(Distance * 100), 1150 - Round(Distance * 100))
     else
-      WaitRR(1350 - I, 1450 - I);
+      WaitRR(1350 - Round(Distance * 128), 1450 - Round(Distance * 128));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -203,6 +205,40 @@ Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
 function Flag: Boolean;
 begin
   Result := FlagEx(0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
+Contributors: Wanted
+Description: If on minimap clicks and then waits for flag to exist then does FlagEx.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
+var
+  P: TPoint;
+begin
+  P := RRectanglePoint(X - RX, Y - RY, X + RX, Y + RY);
+  if (not (OnMM(P.X, P.Y))) then
+    Exit;
+  Mouse(P.X, P.Y, 0, 0, True);
+  if (not (WaitFunc(@FlagExists, True, 100, 200, 4000, 5000))) then
+    Exit;
+  Result := FlagEx(Distance);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MouseFlag(X, Y, RX, RY: Integer): Boolean;
+Contributors: Wanted
+Description: If on minimap clicks and then waits for flag to exist then does Flag.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MouseFlag(X, Y, RX, RY: Integer): Boolean;
+begin
+  Result := MouseFlagEx(X, Y, RX, RY, 0);
 end;
 
 //MMToMS
