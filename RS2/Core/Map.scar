@@ -7,6 +7,10 @@
      By: Wanted
  * function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
      By: Wanted
+ * function GetCompassAngleRadians: Extended;
+     By: Wanted
+ * function GetCompassAngleDegress: Extended;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -33,6 +37,40 @@ Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
 function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
 begin
   Result := FindColorsCircleTolerance(Points, Color, Tol, MMCXe, MMCYe, MMRDe);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCompassAngleRadians: Extended;
+Contributors: Anonymous, Wanted.
+Description: Gets the compass angle in radians.
+Date Created: August 6th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCompassAngleRadians: Extended;
+var
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  FindColors(TPA, 1911089, 527, 8, 559, 41);
+  FilterPointsDist(TPA, 0, 18, 543, 25);
+  P := MiddleTPA(TPA);
+  Result := (ArcTan2(-(P.Y - 24), P.X - 543) - (Pi / 2));
+  if (Result < 0) then
+    Result := Result + (2 * Pi);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCompassAngleDegrees: Extended;
+Contributors: Anonymous, Wanted.
+Description: Gets the compass angle in degrees.
+Date Created: August 6th, 2011. By Anonymous. RS2 Build 660.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 669.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCompassAngleDegrees: Extended;
+begin
+  Result := Degrees(GetCompassAngleRadians);
 end;
 
 //MMToMS

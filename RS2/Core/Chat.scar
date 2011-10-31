@@ -11,6 +11,10 @@
      By: Wanted
  * function SetChat(Chat, State: Integer): Boolean;
      By: Wanted
+ * function SetChats(Chats, States: TIntegerArray): TBooleanArray;
+     By: Wanted
+ * function FixChat: Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -112,7 +116,49 @@ begin
     Result := ChooseOptionMulti(Options[State]);
 end;
 
-//SetChats
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetChats(Chats, States: TIntegerArray): TBooleanArray;
+Contributors: Wanted
+Description: Sets the desired chats to the desired states.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetChats(Chats, States: TIntegerArray): TBooleanArray;
+var
+  I, H: Integer;
+begin
+  H := High(Chats);
+  if (Length(Chats) > Length(States)) then
+    H := Length(Chats) - (Length(Chats) - Length(States));
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := SetChat(Chats[I], States[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FixChat: Boolean;
+Contributors: Wanted
+Description: Scrolls the chat bar all the way down, if needed true.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FixChat: Boolean;
+var
+  TPA: TPointArray;
+  B: TBox;
+begin
+  if (GetColor(505, 440) = 592137) then
+    Exit;
+  Result := True;
+  FindColors(TPA, 592137, 498, 361, 511, 440);
+  if (Length(TPA) < 1) then
+    Exit;
+  B := TPABounds(TPA);
+  DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, 493, 442, 515, 461, True);
+end;
+
 //ClickContinueEx
 //ClickContinue
 //TextLineCoords
@@ -122,4 +168,3 @@ end;
 //GetAllChatTextArr
 //InChat
 //InChatMulti
-//FixChat
