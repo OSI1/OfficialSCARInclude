@@ -8,6 +8,8 @@
      By: Wanted
  * function RCirclePoint(CX, CY, Radius: Integer): TPoint;
      By: Wanted & Zyt3x.
+ * function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
+     By: Wanted
  * function AngleBetweenPointsDegress(P1, P2: TPoint): Extended;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -61,6 +63,19 @@ begin
   {$ELSE}
     Result := RndCirclePointG(CX, CY, Radius, OSI_Variance);
   {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
+Contributors: Wanted
+Description: Returns the exact distance between two points.
+Date Created: October 31st, 2011. By Wanted
+Last Modification: October 31st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
+begin
+  Result := (Sqrt(Sqr(X1 - X2) + Sqr(Y1 - Y2)));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

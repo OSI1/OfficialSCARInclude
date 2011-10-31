@@ -174,7 +174,7 @@ procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Ex
 Contributors: Wanted
 Description: Removes all points not within distance.
 Date Created: October 28th, 2011. By Wanted
-Last Modified: October 28th, 2011. By Wanted
+Last Modified: October 31st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
@@ -187,7 +187,7 @@ begin
   L := Low(Points);
   for I := L to H do
   begin
-    Dist := (Sqrt(Sqr(Points[I].X - CX) + Sqr(Points[I].Y - CY)));
+    Dist := DistanceEx(Points[I].X, Points[I].Y, CX, CY);
     if (Dist >= MinDist) then
       if (Dist <= MaxDist) then
       begin

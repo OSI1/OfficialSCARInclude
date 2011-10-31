@@ -15,8 +15,8 @@
 {$ENDIF}
 
 {.include OSI\Divi\Globals.scar}
-{.include OSI\Divi\Array.scar}
 {.include OSI\Divi\Math.scar}
+{.include OSI\Divi\Array.scar}
 {.include OSI\Divi\Timing.scar}
 {$IFDEF SMART}
   {.include OSI\RS2\Core\Globals.scar}
