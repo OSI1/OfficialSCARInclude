@@ -19,6 +19,10 @@
      By: BenLand100
  * procedure ReleaseMouse(X, Y: Integer; Left: Boolean);
      By: BenLand100
+ * procedure HoldMouseMid(X, Y: Integer);
+     By: Wanted
+ * procedure ReleaseMouseMid(X, Y: Integer);
+     By: Wanted
  * procedure KeyUp(Key: Byte);
      By: BenLand100
  * procedure KeyDown(Key: Byte);
@@ -203,6 +207,32 @@ Last Modification: September 18th, 2011. By Wanted. RS2 Build 666.
 procedure ReleaseMouse(X, Y: Integer; Left: Boolean);
 begin
   SmartReleaseMouse(X, Y, Left);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure HoldMouseMid(X, Y: Integer);
+Contributors: Wanted, BenLand100.
+Description: SMART override for HoldMouseMid.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure HoldMouseMid(X, Y: Integer);
+begin
+  SmartHoldMousePlus(X, Y, 2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ReleaseMouseMid(X, Y: Integer);
+Contributors: Wanted, BenLand100.
+Description: SMART override for ReleaseMouseMid.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ReleaseMouseMid(X, Y: Integer);
+begin
+  SmartReleaseMousePlus(X, Y, 2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
