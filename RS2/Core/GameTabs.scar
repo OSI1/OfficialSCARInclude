@@ -228,7 +228,7 @@ function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
 Contributors: Wanted, Home.
 Description: Clicks a Tab_Equip_ slot.
 Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
-Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
@@ -240,17 +240,12 @@ begin
   if (not (IsSlotEquipped(Slot))) then
     Exit;
   MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
-  T := GetSystemTime + RR(1500, 2500);            // WaitFunc ?
+  T := GetSystemTime + RR(1500, 2500);
   Result := (TypeC = MoveTo);
   repeat
     case TypeC of
       ClickLeft: Result := (not (IsSlotEquipped(Slot)));
-      //ClickRight: Result := OptionTextAvilable; //                        FIX
-      ClickRight: begin                           //                        FIX
-                    WaitRR(150, 250);             //                        FIX
-                    Result := True;               //                        FIX
-                    Exit;                         //                        FIX
-                  end;                            //                        FIX
+      ClickRight: Result := OptionBoxExists;
     end;
     if (Result) then
       Exit;
@@ -294,7 +289,7 @@ function IsRunning: Boolean;
 begin
   if (not (SimilarColors(94120, GetColor(723, 120), 10))) then
     if (not (SimilarColors(6740460, GetColor(722, 104), 10))) then
-      Exit;                     // ADD. Need Low Resting Body Color... Possible?
+      Exit;                     // ADD Need Low Resting Body Color... Possible?
   Result := True;
 end;
 
@@ -332,7 +327,7 @@ function SetRest(Rest: Boolean): Boolean;
 Contributors: Wanted, Zyt3x.
 Description: Sets rest on.
 Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
-Last Modification: September 26th, 2011. By Wanted. RS2 Build 666.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetRest: Boolean;
@@ -340,9 +335,8 @@ begin
   Result := (IsResting);
   if (Result) then
     Exit;
-  Exit;                                                               // FIX
   MouseCircle(15, 724, 108, ClickRight);
-  Result := False;//WaitOption('Rest', 500);                         // FIX
+  Result := ChooseOption('est');
   WaitFunc(@IsResting, True, 50, 150, 1500, 2500);
 end;
 
