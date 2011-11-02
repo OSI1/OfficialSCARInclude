@@ -43,6 +43,8 @@
      By: Wanted
  * function ConvertXPToLevel(xp: Integer): Integer;
      By: Anonymous
+ * function GetSkillBounds(Skill: Integer): TBox;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -435,11 +437,23 @@ begin
   Result := 99;
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetSkillBounds(Skill: Integer): TBox;
+Contributors: Wanted
+Description: Returns the box of the skill on the stats tab.
+Date Created: November 1st, 2011. By Wanted. RS2 Build 670.
+Last Modification: November 1st, 2011. By Wanted. RS2 Build 670.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetSkillBounds(Skill: Integer): TBox;
+begin
+  Result := Box(550 + ((Skill mod 3) * 62), 210 + ((Skill div 3) * 28), 609 + ((Skill mod 3) * 62), 235 + ((Skill div 3) * 28));
+end;
+
 //DidClick
 //SetFightMode
 //GetCombatLevel
 //SetRetaliate
-//SkillToCoords
 //GetSkillInfo
 //GetSkillLevel
 //IsResting

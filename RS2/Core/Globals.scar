@@ -139,37 +139,37 @@ const Skill_ Indexes
 Contributors: Anonymous, Wanted, Zyt3x.
 Description: Index handles for various RS2 skills.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: September 5th, 2011. By Zyt3x. RS2 Build 663.
+Last Modification: November 1st, 2011. By Wanted. RS2 Build 670.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
   Skill_Count         = 25;
   Skill_Attack        = 0;
-  Skill_Defense       = 1;
-  Skill_Defence       = 1;
-  Skill_Strength      = 2;
-  Skill_Hitpoints     = 3;
-  Skill_HP            = 3;
-  Skill_Constitution  = 3;
-  Skill_Range         = 4;
-  Skill_Prayer        = 5;
-  Skill_Magic         = 6;
-  Skill_Cooking       = 7;
-  Skill_Woodcutting   = 8;
-  Skill_Fletching     = 9;
-  Skill_Fishing       = 10;
-  Skill_Firemaking    = 11;
-  Skill_Crafting      = 12;
-  Skill_Smithing      = 13;
-  Skill_Mining        = 14;
-  Skill_Herblore      = 15;
-  Skill_Agility       = 16;
-  Skill_Thieving      = 17;
-  Skill_Slayer        = 18;
-  Skill_Farming       = 19;
-  Skill_Runecrafting  = 20;
-  Skill_Hunter        = 21;
-  Skill_Construction  = 22;
+  Skill_Hitpoints     = 1;
+  Skill_HP            = 1;
+  Skill_Constitution  = 1;
+  Skill_Mining        = 2;
+  Skill_Strength      = 3;
+  Skill_Agility       = 4;
+  Skill_Smithing      = 5;
+  Skill_Defense       = 6;
+  Skill_Defence       = 6;
+  Skill_Herblore      = 7;
+  Skill_Fishing       = 8;
+  Skill_Range         = 9;
+  Skill_Thieving      = 10;
+  Skill_Cooking       = 11;
+  Skill_Prayer        = 12;
+  Skill_Crafting      = 13;
+  Skill_Firemaking    = 14;
+  Skill_Magic         = 15;
+  Skill_Fletching     = 16;
+  Skill_Woodcutting   = 17;
+  Skill_Runecrafting  = 18;
+  Skill_Slayer        = 19;
+  Skill_Farming       = 20;
+  Skill_Construction  = 21;
+  Skill_Hunter        = 22;
   Skill_Summoning     = 23;
   Skill_Dungeoneering = 24;
 
