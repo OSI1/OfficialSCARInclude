@@ -19,17 +19,26 @@ function RR(Min, Max: Integer): Integer;
 Contributors: Freddy, Wanted.
 Description: Outputs a value within a range.
 Date Created: September 22nd, 2011. By Wanted
-Last Modification: September 22nd, 2011. By Wanted
+Last Modification: November 3rd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RR(Min, Max: Integer): Integer;
-begin
-  {$IFDEF NoVariance}
+{$IFDEF NoVariance}
+  begin
     Result := RandomRange(Min, Max);
-  {$ELSE}
-    Result := RandomRangeG(Min, Max, OSI_Variance);
-  {$ENDIF}
-end;
+  end;
+{$ELSE}
+  var
+    Origin, Rand: Integer;
+  begin
+    Origin := ((Min + Max) div 2);
+      Rand := RandomG(Floor(Abs(Max - Origin)), OSI_Variance);
+    case (Random(2)) of
+      0: Result := Origin - Rand;
+      1: Result := Origin + Rand;
+    end;
+  end;
+{$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
