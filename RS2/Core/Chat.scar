@@ -28,7 +28,7 @@ Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
 function GetCurrentChat: Integer;
 begin
   for Result := 0 to 7 do
-    if (not (InIntArray([5399409, 6965324, 5342384], GetColor(9 + (57 * Result), 484)))) then
+    if (not (TIAContains([5399409, 6965324, 5342384], GetColor(9 + (57 * Result), 484)))) then
       Break;
   if (Result > 7) then
     Result := -1;
