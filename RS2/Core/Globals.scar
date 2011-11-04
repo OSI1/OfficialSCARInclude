@@ -15,6 +15,8 @@
      By: Wanted
  * const World Switcher Indexes
      By: Wanted
+ * const RS2 direction/angle Indexes
+     By: Wanted
  * const Chat function indexes
      By: Wanted
  * const Useful in game colors
@@ -270,6 +272,30 @@ const
   WS_Members            = 3;
   WS_LootShare          = 4;
   WS_Ping               = 5;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const RS2 direction/angle Indexes
+Contributors: Wanted.
+Description: Index handles for MakeCompass and all runescape directions.
+Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Dir_North             = 0;
+  Dir_Up                = 0;
+  Dir_Top               = 0;
+  Dir_NorthEast         = 45;
+  Dir_East              = 90;
+  Dir_Right             = 90;
+  Dir_SouthEast         = 135;
+  Dir_South             = 180;
+  Dir_Down              = 180;
+  Dir_Bottom            = 180;
+  Dir_SouthWest         = 225;
+  Dir_West              = 270;
+  Dir_Left              = 270;
+  Dir_NorthWest         = 315;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Chat function indexes

@@ -13,6 +13,12 @@
      By: Wanted
  * function GetCompassAngleDegress: Extended;
      By: Wanted
+ * function MakeCompass(Angle: Extended): Boolean;
+     By: Wanted
+ * procedure SetAngle(Highest: Boolean);
+     By: Naum
+ * procedure ClickCompass(AdjustToHigh: Boolean);
+     By: Wanted
  * function FindFlag(var X, Y: Integer): Boolean;
      By: Wanted
  * function FlagExists: Boolean;
@@ -104,6 +110,83 @@ Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 function GetCompassAngleDegrees: Extended;
 begin
   Result := Degrees(GetCompassAngleRadians);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MakeCompass(Angle: Extended): Boolean;
+Contributors: Wanted, Anonymous.
+Description: Rotates the compass using the arrow keys to the desired angle.
+Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MakeCompass(Angle: Extended): Boolean;
+var
+  InitialAngle, DesiredAngle, CurrentAngle: Extended;
+  T: LongInt;
+  Left: Boolean;
+begin
+  InitialAngle := GetCompassAngleDegrees;
+  if (InitialAngle < 0) then
+    Exit;
+  DesiredAngle := FixD(Angle);
+  if ((MinE(Abs(InitialAngle - DesiredAngle), MinE(Abs(InitialAngle - (DesiredAngle + 360.0)), Abs((InitialAngle + 360.0) - DesiredAngle)))) <= 7.0) then
+  begin
+    Result := True;
+    Exit;
+  end;
+  Left := (Round((360 - InitialAngle) + DesiredAngle) mod 360 <= Round((InitialAngle + 360) - DesiredAngle) mod 360);
+  KeyDown((Integer(not Left) * 2) + 37);
+  T := GetSystemTime + RR(12000, 14000);
+  repeat
+    Wait(1);
+    CurrentAngle := GetCompassAngleDegrees;
+    Result := (MinE(Abs(CurrentAngle - DesiredAngle), MinE(Abs(CurrentAngle - (DesiredAngle + 360)), Abs((CurrentAngle + 360) - DesiredAngle))) <= 7.0);
+    if (Result) then
+      Break;
+  until (GetSystemTime > T);
+  KeyUp((Integer(not Left) * 2) + 37);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SetAngle(Highest: Boolean);
+Contributors: Naum, Anonymous, Wanted.
+Description: Tilts the camera angle.
+Date Created: August 6th, 2011. By Naum. RS2 Build 660.
+Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SetAngle(Highest: Boolean);
+begin
+  KeyDown((Integer(not (Highest)) * 2) + 38);
+  WaitRR(1000, 1500);
+  KeyUp((Integer(not Highest) * 2) + 38);
+  WaitRR(400, 600);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ClickCompass(AdjustToHigh: Boolean);
+Contributors: Wanted, Anonymous.
+Description: Clicks to face north and then tilts the camera angle if desired.
+Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ClickCompass(AdjustToHigh: Boolean);
+begin
+  if (not ((InRange(Round(GetCompassAngleDegrees), 7, 353)))) then
+    Exit;
+  case Random(10) of
+    0: begin
+         MouseCircle(18, 543, 25, ClickRight);
+         if (not (ChooseOptionMulti(['ace', 'orth']))) then
+         Exit;
+       end;
+  else
+    MouseCircle(18, 543, 25, ClickLeft);
+  end;
+  if (AdjustToHigh) then
+    SetAngle(True);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
