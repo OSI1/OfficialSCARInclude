@@ -91,8 +91,8 @@ end;
 function AngleBetweenPointsExDegress(P1, P2: TPoint): Extended;
 Contributors: Wanted
 Description: Calculates the relative angle between two points in degrees.
-Date Created: October 28th, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function AngleBetweenPointsExDegress(P1, P2: TPoint): Extended;

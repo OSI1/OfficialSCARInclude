@@ -45,6 +45,22 @@
      By: Anonymous
  * function GetSkillBounds(Skill: Integer): TBox;
      By: Wanted
+ * function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
+     By: Wanted
+ * function GetSkillLevel(Skill: Integer): Integer;
+     By: Wanted
+ * function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
+     By: Wanted
+ * function GetMMLevel(Skill: Integer): Integer;
+     By: Wanted
+ * function HoverSkill(Skill: Integer): Boolean;
+     By: Wanted
+ * function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck: Boolean): TIntegerArray;
+     By: Wanted
+ * function GetXP(Skill: Integer): Integer;
+     By: Wanted
+ * procedure GetAllLevels;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -230,7 +246,7 @@ function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
 Contributors: Wanted, Home.
 Description: Clicks a Tab_Equip_ slot.
 Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
@@ -260,23 +276,21 @@ function GetCurrentMusic: string;
 Contributors: Zyt3x, Wanted.
 Description: Returns the current music that's playing.
 Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: September 5th, 2011. By Wanted. RS2 Build 663.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCurrentMusic: string;
 var
-  InitialTab: Integer;
   TPA: TPointArray;
   B: TBox;
 begin
-  InitialTab := GetCurrentTab;
-  SetGameTab(Tab_Music);
+  if (not (SetGameTab(Tab_Music))) then
+    Exit;
   if (FindColors(TPA, 39401, 547, 240, 736, 266)) then
   begin
     B := GetTPABounds(TPA);
     Result := Trim(GetTextAtEx(B.X1 - 1, 245, 0, UpChars, False, False, 0, 1, 39401, 50, False, tr_AllChars));
   end;
-  SetGameTab(InitialTab);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -329,7 +343,7 @@ function SetRest(Rest: Boolean): Boolean;
 Contributors: Wanted, Zyt3x.
 Description: Sets rest on.
 Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetRest: Boolean;
@@ -347,7 +361,7 @@ function IsXPBarOpen: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Returns true if the XP counter bar is open.
 Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsXPBarOpen: Boolean;
@@ -360,7 +374,7 @@ function ToggleXPBar(Open: Boolean): Boolean;
 Contributors: Wanted, Anonymous.
 Description: Opens or closes the XP Bar, true if had to toggle.
 Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ToggleXPBar(Open: Boolean): Boolean;
@@ -376,7 +390,7 @@ function GetXPBarTotal: LongInt;
 Contributors: Wanted, Anonymous.
 Description: Returns the number from your XP Bar.
 Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetXPBarTotal: LongInt;
@@ -404,7 +418,7 @@ function ResetXPBar: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Resets the XP Bar.
 Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ResetXPBar: Boolean;
@@ -441,8 +455,8 @@ end;
 function GetSkillBounds(Skill: Integer): TBox;
 Contributors: Wanted
 Description: Returns the box of the skill on the stats tab.
-Date Created: November 1st, 2011. By Wanted. RS2 Build 670.
-Last Modification: November 1st, 2011. By Wanted. RS2 Build 670.
+Date Created: November 1st, 2011. By Wanted. RS2 Build 672.
+Last Modification: November 1st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetSkillBounds(Skill: Integer): TBox;
@@ -450,24 +464,187 @@ begin
   Result := Box(550 + ((Skill mod 3) * 62), 210 + ((Skill div 3) * 28), 609 + ((Skill mod 3) * 62), 235 + ((Skill div 3) * 28));
 end;
 
-//DidClick
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
+Contributors: Wanted
+Description: Returns the number from the skill level in skill tabs.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
+var
+  TPA: TPointArray;
+  B, B2: TBox;
+begin
+  if (not (SetGameTab(Tab_Stats))) then
+    Exit;
+  B := GetSkillBounds(Skill);
+  if (BottomNumber) then
+    B2 := Box(B.X1 + 39, B.Y1 + 13, B.X1 + 58, B.Y1 + 24)
+  else
+    B2 := Box(B.X1 + 20, B.Y1 + 1, B.X1 + 44, B.Y1 + 14);
+  FindColors(TPA, clYellow, B2.X1, B2.Y1, B2.X2, B2.Y2);
+  B := GetTPABounds(TPA);
+  Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, clYellow, 10, False, tr_Digits)), -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetSkillLevel(Skill: Integer): Integer;
+Contributors: Wanted
+Description: Returns the number from the skill level in skill tabs.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetSkillLevel(Skill: Integer): Integer;
+begin
+  Result := GetSkillLevelEx(Skill, True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
+Contributors: Wanted
+Description: Returns the number from the skill level on the minimap.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
+var
+  ColorsDec: TIntegerArray;
+  ColorsStr: TStringArray;
+  TPA: TPointArray;
+  I: Integer;
+  B: TBox;
+begin
+  Result := -1;
+  case Skill of
+    Skill_HP: B := Box(721, 28, 749, 43);
+    Skill_Prayer: B := Box(739, 67, 760, 83);
+    Skill_Run: B := Box(735, 106, 759, 121);
+    Skill_Summoning: B := Box(695, 128, 764, 162);
+  else
+    Exit;
+  end;
+  ColorsDec := [65280, 65535, 2070783, 255];
+  ColorsStr  := ['green', 'yellow', 'orange', 'red'];
+  for I := 0 to 3 do
+    if (FindColors(TPA, ColorsDec[I], B.X1, B.Y1, B.X2, B.Y2)) then
+      Break;
+  if (I > 3) then
+    Exit;
+  B := GetTPABounds(TPA);
+  Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, ColorsDec[I], 10, False, tr_Digits)), -1);
+  ColorState := ColorsStr[I];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMMLevel(Skill: Integer): Integer;
+Contributors: Wanted
+Description: Returns the number from the skill level on the minimap.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetMMLevel(Skill: Integer): Integer;
+var
+  S: string;
+begin
+  Result := GetMMLevelEx(Skill, S);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function HoverSkill(Skill: Integer): Boolean;
+Contributors: Wanted
+Description: Hovers a skill. Put a triple digit number for a random skill.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function HoverSkill(Skill: Integer): Boolean;
+var
+  B: TBox;
+begin
+  if (not (SetGameTab(Tab_Stats))) then
+    Exit;
+  if (Skill > (Skill_Count - 1)) then
+    B := GetSkillBounds(Random(Skill_Count))
+  else
+    B := GetSkillBounds(Skill);
+  MouseBox(B.X1, B.Y1, B.X2, B.Y2, MoveTo);
+  Result := True;
+  WaitRR(1000, 2000);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck: Boolean): TIntegerArray;
+Contributors: Wanted
+Description: Returns the information by hovering the skill.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck: Boolean): TIntegerArray;
+var
+  TBoA: TBooleanArray;
+  TSA: TStringArray;
+  TPA: TPointArray;
+  I: Integer;
+  P: TPoint;
+  B: TBox;
+begin
+  Result := [-1, -1, -1];
+  if (not (HoverSkill(Skill))) then
+    Exit;
+  if (not (WaitFindColorsTolerance(TPA, clSkillInfoBox, MIX1, MIY1, MIX2, MIY2, 0, 50, True, 100, 200, 1500, 2500))) then
+    Exit;
+  B := TPABounds(TPA);
+  TSA := ['urrent', 'ext', 'ainder'];
+  TBoA := [CurrentCheck, NextCheck, RemainderCheck];
+  for I := 0 to 2 do
+    if (TBoA[I]) then
+      if (IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, TSA[I], 0, SmallChars, False, False, 0, 2, clBlack)) then
+        Result[I] := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 0, SmallChars, False, False, 0, 2, clBlack, 50, False, tr_AllChars)), -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetXP(Skill: Integer): Integer;
+Contributors: Wanted
+Description: Returns the information by hovering the skill.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetXP(Skill: Integer): Integer;
+var
+  TIA: TIntegerArray;
+begin
+  TIA := GetSkillInfo(Skill, True, False, False);
+  Result := TIA[0];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure GetAllLevels;
+Contributors: Wanted
+Description: Stores all levels from the stats tab to current player.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure GetAllLevels;
+var
+  I: Integer;
+begin
+  for I := 0 to Skill_Count do
+    Players[CurrentPlayer].Level[I] := GetSkillLevel(I);
+end;
+
 //SetFightMode
 //GetCombatLevel
 //SetRetaliate
-//GetSkillInfo
-//GetSkillLevel
-//IsResting
-//GetMMLevels
-//GetXP
-//GetXPTillNextLevel
-//HPPercent
-//GetAllLevels
 //GetCurrentWorld
-//SetRun
-//GetEnergy
-//SetRest
 //RestUntil
 //AdjustSettings
 //FixAllSettings
 //DoEmotion
-//LobbyTab

@@ -16,6 +16,8 @@
      By: Wanted
  * procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
      By: Wanted
+ * procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+     By: Wanted
  * function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -199,17 +201,22 @@ begin
   Points := NewTPA;
 end;
 
-{procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng, CX, CY: Extended);
-var
-  H, L, I, HH: Integer;
-  NewTPA: TPointArray;
-begin
-  FilterPointsDist(Point, SRad, ERad, CX, CY);
-  H := High(Points);
-  L := Low(Points);
-  for I := L to H do
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+Contributors: Anonymous, Freddy, Wanted.
+Description: Removes all points from a TPA except for a given slice.
+Date Created: November 3, 2011. By Wanted
+Last Modified: November 3, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-end; }
+procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+begin
+ {$IFDEF RS2}
+   TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(SAng - 90), Radians(EAng - 90));
+ {$ELSE}
+   TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(SAng), Radians(EAng));
+ {$ENDIF}
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;

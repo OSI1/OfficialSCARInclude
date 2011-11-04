@@ -21,8 +21,8 @@
 function GetCurrentChat: Integer;
 Contributors: Wanted
 Description: Returns the current chat you have open.
-Date Created:  October 28th, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Date Created:  October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCurrentChat: Integer;
@@ -38,8 +38,8 @@ end;
 function GetChatTabBounds(ChatTab: Integer): TBox;
 Contributors: Wanted
 Description: Returns the boundries of the chat tab you want.
-Date Created:  October 28th, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Date Created:  October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetChatTabBounds(ChatTab: Integer): TBox;
@@ -51,8 +51,8 @@ end;
 function GetChatStatus(Chat: Integer): Integer;
 Contributors: Wanted
 Description: Returns the stats of the chat you enter.
-Date Created:  October 28th, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Date Created:  October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetChatStatus(Chat: Integer): Integer;
@@ -79,8 +79,8 @@ end;
 function SetChat(Chat, State: Integer): Boolean;
 Contributors: Wanted
 Description: Sets the desired chat to the desired state.
-Date Created:  October 28th, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Date Created:  October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetChat(Chat, State: Integer): Boolean;
@@ -120,8 +120,8 @@ end;
 function SetChats(Chats, States: TIntegerArray): TBooleanArray;
 Contributors: Wanted
 Description: Sets the desired chats to the desired states.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetChats(Chats, States: TIntegerArray): TBooleanArray;
@@ -140,8 +140,8 @@ end;
 function FixChat: Boolean;
 Contributors: Wanted
 Description: Scrolls the chat bar all the way down, if needed true.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FixChat: Boolean;

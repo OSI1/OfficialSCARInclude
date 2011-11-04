@@ -91,7 +91,7 @@ procedure WindMouse(xs, ys, xe, ye, gravity, wind, minWait, maxWait, maxStep, ta
 Contributors: BenLand100
 Description: The infamous source code to WindMouse.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure WindMouse(xs, ys, xe, ye, gravity, wind, minWait, maxWait, maxStep, targetArea: extended);
@@ -213,8 +213,8 @@ end;
 procedure HoldMouseMid(X, Y: Integer);
 Contributors: Wanted, BenLand100.
 Description: SMART override for HoldMouseMid.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure HoldMouseMid(X, Y: Integer);
@@ -226,8 +226,8 @@ end;
 procedure ReleaseMouseMid(X, Y: Integer);
 Contributors: Wanted, BenLand100.
 Description: SMART override for ReleaseMouseMid.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure ReleaseMouseMid(X, Y: Integer);
@@ -296,7 +296,7 @@ procedure SmartSetTarget;
 Contributors: BenLand100, Wanted.
 Description: Makes SMART SCAR's canvas target.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SmartSetTarget;
@@ -352,7 +352,7 @@ function SmartSetupEx(Server: Integer; Members, Signed, SuperDetail: Boolean): B
 Contributors: BenLand100, Wanted.
 Description: Initiates SMART.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SmartSetupEx(Server: Integer; SafeMode: Boolean): Boolean;
@@ -387,7 +387,7 @@ function InitiateSMART: Boolean;
 Contributors: Wanted
 Description: Initiates SMART more simply.
 Date Created: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InitiateSMART: Boolean;

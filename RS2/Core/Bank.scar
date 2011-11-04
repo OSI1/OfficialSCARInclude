@@ -21,8 +21,8 @@
 function BankScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
@@ -39,8 +39,8 @@ end;
 function CloseBank(CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then closes it if open.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CloseBank(CheckBS: Boolean): Boolean;
@@ -57,8 +57,8 @@ end;
 function DepositAll(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAll(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
@@ -81,8 +81,8 @@ end;
 function ToggleUseNotes(Use: Boolean): Boolean;
 Contributors: Wanted
 Description: Enables or disables note usage. Returns true if toggle was needed.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ToggleUseNotes(Use: Boolean): Boolean;
@@ -103,8 +103,8 @@ function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
 Contributors: Wanted
 Description: Returns true if at bankscreen and CheckBS.
 Searches for SearchText using the in bank search glass.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
@@ -124,8 +124,8 @@ function FixBank(FixUp: Boolean): Boolean;
 Contributors: Wanted
 Description: Scrolls bank all the way to top or bottom, true if not needed to do so.
 Searches for SearchText using the in bank search glass.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 670.
+Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FixBank(FixUp: Boolean): Boolean;

@@ -86,7 +86,7 @@ Contributors: Wanted
 Description: Returns true if the box that contains the ChooseOptions is up.
 OptionBoxTPA contains all the points within that match clOptionsBox.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 30th, 2011. By Wanted. RS2 Build 669.
+Last Modified: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionBoxExistsEx(var OptionBoxTPA: TPointArray): Boolean;
@@ -160,7 +160,7 @@ function AllOptionColors: TIntegerArray;
 Contributors: Wanted
 Description: Returns all the possible text colors for options except for player levels.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 30th, 2011. By Wanted. RS2 Build 669.
+Last Modified: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function AllOptionColors: TIntegerArray;
@@ -222,7 +222,7 @@ function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; Typ
 Contributors: Wanted
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 30th, 2011. By Wanted. RS2 Build 669.
+Last Modified: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; TypeC: ClickActions): Boolean;

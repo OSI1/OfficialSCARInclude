@@ -29,14 +29,16 @@
      By: Wanted
  * function MouseFlag(X, Y, RX, RY: Integer): Boolean;
      By: Wanted
+ * function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OnMM(X, Y: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if point is on the minimap.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 669.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OnMM(X, Y: Integer): Boolean;
@@ -48,8 +50,8 @@ end;
 function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
 Contributors: Wanted
 Description: Finds color within minimap circle.
-Date Created: October 28th, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
@@ -61,8 +63,8 @@ end;
 function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
 Contributors: Wanted
 Description: Finds colors within minimap circle.
-Date Created: October 28th, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 669.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
@@ -75,7 +77,7 @@ function GetCompassAngleRadians: Extended;
 Contributors: Anonymous, Wanted.
 Description: Gets the compass angle in radians.
 Date Created: August 6th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCompassAngleRadians: Extended;
@@ -96,7 +98,7 @@ function GetCompassAngleDegrees: Extended;
 Contributors: Anonymous, Wanted.
 Description: Gets the compass angle in degrees.
 Date Created: August 6th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 669.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCompassAngleDegrees: Extended;
@@ -108,8 +110,8 @@ end;
 function FindFlag(var X, Y: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if flag exists and the cord of the lowest point.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 669.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 669.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindFlag(var X, Y: Integer): Boolean;
@@ -123,8 +125,8 @@ end;
 function FlagExists: Boolean;
 Contributors: Wanted
 Description: Returns true if flag exists.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FlagExists: Boolean;
@@ -138,8 +140,8 @@ end;
 function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
 Contributors: Wanted
 Description: Returns true if flag exists.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
@@ -158,8 +160,8 @@ end;
 function GetFlagDistance: Extended;
 Contributors: Wanted
 Description: Returns true if flag exists.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFlagDistance: Extended;
@@ -171,8 +173,8 @@ end;
 function FlagEx(Distance: Extended): Boolean;
 Contributors: Wanted
 Description: Waits until your within Distance of flag. Returns true if it didn't time out.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FlagEx(Distance: Extended): Boolean;
@@ -198,8 +200,8 @@ end;
 function Flag: Boolean;
 Contributors: Wanted
 Description: Waits until you're done moving. Returns true if it didn't time out.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Flag: Boolean;
@@ -211,8 +213,8 @@ end;
 function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
 Contributors: Wanted
 Description: If on minimap clicks and then waits for flag to exist then does FlagEx.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
@@ -220,6 +222,8 @@ var
   P: TPoint;
 begin
   P := RRectanglePoint(X - RX, Y - RY, X + RX, Y + RY);
+  if (PointInBox(Point(P.X, P.Y), IntToBox(MMCX, MMCY, MMCX + 3, MMCY + 3))) then
+    Exit;
   if (not (OnMM(P.X, P.Y))) then
     Exit;
   Mouse(P.X, P.Y, 0, 0, True);
@@ -232,8 +236,8 @@ end;
 function MouseFlag(X, Y, RX, RY: Integer): Boolean;
 Contributors: Wanted
 Description: If on minimap clicks and then waits for flag to exist then does Flag.
-Date Created: October 31st, 2011. By Wanted. RS2 Build 670.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 670.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MouseFlag(X, Y, RX, RY: Integer): Boolean;
@@ -241,9 +245,34 @@ begin
   Result := MouseFlagEx(X, Y, RX, RY, 0);
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
+Contributors: Wanted
+Description: Turns a road TPA into a pie slice, finds the middle and offsets,
+and finally walks to it. See the online manual and forums for help using correctly.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
+var
+  ATPA: T2DPointArray;
+  P: TPoint;
+begin
+  FilterPointsPie(TPA, SRad, ERad, SAng, EAng, MMCX, MMCY);
+  ATPA := SplitTPA(TPA, 3);
+  SortATPASize(ATPA, True);
+  if (Length(ATPA) < 1) then
+    Exit;
+  TPA := ATPA[0];
+  P := MiddleTPA(TPA);
+  IncEx(P.X, XOffset);
+  IncEx(P.Y, YOffset);
+  Result := MouseFlagEx(P.X, P.Y, RX, RY, FlagD);
+end;
+
 //MMToMS
 //MSToMM
 //PercentColorMM
 //GetCompassAngleDegrees/Radians
 //IsMoving
-//RadarRoadWalk
