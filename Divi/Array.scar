@@ -205,17 +205,41 @@ end;
 procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
 Contributors: Anonymous, Freddy, Wanted.
 Description: Removes all points from a TPA except for a given slice.
-Date Created: November 3, 2011. By Wanted
-Last Modified: November 3, 2011. By Wanted
+Date Created: November 3rd, 2011. By Wanted
+Last Modified: November 5th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+var
+  StartAngle, EndAngle, StartAngle2, EndAngle2: Extended;
+  TPA, TPA2: TPointArray;
 begin
- {$IFDEF RS2}
-   TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(SAng - 90), Radians(EAng - 90));
- {$ELSE}
-   TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(SAng), Radians(EAng));
- {$ENDIF}
+  {$IFDEF RS2}
+    StartAngle := SAng - 90;
+    EndAngle := EAng - 90;
+  {$ELSE}
+    StartAngle := SAng;
+    EndAngle := EAng;
+  {$ENDIF}
+  if (StartAngle < 0) then
+  begin
+    StartAngle2 := FixD(StartAngle);
+    if (EndAngle < 0) then
+    begin
+      EndAngle2 := FixD(EndAngle);
+      TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(StartAngle2), Radians(EndAngle2));
+      Exit;
+    end;
+    StartAngle := 0;
+    EndAngle2 := 360;
+    TPA := Points;
+    TPA2 := Points;
+    TPAExtractPie(TPA, Point(CX, CY), SRad, ERad, Radians(StartAngle2), Radians(EndAngle2));
+    TPAExtractPie(TPA2, Point(CX, CY), SRad, ERad, Radians(StartAngle), Radians(EndAngle));
+    Points := CombineTPA(TPA, TPA2);
+    Exit;
+  end;
+  TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(StartAngle), Radians(EndAngle));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
