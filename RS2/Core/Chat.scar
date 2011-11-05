@@ -15,13 +15,17 @@
      By: Wanted
  * function FixChat: Boolean;
      By: Wanted
+ * function GetChatLineBounds(Line: Integer): TBox;
+     By: Wanted
+ * function GetChatTextEx(Line, TextColor: Integer): string;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetCurrentChat: Integer;
 Contributors: Wanted
 Description: Returns the current chat you have open.
-Date Created:  October 28th, 2011. By Wanted. RS2 Build 671.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -38,7 +42,7 @@ end;
 function GetChatTabBounds(ChatTab: Integer): TBox;
 Contributors: Wanted
 Description: Returns the boundries of the chat tab you want.
-Date Created:  October 28th, 2011. By Wanted. RS2 Build 671.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -51,7 +55,7 @@ end;
 function GetChatStatus(Chat: Integer): Integer;
 Contributors: Wanted
 Description: Returns the stats of the chat you enter.
-Date Created:  October 28th, 2011. By Wanted. RS2 Build 671.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -79,7 +83,7 @@ end;
 function SetChat(Chat, State: Integer): Boolean;
 Contributors: Wanted
 Description: Sets the desired chat to the desired state.
-Date Created:  October 28th, 2011. By Wanted. RS2 Build 671.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -120,7 +124,7 @@ end;
 function SetChats(Chats, States: TIntegerArray): TBooleanArray;
 Contributors: Wanted
 Description: Sets the desired chats to the desired states.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
 Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -140,7 +144,7 @@ end;
 function FixChat: Boolean;
 Contributors: Wanted
 Description: Scrolls the chat bar all the way down, if needed true.
-Date Created:  October 30th, 2011. By Wanted. RS2 Build 671.
+Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
 Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -159,10 +163,49 @@ begin
   DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, 493, 442, 515, 461, True);
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatLineBounds(Line: Integer): TBox;
+Contributors: Wanted
+Description: Returns the box around the chat line.
+Date Created: November 5th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 5th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatLineBounds(Line: Integer): TBox;
+begin
+  Result := Box(MCX1, MCY1 + (Line * 14), MCX2, ((MCY1 + 13) + (Line * 14)));
+  if (Line = 8) then
+  begin
+    IncEx(Result.Y1, 2);
+    IncEx(Result.Y2, 2);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatTextEx(Line, TextColor: Integer): string;
+Contributors: Wanted
+Description: Returns chat text on a given line.
+Date Created: November 5th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 5th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatTextEx(Line, TextColor: Integer): string;
+var
+  TPA: TPointArray;
+  B: TBox;
+begin
+  if (FixChat) then
+    WaitRR(500, 1000);
+  B := GetChatLineBounds(Line);
+  FindColors(TPA, TextColor, B.X1, B.Y1, B.X2, B.Y2);
+  if (Length(TPA) < 1) then
+    Exit;
+  B := GetTPABounds(TPA);
+  Result := GetTextAtEx(B.X1 - 1, B.Y1 - 2, 0, SmallChars, False, False, 0, 2, TextColor, 70, False, tr_AllChars);
+end;
+
 //ClickContinueEx
 //ClickContinue
-//TextLineCoords
-//GetChatText
 //IsChatTextUp
 //IsChatTextUpBetween
 //GetAllChatTextArr
