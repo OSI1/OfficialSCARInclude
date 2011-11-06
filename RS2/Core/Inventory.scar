@@ -7,13 +7,13 @@
      By: Wamted
  * function GetItemBounds(Slot: Integer): TBox;
      By: Wanted
- * procedure MouseItem(Slot: Integer; TypeC: ClickActions);
-     By: Wanted
- * procedure DragItem(FromSlot, ToSlot: Integer);
-     By: Wanted
  * function InvItemExists(Slot: Integer): Boolean;
      By: Wanted
  * function InvCount: Integer;
+     By: Wanted
+ * procedure MouseItem(Slot: Integer; TypeC: ClickActions);
+     By: Wanted
+ * procedure DragItem(FromSlot, ToSlot: Integer);
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -41,44 +41,6 @@ Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
 function GetItemBounds(Slot: Integer): TBox;
 begin
   Result := Box(563 + ((Slot mod 4) * 41), 213 + ((Slot div 4) * 36), 598 + ((Slot mod 4) * 42), 244 + ((Slot div 4) * 36));
-end;
-
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure MouseItem(Slot: Integer; TypeC: ClickActions);
-Contributors: Wanted
-Description: Clicks on an item.
-Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure MouseItem(Slot: Integer; TypeC: ClickActions);
-var
-  B: TBox;
-begin
-  if (not (SetGameTab(Tab_Inv))) then
-    Exit;
-  B := GetItemBounds(Slot);
-  MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure DragItem(FromSlot, ToSlot: Integer);
-Contributors: Wanted
-Description: Drags an item from one slot to another.
-Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure DragItem(FromSlot, ToSlot: Integer);
-var
-  B, B2: TBox;
-begin
-  if (not (SetGameTab(Tab_Inv))) then
-    Exit;
-  B := GetItemBounds(FromSlot);
-  B2 := GetItemBounds(ToSlot);
-  DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, B2.X1, B2.Y1, B2.X2, B2.Y2, True);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -115,4 +77,41 @@ begin
   for I := 0 to 27 do
     if (InvItemExists(I)) then
       Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure MouseItem(Slot: Integer; TypeC: ClickActions);
+Contributors: Wanted
+Description: Clicks on an item.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure MouseItem(Slot: Integer; TypeC: ClickActions);
+var
+  B: TBox;
+begin
+  if (not (InvItemExists(Slot))) then
+    Exit;
+  B := GetItemBounds(Slot);
+  MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DragItem(FromSlot, ToSlot: Integer);
+Contributors: Wanted
+Description: Drags an item from one slot to another.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DragItem(FromSlot, ToSlot: Integer);
+var
+  B, B2: TBox;
+begin
+  if (not (InvItemExists(FromSlot))) then
+    Exit;
+  B := GetItemBounds(FromSlot);
+  B2 := GetItemBounds(ToSlot);
+  DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, B2.X1, B2.Y1, B2.X2, B2.Y2, True);
 end;
