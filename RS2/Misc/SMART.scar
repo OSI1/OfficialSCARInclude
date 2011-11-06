@@ -397,8 +397,6 @@ Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InitiateSMART: Boolean;
-var
-  P: TPoint;
 begin
   if (SMART_Server = 0) then
     SMART_Server := 11;

@@ -19,6 +19,8 @@
      By: Wanted
  * const Chat function indexes
      By: Wanted
+ * const Area_ indexes
+     By: Wanted
  * const Useful in game colors
      By: Anonymous
  * type TRS2Player = record
@@ -54,10 +56,10 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Anonymous, Wanted.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
-Last Modification: October 16th, 2011. By Wanted. RS2 Build 667.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const             // Description                  Modified            By             Build #
+const             // Description                  Modified            By              Build #
 
   RSCX = 383;     // RS2 Client Center Points  // October 16, 2011    Wanted          667
   RSCY = 252;                                  // October 16, 2011    Wanted          667
@@ -96,15 +98,17 @@ const             // Description                  Modified            By        
   MMRD2 = 75.392307299883; // Fake radius      // August 10, 2011     Wanted          661
   MMPAe = 17907.8635236252;                    // August 7, 2011      Wanted          660
 
-  MICX = 642;     // Inventory Center Points   // August 7, 2011      Wanted          660
-  MICY = 336;                                  // August 7, 2011      Wanted          660
-  MIX1 = 550;     // Inventory Edge Points     // August 7, 2011      Wanted          660
-  MIY1 = 206;                                  // August 7, 2011      Wanted          660
-  MIX2 = 733;                                  // August 7, 2011      Wanted          660
-  MIY2 = 465;                                  // August 7, 2011      Wanted          660
-  MIPW = 183;     // Inventory Width           // August 7, 2011      Wanted          660
-  MIPH = 259;     // Inventory Height          // August 7, 2011      Wanted          660
-  MIPA = 47397;   // Pixel Area                // August 7, 2011      Wanted          660
+  MICX = 644;     // Inventory Center Points   // November 6, 2011    Wanted          675
+  MICY = 337;                                  // November 6, 2011    Wanted          675
+  MICXe = 43.5;                                // November 6, 2011    Wanted          675
+  MICYe = 336.5;                               // November 6, 2011    Wanted          675
+  MIX1 = 563;     // Inventory Edge Points     // November 6, 2011    Wanted          675
+  MIY1 = 213;                                  // November 6, 2011    Wanted          675
+  MIX2 = 724;                                  // November 6, 2011    Wanted          675
+  MIY2 = 460;                                  // November 6, 2011    Wanted          675
+  MIPW = 161;     // Inventory Width           // November 6, 2011    Wanted          675
+  MIPH = 247;     // Inventory Height          // November 6, 2011    Wanted          675
+  MIPA = 39767;   // Pixel Area                // November 6, 2011    Wanted          675
 
   MCCX = 251;     // Chat Box Center Points    // August 8, 2011      Wanted          660
   MCCY = 412;                                  // August 8, 2011      Wanted          660
@@ -323,6 +327,21 @@ const
   Chat_Trade_Tab        = 6;
   Chat_Assist_Tab       = 7;
   Chat_Report_Tab       = 8;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Area_ indexes
+Contributors: Wanted.
+Description: Index handles for the different screen ares within RS that contain items.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Area_Inv              = 0;
+  Area_Bank             = 0;
+  Area_Deposit          = 0;
+  Area_Trade            = 0;
+  Area_Shop             = 0;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors

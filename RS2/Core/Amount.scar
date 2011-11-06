@@ -3,5 +3,57 @@
                                    Runescape 2
                                  Amount Routines
 --------------------------------------------------------------------------------
- *
+ * function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
+     By: Wamted
+ * function GetItemAmount(Area, Slot: Integer): LongInt;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
+Contributors: Wanted
+Description: Returns the amount of something taking into account text color within box.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
+var
+  TextColors: TIntegerArray;
+  TPA: TPointArray;
+  I: Integer;
+  B: TBox;
+begin
+  TextColors := [65535, 16777215, 8453888];
+  for I := 0 to 2 do
+    if (FindColors(TPA, TextColors[I], X1, Y1, X2, Y2)) then
+    begin
+      B := GetTPABounds(TPA);
+      Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, TextColors[I], 5, False, tr_Digits)), -1);
+      if (Result > -1) then
+      begin
+        Result := (Result * Floor(Pow(1000, I)));
+        Exit;
+      end;
+    end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetItemAmount(Area, Slot: Integer): LongInt;
+Contributors: Wanted
+Description: Returns the amount of something taking into account text color within Area_Index.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetItemAmount(Area, Slot: Integer): LongInt;
+var
+  B: TBox;
+begin
+  case Area of
+    Area_Inv: B := GetItemBounds(Slot);
+  else
+    Exit; // FIX ADD MORE AREAS
+  end;
+  Result := GetAmount(B.X1, B.Y1, B.X2, B.Y2);
+end;
