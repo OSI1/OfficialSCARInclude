@@ -348,7 +348,7 @@ const Useful in game colors
 Contributors: Anonymous, Wanted, Zyt3x.
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                             // Modified            By              Build #
@@ -388,8 +388,8 @@ const                             // Modified            By              Build #
   clItemOption    = 4231423;      // October 20, 2011    Wanted          668
 
   clObjectOutline = 131072;       // September 1, 2011   Wanted          662
-  clOptionsBox    = 1845035;      // October 16, 2011    Wanted          667
-  clOptionsBoxSel = 6121839;      // October 30, 2011    Wanted          671
+  clOptionsBox    = 3950929;      // November 6, 2011    Wanted          675
+  clOptionsBox2   = 4343893;      // November 6, 2011    Wanted          675
   clSkillInfoBox  = 10551295;     // November 3, 2011    Wanted          674
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
