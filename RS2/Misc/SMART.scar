@@ -48,6 +48,12 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               Login.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RSReady: Boolean; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function IsKeyDown(C: Char): Boolean;
 Contributors: BenLand100, Wanted.
 Description: SMART override for KeyDown.
@@ -387,7 +393,7 @@ function InitiateSMART: Boolean;
 Contributors: Wanted
 Description: Initiates SMART more simply.
 Date Created: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InitiateSMART: Boolean;
@@ -399,7 +405,7 @@ begin
   if (not (SmartSetupEx(SMART_Server, True))) then
     Exit;
   SetTargetDC(SmartGetDC);
-  Result := WaitFindColorTolerance(P.X, P.Y, 12312554, 698, 15, 700, 17, 5, True, 100, 250, 90000, 120000);
+  Result := WaitFunc(@RSReady, True, 100, 250, 90000, 120000);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

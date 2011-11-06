@@ -9,6 +9,8 @@
      By: Wanted
  * function LoggedIn: Boolean;
      By: Wanted
+ * function RSReady: Boolean;
+     By: Wanted
  * function LoginToLobby: Boolean;
      By: Wanted
  * function Login: Boolean;
@@ -80,11 +82,31 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RSReady: Boolean;
+Contributors: Wanted
+Description: Returns true when runescape isn't intially loading the game.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RSReady: Boolean;
+var
+  P: TPoint;
+begin
+  if (not (LoginScreen)) then
+    if (not (LoggedIn)) then
+      if (not (LobbyScreen)) then
+        if (not (FindColorTolerance(P.X, P.Y, 12312554, 698, 15, 700, 17, 5))) then
+          Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoginToLobby: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginToLobby: Boolean;
@@ -100,6 +122,8 @@ var
 label
   ProcStart;
 begin
+  if (not (WaitFunc(@RSReady, True, 100, 250, 90000, 120000))) then
+    Exit;
   WriteLn('Logging in ' + Players[CurrentPlayer].Name + '...');
   if ((LobbyScreen) or (LoggedIn)) then
   begin
