@@ -270,7 +270,7 @@ Last Modification: November 7th, 2011. By Wanted. RS2 Build 676.
 
 function ClickContinue: Boolean;
 begin
-  ClickContinueEx(True, True);
+  Result := ClickContinueEx(True, True);
 end;
 
 //IsChatTextUp
