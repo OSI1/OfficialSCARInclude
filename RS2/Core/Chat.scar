@@ -223,8 +223,9 @@ begin
     FindColors(TPA, clWhite, MCX1, 446, MCX2, MCY2);
     FindColors(TPA2, 16711680, MCX1, 446, MCX2, MCY2);
     TPA := CombineTPA(TPA, TPA2);
-    if (Length(TPA) < 1) then
+    if (Length(TPA) < 200) then
       Exit;
+    WriteLn(Length(TPA));
     SetLength(TBA, I + 1);
     TBA[I] := GetTPABounds(TPA);
     if (FindTextTPAInTPA('lick here to', NPCChars, TPA, P.X, P.Y)) then
