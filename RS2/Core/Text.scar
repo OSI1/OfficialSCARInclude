@@ -36,7 +36,7 @@ function GetUpText: String;
 Contributors: Freddy1990, Wanted.
 Description: Returns text in upperleft corner.
 Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
-Last Modified: Movember 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetUpText: string;
