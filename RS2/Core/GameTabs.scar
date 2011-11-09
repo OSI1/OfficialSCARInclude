@@ -192,14 +192,14 @@ function EquipmentToCoords(Slot: Integer): TPoint;
 Contributors: Wanted, Home.
 Description: Returns the middle point of any Tab_Equip_ slot.
 Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
-Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modification: November 8th, 2011. By Wanted. RS2 Build 676.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function EquipmentToCoords(Slot: Integer): TPoint;
 var
   TPA: TPointArray;
 begin
-  TPA := [Point(574, 227), Point(642, 227), Point(601, 266), Point(641, 266),
+  TPA := [Point(601, 228), Point(642, 228), Point(601, 266), Point(641, 266),
           Point(684, 266), Point(586, 304), Point(643, 304), Point(697, 304),
           Point(641, 344), Point(586, 385), Point(642, 385), Point(698, 385)];
   if (InRange(Slot, 0, 11)) then
@@ -211,7 +211,7 @@ function GetEquipmentBounds(Slot: Integer): TBox;
 Contributors: Home, Wanted.
 Description: Returns any Tab_Equip slot boundries.
 Date Created: September 1st, 2011. By Home. RS2 Build 662.
-Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modification: November 8th, 2011. By Wanted. RS2 Build 676.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetEquipmentBounds(Slot: Integer): TBox;
@@ -219,7 +219,7 @@ var
   P: TPoint;
 begin
   P := EquipmentToCoords(Slot);
-  Result := IntToBox(P.X - 12, P.Y - 12, P.X + 12, P.X + 12);
+  Result := IntToBox(P.X - 12, P.Y - 12, P.X + 12, P.Y + 12);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -634,9 +634,10 @@ Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
 
 procedure GetAllLevels;
 var
-  I: Integer;
+  I, H: Integer;
 begin
-  for I := 0 to Skill_Count do
+  H := Skill_Count - 1;
+  for I := 0 to H do
     Players[CurrentPlayer].Level[I] := GetSkillLevel(I);
 end;
 
