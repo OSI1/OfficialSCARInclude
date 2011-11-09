@@ -19,6 +19,10 @@
      By: Wanted
  * function GetChatTextEx(Line, TextColor: Integer): string;
      By: Wanted
+ * function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
+     By: Wanted
+ * function ClickContinue: Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

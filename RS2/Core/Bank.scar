@@ -5,16 +5,20 @@
 --------------------------------------------------------------------------------
  * function BankScreen: Boolean;
      By: Wanted
+ * function PinScreen: Boolean;
+     By: Wanted
+ * function EnterBankPin(Pin: string): Boolean;
+     By: Wanted
  * function CloseBank(CheckBS: Boolean): Boolean;
      By: Wanted
  * function DepositAll(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
      By: Wanted
  * function ToggleUseNotes(Use: Boolean): Boolean;
-    By: Wanted
+     By: Wanted
  * function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
-    By: Wanted
+     By: Wanted
  * function FixBank(FixUp: Boolean): Boolean;
-    By: Wanted
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -33,6 +37,68 @@ begin
   FindColors(TPA, 4106994, 119, 25, 328, 47);
   if (Length(TPA) > 20) then
     Result := FindTextTPAInTPA('ank of', UpChars, TPA, P.X, P.Y);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PinScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the pin screen.
+Date Created:  November 8th, 2011. By Wanted. RS2 Build 676.
+Last Modification: November 8th, 2011. By Wanted. RS2 Build 676.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PinScreen: Boolean;
+var
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  FindColors(TPA, 2070783, 50, 57, 421, 79);
+  if (Length(TPA) > 50) then
+     Result := FindTextTPAInTPA('enter your', UpChars, TPA, P.X, P.Y);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function EnterBankPin(Pin: string): Boolean;
+Contributors: Wanted
+Description: Enters bank pin and returns true if succesfully entered pin and at bank screen.
+Date Created:  November 8th, 2011. By Wanted. RS2 Build 676.
+Last Modification: November 8th, 2011. By Wanted. RS2 Build 676.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function EnterBankPin(Pin: string): Boolean;
+var
+  I, II, C, T: Integer;
+  TPA: TPointArray;
+  TBA: TBoxArray;
+  P: TPoint;
+begin
+  if (Length(Pin) <> 4) then
+    Exit;
+  if (not (PinScreen)) then
+    Exit;
+  SetLength(TBA, 11);
+  for I := 0 to 10 do
+    TBA[I] := Box(37 + ((I mod 4) * 90), 107 + ((I div 4) * 72), 100 + ((I mod 4) * 90), 170 + ((I div 4) * 72));
+  for I := 0 to 3 do
+  begin
+    FindColors(TPA, 2070783, 37, 107, 370, 314);
+    if (Length(TPA) < 250) then
+      Exit;
+    if (not (FindTextTPAInTPA(Copy(Pin, I + 1, 1), UpChars, TPA, P.X, P.Y))) then
+      GetMousePos(P.X, P.Y);
+    for II := 0 to 10 do
+      if (PointInBox(P, TBA[II])) then
+        Break;
+    if (II > 10) then
+      Exit;
+    C := CountColor(clWhite, 41, 79, 399, 105);
+    T := GetSystemTime + RR(5000, 7000);
+    MouseBox(TBA[II].X1, TBA[II].Y1, TBA[II].X2, TBA[II].Y2, ClickLeft);
+    while ((CountColor(clWhite, 41, 79, 399, 105) = C) and (GetSystemTime < T)) do
+      WaitRR(250, 400);
+    WaitRR(250, 400);
+  end;
+  Result := WaitFunc(@BankScreen, True, 250, 400, 5000, 7000);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
