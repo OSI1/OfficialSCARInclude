@@ -57,7 +57,7 @@ function TBOutlineToTPA(TB: TBox): TPointArray;
 Contributors: Wanted
 Description: Turns the outline of a TBox into a TPA.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: October 22nd, 2011. By Wanted
+Last Modified: November 9th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TBOutlineToTPA(TB: TBox): TPointArray;
@@ -79,11 +79,12 @@ begin
     Result[II] := Point(TB.X2, I);
     Inc(II);
   end;
-  for I := TB.X2 downto TB.X1 do
-  begin
-    Result[II] := Point(I, TB.Y2);
-    Inc(II);
-  end;
+  if (TB.Y1 <> TB.Y2) then
+    for I := TB.X2 downto TB.X1 do
+    begin
+      Result[II] := Point(I, TB.Y2);
+      Inc(II);
+    end;
   for I := Hi downto Lo do
   begin
     Result[II] := Point(TB.X1, I);

@@ -42,7 +42,7 @@ procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPAB
 Contributors: Wanted
 Description: Debugs an ATPA to the debug window with tons of options.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: October 22nd, 2011. By Wanted
+Last Modified: November 9th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
@@ -101,8 +101,11 @@ begin
         BB := GetTPABounds(ATPA[I]);
         OffsetTPA(TPA, BB.X1 + 2, BB.Y1 + 2);
         HH := High(TPA);
-          for II := 0 to HH do
+        for II := 0 to HH do
+          try
             FastSetPixel(bmpDebug, TPA[II].X, TPA[II].Y, Col);
+          except
+          end;
       end;
     end;
     if (ShowATPABorder) then
