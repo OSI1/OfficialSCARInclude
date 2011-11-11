@@ -1,0 +1,117 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+                           Runecrafting Skill Routines
+--------------------------------------------------------------------------------
+ * const Item data database index
+     By: Wanted
+ * const Pouch option indexes
+     By: Wanted
+ * function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
+     By: Wanted
+ * function ClickPouch(Pouch, Option: Integer): Boolean;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Item data database index
+Contributors: Wanted
+Description: Indexes of all the runecrafting related database items.
+Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 9th, 2011. By Wanted. RS2 Build 677.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const                            // Modified            By              Build #
+  dtmPouch_Small = 0;            // November 9, 2011    Wanted          677
+  dtmPouch_Medium = 1;           // November 9, 2011    Wanted          677
+  dtmPouch_Large = 2;            // November 9, 2011    Wanted          677
+  dtmPouch_Giant = 3;            // November 9, 2011    Wanted          677
+  bmpPouch_Small_Damaged = 4;
+  bmpPouch_Medium_Damaged = 5;
+  bmpPouch_Large_Damaged = 6;    // November 9, 2011    Wanted          677
+  bmpPouch_Giant_Damaged = 7;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Pouch option indexes
+Contributors: Wanted
+Description: Indexes of all the runecrafting related database items.
+Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 10th, 2011. By Wanted. RS2 Build 677.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Pouch_Fill = 0;
+  Pouch_Empty = 1;
+  Pouch_Check = 2;
+  Pouch_Examine = 3;
+  Pouch_Hover = 4;
+  Pouch_Exists = 5;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
+Contributors: Wanted
+Description: Loads the Item into memory as result and returns recommended tolerance.
+Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 10th, 2011. By Wanted. RS2 Build 677.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
+begin
+  case Item of
+    dtmPouch_Small: Result := DTMFromString('78DA63DCCFC4C0F0920105F42F4D66F80FA41' +
+                            '981F83F1030EE00AAB9C3800698C0242394C70832E7060135C781' +
+                            'FC0704D49C04F25F1150B31DC87F4640CD3E20FF3D7E350014841' +
+                            '232');
+    dtmPouch_Medium: Result := DTMFromString('78DA639CC6C4C0F0920105F42F4D66F80FA41' +
+                             '981F83F1030F601D5DC6640034C609211CA639C0EE4DF20A0661E' +
+                             '907F87809AF940FE6B026AA602F91F09A8E905F25FE1570300741' +
+                             'C1113');
+    dtmPouch_Large: Result := DTMFromString('78DA63CC66626078C98002FA972633FC07D28' +
+                            'C40FC1F081853806A6E33A0012630C908E5316601F93709A82906' +
+                            'F2EF1050530EE4BF26A026810835207F7DC2AF0600CB260FEA');
+    dtmPouch_Giant: Result := DTMFromString('78DA637464626078CD8002FA972633FC07D28' +
+                            'C40FC1F08182D816A6E30A0012630C908E531BA00F9D709A8F103' +
+                            'F29F1050E30DE47F22A0C601C8FF42408D3190FF12BF1A0032360' +
+                            'ED2');
+    bmpPouch_Large_Damaged: begin
+                              Result := BitmapFromString(8, 8, 'beNpTVTIz0jM20DHQ1QQiXS1' +
+                                   '1LXUVd3c7a2tjiDhECiLu5eVga2tqYWoI1wIR9/FxcnAwxxT383P' +
+                                   'BKg5EuMTVVZXQxCFSmOJQ9QDNmSO4');
+                              Tolerance := 10;
+                            end;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickPouch(Pouch, Option: Integer): Boolean;
+Contributors: Wanted
+Description: Clicks pouch, if no option left click, else right clicks and selects option.
+Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 9th, 2011. By Wanted. RS2 Build 677.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickPouch(Pouch, Option: Integer): Boolean;
+var
+  TypeCs: array of ClickActions;
+  dtmPouch, Tol, I, T: Integer;
+  COptions: TStringArray;
+  P: TPoint;
+begin
+  if (not (SetGameTab(Tab_Inv))) then
+    Exit;
+  dtmPouch := LoadRunecraftingItem(dtmPouch_Small, Tol);
+  if (not (FindDTM(dtmPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2))) then
+    Exit;
+  TypeCs := [ClickLeft, ClickRight, ClickRight, ClickRight, MoveTo, Nothing];
+  COptions := ['', 'mpty', 'heck', 'xamine', '', ''];
+  I := InvCount;
+  MouseItem(CordsToItemSlot(P), TypeCs[Option]);
+  if (COptions[Option] <> '') then
+    Result := ChooseOption(COptions[Option])
+  else
+    Result := True;
+  T := GetSystemTime + RR(2000, 3000);
+  if (IntInTIA(Option, [0, 1])) then
+    while ((GetSystemTime < T) and (InvCount = I)) do
+      WaitRR(100, 200);
+end;

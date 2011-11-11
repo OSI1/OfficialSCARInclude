@@ -360,7 +360,7 @@ end;
 function IsXPBarOpen: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Returns true if the XP counter bar is open.
-Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -373,7 +373,7 @@ end;
 function ToggleXPBar(Open: Boolean): Boolean;
 Contributors: Wanted, Anonymous.
 Description: Opens or closes the XP Bar, true if had to toggle.
-Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -389,7 +389,7 @@ end;
 function GetXPBarTotal: LongInt;
 Contributors: Wanted, Anonymous.
 Description: Returns the number from your XP Bar.
-Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -417,7 +417,7 @@ end;
 function ResetXPBar: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Resets the XP Bar.
-Date Created:  August 7th, 2011. By Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 

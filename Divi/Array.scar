@@ -4,6 +4,10 @@
 --------------------------------------------------------------------------------
  * function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
      By: Wanted
+ * function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
+     By: Wanted
+ * function IntInTIA(Int: Integer; TIA: TIntegerArray): Boolean;
+     By: Wanted
  * function TBOutlineToTPA(TB: TBox): TPointArray;
      By: Wanted
  * function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
@@ -50,6 +54,42 @@ begin
       if (S = Arr[Pos]) then
         Exit;
   Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
+Contributors: Wanted
+Description: Results true if Int is in the TIntegerArray and the Pos found.
+Date Created: November 10th, 2011. By Wanted
+Last Modified: November 10th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
+var
+  L, H: Integer;
+begin
+  Result := True;
+  L := Low(TIA);
+  H := High(TIA);
+  for Pos := L to H do
+    if (Int = TIA[Pos]) then
+      Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IntInTIA(Int: Integer; TIA: TIntegerArray): Boolean;
+Contributors: Wanted
+Description: Results true if Int is in the TIntegerArray.
+Date Created: November 10th, 2011. By Wanted
+Last Modified: November 10th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IntInTIA(Int: Integer; TIA: TIntegerArray): Boolean;
+var
+  Pos: Integer;
+begin
+  Result := IntInTIAPos(Int, TIA, Pos);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

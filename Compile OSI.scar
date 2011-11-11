@@ -5,17 +5,18 @@
  * procedure TestCompileOSI;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-                                        // Test all combinations of in-depth.
-{$DEFINE RS2}                           // Comment out in in-depth testing
-{$DEFINE OSI_Color_Anti_Randoms}        // Comment out in in-depth testing
-{$DEFINE SMART}                         // Comment out in in-depth testing
-//{$DEFINE NoVariance}                  // Comment in in-depth testing
+                                           // Test all combinations of in-depth.
+{$DEFINE RS2}                              // Comment out in in-depth testing
+{$DEFINE OSI_Color_Anti_Randoms}           // Comment out in in-depth testing
+{$DEFINE SMART}                            // Comment out in in-depth testing
+//{$DEFINE NoVariance}                     // Comment in in-depth testing
 
 {.include OSI\OSI.scar}
-{.include OSI\Divi\Misc\Debug.scar}     // Comment out in in-depth testing
-{.include OSI\RS2\Extended\Timing.scar} // Comment out in in-depth testing
-{.include OSI\RS2\Misc\Anti-Ban.scar}   // Comment out in in-depth testing
-{.include OSI\RS2\Misc\Symbols.scar}    // Comment out in in-depth testing
+{.include OSI\Divi\Misc\Debug.scar}        // Comment out in in-depth testing
+{.include OSI\RS2\Extended\Timing.scar}    // Comment out in in-depth testing
+{.include OSI\RS2\Skill\Runecrafting.scar} // Comment out in in-depth testing
+{.include OSI\RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
+{.include OSI\RS2\Misc\Symbols.scar}       // Comment out in in-depth testing
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TestCompileOSI;

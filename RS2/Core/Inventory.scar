@@ -7,6 +7,8 @@
      By: Wamted
  * function GetItemBounds(Slot: Integer): TBox;
      By: Wanted
+ * function CordsToItemSlot(P: TPoint): Integer;
+     By: Wanted
  * function InvItemExists(Slot: Integer): Boolean;
      By: Wanted
  * function InvCount: Integer;
@@ -41,6 +43,30 @@ Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
 function GetItemBounds(Slot: Integer): TBox;
 begin
   Result := Box(563 + ((Slot mod 4) * 41), 213 + ((Slot div 4) * 36), 598 + ((Slot mod 4) * 42), 244 + ((Slot div 4) * 36));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CordsToItemSlot(P: TPoint): Integer;
+Contributors: Wanted
+Description: Returns the bounds of an item in the inventory.
+Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 9th, 2011. By Wanted. RS2 Build 677.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CordsToItemSlot(P: TPoint): Integer;
+var
+  I: Integer;
+  B: TBox;
+begin
+  for I := 0 to 27 do
+  begin
+    B := GetItemBounds(I);
+    if (PointInBox(P, B)) then
+    begin
+      Result := I;
+      Exit;
+    end;
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
