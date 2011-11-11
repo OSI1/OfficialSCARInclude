@@ -1,0 +1,38 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+                              Mining Skill Routines
+--------------------------------------------------------------------------------
+ * const Item database indexes
+     By: Wanted
+ * function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Item database indexes
+Contributors: Wanted
+Description: Indexes of all the mining related database items.
+Date Created: November 11th, 2011. By Wanted. RS2 Build 678.
+Last Modification: November 11th, 2011. By Wanted. RS2 Build 678.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const                            // Modified            By              Build #
+  dtmPickaxe = 0;                // November 11, 2011   Wanted          678
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
+Contributors: Wanted
+Description: Loads the Item into memory as result and returns recommended tolerance.
+Date Created: November 11th, 2011. By Wanted. RS2 Build 678.
+Last Modification: November 11th, 2011. By Wanted. RS2 Build 678.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
+begin
+  case Item of
+    dtmPickaxe: Result := DTMFromString('78DA63746562603064644006FD4B9319FE036' +
+                        '990E87F2060B406AA514655C3C0C0042661A28C1E40BE12013541' +
+                        '40BE3A01358E40BE2D01352E40BE1D7E350021FA0972');
+  end;
+end;

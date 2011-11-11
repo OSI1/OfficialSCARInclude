@@ -14,6 +14,7 @@
 {.include OSI\OSI.scar}
 {.include OSI\Divi\Misc\Debug.scar}        // Comment out in in-depth testing
 {.include OSI\RS2\Extended\Timing.scar}    // Comment out in in-depth testing
+{.include OSI\RS2\Skill\Mining.scar}       // Comment out in in-depth testing
 {.include OSI\RS2\Skill\Runecrafting.scar} // Comment out in in-depth testing
 {.include OSI\RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
 {.include OSI\RS2\Misc\Symbols.scar}       // Comment out in in-depth testing

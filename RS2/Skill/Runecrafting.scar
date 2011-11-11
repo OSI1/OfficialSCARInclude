@@ -3,7 +3,7 @@
                                    Runescape 2
                            Runecrafting Skill Routines
 --------------------------------------------------------------------------------
- * const Item data database index
+ * const Item database indexes
      By: Wanted
  * const Pouch option indexes
      By: Wanted
@@ -14,7 +14,7 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const Item data database index
+const Item database indexrd
 Contributors: Wanted
 Description: Indexes of all the runecrafting related database items.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
