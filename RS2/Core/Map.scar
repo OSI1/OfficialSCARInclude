@@ -169,22 +169,24 @@ procedure ClickCompass(AdjustToHigh: Boolean);
 Contributors: Wanted, Anonymous.
 Description: Clicks to face north and then tilts the camera angle if desired.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 11th, 2011. By Wanted. RS2 Build 677.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure ClickCompass(AdjustToHigh: Boolean);
 begin
-  if (not ((InRange(Round(GetCompassAngleDegrees), 7, 353)))) then
-    Exit;
-  case Random(10) of
-    0: begin
-         MouseCircle(18, 543, 25, ClickRight);
-         if (not (ChooseOptionMulti(['ace', 'orth']))) then
-         Exit;
-       end;
-  else
-    MouseCircle(18, 543, 25, ClickLeft);
-  end;
+  repeat
+    if (not ((InRange(Round(GetCompassAngleDegrees), 7, 353)))) then
+      Break;
+    case Random(10) of
+      0: begin
+           MouseCircle(18, 543, 25, ClickRight);
+           if (not (ChooseOptionMulti(['ace', 'orth']))) then
+           Exit;
+         end;
+    else
+      MouseCircle(18, 543, 25, ClickLeft);
+    end;
+  until (True);
   if (AdjustToHigh) then
     SetAngle(True);
 end;
