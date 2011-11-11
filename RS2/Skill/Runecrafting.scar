@@ -87,7 +87,7 @@ function ClickPouch(Pouch, Option: Integer): Boolean;
 Contributors: Wanted
 Description: Clicks pouch, if no option left click, else right clicks and selects option.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 10th, 2011. By Wanted. RS2 Build 677.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickPouch(Pouch, Option: Integer): Boolean;
@@ -102,6 +102,7 @@ begin
   dtmPouch := LoadRunecraftingItem(dtmPouch_Small, Tol);
   if (not (FindDTM(dtmPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2))) then
     Exit;
+  FreeDTM(dtmPouch);
   TypeCs := [ClickLeft, ClickRight, ClickRight, ClickRight, MoveTo, Nothing];
   COptions := ['', 'mpty', 'heck', 'xamine', '', ''];
   I := InvCount;
