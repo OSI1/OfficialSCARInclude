@@ -9,6 +9,8 @@
      By: Wanted
  * function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
      By: Wanted
+ * function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
+     By: Wanted
  * function ClickPouch(Pouch, Option: Integer): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -36,7 +38,7 @@ const Pouch option indexes
 Contributors: Wanted
 Description: Indexes of all the runecrafting related database items.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 10th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 12th, 2011. By Wanted. RS2 Build 678.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -45,7 +47,6 @@ const
   Pouch_Check = 2;
   Pouch_Examine = 3;
   Pouch_Hover = 4;
-  Pouch_Exists = 5;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
@@ -83,36 +84,54 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ClickPouch(Pouch, Option: Integer): Boolean;
+function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
 Contributors: Wanted
-Description: Clicks pouch, if no option left click, else right clicks and selects option.
-Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 10th, 2011. By Wanted. RS2 Build 677.
+Description: If found pouch returns true and slot where found.
+Date Created: November 12th, 2011. By Wanted. RS2 Build 678.
+Last Modification: November 12th, 2011. By Wanted. RS2 Build 678.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ClickPouch(Pouch, Option: Integer): Boolean;
+function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
 var
-  TypeCs: array of ClickActions;
-  dtmPouch, Tol, I, T: Integer;
-  COptions: TStringArray;
+  dtmPouch, Tol: Integer;
   P: TPoint;
 begin
   if (not (SetGameTab(Tab_Inv))) then
     Exit;
   dtmPouch := LoadRunecraftingItem(dtmPouch_Small, Tol);
-  if (not (FindDTM(dtmPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2))) then
-    Exit;
+  Result := FindDTM(dtmPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2);
   FreeDTM(dtmPouch);
-  TypeCs := [ClickLeft, ClickRight, ClickRight, ClickRight, MoveTo, Nothing];
+  if (not (Result)) then
+    Exit;
+  Slot := CordsToItemSlot(P);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickPouch(Pouch, Option: Integer): Boolean;
+Contributors: Wanted
+Description: Clicks pouch, if no option left click, else right clicks and selects option.
+Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 12th, 2011. By Wanted. RS2 Build 678.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickPouch(Pouch, Option: Integer): Boolean;
+var
+  TypeCs: array of ClickActions;
+  COptions: TStringArray;
+  I, T, Slot: Integer;
+begin
+  if (not (FindPouch(Pouch, Slot))) then
+    Exit;
+  TypeCs := [ClickLeft, ClickRight, ClickRight, ClickRight, MoveTo];
   COptions := ['', 'mpty', 'heck', 'xamine', '', ''];
   I := InvCount;
-  MouseItem(CordsToItemSlot(P), TypeCs[Option]);
+  MouseItem(Slot, TypeCs[Option]);
   if (COptions[Option] <> '') then
     Result := ChooseOption(COptions[Option])
   else
     Result := True;
   T := GetSystemTime + RR(2000, 3000);
-  if (IntInTIA(Option, [0, 1])) then
+  if (TIAContains([0, 1], Option)) then
     while ((GetSystemTime < T) and (InvCount = I)) do
       WaitRR(100, 200);
 end;

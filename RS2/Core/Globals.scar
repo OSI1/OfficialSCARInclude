@@ -397,7 +397,7 @@ type TRS2Player = record
 Contributors: Anonymous, Wanted.
 Description: Handles all of player related info and variables.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: November 12th, 2011. By Wanted. RS2 Build 678.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
@@ -422,6 +422,7 @@ type
     Strings: array of string;       // String records
     Extendeds: array of Extended;   // Extended records
     Arrays: array of TVariantArray; // Custom records
+    TIA: T2DIntegerArray;           // TIA records
   end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
