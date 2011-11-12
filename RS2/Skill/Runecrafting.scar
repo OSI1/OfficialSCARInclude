@@ -93,14 +93,22 @@ Last Modification: November 12th, 2011. By Wanted. RS2 Build 678.
 
 function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
 var
-  dtmPouch, Tol: Integer;
+  ItemPouch, Tol: Integer;
   P: TPoint;
 begin
   if (not (SetGameTab(Tab_Inv))) then
     Exit;
-  dtmPouch := LoadRunecraftingItem(Pouch, Tol);
-  Result := FindDTM(dtmPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2);
-  FreeDTM(dtmPouch);
+  ItemPouch := LoadRunecraftingItem(Pouch, Tol);
+  if (InRange(Pouch, bmpPouch_Small_Damaged, bmpPouch_Large_Damaged)) then
+  begin
+    Result := FindBitmapToleranceIn(ItemPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2, Tol);
+    FreeBitmap(ItemPouch);
+  end
+  else
+  begin
+    Result := FindDTM(ItemPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2);
+    FreeDTM(ItemPouch);
+  end;
   if (not (Result)) then
     Exit;
   Slot := CordsToItemSlot(P);
