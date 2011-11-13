@@ -42,11 +42,12 @@ Last Modification: November 12th, 2011. By Wanted. RS2 Build 678.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
-  Pouch_Fill = 0;
-  Pouch_Empty = 1;
-  Pouch_Check = 2;
-  Pouch_Examine = 3;
-  Pouch_Hover = 4;
+  Pouch_Deposit = 0;
+  Pouch_Fill = 1;
+  Pouch_Empty = 2;
+  Pouch_Check = 3;
+  Pouch_Examine = 4;
+  Pouch_Hover = 5;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
@@ -97,7 +98,8 @@ var
   P: TPoint;
 begin
   if (not (SetGameTab(Tab_Inv))) then
-    Exit;
+    if (not (BankScreen)) then
+      Exit;
   ItemPouch := LoadRunecraftingItem(Pouch, Tol);
   if (InRange(Pouch, bmpPouch_Small_Damaged, bmpPouch_Large_Damaged)) then
   begin
@@ -127,11 +129,14 @@ var
   TypeCs: array of ClickActions;
   COptions: TStringArray;
   I, T, Slot: Integer;
+  S: string;
 begin
   if (not (FindPouch(Pouch, Slot))) then
     Exit;
   TypeCs := [ClickLeft, ClickRight, ClickRight, ClickRight, MoveTo];
-  COptions := ['', 'mpty', 'heck', 'xamine', '', ''];
+  if (BankScreen) then
+    S := 'ill';
+  COptions := ['', S, 'mpty', 'heck', 'xamine', '', ''];
   I := InvCount;
   MouseItem(Slot, TypeCs[Option]);
   if (COptions[Option] <> '') then
