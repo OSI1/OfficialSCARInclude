@@ -20,6 +20,12 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               Bank.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BankScreen: Boolean; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetInvSlotIndex(Row, Column: Integer): Integer;
 Contributors: Wanted
 Description: Returns index of an inventory slot based on row and column position.
@@ -74,7 +80,7 @@ function InvItemExists(Slot: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if there's an item in the given inventory slot.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 13th, 2011. By Wanted. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InvItemExists(Slot: Integer): Boolean;
@@ -83,7 +89,8 @@ var
   B: TBox;
 begin
   if (not (SetGameTab(Tab_Inv))) then
-    Exit;
+    if (not (BankScreen)) then
+      Exit;
   B := GetItemBounds(Slot);
   Result := FindColor(P.X, P.Y, clObjectOutline, B.X1, B.Y1, B.X2, B.Y2);
 end;

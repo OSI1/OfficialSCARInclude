@@ -13,6 +13,8 @@
      By: Wanted
  * function DepositAll(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
      By: Wanted
+ * function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+     By: Wanted
  * function ToggleUseNotes(Use: Boolean): Boolean;
      By: Wanted
  * function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
@@ -144,6 +146,63 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Deposits all inventory itmes except for excluded slots. True if
+CheckBS is true and bankscreen is found.
+Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modification: November 13th, 2011. By Wanted. RS2 Build 679.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+var
+  I, C, T: Integer;
+  P: TPoint;
+  S: string;
+  B: Boolean;
+begin
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit
+    else
+      Result := True;
+  if (Length(Exclude) = 0) then
+  begin
+    Result := DepositAll(CheckBS, True, False, False);
+    Exit;
+  end;
+  for I := 0 to 27 do
+    if (not (TIAContains(Exclude, I))) then
+      if (InvItemExists(I)) then
+      begin
+        MouseItem(I, MoveTo);
+        GetMousePos(P.X, P.Y);
+        C := InvCount;
+        T := GetSystemTime + RR(1500, 2500);
+        S := '';
+        while ((GetSystemTime < T) and (S = '')) do
+        begin
+          S := GetUpText;
+          WaitRR(100, 200);
+        end;
+        B := False;
+        if (Pos('t-1', S) > 0) then
+        begin
+          Mouse(P.X, P.Y, 0, 0, False);
+          ChooseOptionMulti(['t-A', 'All']);
+          B := True;
+        end
+        else
+          Mouse(P.X, P.Y, 0, 0, True);
+        T := GetSystemTime + RR(1500, 2500);
+        while ((GetSystemTime < T) and (InvCount = C)) do
+          WaitRR(200, 350);
+        if (B) then
+          WaitRR(400, 500);
+      end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function ToggleUseNotes(Use: Boolean): Boolean;
 Contributors: Wanted
 Description: Enables or disables note usage. Returns true if toggle was needed.
@@ -220,8 +279,6 @@ begin
 end;
 
 //DepositScreen
-//PinScreen
-//InPin
 //BankSlotToPoint
 //PointToBankSlot
 //BankSlotToBox
@@ -230,7 +287,6 @@ end;
 //CurrentBankTab
 //BankTabExists
 //BankTab
-//Deposit
 //Withdraw
 //OpenBank
 //OpenDepositBox
