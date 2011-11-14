@@ -49,16 +49,21 @@ function IsUpText(Text: string): Boolean;
 Contributors: Freddy1990, Wanted.
 Description: Returns true if uptext is found.
 Date Created: August 7th, 2011. By Freddy1990 & Wanted. RS2 Build 660.
-Last Modified: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modified: November 14th, 2011. By Wanted. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsUpText(Text: string): Boolean;
 var
   T: LongInt;
 begin
+  Result := True;
   T := GetSystemTime + RR(1500, 2500);
-  while ((GetSystemTime < T) and (Pos(Text, GetUpText) < 1)) do
-    WaitRR(100, 250);
+  while (GetSystemTime < T) do
+    if (Pos(Text, GetUpText) > 0) then
+      Exit
+    else
+      WaitRR(100, 250);
+  Result := False;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
