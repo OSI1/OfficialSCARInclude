@@ -55,18 +55,10 @@ Last Modified: November 13th, 2011. By Wanted. RS2 Build 679.
 function IsUpText(Text: string): Boolean;
 var
   T: LongInt;
-  S: string;
 begin
   T := GetSystemTime + RR(1500, 2500);
-  repeat
-    S := GetUpText;
-    if (S <> '') then
-    begin
-      Result := (Pos(Text, S) > 0);
-      Exit;
-    end;
+  while ((GetSystemTime < T) and (Pos(Text, GetUpText) < 1)) do
     WaitRR(100, 250);
-  until (GetSystemTime > T);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -85,17 +77,13 @@ begin
   T := GetSystemTime + RR(1500, 2500);
   repeat
     TheText := GetUpText;
-    if (TheText <> '') then
-    begin
-      H := High(Text);
-      for I := 0 to H do
-        if (Pos(Text[I], TheText) > 0) then
-        begin
-          Result := True;
-          Exit;
-        end;
-      Exit;
-    end;
+    H := High(Text);
+    for I := 0 to H do
+      if (Pos(Text[I], TheText) > 0) then
+      begin
+        Result := True;
+        Exit;
+      end;
     WaitRR(100, 250);
   until (GetSystemTime > T);
 end;
