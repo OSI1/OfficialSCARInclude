@@ -6,6 +6,8 @@
      By: Wanted
  * function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
      By: Wanted
+ * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
+     By: Wanted
  * function TBOutlineToTPA(TB: TBox): TPointArray;
      By: Wanted
  * function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
@@ -73,6 +75,34 @@ begin
     if (Int = TIA[Pos]) then
       Exit;
   Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
+Contributors: Wanted
+Description: Removes a TPA by index from an ATPA.
+Date Created: November 14th, 2011. By Wanted
+Last Modified: November 14th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
+var
+  NewATPA: T2DPointArray;
+  I, H, II: Integer;
+begin
+  if (Length(ATPA) < 1) then
+    Exit;
+  H := High(ATPA);
+  if (Index > H) then
+    Exit;
+  SetLength(NewATPA, Length(ATPA) - 1);
+  for I := 0 to H do
+    if (not (I = Index)) then
+    begin
+      NewATPA[II] := ATPA[I];
+      Inc(II);
+    end;
+  ATPA := NewATPA;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

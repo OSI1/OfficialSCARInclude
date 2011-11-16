@@ -4,28 +4,51 @@
                               Mining Skill Routines
 --------------------------------------------------------------------------------
  * const Item database indexes
-     By: Wanted
+     By: Bixby Sayz & Wanted.
  * function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
-     By: Wanted
+     By: Bixby Sayz & Wanted.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE Mining}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Item database indexes
-Contributors: Wanted
+Contributors: Bixby Sayz, Wanted.
 Description: Indexes of all the mining related database items.
-Date Created: November 11th, 2011. By Wanted. RS2 Build 678.
-Last Modification: November 11th, 2011. By Wanted. RS2 Build 678.
+Date Created: November 11th, 2011. By Bixby Sayz & Wanted. RS2 Build 678.
+Last Modification: November 14th, 2011. By Bixby Sayz. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
-  dtmPickaxe = 0;                // November 11, 2011   Wanted          678
+{$IFNDEF Smithing}
+  dtmOre = 0;                    // November 13, 2011   Bixby Sayz      679
+  dtmOre_Copper = 1;             // November 13, 2011   Bixby Sayz      679
+  dtmOre_Tin = 2;                // November 13, 2011   Bixby Sayz      679
+  dtmOre_Iron = 3;               // November 13, 2011   Bixby Sayz      679
+  dtmOre_Silver = 4;             // November 13, 2011   Bixby Sayz      679
+  dtmOre_Coal = 5;               // November 13, 2011   Bixby Sayz      679
+  dtmOre_Gold = 6;               // November 13, 2011   Bixby Sayz      679
+  dtmOre_Mithril = 7;            // November 13, 2011   Bixby Sayz      679
+  dtmOre_Adamantite = 8;         // November 13, 2011   Bixby Sayz      679
+  dtmOre_Runite = 9;             // November 13, 2011   Bixby Sayz      679
+  dtmOre_Blurite = 10;           // November 13, 2011   Bixby Sayz      679
+  dtmOre_Elemental = 11;         // November 13, 2011   Bixby Sayz      679
+{$ENDIF}
+  dtmPickaxe = 12;               // November 11, 2011   Wanted          678
+  dtmPickaxe_Bronze = 13;        // November 13, 2011   Bixby Sayz      679
+  dtmPickaxe_Iron = 14;          // November 13, 2011   Bixby Sayz      679
+  dtmPickaxe_Steel = 15;         // November 13, 2011   Bixby Sayz      679
+  dtmPickaxe_Mithril = 16;       // November 13, 2011   Bixby Sayz      679
+  dtmPickaxe_Adamant = 17;       // November 13, 2011   Bixby Sayz      679
+  dtmPickaxe_Rune = 18;          // November 13, 2011   Bixby Sayz      679
+  dtmPickaxe_Dragon = 19;        // November 13, 2011   Bixby Sayz      679
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
-Contributors: Wanted
+function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
+Contributors: Bixby Sayz & Wanted
 Description: Loads the Item into memory as result and returns recommended tolerance.
-Date Created: November 11th, 2011. By Wanted. RS2 Build 678.
-Last Modification: November 11th, 2011. By Wanted. RS2 Build 678.
+Date Created: November 11th, 2011. By Bixby Sayz & Wanted. RS2 Build 678.
+Last Modification: November 14th, 2011. By Bixby Sayz. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
@@ -34,5 +57,41 @@ begin
     dtmPickaxe: Result := DTMFromString('78DA63746562603064644006FD4B9319FE036' +
                         '990E87F2060B406AA514655C3C0C0042661A28C1E40BE12013541' +
                         '40BE3A01358E40BE2D01352E40BE1D7E350021FA0972');
+    dtmOre: Result := DTMFromString('78DA63B4606060C8664001C78A6C19FE03694' +
+                    '620FE0F048C0E986A181898C0242394C7E808240A09A8B10712C5' +
+                    '04D498018902026A8C804416013506402213BF1A00312D0B18');
+    dtmOre_Copper: Result := DTMFromString('78DA63FCC8C0C0E0C880028E15D9327001694' +
+                           '620FE0F048C3F31D5303030814946288FF117907027A0E60790F0' +
+                           '24A0E63D907023A0E635907020A0E62590B0C7AF06008AC70E0C');
+    dtmOre_Tin: Result := DTMFromString('78DA63FCC8C0C0E0C8800272333218B880342' +
+                        '310FF0702C69F986A181898C0242394C7F80B48B81350F3034878' +
+                        '1250F31E48B81150F31A48381050F31248D8E357030057BB0DD4');
+    dtmOre_Iron: Result := DTMFromString('78DA63FCC8C0C0E0C88002AC95A518B880342' +
+                         '310FF0702C69F986A181898C0242394C7F80B48B81350F3034878' +
+                         '1250F31E48B81150F31A48381050F31248D8E3570300A6050D0F');
+    dtmOre_Silver: Result := DTMFromString('78DA63FCC8C0C0E0C88002FA274C63E002D28' +
+                           'C40FC1F08187F62AA61606002938C501EE32F20E14E40CD0F20E1' +
+                           '4940CD7B20E14640CD6B20E14040CD4B20618F5F0D00C3F70E4C');
+    dtmOre_Coal: Result := DTMFromString('78DA637467606090656440062A2A320C5C401' +
+                         'A24FA1F0818FD31D5303030814998286300905026A0C60F48A812' +
+                         '50E30A249408A87104123204D4D8030969FC6A0075EB0760');
+    dtmOre_Gold: Result := DTMFromString('78DA63FCC8C0C0E0C88002764F9562E002D28' +
+                         'C40FC1F08187F62AA61606002938C501EE32F20E14E40CD0F20E1' +
+                         '4940CD7B20E14640CD6B20E14040CD4B20618F5F0D0080F20E01');
+    dtmOre_Mithril: Result := DTMFromString('78DA63FCC8C0C0E0C880022CADC218B880342' +
+                            '310FF0702C69F986A181898C0242394C7F80B48B81350F3034878' +
+                            '1250F31E48B81150F31A48381050F31248D8E3570300EEDE0D60');
+    dtmOre_Adamantite: Result := DTMFromString('78DA63FCC8C0C0E0C88002EC3CEC18B880342' +
+                               '310FF0702C69F986A181898C0242394C7F80B48B81350F3034878' +
+                               '1250F31E48B81150F31A48381050F31248D8E3570300EA780D5B');
+    dtmOre_Runite: Result := DTMFromString('78DA63FCC8C0C0E0C88002DC436318B880342' +
+                           '310FF0702C69F986A181898C0242394C7F80BA491809A1F40C293' +
+                           '809AF740C28D809AD740C281809A9740C21EBF1A00195E0D8F');
+    dtmOre_Blurite: Result := DTMFromString('78DA637467606098CB8002F2F28F307001694' +
+                            '620FE0F048CFE986A181898C0242394C7180024161350E3072496' +
+                            '1250E30A24161150E30824E61050630F2466E3570300767F0C16');
+    dtmOre_Elemental: Result := DTMFromString('78DA637467606098CB800242046B19B880342' +
+                              '310FF0702467F4C350C0C4C609211CA630C00128B09A8F103124B' +
+                              '09A87105128B08A87104127308A8B10712B3F1AB0100CA440B57');
   end;
 end;
