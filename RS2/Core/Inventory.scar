@@ -13,6 +13,8 @@
      By: Wanted
  * function InvCount: Integer;
      By: Wanted
+ * function InvFull: Boolean;
+     By: Wanted
  * procedure MouseItem(Slot: Integer; TypeC: ClickActions);
      By: Wanted
  * procedure DragItem(FromSlot, ToSlot: Integer);
@@ -107,9 +109,23 @@ function InvCount: Integer;
 var
   I: Integer;
 begin
+  Result := 0;
   for I := 0 to 27 do
     if (InvItemExists(I)) then
       Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InvCount: Integer;
+Contributors: Wanted
+Description: Returns true if all 28 spots are full.
+Date Created: November 18th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 18th, 2011. By Wanted. RS2 Build 675.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InvFull: Boolean;
+begin
+  Result := (InvCount = 28);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

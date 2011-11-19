@@ -62,7 +62,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: October 30th, 2011. By Wanted
+Last Modified: November 17th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -106,4 +106,6 @@ begin
     PlayerStartTime := GetSystemTime;
   {$ENDIF}
   MouseSpeed := 15;
+  SetColorSpeed2Modifiers(0.2, 0.2);
+  ColorToleranceSpeed(1);
 end;

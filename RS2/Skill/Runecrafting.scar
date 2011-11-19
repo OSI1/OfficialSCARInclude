@@ -123,21 +123,27 @@ function ClickPouch(Pouch, Option: Integer): Boolean;
 Contributors: Wanted
 Description: Clicks pouch, if no option left click, else right clicks and selects option.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 12th, 2011. By Wanted. RS2 Build 678.
+Last Modification: November 18th, 2011. By Wanted. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickPouch(Pouch, Option: Integer): Boolean;
 var
   TypeCs: array of ClickActions;
   COptions: TStringArray;
+  TypeC: ClickActions;
   I, T, Slot: Integer;
   S: string;
 begin
   if (not (FindPouch(Pouch, Slot))) then
     Exit;
-  TypeCs := [ClickLeft, ClickRight, ClickRight, ClickRight, MoveTo];
   if (BankScreen) then
+  begin
     S := 'ill';
+    TypeC := ClickRight;
+  end
+  else
+    TypeC := ClickLeft;
+  TypeCs := [ClickLeft, TypeC, ClickRight, ClickRight, ClickRight, MoveTo];
   COptions := ['', S, 'mpty', 'heck', 'xamine', '', ''];
   I := InvCount;
   MouseItem(Slot, TypeCs[Option]);
@@ -146,7 +152,7 @@ begin
   else
     Result := True;
   T := GetSystemTime + RR(2000, 3000);
-  if (TIAContains([0, 1], Option)) then
+  if (TIAContains([Pouch_Fill, Pouch_Empty], Option)) then
     while ((GetSystemTime < T) and (InvCount = I)) do
       WaitRR(100, 200);
 end;
