@@ -24,6 +24,8 @@
      By: Wanted
  * function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
      By: Wanted
+ * function PointsNotInTPA(TPA: TPointArray): TPointArray;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -309,4 +311,31 @@ begin
   FindColorsTolerance(Points, Color, Floor(CX - R), Floor(CY - R), Ceil(CX + R), Ceil(CY + R), Tol);
   FilterPointsDist(Points, 0, R, CX, CY);
   Result := (Length(Points) > 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PointsNotInTPA(TPA: TPointArray): TPointArray;
+Contributors: Wanted
+Description: Finds empty points in TPA bounds.
+Date Created: November 18th, 2011. By Wanted
+Last Modified: November 18th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PointsNotInTPA(TPA: TPointArray): TPointArray;
+var
+  TPA2: TPointArray;
+  I, H, L, II: Integer;
+  B: TBox;
+begin
+  B := GetTPABounds(TPA);
+  TPA2 := TPAFromBox(B);
+  H := High(TPA2);
+  L := Low(TPA2);
+  for I := L to H do
+    if (not (TPAContains(TPA, TPA2[I]))) then
+    begin
+      Inc(II);
+      SetLength(Result, II);
+      Result[II - 1] := TPA2[I];
+    end;
 end;
