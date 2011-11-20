@@ -106,7 +106,7 @@ function LoginToLobby: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 20th, 2011. By Wanted. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginToLobby: Boolean;
@@ -124,7 +124,6 @@ label
 begin
   if (not (WaitFunc(@RSReady, True, 100, 250, 90000, 120000))) then
     Exit;
-  WriteLn('Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
   if ((LobbyScreen) or (LoggedIn)) then
   begin
     Result := True;
@@ -135,8 +134,9 @@ begin
     WriteLn('No active players to login!');
     Exit;
   end;
-  I := High(Players);
-  CurrentPlayer := NextActivePlayerIndex;
+  if (not (Players[CurrentPlayer].Active)) then
+    CurrentPlayer := NextActivePlayerIndex;
+  WriteLn('Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
   ProcStart:                                                  // Retry Login Mark
   B := False;
   B2 := False;
