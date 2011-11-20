@@ -466,15 +466,15 @@ function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
 Contributors: Wanted
 Description: Switches to player, Sets CurrentPlayer to 'Active'. True if login successful.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: November 20th, 2011. By Wanted. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
 begin
   WriteLn('SwitchToPlayer(' + Players[Player].Name + ', ' + BoolToStr(Active) + ');');
   Players[CurrentPlayer].Active := Active;
-  Result := Login;
   CurrentPlayer := Player;
+  Result := Login;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
