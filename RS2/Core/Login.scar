@@ -86,13 +86,14 @@ function RSReady: Boolean;
 Contributors: Wanted
 Description: Returns true when runescape isn't intially loading the game.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RSReady: Boolean;
 var
   P: TPoint;
 begin
+  Result := False;
   if (not (LoginScreen)) then
     if (not (LoggedIn)) then
       if (not (LobbyScreen)) then
@@ -106,7 +107,7 @@ function LoginToLobby: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: November 20th, 2011. By Wanted. RS2 Build 679.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginToLobby: Boolean;
@@ -122,6 +123,8 @@ var
 label
   ProcStart;
 begin
+  Result := False;
+  Attempts := 0;
   if (not (WaitFunc(@RSReady, True, 100, 250, 90000, 120000))) then
     Exit;
   if ((LobbyScreen) or (LoggedIn)) then
@@ -276,6 +279,7 @@ var
 label
   ProcStart;
 begin
+  Attempts := 0;
   ProcStart:
   Result := LoggedIn;
   if (Result) then
@@ -428,13 +432,14 @@ function Logout: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logs out current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Logout: Boolean;
 var
   P: TPoint;
 begin
+  Result := False;
   IncEx(Players[CurrentPlayer].Worked, GetSystemTime - PlayerStartTime);
   PlayerStartTime := GetSystemTime;
   if (LobbyScreen) then

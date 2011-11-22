@@ -358,13 +358,14 @@ function SmartSetupEx(Server: Integer; Members, Signed, SuperDetail: Boolean): B
 Contributors: BenLand100, Wanted.
 Description: Initiates SMART.
 Date Created: Unknown Date. By BenLand100. RS2 Build Unknown.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SmartSetupEx(Server: Integer; SafeMode: Boolean): Boolean;
 var
   Prefix, S, S2: string;
 begin
+  Result := False;
   if (SafeMode) then
   begin
     S := 's';
@@ -393,11 +394,12 @@ function InitiateSMART: Boolean;
 Contributors: Wanted
 Description: Initiates SMART more simply.
 Date Created: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InitiateSMART: Boolean;
 begin
+  Result := False;
   if (SMART_Server = 0) then
     SMART_Server := 11;
   if (not (SmartSetupEx(SMART_Server, True))) then

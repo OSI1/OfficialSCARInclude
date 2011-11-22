@@ -48,11 +48,12 @@ function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
 Contributors: Bixby Sayz & Wanted
 Description: Loads the Item into memory as result and returns recommended tolerance.
 Date Created: November 11th, 2011. By Bixby Sayz & Wanted. RS2 Build 678.
-Last Modification: November 14th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
 begin
+  Result := -1;
   case Item of
     dtmPickaxe: Result := DTMFromString('78DA63746562603064644006FD4B9319FE036' +
                         '990E87F2060B406AA514655C3C0C0042661A28C1E40BE12013541' +

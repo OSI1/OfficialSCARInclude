@@ -14,7 +14,7 @@ function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within box.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
@@ -24,6 +24,7 @@ var
   I: Integer;
   B: TBox;
 begin
+  Result := 0;
   TextColors := [65535, 16777215, 8453888];
   for I := 0 to 2 do
     if (FindColors(TPA, TextColors[I], X1, Y1, X2, Y2)) then
@@ -43,13 +44,14 @@ function GetItemAmount(Area, Slot: Integer): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within Area_Index.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetItemAmount(Area, Slot: Integer): LongInt;
 var
   B: TBox;
 begin
+  Result := 0;
   case Area of
     Area_Inv: B := GetItemBounds(Slot);
   else

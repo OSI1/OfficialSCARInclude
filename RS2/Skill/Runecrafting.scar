@@ -56,11 +56,12 @@ function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
 Contributors: Wanted
 Description: Loads the Item into memory as result and returns recommended tolerance.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 10th, 2011. By Wanted. RS2 Build 677.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
 begin
+  Result := -1;
   case Item of
     dtmPouch_Small: Result := DTMFromString('78DA63DCCFC4C0F0920105F42F4D66F80FA41' +
                             '981F83F1030EE00AAB9C3800698C0242394C70832E7060135C781' +
@@ -91,7 +92,7 @@ function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
 Contributors: Wanted
 Description: If found pouch returns true and slot where found.
 Date Created: November 12th, 2011. By Wanted. RS2 Build 678.
-Last Modification: November 12th, 2011. By Wanted. RS2 Build 678.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
@@ -99,6 +100,7 @@ var
   ItemPouch, Tol: Integer;
   P: TPoint;
 begin
+  Result := False;
   if (not (SetGameTab(Tab_Inv))) then
     if (not (BankScreen)) then
       Exit;
@@ -123,7 +125,7 @@ function ClickPouch(Pouch, Option: Integer): Boolean;
 Contributors: Wanted
 Description: Clicks pouch, if no option left click, else right clicks and selects option.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 18th, 2011. By Wanted. RS2 Build 679.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickPouch(Pouch, Option: Integer): Boolean;
@@ -134,6 +136,7 @@ var
   I, T, Slot: Integer;
   S: string;
 begin
+  Result := False;
   if (not (FindPouch(Pouch, Slot))) then
     Exit;
   if (BankScreen) then

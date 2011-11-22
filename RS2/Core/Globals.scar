@@ -550,13 +550,14 @@ function ActivePlayers: Integer;
 Contributors: Anonymous, Wanted.
 Description: Returns the number of active players.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ActivePlayers: Integer;
 var
   I, H: Integer;
 begin
+  Result := 0;
   H := High(Players);
   for I := 0 to H do
     if (Players[I].Active) then
@@ -598,18 +599,16 @@ function NextActivePlayerIndex: Integer;
 Contributors: Wanted
 Description: Returns next active player index after CurrentPlayer.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function NextActivePlayerIndex: Integer;
 var
   H: LongInt;
 begin
+  Result := 0;
   if (AllPlayersInActive) then
-  begin
-    Result := 0;
     Exit;
-  end;
   H := High(Players);
   Result := NextPlayerIndex;
   repeat

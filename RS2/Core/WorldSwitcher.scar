@@ -49,7 +49,7 @@ function OpenWorldScreen: Boolean;
 Contributors: Wanted.
 Description: Opens world screen and removes any favorite worlds.
 Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
-Last Modification: August 14th, 2011. By Wanted. RS2 Build 662.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenWorldScreen: Boolean;
@@ -57,6 +57,7 @@ var
   B: Boolean;
   P: TPoint;
 begin
+  Result := False;
   if (not (WorldScreen)) then
     if (not (LobbyTab(Tab_Lobby_WorldSelect))) then
       Exit;
@@ -97,11 +98,12 @@ function WS_MemberWorld: Boolean;
 Contributors: Wanted
 Description: Returns true if current world is members. Only works at world screen.
 Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
-Last Modified: August 14th, 2011. By Wanted RS2 Build 662.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 *******************************************************************************}
 
 function WS_MemberWorld: Boolean;
 begin
+  Result := False;
   if (not (WorldScreen)) then
     Exit;
   Result := (GetColor(628, 82) = 3927547);
@@ -112,7 +114,7 @@ procedure LoadRS2WorldArray;
 Contributors: Wanted, Anonymous.
 Description: Loads the worlds from Worlds.INI into RS2WorldArray.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 *******************************************************************************}
 
 procedure LoadRS2WorldArray;
@@ -127,6 +129,7 @@ begin
     Exit;
   end;
   SetLength(RS2WorldArray, H + 1);
+  Hw := 0;
   for I := 1 to H do
     if not (ReadINI('World' + IntToStr(I), 'Prefix', WorldsINIPath) = '') then
     begin
@@ -175,7 +178,7 @@ function FindWorld(var P: TPoint; World: Integer): Boolean;
 Contributors: Wanted, Anonymous.
 Description: Finds the world in the world switcher and returns the point.
 Date Created: August 19th, 2011. By Wanted & Anonymous. RS2 Build 662.
-Last Modified: August 30th, 2011. By Wanted. RS2 Build 662.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindWorld(var P: TPoint; World: Integer): Boolean;
@@ -183,6 +186,7 @@ var
   TextColor, I, H, ScPos: Integer;
   CurB, SBP: TPoint;
 begin
+  Result := False;
   if (not (OpenWorldScreen)) then
     Exit;
   H := High(RS2WorldArray);
@@ -293,13 +297,14 @@ function SelectWorld(World: Integer): Boolean;
 Contributors: Wanted
 Description: Selects specified world.
 Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
-Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SelectWorld(World: Integer): Boolean;
 var
   P: TPoint;
 begin
+  Result := False;
   if (WS_CurrentWorld = World) then
   begin
     Result := True;
@@ -341,7 +346,7 @@ procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray)
 Contributors: Wanted
 Description: Deletes an index from a TRS2WorldArray. For use with RandomWorld.
 Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
-Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
@@ -351,6 +356,7 @@ var
 begin
   H := High(WorldArray);
   SetLength(NewArray, H);
+  II := 0;
   for I := 0 to H do
     if (I <> Index) then
     begin
@@ -365,7 +371,7 @@ function RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
 Contributors: Wanted
 Description: Generates a random world number. 0 for False, 1 for True, 2 for either.
 Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
-Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
@@ -373,8 +379,10 @@ var
   NewArray: TRS2WorldArray;
   I, II, H: Integer;
 begin
+  Result := 0;
   NewArray := RS2WorldArray;
   H := High(NewArray);
+  II := 0;
   for I := 0 to H do
   begin
     if (Members < 2) then

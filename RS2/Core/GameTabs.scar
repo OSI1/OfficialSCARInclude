@@ -119,13 +119,14 @@ function GetTabBounds(Tab: Integer): TBox;
 Contributors: Wanted
 Description: Returns tab boundries.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modification: August 31st, 2011. By Wanted. RS2 Build 662.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetTabBounds(Tab: Integer): TBox;
 var
   P: TPoint;
 begin
+  Result := Box(0, 0, 0, 0);
   if (Tab = Tab_Logout) then
   begin
     Result := Box(746, 0, 764, 19);
@@ -140,13 +141,14 @@ function TabExists(Tab: Integer): Integer;
 Contributors: Wanted, Dynamite.
 Description: Returns True if the Tab exists.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modification: August 31st, 2011. By Wanted. RS2 Build 662.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TabExists(Tab: Integer): Boolean;
 var
   TB: TBox;
 begin
+  Result := False;
   if (Tab = Tab_Logout) then
   begin
     Result := (GetColor(746, 0) = 65536);
@@ -192,13 +194,14 @@ function EquipmentToCoords(Slot: Integer): TPoint;
 Contributors: Wanted, Home.
 Description: Returns the middle point of any Tab_Equip_ slot.
 Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
-Last Modification: November 8th, 2011. By Wanted. RS2 Build 676.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function EquipmentToCoords(Slot: Integer): TPoint;
 var
   TPA: TPointArray;
 begin
+  Result := Point(0, 0);
   TPA := [Point(601, 228), Point(642, 228), Point(601, 266), Point(641, 266),
           Point(684, 266), Point(586, 304), Point(643, 304), Point(697, 304),
           Point(641, 344), Point(586, 385), Point(642, 385), Point(698, 385)];
@@ -227,7 +230,7 @@ function IsSlotEquipped(Slot: Integer): Boolean;
 Contributors: Home, Wanted.
 Description: Returns true if a Tab_Equip_ slot is equipped with something.
 Date Created: September 1st, 2011. By Home & Wanted. RS2 Build 662.
-Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsSlotEquipped(Slot: Integer): Boolean;
@@ -235,6 +238,7 @@ var
   P: TPoint;
   TB: TBox;
 begin
+  Result := False;
   if (not (SetGameTab(Tab_Equip))) then
     Exit;
   TB := GetEquipmentBounds(Slot);
@@ -276,7 +280,7 @@ function GetCurrentMusic: string;
 Contributors: Zyt3x, Wanted.
 Description: Returns the current music that's playing.
 Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCurrentMusic: string;
@@ -284,6 +288,7 @@ var
   TPA: TPointArray;
   B: TBox;
 begin
+  Result := '';
   if (not (SetGameTab(Tab_Music))) then
     Exit;
   if (FindColors(TPA, 39401, 547, 240, 736, 266)) then
@@ -298,11 +303,12 @@ function IsRunning: Boolean;
 Contributors: Wanted
 Description: Returns true if running.
 Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
-Last Modification: September 5th, 2011. By Wanted. RS2 Build 663.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsRunning: Boolean;
 begin
+  Result := False;
   if (not (SimilarColors(94120, GetColor(723, 120), 10))) then
     if (not (SimilarColors(6740460, GetColor(722, 104), 10))) then
       Exit;                     // ADD Need Low Resting Body Color... Possible?
@@ -469,7 +475,7 @@ function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number from the skill level in skill tabs.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
@@ -477,6 +483,7 @@ var
   TPA: TPointArray;
   B, B2: TBox;
 begin
+  Result := 0;
   if (not (SetGameTab(Tab_Stats))) then
     Exit;
   B := GetSkillBounds(Skill);
@@ -559,13 +566,14 @@ function HoverSkill(Skill: Integer): Boolean;
 Contributors: Wanted
 Description: Hovers a skill. Put a triple digit number for a random skill.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function HoverSkill(Skill: Integer): Boolean;
 var
   B: TBox;
 begin
+  Result := False;
   if (not (SetGameTab(Tab_Stats))) then
     Exit;
   if (Skill > (Skill_Count - 1)) then

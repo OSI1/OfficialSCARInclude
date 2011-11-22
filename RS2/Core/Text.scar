@@ -71,7 +71,7 @@ function IsUpTextMulti(Text: TStringArray): Boolean;
 Contributors: Freddy1990, Wanted.
 Description: Checks for the occurance of any of the strings in the array.
 Date Created: August 7th, 2011. By Freddy1990 & Wanted. RS2 Build 660.
-Last Modified: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsUpTextMulti(Text: TStringArray): Boolean;
@@ -79,6 +79,7 @@ var
   I, H, T: Integer;
   TheText: string;
 begin
+  Result := False;
   T := GetSystemTime + RR(1500, 2500);
   repeat
     TheText := GetUpText;

@@ -28,7 +28,7 @@ function BankScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
@@ -36,6 +36,7 @@ var
   TPA: TPointArray;
   P: TPoint;
 begin
+  Result := False;
   FindColors(TPA, 4106994, 119, 25, 328, 47);
   if (Length(TPA) > 20) then
     Result := FindTextTPAInTPA('ank of', UpChars, TPA, P.X, P.Y);
@@ -46,7 +47,7 @@ function PinScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the pin screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 8th, 2011. By Wanted. RS2 Build 676.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PinScreen: Boolean;
@@ -54,6 +55,7 @@ var
   TPA: TPointArray;
   P: TPoint;
 begin
+  Result := False;
   FindColors(TPA, 2070783, 50, 57, 421, 79);
   if (Length(TPA) > 50) then
      Result := FindTextTPAInTPA('enter your', UpChars, TPA, P.X, P.Y);
@@ -64,7 +66,7 @@ function EnterBankPin(Pin: string): Boolean;
 Contributors: Wanted
 Description: Enters bank pin and returns true if succesfully entered pin and at bank screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 8th, 2011. By Wanted. RS2 Build 676.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function EnterBankPin(Pin: string): Boolean;
@@ -74,6 +76,7 @@ var
   TBA: TBoxArray;
   P: TPoint;
 begin
+  Result := False;
   if (Length(Pin) <> 4) then
     Exit;
   if (not (PinScreen)) then
@@ -108,11 +111,12 @@ function CloseBank(CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then closes it if open.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CloseBank(CheckBS: Boolean): Boolean;
 begin
+  Result := False;
   if (CheckBS) then
     if (not (BankScreen)) then
       Exit
@@ -126,7 +130,7 @@ function DepositAll(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAll(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
@@ -134,6 +138,7 @@ var
   TBoA: TBooleanArray;
   I: Integer;
 begin
+  Result := False;
   if (CheckBS) then
     if (not (BankScreen)) then
       Exit
@@ -151,7 +156,7 @@ Contributors: Wanted
 Description: Deposits all inventory itmes except for excluded slots. True if
 CheckBS is true and bankscreen is found.
 Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
-Last Modification: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
@@ -161,6 +166,7 @@ var
   S: string;
   B: Boolean;
 begin
+  Result := False;
   if (CheckBS) then
     if (not (BankScreen)) then
       Exit
@@ -207,11 +213,12 @@ function ToggleUseNotes(Use: Boolean): Boolean;
 Contributors: Wanted
 Description: Enables or disables note usage. Returns true if toggle was needed.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ToggleUseNotes(Use: Boolean): Boolean;
 begin
+  Result := False;
   case GetColor(251, 301) of
     7967381: Result := not (Use);
     10862787: Result := Use;
@@ -229,11 +236,12 @@ Contributors: Wanted
 Description: Returns true if at bankscreen and CheckBS.
 Searches for SearchText using the in bank search glass.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
 begin
+  Result := False;
   if (CheckBS) then
     if (not (BankScreen)) then
       Exit
@@ -250,7 +258,7 @@ Contributors: Wanted
 Description: Scrolls bank all the way to top or bottom, true if not needed to do so.
 Searches for SearchText using the in bank search glass.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FixBank(FixUp: Boolean): Boolean;
@@ -258,6 +266,7 @@ var
   TPA: TPointArray;
   B1, B2, B3: TBox;
 begin
+  Result := False;
   if (FixUp) then
     if (GetColor(489, 101) = 1250841) then
       Exit;

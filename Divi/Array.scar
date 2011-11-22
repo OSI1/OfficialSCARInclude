@@ -84,7 +84,7 @@ procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
 Contributors: Wanted
 Description: Removes a TPA by index from an ATPA.
 Date Created: November 14th, 2011. By Wanted
-Last Modified: November 14th, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
@@ -98,6 +98,7 @@ begin
   if (Index > H) then
     Exit;
   SetLength(NewATPA, Length(ATPA) - 1);
+  II := 0;
   for I := 0 to H do
     if (not (I = Index)) then
     begin
@@ -112,16 +113,18 @@ function TBOutlineToTPA(TB: TBox): TPointArray;
 Contributors: Wanted
 Description: Turns the outline of a TBox into a TPA.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: November 9th, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TBOutlineToTPA(TB: TBox): TPointArray;
 var
   I, II, Hi, Lo: Integer;
 begin
+  Result := [];
   SetLength(Result, (((TB.X2 - TB.X1) * 2) + ((TB.Y2 - TB.Y1) * 2)));
   if (Length(Result) < 1) then
     Exit;
+  II := 0;
   for I := TB.X1 to TB.X2 do
   begin
     Result[II] := Point(I, TB.Y1);
@@ -170,7 +173,7 @@ function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
 Contributors: Anonymous, Wanted.
 Description: Turns a line of text into an array of points.
 Date Created: August 7th, 2011. By Anonymous
-Last Modified: October 19th, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
@@ -178,6 +181,7 @@ var
   CTS, W, H, bmpText: Integer;
   DC: HDC;
 begin
+  Result := [];
   if (Length(Text) < 1) then
     Exit;
   bmpText := CreateBitmapMaskFromText(Text, Chars);
@@ -197,13 +201,14 @@ function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): B
 Contributors: Wanted, Freddy.
 Description: Checks a TPA to see if contains the a line of text using its TPA.
 Date Created: October 20th, 2011. By Wanted
-Last Modified: October 22nd, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
 var
   TextTPA, TPA: TPointArray;
 begin
+  Result := False;
   TextTPA := LoadTextTPA(Text, Chars);
   if (not (TPAInTPARelEx(TextTPA, SearchTPA, TPA))) then
     Exit;
@@ -232,7 +237,7 @@ procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Ex
 Contributors: Wanted
 Description: Removes all points not within distance.
 Date Created: October 28th, 2011. By Wanted
-Last Modified: October 31st, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
@@ -243,6 +248,7 @@ var
 begin
   H := High(Points);
   L := Low(Points);
+  HH := 0;
   for I := L to H do
   begin
     Dist := DistanceEx(Points[I].X, Points[I].Y, CX, CY);
@@ -318,7 +324,7 @@ function PointsNotInTPA(TPA: TPointArray): TPointArray;
 Contributors: Wanted
 Description: Finds empty points in TPA bounds.
 Date Created: November 18th, 2011. By Wanted
-Last Modified: November 18th, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PointsNotInTPA(TPA: TPointArray): TPointArray;
@@ -327,10 +333,12 @@ var
   I, H, L, II: Integer;
   B: TBox;
 begin
+  TPA := [];
   B := GetTPABounds(TPA);
   TPA2 := TPAFromBox(B);
   H := High(TPA2);
   L := Low(TPA2);
+  II := 0;
   for I := L to H do
     if (not (TPAContains(TPA, TPA2[I]))) then
     begin
