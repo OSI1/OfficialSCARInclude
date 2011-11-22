@@ -333,7 +333,7 @@ var
   I, H, L, II: Integer;
   B: TBox;
 begin
-  TPA := [];
+  Result := [];
   B := GetTPABounds(TPA);
   TPA2 := TPAFromBox(B);
   H := High(TPA2);
