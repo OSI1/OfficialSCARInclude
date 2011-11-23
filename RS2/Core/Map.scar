@@ -106,7 +106,7 @@ function GetCompassAngleRadians: Extended;
 Contributors: Anonymous, Wanted.
 Description: Gets the compass angle in radians.
 Date Created: August 6th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCompassAngleRadians: Extended;
@@ -114,10 +114,10 @@ var
   TPA: TPointArray;
   P: TPoint;
 begin
-  FindColors(TPA, 1911089, 527, 8, 559, 41);
-  FilterPointsDist(TPA, 0, 18, 543, 25);
+  FindColors(TPA, 65536, 528, 9, 559, 41);
+  FilterPointsDist(TPA, 0, 16, 543.5, 25);
   P := MiddleTPA(TPA);
-  Result := (ArcTan2(-(P.Y - 24), P.X - 543) - (Pi / 2));
+  Result := (ArcTan2(-(P.Y - 25), P.X - 542) - (Pi / 2));
   if (Result < 0) then
     Result := Result + (2 * Pi);
 end;

@@ -348,7 +348,7 @@ const Useful in game colors
 Contributors: Anonymous, Wanted, Zyt3x.
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                             // Modified            By              Build #
@@ -390,7 +390,7 @@ const                             // Modified            By              Build #
   clObjectOutline = 131072;       // September 1, 2011   Wanted          662
   clOptionsBox    = 3950929;      // November 6, 2011    Wanted          675
   clOptionsBox2   = 4343893;      // November 6, 2011    Wanted          675
-  clSkillInfoBox  = 10551295;     // November 3, 2011    Wanted          674
+  clSkillInfoBox  = 921102;       // November 22, 2011   Wanted          682
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS2Player = record
@@ -528,12 +528,14 @@ procedure FreeRS2Fonts;
 Contributors: Wanted
 Description: Frees RS2 fonts from memory.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: November 22st, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeRS2Fonts;
 begin
   {$IFNDEF DisableRS2Fonts}
+    FreeChars2(OptionChars);
+	FreeChars2(ScreenChars);
     FreeChars2(NPCChars);
     FreeChars2(UpChars);
     FreeChars2(SmallChars);

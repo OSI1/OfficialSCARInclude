@@ -280,7 +280,7 @@ function GetCurrentMusic: string;
 Contributors: Zyt3x, Wanted.
 Description: Returns the current music that's playing.
 Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: November 22st, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCurrentMusic: string;
@@ -294,7 +294,7 @@ begin
   if (FindColors(TPA, 39401, 547, 240, 736, 266)) then
   begin
     B := GetTPABounds(TPA);
-    Result := Trim(GetTextAtEx(B.X1 - 1, 245, 0, UpChars, False, False, 0, 1, 39401, 50, False, tr_AllChars));
+    Result := Trim(GetTextAtEx(B.X1 - 1, 245, 0, ScreenChars, False, False, 0, 1, 39401, 50, False, tr_AllChars));
   end;
 end;
 
@@ -590,7 +590,7 @@ function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck: B
 Contributors: Wanted
 Description: Returns the information by hovering the skill.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck: Boolean): TIntegerArray;
@@ -612,8 +612,8 @@ begin
   TBoA := [CurrentCheck, NextCheck, RemainderCheck];
   for I := 0 to 2 do
     if (TBoA[I]) then
-      if (IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, TSA[I], 0, SmallChars, False, False, 0, 2, clBlack)) then
-        Result[I] := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 0, SmallChars, False, False, 0, 2, clBlack, 50, False, tr_AllChars)), -1);
+      if (IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, TSA[I], 0, SmallChars, False, False, 0, 2, 4305653)) then
+        Result[I] := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 0, SmallChars, False, False, 0, 2, 4305653, 50, False, tr_AllChars)), -1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

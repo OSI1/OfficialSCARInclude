@@ -86,7 +86,7 @@ function RSReady: Boolean;
 Contributors: Wanted
 Description: Returns true when runescape isn't intially loading the game.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: November 22nd, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RSReady: Boolean;
@@ -94,11 +94,10 @@ var
   P: TPoint;
 begin
   Result := False;
-  if (not (LoginScreen)) then
+  if (not (FindColorTolerance(P.X, P.Y, 16645629, 700, 15, 702, 17, 5))) then
     if (not (LoggedIn)) then
       if (not (LobbyScreen)) then
-        if (not (FindColorTolerance(P.X, P.Y, 12312554, 698, 15, 700, 17, 5))) then
-          Exit;
+        Exit;
   Result := True;
 end;
 
@@ -385,7 +384,7 @@ function ExitToLobby: Boolean;
 Contributors: Wanted
 Description: Logs out current active player to lobby if not unsigned.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: November 22st, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ExitToLobby: Boolean;
@@ -399,7 +398,7 @@ begin
     if (not (SetGameTab(Tab_Logout))) then
       Exit;
     WaitRR(100, 250);
-    if (IsTextInAreaEx(594, 352, 690, 375, P.X, P.Y, 'obby', 75, UpChars, False, False, -1, 2, clWhite)) then
+    if (IsTextInAreaEx(594, 352, 690, 375, P.X, P.Y, 'obby', 75, ScreenChars, False, False, -1, 2, clWhite)) then
       MouseBox(569, 348, 714, 374, ClickLeft)
     else
       Exit;
@@ -415,7 +414,7 @@ function LeaveLobby: Boolean;
 Contributors: Wanted
 Description: If at the lobby screen goes back to login screen.
 Date Created: September 26th, 2011. By Wanted. RS2 Build 666.
-Last Modification: September 26th, 2011. By Wanted. RS2 Build 666.
+Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LeaveLobby: Boolean;
@@ -423,7 +422,7 @@ begin
   Result := (not (LobbyScreen));
   if (Result) then
     Exit;
-  MouseBox(681, 26, 699, 42, ClickLeft);
+  MouseCircle(7, 690, 34, ClickLeft);
   Result := WaitFunc(@LobbyScreen, False, 250, 500, 3500, 4500);
 end;
 
@@ -432,7 +431,7 @@ function Logout: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logs out current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: November 22st, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Logout: Boolean;
@@ -452,10 +451,10 @@ begin
     if (not (SetGameTab(Tab_Logout))) then
       Exit;
     WaitRR(100, 250);
-    if (IsTextInAreaEx(594, 396, 691, 419, P.X, P.Y, 'ogin', 75, UpChars, False, False, -1, 2, clWhite)) then
+    if (IsTextInAreaEx(594, 396, 691, 419, P.X, P.Y, 'ogin', 75, ScreenChars, False, False, -1, 2, clWhite)) then
       MouseBox(568, 392, 715, 419, ClickLeft)
     else
-      if (IsTextInAreaEx(MIX1, MIY1, MIX2, MIY2, P.X, P.Y, 'lick', 75, UpChars, False, False, -1, 2, clWhite)) then  // FIX ?
+      if (IsTextInAreaEx(MIX1, MIY1, MIX2, MIY2, P.X, P.Y, 'lick', 75, ScreenChars, False, False, -1, 2, clWhite)) then  // FIX ?
         MouseBox(569, 349, 713, 375, ClickLeft)
       else
         Exit;

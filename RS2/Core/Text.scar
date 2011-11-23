@@ -9,7 +9,7 @@
      By: Freddy1990 & Wanted.
  * function IsUpTextMulti(Text: TStringArray): Boolean;
      By: Freddy1990 & Wanted.
- * function OptionBoxExistsEx(var OptionBoxTPA: TPointArray): Boolean;
+ * function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
      By: Wanted
  * function OptionBoxExists: Boolean;
      By: Wanted
@@ -138,7 +138,7 @@ function OptionsExistsEx(Options: TStringArray; Colors: T2DIntegerArray; var InB
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 2nd, 2011. By Wanted. RS2 Build 682.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionsExistsEx(Options: TStringArray; Colors: T2DIntegerArray; var InBox: TBoxArray): TBooleanArray;
