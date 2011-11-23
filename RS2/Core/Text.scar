@@ -36,12 +36,12 @@ function GetUpText: String;
 Contributors: Freddy1990, Wanted.
 Description: Returns text in upperleft corner.
 Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
-Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: November 2nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetUpText: string;
 begin
-  Result := rs_GetUpTextAt(8, 9);
+  Result := rs_GetUpTextAt(8, 10);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -95,27 +95,27 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function OptionBoxExistsEx(var OptionBoxTPA: TPointArray): Boolean;
+function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
 Contributors: Wanted
 Description: Returns true if the box that contains the ChooseOptions is up.
 OptionBoxTPA contains all the points within that match clOptionsBox.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function OptionBoxExistsEx(var OptionBoxTPA: TPointArray): Boolean;
+function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
 var
+  TPA, TPA1, TPA2: TPointArray;
   ATPA: T2DPointArray;
-  TPA: TPointArray;
 begin
-  Result := WaitFindColorsTolerance(OptionBoxTPA, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 150, True, 50, 150, 1500, 2500);
-  FindColors(TPA, clOptionsBox2, RSX1, RSY1, RSX2, RSY2);
-  OptionBoxTPA := CombineTPA(OptionBoxTPA, TPA);
-  ATPA := TPAChain(OptionBoxTPA, 3);
+  Result := WaitFindColorsTolerance(TPA1, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 150, True, 50, 150, 1500, 2500);
+  FindColors(TPA2, clOptionsBox2, RSX1, RSY1, RSX2, RSY2);
+  TPA := CombineTPA(TPA1, TPA2);
+  ATPA := TPAChain(TPA, 3);
   if (Length(ATPA) < 1) then
     Exit;
   SortATPASize(ATPA, True);
-  OptionBoxTPA := TPAFromBox(GetTPABounds(ATPA[0]));
+  OptionBox := GetTPABounds(ATPA[0]);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -123,14 +123,14 @@ function OptionBoxExists: Boolean;
 Contributors: Wanted
 Description: Simpler version of OptionBoxExistsEx.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionBoxExists: Boolean;
 var
-  TPA: TPointArray;
+  TB: TBox;
 begin
-  Result := OptionBoxExistsEx(TPA);
+  Result := OptionBoxExistsEx(TB);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -138,19 +138,18 @@ function OptionsExistsEx(Options: TStringArray; Colors: T2DIntegerArray; var InB
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 6th, 2011. By Wanted. RS2 Build 275.
+Last Modified: November 2nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionsExistsEx(Options: TStringArray; Colors: T2DIntegerArray; var InBox: TBoxArray): TBooleanArray;
 var
-  OptionBoxTPA, TPA1, TPA2: TPointArray;
+  TPA1, TPA2: TPointArray;
   I, II, H, HH: LongInt;
   P: TPoint;
   B: TBox;
 begin
-  if (not (OptionBoxExistsEx(OptionBoxTPA))) then
+  if (not (OptionBoxExistsEx(B))) then
     Exit;
-  B := GetTPABounds(OptionBoxTPA);
   H := High(Options);
   SetLength(Result, H + 1);
   SetLength(InBox, H + 1);
@@ -162,7 +161,7 @@ begin
       FindColors(TPA1, Colors[I][II], B.X1, B.Y1, B.X2, B.Y2);
       TPA2 := CombineTPA(TPA1, TPA2);
     end;
-    if (not (FindTextTPAInTPA(Options[I], UpChars, TPA2, P.X, P.Y))) then
+    if (not (FindTextTPAInTPA(Options[I], OptionChars, TPA2, P.X, P.Y))) then
       Continue;
     Result[I] := True;
     HH := (Round((B.Y2 - B.Y1) / 16.25) - 1);
@@ -212,16 +211,24 @@ function OptionExistsMulti(Options: TStringArray): Boolean;
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionExistsMulti(Options: TStringArray): Boolean;
 var
   TBoA: TBooleanArray;
   TBA: TBoxArray;
+  I, H: Integer;
 begin
-  TBoA := OptionsExistsEx(Options, AllOptionColors2D(1), TBA);
-  Result := TBoA[0];
+  Result := False;
+  TBoA := OptionsExistsEx(Options, AllOptionColors2D(Length(Options)), TBA);
+  H := High(TBoA);
+  for I := 0 to H do
+    if (TBoA[I]) then
+    begin
+      Result := True;
+      Exit;
+    end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -242,7 +249,7 @@ function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; Typ
 Contributors: Wanted
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; TypeC: ClickActions): Boolean;
@@ -263,10 +270,17 @@ begin
       Result := True;
       Exit;
     end;
-  OptionBoxExistsEx(TPA);
-  B := GetTPABounds(TPA);
-  B := Box(B.X1 - 10, B.Y1 - 10, B.X2 + 10, B.Y2 + 10);
-  TPA := TPAFromBox(Box(B.X1 - 35, B.Y1 - 35, B.X2 + 35, B.Y2 + 35));
+  OptionBoxExistsEx(B);
+  if ((B.X1 - 30) < RSX1) then
+  begin
+    B := Box(B.X1, B.Y1, B.X2 + 20, B.Y2);
+    TPA := TPAFromBox(Box(B.X1, B.Y1, B.X2 + 30, B.Y2));
+  end
+  else
+  begin
+    B := Box(B.X1 - 20, B.Y1, B.X2, B.Y2);
+    TPA := TPAFromBox(Box(B.X1 - 30, B.Y1, B.X2, B.Y2));
+  end;
   TPAFilterBoxes(TPA, [B]);
   P := TPA[Random(Length(TPA))];
   MMouse(P.X, P.Y, 0, 0);

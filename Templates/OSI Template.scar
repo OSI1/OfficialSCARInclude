@@ -1,6 +1,6 @@
 program New;
 
-{.include OSI\OSI.scar}
+{$I OSI\OSI.scar}
 
 procedure ScriptTerminate;
 begin

@@ -4,7 +4,7 @@ program New;
 {$DEFINE OSI_Color_Anti_Randoms}
 {$DEFINE SMART}                   // Comment out to disable SMART
 
-{.include OSI\OSI.scar}
+{$I OSI\OSI.scar}
 
 procedure ScriptTerminate;
 begin

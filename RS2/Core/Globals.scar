@@ -482,11 +482,11 @@ var Font Variables
 Contributors: Anonymous, Wanted.
 Description: Variables for RS2 fonts memory handles.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modification: November 2nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars: LongInt;
+  OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars: LongInt;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var RS2WorldArray: TWorldArray;

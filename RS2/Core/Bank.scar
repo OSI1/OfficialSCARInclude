@@ -28,7 +28,7 @@ function BankScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: November 2nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
@@ -39,7 +39,7 @@ begin
   Result := False;
   FindColors(TPA, 4106994, 119, 25, 328, 47);
   if (Length(TPA) > 20) then
-    Result := FindTextTPAInTPA('ank of', UpChars, TPA, P.X, P.Y);
+    Result := FindTextTPAInTPA('ank of', ScreenChars, TPA, P.X, P.Y);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -47,7 +47,7 @@ function PinScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the pin screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: November 2nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PinScreen: Boolean;
@@ -58,7 +58,7 @@ begin
   Result := False;
   FindColors(TPA, 2070783, 50, 57, 421, 79);
   if (Length(TPA) > 50) then
-     Result := FindTextTPAInTPA('enter your', UpChars, TPA, P.X, P.Y);
+     Result := FindTextTPAInTPA('enter your', ScreenChars, TPA, P.X, P.Y);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -66,7 +66,7 @@ function EnterBankPin(Pin: string): Boolean;
 Contributors: Wanted
 Description: Enters bank pin and returns true if succesfully entered pin and at bank screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: November 2nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function EnterBankPin(Pin: string): Boolean;
@@ -89,7 +89,7 @@ begin
     FindColors(TPA, 2070783, 37, 107, 370, 314);
     if (Length(TPA) < 250) then
       Exit;
-    if (not (FindTextTPAInTPA(Copy(Pin, I + 1, 1), UpChars, TPA, P.X, P.Y))) then
+    if (not (FindTextTPAInTPA(Copy(Pin, I + 1, 1), ScreenChars, TPA, P.X, P.Y))) then
       GetMousePos(P.X, P.Y);
     for II := 0 to 10 do
       if (PointInBox(P, TBA[II])) then

@@ -8,23 +8,23 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{.include OSI\RS2\Anti-Randoms\Abyssal.scar}
-{.include OSI\RS2\Anti-Randoms\BeeKeeper.scar}
-{.include OSI\RS2\Anti-Randoms\CapnArnav.scar}
-{.include OSI\RS2\Anti-Randoms\Demon.scar}
-{.include OSI\RS2\Anti-Randoms\EvilBob.scar}
-{.include OSI\RS2\Anti-Randoms\Forester.scar}
-{.include OSI\RS2\Anti-Randoms\Frog.scar}
-{.include OSI\RS2\Anti-Randoms\Leo.scar}
-{.include OSI\RS2\Anti-Randoms\Maze.scar}
-{.include OSI\RS2\Anti-Randoms\Mime.scar}
-{.include OSI\RS2\Anti-Randoms\Molly.scar}
-{.include OSI\RS2\Anti-Randoms\Mordaut.scar}
-{.include OSI\RS2\Anti-Randoms\Pillory.scar}
-{.include OSI\RS2\Anti-Randoms\Pinball.scar}
-{.include OSI\RS2\Anti-Randoms\PrisonPete.scar}
-{.include OSI\RS2\Anti-Randoms\Quiz.scar}
-{.include OSI\RS2\Anti-Randoms\Sandwich.scar}
+{$I OSI\RS2\Anti-Randoms\Abyssal.scar}
+{$I OSI\RS2\Anti-Randoms\BeeKeeper.scar}
+{$I OSI\RS2\Anti-Randoms\CapnArnav.scar}
+{$I OSI\RS2\Anti-Randoms\Demon.scar}
+{$I OSI\RS2\Anti-Randoms\EvilBob.scar}
+{$I OSI\RS2\Anti-Randoms\Forester.scar}
+{$I OSI\RS2\Anti-Randoms\Frog.scar}
+{$I OSI\RS2\Anti-Randoms\Leo.scar}
+{$I OSI\RS2\Anti-Randoms\Maze.scar}
+{$I OSI\RS2\Anti-Randoms\Mime.scar}
+{$I OSI\RS2\Anti-Randoms\Molly.scar}
+{$I OSI\RS2\Anti-Randoms\Mordaut.scar}
+{$I OSI\RS2\Anti-Randoms\Pillory.scar}
+{$I OSI\RS2\Anti-Randoms\Pinball.scar}
+{$I OSI\RS2\Anti-Randoms\PrisonPete.scar}
+{$I OSI\RS2\Anti-Randoms\Quiz.scar}
+{$I OSI\RS2\Anti-Randoms\Sandwich.scar}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRandomInfo
