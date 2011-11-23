@@ -482,11 +482,11 @@ var Font Variables
 Contributors: Anonymous, Wanted.
 Description: Variables for RS2 fonts memory handles.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: November 2nd, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 23rd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars: LongInt;
+  ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars: LongInt;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var RS2WorldArray: TWorldArray;
@@ -528,14 +528,13 @@ procedure FreeRS2Fonts;
 Contributors: Wanted
 Description: Frees RS2 fonts from memory.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modification: November 22st, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 23rd, 2011. By Wanted. RS2 Build 683.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeRS2Fonts;
 begin
   {$IFNDEF DisableRS2Fonts}
-    FreeChars2(OptionChars);
-	FreeChars2(ScreenChars);
+	  FreeChars2(ScreenChars);
     FreeChars2(NPCChars);
     FreeChars2(UpChars);
     FreeChars2(SmallChars);

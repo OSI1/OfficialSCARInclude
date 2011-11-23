@@ -28,7 +28,7 @@ function BankScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: November 2nd, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
@@ -47,7 +47,7 @@ function PinScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the pin screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 2nd, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PinScreen: Boolean;
@@ -66,7 +66,7 @@ function EnterBankPin(Pin: string): Boolean;
 Contributors: Wanted
 Description: Enters bank pin and returns true if succesfully entered pin and at bank screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 2nd, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function EnterBankPin(Pin: string): Boolean;
