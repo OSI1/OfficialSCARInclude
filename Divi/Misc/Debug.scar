@@ -42,19 +42,24 @@ procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPAB
 Contributors: Wanted
 Description: Debugs an ATPA to the debug window with tons of options.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: November 9th, 2011. By Wanted
+Last Modified: November 24th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
 var
   Width, Height, bmpDebug, I, II, H, HH, Col: Integer;
+  ATPA2: T2DPointArray;
   mTPA, TPA: TPointArray;
   B, BB: TBox;
   {$IFNDEF RS2}
     Arial: Integer;
   {$ENDIF}
 begin
-  mTPA := MergeATPA(ATPA);
+  H := High(ATPA);
+  SetLength(ATPA2, H + 1);
+  for I := 0 to H do
+    ATPA2[I] := CopyTPA(ATPA[I]);
+  mTPA := MergeATPA(ATPA2);
   B := GetTPABounds(mTPA);
   TPADimensions(mTPA, Width, Height);
   DecEx(B.X1, Round(Width * 0.25));
@@ -72,20 +77,20 @@ begin
     CopyClientToBitmap(bmpDebug, B.X1, B.Y1, B.X2, B.Y2);
   if ((ShowTPAs) or (ShowTPABorders) or (ShowTPAIndexes)) then
   begin
-    H := High(ATPA);
+    H := High(ATPA2);
     for I := 0 to H do
     begin
       Col := Random(clWhite + 1);
-      OffsetTPA(ATPA[I], -B.X1, -B.Y1);
-      HH := High(ATPA[I]);
+      OffsetTPA(ATPA2[I], -B.X1, -B.Y1);
+      HH := High(ATPA2[I]);
       if (ShowTPAs) then
         for II := 0 to HH do
-          FastSetPixel(bmpDebug, ATPA[I][II].X, ATPA[I][II].Y, Col);
+          FastSetPixel(bmpDebug, ATPA2[I][II].X, ATPA2[I][II].Y, Col);
       if ((ShowTPABorders) or (ShowTPAIndexes)) then
         Col := Random(clWhite + 1);
       if (ShowTPABorders) then
       begin
-        TPA := TBOutlineToTPA(GetTPABounds(ATPA[I]));
+        TPA := TBOutlineToTPA(GetTPABounds(ATPA2[I]));
         HH := High(TPA);
           for II := 0 to HH do
             FastSetPixel(bmpDebug, TPA[II].X, TPA[II].Y, Col);
@@ -98,7 +103,7 @@ begin
           Arial := LoadCharsFromFont2('Arial', 8, True, False, False, False);
           TPA := LoadTextTPA(IntToStr(I), Arial);
         {$ENDIF}
-        BB := GetTPABounds(ATPA[I]);
+        BB := GetTPABounds(ATPA2[I]);
         OffsetTPA(TPA, BB.X1 + 2, BB.Y1 + 2);
         HH := High(TPA);
         for II := 0 to HH do
@@ -110,7 +115,7 @@ begin
     end;
     if (ShowATPABorder) then
     begin
-      TPA := TBOutlineToTPA(ATPABounds(ATPA));
+      TPA := TBOutlineToTPA(ATPABounds(ATPA2));
       H := High(TPA);
       for I := 0 to H do
         FastSetPixel(bmpDebug, TPA[I].X, TPA[I].Y, clBlue);
