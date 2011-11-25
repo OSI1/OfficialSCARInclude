@@ -15,9 +15,23 @@
      By: Wanted
  * function InvFull: Boolean;
      By: Wanted
- * procedure MouseItem(Slot: Integer; TypeC: ClickActions);
+ * function MouseItem(Slot: Integer; TypeC: ClickActions): Boolean;
      By: Wanted
- * procedure DragItem(FromSlot, ToSlot: Integer);
+ * function DragItem(FromSlot, ToSlot: Integer): Boolean;
+     By: Wanted
+ * function GetDropPattern(Which: Integer): TIntegerArray;
+     By: Wanted
+ * function DropItem(Slot: Integer): Boolean;
+     By: Wanted
+ * function DropAllExcludeEx(Exclude, Pattern: TIntegerArray): Integer;
+     By: Wanted
+ * function DropAllExclude(Exclude: TIntegerArray): Integer;
+     By: Wanted
+ * function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
+     By: Wanted
+ * function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
+     By: Wanted
+ * function DropAll: Integer;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -131,38 +145,159 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure MouseItem(Slot: Integer; TypeC: ClickActions);
+function MouseItem(Slot: Integer; TypeC: ClickActions): Boolean;
 Contributors: Wanted
 Description: Clicks on an item.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure MouseItem(Slot: Integer; TypeC: ClickActions);
+function MouseItem(Slot: Integer; TypeC: ClickActions): Boolean;
 var
   B: TBox;
 begin
-  if (not (InvItemExists(Slot))) then
+  Result := InvItemExists(Slot);
+  if (not (Result)) then
     Exit;
   B := GetItemBounds(Slot);
   MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure DragItem(FromSlot, ToSlot: Integer);
+function DragItem(FromSlot, ToSlot: Integer): Boolean;
 Contributors: Wanted
 Description: Drags an item from one slot to another.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure DragItem(FromSlot, ToSlot: Integer);
+function DragItem(FromSlot, ToSlot: Integer): Boolean;
 var
   B, B2: TBox;
 begin
-  if (not (InvItemExists(FromSlot))) then
+  Result := InvItemExists(FromSlot);
+  if (not (Result)) then
     Exit;
   B := GetItemBounds(FromSlot);
   B2 := GetItemBounds(ToSlot);
   DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, B2.X1, B2.Y1, B2.X2, B2.Y2, True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetDropPattern(Which: Integer): TIntegerArray;
+Contributors: Wanted
+Description: Returns a list of all invetory spaces in a drop order. See manual for details.
+Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetDropPattern(Which: Integer): TIntegerArray;
+begin
+  if (not (InRange(Which, 0, 5))) then
+    Which := Random(6);
+  case Which of
+    0: Result := [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
+    1: Result := [3, 2, 1, 0, 7, 6, 5, 4, 11, 10, 9, 8, 15, 14, 13, 12, 19, 18, 17, 16, 23, 22, 21, 20, 27, 26, 25, 24];
+    2: Result := [0, 4, 8, 12, 16, 20, 24, 1, 5, 9, 13, 17, 21, 25, 2, 6, 10, 14, 18, 22, 26, 3, 7, 11, 15, 19, 23, 27];
+    3: Result := [3, 7, 11, 15, 19, 23, 27, 2, 6, 10, 14, 18, 22, 26, 1, 5, 9, 13, 17, 21, 25, 0, 4, 8, 12, 16, 20, 24];
+    4: Result := [0, 1, 2, 3, 7, 6, 5, 4, 8, 9, 10, 11, 15, 14, 13, 12, 16, 17, 18, 19, 23, 22, 21, 20, 24, 25, 26, 27];
+    5: Result := [3, 2, 1, 0, 4, 5, 6, 7, 11, 10, 9, 8, 12, 13, 14, 15, 19, 18, 17, 16, 20, 21, 22, 23, 27, 26, 25, 24];
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DropItem(Slot: Integer): Boolean;
+Contributors: Wanted
+Description: Drops the item in the selected slot if it exists, true if exists and done.
+Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DropItem(Slot: Integer): Boolean;
+begin
+  Result := False;
+  if (not (MouseItem(Slot, ClickRight))) then
+    Exit;
+  Result := ChooseOptionMulti(['Drop ', 'rop ', 'Drop', 'rop']);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DropAllExcludeEx(Exclude, Pattern: TIntegerArray): Integer;
+Contributors: Wanted
+Description: Drops all the items in invetory except for those in excluded spaces
+returns number of items dropped. Use your own custom pattern or GetDropPattern.
+Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DropAllExcludeEx(Exclude, Pattern: TIntegerArray): Integer;
+var
+  I: Integer;
+begin
+  Result := 0;
+  for I := 0 to 27 do
+    if (not (TIAContains(Exclude, Pattern[I]))) then
+      if (DropItem(Pattern[I])) then
+        Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DropAllExclude(Exclude: TIntegerArray): Integer;
+Contributors: Wanted
+Description: Drops all the items in invetory except for those in excluded spaces
+returns number of items dropped. Uses GetDropPattern(2)
+Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DropAllExclude(Exclude: TIntegerArray): Integer;
+begin
+  Result := DropAllExcludeEx(Exclude, GetDropPattern(2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
+Contributors: Wanted
+Description: Drops all the items in invetory specified returns number of items
+dropped. Use your own custom pattern or GetDropPattern.
+Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
+var
+  I: Integer;
+begin
+  Result := 0;
+  for I := 0 to 27 do
+    if (TIAContains(Slots, Pattern[I])) then
+      if (DropItem(Pattern[I])) then
+        Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
+Contributors: Wanted
+Description: Drops all the items in invetory specified returns number of items
+dropped. Uses GetDropPattern(2).
+Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DropItems(Slots: TIntegerArray): Integer;
+begin
+  Result := DropItemsEx(Slots, GetDropPattern(2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DropAll: Integer;
+Contributors: Wanted
+Description: Drops all the items in invetory and returns number of items dropped. Uses GetDropPattern(2).
+Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DropAll: Integer;
+begin
+  Result := DropAllExcludeEx([], GetDropPattern(2));
 end;
