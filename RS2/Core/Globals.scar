@@ -6,7 +6,7 @@
  * const Useful in game boundaries, points, areas, widths, etc. etc.
      By: Anonymous & Wanted.
  * const Skill_ Indexes
-     By: Anonymous
+     By: Wanted
  * const Lobby_Tab_ Indexes
      By: Wanted
  * const Game Tab Indexes
@@ -142,9 +142,9 @@ const             // Description                  Modified            By        
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Skill_ Indexes
-Contributors: Anonymous, Wanted, Zyt3x.
+Contributors: Wanted
 Description: Index handles for various RS2 skills.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
 Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -333,15 +333,15 @@ const Area_ indexes
 Contributors: Wanted.
 Description: Index handles for the different screen ares within RS that contain items.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modification: November 26th, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
   Area_Inv              = 0;
-  Area_Bank             = 0;
-  Area_Deposit          = 0;
-  Area_Trade            = 0;
-  Area_Shop             = 0;
+  Area_Bank             = 1;
+  Area_Deposit          = 2;
+  Area_Trade            = 3;
+  Area_Shop             = 4;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors
@@ -620,6 +620,3 @@ begin
         Result := 0;
   until (Players[Result].Active);
 end;
-
-//INDEXES, LOTS OF THEM
-//more colors outline/black etc. *FlagColor

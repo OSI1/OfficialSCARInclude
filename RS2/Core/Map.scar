@@ -6,7 +6,7 @@
  * function OnMM(X, Y: Integer): Boolean;
      By: Wanted
  * function MMToMS(MM: TPoint): TPoint;
-     By: Anonymous
+     By: Naike
  * function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
      By: Wanted
  * function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
@@ -56,9 +56,9 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function MMToMS(MM: TPoint): TPoint;
-Contributors: Anonymous, Wanted.
+Contributors: Naike, Wanted.
 Description: Returns true if point is on the minimap.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
+Date Created: August 7th, 2011. By Naike. RS2 Build 660.
 Last Modification: November 18th, 2011. By Wanted. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -103,9 +103,9 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetCompassAngleRadians: Extended;
-Contributors: Anonymous, Wanted.
+Contributors: Wanted, Wizzup.
 Description: Gets the compass angle in radians.
-Date Created: August 6th, 2011. By Anonymous. RS2 Build 660.
+Date Created: November 22nd, 2011. By Wanted. RS2 Build 682.
 Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -137,7 +137,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function MakeCompass(Angle: Extended): Boolean;
-Contributors: Wanted, Anonymous.
+Contributors: Wanted, Nielsie95, Nava2.
 Description: Rotates the compass using the arrow keys to the desired angle.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
 Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
@@ -174,7 +174,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SetAngle(Highest: Boolean);
-Contributors: Naum, Anonymous, Wanted.
+Contributors: Naum, Wanted.
 Description: Tilts the camera angle.
 Date Created: August 6th, 2011. By Naum. RS2 Build 660.
 Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
@@ -190,7 +190,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure ClickCompass(AdjustToHigh: Boolean);
-Contributors: Wanted, Anonymous.
+Contributors: Wanted
 Description: Clicks to face north and then tilts the camera angle if desired.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
 Last Modification: November 11th, 2011. By Wanted. RS2 Build 677.
@@ -384,8 +384,6 @@ begin
   Result := MouseFlagEx(P.X, P.Y, RX, RY, FlagD);
 end;
 
-//MMToMS
 //MSToMM
 //PercentColorMM
-//GetCompassAngleDegrees/Radians
 //IsMoving

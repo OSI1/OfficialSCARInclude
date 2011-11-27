@@ -265,7 +265,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
-Contributors: Anonymous, Freddy, Wanted.
+Contributors: Freddy, Wanted, Wizzup.
 Description: Removes all points from a TPA except for a given slice.
 Date Created: November 3rd, 2011. By Wanted
 Last Modified: November 5th, 2011. By Wanted

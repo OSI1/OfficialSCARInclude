@@ -3,16 +3,18 @@
                                 Keyboard Routines
 --------------------------------------------------------------------------------
  * procedure PushKey(C: Char);
-     By: Anonymous
- * procedure TypeSend(s: string);
-     By: Anonymous
+     By: Wanted
+ * procedure TypeSendEx(Text: string; PressEnter: Boolean);
+     By: Wanted
+ * procedure TypeSend(Text: string);
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure PushKey(C: Char);
-Contributors: Anonymous, Wanted.
+Contributors: Wanted
 Description: Types one char human like.
-Date Created: August 7th, 2011. By Anonymous
+Date Created: August 7th, 2011. By Wanted
 Last Modification: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -27,44 +29,54 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TypeSendEx(Text: string; PressEnter: Boolean);
+Contributors: Wanted
+Description: Types human like, presses enter if chosen.
+Date Created: August 26th, 2011. By Wanted
+Last Modification: August 26th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TypeSendEx(Text: string; PressEnter: Boolean);
+var
+  UseShiftKey, ShiftKeyDown: Boolean;
+  ShiftedKeys: string;
+  I, L: Integer;
+begin
+  ShiftedKeys := 'ABCDEFGHIJKLMNOPQRSTUVWXZ~!@#$%^&*()_+{}|:"<>?';
+  L := Length(Text);
+  ShiftKeyDown := False;
+  for I := 1 to L do
+  begin
+    UseShiftKey := (Pos(Text[I], ShiftedKeys) > 0);
+    if (not (ShiftKeyDown)) then
+    begin
+      ShiftKeyDown := True;
+      KeyDown(VK_SHIFT);
+    end;
+    if ((not (UseShiftKey)) and (ShiftKeyDown)) then
+    begin
+      KeyUp(VK_SHIFT);
+      ShiftKeyDown := False;
+    end;
+    PushKey(Text[I]);
+    WaitRR(40, 80);
+  end;
+  if (PressEnter) then
+  begin
+    PushKey(Chr(13));
+    WaitRR(40, 80);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TypeSend(Text: string);
-Contributors: Anonymous, Wanted.
+Contributors: Wanted
 Description: Types human like, presses enter.
-Date Created: August 7th, 2011. By Anonymous
-Last Modification: August 8th, 2011. By Wanted
+Date Created: August 7th, 2011. By Wanted
+Last Modification: August 26th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TypeSend(Text: string);
-var
-  UseShiftKey: Boolean;
-  I, L: Integer;
-  S: string;
 begin
-  S := 'ABCDEFGHIJKLMNOPQRSTUVWXZ~!@#$%^&*()_+{}|:"<>?';
-  L := Length(Text);
-  for I := 1 to L do
-  begin
-    UseShiftKey := (Pos(Text[I], S) > 0);
-    if (UseShiftKey) then
-    begin
-		WaitRR(40, 80);
-      while (Pos(Text[I], S) > 0) and (I <= L) do
-      begin
-        PushKey(Text[I]);
-		WaitRR(40, 80);
-        Inc(I);
-        if (I > L) then
-          Break;
-      end;
-    end;
-    if (UseShiftKey) then
-      KeyUp(VK_SHIFT);
-	WaitRR(40, 80);
-    if (I <= L) then
-    begin
-      PushKey(Text[I]);
-	  WaitRR(40, 80);
-    end;
-  end;
-  PushKey(Chr(13));
+  TypeSendEx(Text, True);
 end;

@@ -29,7 +29,7 @@
      By: Wanted
  * function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
      By: Wanted
- * function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
+ * function DropItems(Slots: TIntegerArray): Integer;
      By: Wanted
  * function DropAll: Integer;
      By: Wanted
@@ -276,7 +276,7 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
+function DropItems(Slots: TIntegerArray): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory specified returns number of items
 dropped. Uses GetDropPattern(2).

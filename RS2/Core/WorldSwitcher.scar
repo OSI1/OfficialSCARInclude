@@ -12,13 +12,13 @@
  * function WS_MemberWorld: Boolean;
      By: Wanted
  * procedure LoadRS2WorldArray;
-     By: Anonymous
+     By: Narcle & Wanted
  * procedure OrderWorlds(By: Integer; Descending: Boolean);
      By: Wanted & Naum.
  * function FindWorld(var P: TPoint; World: Integer): Boolean;
-     By: Wanted & Anonymous
+     By: Wanted, Narcle.
  * function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
-     By: Wanted
+     By: Wanted & Narcle.
  * function SelectWorld(World: Integer): Boolean;
      By: Wanted
  * function SwitchWorld(World: Integer): Boolean;
@@ -111,9 +111,9 @@ end;
 
 {*******************************************************************************
 procedure LoadRS2WorldArray;
-Contributors: Wanted, Anonymous.
+Contributors: Wanted, Narcle.
 Description: Loads the worlds from Worlds.INI into RS2WorldArray.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
+Date Created: August 7th, 2011. By Narcle & Wanted. RS2 Build 661.
 Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 *******************************************************************************}
 
@@ -175,9 +175,9 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindWorld(var P: TPoint; World: Integer): Boolean;
-Contributors: Wanted, Anonymous.
+Contributors: Wanted, Narcle.
 Description: Finds the world in the world switcher and returns the point.
-Date Created: August 19th, 2011. By Wanted & Anonymous. RS2 Build 662.
+Date Created: August 19th, 2011. By Wanted & Narcle. RS2 Build 662.
 Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -250,9 +250,9 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Narcle.
 Description: Returns RS2WorldArray information + updated world switcher screen info.
-Date Created: September 11th, 2011. By Wanted. RS2 Build 663.
+Date Created: September 11th, 2011. By Wanted & Narcle. RS2 Build 663.
 Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -441,5 +441,4 @@ begin
   Result := RandomWorldEx(Integer(Members), A, B, C);
 end;
 
-//ChangeWorld
 //ChooseWorldBy

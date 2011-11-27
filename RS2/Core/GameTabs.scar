@@ -42,7 +42,7 @@
  * function ResetXPBar: Boolean;
      By: Wanted
  * function ConvertXPToLevel(xp: Integer): Integer;
-     By: Anonymous
+     By Brak & Flyboy
  * function GetSkillBounds(Skill: Integer): TBox;
      By: Wanted
  * function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
@@ -435,10 +435,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function ConvertXPToLevel(xp: Integer): Integer;
-Contributors: Anonymous
+Contributors: Brak, Flyboy.
 Description: Returns skill level based on experience points.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 7th, 2011. By Anonymous. RS2 Build 660.
+Date Created: August 7th, 2011. By Brak & Flyboy. RS2 Build 660.
+Last Modification: August 7th, 2011. By Brak & Flyboy. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ConvertXPToLevel(xp: Integer): Integer;

@@ -14,7 +14,7 @@ OSI is credited to a selected group of developers under the lead of James Ryan B
 
 including 
 
-Developers: c0de, Home, Naum, Timer, TRiLeZ, & Zyt3x.
+Developers: c0de, pyroryan, Home, iroki, Naum, Timer, TRiLeZ, & Zyt3x.
 Contributors Camaro, Dynamite, fuzz357, & wundertüte.
 
 
@@ -22,7 +22,7 @@ Special thanks to selected testing group
 
 including
 
-Testers: footballjds, Jakkle, Janilabo, King of the Nites, King Kong, mormonman, Neron, YoHoJo, & zippoxer.
+Testers: Bixby Sayz, footballjds, Jakkle, Janilabo, King of the Nites, King Kong, Main, mormonman, Neron, YoHoJo, & zippoxer.
 
 New qualifying recruits welcome in all areas. See official forums for details.
 
