@@ -16,7 +16,7 @@
  * procedure OrderWorlds(By: Integer; Descending: Boolean);
      By: Wanted & Naum.
  * function FindWorld(var P: TPoint; World: Integer): Boolean;
-     By: Wanted, Narcle.
+     By: Wanted & Narcle.
  * function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
      By: Wanted & Narcle.
  * function SelectWorld(World: Integer): Boolean;

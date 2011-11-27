@@ -13,7 +13,7 @@
  * function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
      By: Wanted
  * function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
-     By: Anonymous
+     By: Raymond
  * function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
      By: Wanted
  * procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
@@ -170,7 +170,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
-Contributors: Anonymous, Wanted.
+Contributors: Raymond, Wanted.
 Description: Turns a line of text into an array of points.
 Date Created: August 7th, 2011. By Anonymous
 Last Modified: November 21st, 2011. By Wanted

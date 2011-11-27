@@ -42,7 +42,7 @@
  * function ResetXPBar: Boolean;
      By: Wanted
  * function ConvertXPToLevel(xp: Integer): Integer;
-     By Brak & Flyboy
+     By: Brak & Flyboy
  * function GetSkillBounds(Skill: Integer): TBox;
      By: Wanted
  * function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;

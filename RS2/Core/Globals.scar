@@ -183,7 +183,7 @@ const
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Lobby Tab Indexes
-Contributors: Wanted.
+Contributors: Wanted
 Description: Index handles for various RS2 tabs.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
 Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
@@ -261,7 +261,7 @@ Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const World Switcher Indexes
-Contributors: Wanted.
+Contributors: Wanted
 Description: Index handles for various worldswitcher routines.
 Date Created: August 18th, 2011. By Wanted. RS2 Build 662.
 Last Modification: August 18th, 2011. By Wanted. RS2 Build 662.
@@ -279,7 +279,7 @@ const
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const RS2 direction/angle Indexes
-Contributors: Wanted.
+Contributors: Wanted
 Description: Index handles for MakeCompass and all runescape directions.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
 Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
@@ -303,7 +303,7 @@ const
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Chat function indexes
-Contributors: Wanted.
+Contributors: Wanted
 Description: Index handles for various chat routines.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
 Last Modification: October 28th, 2011. By Wanted RS2 Build 671.
@@ -330,7 +330,7 @@ const
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Area_ indexes
-Contributors: Wanted.
+Contributors: Wanted
 Description: Index handles for the different screen ares within RS that contain items.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
 Last Modification: November 26th, 2011. By Wanted. RS2 Build 682.
