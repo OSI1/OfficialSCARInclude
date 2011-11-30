@@ -201,7 +201,7 @@ function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): B
 Contributors: Wanted, Freddy.
 Description: Checks a TPA to see if contains the a line of text using its TPA.
 Date Created: October 20th, 2011. By Wanted
-Last Modified: November 21st, 2011. By Wanted
+Last Modified: November 28th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
@@ -210,8 +210,12 @@ var
 begin
   Result := False;
   TextTPA := LoadTextTPA(Text, Chars);
-  if (not (TPAInTPARelEx(TextTPA, SearchTPA, TPA))) then
+  try
+    if (not (TPAInTPARelEx(TextTPA, SearchTPA, TPA))) then
+      Exit;
+  except
     Exit;
+  end;
   X := TPA[0].X;
   Y := TPA[0].Y;
   Result := True;

@@ -35,7 +35,7 @@ Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
 
 function GetUpText: string;
 begin
-  Result := rs_GetUpTextAt(8, 10);
+  Result := rs_GetTextAt(UpChars, 8, 10);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -149,7 +149,7 @@ begin
   H := (Round((B.Y2 - B.Y1) / 16.25) - 1);
   for I := 0 to H do
   begin
-    S := rs_GetUpTextAt(B.X1 + 1, B.Y1 + 2 + (I * 16));
+    S := rs_GetTextAt(OptionChars, B.X1 + 1, B.Y1 + 2 + (I * 16));
     for II := 0 to HH do
       if (Pos(Options[II], S) > 0) then
       begin
