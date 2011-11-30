@@ -14,31 +14,32 @@
   {$ENDIF}
 {$ENDIF}
 
-{$I OSI\Divi\Globals.scar}
-{$I OSI\Divi\Math.scar}
-{$I OSI\Divi\Array.scar}
-{$I OSI\Divi\Timing.scar}
+{$I Divi\Globals.scar}
+{$I Divi\Math.scar}
+{$I Divi\Array.scar}
+{$I Divi\Timing.scar}
 {$IFDEF SMART}
-  {$I OSI\RS2\Core\Globals.scar}
-  {$I OSI\RS2\Misc\SMART.scar}
+  {$I RS2\Core\Globals.scar}
+  {$I RS2\Misc\SMART.scar}
 {$ENDIF}
-{$I OSI\Divi\Mouse.scar}
-{$I OSI\Divi\Keyboard.scar}
+{$I Divi\Mouse.scar}
+{$I Divi\Keyboard.scar}
 {$IFDEF RS2}
   {$IFNDEF SMART}
-      {$I OSI\RS2\Core\Globals.scar}
+      {$I RS2\Core\Globals.scar}
   {$ENDIF}
-  {$I OSI\RS2\Core\Text.scar}
-  {$I OSI\RS2\Core\GameTabs.scar}
-  {$I OSI\RS2\Core\Chat.scar}
-  {$I OSI\RS2\Core\Login.scar}
-  {$I OSI\RS2\Core\WorldSwitcher.scar}
-  {$I OSI\RS2\Core\Inventory.scar}
-  {$I OSI\RS2\Core\Bank.scar}
-  {$I OSI\RS2\Core\Map.scar}
-  {$I OSI\RS2\Core\Amount.scar}
+  {$I RS2\Core\Text.scar}
+  {$I RS2\Core\GameTabs.scar}
+  {$I RS2\Core\Chat.scar}
+  {$I RS2\Core\Login.scar}
+  {$I RS2\Core\WorldSwitcher.scar}
+  {$I RS2\Core\Inventory.scar}
+  {$I RS2\Core\Object.scar}
+  {$I RS2\Core\Bank.scar}
+  {$I RS2\Core\Map.scar}
+  {$I RS2\Core\Amount.scar}
   {$IFDEF OSI_Color_Anti_Randoms}
-    {$I OSI\RS2\Anti-Randoms\Anti-Randoms.scar}
+    {$I RS2\Anti-Randoms\Anti-Randoms.scar}
   {$ENDIF}
 {$ENDIF}
 
@@ -62,7 +63,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: November 23rd, 2011. By Wanted
+Last Modified: November 29th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -83,7 +84,7 @@ begin
       RS2FontFolder := IncludesPath + 'OSI\RS2\Fonts\';
       if (not (DirectoryExists(RS2FontFolder))) then
         RS2FontFolder := FontsPath;
-      rs_LoadUpChars(RS2FontFolder + 'UpChars\');
+      rs_LoadUpChars(RS2FontFolder + 'OptionChars\');     // FIX
       ScreenChars := LoadChars2(RS2FontFolder + 'ScreenChars\');
       NPCChars := LoadChars2(RS2FontFolder + 'NPCChars\');
       UpChars := LoadChars2(RS2FontFolder + 'UpChars\');
@@ -92,7 +93,7 @@ begin
       FriendChars := LoadChars2(RS2FontFolder + 'FriendChars\');
       LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
       XPChars := LoadChars2(RS2FontFolder + 'XPChars\');
-      WriteLn('Loaded RS2 Fonts: ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
+      WriteLn('Loaded RS2 Fonts: OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
     {$ELSE}
       WriteLn('Font loading disabled.');
     {$ENDIF}

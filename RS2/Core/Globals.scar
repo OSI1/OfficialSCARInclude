@@ -450,9 +450,11 @@ Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
 Last Modified: October 30th, 2011. By Wanted. RS2 Build 669.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{$IFDEF SMART}
 var
   NonAutomaticSMART, SMART_Members: Boolean;
   SMART_Server: Integer;
+{$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Players: array of TRS2Player;

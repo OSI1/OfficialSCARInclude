@@ -13,17 +13,11 @@
      By: Wanted
  * function OptionBoxExists: Boolean;
      By: Wanted
- * function OptionsExistsEx(Options: TStringArray; Colors: T2DIntegerArray; var InBox: TBoxArray): TBooleanArray;
-     By: Wanted
- * function AllOptionColors: TIntegerArray;
-     By: Wanted
- * function AllOptionColors2D(ResultLength: LongInt): T2DIntegerArray;
-     By: Wanted
- * function OptionExistsMulti(Options: TStringArray): Boolean;
+ * function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
      By: Wanted
  * function OptionExists(Option: string): Boolean;
      By: Wanted
- * function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; TypeC: ClickActions): Boolean;
+ * function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolean;
      By: Wanted
  * function ChooseOptionMulti(Options: TStringArray): Boolean;
      By: Wanted
@@ -134,101 +128,36 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function OptionsExistsEx(Options: TStringArray; Colors: T2DIntegerArray; var InBox: TBoxArray): TBooleanArray;
+function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 23rd, 2011. By Wanted. RS2 Build 683.
+Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function OptionsExistsEx(Options: TStringArray; Colors: T2DIntegerArray; var InBox: TBoxArray): TBooleanArray;
+function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
 var
-  TPA1, TPA2: TPointArray;
   I, II, H, HH: LongInt;
-  P: TPoint;
+  S: string;
   B: TBox;
 begin
   if (not (OptionBoxExistsEx(B))) then
     Exit;
-  H := High(Options);
-  SetLength(Result, H + 1);
-  SetLength(InBox, H + 1);
+  HH := High(Options);
+  SetLength(Result, HH + 1);
+  SetLength(InBox, HH + 1);
+  H := (Round((B.Y2 - B.Y1) / 16.25) - 1);
   for I := 0 to H do
   begin
-    HH := High(Colors[I]);
+    S := rs_GetUpTextAt(B.X1 + 1, B.Y1 + 2 + (I * 16));
     for II := 0 to HH do
-    begin
-      FindColors(TPA1, Colors[I][II], B.X1, B.Y1, B.X2, B.Y2);
-      TPA2 := CombineTPA(TPA1, TPA2);
-    end;
-    if (not (FindTextTPAInTPA(Options[I], SmallChars, TPA2, P.X, P.Y))) then
-      Continue;
-    Result[I] := True;
-    HH := (Round((B.Y2 - B.Y1) / 16.25) - 1);
-    for II := 0 to HH do
-      if (InRange(P.Y, B.Y1 + 1 + (II * 16), B.Y1 + 17 + (II * 16))) then
+      if (Pos(Options[II], S) > 0) then
       begin
-        InBox[I] := Box(B.X1 + 2, B.Y1 + 2 + (II * 16), B.X2 - 2, B.Y1 + 17 + (II * 16));
+        Result[II] := True;
+        InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
         Break;
       end;
   end;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function AllOptionColors: TIntegerArray;
-Contributors: Wanted
-Description: Returns all the possible text colors for options except for player levels.
-Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 30th, 2011. By Wanted. RS2 Build 671.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function AllOptionColors: TIntegerArray;
-begin
-  Result := [clNPCOption, clObjectOption, clPlayerOption, clActionOption, clActionOption2, clItemOption];
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function AllOptionColors2D(ResultLength: LongInt): T2DIntegerArray;
-Contributors: Wanted
-Description: Returns all the possible text colors for options except for player levels.
-Except for unlike AllOptionColors returns it in a T2DIntegerArray style.
-Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function AllOptionColors2D(ResultLength: LongInt): T2DIntegerArray;
-var
-  I, H: LongInt;
-begin
-  H := ResultLength - 1;
-  SetLength(Result, ResultLength);
-  for I := 0 to H do
-    Result[I] :=  AllOptionColors;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function OptionExistsMulti(Options: TStringArray): Boolean;
-Contributors: Wanted
-Description: Checks if options exist within the options box.
-Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 22nd, 2011. By Wanted. RS2 Build 681.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function OptionExistsMulti(Options: TStringArray): Boolean;
-var
-  TBoA: TBooleanArray;
-  TBA: TBoxArray;
-  I, H: Integer;
-begin
-  Result := False;
-  TBoA := OptionsExistsEx(Options, AllOptionColors2D(Length(Options)), TBA);
-  H := High(TBoA);
-  for I := 0 to H do
-    if (TBoA[I]) then
-    begin
-      Result := True;
-      Exit;
-    end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -236,23 +165,27 @@ function OptionExists(Option: string): Boolean;
 Contributors: Wanted
 Description: Checks if option exists within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionExists(Option: string): Boolean;
+var
+  TBoA: TBooleanArray;
+  TBA: TBoxArray;
 begin
-  Result := OptionExistsMulti([Option]);
+  TBoA := OptionExistsMulti([Option], TBA);
+  Result := TBoA[0];
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; TypeC: ClickActions): Boolean;
+function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolean;
 Contributors: Wanted
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 22nd, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ChooseOptionMultiEx(Options: TStringArray; Colors: T2DIntegerArray; TypeC: ClickActions): Boolean;
+function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolean;
 var
   TBoA: TBooleanArray;
   TPA: TPointArray;
@@ -261,7 +194,7 @@ var
   P: TPoint;
   B: TBox;
 begin
-  TBoA := OptionsExistsEx(Options, Colors, TBA);
+  TBoA := OptionExistsMulti(Options, TBA);
   H := High(TBoA);
   for I := 0 to H do
     if (TBoA[I]) then
@@ -291,12 +224,12 @@ function ChooseOptionMulti(Options: TStringArray): Boolean;
 Contributors: Wanted
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ChooseOptionMulti(Options: TStringArray): Boolean;
 begin
-  Result := ChooseOptionMultiEx(Options, AllOptionColors2D(Length(Options)), ClickLeft);
+  Result := ChooseOptionMultiEx(Options, ClickLeft);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

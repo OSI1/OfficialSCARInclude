@@ -13,7 +13,7 @@ OSI is credited to a selected group of developers under the lead of James Ryan B
 including 
 
 Developers: c0de, pyroryan, Home, iroki, Naum, Timer, TRiLeZ.
-Contributors Bixby Sayz, Camaro, Dynamite, fuzz357, & wundertüte.
+Contributors Bixby Sayz, Camaro, Dynamite, fuzz357, Main, & wundertüte.
 
 
 
@@ -24,7 +24,7 @@ The selected testing group
 
 including
 
-Testers: , footballjds, Jakkle, Janilabo, King of the Nites, King Kong, Main, mormonman, Neron, YoHoJo, zippoxer, & Zyt3x..
+Testers: , footballjds, Jakkle, Janilabo, King of the Nites, King Kong, mormonman, Neron, YoHoJo, zippoxer, & Zyt3x..
 
 
 Legends of the past for their inspirations and ideas that will carry on in OSI
@@ -33,7 +33,7 @@ including
 
 SRL People
 
-Azeroth, Bebe, BenLand100, benleegt, Boreas, Cheesehunk, Coh3n, dakota, Dankness, driger1592, EvilChicken!, Flyboy, Hobbit, inferno, Kernel Klink, Knightstreak, Krazy_Meerkat, Krichevskoy, Liquid, Lorax, lordsaturn, Mad Cow, marpis, Markus, masquerader, mastaraymond, moparisthebest,Mutant Squirrle, n3ss3s, N1ke, Nava2, NCDS, nielsie95, phantombmx, pups, Pyro, RAM, Rasta Magician, realrune, Renax, Ron, RsN, SKy Scripter, solemn wishes, Spky, SRL, Starblaster100, Stupid3ooo, Sumilion, tarajunky, The Claw, The_Rs_Monkey, Wizzup?, WT-Fakawi, XxKanexX, Yakman, ZephyrsFury, _ChArMz
+Azeroth, Bebe, BenLand100, benleegt, Boreas, Cheesehunk, Coh3n, dakota, Dankness, driger1592, EvilChicken!, Flyboy, Hobbit, inferno, Kernel Klink, Knightstreak, Krazy_Meerkat, Krichevskoy, Liquid, Lorax, lordsaturn, Mad Cow, marpis, Markus, masquerader, mastaraymond, moparisthebest,Mutant Squirrle, n3ss3s, N1ke, Nava2, NCDS, nielsie95, phantombmx, pups, Pyro, RAM, Rasta Magician, realrune, Renax, Ron, RsN, SKy Scripter, solemn wishes, Spky, SRL, Starblaster100, Stupid3ooo, Sumilion, tarajunky, The Claw, The_Rs_Monkey, Wizzup?, WT-Fakawi, XxKanexX, Yakman, ZephyrsFury, & _ChArMz.
 
 Other People
 

@@ -1,0 +1,58 @@
+// A simple utility used to add red outline to prexisitng font sets
+// By Wanted. November 29th 2011
+
+program TextShadowAdder;
+
+const
+  InitialFontsPath = 'C:\Users\James\Documents\SCAR Divi\Includes\OSI\RS2\Fonts\SmallChars\';
+  OutputFontsPath = 'C:\Users\James\Documents\SCAR Divi\Includes\OSI\RS2\Fonts\SmallCharsNew\';
+
+procedure ResizeBitmapIfNeeded(var Bitmap: Integer; X, Y: Integer);
+var
+  TempBitmap, W, H: Integer;
+  XInc, YInc: Integer;
+begin
+  GetBitmapSize(Bitmap, W, H);
+  if X >= W then XInc := W - X + 1 else XInc := 0;
+  if Y >= H then YInc := H - Y + 1 else YInc := 0;
+  if (XInc <> 0) or (YInc <> 0) then
+  begin
+    TempBitmap := BitmapFromString(W + XInc, H + YInc, '');
+    CopyCanvas(GetBitmapCanvas(Bitmap), GetBitmapCanvas(TempBitmap), 0, 0,
+      W + XInc - 1, H + YInc - 1, XInc, YInc, W - 1, H - 1);
+    FreeBitmap(Bitmap);
+    Bitmap := TempBitmap;
+  end;
+end;
+
+procedure AddShadowToChar(Char: Integer);
+var
+  OldChar, I, II, H, W, L: Integer;
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  OldChar := LoadBitmap(InitialFontsPath + IntToStr(Char) + '.bmp');
+  GetBitmapSize(OldChar, W, H);
+  SetTargetBitmap(OldChar);
+  FindColors(TPA, clWhite, 0, 0, W - 1, H - 1);
+  H := High(TPA);
+  for I := 0 to H do
+  begin
+    P := Point(TPA[I].X + 1, TPA[I].Y + 1);
+    ResizeBitmapIfNeeded(OldChar, P.X, P.Y);
+    FastSetPixel(OldChar, P.X, P.Y, clRed);
+  end;
+  for I := 0 to H do
+    FastSetPixel(OldChar, TPA[I].X, TPA[I].Y, clWhite);
+  SaveBitmap(OldChar, OutputFontsPath + IntToStr(Char) + '.bmp');
+  FreeBitmap(OldChar);
+end;
+
+var
+  I: Integer;
+
+begin
+  for I := 0 to 255 do
+    if (FileExists(InitialFontsPath + IntToStr(I) + '.bmp')) then
+      AddShadowToChar(I);
+end.
