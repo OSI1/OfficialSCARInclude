@@ -106,7 +106,7 @@ function GetCompassAngleRadians: Extended;
 Contributors: Wanted, Wizzup.
 Description: Gets the compass angle in radians.
 Date Created: November 22nd, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 30th, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCompassAngleRadians: Extended;
@@ -118,8 +118,6 @@ begin
   FilterPointsDist(TPA, 0, 16, 543.5, 25);
   P := MiddleTPA(TPA);
   Result := (ArcTan2(-(P.Y - 23.5), P.X - 542.5) - (Pi / 2));
-  Result := Result - Radians(2.72631099390627);
-  FixR(Result);
   if (Result < 0) then
     Result := Result + Radians(360);
 end;
