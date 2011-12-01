@@ -27,7 +27,7 @@ Last Modification: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
 
 const                            // Modified            By              Build #
 {$IFNDEF Mining}
-  dtmOre_Any = 0;                // November 13, 2011   Bixby Sayz      679
+  dtmOre = 0;                    // November 13, 2011   Bixby Sayz      687
   dtmOre_Copper = 1;             // November 13, 2011   Bixby Sayz      679
   dtmOre_Tin = 2;                // November 13, 2011   Bixby Sayz      679
   dtmOre_Iron = 3;               // November 13, 2011   Bixby Sayz      679
@@ -174,7 +174,7 @@ function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
 Contributors: Bixby Sayz, Wanted.
 Description: Opens any F2P furnace.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modification: November 15th, 2011. By Bixby Sayz. RS2 Build 687.
+Last Modification: November 30th, 2011. By Bixby Sayz. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
@@ -198,7 +198,7 @@ begin
     Exit;
   ATPA := SplitTPA(TPA, 10);
   SortATPASize(ATPA, True);
-  TB := TPABounds(ATPA[High(ATPA)]);
+  TB := TPABounds(ATPA[0]);
   MouseBox(TB.X1, TB.Y1, TB.X2, TB.Y2, TypeC);
   Result := ((TypeC = MoveTo) or (TypeC = Nothing));
   if (Result) then
