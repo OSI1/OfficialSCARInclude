@@ -132,13 +132,13 @@ function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBoolea
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
+Last Modified: November 30th, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
 var
+  Lines, NewOptions: TStringArray;
   I, II, H, HH: LongInt;
-  S: string;
   B: TBox;
 begin
   if (not (OptionBoxExistsEx(B))) then
@@ -147,17 +147,41 @@ begin
   SetLength(Result, HH + 1);
   SetLength(InBox, HH + 1);
   H := (Round((B.Y2 - B.Y1) / 16.25) - 1);
+  SetLength(Lines, H + 1);
   for I := 0 to H do
-  begin
-    S := rs_GetTextAt(OptionChars, B.X1 + 1, B.Y1 + 2 + (I * 16));
+    Lines[I] := rs_GetTextAt(OptionChars, B.X1 + 1, B.Y1 + 2 + (I * 16));
+  for I := 0 to H do
     for II := 0 to HH do
-      if (Pos(Options[II], S) > 0) then
+      if (Pos(Options[II], Lines[I]) > 0) then
       begin
         Result[II] := True;
         InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
         Break;
       end;
+  for I := 0 to HH do
+    if (Result[I]) then
+      Exit;
+  for I := 0 to H do
+  begin
+    Lines[I] := Replace(Lines[I], ' ', '');
+    Lines[I] := Replace(Lines[I], 'i', '');
+    Lines[I] := Replace(Lines[I], 'y', '');
   end;
+  NewOptions := Options;
+  for I := 0 to HH do
+  begin
+    NewOptions[I] := Replace(Options[I], ' ', '');
+    NewOptions[I] := Replace(Options[I], 'i', '');
+    NewOptions[I] := Replace(Options[I], 'y', '');
+  end;
+  for I := 0 to H do
+    for II := 0 to HH do
+      if (Pos(NewOptions[II], Lines[I]) > 0) then
+      begin
+        Result[II] := True;
+        InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
+        Break;
+      end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
