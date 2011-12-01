@@ -174,7 +174,7 @@ function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
 Contributors: Bixby Sayz, Wanted.
 Description: Opens any F2P furnace.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modification: November 15th, 2011. By Wanted. RS2 Build 679.
+Last Modification: November 15th, 2011. By Bixby Sayz. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
@@ -198,7 +198,7 @@ begin
     Exit;
   ATPA := SplitTPA(TPA, 10);
   SortATPASize(ATPA, True);
-  TB := TPABounds(ATPA[0]);
+  TB := TPABounds(ATPA[High(ATPA)]);
   MouseBox(TB.X1, TB.Y1, TB.X2, TB.Y2, TypeC);
   Result := ((TypeC = MoveTo) or (TypeC = Nothing));
   if (Result) then

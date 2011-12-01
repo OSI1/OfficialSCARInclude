@@ -117,9 +117,11 @@ begin
   FindColors(TPA, 65536, 528, 9, 559, 41);
   FilterPointsDist(TPA, 0, 16, 543.5, 25);
   P := MiddleTPA(TPA);
-  Result := (ArcTan2(-(P.Y - 25), P.X - 542) - (Pi / 2));
+  Result := (ArcTan2(-(P.Y - 23.5), P.X - 542.5) - (Pi / 2));
+  Result := Result - Radians(2.72631099390627);
+  FixR(Result);
   if (Result < 0) then
-    Result := Result + (2 * Pi);
+    Result := Result + Radians(360);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
