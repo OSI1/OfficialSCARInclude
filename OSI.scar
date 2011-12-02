@@ -63,7 +63,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: November 29th, 2011. By Wanted
+Last Modified: December 1st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -77,6 +77,7 @@ begin
     WriteLn('OSI RS2 routines enabled');
     {$IFDEF OSI_Color_Anti_Randoms}
       WriteLn('OSI RS2 color random detection and solving enabled');
+      InitiateAntiRandoms;
     {$ELSE}
       WriteLn('OSI RS2 color random detection and solving disabled');
     {$ENDIF}
