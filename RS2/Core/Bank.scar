@@ -126,14 +126,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DepositAll(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
+function DepositAllEx(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DepositAll(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
+function DepositAllEx(CheckBS, Inven, Equip, Summon: Boolean): Boolean;
 var
   TBoA: TBooleanArray;
   I: Integer;
@@ -151,12 +151,25 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DepositAll(CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if at the bank screen and then clicks deposit all.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DepositAll(CheckBS: Boolean): Boolean;
+begin
+  Result := DepositAllEx(CheckBS, True, False, False);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Deposits all inventory itmes except for excluded slots. True if
 CheckBS is true and bankscreen is found.
 Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
@@ -174,7 +187,7 @@ begin
       Result := True;
   if (Length(Exclude) = 0) then
   begin
-    Result := DepositAll(CheckBS, True, False, False);
+    Result := DepositAll(CheckBS);
     Exit;
   end;
   for I := 0 to 27 do

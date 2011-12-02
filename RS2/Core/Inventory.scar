@@ -15,6 +15,8 @@
      By: Wanted
  * function InvFull: Boolean;
      By: Wanted
+ * function InvEmpty: Boolean;
+     By: Wanted
  * function MouseItem(Slot: Integer; TypeC: ClickActions): Boolean;
      By: Wanted
  * function DragItem(FromSlot, ToSlot: Integer): Boolean;
@@ -142,6 +144,25 @@ Last Modification: November 18th, 2011. By Wanted. RS2 Build 675.
 function InvFull: Boolean;
 begin
   Result := (InvCount = 28);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InvEmpty: Boolean;
+Contributors: Wanted
+Description: Returns true if inventory is empty, slightly faster than InvCount = 0;
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InvEmpty: Boolean;
+var
+  P: TPoint;
+begin
+  Result := False;
+  if (not (SetGameTab(Tab_Inv))) then
+    if (not (BankScreen)) then
+      Exit;
+  Result := FindColor(P.X, P.Y, clObjectOutline, MIX1, MIY1, MIX2, MIY2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

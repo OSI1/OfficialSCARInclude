@@ -447,12 +447,12 @@ var SMART Related vars
 Contributors: Wanted, Anonymous.
 Description: Handles all of SMART related info and variables.
 Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modified: October 30th, 2011. By Wanted. RS2 Build 669.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$IFDEF SMART}
 var
-  NonAutomaticSMART, SMART_Members: Boolean;
+  NonAutomaticSMART: Boolean;
   SMART_Server: Integer;
 {$ENDIF}
 

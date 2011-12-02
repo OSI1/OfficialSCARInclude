@@ -289,6 +289,7 @@ begin
           WriteLn(RS2Randoms[I].Name + ' random detected!');
           if (RS2Randoms[I].SolveRandom <> nil) then
           begin
+            InitCompassAngle := GetCompassAngleDegrees;
             if (not (RS2Randoms[I].SolveRandom())) then
             begin
               WriteLn(RS2Randoms[I].Name + ' random solver failed! Needs fixing by an expert!');
@@ -328,7 +329,10 @@ begin
       Exit;
     end;
   if (RandomSolved) then
+  begin
     WaitRR(2000, 3000);
+    MakeCompass(InitCompassAngle);
+  end;
   ClickContinueEx(True, True);
   B := FindRandomEventGift;
   if (not (Result)) then
