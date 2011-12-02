@@ -3,8 +3,182 @@
                                    Runescape 2
                          Abyssal Random Solving Routines
 --------------------------------------------------------------------------------
- *
+ * function Abyss_InRandom: Boolean;
+     By: Wanted
+ * procedure Abyss_WalkToCenter;
+     By: Wanted
+ * function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
+     By: Wanted
+ * function Abyss_SolveRandom: Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-//InAbyss;
-//SolveAbyss;
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Abyss_InRandom: Boolean;
+Contributors: Wanted
+Description: Returns true if in the abyssal random.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Abyss_InRandom: Boolean;
+var
+  TPA, TPA2: TPointArray;
+begin
+  Result := False;
+  FindMMColorsTolerance(TPA, clWhite, 421);
+  TPA2 := TPA;
+  FilterPointsDist(TPA, 0, 45, MMCX, MMCY);
+  if (not (InRange(Length(TPA), 1900, 3200))) then
+    Exit;
+  FilterPointsDist(TPA2, 50, MMRD, MMCX, MMCY);
+  if (not (InRange(Length(TPA2), 0, 150))) then
+    Exit;
+  FindMMColorsTolerance(TPA, clWhite, 35);
+  if (not (InRange(Length(TPA), 150, 350))) then
+    Exit;
+  FindMMColorsTolerance(TPA, clRed, 35);
+  if (not (InRange(Length(TPA), 9, 35))) then
+    Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure Abyss_WalkToCenter;
+Contributors: Wanted
+Description: Walks to the center of the abyssal random.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure Abyss_WalkToCenter;
+var
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  FindMMColorsTolerance(TPA, clWhite, 421);
+  P := MiddleTPA(TPA);
+  MouseFlag(P.X + 1, P.Y + 2, 1, 1);
+  WaitRR(1000, 2000);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
+Contributors: Wanted
+Description: Returns the direction of the unique arm and all the color tpas of the arms.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
+var
+  LeverTypes, LeverCounts: array[0..3] of Integer;
+  LeverInfo: TVariantArray;
+  Locs: TStringArray;
+  TBA: TBoxArray;
+  I, II: Integer;
+begin
+  Result := -1;
+  SetLength(ATPA, 4);
+  TBA := [Box(MSCX, MSY1, MSX2, 111), Box(MSCX, 200, MSX2, MSY2), Box(MSX1, 200, MSCX, MSY2), Box(MSX1, MSY1, MSCX, 111)];
+  LeverInfo := ['Eye', 0.01, 0.63, 5092109, 20, 'Gray', 0.05, 0.43, 8425378, 20, 'Pink', 0.06, 0.08, 4999518, 13, 'Arm'];
+  Locs := ['North', 'East', 'South', 'West'];
+  ColorToleranceSpeed(2);
+  for I := 0 to 3 do
+    LeverCounts[I] := 0;
+  for I := 0 to 3 do
+  begin
+    LeverTypes[I] := 3;
+    Inc(LeverCounts[3]);
+    for II := 0 to 2 do
+    begin
+      SetColorSpeed2Modifiers(LeverInfo[1 + (II * 5)], LeverInfo[2 + (II * 5)]);
+      if (FindColorsTolerance(ATPA[I], LeverInfo[3 + (II * 5)], TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2, LeverInfo[4 + (II * 5)])) then
+      begin
+        LeverTypes[I] := II;
+        Inc(LeverCounts[II]);
+        Dec(LeverCounts[3]);
+        Break;
+      end;
+    end;
+  end;
+  SetColorSpeed2Modifiers(0.2, 0.2);
+  ColorToleranceSpeed(1);
+  for I := 0 to 3 do
+    if (LeverCounts[I] = 1) then
+    begin
+      IntInTIAPos(I, LeverTypes, II);
+      WriteLn('Found unique! ' + LeverInfo[I * 5] + ' in ' + Locs[II] + '.');
+      Result := II;
+      Exit;
+    end;
+  for I := 3 downto 0 do
+    if (LeverCounts[I] = 2) then
+    begin
+      IntInTIAPos(I, LeverTypes, II);
+      WriteLn('Confused! Two uniques... guessing...' + LeverInfo[I * 5] + ' in ' + Locs[II] + '.');
+      Result := II;
+      Exit;
+    end;
+  WriteLn('No uniques found! guessing...');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Abyss_SolveRandom: Boolean;
+Contributors: Wanted
+Description: Solves the abyssal random.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Abyss_SolveRandom: Boolean;
+var
+  Dir, I, T, TT: Integer;
+  ATPA: T2DPointArray;
+  TBA: TBoxArray;
+  P: TPoint;
+begin
+  Result := False;
+  SetAngle(True);
+  MakeCompass(Dir_NorthWest);
+  T := GetSystemTime + RR(120000, 150000);
+  repeat
+    Abyss_WalkToCenter;
+    TBA := [Box(MSCX, MSY1, MSX2, 111), Box(MSCX, 200, MSX2, MSY2), Box(MSX1, 200, MSCX, MSY2), Box(MSX1, MSY1, MSCX, 111)];
+    Dir := Abyss_OddManOut(ATPA);
+    P := Point(0, 0);
+    if (Dir = -1) then
+    begin
+      for I := 0 to 3 do
+        if (Length(ATPA) > 0) then
+        begin
+          Dir := I;
+          P := MiddleTPA(ATPA[I]);
+          Break;
+        end;
+      if (I > 3) then
+        Dir := Random(4);
+    end
+    else
+      if (Length(ATPA[Dir]) > 0) then
+        P := MiddleTPA(ATPA[Dir]);
+    if (FindObjSpiralMouse(P, 15, 1, TBA[Dir].X1, TBA[Dir].Y1, TBA[Dir].X2, TBA[Dir].Y2, 14342657, 75, 40, 200, ['perate', 'ppendag', 'te Ap'])) then
+      Mouse(P.X, P.Y, 0, 0, True)
+    else
+      Continue;
+    Flag;
+    WaitRR(1000, 2000);
+    TT := GetSystemTime + RR(10000, 15000);
+    repeat
+      if (not (Abyss_InRandom)) then
+      begin
+        Result := True;
+        WriteLn('Abyss random solved successfully!');
+        Exit;
+      end;
+      WaitRR(1000, 2000);
+    until (GetSystemTime > TT);
+    WriteLn('Attempt failed! Retrying...');
+  until (GetSystemTime > T);
+  WriteLn('Unable to solve abyssal random! Please lend account to OSI developer. http://forums.scar-divi.com');
+end;

@@ -150,7 +150,7 @@ function FixChat: Boolean;
 Contributors: Wanted
 Description: Scrolls the chat bar all the way down, if needed true.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FixChat: Boolean;
@@ -159,7 +159,7 @@ var
   B: TBox;
 begin
   Result := True;
-  if (GetColor(505, 440) = 592137) then
+  if (GetColor(505, 441) = 592137) then
     Exit;
   Result := True;
   FindColors(TPA, 592137, 498, 361, 511, 440);

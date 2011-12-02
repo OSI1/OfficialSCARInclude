@@ -12,6 +12,8 @@
      By: Wanted
  * function AngleBetweenPointsDegress(P1, P2: TPoint): Extended;
      By: Wanted
+ * function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -101,6 +103,41 @@ begin
   {$IFDEF RS2}
     Result := Result + 90.0;
   {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
+Contributors: Wanted
+Description: Out puts some of the pixels in a spiral incrementing based on AngStep and DistStep.
+Date Created: November 28th, 2011. By Wanted
+Last Modification: December 1st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
+var
+  Ang, Dist: Extended;
+  RP: TPoint;
+  L: Integer;
+begin
+  if (Center.X = 0) then
+    if (Center.Y = 0) then
+  Center := Point((X1 + X2) div 2, (Y1 + Y2) div 2);
+  Result := [];
+  L := 0;
+  Ang := 0;
+  Dist := 0;
+  repeat
+    RP := RotatePoint(Point(Round(Center.X + Dist), Center.Y), Center, Radians(Ang));
+    if (not (PointInBox(RP, Box(X1, Y1, X2, Y2)))) then
+      Break;
+    Inc(L);
+    SetLength(Result, L);
+    Result[L - 1] := RP;
+    Ang := Ang + AngStep;
+    Dist := Dist + DistStep;
+    if (Ang > 360) then
+      Ang := Ang - 360;
+  until (False);
 end;
 
 //InAbstractBox

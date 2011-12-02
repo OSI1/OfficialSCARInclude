@@ -3,8 +3,17 @@
                                    Runescape 2
                              Random Solving Routines
 --------------------------------------------------------------------------------
- * type TRandomInfo = record
- * function OSIFindRandoms: TRandomInfo;
+ * type TRS2Random, TRS2RandomArray.
+     By: Wanted
+ * var RS2Randoms: TRS2RandomArray;
+     By: Wanted
+ * var OverideRandInvTab: Boolean;
+     By: Wanted
+ * function FindRandomEventGift: Boolean;
+     By: Wanted
+ * procedure InitiateAntiRandoms;
+     By: Wanted
+ * function OSIFindRandoms: Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -27,37 +36,301 @@
 {$I Sandwich.scar}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TRandomInfo
+type TRS2Random, TRS2RandomArray.
 Contributors: Wanted
-Description: Record of what happened, what random, etc.
-Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Description: Type used to store random information
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
-  TRandomInfo = record
-    TimeIn: LongInt;
-    Found, Solved, Failed: Boolean;
+  TRS2Random = record
+    Name: string;
+    TabsMissing: TIntegerArray;
+    InRandom, SolveRandom: function: Boolean;
   end;
+  TRS2RandomArray = array of TRS2Random;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function OSIFindRandoms: TRandomInfo;
+var RS2Randoms: TRS2RandomArray;
+Contributors: Wanted
+Description: Variable used to store random information.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  RS2Randoms: TRS2RandomArray;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OverideRandInvTab: Boolean;
+Contributors: Wanted
+Description: Variable used to allow people to disable antirandoms from checking gametab.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  OverideRandInvTab: Boolean;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindRandomEventGift: Boolean;
+Contributors: Wanted
+Description: Finds and solves random event gifts.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindRandomEventGift: Boolean;
+var
+  dtmGift: LongInt;
+  P: TPoint;
+begin
+  Result := False;
+  if (not (OverideRandInvTab)) then
+    SetGameTab(Tab_Inv);
+  if (GetCurrentTab <> Tab_Inv) then
+    Exit;
+  dtmGift := DTMFromString('78DA637460626078C280028E15D932FC07D28' +
+           'C40FC1F0818CD806AEE30A0012630C908E53182CCB94A408D1F90' +
+           '7F9F801A7F20FF1901355E40FE7B026AAC8850638AE9777435003' +
+           '9320FC7');
+  Result := FindDTM(dtmGift, P.X, P.Y, MIX1, MIY1, MIX2, MIY2);
+  FreeDTM(dtmGift);
+  if (not (REsult)) then
+    Exit;
+  WriteLn('Found Random event gift!');
+  WriteLn('Solving Random event gift...');
+  MouseItem(CordsToItemSlot(P), ClickLeft);
+  WaitRR(3500, 4500);
+  MouseBox(42, 74, 189, 124, ClickLeft);  // Temp solution soon, BoxRewards
+  WaitRR(500, 1000);
+  MouseBox(390, 160, 473, 209, ClickLeft);
+  WaitRR(500, 1000);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure InitiateAntiRandoms;
+Contributors: Wanted
+Description: Loads out all the antirandom information.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure InitiateAntiRandoms;
+begin
+  SetLength(RS2Randoms, 17);
+  with RS2Randoms[0] do
+  begin
+    Name := 'Abyssal';
+    TabsMissing := [0, 9];
+    InRandom := @Abyss_InRandom;
+    SolveRandom := @Abyss_SolveRandom;
+  end;
+  with RS2Randoms[1] do
+  begin
+    Name := 'Beekeeper';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[2] do
+  begin
+    Name := 'Cap''n Arnav';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[3] do
+  begin
+    Name := 'Demon';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[4] do
+  begin
+    Name := 'Evil Bob';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[5] do
+  begin
+    Name := 'Freaky Forester';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[6] do
+  begin
+    Name := 'Frog';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[7] do
+  begin
+    Name := 'Leo the Grave Digger';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[8] do
+  begin
+    Name := 'Maze';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[9] do
+  begin
+    Name := 'Mime';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[10] do
+  begin
+    Name := 'Molly''s Evil Twin';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[11] do
+  begin
+    Name := 'Mordaut Surprise Exam';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[12] do
+  begin
+    Name := 'Pillory';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[13] do
+  begin
+    Name := 'Pinball';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[14] do
+  begin
+    Name := 'Prison Pete';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[15] do
+  begin
+    Name := 'Quiz';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+  with RS2Randoms[16] do
+  begin
+    Name := 'Sandwich Lady';
+    TabsMissing := [0];
+    InRandom := nil;
+    SolveRandom := nil;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountMissingTabs: Integer;
+Contributors: Wanted
+Description: Used for counting missing tabs for comparison in OSIFindRandoms.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountMissingTabs: Integer;
+var
+  I: Integer;
+begin
+  Result := 0;
+  for I := 0 to 15 do
+    if (I <> Tab_Objectives) then
+      if (not (TabExists(I))) then
+        Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OSIFindRandoms: Boolean;
 Contributors: Wanted
 Description: Handles all of OSI's RS2 anti-random rountines.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function OSIFindRandoms: TRandomInfo;
+function OSIFindRandoms: Boolean;
 var
-  InitTime: LongInt;
-  //InitCompass: Extended;
+  InitCompassAngle: Extended;
+  MissingTabs, I, H: Integer;
+  RandomSolved, B: Boolean;
 begin
-  Exit; // To be replaced with random finders.
-  InitTime := GetSystemTime;
-  //InitCompass := GetCompassAngleDegrees;
-  Result.TimeIn := GetSystemTime - InitTime;
-  //MakeCompass(InitCompass);
+  Result := False;
+  MissingTabs := CountMissingTabs;
+  RandomSolved := False;
+  H := High(RS2Randoms);
+  for I := 0 to H do
+    if (RS2Randoms[I].InRandom <> nil) then
+      if (TIAContains(RS2Randoms[I].TabsMissing, MissingTabs)) then
+      begin
+        Result := RS2Randoms[I].InRandom();
+        if (Result) then
+        begin
+          Players[CurrentPlayer].Rand := RS2Randoms[I].Name;
+          WriteLn(RS2Randoms[I].Name + ' random detected!');
+          if (RS2Randoms[I].SolveRandom <> nil) then
+          begin
+            if (not (RS2Randoms[I].SolveRandom())) then
+            begin
+              WriteLn(RS2Randoms[I].Name + ' random solver failed! Needs fixing by an expert!');
+              WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
+              WriteLn('Player stuck in ' + RS2Randoms[I].Name + ' random.');
+              Players[CurrentPlayer].Active := False;
+              Logout;
+              Exit;
+            end
+            else
+            begin
+              RandomSolved := True;
+              Break;
+            end;
+          end
+          else
+          begin
+            WriteLn(RS2Randoms[I].Name + ' random solver either doesn''t exist yet or has been disabled.');
+            WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
+            WriteLn('Player stuck in ' + RS2Randoms[I].Name + ' random.');
+            Players[CurrentPlayer].Active := False;
+            Logout;
+            Exit;
+          end;
+        end;
+      end;
+  if (MissingTabs > 0) then
+    if (not (RandomSolved)) then
+    begin
+      Result := True;
+      WriteLn('Unknown random deteced! Detection and solver needs to be made by an expert!');
+      WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
+      WriteLn('Player stuck in unknown random.');
+      Players[CurrentPlayer].Rand := 'Unknown random';
+      Players[CurrentPlayer].Active := False;
+      Logout;
+      Exit;
+    end;
+  if (RandomSolved) then
+    WaitRR(2000, 3000);
+  ClickContinueEx(True, True);
+  B := FindRandomEventGift;
+  if (not (Result)) then
+    Result := B;
 end;
-
-//LoadTeleportRandoms;

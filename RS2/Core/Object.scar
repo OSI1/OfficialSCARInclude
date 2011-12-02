@@ -1,0 +1,38 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+                             Object Finding Routines
+--------------------------------------------------------------------------------
+ * function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
+Contributors: Wanted
+Description: Spirals mouse around until it finds the object. See GenerateSpiral in Divi\Math.scar
+Date Created: November 28th, 2011. By Wanted. RS2 Build 686.
+Last Modification: November 28th, 2011. By Wanted. RS2 Build 686.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
+var
+  TPA: TPointArray;
+  I, H: Integer;
+begin
+  Result := False;
+  TPA := GenerateSpiral(P, AngStep, DistStep, X1, Y1, X2, Y2);
+  H := High(TPA);
+  for I := 0 to H do
+  begin
+    MMouse(TPA[I].X, TPA[I].Y, 0, 0);
+    WaitRR(100, 150);
+    if (not (InRange(CountColorTolerance(TextColor, MSX1, MSY1, MSX2, 27, Tol), MinC, MaxC))) then
+      Continue;
+    if (not (IsUpTextMulti(Text))) then
+      Continue;
+    GetMousePos(P.X, P.Y);
+    Result := True;
+    Exit;
+  end;
+end;

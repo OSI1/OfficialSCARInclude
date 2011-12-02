@@ -13,6 +13,10 @@
      By: Wanted
  * function OptionBoxExists: Boolean;
      By: Wanted
+ * function GetOptionsEx(var B: TBox; FilterBadChars: Boolean): TStringArray;
+     By: Wanted
+ * function GetOptions: TStringArray;
+     By: Wanted
  * function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
      By: Wanted
  * function OptionExists(Option: string): Boolean;
@@ -128,6 +132,49 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetOptionsEx(var B: TBox; FilterBadChars: Boolean): TStringArray;
+Contributors: Wanted
+Description: Returns options.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetOptionsEx(var B: TBox; FilterBadChars: Boolean): TStringArray;
+var
+  H, I: Integer;
+begin
+  if (not (OptionBoxExistsEx(B))) then
+    Exit;
+  H := (Round((B.Y2 - B.Y1) / 16.25) - 1);
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+  begin
+    Result[I] := rs_GetTextAt(OptionChars, B.X1 + 1, B.Y1 + 2 + (I * 16));
+    if (FilterBadChars) then
+    begin
+      Result[I] := Replace(Result[I], ' ', '');
+      Result[I] := Replace(Result[I], 'i', '');
+      Result[I] := Replace(Result[I], 'y', '');
+    end;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetOptions: TStringArray;
+Contributors: Wanted
+Description: Returns options.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetOptions: TStringArray;
+var
+  B: TBox;
+begin
+  Result := GetOptionsEx(B, False);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
 Contributors: Wanted
 Description: Checks if options exist within the options box.
@@ -141,15 +188,13 @@ var
   I, II, H, HH: LongInt;
   B: TBox;
 begin
-  if (not (OptionBoxExistsEx(B))) then
+  Lines := GetOptionsEx(B, False);
+  H := High(Lines);
+  if ((H + 1) < 1) then
     Exit;
   HH := High(Options);
   SetLength(Result, HH + 1);
   SetLength(InBox, HH + 1);
-  H := (Round((B.Y2 - B.Y1) / 16.25) - 1);
-  SetLength(Lines, H + 1);
-  for I := 0 to H do
-    Lines[I] := rs_GetTextAt(OptionChars, B.X1 + 1, B.Y1 + 2 + (I * 16));
   for I := 0 to H do
     for II := 0 to HH do
       if (Pos(Options[II], Lines[I]) > 0) then
