@@ -364,22 +364,6 @@ const                             // Modified            By              Build #
   clWSArrow       = 1008783;      // August 18, 2011     Wanted          662
   clWSBar         = 1250841;      // August 18, 2011     Wanted          662
 
-  clFlag          = 3026478;      // October 31, 2011    Wanted          672
-  clRedDot        = 2105598;      // September 3, 2011   Zyt3x           663
-  clWhiteDot      = 16711422;     // September 3, 2011   Zyt3x           663
-  clGreenDot      = 64768;        // September 3, 2011   Zyt3x           663
-  clYellowDot     = 1179390;      // September 3, 2011   Zyt3x           663
-  clBlueDot       = 13667166;     // September 3, 2011   Zyt3x           663
-//clPurpleDot     = 0;            // September 3, 2011   Zyt3x           663  FIX
-  clOrangeDot     = 35583;        // October 16, 2011    Wanted          667
-  clPlayerDot     = clWhiteDot;   // September 3, 2011   Zyt3x           663
-  clNPCDot        = clYellowDot;  // September 3, 2011   Zyt3x           663
-  clFriendDot     = clGreenDot;   // September 3, 2011   Zyt3x           663
-  clItemDot       = clRedDot;     // September 3, 2011   Zyt3x           663
-  clCapeDot       = clBlueDot;    // September 3, 2011   Zyt3x           663
-//clFriendChatDot = clPurpleDot;  // September 3, 2011   Zyt3x           663  FIX
-  clClanChatDot   = 35583;        // October 16, 2011    Wanted          667
-
   clNPCOption     = clYellow;     // October 20, 2011    Wanted          668
   clObjectOption  = 16776960;     // October 20, 2011    Wanted          668
   clPlayerOption  = clWhite;      // October 20, 2011    Wanted          668

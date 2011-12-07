@@ -12,6 +12,10 @@
      By: Wanted
  * function AngleBetweenPointsDegress(P1, P2: TPoint): Extended;
      By: Wanted
+ * procedure ConstrainBox(var X1, Y1, X2, Y2: Integer; CX1, CY1, CX2, CY2: Integer);
+     By: Wanted
+ * procedure ConstrainBoxes(var TBA: TBoxArray; CX1, CY1, CX2, CY2: Integer);
+     By: Wanted
  * function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -103,6 +107,43 @@ begin
   {$IFDEF RS2}
     Result := Result + 90.0;
   {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ConstrainBox(var X1, Y1, X2, Y2: Integer; CX1, CY1, CX2, CY2: Integer);
+Contributors: Wanted
+Description: Makes the edges of your box within the edges of another box.
+Date Created: December 6th, 2011. By Wanted
+Last Modification: December 6th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ConstrainBox(var X1, Y1, X2, Y2: Integer; CX1, CY1, CX2, CY2: Integer);
+begin
+  if (X1 < CX1) then
+    X1 := CX1;
+  if (Y1 < CY1) then
+    Y1 := CY1;
+  if (X2 > CX2) then
+    X2 := CX2;
+  if (Y2 > CY2) then
+    Y2 := CY2;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ConstrainBoxes(var TBA: TBoxArray; CX1, CY1, CX2, CY2: Integer);
+Contributors: Wanted
+Description: Makes the edges of your boxes within the edges of another box.
+Date Created: December 6th, 2011. By Wanted
+Last Modification: December 6th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ConstrainBoxes(var TBA: TBoxArray; CX1, CY1, CX2, CY2: Integer);
+var
+  I, H: Integer;
+begin
+  H := High(TBA);
+  for I := 0 to H do
+    ConstrainBox(TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2, CX1, CY1, CX2, CY2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

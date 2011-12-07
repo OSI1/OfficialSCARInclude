@@ -179,7 +179,7 @@ function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBoolea
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 30th, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 6th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
@@ -197,12 +197,13 @@ begin
   SetLength(InBox, HH + 1);
   for I := 0 to H do
     for II := 0 to HH do
-      if (Pos(Options[II], Lines[I]) > 0) then
-      begin
-        Result[II] := True;
-        InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
-        Break;
-      end;
+      if (not (Result[II])) then
+        if (Pos(Options[II], Lines[I]) > 0) then
+        begin
+          Result[II] := True;
+          InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
+          Break;
+        end;
   for I := 0 to HH do
     if (Result[I]) then
       Exit;
@@ -221,12 +222,13 @@ begin
   end;
   for I := 0 to H do
     for II := 0 to HH do
-      if (Pos(NewOptions[II], Lines[I]) > 0) then
-      begin
-        Result[II] := True;
-        InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
-        Break;
-      end;
+      if (not (Result[II])) then
+        if (Pos(NewOptions[II], Lines[I]) > 0) then
+        begin
+          Result[II] := True;
+          InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
+          Break;
+        end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
