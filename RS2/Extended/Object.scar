@@ -49,7 +49,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindObjSize(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStringArray): Boolean;
 Contributors: Wanted
-Description: Finds an object from the center out. Checks for uptext. Use pixel width and height of object.
+Description: Finds an object based on biggest. Checks for uptext. Use pixel width and height of object.
 Date Created: December 6th, 2011. By Wanted. RS2 Build 688.
 Last Modification: December 6th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
