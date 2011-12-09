@@ -23,6 +23,10 @@
      By: Wanted
  * procedure ReleaseMouseMid(X, Y: Integer);
      By: Wanted
+ * procedure ClickMouse(X, Y: LongInt; Left: Boolean);
+     By: Wanted
+ * procedure ClickMouseMid(X, Y: LongInt);
+     By: Wanted
  * procedure KeyUp(Key: Byte);
      By: BenLand100
  * procedure KeyDown(Key: Byte);
@@ -241,6 +245,32 @@ Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 procedure ReleaseMouseMid(X, Y: Integer);
 begin
   SmartReleaseMousePlus(X, Y, 2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ClickMouse(X, Y: LongInt; Left: Boolean);
+Contributors: Wanted, BenLand100.
+Description: SMART override for ClickMouse.
+Date Created: December 7th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 7th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ClickMouse(X, Y: LongInt; Left: Boolean);
+begin
+  SmartClickMouse(X, Y, Left);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ClickMouseMid(X, Y: LongInt);
+Contributors: Wanted, BenLand100.
+Description: SMART override for ClickMouseMid.
+Date Created: December 7th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 7th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ClickMouseMid(X, Y: LongInt);
+begin
+  SmartClickMousePlus(X, Y, 2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

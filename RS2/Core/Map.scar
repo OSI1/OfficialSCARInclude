@@ -39,6 +39,16 @@
      By: Wanted
  * function MouseFlag(X, Y, RX, RY: Integer): Boolean;
      By: Wanted
+ * function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
+     By: Wanted
+ * function FindMMDots(cldDot: Integer): TPointArray;
+     By: Wanted
+ * function CountMMDotsEx2(ColorDiffs: TIntegerArray): TIntegerArray;
+     By: Wanted
+ * function CountMMDotsEx(ColorDiffs: TIntegerArray): Integer;
+     By: Wanted
+ * function CountMMDots(cldDot: Integer): Integer;
+     By: Wanted
  * function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -388,6 +398,121 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
+Contributors: Wanted
+Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
+var
+  I, II, H, HH, Map, DC, Wi, He, C: Integer;
+  L: TIntegerArray;
+  TPA: TPointArray;
+begin
+  Result := [TPointArray([])];
+  HH := High(ColorDiffs);
+  SetLength(Result, HH + 1);
+  SetLength(L, HH + 1);
+  if (HH < 0 ) then
+    Exit;
+  Map := BitmapFromString(MMX2 - MMX1, MMY2 - MMY1, '');
+  CopyClientToBitmap(Map, MMX1, MMY1, MMX2, MMY2);
+  DC := GetTargetDC;
+  SetTargetBitmap(Map);
+  GetBitmapSize(Map, Wi, He);
+  FindColors(TPA, 65536, 0, 0, Wi - 1, He -1);
+  FilterPointsDist(TPA, 0, MMRDe, Wi / 2, He / 2);
+  SetTargetDC(DC);
+  H := High(TPA);
+  if (H < 0) then
+    Exit;
+  for I := 0 to H do
+  begin
+    C := (FastGetPixel(Map, TPA[I].X - 2, TPA[I].Y) - FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y));
+    for II := 0 to HH do
+      if (C = ColorDiffs[II]) then
+      begin
+        Inc(L[II]);
+        SetLength(Result[II], L[II]);
+        Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 2, TPA[I].Y + MMY1 - 2);
+        Break;
+      end;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindMMDots(cldDot: Integer): TPointArray;
+Contributors: Wanted
+Description: Finds all of the MMDot that you specify i.e. cldWhiteDot etc. see Global.scar
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindMMDots(cldDot: Integer): TPointArray;
+var
+  ATPA: T2DPointArray;
+begin
+  ATPA := FindMMDotsEx([cldDot]);
+  Result := ATPA[0];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountMMDotsEx2(ColorDiffs: TIntegerArray): TIntegerArray;
+Contributors: Wanted
+Description: Counts all the dots of different colors you specify. cldWhiteDot etc. see Global.scar
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountMMDotsEx2(ColorDiffs: TIntegerArray): TIntegerArray;
+var
+  ATPA: T2DPointArray;
+  I, H: Integer;
+begin
+  H := High(ColorDiffs);
+  SetLength(Result, H + 1);
+  ATPA := FindMMDotsEx(ColorDiffs);
+  for I := 0 to H do
+    Result[I] := Length(ATPA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountMMDotsEx(ColorDiffs: TIntegerArray): Integer;
+Contributors: Wanted
+Description: Counts all the dots of different colors you specify. And then adds
+them together for a total number. cldWhiteDot etc. see Global.scar
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountMMDotsEx(ColorDiffs: TIntegerArray): Integer;
+var
+  TIA: TIntegerArray;
+  I, H: Integer;
+begin
+  Result := 0;
+  TIA := CountMMDotsEx2(ColorDiffs);
+  H := High(TIA);
+  for I := 0 to H do
+    IncEx(Result, TIA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountMMDots(cldDot: Integer): Integer;
+Contributors: Wanted
+Description: Counts all the dots of the color you specify. cldWhiteDot etc. see Global.scar
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountMMDots(cldDot: Integer): Integer;
+begin
+  Result := CountMMDotsEx([cldDot]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
 Contributors: Wanted
 Description: Turns a road TPA into a pie slice, finds the middle and offsets,
@@ -413,7 +538,3 @@ begin
   IncEx(P.Y, YOffset);
   Result := MouseFlagEx(P.X, P.Y, RX, RY, FlagD);
 end;
-
-//MSToMM
-//PercentColorMM
-//IsMoving

@@ -35,6 +35,14 @@
      By: Wanted
  * function DropAll: Integer;
      By: Wanted
+ * function FindInvItemsDTM(dtm: Integer): TIntegerArray;
+     By: Wanted
+ * function CountInvItemsDTM(dtm: Integer): Integer;
+     By: Wanted
+ * function FindInvItemsBMP(bmp, Tol: Integer): TIntegerArray;
+     By: Wanted
+ * function CountInvItemsBMP(bmp, Tol: Integer): Integer;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -321,4 +329,81 @@ Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
 function DropAll: Integer;
 begin
   Result := DropAllExcludeEx([], GetDropPattern(2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindInvItemsDTM(dtm: Integer): TIntegerArray;
+Contributors: Wanted
+Description: Returns all the slots where a dtm is found.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindInvItemsDTM(dtm: Integer): TIntegerArray;
+var
+  I, L: Integer;
+  P: TPoint;
+  B: TBox;
+begin
+  Result := [];
+  for I := 0 to 27 do
+    if (InvItemExists(I)) then
+    begin
+      B := GetItemBounds(I);
+      if (FindDTM(dtm, P.X, P.Y, B.X1, B.Y1, B.X2, B.Y2)) then
+      begin
+        Inc(L);
+        SetLength(Result, L);
+        Result[L - 1] := I;
+      end;
+    end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountInvItemsDTM(dtm: Integer): Integer;
+Contributors: Wanted
+Description: Returns the number of times an inventory dtm is found.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountInvItemsDTM(dtm: Integer): Integer;
+begin
+  Result := Length(FindInvItemsDTM(dtm));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindInvItemsBMP(bmp, Tol: Integer): TIntegerArray;
+Contributors: Wanted
+Description: Returns all the slots where a bmp is found.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindInvItemsBMP(bmp, Tol: Integer): TIntegerArray;
+var
+  TPA: TPointArray;
+  I, H: Integer;
+begin
+  Result := [];
+  FindBitmapsTolerance(bmp, TPA, MIX1, MIY1, MIX2, MIY2, Tol);
+  H := High(TPA);
+  if (H < 0) then
+    Exit;
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := CordsToItemSlot(TPA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountInvItemsBMP(bmp, Tol: Integer): Integer;
+Contributors: Wanted
+Description: Returns the number of times an inventory bmp is found.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountInvItemsBMP(bmp, Tol: Integer): Integer;
+begin
+  Result := Length(FindInvItemsBMP(bmp, Tol));
 end;
