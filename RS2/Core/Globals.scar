@@ -17,6 +17,8 @@
      By: Wanted
  * const RS2 direction/angle Indexes
      By: Wanted
+ * const Withdraw function indexes
+     By: Wanted
  * const Chat function indexes
      By: Wanted
  * const Area_ indexes
@@ -300,6 +302,21 @@ const
   Dir_West              = 270;
   Dir_Left              = 270;
   Dir_NorthWest         = 315;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Withdraw function indexes
+Contributors: Wanted
+Description: Index handles for withdrawing routines.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Withdraw_1 = 1;
+  Withdraw_5 = 5;
+  Withdraw_10 = 10;
+  Withdraw_All = -1337;
+  Withdraw_All_But_One = -13337;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Chat function indexes

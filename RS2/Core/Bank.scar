@@ -15,13 +15,49 @@
      By: Wanted
  * function DepositAll(CheckBS: Boolean): Boolean;
      By: Wanted
+ * function DepositItemsEx(Slots: TIntegerArray; Exclude: Boolean; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function DepositItems(Slots: TIntegerArray; CheckBS: Boolean): Boolean;
+     By: Wanted
  * function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
      By: Wanted
  * function ToggleUseNotes(Use: Boolean): Boolean;
      By: Wanted
+ * function ToggleSwapMode(Use: Boolean): Boolean;
+     By: Wanted
  * function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
      By: Wanted
+ * function BankShowEquipStats(CheckBS: Boolean): Boolean;
+     By: Wanted
  * function FixBank(FixUp: Boolean): Boolean;
+     By: Wanted
+ * function GetBankSlotIndex(Row, Column: Integer): Integer;
+     By: Wanted
+ * function GetBankSlotBounds(Slot: Integer): TBox;
+     By: Wanted
+ * function GetBankTabBounds(Tab: Integer): TBox;
+     By: Wanted
+ * function CordsToBankSlot(P: TPoint): Integer;
+     By: Wanted
+ * function BankItemExists(Slot: Integer; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function GetCurrentBankTab: Integer;
+     By: Wanted
+ * function BankTabExists(Tab: Integer): Boolean;
+     By: Wanted
+ * function SetBankTab(Tab: Integer; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -166,15 +202,15 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+function DepositItemsEx(Slots: TIntegerArray; Exclude: Boolean; CheckBS: Boolean): Boolean;
 Contributors: Wanted
-Description: Deposits all inventory itmes except for excluded slots. True if
-CheckBS is true and bankscreen is found.
-Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Description: Deposits all inventory items except for excluded slots, or the other
+way around if Exclude is false. True if CheckBS is true and bankscreen is found.
+Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+function DepositItemsEx(Slots: TIntegerArray; Exclude: Boolean; CheckBS: Boolean): Boolean;
 var
   I, C, T: Integer;
   P: TPoint;
@@ -193,7 +229,7 @@ begin
     Exit;
   end;
   for I := 0 to 27 do
-    if (not (TIAContains(Exclude, I))) then
+    if ((TIAContains(Slots, I)) xor (Exclude)) then
       if (InvItemExists(I)) then
       begin
         MouseItem(I, MoveTo);
@@ -224,6 +260,34 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DepositItems(Slots: TIntegerArray; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Deposits all inventory items in specified slots. True if CheckBS is
+true and bankscreen is found.
+Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DepositItems(Slots: TIntegerArray; CheckBS: Boolean): Boolean;
+begin
+  Result := DepositItemsEx(Slots, False, CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Deposits all inventory items except for excluded slots. True if
+CheckBS is true and bankscreen is found.
+Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+begin
+  Result := DepositItemsEx(Exclude, True, CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function ToggleUseNotes(Use: Boolean): Boolean;
 Contributors: Wanted
 Description: Enables or disables note usage. Returns true if toggle was needed.
@@ -246,6 +310,28 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleSwapMode(Use: Boolean): Boolean;
+Contributors: Wanted
+Description: Enables or disables note usage. Returns true if toggle was needed.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleSwapMode(Use: Boolean): Boolean;
+begin
+  Result := False;
+  case GetColor(36, 304) of
+    65536: Result := not (Use);
+    4806757: Result := Use;
+  else
+    Exit;
+  end;
+  if  (not (Result)) then
+    Exit;
+  MouseBox(32, 296, 62, 320, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
 Contributors: Wanted
 Description: Returns true if at bankscreen and CheckBS.
@@ -265,6 +351,25 @@ begin
   MouseBox(70, 297, 100, 319, ClickLeft);
   WaitRR(250, 500);
   TypeSend(SearchText);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BankShowEquipStats(CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if at the bank screen if CheckBS true, clicks equip stats.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BankShowEquipStats(CheckBS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit
+    else
+      Result := True;
+  MouseBox(461, 48, 492, 79, ClickLeft);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -302,15 +407,322 @@ begin
     DragMouseBox(B3.X1, B3.Y1, B3.X2, B3.Y2, 475, 279, 504, 300, True)
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankSlotIndex(Row, Column: Integer): Integer;
+Contributors: Wanted
+Description: Returns index of an bank slot based on row and column position.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotIndex(Row, Column: Integer): Integer;
+begin
+  Result := ((((Row - 1) * 10) + Column) - 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankSlotBounds(Slot: Integer): TBox;
+Contributors: Wanted
+Description: Returns the bounds of an item in the bank slot.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotBounds(Slot: Integer): TBox;
+begin
+  Result := Box(38 + ((Slot mod 10) * 44), 92 + ((Slot div 10) * 44), 73 + ((Slot mod 10) * 44), 123 + ((Slot div 10) * 44));
+  ConstrainBox(Result.X1, Result.Y1, Result.X2, Result.Y2, MBX1, MBY1, MBX2, MBY2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankTabBounds(Tab: Integer): TBox;
+Contributors: Wanted
+Description: Returns the bounds of a bank tab.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankTabBounds(Tab: Integer): TBox;
+begin
+  Result := Box(25 + (Tab * 48), 47, 72 + (Tab * 48), 84);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CordsToBankSlot(P: TPoint): Integer;
+Contributors: Wanted
+Description: Returns the bank slot of a point.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CordsToBankSlot(P: TPoint): Integer;
+var
+  I: Integer;
+  B: TBox;
+begin
+  Result := 0;
+  for I := 0 to 27 do
+  begin
+    B := GetBankSlotBounds(I);
+    if (PointInBox(P, B)) then
+    begin
+      Result := I;
+      Exit;
+    end;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BankItemExists(Slot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if there's an item in the given bank slot.
+Exits if not at bankscreen and CheckBS is True.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BankItemExists(Slot: Integer; CheckBS: Boolean): Boolean;
+var
+  P: TPoint;
+  B: TBox;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit
+    else
+      Result := True;
+  FixBank(True);
+  B := GetBankSlotBounds(Slot);
+  Result := FindColor(P.X, P.Y, clObjectOutline, B.X1, B.Y1, B.X2, B.Y2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks on an item in bank. Exits if not at bankscreen and CheckBS is True.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Boolean;
+var
+  B: TBox;
+begin
+  Result := BankItemExists(Slot, CheckBS);
+  if (not (Result)) then
+    Exit;
+  B := GetBankSlotBounds(Slot);
+  MouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, TypeC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Drags an item from one bank slot to another.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
+var
+  B, B2: TBox;
+begin
+  Result := BankItemExists(FromSlot, CheckBS);
+  if (not (Result)) then
+    Exit;
+  B := GetBankSlotBounds(FromSlot);
+  B2 := GetBankSlotBounds(ToSlot);
+  DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, B2.X1, B2.Y1, B2.X2, B2.Y2, True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCurrentBankTab: Integer;
+Contributors: Wanted
+Description: Returns the current bank tab open.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCurrentBankTab: Integer;
+begin
+  for Result := 0 to 8 do
+    if (GetColor(37 + (48 * Result), 82) = 2896954) then
+      Exit;
+  Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BankTabExists(Tab: Integer): Boolean;
+Contributors: Wanted
+Description: Returns the bank tab exists yet.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BankTabExists(Tab: Integer): Boolean;
+var
+  P: TPoint;
+  B: TBox;
+begin
+  B := GetBankTabBounds(Tab);
+  Result := FindColor(P.X, P.Y, clObjectOutline, B.X1, B.Y1, B.X2, B.Y2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetBankTab(Tab: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if at the bank screen and CheckBS is true. Sets banktab.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetBankTab(Tab: Integer; CheckBS: Boolean): Boolean;
+var
+  B: TBox;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit
+    else
+      Result := True;
+  if (Tab = GetCurrentBankTab) then
+    Exit;
+  if (not (BankTabExists(Tab))) then
+    Exit;
+  B := GetBankTabBounds(Tab);
+  MouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Withdraws by using MouseBox on B. Searches for your Options in ChooseOption
+if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
+use ['-1 '] it will withdraw by left clicking one time to get one item out.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+var
+  I, H, C, CT, T: Integer;
+  TBA: TBoxArray;
+  WX: Boolean;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit;
+  if (H < 0) then
+    Exit;
+    C := InvCount;
+  if (C = 28) then
+    Exit;
+  if (Pos('-1 ', Options[0]) < 1) then
+  begin
+    MouseBox(B.X1, B.Y1, B.X2, B.Y2, ClickRight);
+    WX := False;
+    H := High(Options);
+    for I := 0 to H do
+      if  (Pos('-X', Options[I]) > 0) then
+      begin
+        WX := True;
+        Break;
+      end;
+    if (CheckTBoA(OptionExistsMulti(Options, TBA)) < 1) then
+      if (CheckTBoA(OptionExistsMulti(['w-X', '-X', 'X '], TBA)) < 1) then
+        Exit
+      else
+        WX := True;
+    MouseBox(TBA[0].X1, TBA[0].Y1, TBA[0].X2, TBA[0].Y2, ClickLeft);
+    if (WX) then
+    begin
+      T := GetSystemTime + RR(4000, 5000);
+      repeat
+        CT := CountColor(clBlack, 210, 392, 309, 411);
+        if (CT = 277) then
+          Break;
+      until (GetSystemTime > T);
+      if (CT <> 277) then
+        Exit;
+      TypeSend(GetNumbers(Options[0]));
+    end;
+  end
+  else
+    MouseBox(B.X1, B.Y1, B.X2, B.Y2, ClickLeft);
+  T := GetSystemTime + RR(2000, 3000);
+  while ((GetSystemTime < T) and (InvCount = C)) do
+    WaitRR(100, 200);
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Withdraws by using MouseBox on B. Converts your desired amount into
+the appropriate options text, uses Withdraw-X if needed. Withdraw_All etc indexes.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
+var
+  Options: TStringArray;
+begin
+  case Amount of
+    Withdraw_1: Options := ['-1 ', 'draw-1', 'w-1'];
+    Withdraw_5: Options := ['-5 ', 'draw-5', 'w-5'];
+    Withdraw_10: Options := ['-10 ', 'draw-10', 'w-10'];
+    Withdraw_All: Options := ['ll ', 'w-All'];
+    Withdraw_All_But_One: Options := ['All b', 'l but', 'but o', 't one'];
+  else
+    Options := [IntToStr(Amount)];
+  end;
+  Result := WithdrawEx2(Options, B, CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Withdraws by using MouseBox on slot. Searches for your Options in ChooseOption
+if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
+use ['-1 '] it will withdraw by left clicking one time to get one item out.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+begin
+  Result := False;
+  if (not (BankItemExists(Slot, CheckBS))) then
+    Exit;
+  Result := WithdrawEx2(Options, GetBankSlotBounds(Slot), False);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Withdraws by using MouseBox on slot. Converts your desired amount into
+the appropriate options text, uses Withdraw-X if needed. Withdraw_All etc indexes.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
+begin
+  Result := False;
+  if (not (BankItemExists(Slot, CheckBS))) then
+    Exit;
+  Result := WithdrawEx(Amount, GetBankSlotBounds(Slot), False);
+end;
+
+//OpenChest
+//NPCBank
+//OpenBooth
 //DepositScreen
-//BankSlotToPoint
-//PointToBankSlot
-//BankSlotToBox
-//DepositSlotToBox
-//FixBankTab
-//CurrentBankTab
-//BankTabExists
-//BankTab
-//Withdraw
+//OpenBankEx
 //OpenBank
 //OpenDepositBox
+//WalkInBank

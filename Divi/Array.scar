@@ -6,6 +6,8 @@
      By: Wanted
  * function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
      By: Wanted
+ * function CheckTBoA(TBoA: TBooleanArray): Integer;
+     By: Wanted
  * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
      By: Wanted
  * function TBOutlineToTPA(TB: TBox): TPointArray;
@@ -77,6 +79,25 @@ begin
     if (Int = TIA[Pos]) then
       Exit;
   Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CheckTBoA(TBoA: TBooleanArray): Integer;
+Contributors: Wanted
+Description: Results the amount of true booleans in boolean array.
+Date Created: December 12th, 2011. By Wanted
+Last Modified: December 12th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CheckTBoA(TBoA: TBooleanArray): Integer;
+var
+  I, H: Integer;
+begin
+  Result := 0;
+  H := High(TBoA);
+  for I := 0 to H do
+    if (TBoA[I]) then
+      Inc(Result);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

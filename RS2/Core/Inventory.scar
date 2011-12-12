@@ -25,13 +25,13 @@
      By: Wanted
  * function DropItem(Slot: Integer): Boolean;
      By: Wanted
- * function DropAllExcludeEx(Exclude, Pattern: TIntegerArray): Integer;
+ * function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude: Boolean): Integer;
      By: Wanted
- * function DropAllExclude(Exclude: TIntegerArray): Integer;
-     By: Wanted
- * function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
+ * function DropItemsEx(Slots: TIntegerArray; Exclude: Boolean): Integer;
      By: Wanted
  * function DropItems(Slots: TIntegerArray): Integer;
+     By: Wanted
+ * function DropAllExclude(Exclude: TIntegerArray): Integer;
      By: Wanted
  * function DropAll: Integer;
      By: Wanted
@@ -80,7 +80,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function CordsToItemSlot(P: TPoint): Integer;
 Contributors: Wanted
-Description: Returns the bounds of an item in the inventory.
+Description: Returns the slot of a point in the inventory.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
 Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -251,57 +251,39 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropAllExcludeEx(Exclude, Pattern: TIntegerArray): Integer;
+function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude: Boolean): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory except for those in excluded spaces
-returns number of items dropped. Use your own custom pattern or GetDropPattern.
-Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+returns number of items dropped, or the other way around and drops items specified
+if Exclude set to False. Use your own custom pattern or GetDropPattern.
+Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DropAllExcludeEx(Exclude, Pattern: TIntegerArray): Integer;
+function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude: Boolean): Integer;
 var
   I: Integer;
 begin
   Result := 0;
   for I := 0 to 27 do
-    if (not (TIAContains(Exclude, Pattern[I]))) then
+    if ((TIAContains(Slots, Pattern[I])) xor (Exclude)) then
       if (DropItem(Pattern[I])) then
         Inc(Result);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropAllExclude(Exclude: TIntegerArray): Integer;
+function DropItemsEx(Slots: TIntegerArray; Exclude: Boolean): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory except for those in excluded spaces
-returns number of items dropped. Uses GetDropPattern(2)
-Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+returns number of items dropped, or the other way around and drops items specified
+if Exclude set to False. Uses GetDropPattern(2) automatically for drop pattern.
+Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DropAllExclude(Exclude: TIntegerArray): Integer;
+function DropItemsEx(Slots: TIntegerArray; Exclude: Boolean): Integer;
 begin
-  Result := DropAllExcludeEx(Exclude, GetDropPattern(2));
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
-Contributors: Wanted
-Description: Drops all the items in invetory specified returns number of items
-dropped. Use your own custom pattern or GetDropPattern.
-Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function DropItemsEx(Slots, Pattern: TIntegerArray): Integer;
-var
-  I: Integer;
-begin
-  Result := 0;
-  for I := 0 to 27 do
-    if (TIAContains(Slots, Pattern[I])) then
-      if (DropItem(Pattern[I])) then
-        Inc(Result);
+  Result := DropItemsPEx(Slots, GetDropPattern(2), Exclude);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -315,7 +297,21 @@ Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
 
 function DropItems(Slots: TIntegerArray): Integer;
 begin
-  Result := DropItemsEx(Slots, GetDropPattern(2));
+  Result := DropItemsEx(Slots, False);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DropAllExclude(Exclude: TIntegerArray): Integer;
+Contributors: Wanted
+Description: Drops all the items in invetory except for those in excluded spaces
+returns number of items dropped. Uses GetDropPattern(2)
+Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DropAllExclude(Exclude: TIntegerArray): Integer;
+begin
+  Result := DropItemsEx(Exclude, True);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -328,7 +324,7 @@ Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
 
 function DropAll: Integer;
 begin
-  Result := DropAllExcludeEx([], GetDropPattern(2));
+  Result := DropAllExclude([]);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

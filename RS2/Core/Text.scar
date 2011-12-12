@@ -136,7 +136,7 @@ function GetOptionsEx(var B: TBox; FilterBadChars: Boolean): TStringArray;
 Contributors: Wanted
 Description: Returns options.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 12th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetOptionsEx(var B: TBox; FilterBadChars: Boolean): TStringArray;
@@ -155,6 +155,7 @@ begin
       Result[I] := Replace(Result[I], ' ', '');
       Result[I] := Replace(Result[I], 'i', '');
       Result[I] := Replace(Result[I], 'y', '');
+      Result[I] := Replace(Result[I], 'A', '');
     end;
   end;
 end;
@@ -179,7 +180,7 @@ function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBoolea
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: December 6th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 12th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
@@ -212,6 +213,7 @@ begin
     Lines[I] := Replace(Lines[I], ' ', '');
     Lines[I] := Replace(Lines[I], 'i', '');
     Lines[I] := Replace(Lines[I], 'y', '');
+    Lines[I] := Replace(Lines[I], 'A', '');
   end;
   NewOptions := Options;
   for I := 0 to HH do
@@ -219,6 +221,7 @@ begin
     NewOptions[I] := Replace(Options[I], ' ', '');
     NewOptions[I] := Replace(Options[I], 'i', '');
     NewOptions[I] := Replace(Options[I], 'y', '');
+    NewOptions[I] := Replace(Options[I], 'A', '');
   end;
   for I := 0 to H do
     for II := 0 to HH do
@@ -236,7 +239,7 @@ function OptionExists(Option: string): Boolean;
 Contributors: Wanted
 Description: Checks if option exists within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 12th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionExists(Option: string): Boolean;
@@ -245,7 +248,7 @@ var
   TBA: TBoxArray;
 begin
   TBoA := OptionExistsMulti([Option], TBA);
-  Result := TBoA[0];
+  Result := (CheckTBoA(TBoA) > 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
