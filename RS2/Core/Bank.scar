@@ -223,7 +223,7 @@ begin
       Exit
     else
       Result := True;
-  if (Length(Exclude) = 0) then
+  if (Length(Slots) = 0) then
   begin
     Result := DepositAll(CheckBS);
     Exit;
