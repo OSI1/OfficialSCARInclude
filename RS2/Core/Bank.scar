@@ -207,15 +207,15 @@ Contributors: Wanted
 Description: Deposits all inventory items except for excluded slots, or the other
 way around if Exclude is false. True if CheckBS is true and bankscreen is found.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 12th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositItemsEx(Slots: TIntegerArray; Exclude: Boolean; CheckBS: Boolean): Boolean;
 var
   I, C, T: Integer;
+  B: Boolean;
   P: TPoint;
   S: string;
-  B: Boolean;
 begin
   Result := False;
   if (CheckBS) then
@@ -235,15 +235,15 @@ begin
         MouseItem(I, MoveTo);
         GetMousePos(P.X, P.Y);
         C := InvCount;
-        T := GetSystemTime + RR(1500, 2500);
+        T := GetSystemTime + RR(1000, 2000);
         S := '';
         while ((GetSystemTime < T) and (S = '')) do
         begin
           S := GetUpText;
-          WaitRR(100, 200);
+          WaitRR(50, 80);
         end;
         B := False;
-        if (Pos('t-1', S) > 0) then
+        if ((InRange(Pos('t-1', S), 1, 10)) or (InRange(Pos('1', S), 1, 10)) or (InRange(Pos('-', S), 1, 10))) then
         begin
           Mouse(P.X, P.Y, 0, 0, False);
           ChooseOptionMulti(['t-A', 'All']);
@@ -602,7 +602,7 @@ Description: Withdraws by using MouseBox on B. Searches for your Options in Choo
 if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
 use ['-1 '] it will withdraw by left clicking one time to get one item out.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 12th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
@@ -617,9 +617,7 @@ begin
       Exit;
   if (H < 0) then
     Exit;
-    C := InvCount;
-  if (C = 28) then
-    Exit;
+  C := InvCount;
   if (Pos('-1 ', Options[0]) < 1) then
   begin
     MouseBox(B.X1, B.Y1, B.X2, B.Y2, ClickRight);

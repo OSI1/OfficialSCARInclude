@@ -55,12 +55,12 @@ var
   T: LongInt;
 begin
   Result := True;
-  T := GetSystemTime + RR(1500, 2500);
+  T := GetSystemTime + RR(1000, 2000);
   while (GetSystemTime < T) do
     if (Pos(Text, GetUpText) > 0) then
       Exit
     else
-      WaitRR(100, 250);
+      WaitRR(50, 80);
   Result := False;
 end;
 
@@ -78,7 +78,7 @@ var
   TheText: string;
 begin
   Result := False;
-  T := GetSystemTime + RR(1500, 2500);
+  T := GetSystemTime + RR(1000, 2000);
   repeat
     TheText := GetUpText;
     H := High(Text);
@@ -88,7 +88,7 @@ begin
         Result := True;
         Exit;
       end;
-    WaitRR(100, 250);
+    WaitRR(50, 80);
   until (GetSystemTime > T);
 end;
 
