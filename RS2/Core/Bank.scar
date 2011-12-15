@@ -59,6 +59,8 @@
      By: Wanted
  * function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
      By: Wanted
+ * function OpenBankBooth(Loc: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -716,9 +718,103 @@ begin
   Result := WithdrawEx(Amount, GetBankSlotBounds(Slot), False);
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OpenBankBooth(Loc: Integer): Boolean;
+Contributors: Wanted
+Description: Opens a booth, true if bankscreen found. Use Loc_VEB etc.
+Date Created: December 14th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 14th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OpenBankBooth(Loc: Integer): Boolean;
+var
+  BankInfo: TVariantArray;
+  CTS, I, H, T: Integer;
+  ATPA: T2DPointArray;
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  Result := BankScreen;
+  if (Result) then
+    Exit;             //    0     1     2         3       4      5     6   7    8      9
+  case (Loc) of       // | CTS |  CTS2 Mods  |  Color  | Tol | Split | W | H | Min  | Max  |    Modified            By              Build #
+    Loc_LBC: BankInfo := [2,    0.23,  0.35,  9147035,  10,   0,      35, 35, 100,   750];   // December 14, 2011   Wanted          688
+    Loc_AKB: BankInfo := [2,    0.15,  0.09,  3883077,  14,   0,      35, 35, 100,   900];   // December 14, 2011   Wanted          688
+    Loc_FEB,{BankInfo := [2,    0.06,  0.21,  5272464,  4,    1,      4,  15, 250,   800];}  // December 14, 2011   Wanted          688
+    Loc_FWB: BankInfo := [2,    0.06,  0.21,  5272464,  4,    1,      4,  15, 250,   800];   // December 14, 2011   Wanted          688
+    Loc_VEB: BankInfo := [2,    0.07,  1.59,  2181720,  5,    0,      35, 45, 350,   99999]; // December 14, 2011   Wanted          688
+    Loc_VWB: BankInfo := [2,    0.09,  0.45,  3235696,  3,    0,      35, 35, 150,   600];   // December 14, 2011   Wanted          688
+    Loc_DYB,{BankInfo := [2,    0.37,  0.48,  4083025,  2,    0,      35, 35, 500,   99999];}// December 14, 2011   Wanted          688
+    Loc_EVB: BankInfo := [2,    0.37,  0.48,  4083025,  2,    0,      35, 35, 500,   99999]; // December 14, 2011   Wanted          688
+  else
+    Exit;
+  end;
+  CTS := GetColorToleranceSpeed;
+  ColorToleranceSpeed(BankInfo[0]);
+  SetColorSpeed2Modifiers(BankInfo[1], BankInfo[2]);
+  FindColorsSpiralTolerance(MSCX, MSCY, TPA, BankInfo[3], MSX1, MSY1, MSX2, MSY2, BankInfo[4]);
+  SetColorspeed2Modifiers(0.2, 0.2);
+  ColorToleranceSpeed(CTS);
+  if (Length(TPA) < 1) then
+    Exit;
+  case (BankInfo[5]) of
+    0: ATPA := TPAToATPAEx(TPA, BankInfo[6], BankInfo[7]);
+    1: ATPA := SplitTPA(TPA, BankInfo[6]);
+    2: ATPA := SplitTPAEx(TPA, BankInfo[6], BankInfo[7]);
+  end;
+  if (Length(ATPA) < 1) then
+    Exit;
+  SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
+  //DebugATPABounds(ATPA);
+  H := High(ATPA);
+  //for I := 0 to High(ATPA) do
+    //WriteLn(IntToStr(I) + ', ' + IntToStr(Length(ATPA[I])));
+  for I := 0 to High(ATPA) do
+    if (InRange(Length(ATPA[I]), BankInfo[8], BankInfo[9])) then
+    begin
+      P := MiddleTPA(ATPA[I]);
+      MMouse(P.X, P.Y, 2, 2);
+      if ((Loc = Loc_DYB) or (Loc = Loc_EVB)) then
+      begin
+        if (not (IsUpTextMulti(['Use C', 'e Coun', 'ounter']))) then
+          Continue;
+      end
+      else
+        if (not (IsUpTextMulti(['Use B', 'e Ban', 'ank b', 'boot', 'ooth']))) then
+          Continue;
+      GetMousePos(P.X, P.Y);
+      Mouse(P.X, P.Y, 0, 0, False);
+      if (not (ChooseOptionMulti(['se-', '-qu', 'uick', 'ckly B']))) then
+        Continue;
+      if (WaitFunc(@FlagExists, True, 100, 200, 500, 1000)) then
+        Flag;
+      WaitRR(200, 400);
+      T := GetSystemTime + RR(5000, 7000);
+      repeat
+        if (PinScreen) then
+          if (not (EnterBankPin(Players[CurrentPlayer].Pin))) then
+          begin
+            WriteLn('Pin failed!');
+            Exit;
+          end
+          else
+          begin
+            Result := True;
+            Exit;
+          end;
+        if (BankScreen) then
+        begin
+          Result := True;
+          Exit;
+        end;
+        WaitRR(250, 400);
+      until (GetSystemTime > T);
+      Exit;
+    end;
+end;
+
 //OpenChest
 //NPCBank
-//OpenBooth
 //DepositScreen
 //OpenBankEx
 //OpenBank

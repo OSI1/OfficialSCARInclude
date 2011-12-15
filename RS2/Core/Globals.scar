@@ -17,6 +17,8 @@
      By: Wanted
  * const RS2 direction/angle Indexes
      By: Wanted
+ * const Bank locations
+     By: Wanted
  * const Withdraw function indexes
      By: Wanted
  * const Chat function indexes
@@ -302,6 +304,25 @@ const
   Dir_West              = 270;
   Dir_Left              = 270;
   Dir_NorthWest         = 315;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Bank locations
+Contributors: Wanted
+Description: Index handles for Banking locations.
+Date Created: December 14th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 14th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Loc_LBC = 0; // Lumbridge Castle Bank
+  Loc_AKB = 1; // Al-Karid Bank
+  Loc_FEB = 2; // Fallador East Bank
+  Loc_FWB = 3; // Fallador West Bank
+  Loc_DYB = 4; // Draynor Bank
+  Loc_VEB = 5; // Varrock East Bank
+  Loc_VWB = 6; // Varrock West Bank
+  Loc_EVB = 7; // Edgville Bank
+  Loc_GEB = 8; // Grand Exchange Bank
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Withdraw function indexes

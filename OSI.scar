@@ -35,8 +35,8 @@
   {$I RS2\Core\WorldSwitcher.scar}
   {$I RS2\Core\Inventory.scar}
   {$I RS2\Core\Object.scar}
-  {$I RS2\Core\Bank.scar}
   {$I RS2\Core\Map.scar}
+  {$I RS2\Core\Bank.scar}
   {$I RS2\Core\Amount.scar}
   {$IFDEF OSI_Color_Anti_Randoms}
     {$I RS2\Anti-Randoms\Anti-Randoms.scar}
