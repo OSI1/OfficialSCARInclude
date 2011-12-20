@@ -241,7 +241,7 @@ function FindFlag(var X, Y: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if flag exists and the cord of the lowest point.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: December 14th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 20th, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindFlag(var X, Y: Integer): Boolean;
@@ -252,15 +252,12 @@ begin
   Result := False;
   Map := BitmapFromString(MMX2 - MMX1, MMY2 - MMY1, '');
   CopyClientToBitmap(Map, MMX1, MMY1, MMX2, MMY2);
-  DC := GetTargetDC;
-  SetTargetDC(Map);
+  DC := GetClientCanvas.Handle;
+  SetTargetDC(GetBitmapDC(Map));
   GetBitmapSize(Map, Wi, He);
   FindColors(TPA, 65536, 0, 0, Wi - 1, He -1);
   FilterPointsDist(TPA, 0, MMRDe, Wi / 2, He / 2);
   SetTargetDC(DC);
-  {$IFNDEF SMART}
-    FindWindowBySize(RSPW, RSPH);
-  {$ENDIF}
   H := High(TPA);
   for I := 0 to H do
     if ((FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y - 1) - FastGetPixel(Map, TPA[I].X, TPA[I].Y - 1)) = 6381921) then
@@ -405,7 +402,7 @@ function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
 Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 20th, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
@@ -422,8 +419,8 @@ begin
     Exit;
   Map := BitmapFromString(MMX2 - MMX1, MMY2 - MMY1, '');
   CopyClientToBitmap(Map, MMX1, MMY1, MMX2, MMY2);
-  DC := GetTargetDC;
-  SetTargetBitmap(Map);
+  DC := GetClientCanvas.Handle;
+  SetTargetDC(GetBitmapDC(Map));
   GetBitmapSize(Map, Wi, He);
   FindColors(TPA, 65536, 0, 0, Wi - 1, He -1);
   FilterPointsDist(TPA, 0, MMRDe, Wi / 2, He / 2);

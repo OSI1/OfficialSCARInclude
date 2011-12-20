@@ -19,6 +19,10 @@
      By: Wanted
  * function GetChatTextEx(Line, TextColor: Integer): string;
      By: Wanted
+ * function LeveledUpEx(Click, UntilGone: Boolean): Boolean;
+     By: Wanted
+ * function LeveledUp: Boolean;
+     By: Wanted
  * function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
      By: Wanted
  * function ClickContinue: Boolean;
@@ -212,14 +216,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
+function LeveledUpEx(Click, UntilGone: Boolean): Boolean;
 Contributors: Wanted
-Description: Clicks to continue, true if found.
+Description: Clicks to continue after level up, true if found.
 Date Created: November 7th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: December 20th, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
+function LeveledUpEx(Click, UntilGone: Boolean): Boolean;
 var
   TPA, TPA2: TPointArray;
   C, T, I: Integer;
@@ -270,11 +274,59 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LeveledUp: Boolean;
+Contributors: Wanted
+Description: Clicks to continue after level up, true if found.
+Date Created: November 7th, 2011. By Wanted. RS2 Build 676.
+Last Modification: November 7th, 2011. By Wanted. RS2 Build 676.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LeveledUp: Boolean;
+begin
+  Result := LeveledUpEx(True, True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks to continue, true if found.
+Date Created: December 20th, 2011. By Wanted. RS2 Build 690.
+Last Modification: December 20th, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
+var
+  C, T, I: Integer;
+  P: TPoint;
+begin
+  Result := False;
+  I := 0;
+  repeat
+    if (not (GetColor(295, 468) = 13750738)) then
+      Exit;
+    Result := True;
+    if (not (Click)) then
+      Exit;
+    C := CountColor(clBlack, MCX1, MCY1, MCX2, MCY2);
+    if (I = 0) then
+      MouseBox(223, 460, 294, 474, ClickLeft)
+    else
+      Mouse(P.X, P.Y, 0, 0, True);
+    GetMousePos(P.X, P.Y);
+    T := GetSystemTime + RR(10000, 15000);
+    while ((CountColor(clBlack, MCX1, MCY1, MCX2, MCY2) = C) and (GetSystemTime < T)) do
+      WaitRR(200, 400);
+    Inc(I);
+  until (not (UntilGone));
+  LeveledUp;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function ClickContinue: Boolean;
 Contributors: Wanted
 Description: Clicks to continue, true if found.
-Date Created: November 7th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 7th, 2011. By Wanted. RS2 Build 676.
+Date Created: December 20th, 2011. By Wanted. RS2 Build 690.
+Last Modification: December 20th, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickContinue: Boolean;
