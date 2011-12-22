@@ -13,12 +13,10 @@
 
 {$I OSI.scar}
 {$I Divi\Misc\Debug.scar}        // Comment out in in-depth testing
-{$I RS2\Extended\Timing.scar}    // Comment out in in-depth testing
 {$I RS2\Skill\Mining.scar}       // Comment out in in-depth testing
 {$I RS2\Skill\Runecrafting.scar} // Comment out in in-depth testing
 {$I RS2\Skill\Smithing.scar}     // Comment out in in-depth testing
 {$I RS2\Extended\Object.scar}    // Comment out in in-depth testing
-{$I RS2\Extended\Map.scar}       // Comment out in in-depth testing
 {$I RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
 {$I RS2\Misc\Symbols.scar}       // Comment out in in-depth testing
 
