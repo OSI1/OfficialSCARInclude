@@ -9,6 +9,12 @@
      By: Home
  * function MMToMS(MM: TPoint): TPoint;
      By: Home
+ * function MMOnMS(MM: TPoint): Boolean;
+     By: Wanted
+ * function MMsToMSs(TPA: TPointArray): TPointArray;
+     By: Wanted
+ * function FilterMMPointsMS(TPA: TPointArray): TPointArray;
+     By: Wanted
  * function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
      By: Wanted
  * function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
@@ -38,6 +44,8 @@
  * function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
      By: Wanted
  * function MouseFlag(X, Y, RX, RY: Integer): Boolean;
+     By: Wanted
+ * function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
      By: Wanted
  * function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
      By: Wanted
@@ -94,6 +102,70 @@ Last Modification: December 5th, 2011. By Home. RS2 Build 688.
 function MMToMS(MM: TPoint): TPoint;
 begin
  Result := MMToMSEx(MM, 14.5);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMOnMS(MM: TPoint): Boolean;
+Contributors: Wanted
+Description: Returns true if a MM point would be on the MS.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MMOnMS(MM: TPoint): Boolean;
+begin
+  Result := PointInBox(MMToMS(MM), Box(MSX1, MSY1, MSX2, MSY2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMsToMSs(TPA: TPointArray): TPointArray;
+Contributors: Wanted
+Description: Outputs MM points that are on MS as MS points.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MMsToMSs(TPA: TPointArray): TPointArray;
+var
+  I, H, L: Integer;
+  P: TPoint;
+begin
+  H := High(TPA);
+  L := 0;
+  for I := 0 to H do
+  begin
+    P := MMToMS(TPA[I]);
+    if (not (PointInBox(P, Box(MSX1, MSY1, MSX2, MSY2)))) then
+      Continue;
+    Inc(L);
+    SetLength(Result, L);
+    Result[L - 1] := P;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FilterMMPointsMS(TPA: TPointArray): TPointArray;
+Contributors: Wanted
+Description: Filters out points that would not be on the main screen. Returns MM points.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FilterMMPointsMS(TPA: TPointArray): TPointArray;
+var
+  I, H, L: Integer;
+begin
+  Result := [];
+  H := High(TPA);
+  L := 0;
+  for I := 0 to H do
+  begin
+    if (not (MMOnMS(TPA[I]))) then
+      Continue;
+    Inc(L);
+    SetLength(Result, L);
+    Result[L - 1] := TPA[I];
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -395,6 +467,60 @@ Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 function MouseFlag(X, Y, RX, RY: Integer): Boolean;
 begin
   Result := MouseFlagEx(X, Y, RX, RY, 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
+Contributors: Wanted
+Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
+This one uses overlapping checking, so it's twice as slow.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
+var
+  I, II, H, HH, Map, DC, Wi, He, C, O: Integer;
+  Offset: T2DPointArray;
+  TPA: TPointArray;
+  L: TIntegerArray;
+  B: Boolean;
+begin
+  Result := [TPointArray([])];
+  HH := High(ColorDiffs);
+  SetLength(Result, HH + 1);
+  SetLength(L, HH + 1);
+  if (HH < 0 ) then
+    Exit;
+  Map := BitmapFromString(MMX2 - MMX1, MMY2 - MMY1, '');
+  CopyClientToBitmap(Map, MMX1, MMY1, MMX2, MMY2);
+  DC := GetClientCanvas.Handle;
+  SetTargetDC(GetBitmapDC(Map));
+  GetBitmapSize(Map, Wi, He);
+  FindColors(TPA, 65536, 0, 0, Wi - 1, He -1);
+  FilterPointsDist(TPA, 0, MMRDe, Wi / 2, He / 2);
+  SetTargetDC(DC);
+  H := High(TPA);
+  if (H < 0) then
+    Exit;
+  Offset := [TPointArray([Point(-2, 0), Point(-1, 0)]), TPointArray([Point(0, -2), Point(0, -1)])];
+  for I := 0 to H do
+    for O := 0 to 1 do
+    begin
+      C := (FastGetPixel(Map, TPA[I].X + Offset[O][0].X, TPA[I].Y + Offset[O][0].Y) - FastGetPixel(Map, TPA[I].X + Offset[O][1].X, TPA[I].Y + Offset[O][1].Y));
+      B := False;
+      for II := 0 to HH do
+        if (C = ColorDiffs[II]) then
+        begin
+          B := True;
+          Inc(L[II]);
+          SetLength(Result[II], L[II]);
+          Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 2, TPA[I].Y + MMY1 - 2);
+          Break;
+        end;
+      if (B) then
+        Break;
+    end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

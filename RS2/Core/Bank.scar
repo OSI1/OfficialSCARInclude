@@ -61,6 +61,12 @@
      By: Wanted
  * function OpenBankBooth(Loc: Integer): Boolean;
      By: Wanted
+ * function OpenBankNPC(Loc: Integer): Boolean;
+     By: Wanted
+ * function OpenBankEx(Loc: Integer; AllowNPC, AllowBooth, TryBoothFirst: Boolean): Boolean;
+     By: Wanted
+ * function OpenBank(Loc: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -813,10 +819,145 @@ begin
     end;
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OpenBankNPC(Loc: Integer): Boolean;
+Contributors: Wanted
+Description: Opens a bank via Banker, true if bankscreen found. Use Loc_VEB etc.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OpenBankNPC(Loc: Integer): Boolean;
+var
+  BankerInfo: TVariantArray;
+  I, H, T, CTS: Integer;
+  ATPA: T2DPointArray;
+  TPA: TPointArray;
+  TBA: TBoxArray;
+  P: TPoint;
+begin
+  Result := BankScreen;
+  if (Result) then
+    Exit;               //    0     1     2         3       4
+  case (Loc) of         // | CTS |  CTS2 Mods  |  Color  | Tol    Modified            By              Build #
+    Loc_LBC,{BankerInfo := [2,    0.48, 0.06,   6776940,  7];} // December 22, 2011   Wanted          690
+    Loc_FEB,{BankerInfo := [2,    0.48, 0.06,   6776940,  7];} // December 22, 2011   Wanted          690
+    Loc_FWB,{BankerInfo := [2,    0.48, 0.06,   6776940,  7];} // December 22, 2011   Wanted          690
+    Loc_AKB: BankerInfo := [2,    0.48, 0.06,   6776940,  7];  // December 22, 2011   Wanted          690
+    Loc_DYB,{BankerInfo := [2,    0.14, 0.76,   4533556,  11];}// December 22, 2011   Wanted          690
+    Loc_VEB,{BankerInfo := [2,    0.14, 0.76,   4533556,  11];}// December 22, 2011   Wanted          690
+    Loc_VWB: BankerInfo := [2,    0.14, 0.76,   4533556,  11]; // December 22, 2011   Wanted          690
+    Loc_DYB: BankerInfo := [2,    0.21, 0.07,   7633020,  20]; // December 22, 2011   Wanted          690
+    Loc_GEB: BankerInfo := [2,    0.42, 0.14,   6053473,  6];  // December 22, 2011   Wanted          690
+  else
+    Exit;
+  end;
+  ATPA := FindMMDotsExOverLap([cldYellowDot]);
+  TPA := MMsToMSs(ATPA[0]);
+  SortTPAEx(TPA, Point(MSCX, MSCY));
+  H := High(TPA);
+  SetLength(TBA, H + 1);
+  for I := 0 to H do
+    TBA[I] := Box(TPA[I].X - 30, TPA[I].Y - 30, TPA[I].X + 30, TPA[I].Y + 30);
+  ConstrainBoxes(TBA, MSX1, MSY1, MSX2, MSY2);
+  for I := 0 to H do
+  begin
+    CTS := GetColorToleranceSpeed;
+    ColorToleranceSpeed(BankerInfo[0]);
+    SetColorSpeed2Modifiers(BankerInfo[1], BankerInfo[2]);
+    FindColorsTolerance(TPA, BankerInfo[3], TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2, BankerInfo[4]);
+    SetColorspeed2Modifiers(0.2, 0.2);
+    ColorToleranceSpeed(CTS);
+    ATPA := SplitTPA(TPA, 5);
+    if (Length(ATPA) < 1) then
+      Continue;
+    SortATPASize(ATPA, True);
+    P := MiddleTPA(ATPA[0]);
+    MMouse(P.X, P.Y, 0, 0);
+    if (not (IsUpTextMulti(['to B', 'anker']))) then
+      Continue;
+    GetMousePos(P.X, P.Y);
+    Mouse(P.X, P.Y, 0, 0, False);
+    if (not (ChooseOptionMulti(['Bank B', 'k B']))) then
+      Continue;
+    if (WaitFunc(@FlagExists, True, 100, 200, 500, 1000)) then
+      Flag;
+    WaitRR(200, 400);
+    T := GetSystemTime + RR(5000, 7000);
+    repeat
+      if (PinScreen) then
+        if (not (EnterBankPin(Players[CurrentPlayer].Pin))) then
+        begin
+          WriteLn('Pin failed!');
+          Exit;
+        end
+        else
+        begin
+          Result := True;
+          Exit;
+        end;
+      if (BankScreen) then
+      begin
+        Result := True;
+        Exit;
+      end;
+      WaitRR(250, 400);
+    until (GetSystemTime > T);
+    Continue;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OpenBankEx(Loc: Integer; AllowNPC, AllowBooth, TryBoothFirst: Boolean): Boolean;
+Contributors: Wanted
+Description: Opens bank using custom settings, true if bankscreen found. Use Loc_VEB etc.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OpenBankEx(Loc: Integer; AllowNPC, AllowBooth, TryBoothFirst: Boolean): Boolean;
+begin
+  Result := False;
+  if (not (AllowBooth)) then
+    TryBoothFirst := False;
+  if (TryBoothFirst) then
+  begin
+    if (not (OpenBankBooth(Loc))) then
+      if (AllowNPC) then
+        if (not (OpenBankNPC(Loc))) then
+          Exit;
+    Result := True;
+    Exit;
+  end
+  else
+  begin
+    if (not (OpenBankNPC(Loc))) then
+      if (AllowBooth) then
+        if (not (OpenBankBooth(Loc))) then
+          Exit;
+    Result := True;
+    Exit;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OpenBank(Loc: Integer): Boolean;
+Contributors: Wanted
+Description: Opens bank using recommended settings, true if bankscreen found. Use Loc_VEB etc.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OpenBank(Loc: Integer): Boolean;
+begin
+  case (Loc) of
+    Loc_DYB, Loc_EVB, Loc_AKB: Result := OpenBankEx(Loc, True, True, False);
+  else
+    Result := OpenBankEx(Loc, True, True, True);
+  end;
+end;
+
 //OpenChest
-//NPCBank
 //DepositScreen
-//OpenBankEx
-//OpenBank
 //OpenDepositBox
 //WalkInBank

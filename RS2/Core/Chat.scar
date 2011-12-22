@@ -303,10 +303,10 @@ begin
   I := 0;
   repeat
     if (not (GetColor(295, 468) = 13750738)) then
-      Exit;
+      Break;
     Result := True;
     if (not (Click)) then
-      Exit;
+      Break;
     C := CountColor(clBlack, MCX1, MCY1, MCX2, MCY2);
     if (I = 0) then
       MouseBox(223, 460, 294, 474, ClickLeft)
