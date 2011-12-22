@@ -924,8 +924,12 @@ begin
   begin
     if (not (OpenBankBooth(Loc))) then
       if (AllowNPC) then
+      begin
         if (not (OpenBankNPC(Loc))) then
           Exit;
+      end
+      else
+        Exit;
     Result := True;
     Exit;
   end
@@ -933,8 +937,12 @@ begin
   begin
     if (not (OpenBankNPC(Loc))) then
       if (AllowBooth) then
+      begin
         if (not (OpenBankBooth(Loc))) then
           Exit;
+      end
+      else
+        Exit;
     Result := True;
     Exit;
   end;
