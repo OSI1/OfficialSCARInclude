@@ -47,7 +47,7 @@ function IsUpText(Text: string): Boolean;
 Contributors: Freddy1990, Wanted.
 Description: Returns true if uptext is found.
 Date Created: August 7th, 2011. By Freddy1990 & Wanted. RS2 Build 660.
-Last Modified: November 14th, 2011. By Wanted. RS2 Build 679.
+Last Modified: December 31st, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsUpText(Text: string): Boolean;
@@ -57,7 +57,7 @@ begin
   Result := True;
   T := GetSystemTime + RR(1000, 2000);
   while (GetSystemTime < T) do
-    if (Pos(Text, GetUpText) > 0) then
+    if (StrInStr(Text, GetUpText)) then
       Exit
     else
       WaitRR(50, 80);
@@ -69,7 +69,7 @@ function IsUpTextMulti(Text: TStringArray): Boolean;
 Contributors: Freddy1990, Wanted.
 Description: Checks for the occurance of any of the strings in the array.
 Date Created: August 7th, 2011. By Freddy1990 & Wanted. RS2 Build 660.
-Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 31st, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsUpTextMulti(Text: TStringArray): Boolean;
@@ -83,7 +83,7 @@ begin
     TheText := GetUpText;
     H := High(Text);
     for I := 0 to H do
-      if (Pos(Text[I], TheText) > 0) then
+      if (StrInStr(Text[I], TheText)) then
       begin
         Result := True;
         Exit;
@@ -199,7 +199,7 @@ begin
   for I := 0 to H do
     for II := 0 to HH do
       if (not (Result[II])) then
-        if (Pos(Options[II], Lines[I]) > 0) then
+        if (StrInStr(Options[II], Lines[I])) then
         begin
           Result[II] := True;
           InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
@@ -226,7 +226,7 @@ begin
   for I := 0 to H do
     for II := 0 to HH do
       if (not (Result[II])) then
-        if (Pos(NewOptions[II], Lines[I]) > 0) then
+        if (StrInStr(NewOptions[II], Lines[I])) then
         begin
           Result[II] := True;
           InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
@@ -256,7 +256,7 @@ function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolea
 Contributors: Wanted
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 31st, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolean;

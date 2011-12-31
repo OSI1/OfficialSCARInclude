@@ -253,7 +253,7 @@ function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
 Contributors: Wanted, Narcle.
 Description: Returns RS2WorldArray information + updated world switcher screen info.
 Date Created: September 11th, 2011. By Wanted & Narcle. RS2 Build 663.
-Last Modified: September 11th, 2011. By Wanted. RS2 Build 663.
+Last Modified: December 31st, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
@@ -288,8 +288,8 @@ begin
   WorldInfo.Members := (Trim(GetTextAtEx(P.X + 413, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 8, False, tr_AllChars)) = 'Members');
   WorldInfo.LootShare := FindColorTolerance(LS.X, LS.Y, 4824144, P.X + 490, P.Y, P.X + 499, P.Y + 10, 40);
   WorldInfo.Ping := StrToIntDef(GetNumbers(GetTextAtEx(P.X + 520, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 4, False, tr_AllChars)), 0);
-  WorldInfo.QuickChat := ((Pos('uick', WorldInfo.Activity) > 0) or (RS2WorldArray[I].QuickChat));
-  WorldInfo.HRW := (Pos('derness', WorldInfo.Activity) > 0);
+  WorldInfo.QuickChat := ((StrInStr('uick', WorldInfo.Activity)) or (RS2WorldArray[I].QuickChat));
+  WorldInfo.HRW := StrInStr('derness', WorldInfo.Activity);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -33,7 +33,7 @@ procedure TypeSendEx(Text: string; PressEnter: Boolean);
 Contributors: Wanted
 Description: Types human like, presses enter if chosen.
 Date Created: August 26th, 2011. By Wanted
-Last Modification: August 26th, 2011. By Wanted
+Last Modification: December 31st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TypeSendEx(Text: string; PressEnter: Boolean);
@@ -47,7 +47,7 @@ begin
   ShiftKeyDown := False;
   for I := 1 to L do
   begin
-    UseShiftKey := (Pos(Text[I], ShiftedKeys) > 0);
+    UseShiftKey := StrInStr(Text[I], ShiftedKeys);
     if (not (ShiftKeyDown)) then
     begin
       ShiftKeyDown := True;

@@ -142,7 +142,7 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function InvCount: Integer;
+function InvFull: Boolean;
 Contributors: Wanted
 Description: Returns true if all 28 spots are full.
 Date Created: November 18th, 2011. By Wanted. RS2 Build 675.

@@ -11,6 +11,8 @@
      By: Wanted
  * function FindRandomEventGift: Boolean;
      By: Wanted
+ * function GetMissingTabs: TIntegerArray;
+     By: Wanted
  * procedure InitiateAntiRandoms;
      By: Wanted
  * function OSIFindRandoms: Boolean;
@@ -242,22 +244,28 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CountMissingTabs: Integer;
+function GetMissingTabs: TIntegerArray;
 Contributors: Wanted
 Description: Used for counting missing tabs for comparison in OSIFindRandoms.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
 Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CountMissingTabs: Integer;
+function GetMissingTabs: TIntegerArray;
 var
-  I: Integer;
+  I, L: Integer;
 begin
-  Result := 0;
+  Result := [];
+  L := 0;
   for I := 0 to 15 do
-    if (I <> Tab_Objectives) then
-      if (not (TabExists(I))) then
-        Inc(Result);
+    if (not (TabExists(I))) then
+    begin
+      if (I = Tab_Objectives) then
+        Continue;
+      Inc(L);
+      SetLength(Result, L);
+      Result[L - 1] := I;
+    end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -265,22 +273,23 @@ function OSIFindRandoms: Boolean;
 Contributors: Wanted
 Description: Handles all of OSI's RS2 anti-random rountines.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 31st, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OSIFindRandoms: Boolean;
 var
   InitCompassAngle: Extended;
-  MissingTabs, I, H: Integer;
+  MissingTabs: TIntegerArray;
   RandomSolved, B: Boolean;
+  I, H: Integer;
 begin
   Result := False;
-  MissingTabs := CountMissingTabs;
+  MissingTabs := GetMissingTabs;
   RandomSolved := False;
   H := High(RS2Randoms);
   for I := 0 to H do
     if (RS2Randoms[I].InRandom <> nil) then
-      if (TIAContains(RS2Randoms[I].TabsMissing, MissingTabs)) then
+      if (TIAContains(RS2Randoms[I].TabsMissing, Length(MissingTabs))) then
       begin
         Result := RS2Randoms[I].InRandom();
         if (Result) then
@@ -316,7 +325,7 @@ begin
           end;
         end;
       end;
-  if (MissingTabs > 0) then
+  if ((Length(MissingTabs) > 5) or (TIAContains(MissingTabs, Tab_Magic))) then
     if (not (RandomSolved)) then
     begin
       Result := True;

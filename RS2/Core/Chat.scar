@@ -196,23 +196,18 @@ function GetChatTextEx(Line, TextColor: Integer): string;
 Contributors: Wanted
 Description: Returns chat text on a given line.
 Date Created: November 5th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: December 30th, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetChatTextEx(Line, TextColor: Integer): string;
 var
-  TPA: TPointArray;
   B: TBox;
 begin
   Result := '';
   if (FixChat) then
     WaitRR(500, 1000);
   B := GetChatLineBounds(Line);
-  FindColors(TPA, TextColor, B.X1, B.Y1, B.X2, B.Y2);
-  if (Length(TPA) < 1) then
-    Exit;
-  B := GetTPABounds(TPA);
-  Result := GetTextAtEx(B.X1 - 1, B.Y1 - 2, 0, SmallChars, False, False, 0, 2, TextColor, 70, False, tr_AllChars);
+  Result := GetTextAtEx(B.X1, B.Y1 - 1, 0, SmallChars, False, False, 0, 2, TextColor, 70, False, tr_AllChars);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -333,9 +328,3 @@ function ClickContinue: Boolean;
 begin
   Result := ClickContinueEx(True, True);
 end;
-
-//IsChatTextUp
-//IsChatTextUpBetween
-//GetAllChatTextArr
-//InChat
-//InChatMulti

@@ -6,6 +6,10 @@
      By: Wanted
  * function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
      By: Wanted
+ * function StrInStr(SubStr, S: string): Boolean;
+     By: Wanted
+ * function StrInStrMulti(SubStr: string; TSA: TStringArray): Boolean;
+     By: Wanted
  * function CheckTBoA(TBoA: TBooleanArray): Integer;
      By: Wanted
  * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
@@ -77,6 +81,39 @@ begin
   H := High(TIA);
   for Pos := L to H do
     if (Int = TIA[Pos]) then
+      Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrInStr(SubStr, S: string): Boolean;
+Contributors: Wanted
+Description: Results true if a string is inside of another string.
+Date Created: December 31st, 2011. By Wanted
+Last Modified: December 31st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrInStr(SubStr, S: string): Boolean;
+begin
+  Result := (Pos(SubStr, S) > 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrInStrMulti(SubStr: string; TSA: TStringArray): Boolean;
+Contributors: Wanted
+Description: Results true if a string is inside of any of the strings.
+Date Created: December 31st, 2011. By Wanted
+Last Modified: December 31st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrInStrMulti(SubStr: string; TSA: TStringArray): Boolean;
+var
+  I, H: Integer;
+begin
+  H := High(TSA);
+  Result := True;
+  for I := 0 to H do
+    if (StrInStr(SubStr, TSA[I])) then
       Exit;
   Result := False;
 end;
