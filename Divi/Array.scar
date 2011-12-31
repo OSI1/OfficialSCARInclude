@@ -8,7 +8,7 @@
      By: Wanted
  * function StrInStr(SubStr, S: string): Boolean;
      By: Wanted
- * function StrInStrMulti(SubStr: string; TSA: TStringArray): Boolean;
+ * function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
      By: Wanted
  * function CheckTBoA(TBoA: TBooleanArray): Integer;
      By: Wanted
@@ -99,21 +99,21 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrInStrMulti(SubStr: string; TSA: TStringArray): Boolean;
+function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
 Contributors: Wanted
-Description: Results true if a string is inside of any of the strings.
+Description: Results true if any strings are inside a string.
 Date Created: December 31st, 2011. By Wanted
 Last Modified: December 31st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrInStrMulti(SubStr: string; TSA: TStringArray): Boolean;
+function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
 var
   I, H: Integer;
 begin
-  H := High(TSA);
+  H := High(SubStrs);
   Result := True;
   for I := 0 to H do
-    if (StrInStr(SubStr, TSA[I])) then
+    if (StrInStr(SubStrs[I], S)) then
       Exit;
   Result := False;
 end;
