@@ -34,12 +34,15 @@ function GetUpText: String;
 Contributors: Freddy1990, Wanted.
 Description: Returns text in upperleft corner.
 Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
-Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modified: January 5th, 2012. By Wanted. RS2 Build 691.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetUpText: string;
 begin
-  Result := rs_GetTextAt(UpChars, 8, 10);
+  try
+    Result := rs_GetTextAt(UpChars, 8, 10);
+  except
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -256,7 +259,7 @@ function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolea
 Contributors: Wanted
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: December 31st, 2011. By Wanted. RS2 Build 690.
+Last Modified: January 5th, 2012. By Wanted. RS2 Build 691.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolean;
@@ -289,6 +292,8 @@ begin
     TPA := TPAFromBox(Box(B.X1 - 30, B.Y1, B.X2, B.Y2));
   end;
   TPAFilterBoxes(TPA, [B]);
+  if (Length(TPA) < 1) then
+    Exit;
   P := TPA[Random(Length(TPA))];
   MMouse(P.X, P.Y, 0, 0);
 end;

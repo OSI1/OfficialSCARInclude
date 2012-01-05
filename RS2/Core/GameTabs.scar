@@ -396,7 +396,7 @@ function GetXPBarTotal: LongInt;
 Contributors: Wanted, Anonymous.
 Description: Returns the number from your XP Bar.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: January 1st, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetXPBarTotal: LongInt;
@@ -406,17 +406,19 @@ var
   B: TBox;
   P: TPoint;
 begin
-  Previous := IsXPBarOpen;
-  if (ToggleXPBar(True)) then
-    WaitFunc(@IsXPBarOpen, True, 10, 15, 1500, 1750);
+  Previous := ToggleXPBar(True);
+  if (Previous) then
+    if (not (WaitFunc(@IsXPBarOpen, True, 10, 15, 1500, 1750))) then
+      Exit;
   FindColorsTolerance(TPA, clWhite, 342, 55, 510, 69, 1);
   B := GetTPABounds(TPA);
   B := IntToBox(B.X1 - 2, B.Y1 - 2, B.X2 + 2, B.Y2 + 2);
   IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, 'XP', 0, XPChars, False, False, 0, 1, clWhite);
   Result := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 1, XPChars, False, False, 0, 2, clWhite, 60, False, tr_AllChars)), 0);
   if (not (Previous)) then
-    Wait(RandomRange(500, 1500));
-  ToggleXPBar(Previous);
+    Exit;
+  WaitRR(500, 1500);
+  ToggleXPBar(False);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
