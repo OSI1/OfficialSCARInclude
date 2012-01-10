@@ -15,10 +15,8 @@
      By: Wanted
  * function SetGameTab(Tab: Integer): Boolean;
      By: Wanted
- * function EquipmentToCoords(Slot: Integer): TPoint;
-     By: Wanted & Home.
  * function GetEquipmentBounds(Slot: Integer): TBox;
-     By: Home
+     By: Wanted
  * function IsSlotEquipped(Slot: Integer): Boolean;
      By: Home & Wanted.
  * function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
@@ -190,39 +188,23 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function EquipmentToCoords(Slot: Integer): TPoint;
-Contributors: Wanted, Home.
-Description: Returns the middle point of any Tab_Equip_ slot.
-Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function EquipmentToCoords(Slot: Integer): TPoint;
-var
-  TPA: TPointArray;
-begin
-  Result := Point(0, 0);
-  TPA := [Point(601, 228), Point(642, 228), Point(601, 266), Point(641, 266),
-          Point(684, 266), Point(586, 304), Point(643, 304), Point(697, 304),
-          Point(641, 344), Point(586, 385), Point(642, 385), Point(698, 385)];
-  if (InRange(Slot, 0, 11)) then
-    Result := TPA[Slot];
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetEquipmentBounds(Slot: Integer): TBox;
-Contributors: Home, Wanted.
+Contributors: Wanted
 Description: Returns any Tab_Equip slot boundries.
-Date Created: September 1st, 2011. By Home. RS2 Build 662.
-Last Modification: November 8th, 2011. By Wanted. RS2 Build 676.
+Date Created: January 9th, 2012. By Wanted. RS2 Build 695.
+Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetEquipmentBounds(Slot: Integer): TBox;
 var
-  P: TPoint;
+  TBA: TBoxArray;
 begin
-  P := EquipmentToCoords(Slot);
-  Result := IntToBox(P.X - 12, P.Y - 12, P.X + 12, P.Y + 12);
+  TBA := [Box(585, 211, 618, 242), Box(626, 211, 659, 242),
+          Box(585, 250, 618, 281), Box(626, 250, 659, 281), Box(667, 250, 700, 281),
+       Box(570, 289, 603, 320),    Box(626, 289, 659, 320),    Box(682, 289, 715, 320),
+                                   Box(626, 329, 659, 360),
+       Box(570, 369, 603, 400),    Box(626, 369, 659, 400),    Box(682, 369, 715, 400)];
+  Result := TBA[Slot];
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -396,7 +378,7 @@ function GetXPBarTotal: LongInt;
 Contributors: Wanted, Anonymous.
 Description: Returns the number from your XP Bar.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: January 1st, 2011. By Wanted. RS2 Build 671.
+Last Modification: January 1st, 2012. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetXPBarTotal: LongInt;

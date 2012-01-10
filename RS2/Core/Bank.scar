@@ -176,7 +176,7 @@ function DepositAllEx(CheckBS, Inv, CPouch, Equip, Summon: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: January 5th, 2012. By Wanted. RS2 Build 691.
+Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAllEx(CheckBS, Inv, CPouch, Equip, Summon: Boolean): Boolean;
@@ -191,7 +191,7 @@ begin
     else
       Result := True;
   TBoA := [Inv, CPouch, Equip, Summon];
-  for I := 0 to 2 do
+  for I := 0 to 3 do
     if (TBoA[I]) then
       MouseBox(354 + (36 * I), 298, 384 + (36 * I), 318, ClickLeft);
 end;
@@ -824,7 +824,7 @@ function OpenBankNPC(Loc: Integer): Boolean;
 Contributors: Wanted
 Description: Opens a bank via Banker, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankNPC(Loc: Integer): Boolean;
@@ -844,6 +844,7 @@ begin
     Loc_FEB,{BankerInfo := [2,    0.48, 0.06,   6776940,  7];} // December 22, 2011   Wanted          690
     Loc_FWB,{BankerInfo := [2,    0.48, 0.06,   6776940,  7];} // December 22, 2011   Wanted          690
     Loc_AKB: BankerInfo := [2,    0.48, 0.06,   6776940,  7];  // December 22, 2011   Wanted          690
+    Loc_EVB,{BankerInfo := [2,    0.14, 0.76,   4533556,  11];}// December 22, 2011   Wanted          690
     Loc_DYB,{BankerInfo := [2,    0.14, 0.76,   4533556,  11];}// December 22, 2011   Wanted          690
     Loc_VEB,{BankerInfo := [2,    0.14, 0.76,   4533556,  11];}// December 22, 2011   Wanted          690
     Loc_VWB: BankerInfo := [2,    0.14, 0.76,   4533556,  11]; // December 22, 2011   Wanted          690

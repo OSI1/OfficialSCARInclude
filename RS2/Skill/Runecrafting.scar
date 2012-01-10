@@ -56,7 +56,7 @@ function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
 Contributors: Wanted
 Description: Loads the Item into memory as result and returns recommended tolerance.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
@@ -78,6 +78,13 @@ begin
                             'C40FC1F08182D816A6E30A0012630C908E531BA00F9D709A8F103' +
                             'F29F1050E30DE47F22A0C601C8FF42408D3190FF12BF1A0032360' +
                             'ED2');
+    bmpPouch_Medium_Damaged: begin
+                               Result := BitmapFromString(8, 8, 'beNplzd0KQDAchvGLkI/kY1a' +
+                                    'LjKFFSEtxICe7/7vx6l9aOf3V08PZMg6T7oa2VrK09jRmklIEvke' +
+                                    'u+wYuK3EcKzyOwm3W5Ejg12XgWRLDkZAjue8dXuQpubtQqnT9W8A' +
+                                    'FZ67TohL870hefwBvISNI');
+                               Tolerance := 10;
+                             end;
     bmpPouch_Large_Damaged: begin
                               Result := BitmapFromString(8, 8, 'beNpTVTIz0jM20DHQ1QQiXS1' +
                                    '1LXUVd3c7a2tjiDhECiLu5eVga2tqYWoI1wIR9/FxcnAwxxT383P' +

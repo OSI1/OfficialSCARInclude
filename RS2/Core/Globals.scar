@@ -344,7 +344,7 @@ const Chat function indexes
 Contributors: Wanted
 Description: Index handles for various chat routines.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 28th, 2011. By Wanted RS2 Build 671.
+Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -360,7 +360,7 @@ const
   Chat_Game_Tab         = 1;
   Chat_Public_Tab       = 2;
   Chat_Private_Tab      = 3;
-  Chat_Frineds_Tab      = 4;
+  Chat_Friends_Tab      = 4;
   Chat_Clan_Tab         = 5;
   Chat_Trade_Tab        = 6;
   Chat_Assist_Tab       = 7;

@@ -34,13 +34,13 @@ function GetCurrentChat: Integer;
 Contributors: Wanted
 Description: Returns the current chat you have open.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCurrentChat: Integer;
 begin
   for Result := 0 to 7 do
-    if (not (TIAContains([5399409, 6965324, 5342384], GetColor(9 + (57 * Result), 484)))) then
+    if (not (SimilarColors(5531509, GetColor(9 + (57 * Result), 484), 5))) then
       Break;
   if (Result > 7) then
     Result := -1;
@@ -51,12 +51,12 @@ function GetChatTabBounds(ChatTab: Integer): TBox;
 Contributors: Wanted
 Description: Returns the boundries of the chat tab you want.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetChatTabBounds(ChatTab: Integer): TBox;
 begin
-  Result := IntToBox(9 + (57 * ChatTab), 481, 56 + (57 * ChatTab), 502);
+  Result := IntToBox(9 + (57 * ChatTab), 481, 56 + (57 * ChatTab), 501);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

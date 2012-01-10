@@ -1,0 +1,41 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+                            Woodcutting Skill Routines
+--------------------------------------------------------------------------------
+ * const Item database indexes
+     By: Wanted
+ * function LoadWoodcuttingItem(Item: Integer; var Tolerance: Integer): Integer;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE Woodcutting}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Item database indexes
+Contributors: Wanted
+Description: Indexes of all the woodcutting related database items.
+Date Created: January 10th, 2012. By Wanted. RS2 Build 695.
+Last Modification: January 10th, 2012. By Wanted. RS2 Build 695.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const                            // Modified            By              Build #
+  dtmHatchet = 0;                // January 10, 2012    Wanted          679
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
+Contributors: Wanted
+Description: Loads the Item into memory as result and returns recommended tolerance.
+Date Created: January 10th, 2012. By Wanted. RS2 Build 695.
+Last Modification: January 10th, 2012. By Wanted. RS2 Build 695.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoadWoodcuttingItem(Item: Integer; var Tolerance: Integer): Integer;
+begin
+  Result := -1;
+  case Item of
+    dtmHatchet: Result := DTMFromString('78DA63B46362606063644006FD4B9319FE036' +
+                        '990E87F2060B407AAF9CD800698C0244C27A31B116A7C81FCFF04' +
+                        'D45803F9828CF8D55802F97CF8D5000042940B56');
+  end;
+end;
