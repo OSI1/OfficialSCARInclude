@@ -63,7 +63,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: December 1st, 2011. By Wanted
+Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -85,7 +85,7 @@ begin
       RS2FontFolder := IncludesPath + 'OSI\RS2\Fonts\';
       if (not (DirectoryExists(RS2FontFolder))) then
         RS2FontFolder := FontsPath;
-      OptionChars := rs_LoadChars(RS2FontFolder + 'OptionChars\');
+      OptionChars := rs_LoadChars(RS2FontFolder + 'ScreenChars\');
       UpChars := rs_LoadChars(RS2FontFolder + 'UpChars\');
       ScreenChars := LoadChars2(RS2FontFolder + 'ScreenChars\');
       NPCChars := LoadChars2(RS2FontFolder + 'NPCChars\');

@@ -11,7 +11,7 @@
      By: Wanted
  * function CloseBank(CheckBS: Boolean): Boolean;
      By: Wanted
- * function DepositAllEx(CheckBS, Inv, CPouch, Equip, Summon: Boolean): Boolean;
+ * function DepositAllEx(CheckBS, Inv, Equip, Summon, CPouch: Boolean): Boolean;
      By: Wanted
  * function DepositAll(CheckBS: Boolean): Boolean;
      By: Wanted
@@ -172,14 +172,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DepositAllEx(CheckBS, Inv, CPouch, Equip, Summon: Boolean): Boolean;
+function DepositAllEx(CheckBS, Inv, Equip, Summon, CPouch: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
+Last Modification: January 11th, 2012. By Wanted. RS2 Build 697.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DepositAllEx(CheckBS, Inv, CPouch, Equip, Summon: Boolean): Boolean;
+function DepositAllEx(CheckBS, Inv, Equip, Summon, CPouch: Boolean): Boolean;
 var
   TBoA: TBooleanArray;
   I: Integer;
@@ -190,7 +190,7 @@ begin
       Exit
     else
       Result := True;
-  TBoA := [Inv, CPouch, Equip, Summon];
+  TBoA := [Inv, Equip, Summon, CPouch];
   for I := 0 to 3 do
     if (TBoA[I]) then
       MouseBox(354 + (36 * I), 298, 384 + (36 * I), 318, ClickLeft);

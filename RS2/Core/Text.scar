@@ -13,7 +13,7 @@
      By: Wanted
  * function OptionBoxExists: Boolean;
      By: Wanted
- * function GetOptionsEx(var B: TBox; FilterBadChars: Boolean): TStringArray;
+ * function GetOptionsEx(var B: TBox): TStringArray;
      By: Wanted
  * function GetOptions: TStringArray;
      By: Wanted
@@ -135,14 +135,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetOptionsEx(var B: TBox; FilterBadChars: Boolean): TStringArray;
+function GetOptionsEx(var B: TBox): TStringArray;
 Contributors: Wanted
 Description: Returns options.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: December 12th, 2011. By Wanted. RS2 Build 688.
+Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetOptionsEx(var B: TBox; FilterBadChars: Boolean): TStringArray;
+function GetOptionsEx(var B: TBox): TStringArray;
 var
   H, I: Integer;
 begin
@@ -151,16 +151,7 @@ begin
   H := (Round((B.Y2 - B.Y1) / 16.25) - 1);
   SetLength(Result, H + 1);
   for I := 0 to H do
-  begin
     Result[I] := rs_GetTextAt(OptionChars, B.X1 + 1, B.Y1 + 2 + (I * 16));
-    if (FilterBadChars) then
-    begin
-      Result[I] := Replace(Result[I], ' ', '');
-      Result[I] := Replace(Result[I], 'i', '');
-      Result[I] := Replace(Result[I], 'y', '');
-      Result[I] := Replace(Result[I], 'A', '');
-    end;
-  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -168,14 +159,14 @@ function GetOptions: TStringArray;
 Contributors: Wanted
 Description: Returns options.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetOptions: TStringArray;
 var
   B: TBox;
 begin
-  Result := GetOptionsEx(B, False);
+  Result := GetOptionsEx(B);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -183,16 +174,16 @@ function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBoolea
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: December 12th, 2011. By Wanted. RS2 Build 688.
+Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
 var
-  Lines, NewOptions: TStringArray;
   I, II, H, HH: LongInt;
+  Lines: TStringArray;
   B: TBox;
 begin
-  Lines := GetOptionsEx(B, False);
+  Lines := GetOptionsEx(B);
   H := High(Lines);
   if ((H + 1) < 1) then
     Exit;
@@ -211,30 +202,6 @@ begin
   for I := 0 to HH do
     if (Result[I]) then
       Exit;
-  for I := 0 to H do
-  begin
-    Lines[I] := Replace(Lines[I], ' ', '');
-    Lines[I] := Replace(Lines[I], 'i', '');
-    Lines[I] := Replace(Lines[I], 'y', '');
-    Lines[I] := Replace(Lines[I], 'A', '');
-  end;
-  NewOptions := Options;
-  for I := 0 to HH do
-  begin
-    NewOptions[I] := Replace(Options[I], ' ', '');
-    NewOptions[I] := Replace(Options[I], 'i', '');
-    NewOptions[I] := Replace(Options[I], 'y', '');
-    NewOptions[I] := Replace(Options[I], 'A', '');
-  end;
-  for I := 0 to H do
-    for II := 0 to HH do
-      if (not (Result[II])) then
-        if (StrInStr(NewOptions[II], Lines[I])) then
-        begin
-          Result[II] := True;
-          InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));
-          Break;
-        end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
