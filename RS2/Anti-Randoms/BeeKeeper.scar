@@ -3,8 +3,218 @@
                                    Runescape 2
                         Bee Keeper Random Solving Routines
 --------------------------------------------------------------------------------
- *
+ * function BeeKeeper_InRandom: Boolean;
+     By: Wanted
+ * function BeeKeeper_TalkToKeeper: Boolean;
+     By: Wanted
+ * function BeeKeeper_BeeScreen: Boolean;
+     By: Wanted
+ * function Beekeeper_SolveRandom: Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-//InBeeKeeper
-//SolveBeeKeeper
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BeeKeeper_InRandom: Boolean;
+Contributors: Wanted
+Description: Results true if in the beekeeper random.
+Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BeeKeeper_InRandom: Boolean;
+var
+  TPA: TPointArray;
+begin
+  Result := False;
+  FindMMColorsTolerance(TPA, 0, 0);
+  if (not (InRange(Length(TPA), 17500, 18100))) then
+    Exit;
+  FindColorsTolerance(TPA, clWhite, MSX1, MSY1, MSX2, MSY2, 250);
+  Result := (InRange(Length(TPA), 13000, 17000));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BeeKeeper_TalkToKeeper: Boolean;
+Contributors: Wanted
+Description: Finds and clicks talk to on the bee keeper.
+Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BeeKeeper_TalkToKeeper: Boolean;
+var
+  ATPA: T2DPointArray;
+  TPA: TPointArray;
+  I, H: Integer;
+  P: TPoint;
+begin
+  Result := False;
+  ColorToleranceSpeed(2);
+  SetColorSpeed2Modifiers(0.70, 0.88);
+  FindColorsTolerance(TPA, 2500396, MSX1, MSY1, MSX2, MSY2, 8);
+  SetColorSpeed2Modifiers(0.2, 0.2);
+  ColorToleranceSpeed(1);
+  if (Length(TPA) < 1) then
+    Exit;
+  ATPA := TPAToATPAEx(TPA, 20, 20);
+  SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
+  H := High(ATPA);
+  for I := 0 to High(ATPA) do
+  begin
+    if (Length(ATPA[I]) < 30) then
+      Continue;
+    P := MiddleTPA(ATPA[I]);
+    if (Distance(P.X, P.Y, MSCX, MSCY) < 10) then
+      Continue;
+    MMouse(P.X, P.Y, 0, 0);
+    if (not (IsUpTextMulti(['alk', 'k-T', 'Bee', 'ee k', 'eeper']))) then
+      Continue;
+    GetMousePos(P.X, P.Y);
+    Mouse(P.X, P.Y, 0, 0, True);
+    Result := True;
+    Exit;
+  end;
+  WriteLn('Failed to find BeeKeeper!');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BeeKeeper_BeeScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the screen where you assemble the bee house.
+Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BeeKeeper_BeeScreen: Boolean;
+begin
+  Result := (GetColor(486, 9) = 65536);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Beekeeper_SolveRandom: Boolean;
+Contributors: Wanted
+Description: Solves the beekeeper random.
+Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Beekeeper_SolveRandom: Boolean;
+var
+  AATPA: array[0..3] of array[0..2] of TPointArray;
+  ComponentPositions: array[0..3] of Integer;
+  I, II, MS, DC, Wi, He, Trys: Integer;
+  ATPA: array[0..3] of TPointArray;
+  TBA: array[0..3] of TBox;
+  ColorInfo: TVariantArray;
+  ATPA2: T2DPointArray;
+  P: TPoint;
+begin
+  Result := False;
+  MakeCompass(Dir_North);
+  SetAngle(True);
+  Trys := 0;
+  repeat
+    Inc(Trys);
+    if (Trys > 5) then
+    begin
+      WriteLn('Failed! 1 try left saving it...');
+      Logout;
+      Exit;
+    end;
+    WaitRR(1000, 1500);
+    if (not (ClickContinue)) then
+      if (not (BeeKeeper_TalkToKeeper)) then
+        Continue
+      else
+      begin
+        WaitRR(3000, 4000);
+        if (not (ClickContinue)) then
+          Continue;
+      end;
+    WaitRR(500, 700);
+    MouseBox(163, 426, 359, 438, ClickLeft);
+    WaitRR(1000, 1500);
+    ClickContinue;
+    if (not (WaitFunc(@BeeKeeper_BeeScreen, True, 100, 150, 3500, 4500))) then
+      Continue;
+    P := Point(0, 0);
+    if (WaitFindColorTolerance(P.X, P.Y, GetColor(454, 268), MSX1, MSY1, 137, 239, 0, True, 50, 100, 2500, 3500)) then
+      WaitRR(2000, 3000);
+    MS := BitmapFromString(137, 239, '');
+    CopyClientToBitmap(MS, 0, 0, 137, 239);
+    DC := GetClientCanvas.Handle;
+    SetTargetDC(GetBitmapDC(MS));
+    ColorInfo := [0.14, 0.82, 12632784, 16, 0.39, 1.07, 6716794, 3, 0.19, 0.45, 7239036, 9];
+    for I := 0 to 3 do
+      TBA[I] := Box(29, 30 + (I * 50), 127, 79 + (I * 50));
+    ColorToleranceSpeed(2);
+    for I := 0 to 3 do
+      for II := 0 to 2 do
+      begin
+        SetColorSpeed2Modifiers(ColorInfo[II * 4], ColorInfo[1 + (II * 4)]);
+        FindColorsTolerance(AATPA[I][II], ColorInfo[2 + (II * 4)], TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2, ColorInfo[3 + (II * 4)]);
+      end;
+    SetColorSpeed2Modifiers(0.2, 0.2);
+    ColorToleranceSpeed(1);
+    SetTargetDC(DC);
+    for I := 0 to 3 do
+    begin
+      ATPA[I] := MergeATPA(AATPA[I]);
+      ATPA[I] := PointsNotInTPA(ATPA[I]);
+      ATPA2 := SplitTPA(ATPA[I], 2);
+      SortATPASize(ATPA2, True);
+      if (Length(ATPA2) > 0) then
+        ATPA[I] := ATPA2[0];
+    end;
+    for I := 0 to 3 do
+    begin
+      if (PointInBox(P, TBA[I])) then
+        if (ComponentPositions[2] = 0) then
+        begin
+          ComponentPositions[2] := I + 1;
+          Continue;
+        end;
+      TPADimensions(ATPA[I], Wi, He);
+      if (He > 34) then
+        if (TPADensity(ATPA[I]) > 1.42) then
+        begin
+          if (Length(ATPA[I]) < 2400) then
+            if (ComponentPositions[3] = 0) then
+              ComponentPositions[3] := I + 1
+            else
+              if (ComponentPositions[0] = 0) then
+                ComponentPositions[0] := I + 1;
+        end
+        else
+          if (ComponentPositions[0] = 0) then
+            ComponentPositions[0] := I + 1;
+    end;
+    for I := 0 to 3 do
+      if (ComponentPositions[I] = 0) then
+        for II := 4 downto 1 do
+          if (not (TIAContains(ComponentPositions, II))) then
+          begin
+            ComponentPositions[I] := II;
+            Break;
+          end;
+    for I := 0 to 3 do
+    begin
+      II := ComponentPositions[I] -  1;
+      P := Point((TBA[II].X1 + TBA[II].X2) div 2, (TBA[II].Y1 + TBA[II].Y2) div 2);
+      DragMouse(P.X, P.Y, 5, 5, 260, 47 + (I * 52), 5, 5, True);
+      Wait(RandomRange(500, 700));
+    end;
+    MouseBox(202, 264, 236, 294, ClickLeft);
+    WaitRR(2000, 3000);
+    ClickContinue;
+    if (WaitFunc(@BeeKeeper_InRandom, False, 200, 300, 4000, 5000)) then
+      if (not (BeeKeeper_BeeScreen)) then
+      begin
+        WriteLn('Beekeeper Solved!');
+        Result := True;
+        Exit;
+      end;
+    if (Trys < 5) then
+      WriteLn('Incorrect! trying again... ' + IntToStr(6 - Trys) + ' trys left.');
+  until (False);
+end;

@@ -475,7 +475,7 @@ Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 This one uses overlapping checking, so it's twice as slow.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
@@ -521,6 +521,7 @@ begin
       if (B) then
         Break;
     end;
+  FreeBitmap(Map);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -528,7 +529,7 @@ function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
 Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 20th, 2011. By Wanted. RS2 Build 690.
+Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
@@ -566,6 +567,7 @@ begin
         Break;
       end;
   end;
+  FreeBitmap(Map);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

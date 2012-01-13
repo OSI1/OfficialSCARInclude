@@ -384,7 +384,7 @@ function ExitToLobby: Boolean;
 Contributors: Wanted
 Description: Logs out current active player to lobby if not unsigned.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: November 22st, 2011. By Wanted. RS2 Build 682.
+Last Modification: January 11th, 2012. By Wanted. RS2 Build 697.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ExitToLobby: Boolean;
@@ -407,6 +407,8 @@ begin
       Exit;
   until (True);
   WriteLn(Players[CurrentPlayer].Name + ' exited to lobby.');
+  IncEx(Players[CurrentPlayer].Worked, GetSystemTime - PlayerStartTime);
+  PlayerStartTime := GetSystemTime;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

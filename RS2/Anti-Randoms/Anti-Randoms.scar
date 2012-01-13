@@ -116,7 +116,7 @@ procedure InitiateAntiRandoms;
 Contributors: Wanted
 Description: Loads out all the antirandom information.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure InitiateAntiRandoms;
@@ -132,9 +132,9 @@ begin
   with RS2Randoms[1] do
   begin
     Name := 'Beekeeper';
-    TabsMissing := [0];
-    InRandom := nil;
-    SolveRandom := nil;
+    TabsMissing := [0, 9];
+    InRandom := @BeeKeeper_InRandom;
+    SolveRandom := @BeeKeeper_SolveRandom;
   end;
   with RS2Randoms[2] do
   begin
