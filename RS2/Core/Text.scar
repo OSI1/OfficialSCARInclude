@@ -101,7 +101,7 @@ Contributors: Wanted
 Description: Returns true if the box that contains the ChooseOptions is up.
 OptionBoxTPA contains all the points within that match clOptionsBox.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modified: January 16th, 2012. By Wanted. RS2 Build 699.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
@@ -109,14 +109,24 @@ var
   TPA, TPA1, TPA2: TPointArray;
   ATPA: T2DPointArray;
 begin
-  Result := WaitFindColorsTolerance(TPA1, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 80, True, 50, 150, 1500, 2500);
-  FindColors(TPA2, clOptionsBox2, RSX1, RSY1, RSX2, RSY2);
-  TPA := CombineTPA(TPA1, TPA2);
-  ATPA := TPAChain(TPA, 3);
+  Result := False;
+  if (not (WaitFindColorsTolerance(TPA1, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 80, True, 50, 150, 1500, 2500))) then
+    Exit;
+  ATPA := TPAChain(TPA1, 3);
   if (Length(ATPA) < 1) then
     Exit;
   SortATPASize(ATPA, True);
-  OptionBox := GetTPABounds(ATPA[0]);
+  TPA1 := ATPA[0]
+  OptionBox := TPABounds(TPA1);
+  FindColors(TPA2, clOptionsBox2, OptionBox.X1, OptionBox.Y1, OptionBox.X2, RSY2);
+  ATPA := TPAChain(TPA2, 3);
+  if (Length(ATPA) < 1) then
+    Exit;
+  SortATPASize(ATPA, True);
+  TPA2 := ATPA[0]
+  TPA := CombineTPA(TPA1, TPA2);
+  OptionBox := GetTPABounds(TPA);
+  Result := True;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -139,7 +149,7 @@ function GetOptionsEx(var B: TBox): TStringArray;
 Contributors: Wanted
 Description: Returns options.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
+Last Modified: January 16th, 2012. By Wanted. RS2 Build 699.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetOptionsEx(var B: TBox): TStringArray;
@@ -151,7 +161,7 @@ begin
   H := (Round((B.Y2 - B.Y1) / 16.25) - 1);
   SetLength(Result, H + 1);
   for I := 0 to H do
-    Result[I] := rs_GetTextAt(OptionChars, B.X1 + 1, B.Y1 + 2 + (I * 16));
+    Result[I] := rs_GetTextAt(OptionChars, B.X1, B.Y1 + 2 + (I * 16));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
