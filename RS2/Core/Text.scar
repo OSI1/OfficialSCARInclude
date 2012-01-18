@@ -101,13 +101,14 @@ Contributors: Wanted
 Description: Returns true if the box that contains the ChooseOptions is up.
 OptionBoxTPA contains all the points within that match clOptionsBox.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: January 16th, 2012. By Wanted. RS2 Build 699.
+Last Modified: January 17th, 2012. By Wanted. RS2 Build 699.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
 var
   TPA, TPA1, TPA2: TPointArray;
   ATPA: T2DPointArray;
+  B: TBox;
 begin
   Result := False;
   if (not (WaitFindColorsTolerance(TPA1, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 80, True, 50, 150, 1500, 2500))) then
@@ -117,8 +118,8 @@ begin
     Exit;
   SortATPASize(ATPA, True);
   TPA1 := ATPA[0]
-  OptionBox := TPABounds(TPA1);
-  FindColors(TPA2, clOptionsBox2, OptionBox.X1, OptionBox.Y1, OptionBox.X2, RSY2);
+  B := TPABounds(TPA1);
+  FindColors(TPA2, clOptionsBox2, RSX1, B.Y1, RSX2, RSY2);
   ATPA := TPAChain(TPA2, 3);
   if (Length(ATPA) < 1) then
     Exit;
@@ -126,6 +127,7 @@ begin
   TPA2 := ATPA[0]
   TPA := CombineTPA(TPA1, TPA2);
   OptionBox := GetTPABounds(TPA);
+  ConstrainBox(OptionBox.X1, OptionBox.Y1, OptionBox.X2, OptionBox.Y2, B.X1, B.Y1, B.X2, RSY2 - 2);
   Result := True;
 end;
 
