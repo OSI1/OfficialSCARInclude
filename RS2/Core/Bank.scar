@@ -670,7 +670,7 @@ Contributors: Wanted
 Description: Withdraws by using MouseBox on B. Converts your desired amount into
 the appropriate options text, uses Withdraw-X if needed. Withdraw_All etc indexes.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: January 22nd, 2012. By Wanted. RS2 Build 699.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
@@ -684,7 +684,7 @@ begin
     Withdraw_All: Options := ['ll ', 'w-All'];
     Withdraw_All_But_One: Options := ['All b', 'l but', 'but o', 't one'];
   else
-    Options := [IntToStr(Amount)];
+    Options := ['-' + IntToStr(Amount) + ' '];
   end;
   Result := WithdrawEx2(Options, B, CheckBS);
 end;

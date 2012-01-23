@@ -360,7 +360,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
 Contributors: Wanted
-Description: Returns true if flag exists.
+Description: Returns flag distance from point.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
 Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -381,7 +381,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetFlagDistance: Extended;
 Contributors: Wanted
-Description: Returns true if flag exists.
+Description: Returns flag distance from your location (MMCX, MMCY).
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
 Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

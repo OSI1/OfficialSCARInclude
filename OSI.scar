@@ -8,6 +8,10 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{$IFNDEF SCAR330_UP}
+  {$ERROR [OSI] Please update your copy of SCAR to run this script}
+{$ENDIF}
+
 {$IFNDEF RS2}
   {$IFNDEF OverrideVariance}
     {$DEFINE NoVariance}
@@ -63,7 +67,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
+Last Modified: January 22nd, 2012. By Wanted. RS2 Build 699.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -74,6 +78,8 @@ var
 begin
   OSI_Variance := 3.0;
   {$IFDEF RS2}
+    RS2FontFolder := '';
+    FriendChars := 0;
     WriteLn('OSI RS2 routines enabled');
     {$IFDEF OSI_Color_Anti_Randoms}
       WriteLn('OSI RS2 color random detection and solving enabled');
