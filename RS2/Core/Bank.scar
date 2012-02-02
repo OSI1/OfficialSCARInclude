@@ -729,7 +729,7 @@ function OpenBankBooth(Loc: Integer): Boolean;
 Contributors: Wanted
 Description: Opens a booth, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 14th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 14th, 2011. By Wanted. RS2 Build 688.
+Last Modification: February 1st, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankBooth(Loc: Integer): Boolean;
@@ -782,16 +782,14 @@ begin
       MMouse(P.X, P.Y, 2, 2);
       if ((Loc = Loc_DYB) or (Loc = Loc_EVB)) then
       begin
-        if (not (IsUpTextMulti(['Use C', 'e Coun', 'ounter']))) then
+        if (not (IsUpTextMulti(['Bank C', 'k Coun', 'ounter']))) then
           Continue;
       end
       else
-        if (not (IsUpTextMulti(['Use B', 'e Ban', 'ank b', 'boot', 'ooth']))) then
+        if (not (IsUpTextMulti(['ank B', 'k Ban', 'Bank b', 'k boot', 'booth']))) then
           Continue;
       GetMousePos(P.X, P.Y);
-      Mouse(P.X, P.Y, 0, 0, False);
-      if (not (ChooseOptionMulti(['se-', '-qu', 'uick', 'ckly B']))) then
-        Continue;
+      Mouse(P.X, P.Y, 0, 0, True);
       if (WaitFunc(@FlagExists, True, 100, 200, 500, 1000)) then
         Flag;
       WaitRR(200, 400);
@@ -824,7 +822,7 @@ function OpenBankNPC(Loc: Integer): Boolean;
 Contributors: Wanted
 Description: Opens a bank via Banker, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
+Last Modification: January 25th, 2012. By Wanted. RS2 Build 699.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankNPC(Loc: Integer): Boolean;
@@ -845,7 +843,6 @@ begin
     Loc_FWB,{BankerInfo := [2,    0.48, 0.06,   6776940,  7];} // December 22, 2011   Wanted          690
     Loc_AKB: BankerInfo := [2,    0.48, 0.06,   6776940,  7];  // December 22, 2011   Wanted          690
     Loc_EVB,{BankerInfo := [2,    0.14, 0.76,   4533556,  11];}// December 22, 2011   Wanted          690
-    Loc_DYB,{BankerInfo := [2,    0.14, 0.76,   4533556,  11];}// December 22, 2011   Wanted          690
     Loc_VEB,{BankerInfo := [2,    0.14, 0.76,   4533556,  11];}// December 22, 2011   Wanted          690
     Loc_VWB: BankerInfo := [2,    0.14, 0.76,   4533556,  11]; // December 22, 2011   Wanted          690
     Loc_DYB: BankerInfo := [2,    0.21, 0.07,   7633020,  20]; // December 22, 2011   Wanted          690
