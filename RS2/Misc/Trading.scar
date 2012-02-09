@@ -21,7 +21,13 @@
      By: Wanted
  * function GetTradersName: string;
      By: Wanted
+ * function GetFinalTradersName: string;
+     By: Wanted
+ * function GetFinalCoinAmount: LongInt;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE Trading}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function TradeScreen: Boolean;
@@ -190,10 +196,64 @@ function GetTradersName: string;
 Contributors: Wanted
 Description: Returns the name of the person you're trading with. Works on first tradescreen.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 9th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetTradersName: string;
+var
+  TPA: TPointArray;
 begin
-  Result := rs_GetTextAt(OptionChars, 256, 14);
+  Result := '';
+  FindColors(TPA, 2070783, 79, 11, 369, 31);
+  SortTPA(TPA);
+  if (Length(TPA) < 1) then
+    Exit;
+  Result := rs_GetTextAt(OptionChars, TPA[0].X, 14);
+  Result := Copy(Result, Pos(':', Result) + 2, Length(Result) - Pos(':', Result) + 2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetFinalTradersName: string;
+Contributors: Wanted
+Description: Returns the name of the person you're trading with. Works on final tradescreen.
+Date Created: February 9th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 9th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetFinalTradersName: string;
+var
+  TPA: TPointArray;
+begin
+  Result := '';
+  FindColors(TPA, 16776960, 44, 307, 165, 324);
+  SortTPA(TPA);
+  if (Length(TPA) < 1) then
+    Exit;
+  Result := rs_GetTextAt(OptionChars, TPA[0].X, 306);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetFinalCoinAmount: LongInt;
+Contributors: Wanted
+Description: Returns the final coin amount off the final trade screen on their
+offer side of the screen. Results in -1 if failed. Should work for all amounts.
+Date Created: February 9th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 9th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetFinalCoinAmount: LongInt;
+var
+  TPA: TPointArray;
+  S: string;
+  P: TPoint;
+begin
+  Result := -1;
+  FindColors(TPA, 2070783, 261, 86, 497, 259);
+  if (not (FindTextTPAInTPA('oin', ScreenChars, TPA, P.X, P.Y))) then
+    Exit;
+  S := rs_GetTextAt(OptionChars, P.X, P.Y - 5);
+  if (Pos('(', S) > 0) then
+    Result := StrToIntDef(GetNumbers(Between('(', ')', S)), -1)
+  else
+    Result := StrToIntDef(GetNumbers(S), -1);
 end;
