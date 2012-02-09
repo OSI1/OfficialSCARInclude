@@ -44,7 +44,7 @@ function GetItemAmount(Area, Slot: Integer): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within Area_Index.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetItemAmount(Area, Slot: Integer): LongInt;
@@ -55,6 +55,10 @@ begin
   case Area of
     Area_Inv: B := GetItemBounds(Slot);
     Area_Bank: B := GetBankSlotBounds(Slot);
+    {$IFDEF TRADING}
+      Area_Trade_You: B := GetTradeItemBounds(Slot, True);
+      Area_Trade_Them: B := GetTradeItemBounds(Slot, False);
+    {$ENDIF}
   else
     Exit; // FIX ADD MORE AREAS
   end;

@@ -371,15 +371,16 @@ const Area_ indexes
 Contributors: Wanted
 Description: Index handles for the different screen ares within RS that contain items.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 26th, 2011. By Wanted. RS2 Build 682.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
   Area_Inv              = 0;
   Area_Bank             = 1;
   Area_Deposit          = 2;
-  Area_Trade            = 3;
-  Area_Shop             = 4;
+  Area_Trade_You        = 3;
+  Area_Trade_Them       = 4;
+  Area_Shop             = 5;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors

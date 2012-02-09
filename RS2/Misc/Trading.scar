@@ -1,0 +1,199 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+                                Trading routines
+--------------------------------------------------------------------------------
+ * function TradeScreen: Boolean;
+     By: Wanted
+ * function FinalTradeScreen: Boolean;
+     By: Wanted
+ * function GetTradeItemBounds(Slot: Integer; YourOffer: Boolean): TBox;
+     By: Wanted
+ * function FirstScreenAccept(CheckTS: Boolean): Boolean;
+     By: Wanted
+ * function FirstScreenDecline(CheckTS: Boolean): Boolean;
+     By: Wanted
+ * function FinalScreenAccept(CheckFTS: Boolean): Boolean;
+     By: Wanted
+ * function FinalScreenDecline(CheckFTS: Boolean): Boolean;
+     By: Wanted
+ * function AddTradeMoneyPouch(Amount: Integer; CheckTS: Boolean): Boolean;
+     By: Wanted
+ * function GetTradersName: string;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TradeScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the first trade screen.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TradeScreen: Boolean;
+var
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  Result := False;
+  FindColors(TPA, 2070783, 132, 11, 342, 31);
+  if (Length(TPA) > 20) then
+    Result := FindTextTPAInTPA('rading', ScreenChars, TPA, P.X, P.Y);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FinalTradeScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the final trade screen.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FinalTradeScreen: Boolean;
+begin
+  Result := (CountColor(16776960, 127, 27, 388, 51) = 482);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetTradeItemBounds(Slot: Integer; YourOffer: Boolean): TBox;
+Contributors: Wanted
+Description: Returns box of item in slot in trade screen. YourOffer means on your
+side of the screen if true, else their side of the trade screen.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetTradeItemBounds(Slot: Integer; YourOffer: Boolean): TBox;
+var
+  B: TBox;
+begin
+  if (YourOffer) then
+    B := Box(16, 61, 51, 92)
+  else
+    B := Box(326, 61, 362, 92);
+  Result := Box(B.X1 + ((Slot mod 4) * 47), B.Y1 + ((Slot div 4) * 32), B.X2 + ((Slot mod 4) * 47), B.Y2 + ((Slot div 4) * 32));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FirstScreenAccept(CheckTS: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks accept at the first trade screen, true if CheckTS is true and
+at tradescreen, if not true it exits before attempting to click accept.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FirstScreenAccept(CheckTS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckTS) then
+    if (not (TradeScreen)) then
+      Exit
+    else
+      Result := True;
+  MouseBox(229, 129, 290, 157, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FirstScreenDecline(CheckTS: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks decline at the first trade screen, true if CheckTS is true and
+at tradescreen, if not true it exits before attempting to click decline.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FirstScreenDecline(CheckTS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckTS) then
+    if (not (TradeScreen)) then
+      Exit
+    else
+      Result := True;
+  MouseBox(229, 169, 290, 197, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FinalScreenAccept(CheckFTS: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks accept at the final trade screen, true if CheckFTS is true and
+at final tradescreen, if not true it exits before attempting to click accept.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FinalScreenAccept(CheckFTS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckFTS) then
+    if (not (FinalTradeScreen)) then
+      Exit
+    else
+      Result := True;
+  MouseBox(194, 300, 256, 322, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FinalScreenDecline(CheckFTS: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks decline at the final trade screen, true if CheckFTS is true and
+at final tradescreen, if not true it exits before attempting to click decline.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FinalScreenDecline(CheckFTS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckFTS) then
+    if (not (FinalTradeScreen)) then
+      Exit
+    else
+      Result := True;
+  MouseBox(263, 300, 325, 322, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function AddTradeMoneyPouch(Amount: Integer; CheckTS: Boolean): Boolean;
+Contributors: Wanted
+Description: Adds money amount to trade from pouch, true if CheckFTS is true and
+at final tradescreen, if not true it exits before attempting to click + Money pouch.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function AddTradeMoneyPouch(Amount: Integer; CheckTS: Boolean): Boolean;
+var
+  T, C: Integer;
+begin
+  Result := False;
+  if (CheckTS) then
+    if (not (TradeScreen)) then
+      Exit;
+  MouseBox(163, 45, 231, 51, ClickLeft);
+  T := GetSystemTime + RR(4000, 5000);
+  repeat
+    C := CountColor(clBlack, MCX1, MCY1, MCX2, MCY2);
+    if (C = 701) then
+      Break;
+  until (GetSystemTime > T);
+  if (C <> 701) then
+    Exit;
+  TypeSend(IntToStr(Amount));
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetTradersName: string;
+Contributors: Wanted
+Description: Returns the name of the person you're trading with. Works on first tradescreen.
+Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetTradersName: string;
+begin
+  Result := rs_GetTextAt(OptionChars, 256, 14);
+end;

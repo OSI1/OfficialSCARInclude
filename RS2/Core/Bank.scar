@@ -565,7 +565,7 @@ function BankTabExists(Tab: Integer): Boolean;
 Contributors: Wanted
 Description: Returns the bank tab exists yet.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: Feburuary 7th, 2011. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankTabExists(Tab: Integer): Boolean;
@@ -573,6 +573,9 @@ var
   P: TPoint;
   B: TBox;
 begin
+  Result := Tab = 0;
+  if (Result) then
+    Exit;
   B := GetBankTabBounds(Tab);
   Result := FindColor(P.X, P.Y, clObjectOutline, B.X1, B.Y1, B.X2, B.Y2);
 end;
