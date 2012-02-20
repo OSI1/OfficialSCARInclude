@@ -14,13 +14,14 @@ function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within box.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: February 19th, 2011. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
 var
   TextColors: TIntegerArray;
   TPA: TPointArray;
+  Text: string;
   I: Integer;
   B: TBox;
 begin
@@ -30,10 +31,14 @@ begin
     if (FindColors(TPA, TextColors[I], X1, Y1, X2, Y2)) then
     begin
       B := GetTPABounds(TPA);
-      Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, TextColors[I], 5, False, tr_Digits)), -1);
+      Text := GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, TextColors[I], 5, False, tr_AllChars);
+      Result := StrToIntDef(GetNumbers(Text), -1);
       if (Result > -1) then
       begin
-        Result := (Result * Floor(Pow(1000, I)));
+        if (Pos('k', Lowercase(Text)) > 0) then
+          Result := Result * 1000
+        else
+          Result := (Result * Floor(Pow(1000, I)));
         Exit;
       end;
     end;

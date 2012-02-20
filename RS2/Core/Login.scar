@@ -267,14 +267,15 @@ function Login: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modification: February 19th, 20212. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Login: Boolean;
 var
   B, BB, RetryLogin: Boolean;
+  T, Attempts, TT: Integer;
   Actions: TVariantArray;
-  T, Attempts: Integer;
+  P: TPoint;
 label
   ProcStart;
 begin
@@ -331,6 +332,7 @@ begin
         951: Actions :=  ['Your account is already logged in',    5000,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
         1028: Actions := ['You are standing in a members only area', 0,    1,      'PlayerFalse', 'In Mems-Only Area'];  // August 7, 2011      Anonymous       660      unconfirmed
         1239: Actions := ['Not a members account',                   0,    1,      'PlayerFalse', 'Non-member'];         // September 25, 2011  Wanted          666      confirmed
+        1709: Actions := ['World full. Waiting in que...',        3500,    1,      'PlayerFalse', 'In full world que'];  // February 19, 20212  Wanted          701      confirmed
       end;
     if (Length(Actions) > 0) then                             // Respond
     begin
@@ -352,6 +354,19 @@ begin
                                        Players[CurrentPlayer].WorldInfo := [False, 0, AllowHRW];
                                      end;
             'You need skill total of 1000': Players[CurrentPlayer].WorldInfo := [Players[CurrentPlayer].Member, 0, AllowHRW];
+            'In full world que': begin
+                                   TT := GetSystemTime + RR(120000, 180000);
+                                   while (FindColor(P.X, P.Y, clLoginText, 87, 443, 231, 480) and (GetSystemTime < TT)) do
+                                     WaitRR(300, 400);
+                                   WaitRR(2000, 3000);
+                                   if (LoggedIn) then
+                                   begin
+                                     Result := True;
+                                     Exit;
+                                   end
+                                   else
+                                     Continue;
+                                 end;
           end;
           RetryLogin := True;
           WaitRR(2000, 3000);

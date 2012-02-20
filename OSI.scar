@@ -67,7 +67,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: January 22nd, 2012. By Wanted. RS2 Build 699.
+Last Modified: February 19th 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -99,7 +99,7 @@ begin
       StatChars := LoadChars2(RS2FontFolder + 'StatChars\');
       FriendChars := LoadChars2(RS2FontFolder + 'FriendChars\');
       LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
-      XPChars := LoadChars2(RS2FontFolder + 'XPChars\');
+      XPChars := LoadChars2(RS2FontFolder + 'UpChars\');
       WriteLn('Loaded RS2 Fonts: OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
     {$ELSE}
       WriteLn('Font loading disabled.');

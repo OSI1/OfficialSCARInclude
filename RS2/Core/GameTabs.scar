@@ -31,13 +31,19 @@
      By: Wanted
  * function SetRest(Rest: Boolean): Boolean;
      By: Wanted
+ * function IsMoneyPouchOpen: Boolean;
+     By: Wanted
+ * function ToggleMoneyPouch(Open: Boolean): Boolean;
+     By: Wanted
+ * function GetMoneyPouchAmount: LongInt;
+     By: Wanted
+ * function WithdrawMoneyPouch(Amount: LongInt): Boolean;
+     By: Wanted
  * function IsXPBarOpen: Boolean;
      By: Wanted
  * function ToggleXPBar(Open: Boolean): Boolean;
      By: Wanted
  * function GetXPBarTotal: LongInt;
-     By: Wanted
- * function ResetXPBar: Boolean;
      By: Wanted
  * function ConvertXPToLevel(xp: Integer): Integer;
      By: Brak & Flyboy
@@ -60,6 +66,19 @@
  * procedure GetAllLevels;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               Amount.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAmount(X1, Y1, X2, Y2: Integer): LongInt; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Bank.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PinScreen: Boolean; forward;
+function EnterBankPin(Pin: string): Boolean; forward;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function CurrentLobbyTab: Integer;
@@ -139,11 +158,12 @@ function TabExists(Tab: Integer): Integer;
 Contributors: Wanted, Dynamite.
 Description: Returns True if the Tab exists.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TabExists(Tab: Integer): Boolean;
 var
+  P: TPoint;
   TB: TBox;
 begin
   Result := False;
@@ -153,7 +173,7 @@ begin
     Exit;
   end;
   TB := GetTabBounds(Tab);
-  Result := (CountColorTolerance(5268337, TB.X1, TB.Y1, TB.X2, TB.Y2, 18) < 500);
+  Result := FindColorTolerance(P.X, P.Y, 1578252, TB.X1, TB.Y1, TB.X2, TB.Y2, 34);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -345,21 +365,129 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsMoneyPouchOpen: Boolean;
+Contributors: Wanted
+Description: Returns true if the money pouch is open.
+Date Created: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsMoneyPouchOpen: Boolean;
+var
+  TextColors: TIntegerArray;
+  I: Integer;
+  P: TPoint;
+begin
+  Result := False;
+  TextColors := [65535, 16777215, 8453888];
+  for I := 0 to 2 do
+    if (FindColor(P.X, P.Y, TextColors[I], 464, 90, 512, 107)) then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleMoneyPouch(Open: Boolean): Boolean;
+Contributors: Wanted
+Description: Opens or closes the money pouch, true if had to toggle.
+Date Created: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleMoneyPouch(Open: Boolean): Boolean;
+begin
+  Result := IsMoneyPouchOpen <> Open;
+  if (not (Result)) then
+    Exit;
+  MouseCircle(12, 533, 100, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMoneyPouchAmount: LongInt;
+Contributors: Wanted
+Description: Returns the number from your money pouch.
+Date Created: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetMoneyPouchAmount: LongInt;
+var
+  Previous: Boolean;
+begin
+  Result := -1;
+  Previous := ToggleMoneyPouch(True);
+  if (Previous) then
+    if (not (WaitFunc(@IsMoneyPouchOpen, True, 10, 15, 1500, 1750))) then
+      Exit;
+  Result := GetAmount(464, 90, 512, 107);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WithdrawMoneyPouch(Amount: LongInt): Boolean;
+Contributors: Wanted
+Description: Withdraws desired amount from money pouch.
+Date Created: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WithdrawMoneyPouch(Amount: LongInt): Boolean;
+var
+  T, I, CT: LongInt;
+  WText: string;
+  B: Boolean;
+begin
+  Result := False;
+  MouseCircle(12, 533, 100, ClickRight);
+  case Amount of
+    Withdraw_All: begin
+                    WText := '9999999999';
+                    for I := 0 to RandomRange(9, 13) do
+                      WText := WText + '9';
+                  end;
+    Withdraw_All_But_One: WText := IntToStr(GetMoneyPouchAmount - 1);
+  else
+    WText := IntToStr(Amount);
+  end;
+  if (not (ChooseOptionMulti(['With', 'hdra', 'draw', 'w M']))) then
+    Exit;
+  T := GetSystemTime + RR(4000, 5000);
+  B := False;
+  repeat
+    CT := CountColor(clBlack, 210, 392, 309, 411);
+    if (CT = 314) then
+      Break;
+    if (not (B)) then
+      if (PinScreen) then
+      begin
+        CT := 314;
+        B := True;
+        EnterBankPin(Players[CurrentPlayer].Pin);
+      end;
+  until (GetSystemTime > T);
+  if (CT <> 314) then
+    Exit;
+  TypeSend(WText);
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function IsXPBarOpen: Boolean;
-Contributors: Wanted, Narcle.
+Contributors: Wanted
 Description: Returns true if the XP counter bar is open.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: January 16th, 2012. By Wanted. RS2 Build 699.
+Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsXPBarOpen: Boolean;
 begin
-  Result := CountColor(14474460, 438, RSY1, RSX2, 25) > 15;
+  Result := CountColor(14474460, 410, MSY1, MSX2, 27) > 6;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function ToggleXPBar(Open: Boolean): Boolean;
-Contributors: Wanted, Narcle.
+Contributors: Wanted
 Description: Opens or closes the XP Bar, true if had to toggle.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
 Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
@@ -375,10 +503,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetXPBarTotal: LongInt;
-Contributors: Wanted, Narcle.
+Contributors: Wanted
 Description: Returns the number from your XP Bar.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: January 16th, 2012. By Wanted. RS2 Build 699.
+Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetXPBarTotal: LongInt;
@@ -386,35 +514,19 @@ var
   Previous: Boolean;
   TPA: TPointArray;
   B: TBox;
-  P: TPoint;
 begin
+  Result := -1;
   Previous := ToggleXPBar(True);
   if (Previous) then
     if (not (WaitFunc(@IsXPBarOpen, True, 10, 15, 1500, 1750))) then
       Exit;
-  FindColorsTolerance(TPA, 14474460, 438, RSY1, RSX2, 25, 1);
+  FindColors(TPA, 14474460, 410, MSY1, MSX2, 27)
   B := GetTPABounds(TPA);
-  B := IntToBox(B.X1 - 2, B.Y1 - 2, B.X2 + 2, B.Y2 + 2);
-  IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, 'xp', 0, XPChars, False, False, 0, 1, 14474460);
-  Result := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 1, XPChars, False, False, 0, 2, 14474460, 60, False, tr_AllChars)), 0);
+  Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 3, 0, XPChars, False, False, 0, 2, 14474460, 20, False, tr_AllChars)), -1);
   if (not (Previous)) then
     Exit;
   WaitRR(500, 1500);
   ToggleXPBar(False);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ResetXPBar: Boolean;
-Contributors: Wanted, Narcle.
-Description: Resets the XP Bar.
-Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function ResetXPBar: Boolean;
-begin
-  MouseCircle(12, 534, 63, ClickRight);
-  Result := ChooseOptionMulti(['Res', 'ese', 'set']);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
