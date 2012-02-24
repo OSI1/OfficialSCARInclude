@@ -158,22 +158,23 @@ function TabExists(Tab: Integer): Integer;
 Contributors: Wanted, Dynamite.
 Description: Returns True if the Tab exists.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modification: February 24th 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TabExists(Tab: Integer): Boolean;
 var
+  T: Integer;
   P: TPoint;
   TB: TBox;
 begin
-  Result := False;
-  if (Tab = Tab_Logout) then
-  begin
-    Result := (GetColor(746, 0) = 65536);
-    Exit;
-  end;
   TB := GetTabBounds(Tab);
-  Result := FindColorTolerance(P.X, P.Y, 1578252, TB.X1, TB.Y1, TB.X2, TB.Y2, 34);
+  T := GetSystemTime + RR(75, 125);
+  repeat
+    if (Tab = Tab_Logout) then
+      Result := (GetColor(746, 0) = 65536)
+    else
+      Result := FindColorTolerance(P.X, P.Y, 1578252, TB.X1, TB.Y1, TB.X2, TB.Y2, 34);
+  until ((GetSystemTime > T) or (Result));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
