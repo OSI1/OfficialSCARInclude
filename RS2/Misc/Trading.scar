@@ -53,12 +53,12 @@ function FinalTradeScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the final trade screen.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: March 7th, 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FinalTradeScreen: Boolean;
 begin
-  Result := (CountColor(16776960, 127, 27, 388, 51) = 482);
+  Result := (CountColor(clWhite, 105, 46, 415, 60) = 432);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -167,26 +167,33 @@ Contributors: Wanted
 Description: Adds money amount to trade from pouch, true if CheckFTS is true and
 at final tradescreen, if not true it exits before attempting to click + Money pouch.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modification: March 8th, 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function AddTradeMoneyPouch(Amount: Integer; CheckTS: Boolean): Boolean;
 var
-  T, C: Integer;
+  T, C, I: Integer;
 begin
   Result := False;
-  if (CheckTS) then
-    if (not (TradeScreen)) then
-      Exit;
-  MouseBox(163, 45, 231, 51, ClickLeft);
-  T := GetSystemTime + RR(4000, 5000);
   repeat
-    C := CountColor(clBlack, MCX1, MCY1, MCX2, MCY2);
+    Inc(I);
+    if (I > 2) then
+      Exit;
+    if (CheckTS) then
+      if (not (TradeScreen)) then
+        Exit;
+    MouseBox(163, 45, 231, 51, ClickLeft);
+    T := GetSystemTime + RR(7000, 9000);
+    repeat
+      C := CountColor(clBlack, MCX1, MCY1, MCX2, MCY2);
+      if (C = 701) then
+        Break;
+      Wait(100);
+    until (GetSystemTime > T);
     if (C = 701) then
       Break;
-  until (GetSystemTime > T);
-  if (C <> 701) then
-    Exit;
+  until (False);
+  WaitRR(1000, 1250);
   TypeSend(IntToStr(Amount));
   Result := True;
 end;
@@ -217,7 +224,7 @@ function GetFinalTradersName: string;
 Contributors: Wanted
 Description: Returns the name of the person you're trading with. Works on final tradescreen.
 Date Created: February 9th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 9th, 2012. By Wanted. RS2 Build 700.
+Last Modification: March 8th, 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFinalTradersName: string;
@@ -229,7 +236,7 @@ begin
   SortTPA(TPA);
   if (Length(TPA) < 1) then
     Exit;
-  Result := rs_GetTextAt(OptionChars, TPA[0].X, 306);
+  Result := rs_GetTextAt(OptionChars, TPA[0].X - 2, 306);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
