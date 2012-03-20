@@ -24,6 +24,8 @@
  * function GetFinalTradersName: string;
      By: Wanted
  * function GetFinalCoinAmount: LongInt;
+     By: Wanted       
+ * function GetApproxFinalCoinAmount: LongInt;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -263,4 +265,39 @@ begin
     Result := StrToIntDef(GetNumbers(Between('(', ')', S)), -1)
   else
     Result := StrToIntDef(GetNumbers(S), -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetApproxFinalCoinAmount: LongInt;
+Contributors: Wanted
+Description: Returns the final coin amount off the final trade screen on their
+offer side of the screen. Results in -1 if failed. Should work for all amounts.
+This one returns approx value so it works if the money pouch is open and is blocking
+the exact coin amount and reads the first number i.e. 7000k (7,000,XXX)
+Date Created: March 20th, 2012. By Wanted. RS2 Build 707.
+Last Modification: March 20th, 2012. By Wanted. RS2 Build 707.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetApproxFinalCoinAmount: LongInt;
+var
+  TPA: TPointArray;
+  S: string;
+  P: TPoint;
+begin
+  Result := -1;
+  FindColors(TPA, 2070783, 261, 86, 497, 259);
+  if (not (FindTextTPAInTPA('oin', ScreenChars, TPA, P.X, P.Y))) then
+    Exit;
+  S := rs_GetTextAt(OptionChars, P.X, P.Y - 5); 
+  if (Pos('x', S) > 0) then           
+    if (Pos('(', s) > 0) then
+    begin
+       Result := StrToIntDef(GetNumbers(Between('x', '(', S)), -1);
+       if (Pos('K', S) > 0) then
+         Result := Result * 1000;
+       if (Pos('M', S) > 0) then
+         Result := Result * 1000000;
+       Exit;
+    end;
+  Result := StrToIntDef(GetNumbers(S), -1);
 end;
