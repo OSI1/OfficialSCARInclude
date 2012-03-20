@@ -106,7 +106,7 @@ function LoginToLobby: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: March 11th, 2012. By Wanted. RS2 Build 701.
+Last Modification: March 19th, 2012. By Wanted. RS2 Build 707.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginToLobby: Boolean;
@@ -122,7 +122,6 @@ var
 label
   ProcStart;
 begin
-  Mouse(0, 0, 0, 0, True);
   Result := False;
   Attempts := 0;
   if (not (WaitFunc(@RSReady, True, 100, 250, 90000, 120000))) then
@@ -213,13 +212,6 @@ begin
     else
       TypeSend(Players[CurrentPlayer].Pass);
   end;
-  WaitRR(5000, 6000);
-  FindWindowBySize(RSPW, RSPH);
-  WaitRR(500, 750);
-  ActivateClient;
-  ClickMouse(118, 529, True);
-  WaitRR(1000, 2000);
-  ClickMouse(118, 529, True);
   T := GetSystemTime + RR(50000, 70000);
   repeat
     SetLength(Actions, 0);
