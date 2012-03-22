@@ -313,7 +313,7 @@ function FindFlag(var X, Y: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if flag exists and the cord of the lowest point.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: December 20th, 2011. By Wanted. RS2 Build 690.
+Last Modification: March 21st, 2012. By Wanted. RS2 Build 707.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindFlag(var X, Y: Integer): Boolean;
@@ -330,9 +330,9 @@ begin
   FindColors(TPA, 65536, 0, 0, Wi - 1, He -1);
   FilterPointsDist(TPA, 0, MMRDe, Wi / 2, He / 2);
   SetTargetDC(DC);
-  H := High(TPA);
-  for I := 0 to H do
-    if ((FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y - 1) - FastGetPixel(Map, TPA[I].X, TPA[I].Y - 1)) = 6381921) then
+  H := High(TPA)
+  for I := 0 to H do    
+    if (TIAContains([6185313, 6381921], FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y - 1) - FastGetPixel(Map, TPA[I].X, TPA[I].Y - 1))) then
     begin
       Result := True;
       X := TPA[I].X + MMX1;
