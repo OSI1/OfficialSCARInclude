@@ -9,9 +9,9 @@
      By: Wanted
  * function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
      By: Wanted
- * function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
+ * function FindPouch(Pouch: Integer; var Slot: Integer; CheckIT: Boolean): Boolean;
      By: Wanted
- * function ClickPouch(Pouch, Option: Integer): Boolean;
+ * function ClickPouch(Pouch, Option: Integer; CheckIT: Boolean): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -95,21 +95,21 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
+function FindPouch(Pouch: Integer; var Slot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: If found pouch returns true and slot where found.
 Date Created: November 12th, 2011. By Wanted. RS2 Build 678.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindPouch(Pouch: Integer; var Slot: Integer): Boolean;
+function FindPouch(Pouch: Integer; var Slot: Integer; CheckIT: Boolean): Boolean;
 var
   ItemPouch, Tol: Integer;
   P: TPoint;
 begin
-  Result := False;
-  if (not (SetGameTab(Tab_Inv))) then
-    if (not (BankScreen)) then
+  Result := False;        
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
       Exit;
   ItemPouch := LoadRunecraftingItem(Pouch, Tol);
   if (InRange(Pouch, bmpPouch_Small_Damaged, bmpPouch_Large_Damaged)) then
@@ -128,14 +128,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ClickPouch(Pouch, Option: Integer): Boolean;
+function ClickPouch(Pouch, Option: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Clicks pouch, if no option left click, else right clicks and selects option.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ClickPouch(Pouch, Option: Integer): Boolean;
+function ClickPouch(Pouch, Option: Integer; CheckIT: Boolean): Boolean;
 var
   TypeCs: array of ClickActions;
   COptions: TStringArray;
@@ -144,7 +144,7 @@ var
   S: string;
 begin
   Result := False;
-  if (not (FindPouch(Pouch, Slot))) then
+  if (not (FindPouch(Pouch, Slot, CheckIT))) then
     Exit;
   if (BankScreen) then
   begin
@@ -155,14 +155,14 @@ begin
     TypeC := ClickLeft;
   TypeCs := [ClickLeft, TypeC, ClickRight, ClickRight, ClickRight, MoveTo];
   COptions := ['', S, 'mpty', 'heck', 'xamine', '', ''];
-  I := InvCount;
-  MouseItem(Slot, TypeCs[Option]);
+  I := InvCount(False);
+  MouseItem(Slot, TypeCs[Option], False);
   if (COptions[Option] <> '') then
     Result := ChooseOption(COptions[Option])
   else
     Result := True;
   T := GetSystemTime + RR(2000, 3000);
   if (TIAContains([Pouch_Fill, Pouch_Empty], Option)) then
-    while ((GetSystemTime < T) and (InvCount = I)) do
+    while ((GetSystemTime < T) and (InvCount(False) = I)) do
       WaitRR(100, 200);
 end;

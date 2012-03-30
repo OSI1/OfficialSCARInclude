@@ -9,39 +9,39 @@
      By: Wanted
  * function CordsToItemSlot(P: TPoint): Integer;
      By: Wanted
- * function InvItemExists(Slot: Integer): Boolean;
+ * function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
      By: Wanted
- * function InvCount: Integer;
+ * function InvCount(CheckIT: Boolean): Integer;
      By: Wanted
- * function InvFull: Boolean;
+ * function InvFull(CheckIT: Boolean): Boolean;
      By: Wanted
- * function InvEmpty: Boolean;
+ * function InvEmpty(CheckIT: Boolean): Boolean;
      By: Wanted
- * function MouseItem(Slot: Integer; TypeC: ClickActions): Boolean;
+ * function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
      By: Wanted
- * function DragItem(FromSlot, ToSlot: Integer): Boolean;
+ * function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
      By: Wanted
  * function GetDropPattern(Which: Integer): TIntegerArray;
      By: Wanted
- * function DropItem(Slot: Integer): Boolean;
+ * function DropItem(Slot: Integer; CheckIT: Boolean): Boolean;
      By: Wanted
- * function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude: Boolean): Integer;
+ * function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude, CheckIT: Boolean): Integer;
      By: Wanted
- * function DropItemsEx(Slots: TIntegerArray; Exclude: Boolean): Integer;
+ * function DropItemsEx(Slots: TIntegerArray; Exclude, CheckIT: Boolean): Integer;
      By: Wanted
- * function DropItems(Slots: TIntegerArray): Integer;
+ * function DropItems(Slots: TIntegerArray; CheckIT: Boolean): Integer;
      By: Wanted
- * function DropAllExclude(Exclude: TIntegerArray): Integer;
+ * function DropAllExclude(Exclude: TIntegerArray; CheckIT: Boolean): Integer;
      By: Wanted
- * function DropAll: Integer;
+ * function DropAll(CheckIT: Boolean): Integer;
      By: Wanted
- * function FindInvItemsDTM(dtm: Integer): TIntegerArray;
+ * function FindInvItemsDTM(dtm: Integer; CheckIT: Boolean): TIntegerArray;
      By: Wanted
- * function CountInvItemsDTM(dtm: Integer): Integer;
+ * function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
      By: Wanted
- * function FindInvItemsBMP(bmp, Tol: Integer): TIntegerArray;
+ * function FindInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): TIntegerArray;
      By: Wanted
- * function CountInvItemsBMP(bmp, Tol: Integer): Integer;
+ * function CountInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): Integer;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -103,89 +103,92 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function InvItemExists(Slot: Integer): Boolean;
+function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if there's an item in the given inventory slot.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function InvItemExists(Slot: Integer): Boolean;
+function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
 var
   P: TPoint;
   B: TBox;
 begin
   Result := False;
-  if (not (SetGameTab(Tab_Inv))) then
-    if (not (BankScreen)) then
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
       Exit;
   B := GetItemBounds(Slot);
   Result := FindColor(P.X, P.Y, clObjectOutline, B.X1, B.Y1, B.X2, B.Y2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function InvCount: Integer;
+function InvCount(CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number of occupied spots by items in your inventory.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function InvCount: Integer;
+function InvCount(CheckIT: Boolean): Integer;
 var
   I: Integer;
 begin
-  Result := 0;
+  Result := 0; 
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;
   for I := 0 to 27 do
-    if (InvItemExists(I)) then
+    if (InvItemExists(I, False)) then
       Inc(Result);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function InvFull: Boolean;
+function InvFull(CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if all 28 spots are full.
 Date Created: November 18th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 18th, 2011. By Wanted. RS2 Build 675.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function InvFull: Boolean;
+function InvFull(CheckIT: Boolean): Boolean;
 begin
-  Result := (InvCount = 28);
+  Result := (InvCount(CheckIT) = 28);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function InvEmpty: Boolean;
+function InvEmpty(CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if inventory is empty, slightly faster than InvCount = 0;
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function InvEmpty: Boolean;
+function InvEmpty(CheckIT: Boolean): Boolean;
 var
   P: TPoint;
 begin
-  Result := False;
-  if (not (SetGameTab(Tab_Inv))) then
-    if (not (BankScreen)) then
+  Result := False;  
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
       Exit;
   Result := FindColor(P.X, P.Y, clObjectOutline, MIX1, MIY1, MIX2, MIY2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function MouseItem(Slot: Integer; TypeC: ClickActions): Boolean;
+function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Clicks on an item.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 28th, 2011. By Wanted. RS2 Build 686.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function MouseItem(Slot: Integer; TypeC: ClickActions): Boolean;
+function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
 var
   B: TBox;
 begin
-  Result := InvItemExists(Slot);
+  Result := InvItemExists(Slot, CheckIT);
   if (not (Result)) then
     Exit;
   B := GetItemBounds(Slot);
@@ -193,23 +196,23 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DragItem(FromSlot, ToSlot: Integer): Boolean;
+function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Drags an item from one slot to another.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DragItem(FromSlot, ToSlot: Integer): Boolean;
+function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
 var
   B, B2: TBox;
 begin
-  Result := InvItemExists(FromSlot);
+  Result := InvItemExists(FromSlot, CheckIT);
   if (not (Result)) then
     Exit;
   B := GetItemBounds(FromSlot);
   B2 := GetItemBounds(ToSlot);
-  DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, B2.X1, B2.Y1, B2.X2, B2.Y2, True);
+  DragMouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, B2.X1 + 2, B2.Y1 + 2, B2.X2 - 2, B2.Y2 - 2, True);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -235,115 +238,121 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropItem(Slot: Integer): Boolean;
+function DropItem(Slot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Drops the item in the selected slot if it exists, true if exists and done.
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DropItem(Slot: Integer): Boolean;
+function DropItem(Slot: Integer; CheckIT: Boolean): Boolean;
 begin
   Result := False;
-  if (not (MouseItem(Slot, ClickRight))) then
+  if (not (MouseItem(Slot, ClickRight, CheckIT))) then
     Exit;
   Result := ChooseOptionMulti(['Drop ', 'rop ', 'Drop', 'rop']);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude: Boolean): Integer;
+function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude, CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory except for those in excluded spaces
 returns number of items dropped, or the other way around and drops items specified
 if Exclude set to False. Use your own custom pattern or GetDropPattern.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude: Boolean): Integer;
+function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude, CheckIT: Boolean): Integer;
 var
   I: Integer;
 begin
-  Result := 0;
+  Result := 0;  
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;
   for I := 0 to 27 do
     if ((TIAContains(Slots, Pattern[I])) xor (Exclude)) then
-      if (DropItem(Pattern[I])) then
+      if (DropItem(Pattern[I], False)) then
         Inc(Result);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropItemsEx(Slots: TIntegerArray; Exclude: Boolean): Integer;
+function DropItemsEx(Slots: TIntegerArray; Exclude, CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory except for those in excluded spaces
 returns number of items dropped, or the other way around and drops items specified
 if Exclude set to False. Uses GetDropPattern(2) automatically for drop pattern.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DropItemsEx(Slots: TIntegerArray; Exclude: Boolean): Integer;
+function DropItemsEx(Slots: TIntegerArray; Exclude, CheckIT: Boolean): Integer;
 begin
-  Result := DropItemsPEx(Slots, GetDropPattern(2), Exclude);
+  Result := DropItemsPEx(Slots, GetDropPattern(2), Exclude, CheckIT);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropItems(Slots: TIntegerArray): Integer;
+function DropItems(Slots: TIntegerArray; CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory specified returns number of items
 dropped. Uses GetDropPattern(2).
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DropItems(Slots: TIntegerArray): Integer;
+function DropItems(Slots: TIntegerArray; CheckIT: Boolean): Integer;
 begin
-  Result := DropItemsEx(Slots, False);
+  Result := DropItemsEx(Slots, False, CheckIT);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropAllExclude(Exclude: TIntegerArray): Integer;
+function DropAllExclude(Exclude: TIntegerArray; CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory except for those in excluded spaces
 returns number of items dropped. Uses GetDropPattern(2)
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DropAllExclude(Exclude: TIntegerArray): Integer;
+function DropAllExclude(Exclude: TIntegerArray; CheckIT: Boolean): Integer;
 begin
-  Result := DropItemsEx(Exclude, True);
+  Result := DropItemsEx(Exclude, True, CheckIT);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DropAll: Integer;
+function DropAll(CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory and returns number of items dropped. Uses GetDropPattern(2).
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DropAll: Integer;
+function DropAll(CheckIT: Boolean): Integer;
 begin
-  Result := DropAllExclude([]);
+  Result := DropAllExclude([], CheckIT);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindInvItemsDTM(dtm: Integer): TIntegerArray;
+function FindInvItemsDTM(dtm: Integer; CheckIT: Boolean): TIntegerArray;
 Contributors: Wanted
 Description: Returns all the slots where a dtm is found.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindInvItemsDTM(dtm: Integer): TIntegerArray;
+function FindInvItemsDTM(dtm: Integer; CheckIT: Boolean): TIntegerArray;
 var
   I, L: Integer;
   P: TPoint;
   B: TBox;
 begin
-  Result := [];
+  Result := [];  
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;
   for I := 0 to 27 do
-    if (InvItemExists(I)) then
+    if (InvItemExists(I, False)) then
     begin
       B := GetItemBounds(I);
       if (FindDTM(dtm, P.X, P.Y, B.X1, B.Y1, B.X2, B.Y2)) then
@@ -356,32 +365,35 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CountInvItemsDTM(dtm: Integer): Integer;
+function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number of times an inventory dtm is found.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CountInvItemsDTM(dtm: Integer): Integer;
+function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
 begin
-  Result := Length(FindInvItemsDTM(dtm));
+  Result := Length(FindInvItemsDTM(dtm, CheckIT));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindInvItemsBMP(bmp, Tol: Integer): TIntegerArray;
+function FindInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): TIntegerArray;
 Contributors: Wanted
 Description: Returns all the slots where a bmp is found.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindInvItemsBMP(bmp, Tol: Integer): TIntegerArray;
+function FindInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): TIntegerArray;
 var
   TPA: TPointArray;
   I, H: Integer;
 begin
   Result := [];
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;
   FindBitmapsTolerance(bmp, TPA, MIX1, MIY1, MIX2, MIY2, Tol);
   H := High(TPA);
   if (H < 0) then
@@ -392,14 +404,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CountInvItemsBMP(bmp, Tol: Integer): Integer;
+function CountInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number of times an inventory bmp is found.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CountInvItemsBMP(bmp, Tol: Integer): Integer;
+function CountInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): Integer;
 begin
-  Result := Length(FindInvItemsBMP(bmp, Tol));
+  Result := Length(FindInvItemsBMP(bmp, Tol, CheckIT));
 end;

@@ -7,15 +7,15 @@
      By: Wanted
  * function PinScreen: Boolean;
      By: Wanted
- * function EnterBankPin(Pin: string): Boolean;
+ * function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
      By: Wanted
  * function CloseBank(CheckBS: Boolean): Boolean;
      By: Wanted
- * function DepositAllEx(CheckBS, Inv, Equip, Summon, CPouch: Boolean): Boolean;
+ * function DepositAllEx(Inv, Equip, Summon, CPouch, CheckBS: Boolean): Boolean;
      By: Wanted
  * function DepositAll(CheckBS: Boolean): Boolean;
      By: Wanted
- * function DepositItemsEx(Slots: TIntegerArray; Exclude: Boolean; CheckBS: Boolean): Boolean;
+ * function DepositItemsEx(Slots: TIntegerArray; Exclude, CheckBS: Boolean): Boolean;
      By: Wanted
  * function DepositItems(Slots: TIntegerArray; CheckBS: Boolean): Boolean;
      By: Wanted
@@ -25,7 +25,7 @@
      By: Wanted
  * function ToggleSwapMode(Use: Boolean): Boolean;
      By: Wanted
- * function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
+ * function SearchBank(SearchText: string; CheckBS: Boolean): Boolean;
      By: Wanted
  * function BankShowEquipStats(CheckBS: Boolean): Boolean;
      By: Wanted
@@ -108,14 +108,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function EnterBankPin(Pin: string): Boolean;
+function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
 Contributors: Wanted
 Description: Enters bank pin and returns true if succesfully entered pin and at bank screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function EnterBankPin(Pin: string): Boolean;
+function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
 var
   I, II, C, T: Integer;
   TPA: TPointArray;
@@ -125,8 +125,9 @@ begin
   Result := False;
   if (Length(Pin) <> 4) then
     Exit;
-  if (not (PinScreen)) then
-    Exit;
+  if (CheckPS) then
+    if (not (PinScreen)) then
+      Exit;
   SetLength(TBA, 11);
   for I := 0 to 10 do
     TBA[I] := Box(37 + ((I mod 4) * 90), 107 + ((I div 4) * 72), 100 + ((I mod 4) * 90), 170 + ((I div 4) * 72));
@@ -172,14 +173,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DepositAllEx(CheckBS, Inv, Equip, Summon, CPouch: Boolean): Boolean;
+function DepositAllEx(Inv, Equip, Summon, CPouch, CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: January 11th, 2012. By Wanted. RS2 Build 697.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DepositAllEx(CheckBS, Inv, Equip, Summon, CPouch: Boolean): Boolean;
+function DepositAllEx(Inv, Equip, Summon, CPouch, CheckBS: Boolean): Boolean;
 var
   TBoA: TBooleanArray;
   I: Integer;
@@ -201,24 +202,24 @@ function DepositAll(CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: January 5th, 2012. By Wanted. RS2 Build 691.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAll(CheckBS: Boolean): Boolean;
 begin
-  Result := DepositAllEx(CheckBS, True, False, False, False);
+  Result := DepositAllEx(True, False, False, False, CheckBS);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DepositItemsEx(Slots: TIntegerArray; Exclude: Boolean; CheckBS: Boolean): Boolean;
+function DepositItemsEx(Slots: TIntegerArray; Exclude, CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Deposits all inventory items except for excluded slots, or the other
 way around if Exclude is false. True if CheckBS is true and bankscreen is found.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 12th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DepositItemsEx(Slots: TIntegerArray; Exclude: Boolean; CheckBS: Boolean): Boolean;
+function DepositItemsEx(Slots: TIntegerArray; Exclude, CheckBS: Boolean): Boolean;
 var
   I, C, T: Integer;
   B: Boolean;
@@ -233,16 +234,16 @@ begin
       Result := True;
   if (Length(Slots) = 0) then
   begin
-    Result := DepositAll(CheckBS);
+    Result := DepositAll(False);
     Exit;
   end;
   for I := 0 to 27 do
     if ((TIAContains(Slots, I)) xor (Exclude)) then
-      if (InvItemExists(I)) then
+      if (InvItemExists(I, False)) then
       begin
-        MouseItem(I, MoveTo);
+        MouseItem(I, MoveTo, False);
         GetMousePos(P.X, P.Y);
-        C := InvCount;
+        C := InvCount(False);
         T := GetSystemTime + RR(1000, 2000);
         S := '';
         while ((GetSystemTime < T) and (S = '')) do
@@ -260,7 +261,7 @@ begin
         else
           Mouse(P.X, P.Y, 0, 0, True);
         T := GetSystemTime + RR(1500, 2500);
-        while ((GetSystemTime < T) and (InvCount = C)) do
+        while ((GetSystemTime < T) and (InvCount(False) = C)) do
           WaitRR(200, 350);
         if (B) then
           WaitRR(400, 500);
@@ -340,15 +341,15 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
+function SearchBank(SearchText: string; CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at bankscreen and CheckBS.
 Searches for SearchText using the in bank search glass.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function SearchBank(CheckBS: Boolean; SearchText: string): Boolean;
+function SearchBank(SearchText: string; CheckBS: Boolean): Boolean;
 begin
   Result := False;
   if (CheckBS) then
@@ -529,7 +530,7 @@ function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Drags an item from one bank slot to another.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
@@ -541,7 +542,7 @@ begin
     Exit;
   B := GetBankSlotBounds(FromSlot);
   B2 := GetBankSlotBounds(ToSlot);
-  DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, B2.X1, B2.Y1, B2.X2, B2.Y2, True);
+  DragMouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, B2.X1 + 2, B2.Y1 + 2, B2.X2 - 2, B2.Y2 - 2, True);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -613,7 +614,7 @@ Description: Withdraws by using MouseBox on B. Searches for your Options in Choo
 if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
 use ['-1 '] it will withdraw by left clicking one time to get one item out.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 31st, 2011. By Wanted. RS2 Build 690.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
@@ -628,7 +629,7 @@ begin
       Exit;
   if (H < 0) then
     Exit;
-  C := InvCount;
+  C := InvCount(False);
   if (not (StrInStr('-1 ', Options[0]))) then
   begin
     MouseBox(B.X1, B.Y1, B.X2, B.Y2, ClickRight);
@@ -662,7 +663,7 @@ begin
   else
     MouseBox(B.X1, B.Y1, B.X2, B.Y2, ClickLeft);
   T := GetSystemTime + RR(2000, 3000);
-  while ((GetSystemTime < T) and (InvCount = C)) do
+  while ((GetSystemTime < T) and (InvCount(False) = C)) do
     WaitRR(100, 200);
   Result := True;
 end;
@@ -699,15 +700,19 @@ Description: Withdraws by using MouseBox on slot. Searches for your Options in C
 if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
 use ['-1 '] it will withdraw by left clicking one time to get one item out.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+var
+  B: TBox;
 begin
   Result := False;
   if (not (BankItemExists(Slot, CheckBS))) then
     Exit;
-  Result := WithdrawEx2(Options, GetBankSlotBounds(Slot), False);
+  B := GetBankSlotBounds(Slot);
+  B := Box(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2);
+  Result := WithdrawEx2(Options, B, False);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -732,7 +737,7 @@ function OpenBankBooth(Loc: Integer): Boolean;
 Contributors: Wanted
 Description: Opens a booth, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 14th, 2011. By Wanted. RS2 Build 688.
-Last Modification: February 1st, 2012. By Wanted. RS2 Build 700.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankBooth(Loc: Integer): Boolean;
@@ -799,7 +804,7 @@ begin
       T := GetSystemTime + RR(5000, 7000);
       repeat
         if (PinScreen) then
-          if (not (EnterBankPin(Players[CurrentPlayer].Pin))) then
+          if (not (EnterBankPin(Players[CurrentPlayer].Pin, False))) then
           begin
             WriteLn('Pin failed!');
             Exit;
@@ -825,7 +830,7 @@ function OpenBankNPC(Loc: Integer): Boolean;
 Contributors: Wanted
 Description: Opens a bank via Banker, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: January 25th, 2012. By Wanted. RS2 Build 699.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankNPC(Loc: Integer): Boolean;
@@ -887,7 +892,7 @@ begin
     T := GetSystemTime + RR(5000, 7000);
     repeat
       if (PinScreen) then
-        if (not (EnterBankPin(Players[CurrentPlayer].Pin))) then
+        if (not (EnterBankPin(Players[CurrentPlayer].Pin, False))) then
         begin
           WriteLn('Pin failed!');
           Exit;

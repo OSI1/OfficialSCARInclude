@@ -80,7 +80,7 @@ function FindRandomEventGift: Boolean;
 Contributors: Wanted
 Description: Finds and solves random event gifts.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindRandomEventGift: Boolean;
@@ -103,7 +103,7 @@ begin
     Exit;
   WriteLn('Found Random event gift!');
   WriteLn('Solving Random event gift...');
-  MouseItem(CordsToItemSlot(P), ClickLeft);
+  MouseItem(CordsToItemSlot(P), ClickLeft, False);
   WaitRR(3500, 4500);
   MouseBox(42, 74, 189, 124, ClickLeft);  // Temp solution soon, BoxRewards
   WaitRR(500, 1000);

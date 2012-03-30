@@ -17,9 +17,9 @@
      By: Wanted
  * function GetEquipmentBounds(Slot: Integer): TBox;
      By: Wanted
- * function IsSlotEquipped(Slot: Integer): Boolean;
+ * function IsSlotEquipped(Slot: Integer; CheckET: Boolean): Boolean;
      By: Home & Wanted.
- * function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
+ * function ClickEquipedItem(Slot: Integer; TypeC: ClickActions; CheckET: Boolean): Boolean;
      By: Wanted & Home.
  * function GetCurrentMusic: string;
      By: Zyt3x
@@ -49,21 +49,21 @@
      By: Brak & Flyboy
  * function GetSkillBounds(Skill: Integer): TBox;
      By: Wanted
- * function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
+ * function GetSkillLevelEx(Skill: Integer; BottomNumber, CheckST: Boolean): Integer;
      By: Wanted
- * function GetSkillLevel(Skill: Integer): Integer;
+ * function GetSkillLevel(Skill: Integer; CheckST: Boolean): Integer;
      By: Wanted
  * function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
      By: Wanted
  * function GetMMLevel(Skill: Integer): Integer;
      By: Wanted
- * function HoverSkill(Skill: Integer): Boolean;
+ * function HoverSkill(Skill: Integer; CheckST: Boolean): Boolean;
      By: Wanted
- * function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck: Boolean): TIntegerArray;
+ * function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntegerArray;
      By: Wanted
- * function GetXP(Skill: Integer): Integer;
+ * function GetXP(Skill: Integer; CheckST: Boolean): Integer;
      By: Wanted
- * procedure GetAllLevels;
+ * function GetAllLevels(CheckST: Boolean): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -78,7 +78,7 @@ function GetAmount(X1, Y1, X2, Y2: Integer): LongInt; forward;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PinScreen: Boolean; forward;
-function EnterBankPin(Pin: string): Boolean; forward;
+function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean; forward;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function CurrentLobbyTab: Integer;
@@ -229,47 +229,49 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function IsSlotEquipped(Slot: Integer): Boolean;
+function IsSlotEquipped(Slot: Integer; CheckET: Boolean): Boolean;
 Contributors: Home, Wanted.
 Description: Returns true if a Tab_Equip_ slot is equipped with something.
 Date Created: September 1st, 2011. By Home & Wanted. RS2 Build 662.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function IsSlotEquipped(Slot: Integer): Boolean;
+function IsSlotEquipped(Slot: Integer; CheckET: Boolean): Boolean;
 var
   P: TPoint;
   TB: TBox;
 begin
   Result := False;
-  if (not (SetGameTab(Tab_Equip))) then
-    Exit;
+  if (CheckET) then
+    if (not (SetGameTab(Tab_Equip))) then
+      Exit;
   TB := GetEquipmentBounds(Slot);
   Result := FindColor(P.X, P.Y, clObjectOutline, TB.X1, TB.Y1, TB.X2, TB.Y2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
+function ClickEquipedItem(Slot: Integer; TypeC: ClickActions; CheckET: Boolean): Boolean;
 Contributors: Wanted, Home.
 Description: Clicks a Tab_Equip_ slot.
 Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ClickEquipedItem(Slot: Integer; TypeC: ClickActions): Boolean;
+function ClickEquipedItem(Slot: Integer; TypeC: ClickActions; CheckET: Boolean): Boolean;
 var
   T: Integer;
   B : TBox;
 begin
+  Result := False;
   B := GetEquipmentBounds(Slot);
-  if (not (IsSlotEquipped(Slot))) then
+  if (not (IsSlotEquipped(Slot, CheckET))) then
     Exit;
   MouseBox(B.X1, B.Y1, B.X2, B.Y2, TypeC);
   T := GetSystemTime + RR(1500, 2500);
   Result := (TypeC = MoveTo);
   repeat
     case TypeC of
-      ClickLeft: Result := (not (IsSlotEquipped(Slot)));
+      ClickLeft: Result := (not (IsSlotEquipped(Slot, False)));
       ClickRight: Result := OptionBoxExists;
     end;
     if (Result) then
@@ -430,7 +432,7 @@ function WithdrawMoneyPouch(Amount: LongInt): Boolean;
 Contributors: Wanted
 Description: Withdraws desired amount from money pouch.
 Date Created: February 19th 2012. By Wanted. RS2 Build 701.
-Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WithdrawMoneyPouch(Amount: LongInt): Boolean;
@@ -464,7 +466,7 @@ begin
       begin
         CT := 314;
         B := True;
-        EnterBankPin(Players[CurrentPlayer].Pin);
+        EnterBankPin(Players[CurrentPlayer].Pin, True);
       end;
   until (GetSystemTime > T);
   if (CT <> 314) then
@@ -568,21 +570,22 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
+function GetSkillLevelEx(Skill: Integer; BottomNumber, CheckST: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number from the skill level in skill tabs.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: January 16th, 2012. By Wanted. RS2 Build 699.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetSkillLevelEx(Skill: Integer; BottomNumber: Boolean): Integer;
+function GetSkillLevelEx(Skill: Integer; BottomNumber, CheckST: Boolean): Integer;
 var
   TPA: TPointArray;
   B, B2: TBox;
 begin
   Result := 0;
-  if (not (SetGameTab(Tab_Stats))) then
-    Exit;
+  if (CheckST) then
+    if (not (SetGameTab(Tab_Stats))) then
+      Exit;
   B := GetSkillBounds(Skill);
   if (BottomNumber) then
     B2 := Box(B.X1 + 25, B.Y1 + 14, B.X2, B.Y2)
@@ -594,16 +597,16 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetSkillLevel(Skill: Integer): Integer;
+function GetSkillLevel(Skill: Integer; CheckST: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number from the skill level in skill tabs.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetSkillLevel(Skill: Integer): Integer;
+function GetSkillLevel(Skill: Integer; CheckST: Boolean): Integer;
 begin
-  Result := GetSkillLevelEx(Skill, True);
+  Result := GetSkillLevelEx(Skill, True, CheckST);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -659,20 +662,21 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function HoverSkill(Skill: Integer): Boolean;
+function HoverSkill(Skill: Integer; CheckST: Boolean): Boolean;
 Contributors: Wanted
 Description: Hovers a skill. Put a triple digit number for a random skill.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function HoverSkill(Skill: Integer): Boolean;
+function HoverSkill(Skill: Integer; CheckST: Boolean): Boolean;
 var
   B: TBox;
 begin
-  Result := False;
-  if (not (SetGameTab(Tab_Stats))) then
-    Exit;
+  Result := False; 
+  if (CheckST) then
+    if (not (SetGameTab(Tab_Stats))) then
+      Exit;
   if (Skill > (Skill_Count - 1)) then
     B := GetSkillBounds(Random(Skill_Count))
   else
@@ -683,14 +687,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck: Boolean): TIntegerArray;
+function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntegerArray;
 Contributors: Wanted
 Description: Returns the information by hovering the skill.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck: Boolean): TIntegerArray;
+function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntegerArray;
 var
   TBoA: TBooleanArray;
   TSA: TStringArray;
@@ -700,7 +704,7 @@ var
   B: TBox;
 begin
   Result := [-1, -1, -1];
-  if (not (HoverSkill(Skill))) then
+  if (not (HoverSkill(Skill, CheckST))) then
     Exit;
   if (not (WaitFindColorsTolerance(TPA, clSkillInfoBox, MIX1, MIY1, MIX2, MIY2, 0, 50, True, 100, 200, 1500, 2500))) then
     Exit;
@@ -714,36 +718,42 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetXP(Skill: Integer): Integer;
+function GetXP(Skill: Integer; CheckST: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the information by hovering the skill.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetXP(Skill: Integer): Integer;
+function GetXP(Skill: Integer; CheckST: Boolean): Integer;
 var
   TIA: TIntegerArray;
 begin
-  TIA := GetSkillInfo(Skill, True, False, False);
+  TIA := GetSkillInfo(Skill, True, False, False, CheckST);
   Result := TIA[0];
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure GetAllLevels;
+function GetAllLevels(CheckST: Boolean): Boolean;
 Contributors: Wanted
 Description: Stores all levels from the stats tab to current player.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure GetAllLevels;
+function GetAllLevels(CheckST: Boolean): Boolean;
 var
   I, H: Integer;
 begin
+  Result := False;
+  if (CheckST) then
+    if (not (SetGameTab(Tab_Stats))) then
+      Exit
+    else
+      Result := True;    
   H := Skill_Count - 1;
   for I := 0 to H do
-    Players[CurrentPlayer].Level[I] := GetSkillLevel(I);
+    Players[CurrentPlayer].Level[I] := GetSkillLevel(I, False);
 end;
 
 //SetFightMode
