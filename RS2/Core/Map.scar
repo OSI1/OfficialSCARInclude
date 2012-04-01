@@ -475,7 +475,7 @@ Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 This one uses overlapping checking, so it's twice as slow.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: February 19th, 2012. By Wanted. RS2 Build 701.
+Last Modification: April 1st, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
@@ -501,26 +501,25 @@ begin
   FilterPointsDist(TPA, 0, MMRDe, (Wi / 2) - 2, (He / 2) - 2);
   SetTargetDC(DC);
   H := High(TPA);
-  if (H < 0) then
-    Exit;
   Offset := [TPointArray([Point(-2, 0), Point(-1, 0)]), TPointArray([Point(0, -2), Point(0, -1)])];
-  for I := 0 to H do
-    for O := 0 to 1 do
-    begin
-      C := (FastGetPixel(Map, TPA[I].X + Offset[O][0].X, TPA[I].Y + Offset[O][0].Y) - FastGetPixel(Map, TPA[I].X + Offset[O][1].X, TPA[I].Y + Offset[O][1].Y));
-      B := False;
-      for II := 0 to HH do
-        if (C = ColorDiffs[II]) then
-        begin
-          B := True;
-          Inc(L[II]);
-          SetLength(Result[II], L[II]);
-          Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 4, TPA[I].Y + MMY1 - 4);
+  if (H > 0) then
+    for I := 0 to H do
+      for O := 0 to 1 do
+      begin
+        C := (FastGetPixel(Map, TPA[I].X + Offset[O][0].X, TPA[I].Y + Offset[O][0].Y) - FastGetPixel(Map, TPA[I].X + Offset[O][1].X, TPA[I].Y + Offset[O][1].Y));
+        B := False;
+        for II := 0 to HH do
+          if (C = ColorDiffs[II]) then
+          begin
+            B := True;
+            Inc(L[II]);
+            SetLength(Result[II], L[II]);
+            Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 4, TPA[I].Y + MMY1 - 4);
+            Break;
+          end;
+        if (B) then
           Break;
-        end;
-      if (B) then
-        Break;
-    end;
+      end;
   FreeBitmap(Map);
 end;
 
@@ -529,7 +528,7 @@ function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
 Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: February 19th, 2012. By Wanted. RS2 Build 701.
+Last Modification: April 1st, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
@@ -553,20 +552,19 @@ begin
   FilterPointsDist(TPA, 0, MMRDe, (Wi / 2) - 2, (He / 2) - 2);
   SetTargetDC(DC);
   H := High(TPA);
-  if (H < 0) then
-    Exit;
-  for I := 0 to H do
-  begin
-    C := (FastGetPixel(Map, TPA[I].X - 2, TPA[I].Y) - FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y));
-    for II := 0 to HH do
-      if (C = ColorDiffs[II]) then
-      begin
-        Inc(L[II]);
-        SetLength(Result[II], L[II]);
-        Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 4, TPA[I].Y + MMY1 - 4);
-        Break;
-      end;
-  end;
+  if (H > 0) then
+    for I := 0 to H do
+    begin
+      C := (FastGetPixel(Map, TPA[I].X - 2, TPA[I].Y) - FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y));
+      for II := 0 to HH do
+        if (C = ColorDiffs[II]) then
+        begin
+          Inc(L[II]);
+          SetLength(Result[II], L[II]);
+          Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 4, TPA[I].Y + MMY1 - 4);
+          Break;
+        end;
+    end;
   FreeBitmap(Map);
 end;
 
