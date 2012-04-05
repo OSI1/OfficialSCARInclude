@@ -509,13 +509,14 @@ function GetXPBarTotal: LongInt;
 Contributors: Wanted
 Description: Returns the number from your XP Bar.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modification: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modification: April 5th 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetXPBarTotal: LongInt;
 var
   Previous: Boolean;
   TPA: TPointArray;
+  XP: String;
   B: TBox;
 begin
   Result := -1;
@@ -523,9 +524,14 @@ begin
   if (Previous) then
     if (not (WaitFunc(@IsXPBarOpen, True, 10, 15, 1500, 1750))) then
       Exit;
-  FindColors(TPA, 14474460, 410, MSY1, MSX2, 27)
+  FindColors(TPA, 14474460, 350, MSY1, MSX2, 27)
   B := GetTPABounds(TPA);
-  Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 3, 0, XPChars, False, False, 0, 2, 14474460, 20, False, tr_AllChars)), -1);
+  XP := GetTextAtEx(B.X1 - 1, B.Y1 - 3, 0, XPChars, False, False, 0, 2, 14474460, 20, False, tr_AllChars);
+  XP := XP + '#';      
+  if (Pos('xp', XP) > 0) then
+    Result := StrToIntDef(GetNumbers(Between(' ', '#', XP)), -1)
+  else 
+    Result := StrToIntDef(GetNumbers(XP), -1);
   if (not (Previous)) then
     Exit;
   WaitRR(500, 1500);
