@@ -721,15 +721,19 @@ Contributors: Wanted
 Description: Withdraws by using MouseBox on slot. Converts your desired amount into
 the appropriate options text, uses Withdraw-X if needed. Withdraw_All etc indexes.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modification: Apri 19th, 2011. By Wanted. RS2 Build 712.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
+var
+  B: TBox;
 begin
   Result := False;
   if (not (BankItemExists(Slot, CheckBS))) then
-    Exit;
-  Result := WithdrawEx(Amount, GetBankSlotBounds(Slot), False);
+    Exit;  
+  B := GetBankSlotBounds(Slot);
+  B := Box(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2);
+  Result := WithdrawEx(Amount, B, False);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
