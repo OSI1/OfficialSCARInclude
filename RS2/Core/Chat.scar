@@ -93,7 +93,7 @@ function SetChat(Chat, State: Integer): Boolean;
 Contributors: Wanted
 Description: Sets the desired chat to the desired state.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modification: May 6th, 2012. By Wanted. RS2 Build 714.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetChat(Chat, State: Integer): Boolean;
@@ -125,6 +125,8 @@ begin
   end;
   Options := [TStringArray(['All', 'On']), TStringArray(['ilter', 'iend', 'Fri']), TStringArray(['Off', 'ff', 'Of']),
               TStringArray(['ide', 'Hi', 'id']), TStringArray(['XP', 'arned', 'ime'])];
+  if (Chat = Chat_Friends_Tab) then
+    Options[Chat_Friends] := ['ends F', 'nds Fr', 'ds Frie'];            
   if (InRange(State, 0, High(Options))) then
     Result := ChooseOptionMulti(Options[State]);
 end;
