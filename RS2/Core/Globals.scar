@@ -387,7 +387,7 @@ const Useful in game colors
 Contributors: Anonymous, Wanted, Zyt3x.
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modified: February 19, 2012. By Wanted. RS2 Build 701.
+Last Modified: May 7th, 2012. By Wanted. RS2 Build 714.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                             // Modified            By              Build #
@@ -420,7 +420,8 @@ const                             // Modified            By              Build #
   cldRedDot       = 23;           // December 8, 2011    Wanted          688
   cldGreenDot     = 5376;         // December 8, 2011    Wanted          688
   cldBlueDot      = 2171942;      // February 19, 2012   Wanted          701
-//cldPurpleDot    = 1907997;      // December 8, 2011    Wanted          688    // FIX
+  cldOrangeDot    = 138548;       // May 7, 2012         Wanted          714     
+//cldPurpleDot    = 2621450;      // May 7, 2012         Wanted          714 // FIX     
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS2Player = record
