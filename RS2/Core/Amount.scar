@@ -14,7 +14,7 @@ function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within box.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: February 19th, 2011. By Wanted. RS2 Build 701.
+Last Modified: February 19th, 2011. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
@@ -49,7 +49,7 @@ function GetItemAmount(Area, Slot: Integer): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within Area_Index.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetItemAmount(Area, Slot: Integer): LongInt;

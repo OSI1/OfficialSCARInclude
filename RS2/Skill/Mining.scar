@@ -16,7 +16,7 @@ const Item database indexes
 Contributors: Bixby Sayz, Wanted.
 Description: Indexes of all the mining related database items.
 Date Created: November 11th, 2011. By Bixby Sayz & Wanted. RS2 Build 678.
-Last Modification: November 14th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modified: November 14th, 2011. By Bixby Sayz. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
@@ -48,7 +48,7 @@ function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
 Contributors: Bixby Sayz & Wanted
 Description: Loads the Item into memory as result and returns recommended tolerance.
 Date Created: November 11th, 2011. By Bixby Sayz & Wanted. RS2 Build 678.
-Last Modification: January 8th, 2012. By Bixby Sayz. RS2 Build 696.
+Last Modified: January 8th, 2012. By Bixby Sayz. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;

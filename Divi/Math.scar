@@ -25,7 +25,7 @@ function RR(Min, Max: Integer): Integer;
 Contributors: Freddy, Wanted.
 Description: Outputs a value within a range.
 Date Created: September 22nd, 2011. By Wanted
-Last Modification: November 3rd, 2011. By Wanted
+Last Modified: November 3rd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RR(Min, Max: Integer): Integer;
@@ -51,7 +51,7 @@ function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
 Contributors: Freddy, Wanted.
 Description: Outputs a random point within a rectangle.
 Date Created: September 18th, 2011. By Wanted
-Last Modification: September 27th, 2011. By Wanted
+Last Modified: September 27th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
@@ -68,7 +68,7 @@ function RCirclePoint(CX, CY, Radius: Integer): TPoint;
 Contributors: Freddy, Wanted, Zyt3x.
 Description: Outputs a random point within a circle.
 Date Created: September 4th, 2011. By Wanted & Zyt3x.
-Last Modification: September 22nd, 2011. By Wanted
+Last Modified: September 22nd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RCirclePoint(CX, CY, Radius: Integer): TPoint;
@@ -85,7 +85,7 @@ function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
 Contributors: Wanted
 Description: Returns the exact distance between two points.
 Date Created: October 31st, 2011. By Wanted
-Last Modification: October 31st, 2011. By Wanted
+Last Modified: October 31st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
@@ -98,7 +98,7 @@ function AngleBetweenPointsExDegress(P1, P2: TPoint): Extended;
 Contributors: Wanted
 Description: Calculates the relative angle between two points in degrees.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function AngleBetweenPointsExDegress(P1, P2: TPoint): Extended;
@@ -114,7 +114,7 @@ procedure ConstrainBox(var X1, Y1, X2, Y2: Integer; CX1, CY1, CX2, CY2: Integer)
 Contributors: Wanted
 Description: Makes the edges of your box within the edges of another box.
 Date Created: December 6th, 2011. By Wanted
-Last Modification: December 6th, 2011. By Wanted
+Last Modified: December 6th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure ConstrainBox(var X1, Y1, X2, Y2: Integer; CX1, CY1, CX2, CY2: Integer);
@@ -134,7 +134,7 @@ procedure ConstrainBoxes(var TBA: TBoxArray; CX1, CY1, CX2, CY2: Integer);
 Contributors: Wanted
 Description: Makes the edges of your boxes within the edges of another box.
 Date Created: December 6th, 2011. By Wanted
-Last Modification: December 6th, 2011. By Wanted
+Last Modified: December 6th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure ConstrainBoxes(var TBA: TBoxArray; CX1, CY1, CX2, CY2: Integer);
@@ -151,7 +151,7 @@ function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2,
 Contributors: Wanted
 Description: Out puts some of the pixels in a spiral incrementing based on AngStep and DistStep.
 Date Created: November 28th, 2011. By Wanted
-Last Modification: December 1st, 2011. By Wanted
+Last Modified: December 1st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;

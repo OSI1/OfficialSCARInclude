@@ -42,7 +42,7 @@ type TRS2Random, TRS2RandomArray.
 Contributors: Wanted
 Description: Type used to store random information
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
@@ -58,7 +58,7 @@ var RS2Randoms: TRS2RandomArray;
 Contributors: Wanted
 Description: Variable used to store random information.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
@@ -69,7 +69,7 @@ var OverideRandInvTab: Boolean;
 Contributors: Wanted
 Description: Variable used to allow people to disable antirandoms from checking gametab.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
@@ -80,7 +80,7 @@ function FindRandomEventGift: Boolean;
 Contributors: Wanted
 Description: Finds and solves random event gifts.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindRandomEventGift: Boolean;
@@ -116,7 +116,7 @@ procedure InitiateAntiRandoms;
 Contributors: Wanted
 Description: Loads out all the antirandom information.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modified: January 12th, 2012. By Wanted. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure InitiateAntiRandoms;
@@ -248,7 +248,7 @@ function GetMissingTabs: TIntegerArray;
 Contributors: Wanted
 Description: Used for counting missing tabs for comparison in OSIFindRandoms.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: February 24th 2012. By Wanted. RS2 Build 701.
+Last Modified: February 24th 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetMissingTabs: TIntegerArray;

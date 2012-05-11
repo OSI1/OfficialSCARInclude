@@ -47,7 +47,7 @@ function LoginScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the screen to type in user/pass.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: August 10th, 2011. By Wanted. RS2 Build 661.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginScreen: Boolean;
@@ -60,7 +60,7 @@ function LobbyScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at lobby screen.
 Date Created: August 11th, 2011. By Wanted. RS2 Build 662.
-Last Modification: August 11th, 2011. By Wanted. RS2 Build 662.
+Last Modified: August 11th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LobbyScreen: Boolean;
@@ -73,7 +73,7 @@ function LoggedIn: Boolean;
 Contributors: Wanted
 Description: Returns true if Logged In.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoggedIn: Boolean;
@@ -86,7 +86,7 @@ function RSReady: Boolean;
 Contributors: Wanted
 Description: Returns true when runescape isn't intially loading the game.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 22nd, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RSReady: Boolean;
@@ -106,7 +106,7 @@ function LoginToLobby: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: March 19th, 2012. By Wanted. RS2 Build 707.
+Last Modified: March 19th, 2012. By Wanted. RS2 Build 707.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginToLobby: Boolean;
@@ -267,7 +267,7 @@ function Login: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logins in current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: February 19th, 20212. By Wanted. RS2 Build 701.
+Last Modified: February 19th, 20212. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Login: Boolean;
@@ -399,7 +399,7 @@ function ExitToLobby: Boolean;
 Contributors: Wanted
 Description: Logs out current active player to lobby if not unsigned.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: January 11th, 2012. By Wanted. RS2 Build 697.
+Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ExitToLobby: Boolean;
@@ -431,7 +431,7 @@ function LeaveLobby: Boolean;
 Contributors: Wanted
 Description: If at the lobby screen goes back to login screen.
 Date Created: September 26th, 2011. By Wanted. RS2 Build 666.
-Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LeaveLobby: Boolean;
@@ -448,7 +448,7 @@ function Logout: Boolean;
 Contributors: Wanted, Anonymous.
 Description: Logs out current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: November 22st, 2011. By Wanted. RS2 Build 682.
+Last Modified: November 22st, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Logout: Boolean;
@@ -487,7 +487,7 @@ function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
 Contributors: Wanted
 Description: Switches to player, Sets CurrentPlayer to 'Active'. True if login successful.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modification: November 20th, 2011. By Wanted. RS2 Build 679.
+Last Modified: November 20th, 2011. By Wanted. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
@@ -504,7 +504,7 @@ Contributors: Wanted
 Description: Switches to next active player, Sets CurrentPlayer to 'Active'.
 True if login successful.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modified: September 25th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function NextPlayer(Active: Boolean): Boolean;
@@ -520,7 +520,7 @@ Contributors: Wanted
 Description: Switches to a random active player, Sets CurrentPlayer to 'Active'.
 True if login successful.
 Date Created: August 10th, 2011. By Wanted & Anonymous. RS2 Build 661.
-Last Modification: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modified: September 25th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RandomNextPlayer(Active: Boolean): Boolean;

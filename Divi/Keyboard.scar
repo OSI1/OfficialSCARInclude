@@ -15,7 +15,7 @@ procedure PushKey(C: Char);
 Contributors: Wanted
 Description: Types one char human like.
 Date Created: August 7th, 2011. By Wanted
-Last Modification: August 8th, 2011. By Wanted
+Last Modified: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure PushKey(C: Char);
@@ -33,7 +33,7 @@ procedure TypeSendEx(Text: string; PressEnter: Boolean);
 Contributors: Wanted
 Description: Types human like, presses enter if chosen.
 Date Created: August 26th, 2011. By Wanted
-Last Modification: December 31st, 2011. By Wanted
+Last Modified: December 31st, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TypeSendEx(Text: string; PressEnter: Boolean);
@@ -73,7 +73,7 @@ procedure TypeSend(Text: string);
 Contributors: Wanted
 Description: Types human like, presses enter.
 Date Created: August 7th, 2011. By Wanted
-Last Modification: August 26th, 2011. By Wanted
+Last Modified: August 26th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TypeSend(Text: string);

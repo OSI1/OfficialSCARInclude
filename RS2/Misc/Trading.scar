@@ -36,7 +36,7 @@ function TradeScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the first trade screen.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TradeScreen: Boolean;
@@ -55,7 +55,7 @@ function FinalTradeScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the final trade screen.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: March 7th, 2012. By Wanted. RS2 Build 701.
+Last Modified: March 7th, 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FinalTradeScreen: Boolean;
@@ -69,7 +69,7 @@ Contributors: Wanted
 Description: Returns box of item in slot in trade screen. YourOffer means on your
 side of the screen if true, else their side of the trade screen.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetTradeItemBounds(Slot: Integer; YourOffer: Boolean): TBox;
@@ -89,7 +89,7 @@ Contributors: Wanted
 Description: Clicks accept at the first trade screen, true if CheckTS is true and
 at tradescreen, if not true it exits before attempting to click accept.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FirstScreenAccept(CheckTS: Boolean): Boolean;
@@ -109,7 +109,7 @@ Contributors: Wanted
 Description: Clicks decline at the first trade screen, true if CheckTS is true and
 at tradescreen, if not true it exits before attempting to click decline.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FirstScreenDecline(CheckTS: Boolean): Boolean;
@@ -129,7 +129,7 @@ Contributors: Wanted
 Description: Clicks accept at the final trade screen, true if CheckFTS is true and
 at final tradescreen, if not true it exits before attempting to click accept.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FinalScreenAccept(CheckFTS: Boolean): Boolean;
@@ -149,7 +149,7 @@ Contributors: Wanted
 Description: Clicks decline at the final trade screen, true if CheckFTS is true and
 at final tradescreen, if not true it exits before attempting to click decline.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FinalScreenDecline(CheckFTS: Boolean): Boolean;
@@ -169,7 +169,7 @@ Contributors: Wanted
 Description: Adds money amount to trade from pouch, true if CheckFTS is true and
 at final tradescreen, if not true it exits before attempting to click + Money pouch.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: March 8th, 2012. By Wanted. RS2 Build 701.
+Last Modified: March 8th, 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function AddTradeMoneyPouch(Amount: Integer; CheckTS: Boolean): Boolean;
@@ -205,7 +205,7 @@ function GetTradersName: string;
 Contributors: Wanted
 Description: Returns the name of the person you're trading with. Works on first tradescreen.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 9th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 9th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetTradersName: string;
@@ -226,7 +226,7 @@ function GetFinalTradersName: string;
 Contributors: Wanted
 Description: Returns the name of the person you're trading with. Works on final tradescreen.
 Date Created: February 9th, 2012. By Wanted. RS2 Build 700.
-Last Modification: March 8th, 2012. By Wanted. RS2 Build 701.
+Last Modified: March 8th, 2012. By Wanted. RS2 Build 701.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFinalTradersName: string;
@@ -247,7 +247,7 @@ Contributors: Wanted
 Description: Returns the final coin amount off the final trade screen on their
 offer side of the screen. Results in -1 if failed. Should work for all amounts.
 Date Created: February 9th, 2012. By Wanted. RS2 Build 700.
-Last Modification: February 9th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 9th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFinalCoinAmount: LongInt;
@@ -275,7 +275,7 @@ offer side of the screen. Results in -1 if failed. Should work for all amounts.
 This one returns approx value so it works if the money pouch is open and is blocking
 the exact coin amount and reads the first number i.e. 7000k (7,000,XXX)
 Date Created: March 20th, 2012. By Wanted. RS2 Build 707.
-Last Modification: March 20th, 2012. By Wanted. RS2 Build 707.
+Last Modified: March 20th, 2012. By Wanted. RS2 Build 707.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetApproxFinalCoinAmount: LongInt;

@@ -25,7 +25,7 @@ procedure MMouse(x, y, rx, ry: Integer);
 Contributors: Timer, Wanted.
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modification: September 18th, 2011. By Wanted
+Last Modified: September 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
@@ -44,7 +44,7 @@ procedure HoldMouseWait(x, y, rx, ry, MinTime, MaxTime: Integer; Left: Boolean);
 Contributors: Wanted, Timer, Anonymous.
 Description: Moves the mouse and clicks + holds humanly.
 Date Created: August 19th, 2011. By Wanted
-Last Modification: August 19th, 2011. By Wanted
+Last Modified: August 19th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure HoldMouseWait(x, y, rx, ry, MinTime, MaxTime: Integer; Left: Boolean);
@@ -66,7 +66,7 @@ procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
 Contributors: Timer, Wanted.
 Description: Moves the mouse and clicks humanly.
 Date Created: August 7th, 2011. By Wanted & Timer.
-Last Modification: August 19th, 2011. By Wanted
+Last Modified: August 19th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
@@ -79,7 +79,7 @@ procedure HoldMouseWaitBox(x1, y1, x2, y2, MinTime, MaxTime: Integer; Left: Bool
 Contributors: Wanted
 Description: Moves the mouse and clicks + holds humanly.
 Date Created: August 19th, 2011. By Wanted
-Last Modification: September 18th, 2011. By Wanted
+Last Modified: September 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure HoldMouseWaitBox(x1, y1, x2, y2, MinTime, MaxTime: Integer; Left: Boolean);
@@ -95,7 +95,7 @@ procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
 Contributors: Wanted, Timer.
 Description: Clicks/moves the mouse in a specified area.
 Date Created: August 7th, 2011. By Wanted & Timer.
-Last Modification: September 18th, 2011. By Wanted
+Last Modified: September 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
@@ -115,7 +115,7 @@ procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
 Contributors: Zyt3x, Wanted.
 Description: Clicks/moves the mouse in a circle with a specified radius.
 Date Created: September 4th, 2011. By Zyt3x & Wanted.
-Last Modification: September 18th, 2011. By Wanted
+Last Modified: September 18th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
@@ -135,7 +135,7 @@ procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
 Contributors: Naum, Wanted.
 Description: Clicks and holds the mouse and then drags it and releases it.
 Date Created: August 7th, 2011. By Naum
-Last Modification: August 19th, 2011. By Wanted
+Last Modified: August 19th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
@@ -159,7 +159,7 @@ procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Bo
 Contributors: Wanted
 Description: See DragMouse. Except for does in box areas.
 Date Created: August 19th, 2011. By Wanted
-Last Modification: August 19th, 2011. By Wanted
+Last Modified: August 19th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);

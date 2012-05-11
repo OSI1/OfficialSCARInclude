@@ -16,7 +16,7 @@ Contributors: Wanted, Freddy.
 Description: The default level of variance, or tendency, for randomized values
 in human simulating instance to be towards the center is 3.0 .
 Date Created: September 22nd, 2011. By Wanted. RS2 Build 666.
-Last Modification: September 30th, 2011. By Wanted. RS2 Build 666.
+Last Modified: September 30th, 2011. By Wanted. RS2 Build 666.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
@@ -27,7 +27,7 @@ type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
 Contributors: Anonymous, Timer.
 Description: Click Actions, decide a click.
 Date Created: August 7th, 2011. By Anonymous
-Last Modification: August 7th, 2011. By Timer
+Last Modified: August 7th, 2011. By Timer
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
@@ -38,7 +38,7 @@ var MouseSpeed: Integer;
 Contributors: Anonymous, Timer.
 Description: Global MouseSpeed.
 Date Created: August 7th, 2011. By Anonymous
-Last Modification: August 7th, 2011. By Timer
+Last Modified: August 7th, 2011. By Timer
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var

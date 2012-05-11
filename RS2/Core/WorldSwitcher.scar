@@ -36,7 +36,7 @@ function WorldScreen: Boolean;
 Contributors: Wanted.
 Description: Returns true if world select tab is open.
 Date Created: August 11th, 2011. By Wanted. RS2 Build 662.
-Last Modification: August 11th, 2011. By Wanted. RS2 Build 662.
+Last Modified: August 11th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WorldScreen: Boolean;
@@ -49,7 +49,7 @@ function OpenWorldScreen: Boolean;
 Contributors: Wanted.
 Description: Opens world screen and removes any favorite worlds.
 Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenWorldScreen: Boolean;

@@ -60,7 +60,7 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Anonymous, Wanted.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const             // Description                  Modified            By              Build #
@@ -149,7 +149,7 @@ const Skill_ Indexes
 Contributors: Wanted
 Description: Index handles for various RS2 skills.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: November 3rd, 2011. By Wanted. RS2 Build 674.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -190,7 +190,7 @@ const Lobby Tab Indexes
 Contributors: Wanted
 Description: Index handles for various RS2 tabs.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: August 10th, 2011. By Wanted. RS2 Build 661.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -206,7 +206,7 @@ const Game Tab Indexes
 Contributors: Dynamite, Wanted.
 Description: Index handles for Game RS2 tabs.
 Date Created: August 31st, 2011. By Dynamite & Wanted. RS2 Build 662.
-Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modified: September 1st, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -233,7 +233,7 @@ const Equip Tab Indexes
 Contributors: Wanted
 Description: Index handles for Game RS2 tabs.
 Date Created: September 1st, 2011. By Wanted. RS2 Build 662.
-Last Modification: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modified: September 1st, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
   Tab_Equip_Aura        = 0;
@@ -268,7 +268,7 @@ const World Switcher Indexes
 Contributors: Wanted
 Description: Index handles for various worldswitcher routines.
 Date Created: August 18th, 2011. By Wanted. RS2 Build 662.
-Last Modification: August 18th, 2011. By Wanted. RS2 Build 662.
+Last Modified: August 18th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -286,7 +286,7 @@ const RS2 direction/angle Indexes
 Contributors: Wanted
 Description: Index handles for MakeCompass and all runescape directions.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modified: November 4th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -310,7 +310,7 @@ const Bank locations
 Contributors: Wanted
 Description: Index handles for Banking locations.
 Date Created: December 14th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 14th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 14th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -329,7 +329,7 @@ const Withdraw function indexes
 Contributors: Wanted
 Description: Index handles for withdrawing routines.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -344,7 +344,7 @@ const Chat function indexes
 Contributors: Wanted
 Description: Index handles for various chat routines.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
+Last Modified: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -371,7 +371,7 @@ const Area_ indexes
 Contributors: Wanted
 Description: Index handles for the different screen ares within RS that contain items.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -504,7 +504,7 @@ Contributors: Anonymous, Wanted.
 Description: Variable used to keep track of your current RS2 player index.
 PlayerStartTime is for keeping track of Players[].Worked
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
@@ -515,7 +515,7 @@ var Font Variables
 Contributors: Anonymous, Wanted.
 Description: Variables for RS2 fonts memory handles.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: November 29th, 2011. By Wanted. RS2 Build 687.
+Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
@@ -526,7 +526,7 @@ var RS2WorldArray: TWorldArray;
 Contributors: Anonymous, Wanted.
 Description: Variables for RS2 fonts memory handles.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 14th, 2011. By Wanted. RS2 Build 662.
+Last Modified: August 14th, 2011. By Wanted. RS2 Build 662.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
@@ -561,7 +561,7 @@ procedure FreeRS2Fonts;
 Contributors: Wanted
 Description: Frees RS2 fonts from memory.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modification: November 23rd, 2011. By Wanted. RS2 Build 683.
+Last Modified: November 23rd, 2011. By Wanted. RS2 Build 683.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeRS2Fonts;
@@ -583,7 +583,7 @@ function ActivePlayers: Integer;
 Contributors: Anonymous, Wanted.
 Description: Returns the number of active players.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ActivePlayers: Integer;
@@ -602,7 +602,7 @@ function AllPlayersInActive: Boolean;
 Contributors: Anonymous, Wanted.
 Description: Returns true if all players are in-active.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function AllPlayersInActive: Boolean;
@@ -615,7 +615,7 @@ function NextPlayerIndex: Integer;
 Contributors: Anonymous, Wanted.
 Description: Returns next player index after CurrentPlayer.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 661.
-Last Modification: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: August 10th, 2011. By Wanted. RS2 Build 661.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function NextPlayerIndex: Integer;
@@ -632,7 +632,7 @@ function NextActivePlayerIndex: Integer;
 Contributors: Wanted
 Description: Returns next active player index after CurrentPlayer.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function NextActivePlayerIndex: Integer;

@@ -74,7 +74,7 @@ function BankScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
@@ -93,7 +93,7 @@ function PinScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the pin screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PinScreen: Boolean;
@@ -112,7 +112,7 @@ function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
 Contributors: Wanted
 Description: Enters bank pin and returns true if succesfully entered pin and at bank screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
@@ -158,7 +158,7 @@ function CloseBank(CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then closes it if open.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CloseBank(CheckBS: Boolean): Boolean;
@@ -177,7 +177,7 @@ function DepositAllEx(Inv, Equip, Summon, CPouch, CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAllEx(Inv, Equip, Summon, CPouch, CheckBS: Boolean): Boolean;
@@ -202,7 +202,7 @@ function DepositAll(CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAll(CheckBS: Boolean): Boolean;
@@ -216,7 +216,7 @@ Contributors: Wanted
 Description: Deposits all inventory items except for excluded slots, or the other
 way around if Exclude is false. True if CheckBS is true and bankscreen is found.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositItemsEx(Slots: TIntegerArray; Exclude, CheckBS: Boolean): Boolean;
@@ -274,7 +274,7 @@ Contributors: Wanted
 Description: Deposits all inventory items in specified slots. True if CheckBS is
 true and bankscreen is found.
 Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
-Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 9th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositItems(Slots: TIntegerArray; CheckBS: Boolean): Boolean;
@@ -288,7 +288,7 @@ Contributors: Wanted
 Description: Deposits all inventory items except for excluded slots. True if
 CheckBS is true and bankscreen is found.
 Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
-Last Modification: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 9th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
@@ -301,7 +301,7 @@ function ToggleUseNotes(Use: Boolean): Boolean;
 Contributors: Wanted
 Description: Enables or disables note usage. Returns true if toggle was needed.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ToggleUseNotes(Use: Boolean): Boolean;
@@ -323,7 +323,7 @@ function ToggleSwapMode(Use: Boolean): Boolean;
 Contributors: Wanted
 Description: Enables or disables note usage. Returns true if toggle was needed.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ToggleSwapMode(Use: Boolean): Boolean;
@@ -346,7 +346,7 @@ Contributors: Wanted
 Description: Returns true if at bankscreen and CheckBS.
 Searches for SearchText using the in bank search glass.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SearchBank(SearchText: string; CheckBS: Boolean): Boolean;
@@ -367,7 +367,7 @@ function BankShowEquipStats(CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen if CheckBS true, clicks equip stats.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankShowEquipStats(CheckBS: Boolean): Boolean;
@@ -387,7 +387,7 @@ Contributors: Wanted
 Description: Scrolls bank all the way to top or bottom, true if not needed to do so.
 Searches for SearchText using the in bank search glass.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FixBank(FixUp: Boolean): Boolean;
@@ -421,7 +421,7 @@ function GetBankSlotIndex(Row, Column: Integer): Integer;
 Contributors: Wanted
 Description: Returns index of an bank slot based on row and column position.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetBankSlotIndex(Row, Column: Integer): Integer;
@@ -434,7 +434,7 @@ function GetBankSlotBounds(Slot: Integer): TBox;
 Contributors: Wanted
 Description: Returns the bounds of an item in the bank slot.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetBankSlotBounds(Slot: Integer): TBox;
@@ -448,7 +448,7 @@ function GetBankTabBounds(Tab: Integer): TBox;
 Contributors: Wanted
 Description: Returns the bounds of a bank tab.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetBankTabBounds(Tab: Integer): TBox;
@@ -461,7 +461,7 @@ function CordsToBankSlot(P: TPoint): Integer;
 Contributors: Wanted
 Description: Returns the bank slot of a point.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CordsToBankSlot(P: TPoint): Integer;
@@ -487,7 +487,7 @@ Contributors: Wanted
 Description: Returns true if there's an item in the given bank slot.
 Exits if not at bankscreen and CheckBS is True.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankItemExists(Slot: Integer; CheckBS: Boolean): Boolean;
@@ -511,7 +511,7 @@ function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Bo
 Contributors: Wanted
 Description: Clicks on an item in bank. Exits if not at bankscreen and CheckBS is True.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Boolean;
@@ -530,7 +530,7 @@ function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Drags an item from one bank slot to another.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
@@ -550,7 +550,7 @@ function GetCurrentBankTab: Integer;
 Contributors: Wanted
 Description: Returns the current bank tab open.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCurrentBankTab: Integer;
@@ -566,7 +566,7 @@ function BankTabExists(Tab: Integer): Boolean;
 Contributors: Wanted
 Description: Returns the bank tab exists yet.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: Feburuary 7th, 2011. By Wanted. RS2 Build 700.
+Last Modified: Feburuary 7th, 2011. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankTabExists(Tab: Integer): Boolean;
@@ -586,7 +586,7 @@ function SetBankTab(Tab: Integer; CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and CheckBS is true. Sets banktab.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetBankTab(Tab: Integer; CheckBS: Boolean): Boolean;
@@ -614,7 +614,7 @@ Description: Withdraws by using MouseBox on B. Searches for your Options in Choo
 if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
 use ['-1 '] it will withdraw by left clicking one time to get one item out.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
@@ -674,7 +674,7 @@ Contributors: Wanted
 Description: Withdraws by using MouseBox on B. Converts your desired amount into
 the appropriate options text, uses Withdraw-X if needed. Withdraw_All etc indexes.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: January 22nd, 2012. By Wanted. RS2 Build 699.
+Last Modified: January 22nd, 2012. By Wanted. RS2 Build 699.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
@@ -700,7 +700,7 @@ Description: Withdraws by using MouseBox on slot. Searches for your Options in C
 if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
 use ['-1 '] it will withdraw by left clicking one time to get one item out.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
@@ -721,7 +721,7 @@ Contributors: Wanted
 Description: Withdraws by using MouseBox on slot. Converts your desired amount into
 the appropriate options text, uses Withdraw-X if needed. Withdraw_All etc indexes.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modification: Apri 19th, 2011. By Wanted. RS2 Build 712.
+Last Modified: Apri 19th, 2011. By Wanted. RS2 Build 712.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
@@ -741,7 +741,7 @@ function OpenBankBooth(Loc: Integer): Boolean;
 Contributors: Wanted
 Description: Opens a booth, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 14th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankBooth(Loc: Integer): Boolean;
@@ -834,7 +834,7 @@ function OpenBankNPC(Loc: Integer): Boolean;
 Contributors: Wanted
 Description: Opens a bank via Banker, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankNPC(Loc: Integer): Boolean;
@@ -922,7 +922,7 @@ function OpenBankEx(Loc: Integer; AllowNPC, AllowBooth, TryBoothFirst: Boolean):
 Contributors: Wanted
 Description: Opens bank using custom settings, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modified: December 22nd, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankEx(Loc: Integer; AllowNPC, AllowBooth, TryBoothFirst: Boolean): Boolean;
@@ -963,7 +963,7 @@ function OpenBank(Loc: Integer): Boolean;
 Contributors: Wanted
 Description: Opens bank using recommended settings, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modified: December 22nd, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBank(Loc: Integer): Boolean;

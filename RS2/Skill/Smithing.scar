@@ -22,7 +22,7 @@ const Item database indexes
 Contributors: Bixby Sayz
 Description: Indexes of all the smithing related database items.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modification: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modified: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
@@ -58,7 +58,7 @@ const Furnace option indexes
 Contributors: Bixby Sayz
 Description: Indexes of all the supported furnaces.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modification: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modified: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
@@ -72,7 +72,7 @@ function LoadSmithingItem(Item: Integer; var Tolerance: Integer): Integer;
 Contributors: Wanted, Bixby Sayz
 Description: Loads the Item into memory as result and returns recommended tolerance.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modification: January 8th, 2012. By Bixby Sayz. RS2 Build 696.
+Last Modified: January 8th, 2012. By Bixby Sayz. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadSmithingItem(Item: Integer; var Tolerance: Integer): Integer;
@@ -161,7 +161,7 @@ function FurnaceScreen: Boolean;
 Contributors: Bixby Sayz
 Description: Returns true if furnace (smelting) interface is open.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modification: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modified: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FurnaceScreen: Boolean;
@@ -174,7 +174,7 @@ function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
 Contributors: Bixby Sayz, Wanted.
 Description: Opens any F2P furnace.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modification: November 30th, 2011. By Bixby Sayz. RS2 Build 687.
+Last Modified: November 30th, 2011. By Bixby Sayz. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;

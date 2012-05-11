@@ -16,7 +16,7 @@ const Item database indexes
 Contributors: Wanted
 Description: Indexes of all the woodcutting related database items.
 Date Created: January 10th, 2012. By Wanted. RS2 Build 695.
-Last Modification: January 10th, 2012. By Wanted. RS2 Build 695.
+Last Modified: January 10th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
@@ -27,7 +27,7 @@ function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
 Contributors: Wanted
 Description: Loads the Item into memory as result and returns recommended tolerance.
 Date Created: January 10th, 2012. By Wanted. RS2 Build 695.
-Last Modification: January 10th, 2012. By Wanted. RS2 Build 695.
+Last Modified: January 10th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadWoodcuttingItem(Item: Integer; var Tolerance: Integer): Integer;

@@ -66,7 +66,7 @@ function OnMM(X, Y: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if point is on the minimap.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OnMM(X, Y: Integer): Boolean;
@@ -79,7 +79,7 @@ function MMToMSEx(MM: TPoint; Height: Extended): TPoint;
 Contributors: Home
 Description: Transforms a point on the minimap to where it would be on the mainscreen.
 Date Created: December 5th, 2011. By Home. RS2 Build 688.
-Last Modification: December 5th, 2011. By Home. RS2 Build 688.
+Last Modified: December 5th, 2011. By Home. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MMToMSEx(MM: TPoint; Height: Extended): TPoint;
@@ -96,7 +96,7 @@ function MMToMS(MM: TPoint): TPoint;
 Contributors: Home
 Description: Transforms a point on the minimap to where it would be on the mainscreen.
 Date Created: December 5th, 2011. By Home. RS2 Build 688.
-Last Modification: December 5th, 2011. By Home. RS2 Build 688.
+Last Modified: December 5th, 2011. By Home. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MMToMS(MM: TPoint): TPoint;
@@ -109,7 +109,7 @@ function MMOnMS(MM: TPoint): Boolean;
 Contributors: Wanted
 Description: Returns true if a MM point would be on the MS.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modified: December 22nd, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MMOnMS(MM: TPoint): Boolean;
@@ -122,7 +122,7 @@ function MMsToMSs(TPA: TPointArray): TPointArray;
 Contributors: Wanted
 Description: Outputs MM points that are on MS as MS points.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modified: December 22nd, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MMsToMSs(TPA: TPointArray): TPointArray;
@@ -148,7 +148,7 @@ function FilterMMPointsMS(TPA: TPointArray): TPointArray;
 Contributors: Wanted
 Description: Filters out points that would not be on the main screen. Returns MM points.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modification: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modified: December 22nd, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FilterMMPointsMS(TPA: TPointArray): TPointArray;
@@ -173,7 +173,7 @@ function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
 Contributors: Wanted
 Description: Finds color within minimap circle.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
@@ -186,7 +186,7 @@ function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Bo
 Contributors: Wanted
 Description: Finds colors within minimap circle.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modification: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 28th, 2011. By Wanted. RS2 Build 671.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
@@ -199,7 +199,7 @@ function GetCompassAngleRadians: Extended;
 Contributors: Wanted, Wizzup.
 Description: Gets the compass angle in radians.
 Date Created: November 22nd, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 30th, 2011. By Wanted. RS2 Build 687.
+Last Modified: November 30th, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCompassAngleRadians: Extended;
@@ -220,7 +220,7 @@ function GetCompassAngleDegrees: Extended;
 Contributors: Anonymous, Wanted.
 Description: Gets the compass angle in degrees.
 Date Created: August 6th, 2011. By Anonymous. RS2 Build 660.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCompassAngleDegrees: Extended;
@@ -233,7 +233,7 @@ function MakeCompass(Angle: Extended): Boolean;
 Contributors: Wanted, Nielsie95, Nava2.
 Description: Rotates the compass using the arrow keys to the desired angle.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MakeCompass(Angle: Extended): Boolean;
@@ -270,7 +270,7 @@ procedure SetAngle(Highest: Boolean);
 Contributors: Naum, Wanted.
 Description: Tilts the camera angle.
 Date Created: August 6th, 2011. By Naum. RS2 Build 660.
-Last Modification: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modified: November 4th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetAngle(Highest: Boolean);
@@ -286,7 +286,7 @@ procedure ClickCompass(AdjustToHigh: Boolean);
 Contributors: Wanted
 Description: Clicks to face north and then tilts the camera angle if desired.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 11th, 2011. By Wanted. RS2 Build 677.
+Last Modified: November 11th, 2011. By Wanted. RS2 Build 677.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure ClickCompass(AdjustToHigh: Boolean);
@@ -313,23 +313,22 @@ function FindFlag(var X, Y: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if flag exists and the cord of the lowest point.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: March 21st, 2012. By Wanted. RS2 Build 707.
+Last Modified: May 11th, 2012. By Wanted. By Wanted. RS2 Build 716.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindFlag(var X, Y: Integer): Boolean;
 var
-  I, H, Map, DC, Wi, He: Integer;
+  I, H, Map, Wi, He: Integer;
   TPA: TPointArray;
 begin
-  Result := False;
+  Result := False; 
   Map := BitmapFromString(MMX2 - MMX1, MMY2 - MMY1, '');
   CopyClientToBitmap(Map, MMX1, MMY1, MMX2, MMY2);
-  DC := GetClientCanvas.Handle;
   SetTargetDC(GetBitmapDC(Map));
   GetBitmapSize(Map, Wi, He);
-  FindColors(TPA, 65536, 0, 0, Wi - 1, He -1);
+  FindColors(TPA, 65536, 0, 0, Wi - 1, He - 1);
   FilterPointsDist(TPA, 0, MMRDe, Wi / 2, He / 2);
-  SetTargetDC(DC);
+  ResetDC;
   H := High(TPA)
   for I := 0 to H do    
     if (TIAContains([6185313, 6381921], FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y - 1) - FastGetPixel(Map, TPA[I].X, TPA[I].Y - 1))) then
@@ -347,7 +346,7 @@ function FlagExists: Boolean;
 Contributors: Wanted
 Description: Returns true if flag exists.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: December 6th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 6th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FlagExists: Boolean;
@@ -362,7 +361,7 @@ function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
 Contributors: Wanted
 Description: Returns flag distance from point.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
@@ -383,7 +382,7 @@ function GetFlagDistance: Extended;
 Contributors: Wanted
 Description: Returns flag distance from your location (MMCX, MMCY).
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFlagDistance: Extended;
@@ -396,7 +395,7 @@ function FlagEx(Distance: Extended): Boolean;
 Contributors: Wanted
 Description: Waits until your within Distance of flag. Returns true if it didn't time out.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FlagEx(Distance: Extended): Boolean;
@@ -424,7 +423,7 @@ function Flag: Boolean;
 Contributors: Wanted
 Description: Waits until you're done moving. Returns true if it didn't time out.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Flag: Boolean;
@@ -437,7 +436,7 @@ function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
 Contributors: Wanted
 Description: If on minimap clicks and then waits for flag to exist then does FlagEx.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
@@ -461,7 +460,7 @@ function MouseFlag(X, Y, RX, RY: Integer): Boolean;
 Contributors: Wanted
 Description: If on minimap clicks and then waits for flag to exist then does Flag.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modification: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MouseFlag(X, Y, RX, RY: Integer): Boolean;
@@ -475,12 +474,12 @@ Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 This one uses overlapping checking, so it's twice as slow.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: April 1st, 2012. By Wanted. RS2 Build 710.
+Last Modified: May 11th, 2012. By Wanted. By Wanted. RS2 Build 716.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
 var
-  I, II, H, HH, Map, DC, Wi, He, C, O: Integer;
+  I, II, H, HH, Map, Wi, He, C, O: Integer;
   Offset: T2DPointArray;
   TPA: TPointArray;
   L: TIntegerArray;
@@ -494,12 +493,11 @@ begin
     Exit;
   Map := BitmapFromString(MMX2 - MMX1 + 4, MMY2 - MMY1 + 4, '');
   CopyClientToBitmap(Map, MMX1 - 2, MMY1 - 2, MMX2 + 2, MMY2 + 2);
-  DC := GetClientCanvas.Handle;
   SetTargetDC(GetBitmapDC(Map));
   GetBitmapSize(Map, Wi, He);
   FindColors(TPA, 65536, 3, 3, Wi - 3, He - 3);
   FilterPointsDist(TPA, 0, MMRDe, (Wi / 2) - 2, (He / 2) - 2);
-  SetTargetDC(DC);
+  ResetDC;
   H := High(TPA);
   Offset := [TPointArray([Point(-2, 0), Point(-1, 0)]), TPointArray([Point(0, -2), Point(0, -1)])];
   if (H > 0) then
@@ -528,12 +526,12 @@ function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
 Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: April 1st, 2012. By Wanted. RS2 Build 710.
+Last Modified: May 11th, 2012. By Wanted. By Wanted. RS2 Build 716.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
 var
-  I, II, H, HH, Map, DC, Wi, He, C: Integer;
+  I, II, H, HH, Map, Wi, He, C: Integer;
   L: TIntegerArray;
   TPA: TPointArray;
 begin
@@ -545,12 +543,11 @@ begin
     Exit;
   Map := BitmapFromString(MMX2 - MMX1 + 4, MMY2 - MMY1 + 4, '');
   CopyClientToBitmap(Map, MMX1 - 2, MMY1 - 2, MMX2 + 2, MMY2 + 2);
-  DC := GetClientCanvas.Handle;
   SetTargetDC(GetBitmapDC(Map));
   GetBitmapSize(Map, Wi, He);
   FindColors(TPA, 65536, 3, 3, Wi - 3, He - 3);
   FilterPointsDist(TPA, 0, MMRDe, (Wi / 2) - 2, (He / 2) - 2);
-  SetTargetDC(DC);
+  ResetDC;
   H := High(TPA);
   if (H > 0) then
     for I := 0 to H do
@@ -573,7 +570,7 @@ function FindMMDots(cldDot: Integer): TPointArray;
 Contributors: Wanted
 Description: Finds all of the MMDot that you specify i.e. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 8th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDots(cldDot: Integer): TPointArray;
@@ -589,7 +586,7 @@ function CountMMDotsEx2(ColorDiffs: TIntegerArray): TIntegerArray;
 Contributors: Wanted
 Description: Counts all the dots of different colors you specify. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 8th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CountMMDotsEx2(ColorDiffs: TIntegerArray): TIntegerArray;
@@ -610,7 +607,7 @@ Contributors: Wanted
 Description: Counts all the dots of different colors you specify. And then adds
 them together for a total number. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 8th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CountMMDotsEx(ColorDiffs: TIntegerArray): Integer;
@@ -630,7 +627,7 @@ function CountMMDots(cldDot: Integer): Integer;
 Contributors: Wanted
 Description: Counts all the dots of the color you specify. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: December 8th, 2011. By Wanted. RS2 Build 688.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CountMMDots(cldDot: Integer): Integer;
@@ -644,7 +641,7 @@ Contributors: Wanted
 Description: Turns a road TPA into a pie slice, finds the middle and offsets,
 and finally walks to it. See the online manual and forums for help using correctly.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modification: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: November 3rd, 2011. By Wanted. RS2 Build 674.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;

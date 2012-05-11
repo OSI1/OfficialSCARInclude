@@ -18,7 +18,7 @@ function Abyss_InRandom: Boolean;
 Contributors: Wanted
 Description: Returns true if in the abyssal random.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Abyss_InRandom: Boolean;
@@ -48,7 +48,7 @@ procedure Abyss_WalkToCenter;
 Contributors: Wanted
 Description: Walks to the center of the abyssal random.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure Abyss_WalkToCenter;
@@ -67,7 +67,7 @@ function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
 Contributors: Wanted
 Description: Returns the direction of the unique arm and all the color tpas of the arms.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
@@ -128,7 +128,7 @@ function Abyss_SolveRandom: Boolean;
 Contributors: Wanted
 Description: Solves the abyssal random.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Abyss_SolveRandom: Boolean;

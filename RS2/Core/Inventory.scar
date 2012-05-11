@@ -56,7 +56,7 @@ function GetInvSlotIndex(Row, Column: Integer): Integer;
 Contributors: Wanted
 Description: Returns index of an inventory slot based on row and column position.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetInvSlotIndex(Row, Column: Integer): Integer;
@@ -69,7 +69,7 @@ function GetItemBounds(Slot: Integer): TBox;
 Contributors: Wanted
 Description: Returns the bounds of an item in the inventory.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetItemBounds(Slot: Integer): TBox;
@@ -82,7 +82,7 @@ function CordsToItemSlot(P: TPoint): Integer;
 Contributors: Wanted
 Description: Returns the slot of a point in the inventory.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CordsToItemSlot(P: TPoint): Integer;
@@ -107,7 +107,7 @@ function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if there's an item in the given inventory slot.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
@@ -128,7 +128,7 @@ function InvCount(CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number of occupied spots by items in your inventory.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InvCount(CheckIT: Boolean): Integer;
@@ -149,7 +149,7 @@ function InvFull(CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if all 28 spots are full.
 Date Created: November 18th, 2011. By Wanted. RS2 Build 675.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InvFull(CheckIT: Boolean): Boolean;
@@ -162,7 +162,7 @@ function InvEmpty(CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if inventory is empty, slightly faster than InvCount = 0;
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InvEmpty(CheckIT: Boolean): Boolean;
@@ -181,7 +181,7 @@ function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolea
 Contributors: Wanted
 Description: Clicks on an item.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
@@ -200,7 +200,7 @@ function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Drags an item from one slot to another.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
@@ -220,7 +220,7 @@ function GetDropPattern(Which: Integer): TIntegerArray;
 Contributors: Wanted
 Description: Returns a list of all invetory spaces in a drop order. See manual for details.
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: November 24th, 2011. By Wanted. RS2 Build 682.
+Last Modified: November 24th, 2011. By Wanted. RS2 Build 682.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetDropPattern(Which: Integer): TIntegerArray;
@@ -242,7 +242,7 @@ function DropItem(Slot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Drops the item in the selected slot if it exists, true if exists and done.
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DropItem(Slot: Integer; CheckIT: Boolean): Boolean;
@@ -260,7 +260,7 @@ Description: Drops all the items in invetory except for those in excluded spaces
 returns number of items dropped, or the other way around and drops items specified
 if Exclude set to False. Use your own custom pattern or GetDropPattern.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DropItemsPEx(Slots, Pattern: TIntegerArray; Exclude, CheckIT: Boolean): Integer;
@@ -284,7 +284,7 @@ Description: Drops all the items in invetory except for those in excluded spaces
 returns number of items dropped, or the other way around and drops items specified
 if Exclude set to False. Uses GetDropPattern(2) automatically for drop pattern.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DropItemsEx(Slots: TIntegerArray; Exclude, CheckIT: Boolean): Integer;
@@ -298,7 +298,7 @@ Contributors: Wanted
 Description: Drops all the items in invetory specified returns number of items
 dropped. Uses GetDropPattern(2).
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DropItems(Slots: TIntegerArray; CheckIT: Boolean): Integer;
@@ -312,7 +312,7 @@ Contributors: Wanted
 Description: Drops all the items in invetory except for those in excluded spaces
 returns number of items dropped. Uses GetDropPattern(2)
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DropAllExclude(Exclude: TIntegerArray; CheckIT: Boolean): Integer;
@@ -325,7 +325,7 @@ function DropAll(CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Drops all the items in invetory and returns number of items dropped. Uses GetDropPattern(2).
 Date Created: November 24th, 2011. By Wanted. RS2 Build 682.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DropAll(CheckIT: Boolean): Integer;
@@ -338,7 +338,7 @@ function FindInvItemsDTM(dtm: Integer; CheckIT: Boolean): TIntegerArray;
 Contributors: Wanted
 Description: Returns all the slots where a dtm is found.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindInvItemsDTM(dtm: Integer; CheckIT: Boolean): TIntegerArray;
@@ -369,7 +369,7 @@ function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number of times an inventory dtm is found.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
@@ -382,7 +382,7 @@ function FindInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): TIntegerArray;
 Contributors: Wanted
 Description: Returns all the slots where a bmp is found.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): TIntegerArray;
@@ -408,7 +408,7 @@ function CountInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): Integer;
 Contributors: Wanted
 Description: Returns the number of times an inventory bmp is found.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CountInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): Integer;

@@ -18,7 +18,7 @@ function BeeKeeper_InRandom: Boolean;
 Contributors: Wanted
 Description: Results true if in the beekeeper random.
 Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
-Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modified: January 12th, 2012. By Wanted. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BeeKeeper_InRandom: Boolean;
@@ -38,7 +38,7 @@ function BeeKeeper_TalkToKeeper: Boolean;
 Contributors: Wanted
 Description: Finds and clicks talk to on the bee keeper.
 Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
-Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modified: January 12th, 2012. By Wanted. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BeeKeeper_TalkToKeeper: Boolean;
@@ -82,7 +82,7 @@ function BeeKeeper_BeeScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the screen where you assemble the bee house.
 Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
-Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modified: January 12th, 2012. By Wanted. RS2 Build 696.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BeeKeeper_BeeScreen: Boolean;
@@ -95,14 +95,14 @@ function Beekeeper_SolveRandom: Boolean;
 Contributors: Wanted
 Description: Solves the beekeeper random.
 Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
-Last Modification: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modified: May 11th, 2012. By Wanted. By Wanted. RS2 Build 716.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Beekeeper_SolveRandom: Boolean;
 var
   AATPA: array[0..3] of array[0..2] of TPointArray;
   ComponentPositions: array[0..3] of Integer;
-  I, II, MS, DC, Wi, He, Trys: Integer;
+  I, II, MS, Wi, He, Trys: Integer;
   ATPA: array[0..3] of TPointArray;
   TBA: array[0..3] of TBox;
   ColorInfo: TVariantArray;
@@ -142,7 +142,6 @@ begin
       WaitRR(2000, 3000);
     MS := BitmapFromString(137, 239, '');
     CopyClientToBitmap(MS, 0, 0, 137, 239);
-    DC := GetClientCanvas.Handle;
     SetTargetDC(GetBitmapDC(MS));
     ColorInfo := [0.14, 0.82, 12632784, 16, 0.39, 1.07, 6716794, 3, 0.19, 0.45, 7239036, 9];
     for I := 0 to 3 do
@@ -156,7 +155,7 @@ begin
       end;
     SetColorSpeed2Modifiers(0.2, 0.2);
     ColorToleranceSpeed(1);
-    SetTargetDC(DC);
+    ResetDC;
     for I := 0 to 3 do
     begin
       ATPA[I] := MergeATPA(AATPA[I]);

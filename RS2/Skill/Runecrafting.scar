@@ -22,7 +22,7 @@ const Item database indexrd
 Contributors: Wanted
 Description: Indexes of all the runecrafting related database items.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modified: November 9th, 2011. By Wanted. RS2 Build 677.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
@@ -40,7 +40,7 @@ const Pouch option indexes
 Contributors: Wanted
 Description: Indexes of all the runecrafting related database items.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: November 12th, 2011. By Wanted. RS2 Build 678.
+Last Modified: November 12th, 2011. By Wanted. RS2 Build 678.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -56,7 +56,7 @@ function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
 Contributors: Wanted
 Description: Loads the Item into memory as result and returns recommended tolerance.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: January 9th, 2012. By Wanted. RS2 Build 695.
+Last Modified: January 9th, 2012. By Wanted. RS2 Build 695.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
@@ -99,7 +99,7 @@ function FindPouch(Pouch: Integer; var Slot: Integer; CheckIT: Boolean): Boolean
 Contributors: Wanted
 Description: If found pouch returns true and slot where found.
 Date Created: November 12th, 2011. By Wanted. RS2 Build 678.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindPouch(Pouch: Integer; var Slot: Integer; CheckIT: Boolean): Boolean;
@@ -132,7 +132,7 @@ function ClickPouch(Pouch, Option: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Clicks pouch, if no option left click, else right clicks and selects option.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modification: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickPouch(Pouch, Option: Integer; CheckIT: Boolean): Boolean;
