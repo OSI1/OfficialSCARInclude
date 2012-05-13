@@ -63,7 +63,7 @@ Last Modified: May 13th, 2012. By Wanted
 procedure OSIResetDC;
 begin
   {$IFNDEF SMART}
-    OSIResetDC;
+    ResetDC;
   {$ELSE} 
     SmartSetTarget;
   {$ENDIF}
