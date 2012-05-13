@@ -95,7 +95,7 @@ function Beekeeper_SolveRandom: Boolean;
 Contributors: Wanted
 Description: Solves the beekeeper random.
 Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
-Last Modified: May 11th, 2012. By Wanted. By Wanted. RS2 Build 716.
+Last Modified: May 13th, 2012. By Wanted. RS2 Build 716.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Beekeeper_SolveRandom: Boolean;
@@ -155,7 +155,7 @@ begin
       end;
     SetColorSpeed2Modifiers(0.2, 0.2);
     ColorToleranceSpeed(1);
-    ResetDC;
+    OSIResetDC;
     for I := 0 to 3 do
     begin
       ATPA[I] := MergeATPA(AATPA[I]);

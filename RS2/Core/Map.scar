@@ -313,7 +313,7 @@ function FindFlag(var X, Y: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if flag exists and the cord of the lowest point.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modified: May 11th, 2012. By Wanted. By Wanted. RS2 Build 716.
+Last Modified: May 13th, 2012. By Wanted. RS2 Build 716.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindFlag(var X, Y: Integer): Boolean;
@@ -328,7 +328,7 @@ begin
   GetBitmapSize(Map, Wi, He);
   FindColors(TPA, 65536, 0, 0, Wi - 1, He - 1);
   FilterPointsDist(TPA, 0, MMRDe, Wi / 2, He / 2);
-  ResetDC;
+  OSIResetDC;
   H := High(TPA)
   for I := 0 to H do    
     if (TIAContains([6185313, 6381921], FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y - 1) - FastGetPixel(Map, TPA[I].X, TPA[I].Y - 1))) then
@@ -474,7 +474,7 @@ Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 This one uses overlapping checking, so it's twice as slow.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modified: May 11th, 2012. By Wanted. By Wanted. RS2 Build 716.
+Last Modified: May 13th, 2012. By Wanted. RS2 Build 716.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
@@ -497,7 +497,7 @@ begin
   GetBitmapSize(Map, Wi, He);
   FindColors(TPA, 65536, 3, 3, Wi - 3, He - 3);
   FilterPointsDist(TPA, 0, MMRDe, (Wi / 2) - 2, (He / 2) - 2);
-  ResetDC;
+  OSIResetDC;
   H := High(TPA);
   Offset := [TPointArray([Point(-2, 0), Point(-1, 0)]), TPointArray([Point(0, -2), Point(0, -1)])];
   if (H > 0) then
@@ -526,7 +526,7 @@ function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
 Contributors: Wanted
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modified: May 11th, 2012. By Wanted. By Wanted. RS2 Build 716.
+Last Modified: May 13th, 2012. By Wanted. RS2 Build 716.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
@@ -547,7 +547,7 @@ begin
   GetBitmapSize(Map, Wi, He);
   FindColors(TPA, 65536, 3, 3, Wi - 3, He - 3);
   FilterPointsDist(TPA, 0, MMRDe, (Wi / 2) - 2, (He / 2) - 2);
-  ResetDC;
+  OSIResetDC;
   H := High(TPA);
   if (H > 0) then
     for I := 0 to H do

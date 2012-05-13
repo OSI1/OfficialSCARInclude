@@ -11,6 +11,12 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               SMART.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SmartSetTarget; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Variance
 Contributors: Wanted, Freddy.
 Description: The default level of variance, or tendency, for randomized values
@@ -43,3 +49,20 @@ Last Modified: August 7th, 2011. By Timer
 
 var
   MouseSpeed: Integer;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure OSIResetDC;
+Contributors: Wanted
+Description: Clean DC resetting.
+Date Created: May 13th, 2012. By Wanted
+Last Modified: May 13th, 2012. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+                     
+procedure OSIResetDC;
+begin
+  {$IFNDEF SMART}
+    OSIResetDC;
+  {$ELSE} 
+    SmartSetTarget;
+  {$ENDIF}
+end;
