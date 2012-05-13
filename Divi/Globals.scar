@@ -14,7 +14,9 @@
                                SMART.scar forwards
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure SmartSetTarget; forward;
+{$IFDEF SMART}
+  procedure SmartSetTarget; forward;           
+{$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Variance
