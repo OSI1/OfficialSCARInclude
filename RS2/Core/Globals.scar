@@ -57,10 +57,10 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game boundaries, points, areas, widths, etc. etc.
-Contributors: Anonymous, Wanted.
+Contributors: Anonymous, Wanted, LordJashin.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
-Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: June 13th, 2012. By LordJashin. RS2 Build 719.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const             // Description                  Modified            By              Build #
@@ -73,7 +73,7 @@ const             // Description                  Modified            By        
   RSY2 = 504;                                  // October 16, 2011    Wanted          667
   RSPW = 766;     // RS2 Client Width          // October 16, 2011    Wanted          667
   RSPH = 504;     // RS2 Client Height         // October 16, 2011    Wanted          667
-  RSPA = 381024;  // RS2 Client Pixel Area     // October 16, 2011    Wanted          667
+  RSPA = 386064;  // RS2 Client Pixel Area     // June 12, 2012       LordJashin      719
 
   MSCX  = 260;    // Main Screen Center Points // August 7, 2011      Wanted          660
   MSCY  = 171;                                 // August 7, 2011      Wanted          660

@@ -69,12 +69,12 @@ function GetItemBounds(Slot: Integer): TBox;
 Contributors: Wanted
 Description: Returns the bounds of an item in the inventory.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: June 18th, 2012. By LordJashin. RS2 Build 719.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetItemBounds(Slot: Integer): TBox;
 begin
-  Result := Box(563 + ((Slot mod 4) * 41), 213 + ((Slot div 4) * 36), 598 + ((Slot mod 4) * 42), 244 + ((Slot div 4) * 36));
+  Result := Box(563 + ((Slot mod 4) * 42), 213 + ((Slot div 4) * 36), 598 + ((Slot mod 4) * 42), 244 + ((Slot div 4) * 36));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

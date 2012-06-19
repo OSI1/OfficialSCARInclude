@@ -516,7 +516,7 @@ function GetXPBarTotal: LongInt;
 var
   Previous: Boolean;
   TPA: TPointArray;
-  XP: String;
+  XP: string;
   B: TBox;
 begin
   Result := -1;
