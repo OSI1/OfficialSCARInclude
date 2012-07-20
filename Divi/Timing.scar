@@ -26,21 +26,15 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure WaitRR(Min, Max: LongInt);
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Waits/sleeps a random amount of time.
 Date Created: August 10th, 2011. By Wanted
-Last Modified: August 10th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure WaitRR(Min, Max: LongInt);
-var
-  T: LongInt;
 begin
-  T := RR(Min, Max);
-  if (T > 9999) then
-    Sleep(T)
-  else
-    Wait(T);
+  Wait(RR(Min, Max));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
