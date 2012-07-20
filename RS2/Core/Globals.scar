@@ -425,10 +425,10 @@ const                             // Modified            By              Build #
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS2Player = record
-Contributors: Anonymous, Wanted.
+Contributors: Anonymous, Wanted, Freddy.
 Description: Handles all of player related info and variables.
 Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modified: November 12th, 2011. By Wanted. RS2 Build 678.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
@@ -446,14 +446,14 @@ type
     Level: array[0..24] of Integer; // Levels of all skills
     Member: Boolean;                // Members
     Active: Boolean;                // Player active
-    BoxRewards: TStringArray;       // Partial texts for rewards, place in desired order
+    BoxRewards: TStrArray;          // Partial texts for rewards, place in desired order
     WorldInfo: TVariantArray;       // [Members {Boolean}, World {Integer}, HRW {Boolean}]
-    Booleans: array of Boolean;     // Boolean records
-    Integers: array of Integer;     // Integer records
-    Strings: array of string;       // String records
-    Extendeds: array of Extended;   // Extended records
+    Booleans: TBoolArray;           // Boolean records
+    Integers: TIntArray;            // Integer records
+    Strings: TStrArray;             // String records
+    Extendeds: TExtArray;           // Extended records
     Arrays: array of TVariantArray; // Custom records
-    TIA: T2DIntegerArray;           // TIA records
+    TIA: T2DIntArray;               // TIA records
   end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -483,7 +483,8 @@ Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 
 {$IFDEF SMART}
 var
-  NonAutomaticSMART: Boolean;
+  NonAutomaticSMART: Boolean;  
+  SMART_Client: TSCARClient;  
   SMART_Server: Integer;
 {$ENDIF}
 

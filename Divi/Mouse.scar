@@ -22,10 +22,10 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MMouse(x, y, rx, ry: Integer);
-Contributors: Timer, Wanted.
+Contributors: Timer, Wanted, Freddy
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modified: September 18th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
@@ -34,17 +34,17 @@ var
 begin
   P := RRectanglePoint(X - RX, Y - RY, X + RX, Y + RY);
   if (not (MouseSpeed = 0)) then
-    MoveWindMouseEx(P.X, P.Y, 0, 0, MouseSpeed)
+    MoveMouseEx(P.X, P.Y, 0, 0, MouseSpeed)
   else
-    MoveWindMouse(P.X, P.Y, 0, 0);
+    MoveMouse(P.X, P.Y);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure HoldMouseWait(x, y, rx, ry, MinTime, MaxTime: Integer; Left: Boolean);
-Contributors: Wanted, Timer, Anonymous.
+Contributors: Wanted, Timer, Anonymous, Freddy
 Description: Moves the mouse and clicks + holds humanly.
 Date Created: August 19th, 2011. By Wanted
-Last Modified: August 19th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure HoldMouseWait(x, y, rx, ry, MinTime, MaxTime: Integer; Left: Boolean);
@@ -52,18 +52,15 @@ var
   cx, cy: Integer;
 begin
   MMouse(x, y, rx, ry);
-  WaitRR(60, 90);
+  WaitRR(60, 90);                  
   GetMousePos(cx, cy);
-  HoldMouse(cx, cy, Left);
-  WaitRR(MinTime, MaxTime);
-  GetMousePos(cx, cy);
-  ReleaseMouse(cx, cy, Left);
+  ClickMouseEx(cx, cy, TMouseButton(not Left), RR(MinTime, MaxTime));
   WaitRR(100, 200);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
-Contributors: Timer, Wanted.
+Contributors: Timer, Wanted
 Description: Moves the mouse and clicks humanly.
 Date Created: August 7th, 2011. By Wanted & Timer.
 Last Modified: August 19th, 2011. By Wanted
@@ -92,7 +89,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
-Contributors: Wanted, Timer.
+Contributors: Wanted, Timer
 Description: Clicks/moves the mouse in a specified area.
 Date Created: August 7th, 2011. By Wanted & Timer.
 Last Modified: September 18th, 2011. By Wanted
@@ -112,7 +109,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
-Contributors: Zyt3x, Wanted.
+Contributors: Zyt3x, Wanted
 Description: Clicks/moves the mouse in a circle with a specified radius.
 Date Created: September 4th, 2011. By Zyt3x & Wanted.
 Last Modified: September 18th, 2011. By Wanted
@@ -132,10 +129,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
-Contributors: Naum, Wanted.
+Contributors: Naum, Wanted, Freddy
 Description: Clicks and holds the mouse and then drags it and releases it.
 Date Created: August 7th, 2011. By Naum
-Last Modified: August 19th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
@@ -145,21 +142,21 @@ begin
   MMouse(sX, sY, sRX, sRY);
   WaitRR(60, 90);
   GetMousePos(cx, cy);
-  HoldMouse(cx, cy, Left);
+  MouseBtnDown(cx, cy, TMouseButton(not Left));
   WaitRR(80, 120);
   MMouse(eX, eY, eRX, eRY);
   WaitRR(60, 90);
   GetMousePos(cx, cy);
-  ReleaseMouse(cx, cy, Left);
+  MouseBtnUp(cx, cy, TMouseButton(not Left));
   WaitRR(100, 200);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: See DragMouse. Except for does in box areas.
 Date Created: August 19th, 2011. By Wanted
-Last Modified: August 19th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);
@@ -169,11 +166,11 @@ begin
   MouseBox(sX1, sY1, sX2, sY2, MoveTo);
   WaitRR(60, 90);
   GetMousePos(cx, cy);
-  HoldMouse(cx, cy, Left);
+  MouseBtnDown(cx, cy, TMouseButton(not Left));
   WaitRR(80, 120);
   MouseBox(eX1, eY1, eX2, eY2, MoveTo);
   WaitRR(60, 90);
   GetMousePos(cx, cy);
-  ReleaseMouse(cx, cy, Left);
+  MouseBtnUp(cx, cy, TMouseButton(not Left));
   WaitRR(100, 200);
 end;
