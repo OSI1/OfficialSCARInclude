@@ -8,7 +8,7 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{$IFNDEF SCAR330_UP}
+{$IFNDEF SCAR335_UP}
   {$ERROR [OSI] Please update your copy of SCAR to run this script}
 {$ENDIF}
 
@@ -64,10 +64,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SetUpOSI;
-Contributors: Wanted, Timer.
+Contributors: Wanted, Timer, Freddy.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -108,7 +108,18 @@ begin
     LoadRS2WorldArray;
     AllowQuickChat := True;
     AllowLootShare := True;
-    {$IFDEF SMART}
+    {$IFDEF SMART}     
+      if InitSmartLib(IncludesPath + 'OSI\RS2\Misc\libsmartremote32.dll') then
+        SMART_Path := IncludesPath + 'OSI\RS2\Misc\'
+      else if InitSmartLib(ScriptPath + 'OSI\RS2\Misc\libsmartremote32.dll') then   
+        SMART_Path := ScriptPath + 'OSI\RS2\Misc\'    
+      else if InitSmartLib(ScriptPath + 'RS2\Misc\libsmartremote32.dll') then   
+        SMART_Path := ScriptPath + 'RS2\Misc\'  
+      else
+      begin
+        WriteLn('Couldn''t load SMART (libsmartremote32.dll)');
+        TerminateScript;
+      end;
       if (not (NonAutomaticSMART)) then
         InitiateSMART;
     {$ENDIF}

@@ -12,20 +12,15 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure PushKey(C: Char);
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Types one char human like.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: August 8th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure PushKey(C: Char);
-var
-  B: Byte;
 begin
-  B := GetKeyCode(C);
-  KeyDown(B);
-  WaitRR(10, 60);
-  KeyUp(B);
+  PressVKeyEx(CharToVKey(C), RR(10, 60));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -3,19 +3,19 @@
                                    Runescape 2
                              Object Finding Routines
 --------------------------------------------------------------------------------
- * function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
+ * function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStrArray): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
-Contributors: Wanted
+function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStrArray): Boolean;
+Contributors: Wanted, Freddy
 Description: Spirals mouse around until it finds the object. See GenerateSpiral in Divi\Math.scar
 Date Created: November 28th, 2011. By Wanted. RS2 Build 686.
-Last Modified: November 28th, 2011. By Wanted. RS2 Build 686.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
+function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStrArray): Boolean;
 var
   TPA: TPointArray;
   I, H: Integer;
@@ -27,7 +27,7 @@ begin
   begin
     MMouse(TPA[I].X, TPA[I].Y, 0, 0);
     WaitRR(100, 150);
-    if (not (InRange(CountColorTolerance(TextColor, MSX1, MSY1, MSX2, 27, Tol), MinC, MaxC))) then
+    if (not (InRange(CountColorTol(TextColor, MSX1, MSY1, MSX2, 27, Tol), MinC, MaxC))) then
       Continue;
     if (not (IsUpTextMulti(Text))) then
       Continue;

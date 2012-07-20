@@ -15,9 +15,9 @@
      By: Wanted
  * function FilterMMPointsMS(TPA: TPointArray): TPointArray;
      By: Wanted
- * function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
+ * function FindMMColorTol(var X, Y: Integer; Color, Tol: Integer): Boolean;
      By: Wanted
- * function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
+ * function FindMMColorTolEx(var Points: TPointArray; Color, Tol: Integer): Boolean;
      By: Wanted
  * function GetCompassAngleRadians: Extended;
      By: Wanted
@@ -45,15 +45,15 @@
      By: Wanted
  * function MouseFlag(X, Y, RX, RY: Integer): Boolean;
      By: Wanted
- * function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
+ * function FindMMDotsExOverlap(ColorDiffs: TIntArray): T2DPointArray;
      By: Wanted
- * function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
+ * function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
      By: Wanted
  * function FindMMDots(cldDot: Integer): TPointArray;
      By: Wanted
- * function CountMMDotsEx2(ColorDiffs: TIntegerArray): TIntegerArray;
+ * function CountMMDotsEx2(ColorDiffs: TIntArray): TIntArray;
      By: Wanted
- * function CountMMDotsEx(ColorDiffs: TIntegerArray): Integer;
+ * function CountMMDotsEx(ColorDiffs: TIntArray): Integer;
      By: Wanted
  * function CountMMDots(cldDot: Integer): Integer;
      By: Wanted
@@ -169,37 +169,37 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
-Contributors: Wanted
+function FindMMColorTol(var X, Y: Integer; Color, Tol: Integer): Boolean;
+Contributors: Wanted, Freddy
 Description: Finds color within minimap circle.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modified: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindMMColorTolerance(var X, Y: Integer; Color, Tol: Integer): Boolean;
+function FindMMColorTol(var X, Y: Integer; Color, Tol: Integer): Boolean;
 begin
-  Result := FindColorCircleTolerance(X, Y, Color, MMCX, MMCY, MMRD, Tol);
+  Result := FindColorCircleTol(X, Y, Color, Tol, MMCX, MMCY, MMRD);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
+function FindMMColorTolEx(var Points: TPointArray; Color, Tol: Integer): Boolean;
 Contributors: Wanted
 Description: Finds colors within minimap circle.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modified: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindMMColorsTolerance(var Points: TPointArray; Color, Tol: Integer): Boolean;
+function FindMMColorTolEx(var Points: TPointArray; Color, Tol: Integer): Boolean;
 begin
-  Result := FindColorsCircleTolerance(Points, Color, Tol, MMCXe, MMCYe, MMRDe);
+  Result := FindColorCircleTolEx(Points, Color, Tol, MMCX, MMCY, MMRD);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetCompassAngleRadians: Extended;
-Contributors: Wanted, Wizzup.
+Contributors: Wanted, Wizzup, Freddy.
 Description: Gets the compass angle in radians.
 Date Created: November 22nd, 2011. By Wanted. RS2 Build 682.
-Last Modified: November 30th, 2011. By Wanted. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCompassAngleRadians: Extended;
@@ -207,9 +207,9 @@ var
   TPA: TPointArray;
   P: TPoint;
 begin
-  FindColors(TPA, 65536, 528, 9, 559, 41);
+  FindColorEx(TPA, 65536, 528, 9, 559, 41);
   FilterPointsDist(TPA, 0, 16, 543.5, 25);
-  P := MiddleTPA(TPA);
+  P := TPAMiddle(TPA);
   Result := (ArcTan2(-(P.Y - 23.5), P.X - 542.5) - (Pi / 2));
   if (Result < 0) then
     Result := Result + Radians(360);
@@ -230,10 +230,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function MakeCompass(Angle: Extended): Boolean;
-Contributors: Wanted, Nielsie95, Nava2.
+Contributors: Wanted, Nielsie95, Nava2, Freddy.
 Description: Rotates the compass using the arrow keys to the desired angle.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
-Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MakeCompass(Angle: Extended): Boolean;
@@ -253,7 +253,7 @@ begin
     Exit;
   end;
   Left := (Round((360 - InitialAngle) + DesiredAngle) mod 360 <= Round((InitialAngle + 360) - DesiredAngle) mod 360);
-  KeyDown((Integer(not Left) * 2) + 37);
+  VKeyDown((Integer(not Left) * 2) + 37);
   T := GetSystemTime + RR(12000, 14000);
   repeat
     Wait(1);
@@ -262,22 +262,22 @@ begin
     if (Result) then
       Break;
   until (GetSystemTime > T);
-  KeyUp((Integer(not Left) * 2) + 37);
+  VKeyUp((Integer(not Left) * 2) + 37);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SetAngle(Highest: Boolean);
-Contributors: Naum, Wanted.
+Contributors: Naum, Wanted, Freddy.
 Description: Tilts the camera angle.
 Date Created: August 6th, 2011. By Naum. RS2 Build 660.
-Last Modified: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetAngle(Highest: Boolean);
 begin
-  KeyDown((Integer(not (Highest)) * 2) + 38);
+  VKeyDown((Integer(not (Highest)) * 2) + 38);
   WaitRR(1000, 1500);
-  KeyUp((Integer(not Highest) * 2) + 38);
+  VKeyUp((Integer(not Highest) * 2) + 38);
   WaitRR(400, 600);
 end;
 
@@ -310,35 +310,41 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindFlag(var X, Y: Integer): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if flag exists and the cord of the lowest point.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modified: May 13th, 2012. By Wanted. RS2 Build 716.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindFlag(var X, Y: Integer): Boolean;
 var
-  I, H, Map, Wi, He: Integer;
+  Map: TSCARBitmap;
+  Client: TSCARClient;
+  I, H: Integer;
   TPA: TPointArray;
 begin
-  Result := False; 
-  Map := BitmapFromString(MMX2 - MMX1, MMY2 - MMY1, '');
-  CopyClientToBitmap(Map, MMX1, MMY1, MMX2, MMY2);
-  SetTargetDC(GetBitmapDC(Map));
-  GetBitmapSize(Map, Wi, He);
-  FindColors(TPA, 65536, 0, 0, Wi - 1, He - 1);
-  FilterPointsDist(TPA, 0, MMRDe, Wi / 2, He / 2);
-  OSIResetDC;
-  H := High(TPA)
-  for I := 0 to H do    
-    if (TIAContains([6185313, 6381921], FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y - 1) - FastGetPixel(Map, TPA[I].X, TPA[I].Y - 1))) then
-    begin
-      Result := True;
-      X := TPA[I].X + MMX1;
-      Y := TPA[I].Y + MMY1;
-      Break;
-    end;
-  FreeBitmap(Map);
+  Result := False;      
+  Map := GetClient.CaptureEx(MMX1, MMY1, MMX2, MMY2);  
+  try
+    Client := SetClient(TSCARBitmapClient.Create(Map));  
+    try
+      FindColorEx(TPA, 65536, 0, 0, Map.Width - 1, Map.Height - 1);      
+    finally  
+      SetClient(Client).Free;  
+    end;  
+    FilterPointsDist(TPA, 0, MMRDe, Map.Width / 2, Map.Height / 2); 
+    H := High(TPA)
+    for I := 0 to H do    
+      if (TIAContains([6185313, 6381921], Map.Pixels[TPA[I].X - 1, TPA[I].Y - 1] - Map.Pixels[TPA[I].X, TPA[I].Y - 1])) then
+      begin
+        Result := True;
+        X := TPA[I].X + MMX1;
+        Y := TPA[I].Y + MMY1;
+        Break;
+      end;  
+  finally
+    Map.Free;  
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -469,20 +475,22 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
-Contributors: Wanted
+function FindMMDotsExOverlap(ColorDiffs: TIntArray): T2DPointArray;
+Contributors: Wanted, Freddy
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 This one uses overlapping checking, so it's twice as slow.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modified: May 13th, 2012. By Wanted. RS2 Build 716.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindMMDotsExOverlap(ColorDiffs: TIntegerArray): T2DPointArray;
+function FindMMDotsExOverlap(ColorDiffs: TIntArray): T2DPointArray;
 var
-  I, II, H, HH, Map, Wi, He, C, O: Integer;
+  Map: TSCARBitmap;
+  Client: TSCARClient;
+  I, II, H, HH, C, O: Integer;
   Offset: T2DPointArray;
   TPA: TPointArray;
-  L: TIntegerArray;
+  L: TIntArray;
   B: Boolean;
 begin
   Result := [TPointArray([])];
@@ -491,48 +499,54 @@ begin
   SetLength(L, HH + 1);
   if (HH < 0 ) then
     Exit;
-  Map := BitmapFromString(MMX2 - MMX1 + 4, MMY2 - MMY1 + 4, '');
-  CopyClientToBitmap(Map, MMX1 - 2, MMY1 - 2, MMX2 + 2, MMY2 + 2);
-  SetTargetDC(GetBitmapDC(Map));
-  GetBitmapSize(Map, Wi, He);
-  FindColors(TPA, 65536, 3, 3, Wi - 3, He - 3);
-  FilterPointsDist(TPA, 0, MMRDe, (Wi / 2) - 2, (He / 2) - 2);
-  OSIResetDC;
-  H := High(TPA);
-  Offset := [TPointArray([Point(-2, 0), Point(-1, 0)]), TPointArray([Point(0, -2), Point(0, -1)])];
-  if (H > 0) then
-    for I := 0 to H do
-      for O := 0 to 1 do
-      begin
-        C := (FastGetPixel(Map, TPA[I].X + Offset[O][0].X, TPA[I].Y + Offset[O][0].Y) - FastGetPixel(Map, TPA[I].X + Offset[O][1].X, TPA[I].Y + Offset[O][1].Y));
-        B := False;
-        for II := 0 to HH do
-          if (C = ColorDiffs[II]) then
-          begin
-            B := True;
-            Inc(L[II]);
-            SetLength(Result[II], L[II]);
-            Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 4, TPA[I].Y + MMY1 - 4);
+  Map := GetClient.CaptureEx(MMX1 - 2, MMY1 - 2, MMX2 + 2, MMY2 + 2);       
+  try             
+    Client := SetClient(TSCARBitmapClient.Create(Map));   
+    try
+      FindColorEx(TPA, 65536, 3, 3, Map.Width - 3, Map.Height - 3);   
+    finally
+      SetClient(Client).Free;
+    end; 
+    FilterPointsDist(TPA, 0, MMRDe, (Map.Width / 2) - 2, (Map.Height / 2) - 2);
+    H := High(TPA);
+    Offset := [TPointArray([Point(-2, 0), Point(-1, 0)]), TPointArray([Point(0, -2), Point(0, -1)])];
+    if (H > 0) then
+      for I := 0 to H do
+        for O := 0 to 1 do
+        begin
+          C := (Map.Pixels[TPA[I].X + Offset[O][0].X, TPA[I].Y + Offset[O][0].Y] - Map.Pixels[TPA[I].X + Offset[O][1].X, TPA[I].Y + Offset[O][1].Y]);
+          B := False;
+          for II := 0 to HH do
+            if (C = ColorDiffs[II]) then
+            begin
+              B := True;
+              Inc(L[II]);
+              SetLength(Result[II], L[II]);
+              Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 4, TPA[I].Y + MMY1 - 4);
+              Break;
+            end;
+          if (B) then
             Break;
-          end;
-        if (B) then
-          Break;
-      end;
-  FreeBitmap(Map);
+        end;  
+  finally   
+    Map.Free;
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
-Contributors: Wanted
+function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
+Contributors: Wanted, Freddy
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modified: May 13th, 2012. By Wanted. RS2 Build 716.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindMMDotsEx(ColorDiffs: TIntegerArray): T2DPointArray;
-var
-  I, II, H, HH, Map, Wi, He, C: Integer;
-  L: TIntegerArray;
+function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
+var                  
+  Map: TSCARBitmap;
+  Client: TSCARClient;
+  I, II, H, HH, C: Integer;
+  L: TIntArray;
   TPA: TPointArray;
 begin
   Result := [TPointArray([])];
@@ -540,29 +554,33 @@ begin
   SetLength(Result, HH + 1);
   SetLength(L, HH + 1);
   if (HH < 0 ) then
-    Exit;
-  Map := BitmapFromString(MMX2 - MMX1 + 4, MMY2 - MMY1 + 4, '');
-  CopyClientToBitmap(Map, MMX1 - 2, MMY1 - 2, MMX2 + 2, MMY2 + 2);
-  SetTargetDC(GetBitmapDC(Map));
-  GetBitmapSize(Map, Wi, He);
-  FindColors(TPA, 65536, 3, 3, Wi - 3, He - 3);
-  FilterPointsDist(TPA, 0, MMRDe, (Wi / 2) - 2, (He / 2) - 2);
-  OSIResetDC;
-  H := High(TPA);
-  if (H > 0) then
-    for I := 0 to H do
-    begin
-      C := (FastGetPixel(Map, TPA[I].X - 2, TPA[I].Y) - FastGetPixel(Map, TPA[I].X - 1, TPA[I].Y));
-      for II := 0 to HH do
-        if (C = ColorDiffs[II]) then
-        begin
-          Inc(L[II]);
-          SetLength(Result[II], L[II]);
-          Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 4, TPA[I].Y + MMY1 - 4);
-          Break;
-        end;
-    end;
-  FreeBitmap(Map);
+    Exit;       
+  Map := GetClient.CaptureEx(MMX1 - 2, MMY1 - 2, MMX2 + 2, MMY2 + 2);       
+  try             
+    Client := SetClient(TSCARBitmapClient.Create(Map));   
+    try
+      FindColorEx(TPA, 65536, 3, 3, Map.Width - 3, Map.Height - 3);   
+    finally
+      SetClient(Client).Free;
+    end; 
+    FilterPointsDist(TPA, 0, MMRDe, (Map.Width / 2) - 2, (Map.Height / 2) - 2);
+    H := High(TPA);
+    if (H > 0) then
+      for I := 0 to H do
+      begin
+        C := (Map.Pixels[TPA[I].X - 2, TPA[I].Y] - Map.Pixels[TPA[I].X - 1, TPA[I].Y]);
+        for II := 0 to HH do
+          if (C = ColorDiffs[II]) then
+          begin
+            Inc(L[II]);
+            SetLength(Result[II], L[II]);
+            Result[II][L[II] - 1] := Point(TPA[I].X + MMX1 - 4, TPA[I].Y + MMY1 - 4);
+            Break;
+          end;
+      end; 
+  finally   
+    Map.Free;
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -582,14 +600,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CountMMDotsEx2(ColorDiffs: TIntegerArray): TIntegerArray;
-Contributors: Wanted
+function CountMMDotsEx2(ColorDiffs: TIntArray): TIntArray;
+Contributors: Wanted, Freddy
 Description: Counts all the dots of different colors you specify. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modified: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CountMMDotsEx2(ColorDiffs: TIntegerArray): TIntegerArray;
+function CountMMDotsEx2(ColorDiffs: TIntArray): TIntArray;
 var
   ATPA: T2DPointArray;
   I, H: Integer;
@@ -602,17 +620,17 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CountMMDotsEx(ColorDiffs: TIntegerArray): Integer;
-Contributors: Wanted
+function CountMMDotsEx(ColorDiffs: TIntArray): Integer;
+Contributors: Wanted, Freddy
 Description: Counts all the dots of different colors you specify. And then adds
 them together for a total number. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modified: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CountMMDotsEx(ColorDiffs: TIntegerArray): Integer;
+function CountMMDotsEx(ColorDiffs: TIntArray): Integer;
 var
-  TIA: TIntegerArray;
+  TIA: TIntArray;
   I, H: Integer;
 begin
   Result := 0;
@@ -656,7 +674,7 @@ begin
   if (Length(ATPA) < 1) then
     Exit;
   TPA := ATPA[0];
-  P := MiddleTPA(TPA);
+  P := TPAMiddle(TPA);
   IncEx(P.X, XOffset);
   IncEx(P.Y, YOffset);
   Result := MouseFlagEx(P.X, P.Y, RX, RY, FlagD);

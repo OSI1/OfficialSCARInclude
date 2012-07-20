@@ -2,15 +2,13 @@
                               Official SCAR Include
                                   Array Routines
 --------------------------------------------------------------------------------
- * function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
-     By: Wanted
- * function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
+ * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
      By: Wanted
  * function StrInStr(SubStr, S: string): Boolean;
      By: Wanted
- * function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
+ * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
      By: Wanted
- * function CheckTBoA(TBoA: TBooleanArray): Integer;
+ * function CheckTBoA(TBoA: TBoolArray): Integer;
      By: Wanted
  * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
      By: Wanted
@@ -27,22 +25,24 @@
  * procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
      By: Wanted
  * procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
-     By: Wanted
- * function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+     By: Wanted                     
+ * function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+     By: Freddy
+ * function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
      By: Wanted
  * function PointsNotInTPA(TPA: TPointArray): TPointArray;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if the string is in the array and returns position.
 Date Created: October 10th, 2011. By Wanted
-Last Modified: October 10th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
 var
   H, L: Integer;
   SS: string;
@@ -65,27 +65,6 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
-Contributors: Wanted
-Description: Results true if Int is in the TIntegerArray and the Pos found.
-Date Created: November 10th, 2011. By Wanted
-Last Modified: November 10th, 2011. By Wanted
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
-var
-  L, H: Integer;
-begin
-  Result := True;
-  L := Low(TIA);
-  H := High(TIA);
-  for Pos := L to H do
-    if (Int = TIA[Pos]) then
-      Exit;
-  Result := False;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function StrInStr(SubStr, S: string): Boolean;
 Contributors: Wanted
 Description: Results true if a string is inside of another string.
@@ -99,14 +78,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
+function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
 Contributors: Wanted
 Description: Results true if any strings are inside a string.
 Date Created: December 31st, 2011. By Wanted
-Last Modified: December 31st, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
+function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
 var
   I, H: Integer;
 begin
@@ -119,14 +98,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CheckTBoA(TBoA: TBooleanArray): Integer;
+function CheckTBoA(TBoA: TBoolArray): Integer;
 Contributors: Wanted
 Description: Results the amount of true booleans in boolean array.
 Date Created: December 12th, 2011. By Wanted
-Last Modified: December 12th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CheckTBoA(TBoA: TBooleanArray): Integer;
+function CheckTBoA(TBoA: TBoolArray): Integer;
 var
   I, H: Integer;
 begin
@@ -231,22 +210,25 @@ function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
 Contributors: Raymond, Wanted, Freddy.
 Description: Turns a line of text into an array of points.
 Date Created: August 7th, 2011. By Anonymous
-Last Modified: May 13th, 2012. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
-var
-  W, H, bmpText: Integer;
+var      
+  BmpText: TSCARBitmap; 
+  Client: TSCARClient;
 begin
   Result := [];
   if (Length(Text) < 1) then
     Exit;
-  bmpText := CreateBitmapMaskFromText(Text, Chars);
-  GetBitmapSize(bmpText, W, H);
-  SetTargetDC(GetBitmapDC(bmpText));
-  FindColors(Result, clWhite, 0, 0, W + 1, H + 1);
-  OSIResetDC;
-  FreeBitmap(bmpText);
+  BmpText := CreateBitmapMaskFromText(Text, Chars);  
+  Client := SetClient(TSCARBitmapClient.Create(BmpText));    
+  try                              
+    FindColorEx(Result, clWhite, 0, 0, BmpText.Width - 1, BmpText.Height - 1);
+  finally      
+    SetClient(Client).Free;
+    BmpText.Free;
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -359,21 +341,32 @@ begin
     Exit;
   end;
   TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(StartAngle), Radians(EndAngle));
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+Contributors: Freddy
+Description: Finds a color within circle.
+Date Created: July 20th, 2012. By Freddy
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+begin
+  Result := FindColorTPATol(X, Y, Color, TPAFromCircle(Point(CX, CY), R), Tol);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
-Contributors: Wanted
+function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
+Contributors: Wanted, Freddy
 Description: Finds colors within circle.
 Date Created: October 28th, 2011. By Wanted
-Last Modified: October 28th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
 begin
-  FindColorsTolerance(Points, Color, Floor(CX - R), Floor(CY - R), Ceil(CX + R), Ceil(CY + R), Tol);
-  FilterPointsDist(Points, 0, R, CX, CY);
-  Result := (Length(Points) > 1);
+  Result := FindColorTPATolEx(Points, Color, TPAFromCircle(Point(CX, CY), R), Tol);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

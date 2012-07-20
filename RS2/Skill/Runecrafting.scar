@@ -79,16 +79,18 @@ begin
                             'F29F1050E30DE47F22A0C601C8FF42408D3190FF12BF1A0032360' +
                             'ED2');
     bmpPouch_Medium_Damaged: begin
-                               Result := BitmapFromString(8, 8, 'beNplzd0KQDAchvGLkI/kY1a' +
-                                    'LjKFFSEtxICe7/7vx6l9aOf3V08PZMg6T7oa2VrK09jRmklIEvke' +
-                                    'u+wYuK3EcKzyOwm3W5Ejg12XgWRLDkZAjue8dXuQpubtQqnT9W8A' +
-                                    'FZ67TohL870hefwBvISNI');
+                               Result := Integer(TSCARBitmap.Create('deNplzcs' +
+                                 'KQEAYhmFLezkk55rIMEyTCWlSLGTj/u/GV39pyvapt9' +
+                                 'd1XGeZpFaD7FvB6+c5jdGcs8D3yNXYwXnDjmOFx1G4z' +
+                                 'YocCfy6DDxLYjgSciT3vcPLPCW3F0LUtn8LOKsK22nR' +
+                                 'sOrvSMhfkGMjWA=='));
                                Tolerance := 10;
                              end;
     bmpPouch_Large_Damaged: begin
-                              Result := BitmapFromString(8, 8, 'beNpTVTIz0jM20DHQ1QQiXS1' +
-                                   '1LXUVd3c7a2tjiDhECiLu5eVga2tqYWoI1wIR9/FxcnAwxxT383P' +
-                                   'BKg5EuMTVVZXQxCFSmOJQ9QDNmSO4');
+                              Result := Integer(TSCARBitmap.Create('deNrjYOBg' +
+                                'MDPSMzbQMdDVBCJdLXUtdRV3dztra2OIOEQKIu7l5WBr' +
+                                'a2phagjXAhH38XFycDDHFPfzc8EqDkS4xNVVldDEIVKY' +
+                                '4nD1AOv7I8g='));
                               Tolerance := 10;
                             end;
   end;
@@ -96,10 +98,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindPouch(Pouch: Integer; var Slot: Integer; CheckIT: Boolean): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: If found pouch returns true and slot where found.
 Date Created: November 12th, 2011. By Wanted. RS2 Build 678.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindPouch(Pouch: Integer; var Slot: Integer; CheckIT: Boolean): Boolean;
@@ -114,8 +116,8 @@ begin
   ItemPouch := LoadRunecraftingItem(Pouch, Tol);
   if (InRange(Pouch, bmpPouch_Small_Damaged, bmpPouch_Large_Damaged)) then
   begin
-    Result := FindBitmapToleranceIn(ItemPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2, Tol);
-    FreeBitmap(ItemPouch);
+    Result := FindBitmapTol(P.X, P.Y, TSCARBitmap(ItemPouch), MIX1, MIY1, MIX2, MIY2, Tol);
+    TSCARBitmap(ItemPouch).Free;
   end
   else
   begin
@@ -129,16 +131,16 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function ClickPouch(Pouch, Option: Integer; CheckIT: Boolean): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Clicks pouch, if no option left click, else right clicks and selects option.
 Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickPouch(Pouch, Option: Integer; CheckIT: Boolean): Boolean;
 var
   TypeCs: array of ClickActions;
-  COptions: TStringArray;
+  COptions: TStrArray;
   TypeC: ClickActions;
   I, T, Slot: Integer;
   S: string;

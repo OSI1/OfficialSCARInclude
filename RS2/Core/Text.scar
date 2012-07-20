@@ -4,26 +4,26 @@
                                   Text Routines
 --------------------------------------------------------------------------------
  * function GetUpText: string;
-     By: Freddy1990
+     By: Freddy
  * function IsUpText(Text: string): Boolean;
-     By: Freddy1990 & Wanted.
- * function IsUpTextMulti(Text: TStringArray): Boolean;
-     By: Freddy1990 & Wanted.
+     By: Freddy & Wanted.
+ * function IsUpTextMulti(Text: TStrArray): Boolean;
+     By: Freddy & Wanted.
  * function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
      By: Wanted
  * function OptionBoxExists: Boolean;
      By: Wanted
- * function GetOptionsEx(var B: TBox): TStringArray;
+ * function GetOptionsEx(var B: TBox): TStrArray;
      By: Wanted
- * function GetOptions: TStringArray;
+ * function GetOptions: TStrArray;
      By: Wanted
- * function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
+ * function OptionExistsMulti(Options: TStrArray; var InBox: TBoxArray): TBoolArray;
      By: Wanted
  * function OptionExists(Option: string): Boolean;
      By: Wanted
- * function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolean;
+ * function ChooseOptionMultiEx(Options: TStrArray; TypeC: ClickActions): Boolean;
      By: Wanted
- * function ChooseOptionMulti(Options: TStringArray): Boolean;
+ * function ChooseOptionMulti(Options: TStrArray): Boolean;
      By: Wanted
  * function ChooseOption(Option: string): Boolean;
      By: Wanted
@@ -31,9 +31,9 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetUpText: String;
-Contributors: Freddy1990, Wanted.
+Contributors: Freddy, Wanted.
 Description: Returns text in upperleft corner.
-Date Created: August 7th, 2011. By Freddy1990. RS2 Build 660.
+Date Created: August 7th, 2011. By Freddy. RS2 Build 660.
 Last Modified: January 5th, 2012. By Wanted. RS2 Build 691.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -47,9 +47,9 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function IsUpText(Text: string): Boolean;
-Contributors: Freddy1990, Wanted.
+Contributors: Freddy, Wanted.
 Description: Returns true if uptext is found.
-Date Created: August 7th, 2011. By Freddy1990 & Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Freddy & Wanted. RS2 Build 660.
 Last Modified: December 31st, 2011. By Wanted. RS2 Build 690.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -68,14 +68,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function IsUpTextMulti(Text: TStringArray): Boolean;
-Contributors: Freddy1990, Wanted.
+function IsUpTextMulti(Text: TStrArray): Boolean;
+Contributors: Freddy, Wanted.
 Description: Checks for the occurance of any of the strings in the array.
-Date Created: August 7th, 2011. By Freddy1990 & Wanted. RS2 Build 660.
-Last Modified: November 31st, 2011. By Wanted. RS2 Build 690.
+Date Created: August 7th, 2011. By Freddy & Wanted. RS2 Build 660.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function IsUpTextMulti(Text: TStringArray): Boolean;
+function IsUpTextMulti(Text: TStrArray): Boolean;
 var
   I, H, T: Integer;
   TheText: string;
@@ -97,11 +97,11 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if the box that contains the ChooseOptions is up.
 OptionBoxTPA contains all the points within that match clOptionsBox.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: January 17th, 2012. By Wanted. RS2 Build 699.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
@@ -111,22 +111,22 @@ var
   B: TBox;
 begin
   Result := False;
-  if (not (WaitFindColorsTolerance(TPA1, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 80, True, 50, 150, 1500, 2500))) then
+  if (not (WaitFindColorTolEx(TPA1, clOptionsBox, RSX1, RSY1, RSX2, RSY2, 0, 80, True, 50, 150, 1500, 2500))) then
     Exit;
-  ATPA := TPAChain(TPA1, 3);
+  ATPA := SplitTPA(TPA1, 3);
   if (Length(ATPA) < 1) then
     Exit;
   SortATPASize(ATPA, True);
   TPA1 := ATPA[0]
   B := TPABounds(TPA1);
-  FindColors(TPA2, clOptionsBox2, RSX1, B.Y1, RSX2, RSY2);
-  ATPA := TPAChain(TPA2, 3);
+  FindColorEx(TPA2, clOptionsBox2, RSX1, B.Y1, RSX2, RSY2);
+  ATPA := SplitTPA(TPA2, 3);
   if (Length(ATPA) < 1) then
     Exit;
   SortATPASize(ATPA, True);
   TPA2 := ATPA[0]
   TPA := CombineTPA(TPA1, TPA2);
-  OptionBox := GetTPABounds(TPA);
+  OptionBox := TPABounds(TPA);
   ConstrainBox(OptionBox.X1, OptionBox.Y1, OptionBox.X2, OptionBox.Y2, B.X1, B.Y1, B.X2, RSY2 - 2);
   Result := True;
 end;
@@ -147,14 +147,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetOptionsEx(var B: TBox): TStringArray;
-Contributors: Wanted
+function GetOptionsEx(var B: TBox): TStrArray;
+Contributors: Wanted, Freddy
 Description: Returns options.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: January 16th, 2012. By Wanted. RS2 Build 699.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetOptionsEx(var B: TBox): TStringArray;
+function GetOptionsEx(var B: TBox): TStrArray;
 var
   H, I: Integer;
 begin
@@ -167,14 +167,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetOptions: TStringArray;
-Contributors: Wanted
+function GetOptions: TStrArray;
+Contributors: Wanted, Freddy
 Description: Returns options.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetOptions: TStringArray;
+function GetOptions: TStrArray;
 var
   B: TBox;
 begin
@@ -182,17 +182,17 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
+function OptionExistsMulti(Options: TStrArray; var InBox: TBoxArray): TBoolArray;
 Contributors: Wanted
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: January 11th, 2012. By Wanted. RS2 Build 697.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function OptionExistsMulti(Options: TStringArray; var InBox: TBoxArray): TBooleanArray;
+function OptionExistsMulti(Options: TStrArray; var InBox: TBoxArray): TBoolArray;
 var
   I, II, H, HH: LongInt;
-  Lines: TStringArray;
+  Lines: TStrArray;
   B: TBox;
 begin
   Lines := GetOptionsEx(B);
@@ -218,15 +218,15 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OptionExists(Option: string): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Checks if option exists within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: December 12th, 2011. By Wanted. RS2 Build 688.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OptionExists(Option: string): Boolean;
 var
-  TBoA: TBooleanArray;
+  TBoA: TBoolArray;
   TBA: TBoxArray;
 begin
   TBoA := OptionExistsMulti([Option], TBA);
@@ -234,16 +234,16 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolean;
-Contributors: Wanted
+function ChooseOptionMultiEx(Options: TStrArray; TypeC: ClickActions): Boolean;
+Contributors: Wanted, Freddy
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: January 5th, 2012. By Wanted. RS2 Build 691.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ChooseOptionMultiEx(Options: TStringArray; TypeC: ClickActions): Boolean;
+function ChooseOptionMultiEx(Options: TStrArray; TypeC: ClickActions): Boolean;
 var
-  TBoA: TBooleanArray;
+  TBoA: TBoolArray;
   TPA: TPointArray;
   TBA: TBoxArray;
   I, H: LongInt;
@@ -278,14 +278,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ChooseOptionMulti(Options: TStringArray): Boolean;
-Contributors: Wanted
+function ChooseOptionMulti(Options: TStrArray): Boolean;
+Contributors: Wanted, Freddy
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
-Last Modified: November 29th, 2011. By Wanted. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ChooseOptionMulti(Options: TStringArray): Boolean;
+function ChooseOptionMulti(Options: TStrArray): Boolean;
 begin
   Result := ChooseOptionMultiEx(Options, ClickLeft);
 end;

@@ -22,6 +22,8 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+// SmartRemote.dll currently does not support debugimage
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SmartDebugBitmap(BMP, X, Y: Integer);
 Contributors: Wanted, Timer.

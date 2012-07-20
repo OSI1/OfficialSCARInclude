@@ -33,10 +33,10 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function TradeScreen: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if at the first trade screen.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TradeScreen: Boolean;
@@ -45,7 +45,7 @@ var
   P: TPoint;
 begin
   Result := False;
-  FindColors(TPA, 2070783, 132, 11, 342, 31);
+  FindColorEx(TPA, 2070783, 132, 11, 342, 31);
   if (Length(TPA) > 20) then
     Result := FindTextTPAInTPA('rading', ScreenChars, TPA, P.X, P.Y);
 end;
@@ -202,10 +202,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetTradersName: string;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the name of the person you're trading with. Works on first tradescreen.
 Date Created: February 8th, 2012. By Wanted. RS2 Build 700.
-Last Modified: February 9th, 2012. By Wanted. RS2 Build 700.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetTradersName: string;
@@ -213,7 +213,7 @@ var
   TPA: TPointArray;
 begin
   Result := '';
-  FindColors(TPA, 2070783, 79, 11, 369, 31);
+  FindColorEx(TPA, 2070783, 79, 11, 369, 31);
   SortTPA(TPA);
   if (Length(TPA) < 1) then
     Exit;
@@ -223,10 +223,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetFinalTradersName: string;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the name of the person you're trading with. Works on final tradescreen.
 Date Created: February 9th, 2012. By Wanted. RS2 Build 700.
-Last Modified: March 8th, 2012. By Wanted. RS2 Build 701.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFinalTradersName: string;
@@ -234,7 +234,7 @@ var
   TPA: TPointArray;
 begin
   Result := '';
-  FindColors(TPA, 16776960, 44, 307, 165, 324);
+  FindColorEx(TPA, 16776960, 44, 307, 165, 324);
   SortTPA(TPA);
   if (Length(TPA) < 1) then
     Exit;
@@ -243,11 +243,11 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetFinalCoinAmount: LongInt;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the final coin amount off the final trade screen on their
 offer side of the screen. Results in -1 if failed. Should work for all amounts.
 Date Created: February 9th, 2012. By Wanted. RS2 Build 700.
-Last Modified: February 9th, 2012. By Wanted. RS2 Build 700.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetFinalCoinAmount: LongInt;
@@ -257,7 +257,7 @@ var
   P: TPoint;
 begin
   Result := -1;
-  FindColors(TPA, 2070783, 261, 86, 497, 259);
+  FindColorEx(TPA, 2070783, 261, 86, 497, 259);
   if (not (FindTextTPAInTPA('oin', ScreenChars, TPA, P.X, P.Y))) then
     Exit;
   S := rs_GetTextAt(OptionChars, P.X, P.Y - 5);
@@ -269,13 +269,13 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetApproxFinalCoinAmount: LongInt;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the final coin amount off the final trade screen on their
 offer side of the screen. Results in -1 if failed. Should work for all amounts.
 This one returns approx value so it works if the money pouch is open and is blocking
 the exact coin amount and reads the first number i.e. 7000k (7,000,XXX)
 Date Created: March 20th, 2012. By Wanted. RS2 Build 707.
-Last Modified: March 20th, 2012. By Wanted. RS2 Build 707.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetApproxFinalCoinAmount: LongInt;
@@ -285,7 +285,7 @@ var
   P: TPoint;
 begin
   Result := -1;
-  FindColors(TPA, 2070783, 261, 86, 497, 259);
+  FindColorEx(TPA, 2070783, 261, 86, 497, 259);
   if (not (FindTextTPAInTPA('oin', ScreenChars, TPA, P.X, P.Y))) then
     Exit;
   S := rs_GetTextAt(OptionChars, P.X, P.Y - 5); 

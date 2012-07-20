@@ -148,16 +148,16 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure OrderWorlds(By: Integer; Descending: Boolean);
-Contributors: Wanted, Naum.
+Contributors: Wanted, Naum, Freddy.
 Description: Sorts world By (WS_ Indexes)
 Date Created: August 18th, 2011. By Wanted & Naum. RS2 Build 662.
-Last Modified: October 23rd, 2011. By Wanted. RS2 Build 668.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OrderWorlds(By: Integer; Descending: Boolean);
 var
   ATPA: T2DPointArray;
-  TIA: TIntegerArray;
+  TIA: TIntArray;
   TPA: TPointArray;
   P: TPoint;
   TB: TBox;
@@ -166,7 +166,7 @@ begin
     Exit;
   TIA := [107, 172, 361, 545, 598, 645];
   TB := IntToBox(TIA[By], 123, TIA[By] + 22, 133);
-  FindColors(TPA, clWSArrow, TB.X1, TB.Y1, TB.X2, TB.Y2);
+  FindColorEx(TPA, clWSArrow, TB.X1, TB.Y1, TB.X2, TB.Y2);
   ATPA := SplitTPA(TPA, 2);
   SortATPAByMiddleEx(ATPA, Point(95, 131));
   P := ATPA[Integer(not (Descending))][Random(Length(ATPA[Integer(not (Descending))]))];
@@ -250,10 +250,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
-Contributors: Wanted, Narcle.
+Contributors: Wanted, Narcle, Freddy.
 Description: Returns RS2WorldArray information + updated world switcher screen info.
 Date Created: September 11th, 2011. By Wanted & Narcle. RS2 Build 663.
-Last Modified: December 31st, 2011. By Wanted. RS2 Build 690.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
@@ -286,7 +286,7 @@ begin
   WorldInfo.Location := Trim(GetTextAtEx(P.X + 133, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 50, False, tr_AllChars));
   WorldInfo.Activity := WorldInfo.Location;
   WorldInfo.Members := (Trim(GetTextAtEx(P.X + 413, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 8, False, tr_AllChars)) = 'Members');
-  WorldInfo.LootShare := FindColorTolerance(LS.X, LS.Y, 4824144, P.X + 490, P.Y, P.X + 499, P.Y + 10, 40);
+  WorldInfo.LootShare := FindColorTol(LS.X, LS.Y, 4824144, P.X + 490, P.Y, P.X + 499, P.Y + 10, 40);
   WorldInfo.Ping := StrToIntDef(GetNumbers(GetTextAtEx(P.X + 520, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 4, False, tr_AllChars)), 0);
   WorldInfo.QuickChat := ((StrInStr('uick', WorldInfo.Activity)) or (RS2WorldArray[I].QuickChat));
   WorldInfo.HRW := StrInStr('derness', WorldInfo.Activity);

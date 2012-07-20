@@ -11,7 +11,7 @@
      By: Wanted
  * function SetChat(Chat, State: Integer): Boolean;
      By: Wanted
- * function SetChats(Chats, States: TIntegerArray): TBooleanArray;
+ * function SetChats(Chats, States: TIntArray): TBoolArray;
      By: Wanted
  * function FixChat: Boolean;
      By: Wanted
@@ -61,15 +61,15 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetChatStatus(Chat: Integer): Integer;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the stats of the chat you enter.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetChatStatus(Chat: Integer): Integer;
 var
-  Colors: TIntegerArray;
+  Colors: TIntArray;
   P: TPoint;
   B: TBox;
 begin
@@ -90,16 +90,16 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function SetChat(Chat, State: Integer): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Sets the desired chat to the desired state.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modified: May 6th, 2012. By Wanted. RS2 Build 714.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetChat(Chat, State: Integer): Boolean;
 var
   CurrentState, CurrentChat: Integer;
-  Options: T2DStringArray;
+  Options: T2DStrArray;
   TypeC: ClickActions;
   B: TBox;
 begin
@@ -123,8 +123,8 @@ begin
     Result := True;
     Exit;
   end;
-  Options := [TStringArray(['All', 'On']), TStringArray(['ilter', 'iend', 'Fri']), TStringArray(['Off', 'ff', 'Of']),
-              TStringArray(['ide', 'Hi', 'id']), TStringArray(['XP', 'arned', 'ime'])];
+  Options := [TStrArray(['All', 'On']), TStrArray(['ilter', 'iend', 'Fri']), TStrArray(['Off', 'ff', 'Of']),
+              TStrArray(['ide', 'Hi', 'id']), TStrArray(['XP', 'arned', 'ime'])];
   if (Chat = Chat_Friends_Tab) then
     Options[Chat_Friends] := ['ends F', 'nds Fr', 'ds Frie'];            
   if (InRange(State, 0, High(Options))) then
@@ -132,14 +132,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function SetChats(Chats, States: TIntegerArray): TBooleanArray;
-Contributors: Wanted
+function SetChats(Chats, States: TIntArray): TBoolArray;
+Contributors: Wanted, Freddy
 Description: Sets the desired chats to the desired states.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function SetChats(Chats, States: TIntegerArray): TBooleanArray;
+function SetChats(Chats, States: TIntArray): TBoolArray;
 var
   I, H: Integer;
 begin
@@ -153,10 +153,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FixChat: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Scrolls the chat bar all the way down, if needed true.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FixChat: Boolean;
@@ -168,7 +168,7 @@ begin
   if (GetColor(505, 441) = 592137) then
     Exit;
   Result := True;
-  FindColors(TPA, 592137, 498, 361, 511, 440);
+  FindColorEx(TPA, 592137, 498, 361, 511, 440);
   if (Length(TPA) < 1) then
     Exit;
   B := TPABounds(TPA);
@@ -214,10 +214,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LeveledUpEx(Click, UntilGone: Boolean): Boolean;
-Contributors: Wanted
+Contributors: Wante, Freddy
 Description: Clicks to continue after level up, true if found.
 Date Created: November 7th, 2011. By Wanted. RS2 Build 676.
-Last Modified: December 20th, 2011. By Wanted. RS2 Build 690.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LeveledUpEx(Click, UntilGone: Boolean): Boolean;
@@ -230,13 +230,13 @@ begin
   Result := False;
   I := 0;
   repeat
-    FindColors(TPA, clWhite, MCX1, 446, MCX2, MCY2);
-    FindColors(TPA2, 16711680, MCX1, 446, MCX2, MCY2);
+    FindColorEx(TPA, clWhite, MCX1, 446, MCX2, MCY2);
+    FindColorEx(TPA2, 16711680, MCX1, 446, MCX2, MCY2);
     TPA := CombineTPA(TPA, TPA2);
     if (Length(TPA) < 200) then
       Exit;
     SetLength(TBA, I + 1);
-    TBA[I] := GetTPABounds(TPA);
+    TBA[I] := TPABounds(TPA);
     if (FindTextTPAInTPA('lick here to', NPCChars, TPA, P.X, P.Y)) then
     begin
       if (not (Result)) then
