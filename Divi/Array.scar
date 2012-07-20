@@ -65,27 +65,6 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function IntInTIAPos(Int: Integer; TIA: TIntArray; var Pos: Integer): Boolean;
-Contributors: Wanted
-Description: Results true if Int is in the TIntArray and the Pos found.
-Date Created: November 10th, 2011. By Wanted
-Last Modified: July 20th, 2012. By Freddy
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function IntInTIAPos(Int: Integer; TIA: TIntArray; var Pos: Integer): Boolean;
-var
-  L, H: Integer;
-begin
-  Result := True;
-  L := Low(TIA);
-  H := High(TIA);
-  for Pos := L to H do
-    if (Int = TIA[Pos]) then
-      Exit;
-  Result := False;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function StrInStr(SubStr, S: string): Boolean;
 Contributors: Wanted
 Description: Results true if a string is inside of another string.
@@ -231,22 +210,25 @@ function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
 Contributors: Raymond, Wanted, Freddy.
 Description: Turns a line of text into an array of points.
 Date Created: August 7th, 2011. By Anonymous
-Last Modified: May 13th, 2012. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
-var
-  W, H, bmpText: Integer;
+var      
+  BmpText: TSCARBitmap; 
+  Client: TSCARClient;
 begin
   Result := [];
   if (Length(Text) < 1) then
     Exit;
-  bmpText := CreateBitmapMaskFromText(Text, Chars);
-  GetBitmapSize(bmpText, W, H);
-  SetTargetDC(GetBitmapDC(bmpText));
-  FindColors(Result, clWhite, 0, 0, W + 1, H + 1);
-  OSIResetDC;
-  FreeBitmap(bmpText);
+  BmpText := CreateBitmapMaskFromText(Text, Chars);  
+  Client := SetClient(TSCARBitmapClient.Create(BmpText));    
+  try                              
+    FindColorEx(Result, clWhite, 0, 0, BmpText.Width - 1, BmpText.Height - 1);
+  finally      
+    SetClient(Client).Free;
+    BmpText.Free;
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
