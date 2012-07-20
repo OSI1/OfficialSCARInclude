@@ -31,15 +31,15 @@ var
   OSI_Variance: Extended;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
+type ClickActions = (ClickLeft, ClickRight, ClickMiddle, MoveTo, Nothing);
 Contributors: Anonymous, Timer.
 Description: Click Actions, decide a click.
 Date Created: August 7th, 2011. By Anonymous
-Last Modified: August 7th, 2011. By Timer
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
-  ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
+  ClickActions = (ClickLeft, ClickRight, ClickMiddle, MoveTo, Nothing);
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var MouseSpeed: Integer;
@@ -51,20 +51,3 @@ Last Modified: August 7th, 2011. By Timer
 
 var
   MouseSpeed: Integer;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure OSIResetDC;
-Contributors: Wanted
-Description: Clean DC resetting.
-Date Created: May 13th, 2012. By Wanted
-Last Modified: May 13th, 2012. By Wanted
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-                     
-procedure OSIResetDC;
-begin
-  {$IFNDEF SMART}
-    ResetDC;
-  {$ELSE} 
-    SmartSetTarget;
-  {$ENDIF}
-end;

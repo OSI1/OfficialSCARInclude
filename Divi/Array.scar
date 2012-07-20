@@ -2,15 +2,15 @@
                               Official SCAR Include
                                   Array Routines
 --------------------------------------------------------------------------------
- * function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+ * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
      By: Wanted
- * function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
+ * function IntInTIAPos(Int: Integer; TIA: TIntArray; var Pos: Integer): Boolean;
      By: Wanted
  * function StrInStr(SubStr, S: string): Boolean;
      By: Wanted
- * function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
+ * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
      By: Wanted
- * function CheckTBoA(TBoA: TBooleanArray): Integer;
+ * function CheckTBoA(TBoA: TBoolArray): Integer;
      By: Wanted
  * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
      By: Wanted
@@ -35,14 +35,14 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if the string is in the array and returns position.
 Date Created: October 10th, 2011. By Wanted
-Last Modified: October 10th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function InStrArrPos(S: string; Arr: TStringArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
 var
   H, L: Integer;
   SS: string;
@@ -65,14 +65,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
+function IntInTIAPos(Int: Integer; TIA: TIntArray; var Pos: Integer): Boolean;
 Contributors: Wanted
-Description: Results true if Int is in the TIntegerArray and the Pos found.
+Description: Results true if Int is in the TIntArray and the Pos found.
 Date Created: November 10th, 2011. By Wanted
-Last Modified: November 10th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function IntInTIAPos(Int: Integer; TIA: TIntegerArray; var Pos: Integer): Boolean;
+function IntInTIAPos(Int: Integer; TIA: TIntArray; var Pos: Integer): Boolean;
 var
   L, H: Integer;
 begin
@@ -99,14 +99,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
+function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
 Contributors: Wanted
 Description: Results true if any strings are inside a string.
 Date Created: December 31st, 2011. By Wanted
-Last Modified: December 31st, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrInStrMulti(SubStrs: TStringArray; S: string): Boolean;
+function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
 var
   I, H: Integer;
 begin
@@ -119,14 +119,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CheckTBoA(TBoA: TBooleanArray): Integer;
+function CheckTBoA(TBoA: TBoolArray): Integer;
 Contributors: Wanted
 Description: Results the amount of true booleans in boolean array.
 Date Created: December 12th, 2011. By Wanted
-Last Modified: December 12th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CheckTBoA(TBoA: TBooleanArray): Integer;
+function CheckTBoA(TBoA: TBoolArray): Integer;
 var
   I, H: Integer;
 begin

@@ -8,7 +8,7 @@
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{$IFNDEF SCAR330_UP}
+{$IFNDEF SCAR335_UP}
   {$ERROR [OSI] Please update your copy of SCAR to run this script}
 {$ENDIF}
 
