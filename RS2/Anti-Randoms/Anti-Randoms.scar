@@ -39,16 +39,16 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS2Random, TRS2RandomArray.
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Type used to store random information
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
   TRS2Random = record
     Name: string;
-    TabsMissing: TIntegerArray;
+    TabsMissing: TIntArray;
     InRandom, SolveRandom: function: Boolean;
   end;
   TRS2RandomArray = array of TRS2Random;
@@ -244,14 +244,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetMissingTabs: TIntegerArray;
-Contributors: Wanted
+function GetMissingTabs: TIntArray;
+Contributors: Wanted, Freddy
 Description: Used for counting missing tabs for comparison in OSIFindRandoms.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: February 24th 2012. By Wanted. RS2 Build 701.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetMissingTabs: TIntegerArray;
+function GetMissingTabs: TIntArray;
 var
   I, L: Integer;
 begin
@@ -273,16 +273,16 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OSIFindRandoms: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Handles all of OSI's RS2 anti-random rountines.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: December 31st, 2011. By Wanted. RS2 Build 690.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OSIFindRandoms: Boolean;
 var
   InitCompassAngle: Extended;
-  MissingTabs: TIntegerArray;
+  MissingTabs: TIntArray;
   RandomSolved, B: Boolean;
   I, H: Integer;
 begin

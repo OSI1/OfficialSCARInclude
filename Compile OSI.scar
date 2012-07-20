@@ -21,7 +21,7 @@
 {$I RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
 {$I RS2\Misc\Trading.scar}       // Comment out in in-depth testing
 {$I RS2\Misc\Symbols.scar}       // Comment out in in-depth testing
-{$I RS2\Misc\DebugSMART.scar}    // Comment out in in-depth testing
+//{$I RS2\Misc\DebugSMART.scar}    // Comment out in in-depth testing
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TestCompileOSI;

@@ -158,23 +158,23 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FurnaceScreen: Boolean;
-Contributors: Bixby Sayz
+Contributors: Bixby Sayz, Freddy
 Description: Returns true if furnace (smelting) interface is open.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modified: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FurnaceScreen: Boolean;
 begin
-  Result := TIAContains([11, 121], CountColorTolerance(4543066, 315, 350, 325, 360, 10));
+  Result := TIAContains([11, 121], CountColorTol(4543066, 315, 350, 325, 360, 10));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
-Contributors: Bixby Sayz, Wanted.
+Contributors: Bixby Sayz, Wanted, Freddy
 Description: Opens any F2P furnace.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modified: November 30th, 2011. By Bixby Sayz. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
@@ -194,7 +194,7 @@ begin
   else
     Exit;
   end;
-  if (not (FindColorsTolerance(TPA, Color, MSX1, MSY1, MSX2, MSY2, 10))) then
+  if (not (FindColorTolEx(TPA, Color, MSX1, MSY1, MSX2, MSY2, 10))) then
     Exit;
   ATPA := SplitTPA(TPA, 10);
   SortATPASize(ATPA, True);

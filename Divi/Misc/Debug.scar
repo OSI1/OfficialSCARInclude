@@ -2,8 +2,6 @@
                               Official SCAR Include
                                Debugging Routines
 --------------------------------------------------------------------------------
- * procedure DebugBitmap2(bmpDebug: Integer);
-     By: Wanted
  * procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
      By: Wanted
  * procedure DebugATPABounds(ATPA: T2DPointArray);
@@ -21,33 +19,17 @@
 {$DEFINE OSIDebug}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure DebugBitmap2(bmpDebug: Integer);
-Contributors: Wanted
-Description: Simply debugs a bitmap by displaying it on the debug window.
-Date Created: August 7th, 2011. By Anonymous. RS2 Build 660.
-Last Modified: October 21st, 2011. By Wanted
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure DebugBitmap2(bmpDebug: Integer);
-var
-  W, H: Integer;
-begin
-  GetBitmapSize(bmpDebug, W, H);
-  DisplayDebugImgWindow(W, H);
-  SafeDrawBitmap(bmpDebug, GetDebugCanvas, 0, 0);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Debugs an ATPA to the debug window with tons of options.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: November 24th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
 var
-  Width, Height, bmpDebug, I, II, H, HH, Col: Integer;
+  bmpDebug: TSCARBitmap;
+  Width, Height, I, II, H, HH, Col: Integer;
   ATPA2: T2DPointArray;
   mTPA, TPA: TPointArray;
   B, BB: TBox;
@@ -60,7 +42,7 @@ begin
   for I := 0 to H do
     ATPA2[I] := CopyTPA(ATPA[I]);
   mTPA := MergeATPA(ATPA2);
-  B := GetTPABounds(mTPA);
+  B := TPABounds(mTPA);
   TPADimensions(mTPA, Width, Height);
   DecEx(B.X1, Round(Width * 0.25));
   if (B.X1 < 0) then
@@ -72,64 +54,70 @@ begin
   IncEx(B.Y2, Round(Height * 0.25));
   Width := B.X2 - B.X1 + 1;
   Height := B.Y2 - B.Y1 + 1;
-  bmpDebug := BitmapFromString(Width, Height, '');
-  if (ShowClient) then
-    CopyClientToBitmap(bmpDebug, B.X1, B.Y1, B.X2, B.Y2);
-  if ((ShowTPAs) or (ShowTPABorders) or (ShowTPAIndexes)) then
-  begin
-    H := High(ATPA2);
-    for I := 0 to H do
+  if (ShowClient) then 
+    bmpDebug := GetClient.CaptureEx(B.X1, B.Y1, B.X2, B.Y2)
+  else begin
+    bmpDebug := TSCARBitmap.Create('');
+    bmpDebug.SetSize(Width, Height);
+  end;         
+  try
+    if ((ShowTPAs) or (ShowTPABorders) or (ShowTPAIndexes)) then
     begin
-      Col := Random(clWhite + 1);
-      OffsetTPA(ATPA2[I], -B.X1, -B.Y1);
-      HH := High(ATPA2[I]);
-      if (ShowTPAs) then
-        for II := 0 to HH do
-          FastSetPixel(bmpDebug, ATPA2[I][II].X, ATPA2[I][II].Y, Col);
-      if ((ShowTPABorders) or (ShowTPAIndexes)) then
-        Col := Random(clWhite + 1);
-      if (ShowTPABorders) then
-      begin
-        TPA := TBOutlineToTPA(GetTPABounds(ATPA2[I]));
-        HH := High(TPA);
-          for II := 0 to HH do
-            FastSetPixel(bmpDebug, TPA[II].X, TPA[II].Y, Col);
-      end;
-      if (ShowTPAIndexes) then
-      begin
-        {$IFDEF RS2}
-          TPA := LoadTextTPA(IntToStr(I), StatChars);
-        {$ELSE}
-          Arial := LoadCharsFromFont2('Arial', 8, True, False, False, False);
-          TPA := LoadTextTPA(IntToStr(I), Arial);
-        {$ENDIF}
-        BB := GetTPABounds(ATPA2[I]);
-        OffsetTPA(TPA, BB.X1 + 2, BB.Y1 + 2);
-        HH := High(TPA);
-        for II := 0 to HH do
-          try
-            FastSetPixel(bmpDebug, TPA[II].X, TPA[II].Y, Col);
-          except
-          end;
-      end;
-    end;
-    if (ShowATPABorder) then
-    begin
-      TPA := TBOutlineToTPA(ATPABounds(ATPA2));
-      H := High(TPA);
+      H := High(ATPA2);
       for I := 0 to H do
-        FastSetPixel(bmpDebug, TPA[I].X, TPA[I].Y, clBlue);
+      begin
+        Col := Random(clWhite + 1);
+        OffsetTPA(ATPA2[I], -B.X1, -B.Y1);
+        HH := High(ATPA2[I]);
+        if (ShowTPAs) then
+          for II := 0 to HH do
+            bmpDebug.Pixels[ATPA2[I][II].X, ATPA2[I][II].Y] := Col;
+        if ((ShowTPABorders) or (ShowTPAIndexes)) then
+          Col := Random(clWhite + 1);
+        if (ShowTPABorders) then
+        begin
+          TPA := TBOutlineToTPA(TPABounds(ATPA2[I]));
+          HH := High(TPA);
+            for II := 0 to HH do
+              bmpDebug.Pixels[TPA[II].X, TPA[II].Y] := Col;
+        end;
+        if (ShowTPAIndexes) then
+        begin
+          {$IFDEF RS2}
+            TPA := LoadTextTPA(IntToStr(I), StatChars);
+          {$ELSE}
+            Arial := LoadCharsFromFont2('Arial', 8, True, False, False, False);
+            TPA := LoadTextTPA(IntToStr(I), Arial);
+          {$ENDIF}
+          BB := TPABounds(ATPA2[I]);
+          OffsetTPA(TPA, BB.X1 + 2, BB.Y1 + 2);
+          HH := High(TPA);
+          for II := 0 to HH do
+            try
+              bmpDebug.Pixels[TPA[II].X, TPA[II].Y] := Col;
+            except
+            end;
+        end;
+      end;
+      if (ShowATPABorder) then
+      begin
+        TPA := TBOutlineToTPA(ATPABounds(ATPA2));
+        H := High(TPA);
+        for I := 0 to H do    
+          bmpDebug.Pixels[TPA[I].X, TPA[I].Y] := clBlue;
+      end;
     end;
+    DebugBitmap(bmpDebug);
+    if (FileName <> '') then
+    begin
+      if (not (DirectoryExists(ScriptPath + 'Debug\'))) then
+        bmpDebug.SaveToBmp(ScriptPath + FileName + '.bmp')
+      else
+        bmpDebug.SaveToBmp(ScriptPath + 'Debug\' + FileName + '.bmp');
+    end;
+  finally
+    bmpDebug.Free;
   end;
-  DebugBitmap2(bmpDebug);
-  if (FileName <> '') then
-  begin
-    if (not (DirectoryExists(ScriptPath + 'Debug\'))) then
-      SaveBitmap(bmpDebug, ScriptPath + FileName + '.bmp')
-    else
-      SaveBitmap(bmpDebug, ScriptPath + 'Debug\' + FileName + '.bmp');
-  end;
-  FreeBitmap(bmpDebug);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -109,7 +109,9 @@ begin
     AllowQuickChat := True;
     AllowLootShare := True;
     {$IFDEF SMART}      
-      if not InitSmartLib(ScriptPath + 'libsmartremote32.dll') then 
+      if not InitSmartLib(IncludesPath + 'OSI\libsmartremote32.dll') or
+        not InitSmartLib(ScriptPath + 'OSI\libsmartremote32.dll') or
+        not InitSmartLib(ScriptPath + 'libsmartremote32.dll') then 
       begin
         WriteLn('Couldn''t load SMART (libsmartremote32.dll)');
         TerminateScript;
