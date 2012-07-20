@@ -15,10 +15,10 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function Abyss_InRandom: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if in the abyssal random.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Abyss_InRandom: Boolean;
@@ -26,7 +26,7 @@ var
   TPA, TPA2: TPointArray;
 begin
   Result := False;
-  FindMMColorsTolerance(TPA, clWhite, 421);
+  FindMMColorTolEx(TPA, clWhite, 421);
   TPA2 := TPA;
   FilterPointsDist(TPA, 0, 45, MMCX, MMCY);
   if (not (InRange(Length(TPA), 1900, 3200))) then
@@ -34,10 +34,10 @@ begin
   FilterPointsDist(TPA2, 50, MMRD, MMCX, MMCY);
   if (not (InRange(Length(TPA2), 0, 150))) then
     Exit;
-  FindMMColorsTolerance(TPA, clWhite, 35);
+  FindMMColorTolEx(TPA, clWhite, 35);
   if (not (InRange(Length(TPA), 150, 350))) then
     Exit;
-  FindMMColorsTolerance(TPA, clRed, 35);
+  FindMMColorTolEx(TPA, clRed, 35);
   if (not (InRange(Length(TPA), 9, 35))) then
     Exit;
   Result := True;
@@ -45,10 +45,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure Abyss_WalkToCenter;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Walks to the center of the abyssal random.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure Abyss_WalkToCenter;
@@ -56,25 +56,25 @@ var
   TPA: TPointArray;
   P: TPoint;
 begin
-  FindMMColorsTolerance(TPA, clWhite, 421);
-  P := MiddleTPA(TPA);
+  FindMMColorTolEx(TPA, clWhite, 421);
+  P := TPAMiddle(TPA);
   MouseFlag(P.X + 1, P.Y + 2, 1, 1);
   WaitRR(1000, 2000);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the direction of the unique arm and all the color tpas of the arms.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
 var
   LeverTypes, LeverCounts: array[0..3] of Integer;
   LeverInfo: TVariantArray;
-  Locs: TStringArray;
+  Locs: TStrArray;
   TBA: TBoxArray;
   I, II: Integer;
 begin
@@ -93,7 +93,7 @@ begin
     for II := 0 to 2 do
     begin
       SetColorSpeed2Modifiers(LeverInfo[1 + (II * 5)], LeverInfo[2 + (II * 5)]);
-      if (FindColorsTolerance(ATPA[I], LeverInfo[3 + (II * 5)], TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2, LeverInfo[4 + (II * 5)])) then
+      if (FindColorTolEx(ATPA[I], LeverInfo[3 + (II * 5)], TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2, LeverInfo[4 + (II * 5)])) then
       begin
         LeverTypes[I] := II;
         Inc(LeverCounts[II]);
@@ -106,8 +106,8 @@ begin
   ColorToleranceSpeed(1);
   for I := 0 to 3 do
     if (LeverCounts[I] = 1) then
-    begin
-      IntInTIAPos(I, LeverTypes, II);
+    begin           
+      II := TIAPos(LeverTypes, I);
       WriteLn('Found unique! ' + LeverInfo[I * 5] + ' in ' + Locs[II] + '.');
       Result := II;
       Exit;
@@ -115,7 +115,7 @@ begin
   for I := 3 downto 0 do
     if (LeverCounts[I] = 2) then
     begin
-      IntInTIAPos(I, LeverTypes, II);
+      II := TIAPos(LeverTypes, I);
       WriteLn('Confused! Two uniques... guessing...' + LeverInfo[I * 5] + ' in ' + Locs[II] + '.');
       Result := II;
       Exit;
@@ -125,10 +125,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function Abyss_SolveRandom: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Solves the abyssal random.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Abyss_SolveRandom: Boolean;
@@ -153,7 +153,7 @@ begin
         if (Length(ATPA) > 0) then
         begin
           Dir := I;
-          P := MiddleTPA(ATPA[I]);
+          P := TPAMiddle(ATPA[I]);
           Break;
         end;
       if (I > 3) then
@@ -161,7 +161,7 @@ begin
     end
     else
       if (Length(ATPA[Dir]) > 0) then
-        P := MiddleTPA(ATPA[Dir]);
+        P := TPAMiddle(ATPA[Dir]);
     if (FindObjSpiralMouse(P, 15, 1, TBA[Dir].X1, TBA[Dir].Y1, TBA[Dir].X2, TBA[Dir].Y2, 14342657, 75, 40, 200, ['perate', 'ppendag', 'te Ap'])) then
       Mouse(P.X, P.Y, 0, 0, True)
     else

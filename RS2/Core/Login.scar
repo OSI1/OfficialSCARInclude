@@ -83,10 +83,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RSReady: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true when runescape isn't intially loading the game.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: November 22nd, 2011. By Wanted. RS2 Build 681.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RSReady: Boolean;
@@ -94,7 +94,7 @@ var
   P: TPoint;
 begin
   Result := False;
-  if (not (FindColorTolerance(P.X, P.Y, 16645629, 700, 15, 702, 17, 5))) then
+  if (not (FindColorTol(P.X, P.Y, 16645629, 700, 15, 702, 17, 5))) then
     if (not (LoggedIn)) then
       if (not (LobbyScreen)) then
         Exit;
@@ -103,10 +103,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoginToLobby: Boolean;
-Contributors: Wanted, Anonymous.
+Contributors: Wanted, Anonymous, Freddy.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modified: March 19th, 2012. By Wanted. RS2 Build 707.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginToLobby: Boolean;
@@ -186,10 +186,10 @@ begin
   B := False;
   for I := 0 to 1 do
   begin
-    if (FindColors(TPA, clLoginText, TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2)) then
+    if (FindColorEx(TPA, clLoginText, TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2)) then
     begin
       B := True;
-      TB := GetTPABounds(TPA);
+      TB := TPABounds(TPA);
       if (I = 0) then
         MouseBox(TB.X2 + 2, TBA[I].Y1, TB.X2 + 5, TBA[I].Y2, ClickLeft);
       WaitRR(250, 400);

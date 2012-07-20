@@ -11,15 +11,15 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the amount of something taking into account text color within box.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: February 19th, 2011. By Wanted. RS2 Build 701.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetAmount(X1, Y1, X2, Y2: Integer): LongInt;
 var
-  TextColors: TIntegerArray;
+  TextColors: TIntArray;
   TPA: TPointArray;
   Text: string;
   I: Integer;
@@ -28,9 +28,9 @@ begin
   Result := 0;
   TextColors := [65535, 16777215, 8453888];
   for I := 0 to 2 do
-    if (FindColors(TPA, TextColors[I], X1, Y1, X2, Y2)) then
+    if (FindColorEx(TPA, TextColors[I], X1, Y1, X2, Y2)) then
     begin
-      B := GetTPABounds(TPA);
+      B := TPABounds(TPA);
       Text := GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, TextColors[I], 5, False, tr_AllChars);
       Result := StrToIntDef(GetNumbers(Text), -1);
       if (Result > -1) then

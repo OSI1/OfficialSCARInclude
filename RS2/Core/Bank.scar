@@ -15,11 +15,11 @@
      By: Wanted
  * function DepositAll(CheckBS: Boolean): Boolean;
      By: Wanted
- * function DepositItemsEx(Slots: TIntegerArray; Exclude, CheckBS: Boolean): Boolean;
+ * function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
      By: Wanted
- * function DepositItems(Slots: TIntegerArray; CheckBS: Boolean): Boolean;
+ * function DepositItems(Slots: TIntArray; CheckBS: Boolean): Boolean;
      By: Wanted
- * function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+ * function DepositAllExclude(Exclude: TIntArray; CheckBS: Boolean): Boolean;
      By: Wanted
  * function ToggleUseNotes(Use: Boolean): Boolean;
      By: Wanted
@@ -51,11 +51,11 @@
      By: Wanted
  * function SetBankTab(Tab: Integer; CheckBS: Boolean): Boolean;
      By: Wanted
- * function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+ * function WithdrawEx2(Options: TStrArray; B: TBox; CheckBS: Boolean): Boolean;
      By: Wanted
  * function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
      By: Wanted
- * function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+ * function WithdrawSlotEx(Options: TStrArray; Slot: Integer; CheckBS: Boolean): Boolean;
      By: Wanted
  * function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
      By: Wanted
@@ -71,10 +71,10 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function BankScreen: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if at the bank screen.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
@@ -83,17 +83,17 @@ var
   P: TPoint;
 begin
   Result := False;
-  FindColors(TPA, 4106994, 119, 25, 328, 47);
+  FindColorEx(TPA, 4106994, 119, 25, 328, 47);
   if (Length(TPA) > 20) then
     Result := FindTextTPAInTPA('ank of', ScreenChars, TPA, P.X, P.Y);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function PinScreen: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if at the pin screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modified: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PinScreen: Boolean;
@@ -102,17 +102,17 @@ var
   P: TPoint;
 begin
   Result := False;
-  FindColors(TPA, 2070783, 50, 57, 421, 79);
+  FindColorEx(TPA, 2070783, 50, 57, 421, 79);
   if (Length(TPA) > 50) then
      Result := FindTextTPAInTPA('enter your', ScreenChars, TPA, P.X, P.Y);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Enters bank pin and returns true if succesfully entered pin and at bank screen.
 Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
@@ -133,7 +133,7 @@ begin
     TBA[I] := Box(37 + ((I mod 4) * 90), 107 + ((I div 4) * 72), 100 + ((I mod 4) * 90), 170 + ((I div 4) * 72));
   for I := 0 to 3 do
   begin
-    FindColors(TPA, 2070783, 37, 107, 370, 314);
+    FindColorEx(TPA, 2070783, 37, 107, 370, 314);
     if (Length(TPA) < 250) then
       Exit;
     if (not (FindTextTPAInTPA(Copy(Pin, I + 1, 1), ScreenChars, TPA, P.X, P.Y))) then
@@ -174,15 +174,15 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function DepositAllEx(Inv, Equip, Summon, CPouch, CheckBS: Boolean): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if at the bank screen and then clicks deposit all.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositAllEx(Inv, Equip, Summon, CPouch, CheckBS: Boolean): Boolean;
 var
-  TBoA: TBooleanArray;
+  TBoA: TBoolArray;
   I: Integer;
 begin
   Result := False;
@@ -211,15 +211,15 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DepositItemsEx(Slots: TIntegerArray; Exclude, CheckBS: Boolean): Boolean;
-Contributors: Wanted
+function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
+Contributors: Wanted, Freddy
 Description: Deposits all inventory items except for excluded slots, or the other
 way around if Exclude is false. True if CheckBS is true and bankscreen is found.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DepositItemsEx(Slots: TIntegerArray; Exclude, CheckBS: Boolean): Boolean;
+function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
 var
   I, C, T: Integer;
   B: Boolean;
@@ -269,29 +269,29 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DepositItems(Slots: TIntegerArray; CheckBS: Boolean): Boolean;
-Contributors: Wanted
+function DepositItems(Slots: TIntArray; CheckBS: Boolean): Boolean;
+Contributors: Wanted, Freddy
 Description: Deposits all inventory items in specified slots. True if CheckBS is
 true and bankscreen is found.
 Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
-Last Modified: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DepositItems(Slots: TIntegerArray; CheckBS: Boolean): Boolean;
+function DepositItems(Slots: TIntArray; CheckBS: Boolean): Boolean;
 begin
   Result := DepositItemsEx(Slots, False, CheckBS);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
-Contributors: Wanted
+function DepositAllExclude(Exclude: TIntArray; CheckBS: Boolean): Boolean;
+Contributors: Wanted, Freddy
 Description: Deposits all inventory items except for excluded slots. True if
 CheckBS is true and bankscreen is found.
 Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
-Last Modified: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DepositAllExclude(Exclude: TIntegerArray; CheckBS: Boolean): Boolean;
+function DepositAllExclude(Exclude: TIntArray; CheckBS: Boolean): Boolean;
 begin
   Result := DepositItemsEx(Exclude, True, CheckBS);
 end;
@@ -383,11 +383,11 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FixBank(FixUp: Boolean): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Scrolls bank all the way to top or bottom, true if not needed to do so.
 Searches for SearchText using the in bank search glass.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FixBank(FixUp: Boolean): Boolean;
@@ -403,10 +403,10 @@ begin
     if (GetColor(489, 276) = 592137) then
       Exit;
   Result := True;
-  if (not (FindColors(TPA, 1250841, 482, 101, 495, 276))) then
+  if (not (FindColorEx(TPA, 1250841, 482, 101, 495, 276))) then
     Exit;
   B1 := TPABounds(TPA);
-  if (not (FindColors(TPA, 592137, 482, 101, 495, 276))) then
+  if (not (FindColorEx(TPA, 592137, 482, 101, 495, 276))) then
     Exit;
   B2 := TPABounds(TPA);
   B3 := Box(482, B1.Y1, 495, B2.Y2);
@@ -608,7 +608,7 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+function WithdrawEx2(Options: TStrArray; B: TBox; CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Withdraws by using MouseBox on B. Searches for your Options in ChooseOption
 if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
@@ -617,7 +617,7 @@ Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
 Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+function WithdrawEx2(Options: TStrArray; B: TBox; CheckBS: Boolean): Boolean;
 var
   I, H, C, CT, T: Integer;
   TBA: TBoxArray;
@@ -679,7 +679,7 @@ Last Modified: January 22nd, 2012. By Wanted. RS2 Build 699.
 
 function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
 var
-  Options: TStringArray;
+  Options: TStrArray;
 begin
   case Amount of
     Withdraw_1: Options := ['-1 ', 'draw-1', 'w-1'];
@@ -694,16 +694,16 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
-Contributors: Wanted
+function WithdrawSlotEx(Options: TStrArray; Slot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted, Freddy
 Description: Withdraws by using MouseBox on slot. Searches for your Options in ChooseOption
 if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
 use ['-1 '] it will withdraw by left clicking one time to get one item out.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+function WithdrawSlotEx(Options: TStrArray; Slot: Integer; CheckBS: Boolean): Boolean;
 var
   B: TBox;
 begin
@@ -738,10 +738,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OpenBankBooth(Loc: Integer): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Opens a booth, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 14th, 2011. By Wanted. RS2 Build 688.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankBooth(Loc: Integer): Boolean;
@@ -770,13 +770,13 @@ begin
   CTS := GetColorToleranceSpeed;
   ColorToleranceSpeed(BankInfo[0]);
   SetColorSpeed2Modifiers(BankInfo[1], BankInfo[2]);
-  FindColorsSpiralTolerance(MSCX, MSCY, TPA, BankInfo[3], MSX1, MSY1, MSX2, MSY2, BankInfo[4]);
+  FindColorSpiralTolEx(MSCX, MSCY, TPA, BankInfo[3], MSX1, MSY1, MSX2, MSY2, BankInfo[4]);
   SetColorspeed2Modifiers(0.2, 0.2);
   ColorToleranceSpeed(CTS);
   if (Length(TPA) < 1) then
     Exit;
   case (BankInfo[5]) of
-    0: ATPA := TPAToATPAEx(TPA, BankInfo[6], BankInfo[7]);
+    0: ATPA := GroupTPAEx(TPA, BankInfo[6], BankInfo[7]);
     1: ATPA := SplitTPA(TPA, BankInfo[6]);
     2: ATPA := SplitTPAEx(TPA, BankInfo[6], BankInfo[7]);
   end;
@@ -790,7 +790,7 @@ begin
   for I := 0 to High(ATPA) do
     if (InRange(Length(ATPA[I]), BankInfo[8], BankInfo[9])) then
     begin
-      P := MiddleTPA(ATPA[I]);
+      P := TPAMiddle(ATPA[I]);
       MMouse(P.X, P.Y, 2, 2);
       if ((Loc = Loc_DYB) or (Loc = Loc_EVB)) then
       begin
@@ -831,10 +831,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OpenBankNPC(Loc: Integer): Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Opens a bank via Banker, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankNPC(Loc: Integer): Boolean;
@@ -875,14 +875,14 @@ begin
     CTS := GetColorToleranceSpeed;
     ColorToleranceSpeed(BankerInfo[0]);
     SetColorSpeed2Modifiers(BankerInfo[1], BankerInfo[2]);
-    FindColorsTolerance(TPA, BankerInfo[3], TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2, BankerInfo[4]);
+    FindColorTolEx(TPA, BankerInfo[3], TBA[I].X1, TBA[I].Y1, TBA[I].X2, TBA[I].Y2, BankerInfo[4]);
     SetColorspeed2Modifiers(0.2, 0.2);
     ColorToleranceSpeed(CTS);
     ATPA := SplitTPA(TPA, 5);
     if (Length(ATPA) < 1) then
       Continue;
     SortATPASize(ATPA, True);
-    P := MiddleTPA(ATPA[0]);
+    P := TPAMiddle(ATPA[0]);
     MMouse(P.X, P.Y, 0, 0);
     if (not (IsUpTextMulti(['to B', 'anker']))) then
       Continue;

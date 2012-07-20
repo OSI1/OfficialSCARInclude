@@ -25,8 +25,10 @@
  * procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
      By: Wanted
  * procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
-     By: Wanted
- * function FindColorCircleTolEx(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+     By: Wanted                     
+ * function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+     By: Freddy
+ * function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
      By: Wanted
  * function PointsNotInTPA(TPA: TPointArray): TPointArray;
      By: Wanted
@@ -339,21 +341,32 @@ begin
     Exit;
   end;
   TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(StartAngle), Radians(EndAngle));
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+Contributors: Freddy
+Description: Finds a color within circle.
+Date Created: July 20th, 2012. By Freddy
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+begin
+  Result := FindColorTPATol(X, Y, Color, TPAFromCircle(Point(CX, CY), R), Tol);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindColorCircleTolEx(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
 Contributors: Wanted, Freddy
 Description: Finds colors within circle.
 Date Created: October 28th, 2011. By Wanted
 Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindColorCircleTolEx(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
 begin
-  FindColorTolEx(Points, Color, Floor(CX - R), Floor(CY - R), Ceil(CX + R), Ceil(CY + R), Tol);
-  FilterPointsDist(Points, 0, R, CX, CY);
-  Result := (Length(Points) > 1);
+  Result := FindColorTPATolEx(Points, Color, TPAFromCircle(Point(CX, CY), R), Tol);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

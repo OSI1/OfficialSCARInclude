@@ -59,7 +59,7 @@
      By: Wanted
  * function HoverSkill(Skill: Integer; CheckST: Boolean): Boolean;
      By: Wanted
- * function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntegerArray;
+ * function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntArray;
      By: Wanted
  * function GetXP(Skill: Integer; CheckST: Boolean): Integer;
      By: Wanted
@@ -155,10 +155,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function TabExists(Tab: Integer): Integer;
-Contributors: Wanted, Dynamite.
+Contributors: Wanted, Dynamite, Freddy.
 Description: Returns True if the Tab exists.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modified: February 24th 2012. By Wanted. RS2 Build 701.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TabExists(Tab: Integer): Boolean;
@@ -173,7 +173,7 @@ begin
     if (Tab = Tab_Logout) then
       Result := (GetColor(746, 0) = 65536)
     else
-      Result := FindColorTolerance(P.X, P.Y, 1578252, TB.X1, TB.Y1, TB.X2, TB.Y2, 34);
+      Result := FindColorTol(P.X, P.Y, 1578252, TB.X1, TB.Y1, TB.X2, TB.Y2, 34);
   until ((GetSystemTime > T) or (Result));
 end;
 
@@ -222,9 +222,9 @@ var
 begin
   TBA := [Box(585, 211, 618, 242), Box(626, 211, 659, 242),
           Box(585, 250, 618, 281), Box(626, 250, 659, 281), Box(667, 250, 700, 281),
-       Box(570, 289, 603, 320),    Box(626, 289, 659, 320),    Box(682, 289, 715, 320),
+          Box(570, 289, 603, 320), Box(626, 289, 659, 320), Box(682, 289, 715, 320),
                                    Box(626, 329, 659, 360),
-       Box(570, 369, 603, 400),    Box(626, 369, 659, 400),    Box(682, 369, 715, 400)];
+          Box(570, 369, 603, 400), Box(626, 369, 659, 400), Box(682, 369, 715, 400)];
   Result := TBA[Slot];
 end;
 
@@ -282,10 +282,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetCurrentMusic: string;
-Contributors: Zyt3x, Wanted.
+Contributors: Zyt3x, Wanted, Freddy.
 Description: Returns the current music that's playing.
 Date Created: September 3rd, 2011. By Zyt3x. RS2 Build 663.
-Last Modified: November 22st, 2011. By Wanted. RS2 Build 682.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCurrentMusic: string;
@@ -296,9 +296,9 @@ begin
   Result := '';
   if (not (SetGameTab(Tab_Music))) then
     Exit;
-  if (FindColors(TPA, 39401, 547, 240, 736, 266)) then
+  if (FindColorEx(TPA, 39401, 547, 240, 736, 266)) then
   begin
-    B := GetTPABounds(TPA);
+    B := TPABounds(TPA);
     Result := Trim(GetTextAtEx(B.X1 - 1, 245, 0, ScreenChars, False, False, 0, 1, 39401, 50, False, tr_AllChars));
   end;
 end;
@@ -369,15 +369,15 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function IsMoneyPouchOpen: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if the money pouch is open.
 Date Created: February 19th 2012. By Wanted. RS2 Build 701.
-Last Modified: February 19th 2012. By Wanted. RS2 Build 701.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsMoneyPouchOpen: Boolean;
 var
-  TextColors: TIntegerArray;
+  TextColors: TIntArray;
   I: Integer;
   P: TPoint;
 begin
@@ -506,10 +506,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetXPBarTotal: LongInt;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the number from your XP Bar.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: April 5th 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetXPBarTotal: LongInt;
@@ -524,8 +524,8 @@ begin
   if (Previous) then
     if (not (WaitFunc(@IsXPBarOpen, True, 10, 15, 1500, 1750))) then
       Exit;
-  FindColors(TPA, 14474460, 350, MSY1, MSX2, 27)
-  B := GetTPABounds(TPA);
+  FindColorEx(TPA, 14474460, 350, MSY1, MSX2, 27)
+  B := TPABounds(TPA);
   XP := GetTextAtEx(B.X1 - 1, B.Y1 - 3, 0, XPChars, False, False, 0, 2, 14474460, 20, False, tr_AllChars);
   XP := XP + '#';      
   if (Pos('xp', XP) > 0) then
@@ -577,10 +577,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetSkillLevelEx(Skill: Integer; BottomNumber, CheckST: Boolean): Integer;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the number from the skill level in skill tabs.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetSkillLevelEx(Skill: Integer; BottomNumber, CheckST: Boolean): Integer;
@@ -597,8 +597,8 @@ begin
     B2 := Box(B.X1 + 25, B.Y1 + 14, B.X2, B.Y2)
   else
     B2 := Box(B.X1 + 25, B.Y1, B.X2, B.Y1 + 13);
-  FindColors(TPA, 36095, B2.X1, B2.Y1, B2.X2, B2.Y2);
-  B := GetTPABounds(TPA);
+  FindColorEx(TPA, 36095, B2.X1, B2.Y1, B2.X2, B2.Y2);
+  B := TPABounds(TPA);
   Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, 36095, 10, False, tr_Digits)), -1);
 end;
 
@@ -617,16 +617,16 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns the number from the skill level on the minimap.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
 var
-  ColorsDec: TIntegerArray;
-  ColorsStr: TStringArray;
+  ColorsDec: TIntArray;
+  ColorsStr: TStrArray;
   TPA: TPointArray;
   I: Integer;
   B: TBox;
@@ -643,11 +643,11 @@ begin
   ColorsDec := [65280, 65535, 2070783, 255];
   ColorsStr  := ['green', 'yellow', 'orange', 'red'];
   for I := 0 to 3 do
-    if (FindColors(TPA, ColorsDec[I], B.X1, B.Y1, B.X2, B.Y2)) then
+    if (FindColorEx(TPA, ColorsDec[I], B.X1, B.Y1, B.X2, B.Y2)) then
       Break;
   if (I > 3) then
     Exit;
-  B := GetTPABounds(TPA);
+  B := TPABounds(TPA);
   Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, ColorsDec[I], 10, False, tr_Digits)), -1);
   ColorState := ColorsStr[I];
 end;
@@ -693,17 +693,17 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntegerArray;
-Contributors: Wanted
+function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntArray;
+Contributors: Wanted, Freddy
 Description: Returns the information by hovering the skill.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntegerArray;
+function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntArray;
 var
-  TBoA: TBooleanArray;
-  TSA: TStringArray;
+  TBoA: TBoolArray;
+  TSA: TStrArray;
   TPA: TPointArray;
   I: Integer;
   P: TPoint;
@@ -712,7 +712,7 @@ begin
   Result := [-1, -1, -1];
   if (not (HoverSkill(Skill, CheckST))) then
     Exit;
-  if (not (WaitFindColorsTolerance(TPA, clSkillInfoBox, MIX1, MIY1, MIX2, MIY2, 0, 50, True, 100, 200, 1500, 2500))) then
+  if (not (WaitFindColorTolEx(TPA, clSkillInfoBox, MIX1, MIY1, MIX2, MIY2, 0, 50, True, 100, 200, 1500, 2500))) then
     Exit;
   B := TPABounds(TPA);
   TSA := ['urrent', 'ext', 'ainder'];
@@ -733,7 +733,7 @@ Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 
 function GetXP(Skill: Integer; CheckST: Boolean): Integer;
 var
-  TIA: TIntegerArray;
+  TIA: TIntArray;
 begin
   TIA := GetSkillInfo(Skill, True, False, False, CheckST);
   Result := TIA[0];

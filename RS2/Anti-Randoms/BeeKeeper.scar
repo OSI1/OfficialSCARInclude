@@ -15,10 +15,10 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function BeeKeeper_InRandom: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Results true if in the beekeeper random.
 Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
-Last Modified: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BeeKeeper_InRandom: Boolean;
@@ -26,19 +26,19 @@ var
   TPA: TPointArray;
 begin
   Result := False;
-  FindMMColorsTolerance(TPA, 0, 0);
+  FindMMColorTolEx(TPA, 0, 0);
   if (not (InRange(Length(TPA), 17500, 18100))) then
     Exit;
-  FindColorsTolerance(TPA, clWhite, MSX1, MSY1, MSX2, MSY2, 250);
+  FindColorTolEx(TPA, clWhite, MSX1, MSY1, MSX2, MSY2, 250);
   Result := (InRange(Length(TPA), 13000, 17000));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function BeeKeeper_TalkToKeeper: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Finds and clicks talk to on the bee keeper.
 Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
-Last Modified: January 12th, 2012. By Wanted. RS2 Build 696.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BeeKeeper_TalkToKeeper: Boolean;
@@ -51,19 +51,19 @@ begin
   Result := False;
   ColorToleranceSpeed(2);
   SetColorSpeed2Modifiers(0.70, 0.88);
-  FindColorsTolerance(TPA, 2500396, MSX1, MSY1, MSX2, MSY2, 8);
+  FindColorTolEx(TPA, 2500396, MSX1, MSY1, MSX2, MSY2, 8);
   SetColorSpeed2Modifiers(0.2, 0.2);
   ColorToleranceSpeed(1);
   if (Length(TPA) < 1) then
     Exit;
-  ATPA := TPAToATPAEx(TPA, 20, 20);
+  ATPA := GroupTPAEx(TPA, 20, 20);
   SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
   H := High(ATPA);
   for I := 0 to High(ATPA) do
   begin
     if (Length(ATPA[I]) < 30) then
       Continue;
-    P := MiddleTPA(ATPA[I]);
+    P := TPAMiddle(ATPA[I]);
     if (Distance(P.X, P.Y, MSCX, MSCY) < 10) then
       Continue;
     MMouse(P.X, P.Y, 0, 0);
@@ -138,7 +138,7 @@ begin
     if (not (WaitFunc(@BeeKeeper_BeeScreen, True, 100, 150, 3500, 4500))) then
       Continue;
     P := Point(0, 0);
-    if (WaitFindColorTolerance(P.X, P.Y, GetColor(454, 268), MSX1, MSY1, 137, 239, 0, True, 50, 100, 2500, 3500)) then
+    if (WaitFindColorTol(P.X, P.Y, GetColor(454, 268), MSX1, MSY1, 137, 239, 0, True, 50, 100, 2500, 3500)) then
       WaitRR(2000, 3000);
     MS := BitmapFromString(137, 239, '');
     CopyClientToBitmap(MS, 0, 0, 137, 239);
