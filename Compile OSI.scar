@@ -41,6 +41,6 @@ begin
 end;
 
 begin
-  TestCompileOSI;
+  TestCompileOSI; 
   FreeOSI;
 end.

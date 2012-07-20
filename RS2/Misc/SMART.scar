@@ -62,7 +62,7 @@ begin
         end;
       end;
     end;  
-    ID := SmartSpawnClient(ScriptPath, 'http://' + Prefix + '.runescape.com/', ',f5', RSPW, RSPH, S, '', '', -1);
+    ID := SmartSpawnClient(SMART_Path, 'http://' + Prefix + '.runescape.com/', ',f5', RSPW, RSPH, S, '', '', -1);
     Result := CreateSmartClient(ID);    
   except
     WriteLn('Failed to load SMART!'); 

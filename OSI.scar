@@ -108,10 +108,14 @@ begin
     LoadRS2WorldArray;
     AllowQuickChat := True;
     AllowLootShare := True;
-    {$IFDEF SMART}      
-      if not InitSmartLib(IncludesPath + 'OSI\libsmartremote32.dll') or
-        not InitSmartLib(ScriptPath + 'OSI\libsmartremote32.dll') or
-        not InitSmartLib(ScriptPath + 'libsmartremote32.dll') then 
+    {$IFDEF SMART}     
+      if InitSmartLib(IncludesPath + 'OSI\RS2\Misc\libsmartremote32.dll') then
+        SMART_Path := IncludesPath + 'OSI\RS2\Misc\'
+      else if InitSmartLib(ScriptPath + 'OSI\RS2\Misc\libsmartremote32.dll') then   
+        SMART_Path := ScriptPath + 'OSI\RS2\Misc\'    
+      else if InitSmartLib(ScriptPath + 'RS2\Misc\libsmartremote32.dll') then   
+        SMART_Path := ScriptPath + 'RS2\Misc\'  
+      else
       begin
         WriteLn('Couldn''t load SMART (libsmartremote32.dll)');
         TerminateScript;
