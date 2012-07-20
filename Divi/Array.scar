@@ -4,8 +4,6 @@
 --------------------------------------------------------------------------------
  * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
      By: Wanted
- * function IntInTIAPos(Int: Integer; TIA: TIntArray; var Pos: Integer): Boolean;
-     By: Wanted
  * function StrInStr(SubStr, S: string): Boolean;
      By: Wanted
  * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
@@ -28,7 +26,7 @@
      By: Wanted
  * procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
      By: Wanted
- * function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+ * function FindColorCircleTolEx(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
      By: Wanted
  * function PointsNotInTPA(TPA: TPointArray): TPointArray;
      By: Wanted
@@ -344,16 +342,16 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
-Contributors: Wanted
+function FindColorCircleTolEx(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+Contributors: Wanted, Freddy
 Description: Finds colors within circle.
 Date Created: October 28th, 2011. By Wanted
-Last Modified: October 28th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindColorsCircleTolerance(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
+function FindColorCircleTolEx(var Points: TPointArray; Color, Tol: Integer; CX, CY, R: Extended): Boolean;
 begin
-  FindColorsTolerance(Points, Color, Floor(CX - R), Floor(CY - R), Ceil(CX + R), Ceil(CY + R), Tol);
+  FindColorTolEx(Points, Color, Floor(CX - R), Floor(CY - R), Ceil(CX + R), Ceil(CY + R), Tol);
   FilterPointsDist(Points, 0, R, CX, CY);
   Result := (Length(Points) > 1);
 end;
