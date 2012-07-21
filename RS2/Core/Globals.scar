@@ -670,14 +670,8 @@ begin
   if Client.Update then
   begin
     with Client.ImageArea do
-    begin
-      Y1 := Y1 + 50;  
-      Y2 := Y2 + 50;  
-    end;       
+      Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);   
     with Client.InputArea do
-    begin
-      Y1 := Y1 + 50;  
-      Y2 := Y2 + 50;  
-    end;
+      Client.InputArea := Box(X1, Y1 + 50, X2, Y2);   
   end;  
 end;

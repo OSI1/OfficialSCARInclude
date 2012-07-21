@@ -25,10 +25,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TypeSendEx(Text: string; PressEnter: Boolean);
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Types human like, presses enter if chosen.
 Date Created: August 26th, 2011. By Wanted
-Last Modified: December 31st, 2011. By Wanted
+Last Modified: July 21th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TypeSendEx(Text: string; PressEnter: Boolean);
@@ -46,11 +46,11 @@ begin
     if (not (ShiftKeyDown)) then
     begin
       ShiftKeyDown := True;
-      KeyDown(VK_SHIFT);
+      VKeyDown(VK_SHIFT);
     end;
     if ((not (UseShiftKey)) and (ShiftKeyDown)) then
     begin
-      KeyUp(VK_SHIFT);
+      VKeyUp(VK_SHIFT);
       ShiftKeyDown := False;
     end;
     PushKey(Text[I]);

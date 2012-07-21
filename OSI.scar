@@ -123,10 +123,10 @@ begin
       if (not (NonAutomaticSMART)) then
         InitiateSMART;
     {$ENDIF}
-    PlayerStartTime := GetSystemTime;
+    PlayerStartTime := GetSystemTime;    
+    UpdateRSClient;
   {$ENDIF}
   MouseSpeed := 15;
   SetColorSpeed2Modifiers(0.2, 0.2);
-  ColorToleranceSpeed(1);    
-  UpdateRSClient;
+  ColorToleranceSpeed(1); 
 end;

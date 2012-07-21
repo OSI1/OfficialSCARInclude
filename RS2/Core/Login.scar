@@ -44,15 +44,15 @@ function RandomWorld(Members: Boolean): Integer; forward;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoginScreen: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Freddy
 Description: Returns true if at the screen to type in user/pass.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modified: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: July 21th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginScreen: Boolean;
 begin
-  Result := (CountColor(clLoginText, 358, 128, 404, 147) = 160); // Big "Login" word
+  Result := (CountColor(clLoginText, 358, 103, 404, 122) = 160); // Big "Login" word
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -90,13 +90,12 @@ Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RSReady: Boolean;
-var
-  P: TPoint;
 begin
-  Result := False;
-  if (not (FindColorTol(P.X, P.Y, 16645629, 700, 15, 702, 17, 5))) then
-    if (not (LoggedIn)) then
-      if (not (LobbyScreen)) then
+  Result := False;     
+  WriteLn(GetColor(381, 56));
+  if (GetColor(381, 56) <> 32747) then
+    if (not (LobbyScreen)) then 
+      if (not (LoginScreen)) then
         Exit;
   Result := True;
 end;
@@ -106,7 +105,7 @@ function LoginToLobby: Boolean;
 Contributors: Wanted, Anonymous, Freddy.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: July 21th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginToLobby: Boolean;
@@ -144,17 +143,17 @@ begin
   B2 := False;
   B3 := False;
   B4 := False;
-  B3 := (CountColor(10141389, 345, 293, 418, 305) = 143);     // Autographics
+  B3 := (CountColor(10141389, 345, 268, 418, 280) = 143);     // Autographics
   if (not (B3)) then
-    B4 := (CountColor(10141389, 343, 303, 418, 315) = 143);   // Available changed
+    B4 := (CountColor(10141389, 343, 278, 418, 290) = 143);   // Available changed
   if (B3) then
-    MouseBox(349, 298, 414, 300, ClickLeft)
+    MouseBox(349, 273, 414, 275, ClickLeft)
   else
     if (B4) then
-      MouseBox(349, 309, 414, 312, ClickLeft);
+      MouseBox(349, 284, 414, 287, ClickLeft);
   T := GetSystemTime + RR(1500, 2500);
   repeat
-    B := CountColor(clLoginText, 202, 64, 390, 81) = 568;     // Create a Free Account
+    B := CountColor(clLoginText, 202, 39, 390, 56) = 568;     // Create a Free Account
     if (not (B)) then
     begin
       B2 := LoginScreen;
@@ -165,8 +164,8 @@ begin
   until ((GetSystemTime > T) or (B));
   if (B) then
   case (Random(2)) of
-    0: MouseBox(544, 67, 556, 78, ClickLeft);                 // Exit
-    1: MouseBox(165, 428, 428, 430, ClickLeft);               // Already have an account
+    0: MouseBox(544, 42, 556, 53, ClickLeft);                 // Exit
+    1: MouseBox(165, 403, 428, 405, ClickLeft);               // Already have an account
   end;
   if (not (B2)) then
     if (not (WaitFunc(@LoginScreen, True, 250, 400, 3500, 4500))) then
@@ -176,13 +175,13 @@ begin
     end;
   {$IFNDEF SMART}
   if (not ((B3) or (B4))) then
-    if (not (FindColor(P.X, P.Y, clLoginText, 280, 176, 487, 197))) then
+    if (not (FindColor(P.X, P.Y, clLoginText, 280, 151, 487, 172))) then
     begin
-      MouseBox(280, 176, 487, 197, ClickLeft);
+      MouseBox(280, 151, 487, 172, ClickLeft);
       WaitRR(100, 250);
     end;
   {$ENDIF}
-  TBA := [IntToBox(280, 176, 487, 197), IntToBox(280, 220, 487, 244)];  // User / Pass Boxes
+  TBA := [Box(280, 151, 487, 197), Box(280, 195, 487, 219)];  // User / Pass Boxes
   B := False;
   for I := 0 to 1 do
   begin
@@ -264,10 +263,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function Login: Boolean;
-Contributors: Wanted, Anonymous.
+Contributors: Wanted, Anonymous, Freddy.
 Description: Logins in current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: February 19th, 20212. By Wanted. RS2 Build 701.
+Last Modified: July 21th, 2012. By Freddy. RS2 Build 725.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Login: Boolean;
@@ -316,14 +315,14 @@ begin
        end;
   end;
   if (LobbyScreen) then
-    MouseBox(256, 442, 507, 478, ClickLeft);                  // Click to Play
+    MouseBox(256, 417, 507, 453, ClickLeft);                  // Click to Play
   T := GetSystemTime + RR(50000, 70000);                      // Check Response
   repeat
     SetLength(Actions, 0);
     if (GetSystemTime > T) then // Response                          Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
       Actions :=       ['About one minute has passed...',            0,    0,      'NextPlayer',  'Login Failed']        // September 25, 2011  Wanted          666      confirmed
     else
-      case CountColor(clLoginText, 260, 140, 510, 400) of
+      case CountColor(clLoginText, 260, 115, 510, 375) of
       //-1: Actions :=   ['You need 20 combat for PvP',              0,    1,      'PlayerFalse', 'PvP warning'];        // August 7, 2011      Anonymous       660      unconfirmed
       //-1: Actions :=   ['You need skill total of 1500.',           0,    9,      'PlayerTrue',  '1500 skill club'];    // August 7, 2011      Anonymous       660      unconfirmed
         364: Actions :=  ['Error connecting',                    20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
@@ -356,7 +355,7 @@ begin
             'You need skill total of 1000': Players[CurrentPlayer].WorldInfo := [Players[CurrentPlayer].Member, 0, AllowHRW];
             'In full world que': begin
                                    TT := GetSystemTime + RR(120000, 180000);
-                                   while (FindColor(P.X, P.Y, clLoginText, 87, 443, 231, 480) and (GetSystemTime < TT)) do
+                                   while (FindColor(P.X, P.Y, clLoginText, 87, 418, 231, 465) and (GetSystemTime < TT)) do
                                      WaitRR(300, 400);
                                    WaitRR(2000, 3000);
                                    if (LoggedIn) then
