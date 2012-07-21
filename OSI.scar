@@ -127,5 +127,6 @@ begin
   {$ENDIF}
   MouseSpeed := 15;
   SetColorSpeed2Modifiers(0.2, 0.2);
-  ColorToleranceSpeed(1);
+  ColorToleranceSpeed(1);    
+  UpdateRSClient;
 end;

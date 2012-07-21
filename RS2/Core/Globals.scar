@@ -53,7 +53,7 @@
      By: Anonymous
  * function NextActivePlayerIndex: Integer;
      By: Wanted
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=} 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game boundaries, points, areas, widths, etc. etc.
@@ -69,11 +69,11 @@ const             // Description                  Modified            By        
   RSCY = 252;                                  // October 16, 2011    Wanted          667
   RSX1 = 0;       // RS2 Client Edge Points    // October 16, 2011    Wanted          667
   RSY1 = 0;                                    // October 16, 2011    Wanted          667
-  RSX2 = 766;                                  // October 16, 2011    Wanted          667
-  RSY2 = 504;                                  // October 16, 2011    Wanted          667
-  RSPW = 766;     // RS2 Client Width          // October 16, 2011    Wanted          667
-  RSPH = 504;     // RS2 Client Height         // October 16, 2011    Wanted          667
-  RSPA = 386064;  // RS2 Client Pixel Area     // June 12, 2012       LordJashin      719
+  RSX2 = 764;                                  // July 20, 2012       Freddy          725
+  RSY2 = 502;                                  // July 20, 2012       Freddy          725
+  RSPW = 765;     // RS2 Client Width          // July 20, 2012       Freddy          725
+  RSPH = 503;     // RS2 Client Height         // July 20, 2012       Freddy          725
+  RSPA = 384795;  // RS2 Client Pixel Area     // July 20, 2012       Freddy          725
 
   MSCX  = 260;    // Main Screen Center Points // August 7, 2011      Wanted          660
   MSCY  = 171;                                 // August 7, 2011      Wanted          660
@@ -653,4 +653,31 @@ begin
       else
         Result := 0;
   until (Players[Result].Active);
+end;    
+   
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure UpdateRSClient;
+Contributors: Freddy
+Description: Updates the client and excludes the toolbar from the client area.
+Date Created: July 21th 2012. By Freddy. RS2 Build 725.
+Last Modified: July 21th 2012. By Freddy. RS2 Build 725.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+procedure UpdateRSClient;
+var
+  Client: TSCARClient; 
+begin
+  Client := GetClient;
+  if Client.Update then
+  begin
+    with Client.ImageArea do
+    begin
+      Y1 := Y1 + 50;  
+      Y2 := Y2 + 50;  
+    end;       
+    with Client.InputArea do
+    begin
+      Y1 := Y1 + 50;  
+      Y2 := Y2 + 50;  
+    end;
+  end;  
 end;
