@@ -86,6 +86,7 @@ begin
   SMART_Client := InitSmartEx(SMART_Server, True, False);
   if (SMART_Client = nil) then
     Exit;
-  SetClient(SMART_Client).Free;
+  SetClient(SMART_Client).Free;   
+  UpdateRSClient;       
   Result := WaitFunc(@RSReady, True, 100, 250, 90000, 120000);
 end;

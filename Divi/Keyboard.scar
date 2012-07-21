@@ -32,30 +32,8 @@ Last Modified: July 21th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TypeSendEx(Text: string; PressEnter: Boolean);
-var
-  UseShiftKey, ShiftKeyDown: Boolean;
-  ShiftedKeys: string;
-  I, L: Integer;
 begin
-  ShiftedKeys := 'ABCDEFGHIJKLMNOPQRSTUVWXZ~!@#$%^&*()_+{}|:"<>?';
-  L := Length(Text);
-  ShiftKeyDown := False;
-  for I := 1 to L do
-  begin
-    UseShiftKey := StrInStr(Text[I], ShiftedKeys);
-    if (not (ShiftKeyDown)) then
-    begin
-      ShiftKeyDown := True;
-      VKeyDown(VK_SHIFT);
-    end;
-    if ((not (UseShiftKey)) and (ShiftKeyDown)) then
-    begin
-      VKeyUp(VK_SHIFT);
-      ShiftKeyDown := False;
-    end;
-    PushKey(Text[I]);
-    WaitRR(40, 80);
-  end;
+  TypeTextEx(Text, True, True); // TypeText(Ex) is not bound to a keyboard layout
   if (PressEnter) then
   begin
     PushKey(Chr(13));

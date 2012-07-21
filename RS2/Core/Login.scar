@@ -92,8 +92,7 @@ Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
 function RSReady: Boolean;
 begin
   Result := False;     
-  WriteLn(GetColor(381, 56));
-  if (GetColor(381, 56) <> 32747) then
+  if (not SimilarColors(GetColor(381, 56), 32747, 5)) then
     if (not (LobbyScreen)) then 
       if (not (LoginScreen)) then
         Exit;
@@ -315,7 +314,7 @@ begin
        end;
   end;
   if (LobbyScreen) then
-    MouseBox(256, 417, 507, 453, ClickLeft);                  // Click to Play
+    MouseBox(256, 442, 507, 478, ClickLeft);                  // Click to Play
   T := GetSystemTime + RR(50000, 70000);                      // Check Response
   repeat
     SetLength(Actions, 0);
