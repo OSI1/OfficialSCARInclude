@@ -58,7 +58,9 @@ begin
           begin                  
             Result := CreateSmartClient(ID);   
             with Result.ImageArea do
-              Result.ImageArea := Box(X1, Y1 + 50, X2, Y2);
+              Result.ImageArea := Box(X1, Y1 + 50, X2, Y2);  
+            with Result.InputArea do
+              Result.InputArea := Box(X1, Y1 + 50, X2, Y2);
             Exit;
           end;
         end;
@@ -67,7 +69,9 @@ begin
     ID := SmartSpawnClient(SMART_Path, 'http://' + Prefix + '.runescape.com/', ',f5', RSPW, RSPH + 50, S, '', '', -1);
     Result := CreateSmartClient(ID);  
     with Result.ImageArea do
-      Result.ImageArea := Box(X1, Y1 + 50, X2, Y2);  
+      Result.ImageArea := Box(X1, Y1 + 50, X2, Y2); 
+    with Result.InputArea do
+      Result.InputArea := Box(X1, Y1 + 50, X2, Y2); 
   except
     WriteLn('Failed to load SMART!'); 
     TerminateScript;
