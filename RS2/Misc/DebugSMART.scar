@@ -2,10 +2,6 @@
                               Official SCAR Include
                              SMART Debugging Routines
 --------------------------------------------------------------------------------
- * procedure SmartDebugBitmap(BMP, X, Y: Integer);
-     By: Wanted
- * procedure SmartClearDebugCanvas;
-     By: Wanted
  * procedure SmartDebugText(Text: string; Chars, Color, X, Y: Integer);
      By: Wanted
  * procedure SmartDebugATPABoundsEx(ATPA: T2DPointArray; ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean);
@@ -25,45 +21,6 @@
 // SmartRemote.dll currently does not support debugimage
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure SmartDebugBitmap(BMP, X, Y: Integer);
-Contributors: Wanted, Timer.
-Description: Draws a bitmap on the smart debug canvas.
-Date Created: January 22nd, 2012. By Wanted. RS2 Build 699.
-Last Modified: February 19th 2012. By Wanted. RS2 Build 701.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure SmartDebugBitmap(BMP, X, Y: Integer);
-var
-  Canvas, SCanvas: TCanvas;
-  BMP2, W, H: Integer;
-begin
-  BMP2 := BitmapFromString(RSPW, RSPH, '');
-  SCanvas := GetBitmapCanvas(BMP2);
-  SCanvas.Handle := SmartGetDebugDC;
-  Canvas := GetBitmapCanvas(BMP);
-  GetBitmapSize(BMP, W, H);
-  SafeCopyCanvas(Canvas, SCanvas, 0, 0, W, H, X, Y, X + W, Y + H);
-  FreeBitmap(BMP2);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure SmartClearDebugCanvas;
-Contributors: Wanted, Timer.
-Description: Clears the smart debug canvas.
-Date Created: January 22nd, 2012. By Wanted. RS2 Build 699.
-Last Modified: January 22nd, 2012. By Wanted. RS2 Build 699.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure SmartClearDebugCanvas;
-var
-  BMP: Integer;
-begin
-  BMP := BitmapFromString(RSPW, RSPH, '');
-  SmartDebugBitmap(BMP, 0, 0);
-  FreeBitmap(BMP);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SmartDebugText(Text: string; Chars, Color, X, Y: Integer);
 Contributors: Wanted
 Description: Debugs a line of text to the smart debug canvas.
@@ -73,16 +30,22 @@ Last Modified: January 22nd, 2012. By Wanted. RS2 Build 699.
 
 procedure SmartDebugText(Text: string; Chars, Color, X, Y: Integer);
 var
-  I, H, BMP: Integer;
+  Bmp: TSCARBitmap;
+  I, H: Integer;
   TPA: TPointArray;
 begin
-  BMP := BitmapFromString(RSPW, RSPH, '');
-  TPA := LoadTextTPA(Text, Chars);
-  H := High(TPA);
-  for I := 0 to H do
-    FastSetPixel(BMP, TPA[I].X, TPA[I].Y, Color);
-  SmartDebugBitmap(BMP, X, Y);
-  FreeBitmap(BMP);
+  Bmp := TSCARBitmap.Create('');
+  try
+    Bmp.SetSize(RSPW, RSPH);
+    Bmp.Clear(0);    
+    TPA := LoadTextTPA(Text, Chars);  
+    H := High(TPA);
+    for I := 0 to H do
+      Bmp.Pixels[TPA[I].X, TPA[I].Y] := Color;  
+    SmartDebugBitmapEx(SMART_Client, Bmp, X, Y);
+  finally
+    Bmp.Free;
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -94,58 +57,64 @@ Last Modified: January 22nd, 2012. By Wanted. RS2 Build 699.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SmartDebugATPABoundsEx(ATPA: T2DPointArray; ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean);
-var
-  I, II, H, HH, BMP, Col: Integer;
+var                  
+  Bmp: TSCARBitmap;
+  I, II, H, HH, Col: Integer;
   ATPA2: T2DPointArray;
   TPA: TPointArray;
   B: TBox;
-begin
-  BMP := BitmapFromString(RSPW, RSPH, '');
-  H := High(ATPA);
-  SetLength(ATPA2, H + 1);
-  for I := 0 to H do
-    ATPA2[I] := CopyTPA(ATPA[I]);
-  if ((ShowTPAs) or (ShowTPABorders) or (ShowTPAIndexes)) then
-  begin
+begin      
+  Bmp := TSCARBitmap.Create('');
+  try
+    Bmp.SetSize(RSPW, RSPH);
+    Bmp.Clear(0);    
+    H := High(ATPA);
+    SetLength(ATPA2, H + 1);
     for I := 0 to H do
+      ATPA2[I] := CopyTPA(ATPA[I]);
+    if ((ShowTPAs) or (ShowTPABorders) or (ShowTPAIndexes)) then
     begin
-      Col := Random(clWhite + 1);
-      HH := High(ATPA2[I]);
-      if (ShowTPAs) then
-        for II := 0 to HH do
-          FastSetPixel(BMP, ATPA2[I][II].X, ATPA2[I][II].Y, Col);
-      if ((ShowTPABorders) or (ShowTPAIndexes)) then
-        Col := Random(clWhite + 1);
-      if (ShowTPABorders) then
-      begin
-        TPA := TBOutlineToTPA(GetTPABounds(ATPA2[I]));
-        HH := High(TPA);
-          for II := 0 to HH do
-            FastSetPixel(BMP, TPA[II].X, TPA[II].Y, Col);
-      end;
-      if (ShowTPAIndexes) then
-      begin
-        TPA := LoadTextTPA(IntToStr(I), StatChars);
-        B := GetTPABounds(ATPA2[I]);
-        OffsetTPA(TPA, B.X1 + 2, B.Y1 + 2);
-        HH := High(TPA);
-        for II := 0 to HH do
-          try
-            FastSetPixel(BMP, TPA[II].X, TPA[II].Y, Col);
-          except
-          end;
-      end;
-    end;
-    if (ShowATPABorder) then
-    begin
-      TPA := TBOutlineToTPA(ATPABounds(ATPA2));
-      H := High(TPA);
       for I := 0 to H do
-        FastSetPixel(BMP, TPA[I].X, TPA[I].Y, clBlue);
+      begin
+        Col := Random(clWhite + 1);
+        HH := High(ATPA2[I]);
+        if (ShowTPAs) then
+          for II := 0 to HH do   
+            Bmp.Pixels[ATPA2[I][II].X, ATPA2[I][II].Y] := Col;
+        if ((ShowTPABorders) or (ShowTPAIndexes)) then
+          Col := Random(clWhite + 1);
+        if (ShowTPABorders) then
+        begin
+          TPA := TBOutlineToTPA(TPABounds(ATPA2[I]));
+          HH := High(TPA);
+          for II := 0 to HH do                       
+            Bmp.Pixels[TPA[II].X, TPA[II].Y] := Col;
+        end;
+        if (ShowTPAIndexes) then
+        begin
+          TPA := LoadTextTPA(IntToStr(I), StatChars);
+          B := TPABounds(ATPA2[I]);
+          OffsetTPA(TPA, B.X1 + 2, B.Y1 + 2);
+          HH := High(TPA);
+          for II := 0 to HH do
+            try     
+              Bmp.Pixels[TPA[II].X, TPA[II].Y] := Col;
+            except
+            end;
+        end;
+      end;
+      if (ShowATPABorder) then
+      begin
+        TPA := TBOutlineToTPA(ATPABounds(ATPA2));
+        H := High(TPA);
+        for I := 0 to H do   
+          Bmp.Pixels[TPA[I].X, TPA[I].Y] := clBlue;
+      end;
     end;
+    SmartDebugBitmap(SMART_Client, Bmp);
+  finally
+    Bmp.Free;
   end;
-  SmartDebugBitmap(BMP, 0, 0);
-  FreeBitmap(BMP);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
