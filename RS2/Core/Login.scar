@@ -225,7 +225,8 @@ begin
       951: Actions :=  ['Your account is already logged in', 5,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
       1057: Actions := ['Too many incorrect logins', 5 * 60000,    2,      'PlayerFalse', 'Too many logins'];    // August 7, 2011      Anonymous       660      unconfirmed
       1088: Actions := ['Your account has been disabled',    0,    0,      'PlayerFalse', 'Acc Disabled'];       // August 7, 2011      Anonymous       660      unconfirmed
-      1535: Actions := ['Your account has been locked',      0,    0,      'PlayerFalse', 'Acc Locked'];         // August 10, 2011     Wanted          661      confirmed
+      1535: Actions := ['Your account has been locked',      0,    0,      'PlayerFalse', 'Acc Locked'];         // August 10, 2011     Wanted          661      confirmed 
+      1606: Actions := ['Game session has ended',            0,    0,      'Exit',        'RS updated'];         // July 26, 2012 Bixby Sayz 727 confirmed
     end;
     if (Length(Actions) > 0) then
     begin
