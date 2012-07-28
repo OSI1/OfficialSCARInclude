@@ -86,13 +86,13 @@ function RSReady: Boolean;
 Contributors: Wanted, Freddy
 Description: Returns true when runescape isn't intially loading the game.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: July 28th, 2012. By Freddy. RS2 Build 727.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RSReady: Boolean;
 begin
   Result := False;     
-  if (not SimilarColors(GetColor(381, 56), 32747, 5)) then
+  if (not (LoggedIn)) then
     if (not (LobbyScreen)) then 
       if (not (LoginScreen)) then
         Exit;
