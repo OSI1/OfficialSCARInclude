@@ -134,15 +134,15 @@ const             // Description                  Modified            By        
   MBPH = 206;     // Bank Screen Height        // August 8, 2011      Wanted          660
   MBPA = 101146;  // Pixel Area                // August 8, 2011      Wanted          660
 
-  MDCX = 269;     // Deposit Box Center Points // August 8, 2011      Wanted          660
-  MDCY = 162;                                  // August 8, 2011      Wanted          660
-  MDX1 = 100;     // Deposit Box Edge Points   // August 8, 2011      Wanted          660
-  MDY1 = 65;                                   // August 8, 2011      Wanted          660
-  MDX2 = 437;                                  // August 8, 2011      Wanted          660
-  MDY2 = 258;                                  // August 8, 2011      Wanted          660
-  MDPH = 337;     // Deposit Box Width         // August 8, 2011      Wanted          660
-  MDPW = 193;     // Deposit Box Height        // August 8, 2011      Wanted          660
-  MDPA = 65041;   // Deposit Box Area          // August 8, 2011      Wanted          660
+  MDCX = 268;     // Deposit Box Center Point  // July 23, 2012       LordJashin      718  
+  MDCY = 161;     // Rounded                   // July 23, 2012       LordJashin      718
+  MDX1 = 106;     // Deposit Box Top Left Pnt  // July 23, 2012       LordJashin      718
+  MDY1 = 70;      //                           // July 23, 2012       LordJashin      718  
+  MDX2 = 429;     // Deposit Box Btm Right Pnt // July 23, 2012       LordJashin      718  
+  MDY2 = 251;     //                           // July 23, 2012       LordJashin      718
+  MDPW = 324;     // Deposit Box Width         // July 23, 2012       LordJashin      718  
+  MDPH = 182;     // Deposit Box Height        // July 23, 2012       LordJashin      718  
+  MDPA = 58968;   // Deposit Box Area          // July 23, 2012       LordJashin      718
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Skill_ Indexes
