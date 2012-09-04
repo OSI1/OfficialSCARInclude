@@ -51,14 +51,14 @@ const                            // Modified            By              Build #
   dtmBar_Rune = 20;              // November 13, 2011   Bixby Sayz      679
   dtmBar_Blurite = 21;           // November 13, 2011   Bixby Sayz      679
   dtmBar_Elemental = 22;         // November 13, 2011   Bixby Sayz      679
-  dtm_Cannonball = 23;           // November 13, 2011   Bixby Sayz      679
+  dtmCannonball = 23;           // November 13, 2011   Bixby Sayz      679
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Furnace option indexes
 Contributors: Bixby Sayz
 Description: Indexes of all the supported furnaces.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modified: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modified: August 13th, 2012. By Bixby Sayz. RS2 Build 729.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
@@ -66,6 +66,7 @@ const                            // Modified            By              Build #
   Furnace_Falador = 1;           // November 13, 2011   Bixby Sayz      679
   Furnace_Lumbridge = 2;         // November 13, 2011   Bixby Sayz      679
   Furnace_Wilderness = 3;        // November 13, 2011   Bixby Sayz      679
+  Furnace_Edgeville = 4;         // August 13, 2012     Bixby Sayz      729
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoadSmithingItem(Item: Integer; var Tolerance: Integer): Integer;
@@ -148,9 +149,9 @@ begin
     dtmBar_Elemental: Result := DTMFromString('78DA63B466606028644001C9229319B880342' +
                               '310FF07024627202387010D30814946288FD10C48941350A30724' +
                               '4A8950938E5F0D0054290862');
-    dtm_Cannonball: Result := DTMFromString('78DA637CC7C0C0E0C48002D4545519B880342' +
-                            '310FF0702C6DF40863D031A6002938C501EE31F4C7330D47C0112' +
-                            'BE04D4BC05120104D43C05123EF8D50000CB5E0BE4');
+    dtmCannonball: Result := DTMFromString('78DA637CC7C0C0E0C48002D4545519B880342' +
+                           '310FF0702C6DF40863D031A6002938C501EE31F4C7330D47C0112' +
+                           'BE04D4BC05120104D43C05123EF8D50000CB5E0BE4');
   else
     Result := 0;
   end;
@@ -161,12 +162,12 @@ function FurnaceScreen: Boolean;
 Contributors: Bixby Sayz, Freddy
 Description: Returns true if furnace (smelting) interface is open.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: August 13th, 2012. By Bixby Sayz. RS2 Build 729.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FurnaceScreen: Boolean;
 begin
-  Result := TIAContains([11, 121], CountColorTol(4543066, 315, 350, 325, 360, 10));
+  Result := (CountColor(1972494, 344, 377, 512, 385) = 784);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -174,7 +175,7 @@ function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
 Contributors: Bixby Sayz, Wanted, Freddy
 Description: Opens any F2P furnace.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: August 13th, 2012. By Bixby Sayz. RS2 Build 729.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
@@ -190,7 +191,8 @@ begin
   case (Furnace) of
     Furnace_Al_Kharid, Furnace_Falador: Color := 3947583;
     Furnace_Lumbridge:                  Color := 1581999;
-    Furnace_Wilderness:                 Color := 3289653;
+    Furnace_Wilderness:                 Color := 1186435;
+    Furnace_Edgeville:                  Color := 1252492;
   else
     Exit;
   end;
