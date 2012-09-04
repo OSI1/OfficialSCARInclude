@@ -12,6 +12,10 @@
   {$ERROR [OSI] Please update your copy of SCAR to run this script}
 {$ENDIF}
 
+{$IFDEF SMART}
+  {$DEFINE RS2}
+{$ENDIF}
+
 {$IFNDEF RS2}
   {$IFNDEF OverrideVariance}
     {$DEFINE NoVariance}
