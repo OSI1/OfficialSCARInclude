@@ -378,11 +378,15 @@ function PointsNotInTPA(TPA: TPointArray): TPointArray;
 Contributors: Wanted, Freddy.
 Description: Finds empty points in TPA bounds.
 Date Created: November 18th, 2011. By Wanted
-Last Modified: January 15th, 2012. By Wanted. RS2 Build 697.
+Last Modified: September 11th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PointsNotInTPA(TPA: TPointArray): TPointArray;
 begin
-  Result := TPAFromBox(TPABounds(TPA));
-  TPAFilterPoints(Result, TPA);
+  {$IFDEF SCAR336_UP}         
+    InvertTPA(TPA);
+  {$ELSE}
+    Result := TPAFromBox(TPABounds(TPA));
+    TPAFilterPoints(Result, TPA);
+  {$ENDIF}
 end;
