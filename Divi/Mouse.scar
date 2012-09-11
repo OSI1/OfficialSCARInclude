@@ -25,7 +25,7 @@ procedure MMouse(x, y, rx, ry: Integer);
 Contributors: Timer, Wanted, Freddy
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modified: July 20th, 2012. By Freddy
+Last Modified: September 10th, 2012. By Bixby Sayz.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
@@ -34,7 +34,11 @@ var
 begin
   P := RRectanglePoint(X - RX, Y - RY, X + RX, Y + RY);
   if (not (MouseSpeed = 0)) then
-    MoveMouseEx(P.X, P.Y, 0, 0, MouseSpeed)
+    {$IFDEF SCAR336_UP}
+      MoveMouseEx(P.X, P.Y, MouseSpeed)
+    {$ELSE}
+      MoveMouseEx(P.X, P.Y, 0, 0, MouseSpeed)
+    {$ENDIF}
   else
     MoveMouse(P.X, P.Y);
 end;
