@@ -261,14 +261,18 @@ procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
 Contributors: Wanted, Freddy.
 Description: Sorts ATPAs based in their TPA lengths.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: October 23rd, 2011. By Wanted
+Last Modified: September 10th, 2012. By Bixby Sayz.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
 begin
   SortATPABySize(ATPA);
   if (BigFirst) then
-    InvertATPA(ATPA);
+    {$IFDEF SCAR336_UP}
+      ReverseATPA(ATPA);
+    {$ELSE}
+      InvertATPA(ATPA);
+    {$ENDIF}
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
