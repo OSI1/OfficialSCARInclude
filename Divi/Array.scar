@@ -383,8 +383,9 @@ Last Modified: September 11th, 2012. By Freddy
 
 function PointsNotInTPA(TPA: TPointArray): TPointArray;
 begin
-  {$IFDEF SCAR336_UP}         
-    InvertTPA(TPA);
+  {$IFDEF SCAR336_UP}
+    Result := CopyTPA(TPA);
+    InvertTPA(Result);
   {$ELSE}
     Result := TPAFromBox(TPABounds(TPA));
     TPAFilterPoints(Result, TPA);
