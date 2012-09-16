@@ -91,6 +91,9 @@ Last Modified: July 28th, 2012. By Freddy. RS2 Build 727.
 
 function RSReady: Boolean;
 begin
+{$IFDEF SMART}
+  SmartSetRefresh(Smart_Client, 50);
+{$ENDIF}
   Result := False;     
   if (not (LoggedIn)) then
     if (not (LobbyScreen)) then 
