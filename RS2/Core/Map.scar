@@ -4,61 +4,33 @@
                                   Map Routines
 --------------------------------------------------------------------------------
  * function OnMM(X, Y: Integer): Boolean;
-     By: Wanted
  * function MMToMSEx(MM: TPoint; Height: Extended): TPoint;
-     By: Home
  * function MMToMS(MM: TPoint): TPoint;
-     By: Home
  * function MMOnMS(MM: TPoint): Boolean;
-     By: Wanted
  * function MMsToMSs(TPA: TPointArray): TPointArray;
-     By: Wanted
  * function FilterMMPointsMS(TPA: TPointArray): TPointArray;
-     By: Wanted
  * function FindMMColorTol(var X, Y: Integer; Color, Tol: Integer): Boolean;
-     By: Wanted
  * function FindMMColorTolEx(var Points: TPointArray; Color, Tol: Integer): Boolean;
-     By: Wanted
  * function GetCompassAngleRadians: Extended;
-     By: Wanted
  * function GetCompassAngleDegress: Extended;
-     By: Wanted
  * function MakeCompass(Angle: Extended): Boolean;
-     By: Wanted
  * procedure SetAngle(Highest: Boolean);
-     By: Naum
  * procedure ClickCompass(AdjustToHigh: Boolean);
-     By: Wanted
  * function FindFlag(var X, Y: Integer): Boolean;
-     By: Wanted
  * function FlagExists: Boolean;
-     By: Wanted;
  * function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
-     By: Wanted
  * function GetFlagDistance: Extended;
-     By: Wanted;
  * function FlagEx(Distance: Extended): Boolean;
-     By: Wanted
  * function Flag: Boolean;
-     By: Wanted
  * function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
-     By: Wanted
  * function MouseFlag(X, Y, RX, RY: Integer): Boolean;
-     By: Wanted
  * function FindMMDotsExOverlap(ColorDiffs: TIntArray): T2DPointArray;
-     By: Wanted
  * function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
-     By: Wanted
  * function FindMMDots(cldDot: Integer): TPointArray;
-     By: Wanted
  * function CountMMDotsEx2(ColorDiffs: TIntArray): TIntArray;
-     By: Wanted
  * function CountMMDotsEx(ColorDiffs: TIntArray): Integer;
-     By: Wanted
  * function CountMMDots(cldDot: Integer): Integer;
-     By: Wanted
  * function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
