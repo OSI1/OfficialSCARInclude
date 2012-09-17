@@ -4,9 +4,7 @@
                             Woodcutting Skill Routines
 --------------------------------------------------------------------------------
  * const Item database indexes
-     By: Wanted
  * function LoadWoodcuttingItem(Item: Integer; var Tolerance: Integer): Integer;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE Woodcutting}
