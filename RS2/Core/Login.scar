@@ -4,29 +4,17 @@
                                  Login Routines
 --------------------------------------------------------------------------------
  * function LoginScreen: Boolean;
-     By: Wanted
  * function LobbyScreen: Boolean;
-     By: Wanted
  * function LoggedIn: Boolean;
-     By: Wanted
  * function RSReady: Boolean;
-     By: Wanted
  * function LoginToLobby: Boolean;
-     By: Wanted
  * function Login: Boolean;
-     By: Wanted
  * function ExitToLobby: Boolean;
-     By: Wanted
  * function LeaveLobby: Boolean;
-     By: Wanted
  * function Logout: Boolean;
-     By: Wanted
  * function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
-     By: Wanted
  * function NextPlayer(Active: Boolean): Boolean;
-     By: Wanted
  * function RandomNextPlayer(Active: Boolean): Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
