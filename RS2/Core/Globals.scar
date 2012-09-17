@@ -68,8 +68,8 @@ const                   // Description                  Modified     By         
   MSY1  = 4;                                                   // 8/7/2011     Wanted       660
   MSX2  = 515;                                                 // 8/7/2011     Wanted       660
   MSY2  = 337;                                                 // 8/7/2011     Wanted       660
-  MSCX  = (MSX1 + MSX2) / 2 + 0.5; // Main Screen Center Point // 6/23/2012    LordJashin   718
-  MSCY  = (MSY1 + MSY2) / 2 + 0.5; // Rounded                  // 6/23/2012    LordJashin   718
+  MSCX  = (MSX1 + MSX2) div 2 + 1; // Main Screen Center Point // 6/23/2012    LordJashin   718
+  MSCY  = (MSY1 + MSY2) div 2 + 1; // Rounded                  // 6/23/2012    LordJashin   718
   MSCXe = (MSX1 + MSX2) / 2;       // Main Screen Center Point // 6/23/2012    LordJashin   718
   MSCYe = (MSY1 + MSY2) / 2;       // Not Rounded              // 6/23/2012    LordJashin   718
   MSPW  = MSX2 - MSX1 + 1;         // Main Screen Width        // 6/23/2012    LordJashin   718
