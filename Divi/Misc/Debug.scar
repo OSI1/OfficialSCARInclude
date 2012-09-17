@@ -3,17 +3,11 @@
                                Debugging Routines
 --------------------------------------------------------------------------------
  * procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
-     By: Wanted
  * procedure DebugATPABounds(ATPA: T2DPointArray);
-     By: Wanted
  * procedure DebugATPA(ATPA: T2DPointArray);
-     By: Wanted
  * procedure DebugTPA(TPA: TPointArray);
-     By: Wanted
  * procedure DebugTBA(TBA: TBoxArray);
-     By: Wanted
  * procedure DebugTB(TB: TBox);
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE OSIDebug}
