@@ -4,15 +4,10 @@
                            Runecrafting Skill Routines
 --------------------------------------------------------------------------------
  * const Item database indexes
-     By: Wanted
  * const Pouch option indexes
-     By: Wanted
  * function LoadRunecraftingItem(Item: Integer; var Tolerance: Integer): Integer;
-     By: Wanted
  * function FindPouch(Pouch: Integer; var Slot: Integer; CheckIT: Boolean): Boolean;
-     By: Wanted
  * function ClickPouch(Pouch, Option: Integer; CheckIT: Boolean): Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE Runecrafting}
