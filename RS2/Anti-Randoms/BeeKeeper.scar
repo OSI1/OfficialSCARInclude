@@ -4,13 +4,9 @@
                         Bee Keeper Random Solving Routines
 --------------------------------------------------------------------------------
  * function BeeKeeper_InRandom: Boolean;
-     By: Wanted
  * function BeeKeeper_TalkToKeeper: Boolean;
-     By: Wanted
  * function BeeKeeper_BeeScreen: Boolean;
-     By: Wanted
  * function Beekeeper_SolveRandom: Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
