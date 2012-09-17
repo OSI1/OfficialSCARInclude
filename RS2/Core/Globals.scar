@@ -78,20 +78,21 @@ const                   // Description                  Modified     By         
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Mini Map Constants 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-  MMX1  = 551;    // Map Edge Points           // 8/7/2011     Wanted       660
-  MMY1  = 9;                                   // 8/7/2011     Wanted       660
-  MMX2  = 702;                                 // 8/7/2011     Wanted       660
-  MMY2  = 160;                                 // 8/7/2011     Wanted       660
-  MMCX  = 627;    // Map Center Points         // 8/7/2011     Wanted       660
-  MMCY  = 85;                                  // 8/7/2011     Wanted       660
-  MMRD  = 75;     // Map Radius                // 8/7/2011     Wanted       660
-  MMDI  = 151;    // Map Diameter              // 8/7/2011     Wanted       660
-  MMPA  = 17907;  // Approx. Pixel Are         // 8/7/2011     Wanted       660
-  MMCXe = 626.5;                               // 8/7/2011     Wanted       660
-  MMCYe = 84.5;                                // 8/7/2011     Wanted       660
-  MMRDe = 75.5;   // True Radius               // 8/7/2011     Wanted       660
-  MMRD2 = 75.392307299883; // Fake radius      // 8/7/2011     Wanted       660
-  MMPAe = 17907.8635236252;                    // 8/7/2011     Wanted       660
+  MMX1  = 551;                     // Map Edge Points          // 8/7/2011     Wanted       660
+  MMY1  = 9;                                                   // 8/7/2011     Wanted       660
+  MMX2  = 702;                                                 // 8/7/2011     Wanted       660
+  MMY2  = 160;                                                 // 8/7/2011     Wanted       660
+  MMCX  = 627;                     // Map Center Points        // 8/7/2011     Wanted       660
+  MMCY  = 85;                      // Rounded                  // 8/7/2011     Wanted       660
+  MMCXe = 626.5;                   // Map Center Points        // 8/7/2011     Wanted       660
+  MMCYe = 84.5;                    // Not Rounded              // 8/7/2011     Wanted       660
+  MMDI  = 151;                     // Map Diameter             // 8/7/2011     Wanted       660
+  MMRD  = 75;                      // Map Radius               // 8/7/2011     Wanted       660
+  MMRDe = 75.5;                    // True Radius              // 8/7/2011     Wanted       660
+  MMRD2 = 75.392307299883;         // Fake radius              // 8/7/2011     Wanted       660
+  MMPA  = 17907;                   // Approx. Pixel Area       // 8/7/2011     Wanted       660
+  MMPAe = 17907.8635236252;        // Exact Pixel Area         // 8/7/2011     Wanted       660
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Inventory Constants 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
