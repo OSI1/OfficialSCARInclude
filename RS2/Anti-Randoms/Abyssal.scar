@@ -4,13 +4,9 @@
                          Abyssal Random Solving Routines
 --------------------------------------------------------------------------------
  * function Abyss_InRandom: Boolean;
-     By: Wanted
  * procedure Abyss_WalkToCenter;
-     By: Wanted
  * function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
-     By: Wanted
  * function Abyss_SolveRandom: Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
