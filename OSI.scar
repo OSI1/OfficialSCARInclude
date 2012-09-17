@@ -3,13 +3,15 @@
                                   Include File
 --------------------------------------------------------------------------------
  * procedure SetUpOSI;
-     By: Wanted
  * procedure FreeOSI;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$IFNDEF SCAR335_UP}
-  {$ERROR [OSI] Please update your copy of SCAR to run this script}
+  {$IFDEF SCAR320_UP}
+    {$ERROR [OSI] Please update SCAR Divi to version 3.35 or higher to run this script!}
+  {$ELSE}
+    '[OSI] Please update SCAR Divi to version 3.35 or higher to run this script!'
+  {$ENDIF}
 {$ENDIF}
 
 {$IFDEF SMART}
