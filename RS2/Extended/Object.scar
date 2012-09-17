@@ -4,9 +4,7 @@
                          Extended Object Finding Routines
 --------------------------------------------------------------------------------
  * function FindObjSpiral(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStrArray): Boolean;
-     By: Wanted
  * function FindObjSize(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStrArray): Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
