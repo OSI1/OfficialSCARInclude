@@ -3,21 +3,13 @@
                                   Mouse Routines
 --------------------------------------------------------------------------------
  * procedure MMouse(x, y, rx, ry: Integer);
-     By: Timer
  * procedure HoldMouseWait(x, y, rx, ry, MinTime, MaxTime: Integer; Left: Boolean);
-     By: Wanted
  * procedure Mouse(x, y, rx, ry: Integer; Left: Boolean);
-     By: Wanted & Timer.
  * procedure HoldMouseWaitBox(x1, y1, x2, y2, MinTime, MaxTime: Integer; Left: Boolean);
-     By: Wanted
  * procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
-     By: Wanted, Timer.
  * procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
-     By: Zyt3x & Wanted.
  * procedure DragMouse(sX, sY, sRX, sRY, eX, eY, eRX, eRY: Integer; Left: Boolean);
-     By: Naum
  * procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
