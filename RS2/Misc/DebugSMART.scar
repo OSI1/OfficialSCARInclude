@@ -3,19 +3,12 @@
                              SMART Debugging Routines
 --------------------------------------------------------------------------------
  * procedure SmartDebugText(Text: string; Chars, Color, X, Y: Integer);
-     By: Wanted
  * procedure SmartDebugATPABoundsEx(ATPA: T2DPointArray; ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean);
-     By: Wanted
  * procedure SmartDebugATPABounds(ATPA: T2DPointArray);
-     By: Wanted
  * procedure SmartDebugATPA(ATPA: T2DPointArray);
-     By: Wanted
  * procedure SmartDebugTPA(TPA: TPointArray);
-     By: Wanted
  * procedure SmartDebugTBA(TBA: TBoxArray);
-     By: Wanted
  * procedure SmartDebugTB(TB: TBox);
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

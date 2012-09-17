@@ -16,9 +16,6 @@
  * function CountDepositItemsDTM(dtm: Integer): Integer;     
  * function FindDepositItemsBMP(bmp: TSCARBitmap; Tol: Integer): TIntArray;     
  * function CountDepositItemsBMP(bmp: TSCARBitmap; Tol: Integer): Integer;  
- 
- *+ Credits: Wanted, LordJashin
-     
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

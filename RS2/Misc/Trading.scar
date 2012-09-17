@@ -4,29 +4,17 @@
                                 Trading routines
 --------------------------------------------------------------------------------
  * function TradeScreen: Boolean;
-     By: Wanted
  * function FinalTradeScreen: Boolean;
-     By: Wanted
  * function GetTradeItemBounds(Slot: Integer; YourOffer: Boolean): TBox;
-     By: Wanted
  * function FirstScreenAccept(CheckTS: Boolean): Boolean;
-     By: Wanted
  * function FirstScreenDecline(CheckTS: Boolean): Boolean;
-     By: Wanted
  * function FinalScreenAccept(CheckFTS: Boolean): Boolean;
-     By: Wanted
  * function FinalScreenDecline(CheckFTS: Boolean): Boolean;
-     By: Wanted
  * function AddTradeMoneyPouch(Amount: Integer; CheckTS: Boolean): Boolean;
-     By: Wanted
  * function GetTradersName: string;
-     By: Wanted
  * function GetFinalTradersName: string;
-     By: Wanted
  * function GetFinalCoinAmount: LongInt;
-     By: Wanted       
  * function GetApproxFinalCoinAmount: LongInt;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE Trading}

@@ -3,7 +3,6 @@
                            Include Compile Testing File
 --------------------------------------------------------------------------------
  * procedure TestCompileOSI;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
                                            // Test all combinations of in-depth.
 {$DEFINE RS2}                              // Comment out in in-depth testing

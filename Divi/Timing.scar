@@ -3,25 +3,15 @@
                                  Timing Routines
 --------------------------------------------------------------------------------
  * procedure WaitRR(Min, Max);
-     By: Wanted
  * function WaitFunc(Func: function: Boolean; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
-     By: Wanted
  * function WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
-     By: Wanted
  * function WaitFindColorTol(var X, Y: Integer; Color, X1, Y1, X2, Y2, Tol: Integer; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
-     By: Wanted
  * function WaitFindColorTolEx(var TPA: TPointArray; Color, X1, Y1, X2, Y2, Tol, DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
-     By: Wanted
  * procedure WaitNone;
-     By: Wanted
  * function TheTime: string;
-     By: Timer
  * function TheDate: string;
-     By: Timer
  * function TheMonth: string;
-     By: Timer
  * function STimeRunning: string;
-     By: Timer
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

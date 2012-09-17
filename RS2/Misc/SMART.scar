@@ -4,9 +4,7 @@
            S.M.A.R.T. Smart Minimizing Autoing Resource Thing Routines
 --------------------------------------------------------------------------------
  * function InitSMARTEx(Server: Integer; SafeMode, ForceNew: Boolean): Integer;
-     By: BenLand100
  * function InitSMART: Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$L SmartRemote.dll}

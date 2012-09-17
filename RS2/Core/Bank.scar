@@ -4,69 +4,37 @@
                                   Bank routines
 --------------------------------------------------------------------------------
  * function BankScreen: Boolean;
-     By: Wanted
  * function PinScreen: Boolean;
-     By: Wanted
  * function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
-     By: Wanted
  * function CloseBank(CheckBS: Boolean): Boolean;
-     By: Wanted
  * function DepositAllEx(Inv, Equip, Summon, CPouch, CheckBS: Boolean): Boolean;
-     By: Wanted
  * function DepositAll(CheckBS: Boolean): Boolean;
-     By: Wanted
  * function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
-     By: Wanted
  * function DepositItems(Slots: TIntArray; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function DepositAllExclude(Exclude: TIntArray; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function ToggleUseNotes(Use: Boolean): Boolean;
-     By: Wanted
  * function ToggleSwapMode(Use: Boolean): Boolean;
-     By: Wanted
  * function SearchBank(SearchText: string; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function BankShowEquipStats(CheckBS: Boolean): Boolean;
-     By: Wanted
  * function FixBank(FixUp: Boolean): Boolean;
-     By: Wanted
  * function GetBankSlotIndex(Row, Column: Integer): Integer;
-     By: Wanted
  * function GetBankSlotBounds(Slot: Integer): TBox;
-     By: Wanted
  * function GetBankTabBounds(Tab: Integer): TBox;
-     By: Wanted
  * function CordsToBankSlot(P: TPoint): Integer;
-     By: Wanted
  * function BankItemExists(Slot: Integer; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function GetCurrentBankTab: Integer;
-     By: Wanted
  * function BankTabExists(Tab: Integer): Boolean;
-     By: Wanted
  * function SetBankTab(Tab: Integer; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function WithdrawEx2(Options: TStrArray; B: TBox; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function WithdrawSlotEx(Options: TStrArray; Slot: Integer; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
-     By: Wanted
  * function OpenBankBooth(Loc: Integer): Boolean;
-     By: Wanted
  * function OpenBankNPC(Loc: Integer): Boolean;
-     By: Wanted
  * function OpenBankEx(Loc: Integer; AllowNPC, AllowBooth, TryBoothFirst: Boolean): Boolean;
-     By: Wanted
  * function OpenBank(Loc: Integer): Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

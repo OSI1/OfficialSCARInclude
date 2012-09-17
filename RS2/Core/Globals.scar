@@ -28,95 +28,121 @@
  * function AllPlayersInActive: Boolean;
  * function NextPlayerIndex: Integer;
  * function NextActivePlayerIndex: Integer;
-
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=} 
 
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Anonymous, Wanted, LordJashin.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
-Last Modified: June 13th, 2012. By LordJashin. RS2 Build 718.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+Last Modified: September 17, 2012. By LordJashin. RS2 Build 718.
+Explanation:
+            Most of the constants are relative to each other, so that if we
+            need to change one. It will automatically update the rest of them.
+            Things like toolbar changes will be easier to overcome with Relative
+            constants. The formulas used are all relatively the same except for
+            when ZERO is involved. If something starts at 1 and ends at 3 the 
+            width of it is not 3. But 3 - 1. Now if it was 0 to 3, the width 
+            would be 3. Things like this make the math look different, etc.
 
-const             // Description                  Modified            By              Build #
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-  RSCX = 383;     // RS2 Client Center Points  // October 16, 2011    Wanted          667
-  RSCY = 252;                                  // October 16, 2011    Wanted          667
-  RSX1 = 0;       // RS2 Client Edge Points    // October 16, 2011    Wanted          667
-  RSY1 = 0;                                    // October 16, 2011    Wanted          667
-  RSX2 = 764;                                  // July 20, 2012       Freddy          725
-  RSY2 = 502;                                  // July 20, 2012       Freddy          725
-  RSPW = 765;     // RS2 Client Width          // July 20, 2012       Freddy          725
-  RSPH = 503;     // RS2 Client Height         // July 20, 2012       Freddy          725
-  RSPA = 384795;  // RS2 Client Pixel Area     // July 20, 2012       Freddy          725
+const                   // Description                  Modified     By           Build #
 
-  MSCX  = 260;    // Main Screen Center Points // August 7, 2011      Wanted          660
-  MSCY  = 171;                                 // August 7, 2011      Wanted          660
-  MSX1  = 4;      // Main Screen Edge Points   // August 7, 2011      Wanted          660
-  MSY1  = 4;                                   // August 7, 2011      Wanted          660
-  MSX2  = 515;                                 // August 7, 2011      Wanted          660
-  MSY2  = 337;                                 // August 7, 2011      Wanted          660
-  MSPW  = 511;    // Main Screen Width         // August 7, 2011      Wanted          660
-  MSPH  = 333;    // Main Screen Height        // August 7, 2011      Wanted          660
-  MSPA  = 170163; // Main Screen Pixel Area    // August 7, 2011      Wanted          660
-  MSCXe = 259.5;                               // August 7, 2011      Wanted          660
-  MSCYe = 170.5;                               // August 7, 2011      Wanted          660
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                RS2 Client Constants 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  RSX1 = 0;                        // Client Edge Points    // 8/16/2011    Wanted       667
+  RSY1 = 0;                                                 // 8/16/2011    Wanted       667
+  RSX2 = 764;                                               // 7/20/2012    Freddy       725
+  RSY2 = 502;                                               // 7/20/2012    Freddy       725
+  RSCX = RSX2 div 2;               // Client Center Points  // 9/17/2012    LordJashin   725
+  RSCY = RSY2 div 2;                                        // 9/17/2012    LordJashin   725
+  RSPW = RSX2;                     // Client Width          // 9/17/2012    LordJashin   725
+  RSPH = RSY2;                     // Client Height         // 9/17/2012    LordJashin   725
+  RSPA = RSPW * RSPH;              // Client Pixel Area     // 9/17/2012    LordJashin   725
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Main Screen Constants 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  MSX1  = 4;                       // Main Screen Edge Points  // 8/7/2011     Wanted       660
+  MSY1  = 4;                                                   // 8/7/2011     Wanted       660
+  MSX2  = 515;                                                 // 8/7/2011     Wanted       660
+  MSY2  = 337;                                                 // 8/7/2011     Wanted       660
+  MSCX  = (MSX1 + MSX2) div 2 + 1; // Main Screen Center Point // 6/23/2012    LordJashin   718
+  MSCY  = (MSY1 + MSY2) div 2 + 1; // Rounded                  // 6/23/2012    LordJashin   718
+  MSCXe = (MSX1 + MSX2) / 2;       // Main Screen Center Point // 6/23/2012    LordJashin   718
+  MSCYe = (MSY1 + MSY2) / 2;       // Not Rounded              // 6/23/2012    LordJashin   718
+  MSPW  = MSX2 - MSX1 + 1;         // Main Screen Width        // 6/23/2012    LordJashin   718
+  MSPH  = MSY2 - MSY1 + 1;         // Main Screen Height       // 6/23/2012    LordJashin   718
+  MSPA  = MSPW * MSPH;             // Main Screen Pixel Area   // 6/23/2012    LordJashin   718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Mini Map Constants 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  MMX1  = 551;                     // Map Edge Points          // 8/7/2011     Wanted       660
+  MMY1  = 9;                                                   // 8/7/2011     Wanted       660
+  MMX2  = 702;                                                 // 8/7/2011     Wanted       660
+  MMY2  = 160;                                                 // 8/7/2011     Wanted       660
+  MMCX  = 627;                     // Map Center Points        // 8/7/2011     Wanted       660
+  MMCY  = 85;                      // Rounded                  // 8/7/2011     Wanted       660
+  MMCXe = 626.5;                   // Map Center Points        // 8/7/2011     Wanted       660
+  MMCYe = 84.5;                    // Not Rounded              // 8/7/2011     Wanted       660
+  MMDI  = 151;                     // Map Diameter             // 8/7/2011     Wanted       660
+  MMRD  = 75;                      // Map Radius               // 8/7/2011     Wanted       660
+  MMRDe = 75.5;                    // True Radius              // 8/7/2011     Wanted       660
+  MMRD2 = 75.392307299883;         // Fake radius              // 8/7/2011     Wanted       660
+  MMPA  = 17907;                   // Approx. Pixel Area       // 8/7/2011     Wanted       660
+  MMPAe = 17907.8635236252;        // Exact Pixel Area         // 8/7/2011     Wanted       660
 
-  MMCX  = 627;    // Map Center Points         // August 7, 2011      Wanted          660
-  MMCY  = 85;                                  // August 7, 2011      Wanted          660
-  MMX1  = 551;    // Map Edge Points           // August 7, 2011      Wanted          660
-  MMY1  = 9;                                   // August 7, 2011      Wanted          660
-  MMX2  = 702;                                 // August 7, 2011      Wanted          660
-  MMY2  = 160;                                 // August 7, 2011      Wanted          660
-  MMRD  = 75;     // Map Radius                // August 7, 2011      Wanted          660
-  MMDI  = 151;    // Map Diameter              // August 7, 2011      Wanted          660
-  MMPA  = 17907;  // Approx. Pixel Are         // August 7, 2011      Wanted          660
-  MMCXe = 626.5;                               // August 7, 2011      Wanted          660
-  MMCYe = 84.5;                                // August 7, 2011      Wanted          660
-  MMRDe = 75.5;   // True Radius               // August 7, 2011      Wanted          660
-  MMRD2 = 75.392307299883; // Fake radius      // August 10, 2011     Wanted          661
-  MMPAe = 17907.8635236252;                    // August 7, 2011      Wanted          660
-
-  MIX1 = 556;    // Inventory Top Left Point   // June 23, 2012       LordJashin      718
-  MIY1 = 210;    //                            // June 23, 2012       LordJashin      718  
-  MIX2 = 730;    // Inventory Btm Right Point  // June 23, 2012       LordJashin      718  
-  MIY2 = 460;    //                            // June 23, 2012       LordJashin      718
-  MICX = 643;    // Inventory Center Point     // June 23, 2012       LordJashin      718  
-  MICY = 335;    // Rounded                    // June 23, 2012       LordJashin      718    
-  MIPW = 162;    // Inventory Width            // June 23, 2012       LordJashin      718  
-  MIPH = 248;    // Inventory Height           // June 23, 2012       LordJashin      718  
-  MIPA = 40176;  // Inventory Area             // June 23, 2012       LordJashin      718
-
-  MCCX = 251;     // Chat Box Center Points    // August 8, 2011      Wanted          660
-  MCCY = 412;                                  // August 8, 2011      Wanted          660
-  MCX1 = 7;       // Chat Box Edge Points      // August 8, 2011      Wanted          660
-  MCY1 = 345;                                  // August 8, 2011      Wanted          660
-  MCX2 = 494;                                  // August 8, 2011      Wanted          660
-  MCY2 = 478;                                  // August 8, 2011      Wanted          660
-  MCPW = 487;     // Chat Box Width            // August 8, 2011      Wanted          660
-  MCPH = 133;     // Chat Box Height           // August 8, 2011      Wanted          660
-  MCPA = 64771;   // Chat Box Area             // August 8, 2011      Wanted          660
-
-  MBCX = 272;     // Bank Screen Center Points // August 8, 2011      Wanted          660
-  MBCY = 189;                                  // August 8, 2011      Wanted          660
-  MBX1 = 26;      // Bank Screen Edge Points   // August 8, 2011      Wanted          660
-  MBY1 = 86;                                   // August 8, 2011      Wanted          660
-  MBX2 = 517;                                  // August 8, 2011      Wanted          660
-  MBY2 = 292;                                  // August 8, 2011      Wanted          660
-  MBPW = 491;     // Bank Screen Width         // August 8, 2011      Wanted          660
-  MBPH = 206;     // Bank Screen Height        // August 8, 2011      Wanted          660
-  MBPA = 101146;  // Pixel Area                // August 8, 2011      Wanted          660
-
-  MDCX = 268;     // Deposit Box Center Point  // July 23, 2012       LordJashin      718  
-  MDCY = 161;     // Rounded                   // July 23, 2012       LordJashin      718
-  MDX1 = 106;     // Deposit Box Top Left Pnt  // July 23, 2012       LordJashin      718
-  MDY1 = 70;      //                           // July 23, 2012       LordJashin      718  
-  MDX2 = 429;     // Deposit Box Btm Right Pnt // July 23, 2012       LordJashin      718  
-  MDY2 = 251;     //                           // July 23, 2012       LordJashin      718
-  MDPW = 324;     // Deposit Box Width         // July 23, 2012       LordJashin      718  
-  MDPH = 182;     // Deposit Box Height        // July 23, 2012       LordJashin      718  
-  MDPA = 58968;   // Deposit Box Area          // July 23, 2012       LordJashin      718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Inventory Constants 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  MIX1 = 556;                      // Inventory Top Left Point  // 6/23/2012    LordJashin   718
+  MIY1 = 210;                      //                           // 6/23/2012    LordJashin   718
+  MIX2 = 730;                      // Inventory Btm Right Point // 6/23/2012    LordJashin   718
+  MIY2 = 460;                      //                           // 6/23/2012    LordJashin   718
+  MICX = (MIX1 + MIX2) div 2 + 1;  // Inventory Center Point    // 6/23/2012    LordJashin   718
+  MICY = (MIY1 + MIY2) div 2 + 1;  // Rounded                   // 6/23/2012    LordJashin   718
+  MICXe = (MIX1 + MIX2) / 2;       // Inventory Center Point    // 6/23/2012    LordJashin   718
+  MICYe = (MIY1 + MIY2) / 2;       // Not Rounded               // 6/23/2012    LordJashin   718
+  MIPW = MIX2 - MIX1 + 1;          // Inventory Width           // 6/23/2012    LordJashin   718
+  MIPH = MIY2 - MIY1 + 1;          // Inventory Height          // 6/23/2012    LordJashin   718
+  MIPA = MIPW * MIPH;              // Inventory Area            // 6/23/2012    LordJashin   718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Chat Constants 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  MCX1 = 7;                        // Chat Box Edge Points      // 6/23/2012    LordJashin   718
+  MCY1 = 345;                                                   // 6/23/2012    LordJashin   718
+  MCX2 = 496;                                                   // 6/23/2012    LordJashin   718
+  MCY2 = 457;                                                   // 6/23/2012    LordJashin   718
+  MCCX = (MCX1 + MCX2) div 2 + 1;  // Chat Box Center Points    // 6/23/2012    LordJashin   718
+  MCCY = (MCY1 + MCY2) div 2 + 1;                               // 6/23/2012    LordJashin   718
+  MCPW = MCX2 - MCX1 + 1;          // Chat Box Width            // 6/23/2012    LordJashin   718
+  MCPH = MCY2 - MCY1 + 1;          // Chat Box Height           // 6/23/2012    LordJashin   718
+  MCPA = MCPW * MCPH;              // Chat Box Area             // 6/23/2012    LordJashin   718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Bank Constants 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  MBX1 = 26;                      // Bank Screen Edge Points    // 8/8/2011     Wanted       660
+  MBY1 = 86;                                                    // 8/8/2011     Wanted       660
+  MBX2 = 517;                                                   // 8/8/2011     Wanted       660
+  MBY2 = 292;                                                   // 8/8/2011     Wanted       660
+  MBCX = (MBX1 + MBX2) div 2 + 1; // Bank Screen Center Points  // 6/23/2012    LordJashin   718
+  MBCY = (MBY1 + MBY2) div 2;                                   // 6/23/2012    LordJashin   718
+  MBPW = MBX2 - MBX1 + 1;         // Bank Screen Width          // 6/23/2012    LordJashin   718
+  MBPH = MBY2 - MBY1 + 1;         // Bank Screen Height         // 6/23/2012    LordJashin   718
+  MBPA = MBPW * MBPH;             // Pixel Area                 // 6/23/2012    LordJashin   718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Deposit Box Constants  
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  MDX1 = 106;                      // Deposit Edge Points       // 6/23/2012    LordJashin   718  
+  MDY1 = 70;                                                    // 6/23/2012    LordJashin   718  
+  MDX2 = 429;                                                   // 6/23/2012    LordJashin   718  
+  MDY2 = 251;                                                   // 6/23/2012    LordJashin   718  
+  MDCX = (MDX1 + MDX2) div 2 + 1;  // Deposit Box Center Point  // 6/23/2012    LordJashin   718  
+  MDCY = (MDY1 + MDY2) div 2 + 1;  // Rounded                   // 6/23/2012    LordJashin   718
+  MDPW = MDX2 - MDX1 + 1;          // Deposit Box Width         // 6/23/2012    LordJashin   718  
+  MDPH = MDY2 - MDY1 + 1;          // Deposit Box Height        // 6/23/2012    LordJashin   718  
+  MDPA = MDPW * MDPH;              // Deposit Box Area          // 6/23/2012    LordJashin   718
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Skill_ Indexes

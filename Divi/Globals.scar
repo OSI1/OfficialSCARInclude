@@ -3,11 +3,8 @@
                                  Global Routines
 --------------------------------------------------------------------------------
  * var OSI_Variance
-     By: Wanted
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
-     By: Anonymous
  * var MouseSpeed: Integer;
-     By: Anonymous
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

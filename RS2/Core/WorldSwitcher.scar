@@ -4,31 +4,18 @@
                               World Switch Routines
 --------------------------------------------------------------------------------
  * function WorldScreen: Boolean;
-     By: Wanted
  * function OpenWorldScreen: Boolean;
-     By: Wanted
  * function WS_CurrentWorld: Boolean;
-     By: Wanted
  * function WS_MemberWorld: Boolean;
-     By: Wanted
  * procedure LoadRS2WorldArray;
-     By: Narcle & Wanted
  * procedure OrderWorlds(By: Integer; Descending: Boolean);
-     By: Wanted & Naum.
  * function FindWorld(var P: TPoint; World: Integer): Boolean;
-     By: Wanted & Narcle.
  * function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
-     By: Wanted & Narcle.
  * function SelectWorld(World: Integer): Boolean;
-     By: Wanted
  * function SwitchWorld(World: Integer): Boolean;
-     By: Wanted
  * procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
-     By: Wanted
  * function RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
-     By: Wanted
  * function RandomWorld(Members: Boolean): Integer;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

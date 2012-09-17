@@ -4,15 +4,10 @@
                              Smithing Skill Routines
 --------------------------------------------------------------------------------
  * const Item database indexes
-     By: Bixby Sayz
  * const Furnace options indexes
-     By: Bixby Sayz
  * function LoadSmithingItem(Item: Integer; var Tolerance: Integer): Integer;
-     By: Bixby Sayz
  * function FurnaceScreen: Boolean;
-     By: Bixby Sayz
  * function OpenFurnace(Furnace: Integer; TypeC: ClickActions): Boolean;
-     By Bixby Sayz
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE Smithing}
