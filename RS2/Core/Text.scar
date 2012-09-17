@@ -4,29 +4,17 @@
                                   Text Routines
 --------------------------------------------------------------------------------
  * function GetUpText: string;
-     By: Freddy
  * function IsUpText(Text: string): Boolean;
-     By: Freddy & Wanted.
  * function IsUpTextMulti(Text: TStrArray): Boolean;
-     By: Freddy & Wanted.
  * function OptionBoxExistsEx(var OptionBox: TBox): Boolean;
-     By: Wanted
  * function OptionBoxExists: Boolean;
-     By: Wanted
  * function GetOptionsEx(var B: TBox): TStrArray;
-     By: Wanted
  * function GetOptions: TStrArray;
-     By: Wanted
  * function OptionExistsMulti(Options: TStrArray; var InBox: TBoxArray): TBoolArray;
-     By: Wanted
  * function OptionExists(Option: string): Boolean;
-     By: Wanted
  * function ChooseOptionMultiEx(Options: TStrArray; TypeC: ClickActions): Boolean;
-     By: Wanted
  * function ChooseOptionMulti(Options: TStrArray): Boolean;
-     By: Wanted
  * function ChooseOption(Option: string): Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
