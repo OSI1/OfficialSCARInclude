@@ -25,7 +25,6 @@
  * function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
  * function FindInvItemsBMP(Bmp: TSCARBitmap; Tol: Integer; CheckIT: Boolean): TIntArray;
  * function CountInvItemsBMP(Bmp: TSCARBitmap; Tol: Integer; CheckIT: Boolean): Integer;
-
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
