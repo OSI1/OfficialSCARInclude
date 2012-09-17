@@ -28,7 +28,6 @@
  * function AllPlayersInActive: Boolean;
  * function NextPlayerIndex: Integer;
  * function NextActivePlayerIndex: Integer;
-
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=} 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
