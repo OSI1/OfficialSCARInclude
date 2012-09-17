@@ -3,21 +3,13 @@
                                   Math Routines
 --------------------------------------------------------------------------------
  * function RR(Min, Max: Integer): Integer;
-     By: Wanted
  * function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
-     By: Wanted
  * function RCirclePoint(CX, CY, Radius: Integer): TPoint;
-     By: Wanted & Zyt3x.
  * function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
-     By: Wanted
  * function AngleBetweenPointsDegress(P1, P2: TPoint): Extended;
-     By: Wanted
  * procedure ConstrainBox(var X1, Y1, X2, Y2: Integer; CX1, CY1, CX2, CY2: Integer);
-     By: Wanted
  * procedure ConstrainBoxes(var TBA: TBoxArray; CX1, CY1, CX2, CY2: Integer);
-     By: Wanted
  * function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
