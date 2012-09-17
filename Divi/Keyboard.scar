@@ -3,11 +3,8 @@
                                 Keyboard Routines
 --------------------------------------------------------------------------------
  * procedure PushKey(C: Char);
-     By: Wanted
  * procedure TypeSendEx(Text: string; PressEnter: Boolean);
-     By: Wanted
  * procedure TypeSend(Text: string);
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
