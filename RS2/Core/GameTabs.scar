@@ -4,67 +4,36 @@
                                 Game Tab Routines
 --------------------------------------------------------------------------------
  * function CurrentLobbyTab: Integer;
-     By: Wanted
  * function LobbyTab(Tab: Integer): Boolean;
-     By: Wanted
  * function GetCurrentTab: Integer;
-     By: Dynamite & Wanted.
  * function GetTabBounds(Tab: Integer): TBox;
-     By: Wanted
  * function TabExists(Tab: Integer): Boolean;
-     By: Wanted
  * function SetGameTab(Tab: Integer): Boolean;
-     By: Wanted
  * function GetEquipmentBounds(Slot: Integer): TBox;
-     By: Wanted
  * function IsSlotEquipped(Slot: Integer; CheckET: Boolean): Boolean;
-     By: Home & Wanted.
  * function ClickEquipedItem(Slot: Integer; TypeC: ClickActions; CheckET: Boolean): Boolean;
-     By: Wanted & Home.
  * function GetCurrentMusic: string;
-     By: Zyt3x
  * function IsRunning: Boolean;
-     By: Wanted
  * function SetRun(Run: Boolean): Boolean;
-     By: Zyt3x
  * function IsResting: Boolean;
-     By: Wanted
  * function SetRest(Rest: Boolean): Boolean;
-     By: Wanted
  * function IsMoneyPouchOpen: Boolean;
-     By: Wanted
  * function ToggleMoneyPouch(Open: Boolean): Boolean;
-     By: Wanted
  * function GetMoneyPouchAmount: LongInt;
-     By: Wanted
  * function WithdrawMoneyPouch(Amount: LongInt): Boolean;
-     By: Wanted
  * function IsXPBarOpen: Boolean;
-     By: Wanted
  * function ToggleXPBar(Open: Boolean): Boolean;
-     By: Wanted
  * function GetXPBarTotal: LongInt;
-     By: Wanted
  * function ConvertXPToLevel(xp: Integer): Integer;
-     By: Brak & Flyboy
  * function GetSkillBounds(Skill: Integer): TBox;
-     By: Wanted
  * function GetSkillLevelEx(Skill: Integer; BottomNumber, CheckST: Boolean): Integer;
-     By: Wanted
  * function GetSkillLevel(Skill: Integer; CheckST: Boolean): Integer;
-     By: Wanted
  * function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
-     By: Wanted
  * function GetMMLevel(Skill: Integer): Integer;
-     By: Wanted
  * function HoverSkill(Skill: Integer; CheckST: Boolean): Boolean;
-     By: Wanted
  * function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntArray;
-     By: Wanted
  * function GetXP(Skill: Integer; CheckST: Boolean): Integer;
-     By: Wanted
  * function GetAllLevels(CheckST: Boolean): Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
