@@ -4,7 +4,6 @@
                              Object Finding Routines
 --------------------------------------------------------------------------------
  * function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2, TextColor, Tol, MinC, MaxC: Integer; Text: TStrArray): Boolean;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
