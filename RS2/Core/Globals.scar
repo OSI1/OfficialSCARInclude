@@ -1,8 +1,8 @@
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
                               Official SCAR Include
                                    Runescape 2
                                  Global Routines
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
  * const Useful in game boundaries, points, areas, widths, etc. etc.
  * const Skill_ Indexes
  * const Lobby_Tab_ Indexes
@@ -28,9 +28,9 @@
  * function AllPlayersInActive: Boolean;
  * function NextPlayerIndex: Integer;
  * function NextActivePlayerIndex: Integer;
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=} 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-}
 
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Anonymous, Wanted, LordJashin.
 Description: MMX1, MSCX, etc. etc.
@@ -45,13 +45,13 @@ Explanation:
             width of it is not 3. But 3 - 1. Now if it was 0 to 3, the width 
             would be 3. Things like this make the math look different, etc.
 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const                   // Description                  Modified     By           Build #
+  const                            // Description              Modified     By           Build #
 
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 RS2 Client Constants 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   RSX1 = 0;                        // Client Edge Points    // 8/16/2011    Wanted       667
   RSY1 = 0;                                                 // 8/16/2011    Wanted       667
   RSX2 = 764;                                               // 7/20/2012    Freddy       725
@@ -61,9 +61,9 @@ const                   // Description                  Modified     By         
   RSPW = RSX2;                     // Client Width          // 9/17/2012    LordJashin   725
   RSPH = RSY2;                     // Client Height         // 9/17/2012    LordJashin   725
   RSPA = RSPW * RSPH;              // Client Pixel Area     // 9/17/2012    LordJashin   725
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Main Screen Constants 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   MSX1  = 4;                       // Main Screen Edge Points  // 8/7/2011     Wanted       660
   MSY1  = 4;                                                   // 8/7/2011     Wanted       660
   MSX2  = 515;                                                 // 8/7/2011     Wanted       660
@@ -75,27 +75,26 @@ const                   // Description                  Modified     By         
   MSPW  = MSX2 - MSX1 + 1;         // Main Screen Width        // 6/23/2012    LordJashin   718
   MSPH  = MSY2 - MSY1 + 1;         // Main Screen Height       // 6/23/2012    LordJashin   718
   MSPA  = MSPW * MSPH;             // Main Screen Pixel Area   // 6/23/2012    LordJashin   718
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Mini Map Constants 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-  MMX1  = 551;                     // Map Edge Points          // 8/7/2011     Wanted       660
-  MMY1  = 9;                                                   // 8/7/2011     Wanted       660
-  MMX2  = 702;                                                 // 8/7/2011     Wanted       660
-  MMY2  = 160;                                                 // 8/7/2011     Wanted       660
-  MMCX  = 627;                     // Map Center Points        // 8/7/2011     Wanted       660
-  MMCY  = 85;                      // Rounded                  // 8/7/2011     Wanted       660
-  MMCXe = 626.5;                   // Map Center Points        // 8/7/2011     Wanted       660
-  MMCYe = 84.5;                    // Not Rounded              // 8/7/2011     Wanted       660
-  MMDI  = 151;                     // Map Diameter             // 8/7/2011     Wanted       660
-  MMRD  = 75;                      // Map Radius               // 8/7/2011     Wanted       660
-  MMRDe = 75.5;                    // True Radius              // 8/7/2011     Wanted       660
-  MMRD2 = 75.392307299883;         // Fake radius              // 8/7/2011     Wanted       660
-  MMPA  = 17907;                   // Approx. Pixel Area       // 8/7/2011     Wanted       660
-  MMPAe = 17907.8635236252;        // Exact Pixel Area         // 8/7/2011     Wanted       660
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  MMX1  = 551;                             // Map Edge Points        // 8/7/2011   Wanted       660
+  MMY1  = 9;                                                         // 8/7/2011   Wanted       660
+  MMX2  = 702;                                                       // 8/7/2011   Wanted       660
+  MMY2  = 160;                                                       // 8/7/2011   Wanted       660
+  MMCX  = 627;                             // Map Center Points      // 9/18/2012  LordJashin   718
+  MMCY  = 85;                              // Rounded                // 9/18/2012  LordJashin   718
+  MMCXe = (MMX1 + MMX2) / 2;               // Map Center Points      // 9/18/2012  LordJashin   718
+  MMCYe = (MMY1 + MMY2) / 2;               // Not Rounded            // 9/18/2012  LordJashin   718
+  MMDI  = MMX2 - MMX1;                     // Map Diameter           // 8/7/2011   Wanted       660
+  MMRD  = MMDI div 2 + 1;                  // Map Radius Rounded     // 9/18/2012  LordJashin   718
+  MMRDe = MMDI / 2;                        // Map Radius Not Rounded // 9/18/2012  LordJashin   718
+  MMRD2 = 75.392307299883;                 // Fake (Click?) radius   // 8/7/2011   Wanted       660
+  MMPA  = 17908;                           // Approx. Pixel Area     // 9/18/2012  LordJashin   718
+  MMPAe = (MMRDe * MMRDe) * 3.14159265359; // Exact Pixel Area       // 8/7/2011   Wanted       660
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Inventory Constants 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   MIX1 = 556;                      // Inventory Top Left Point  // 6/23/2012    LordJashin   718
   MIY1 = 210;                      //                           // 6/23/2012    LordJashin   718
   MIX2 = 730;                      // Inventory Btm Right Point // 6/23/2012    LordJashin   718
