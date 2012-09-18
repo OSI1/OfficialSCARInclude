@@ -82,8 +82,8 @@ Explanation:
   MMY1  = 9;                                                         // 8/7/2011   Wanted       660
   MMX2  = 702;                                                       // 8/7/2011   Wanted       660
   MMY2  = 160;                                                       // 8/7/2011   Wanted       660
-  MMCX  = 627;                             // Map Center Points      // 9/18/2012  LordJashin   718
-  MMCY  = 85;                              // Rounded                // 9/18/2012  LordJashin   718
+  MMCX  = (MMX1 + MMX2) div 2 + 1;         // Map Center Points      // 9/18/2012  LordJashin   718
+  MMCY  = (MMY1 + MMY2) div 2 + 1;         // Rounded                // 9/18/2012  LordJashin   718
   MMCXe = (MMX1 + MMX2) / 2;               // Map Center Points      // 9/18/2012  LordJashin   718
   MMCYe = (MMY1 + MMY2) / 2;               // Not Rounded            // 9/18/2012  LordJashin   718
   MMDI  = MMX2 - MMX1;                     // Map Diameter           // 8/7/2011   Wanted       660
