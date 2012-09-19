@@ -1,0 +1,56 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                              Official SCAR Include
+                                   Runescape 2
+                               Advanced Constants
+-------------------------------------------------------------------------------
+ * Adv. constants
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Adv. Constants
+Contributors: Wanted, LordJashin
+Description: Constants that are very exact, useful for functions
+Date Created: June 26, 2012. By LordJashin. RS2 Build 718.
+Last Modified: June 26, 2012. By LordJashin. RS2 Build 718.
+Explanation:
+            Functions such as GetItemBounds, and others. Use exact coordinates.
+            We can use color/dtm/bitmap and other methods later but for now
+            a lot of things use exact coordinates. Each Inventory item has a
+            width, height, and they have their own placement. We can use these
+            coordinates for mouse procedures, dragging, etc. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const                  // Description                            Modified   By        Build #
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Adv. Inventory Constants
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ MIIC = 4;               // Bag Columns                          // 9/19/2012  LordJashin  718 
+ MIIR = 7;               // Bag Rows                             // 9/19/2012  LordJashin  718
+ MIIS = MIIC * MIIR;     // Bag Slots                            // 9/19/2012  LordJashin  718
+ MII1 = 563;             // Bag Item Slot(0) TopLeft pnt         // 9/19/2012  LordJashin  718
+ MII2 = 213;             //                                      // 9/19/2012  LordJashin  718
+ MII3 = 598;             // Bag Item Slot(0) BtmRight pnt        // 9/19/2012  LordJashin  718
+ MII4 = 244;             //                                      // 9/19/2012  LordJashin  718   
+ MIIW = MII3 - MII1 + 1; // Bag Slot Width                       // 9/19/2012  LordJashin  718
+ MIIH = MII4 - MII2 + 1; // Bag Slot Height                      // 9/19/2012  LordJashin  718                                                                         
+ MISX = 6;              // Bag Space betw. Slots Unclickable X  // 9/19/2012  LordJashin  718
+ MISY = 4;               // Bag Space betw. Slots Unclickable Y  // 9/19/2012  LordJashin  718   
+ MIIX = MIIW + MISX;     // Bag Space betw. Slot1.x1 & Slot2.x1  // 9/19/2012  LordJashin  718
+ MIIY = MIIH + MISY;     // Bag Space betw. Slot1.y1 & Slot2.y1  // 9/19/2012  LordJashin  718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Adv. Deposit Box Constants
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ MDIC = 7;               // DepoBox Columns                          // 9/19/2012  LordJashin  718 
+ MDIR = 4;               // DepoBox Rows                             // 9/19/2012  LordJashin  718
+ MDIS = MDIC * MDIR;     // DepoBox Slots                            // 9/19/2012  LordJashin  718
+ MDI1 = 106;             // DepoBox Slot(0) TopLeft pnt              // 9/19/2012  LordJashin  718  
+ MDI2 = 70;              //                                          // 9/19/2012  LordJashin  718  
+ MDI3 = 141;             // DepoBox Slot(0) BtmRight pnt             // 9/19/2012  LordJashin  718  
+ MDI4 = 101;             //                                          // 9/19/2012  LordJashin  718
+ MDIW = MDI3 - MDI1 + 1; // DepoBox Slot Width                       // 9/19/2012  LordJashin  718
+ MDIH = MDI4 - MDI2 + 1; // DepoBox Slot Height                      // 9/19/2012  LordJashin  718                                       
+ MDSX = 12;              // DepoBox Space betw. Slots Unclickable X  // 9/19/2012  LordJashin  718
+ MDSY = 18;               // DepoBox Space betw. Slots Unclickable Y  // 9/19/2012  LordJashin  718
+ MDIX = MDIW + MDSX;     // DepoBox Space betw. Slot1.x1 & Slot2.x1  // 9/19/2012  LordJashin  718
+ MDIY = MDIH + MDSY;     // DepoBox Space betw. Slot1.y1 & Slot2.y1  // 9/19/2012  LordJashin  718         

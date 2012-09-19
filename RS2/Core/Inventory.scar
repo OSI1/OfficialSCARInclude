@@ -3,8 +3,7 @@
                                    Runescape 2
                                 Inventory Routines
 --------------------------------------------------------------------------------
- * Bank.scar Forward
- * Inventory Constants        
+ * Bank.scar Forward   
  * function GetInvSlotIndex(Row, Column: Integer): Integer;
  * function GetItemBounds(Slot: Integer): TBox;
  * function CordsToItemSlot(P: TPoint): Integer;
@@ -32,29 +31,6 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean; forward;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-Const Inventory
-Contributors: Wanted, LordJashin
-Description: Constants that affect some of the main inventory functions
-Date Created: June 26, 2012. By LordJashin. RS2 Build 718.
-Last Modified: June 26, 2012. By LordJashin. RS2 Build 718.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-const
- MIIC = 4;                 // Inventory # of Columns                         - 6/23/2012 - LordJashin - #718 
- MIIR = 7;                 // Inventory # of Rows                            - 6/23/2012 - LordJashin - #718
- MIIS = 28;                // Inventory # of Slots                           - 6/23/2012 - LordJashin - #718
- MII1 = 563;               // Inventory Item Slot (0) Top left point         - 6/23/2012 - LordJashin - #718
- MII2 = 213;               //                                                - 6/23/2012 - LordJashin - #718
- MII3 = 598;               // Inventory Item Slot (0) Bottom Right Point     - 6/23/2012 - LordJashin - #718
- MII4 = 244;               //                                                - 6/23/2012 - LordJashin - #718                                                                           
- MISX = 6;                 // Inventory Item Space betw. Slots Unclickable X - 6/23/2012 - LordJashin - #718
- MISY = 4;                 // Inventory Item Space betw. Slots Unclickable Y - 6/23/2012 - LordJashin - #718   
- MIIW = 36;                // Inventory Item Width                           - 6/23/2012 - LordJashin - #718
- MIIH = 32;                // Inventory Item Height                          - 6/23/2012 - LordJashin - #718
- MIIX = 42;                // Inventory Item Space betw. Slot1.x1 & Slot2.x1 - 6/23/2012 - LordJashin - #718
- MIIY = 36;                // Inventory Item Space betw. Slot1.y1 & Slot2.y1 - 6/23/2012 - LordJashin - #718
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetInvSlotIndex(Row, Column: Integer): Integer;

@@ -1,0 +1,31 @@
+program New;
+
+{$DEFINE RS2}
+{$DEFINE OSI_Color_Anti_Randoms}
+{$DEFINE SMART}                   // Comment out to disable SMART
+
+{$I OSI\OSI.scar}
+
+procedure ScriptTerminate;
+begin
+  FreeOSI;
+end;
+
+procedure SetupPlayers;
+begin
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := 'Test';
+      Pass  := 'Test';
+      Member := False;
+      Active := True;
+    end;  
+end;
+
+begin
+  SetupPlayers;
+  SetUpOSI;    
+  if Login then
+    WriteLn('Congratz!');
+end.

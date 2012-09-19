@@ -4,14 +4,20 @@
 --------------------------------------------------------------------------------
  * procedure TestCompileOSI;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-                                           // Test all combinations of in-depth.
+                                           
+// OSI Defines                             // Test all combinations of in-depth.
+//{$DEFINE OverrideVariance}               // Comment out in in-depth testing                          
 {$DEFINE RS2}                              // Comment out in in-depth testing
 {$DEFINE OSI_Color_Anti_Randoms}           // Comment out in in-depth testing
 {$DEFINE SMART}                            // Comment out in in-depth testing
 //{$DEFINE NoVariance}                     // Comment in in-depth testing
 
 {$I OSI.scar}
+
+//Divi
 {$I Divi\Misc\Debug.scar}        // Comment out in in-depth testing
+
+//RS2
 {$I RS2\Skill\Mining.scar}       // Comment out in in-depth testing
 {$I RS2\Skill\Runecrafting.scar} // Comment out in in-depth testing
 {$I RS2\Skill\Smithing.scar}     // Comment out in in-depth testing
@@ -20,14 +26,16 @@
 {$I RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
 {$I RS2\Misc\Trading.scar}       // Comment out in in-depth testing
 {$I RS2\Misc\Symbols.scar}       // Comment out in in-depth testing
-{$I RS2\Misc\DebugSMART.scar}    // Comment out in in-depth testing
+{$IFDEF SMART}
+  {$I RS2\Misc\DebugSMART.scar}    // Comment out in in-depth testing
+{$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TestCompileOSI;
 Contributors: Wanted
 Description: Test compiles all of OSI. Comment out every combination of defines.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: August 8th, 2011. By Wanted
+Last Modified: September 19, 2012. By LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TestCompileOSI;

@@ -3,7 +3,6 @@
                                    Runescape 2
                               Deposit Box routines
 --------------------------------------------------------------------------------
- * const for Deposit Box
  * function GetDepositItemBounds(Slot: Integer): TBox;      
  * function GetDepositSlotIndex(Row, Column: Integer): Integer;
  * function CoordsToDepositItemSlot(P: TPoint): Integer;
@@ -17,25 +16,6 @@
  * function FindDepositItemsBMP(bmp: TSCARBitmap; Tol: Integer): TIntArray;     
  * function CountDepositItemsBMP(bmp: TSCARBitmap; Tol: Integer): Integer;  
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const for Deposit Box 
-Contributors: Wanted, LordJashin
-Description: MDX1, MDIC, etc.
-Date Created: June 23, 2012. By LordJashin. RS2 Build 718.
-Last Modified: June 23, 2012. By LordJashin. RS2 Build 718.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-  
-const                      // Description                                    - Last Mod. - By:     - RS2 Build
- MDIC = 7;                 // Deposit Box # of Columns                       - 6/23/2012 - LordJashin - #718 
- MDIR = 4;                 // Deposit Box # of Rows                          - 6/23/2012 - LordJashin - #718
- MDIS = 28;                // Deposit Box # of Slots                         - 6/23/2012 - LordJashin - #718
- MDI1 = 106;               // Deposit Box Item (0) Top Left Point            - 6/23/2012 - LordJashin - #718  
- MDI2 = 70;                //                                                - 6/23/2012 - LordJashin - #718  
- MDI3 = 141;               // Deposit Box Item (0) Bottom Right Point        - 6/23/2012 - LordJashin - #718  
- MDI4 = 101;               //                                                                                       
- MDIX = 48;                // Deposit Item Space betw. Slot1.x1 & Slot2.x1   - 6/23/2012 - LordJashin - #718
- MDIY = 50;                // Deposit Item Space betw. Slot1.y1 & Slot2.y1   - 6/23/2012 - LordJashin - #718         
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetDepositItemBounds(Slot: Integer): TBox;

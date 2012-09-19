@@ -1,19 +1,17 @@
-OSI - The Official SCAR Include is licensed under BSD. http://en.wikipedia.org/wiki/BSD_licenses
-
-
+ï»¿OSI - The Official SCAR Include is licensed under BSD. http://en.wikipedia.org/wiki/BSD_licenses
 
 The official documentation/manual/wiki of OSI can be found http://wiki.scar-divi.com/osi/index.php?title=OSI_Manual
 The official project location of OSI is https://github.com/OSI1/OSI1
 The official homepage of OSI is http://scar-divi.com
-The official fourms of OSI are http://forums.scar-divi.com/
+The official forums of OSI are http://forums.scar-divi.com/
 
 
-OSI is credited to a selected group of developers under the lead of James Ryan Bolduc (alias Wanted) and Frédéric Hannes (alias Freddy1990).
+OSI is credited to a selected group of developers under the lead of James Ryan Bolduc (alias Wanted) and FrÃ©dÃ©ric Hannes (alias Freddy1990).
 
 including 
 
 Developers: c0de, pyroryan, Home, iroki, Naum, Timer, TRiLeZ.
-Contributors Bixby Sayz, Camaro, Dynamite, fuzz357, Main, & wundertüte.
+Contributors Bixby Sayz, Camaro, Dynamite, fuzz357, Main, & wundertÃ¼te.
 
 
 

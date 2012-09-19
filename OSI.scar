@@ -29,7 +29,8 @@
 {$I Divi\Array.scar}
 {$I Divi\Timing.scar}
 {$IFDEF SMART}
-  {$I RS2\Core\Globals.scar}
+  {$I RS2\Core\Globals.scar} 
+  {$I RS2\Core\Constants.scar}
   {$I RS2\Misc\SMART.scar}
 {$ENDIF}
 {$I Divi\Mouse.scar}
@@ -37,6 +38,7 @@
 {$IFDEF RS2}
   {$IFNDEF SMART}
       {$I RS2\Core\Globals.scar}
+      {$I RS2\Core\Constants.scar}
   {$ENDIF}
   {$I RS2\Core\Text.scar}
   {$I RS2\Core\GameTabs.scar}

@@ -133,15 +133,15 @@ Explanation:
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Deposit Box Constants  
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-  MDX1 = 106;                      // Deposit Edge Points       // 6/23/2012    LordJashin   718  
-  MDY1 = 70;                                                    // 6/23/2012    LordJashin   718  
-  MDX2 = 429;                                                   // 6/23/2012    LordJashin   718  
-  MDY2 = 251;                                                   // 6/23/2012    LordJashin   718  
-  MDCX = (MDX1 + MDX2) div 2 + 1;  // Deposit Box Center Point  // 6/23/2012    LordJashin   718  
-  MDCY = (MDY1 + MDY2) div 2 + 1;  // Rounded                   // 6/23/2012    LordJashin   718
-  MDPW = MDX2 - MDX1 + 1;          // Deposit Box Width         // 6/23/2012    LordJashin   718  
-  MDPH = MDY2 - MDY1 + 1;          // Deposit Box Height        // 6/23/2012    LordJashin   718  
-  MDPA = MDPW * MDPH;              // Deposit Box Area          // 6/23/2012    LordJashin   718
+  MDX1 = 94;                      // Deposit Edge Points        // 6/23/2012    LordJashin   718  
+  MDY1 = 60;                                                    // 6/23/2012    LordJashin   718  
+  MDX2 = 440;                                                   // 6/23/2012    LordJashin   718  
+  MDY2 = 258;                                                   // 6/23/2012    LordJashin   718  
+  MDCX = (MDX1 + MDX2) / 2;       // Deposit Box Center Point   // 6/23/2012    LordJashin   718  
+  MDCY = (MDY1 + MDY2) / 2;       //                            // 6/23/2012    LordJashin   718
+  MDPW = MDX2 - MDX1 + 1;         // Deposit Box Width          // 6/23/2012    LordJashin   718  
+  MDPH = MDY2 - MDY1 + 1;         // Deposit Box Height         // 6/23/2012    LordJashin   718  
+  MDPA = MDPW * MDPH;             // Deposit Box Area           // 6/23/2012    LordJashin   718
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Skill_ Indexes
