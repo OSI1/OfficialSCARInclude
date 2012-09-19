@@ -57,7 +57,9 @@ Last Modified: June 18, 2012. By LordJashin. RS2 Build 718.
 
 function GetItemBounds(Slot: Integer): TBox;
 begin 
-  Result := Box(MII1 + (Slot mod 4) * MIIX, MII2 + (Slot div 4) * MIIY, MII3 + (Slot mod 4) * MIIX, MII4 + (Slot div 4) * MIIY);                              
+  Result := Box(0, 0, 0, 0);
+  if not (Slot > 27) then
+    Result := Box(MII1 + (Slot mod 4) * MIIX, MII2 + (Slot div 4) * MIIY, MII3 + (Slot mod 4) * MIIX, MII4 + (Slot div 4) * MIIY);                              
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

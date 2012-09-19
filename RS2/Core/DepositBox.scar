@@ -27,7 +27,9 @@ Last Modified: June 23, 2012. By LordJashin. RS2 Build 718.
 
 function GetDepositItemBounds(Slot: Integer): TBox;
 begin         
-  Result := Box(MDI1 + (Slot div 4) * MDIX, MDI2 + (Slot mod 4) * MDIY, MDI3 + (Slot div 4) * MDIX, MDI4 + (Slot mod 4) * MDIY);                              
+  Result := Box(0, 0, 0, 0);
+  if not (Slot > 27) then
+    Result := Box(MDI1 + (Slot div 4) * MDIX, MDI2 + (Slot mod 4) * MDIY, MDI3 + (Slot div 4) * MDIX, MDI4 + (Slot mod 4) * MDIY);                              
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

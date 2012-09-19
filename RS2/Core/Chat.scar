@@ -29,8 +29,10 @@ function GetChatTabBounds(ChatTab: Integer): TBox;
 var
   Offset: Integer;
 begin
+  Result := Box(0, 0, 0, 0);
   if ChatTab = 8 then Offset := MCTL;
-  Result := IntToBox(MCT1 + (MCTS * ChatTab), MCT2, MCT3 + Offset + (MCTS * ChatTab), MCT4);
+  if not (ChatTab > 8) then
+    Result := IntToBox(MCT1 + (MCTS * ChatTab), MCT2, MCT3 + Offset + (MCTS * ChatTab), MCT4);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
