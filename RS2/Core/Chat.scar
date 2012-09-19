@@ -3,8 +3,8 @@
                                    Runescape 2
                                   Chat Routines
 --------------------------------------------------------------------------------
- * function GetCurrentChat: Integer;
  * function GetChatTabBounds(ChatTab: Integer): TBox;
+ * function GetCurrentChat: Integer;
  * function GetChatStatus(Chat: Integer): Integer;
  * function SetChat(Chat, State: Integer): Boolean;
  * function SetChats(Chats, States: TIntArray): TBoolArray;
@@ -16,6 +16,22 @@
  * function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
  * function ClickContinue: Boolean;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatTabBounds(ChatTab: Integer): TBox;
+Contributors: Wanted
+Description: Returns the boundries of the chat tab you want.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: January 9th, 2012. By Wanted. RS2 Build 695.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatTabBounds(ChatTab: Integer): TBox;
+var
+  Offset: Integer;
+begin
+  if ChatTab = 8 then Offset := MCTL;
+  Result := IntToBox(MCT1 + (MCTS * ChatTab), MCT2, MCT3 + Offset + (MCTS * ChatTab), MCT4);
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetCurrentChat: Integer;
@@ -32,19 +48,6 @@ begin
       Break;
   if (Result > 7) then
     Result := -1;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetChatTabBounds(ChatTab: Integer): TBox;
-Contributors: Wanted
-Description: Returns the boundries of the chat tab you want.
-Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modified: January 9th, 2012. By Wanted. RS2 Build 695.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function GetChatTabBounds(ChatTab: Integer): TBox;
-begin
-  Result := IntToBox(9 + (57 * ChatTab), 481, 56 + (57 * ChatTab), 501);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -34,10 +34,23 @@ const                  // Description                            Modified   By  
  MII4 = 244;             //                                      // 9/19/2012  LordJashin  718   
  MIIW = MII3 - MII1 + 1; // Bag Slot Width                       // 9/19/2012  LordJashin  718
  MIIH = MII4 - MII2 + 1; // Bag Slot Height                      // 9/19/2012  LordJashin  718                                                                         
- MISX = 6;              // Bag Space betw. Slots Unclickable X  // 9/19/2012  LordJashin  718
+ MISX = 6;               // Bag Space betw. Slots Unclickable X  // 9/19/2012  LordJashin  718
  MISY = 4;               // Bag Space betw. Slots Unclickable Y  // 9/19/2012  LordJashin  718   
- MIIX = MIIW + MISX;     // Bag Space betw. Slot1.x1 & Slot2.x1  // 9/19/2012  LordJashin  718
- MIIY = MIIH + MISY;     // Bag Space betw. Slot1.y1 & Slot2.y1  // 9/19/2012  LordJashin  718
+ MIIX = MIIW + MISX;     // Bag Space betw. Slot0.x1 & Slot1.x1  // 9/19/2012  LordJashin  718
+ MIIY = MIIH + MISY;     // Bag Space betw. Slot0.y1 & Slot1.y1  // 9/19/2012  LordJashin  718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Adv. Chat Tab Constants
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ MCTT = 9;               // Chat Tabs                            // 9/19/2012  LordJashin  718
+ MCT1 = 3;               // Chat Tab(0) TopLeft pnt              // 9/19/2012  LordJashin  718
+ MCT2 = 481;                                                     // 9/19/2012  LordJashin  718
+ MCT3 = 58;              // Chat Tab(0) BtmRight pnt             // 9/19/2012  LordJashin  718
+ MCT4 = 501;                                                     // 9/19/2012  LordJashin  718
+ MCTW = MCT3 - MCT1 + 1; // Chat Tab Width                       // 9/19/2012  LordJashin  718
+ MCTH = MCT4 - MCT2 + 1; // Chat Tab Height                      // 9/19/2012  LordJashin  718
+ MCTX = 1;               // Chat Space betwn. Tabs Unclickable X // 9/19/2012  LordJashin  718
+ MCTS = MCTW + MCTX;     // Chat Space betwn. Tab0.x1 & Tab1.x1  // 9/19/2012  LordJashin  718 
+ MCTL = 1;               // Chat Tab(8) x2 Offset!               // 9/19/2012  LordJashin  718
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Adv. Deposit Box Constants
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -51,6 +64,6 @@ const                  // Description                            Modified   By  
  MDIW = MDI3 - MDI1 + 1; // DepoBox Slot Width                       // 9/19/2012  LordJashin  718
  MDIH = MDI4 - MDI2 + 1; // DepoBox Slot Height                      // 9/19/2012  LordJashin  718                                       
  MDSX = 12;              // DepoBox Space betw. Slots Unclickable X  // 9/19/2012  LordJashin  718
- MDSY = 18;               // DepoBox Space betw. Slots Unclickable Y  // 9/19/2012  LordJashin  718
- MDIX = MDIW + MDSX;     // DepoBox Space betw. Slot1.x1 & Slot2.x1  // 9/19/2012  LordJashin  718
- MDIY = MDIH + MDSY;     // DepoBox Space betw. Slot1.y1 & Slot2.y1  // 9/19/2012  LordJashin  718         
+ MDSY = 18;              // DepoBox Space betw. Slots Unclickable Y  // 9/19/2012  LordJashin  718
+ MDIX = MDIW + MDSX;     // DepoBox Space betw. Slot0.x1 & Slot1.x1  // 9/19/2012  LordJashin  718
+ MDIY = MDIH + MDSY;     // DepoBox Space betw. Slot0.y1 & Slot1.y1  // 9/19/2012  LordJashin  718         
