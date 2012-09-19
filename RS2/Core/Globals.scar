@@ -123,10 +123,10 @@ Explanation:
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   MBX1 = 26;                      // Bank Screen Edge Points    // 8/8/2011     Wanted       660
   MBY1 = 86;                                                    // 8/8/2011     Wanted       660
-  MBX2 = 517;                                                   // 8/8/2011     Wanted       660
-  MBY2 = 292;                                                   // 8/8/2011     Wanted       660
-  MBCX = (MBX1 + MBX2) div 2 + 1; // Bank Screen Center Points  // 6/23/2012    LordJashin   718
-  MBCY = (MBY1 + MBY2) div 2;                                   // 6/23/2012    LordJashin   718
+  MBX2 = 494;                                                   // 8/8/2011     Wanted       660
+  MBY2 = 290;                                                   // 8/8/2011     Wanted       660
+  MBCX = (MBX1 + MBX2) / 2;       // Bank Screen Center Points  // 6/23/2012    LordJashin   718
+  MBCY = (MBY1 + MBY2) / 2;                                     // 6/23/2012    LordJashin   718
   MBPW = MBX2 - MBX1 + 1;         // Bank Screen Width          // 6/23/2012    LordJashin   718
   MBPH = MBY2 - MBY1 + 1;         // Bank Screen Height         // 6/23/2012    LordJashin   718
   MBPA = MBPW * MBPH;             // Pixel Area                 // 6/23/2012    LordJashin   718
