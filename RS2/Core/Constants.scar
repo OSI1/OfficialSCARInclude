@@ -10,8 +10,8 @@
 Adv. Constants
 Contributors: Wanted, LordJashin
 Description: Constants that are very exact, useful for functions
-Date Created: June 26, 2012. By LordJashin. RS2 Build 718.
-Last Modified: June 26, 2012. By LordJashin. RS2 Build 718.
+Date Created:  June 26, 2012. By LordJashin. RS2 Build 718.
+Last Modified: September 21, 2012. By LordJashin. RS2 Build 718.
 Explanation:
             Functions such as GetItemBounds, and others. Use exact coordinates.
             We can use color/dtm/bitmap and other methods later but for now
@@ -22,6 +22,28 @@ Explanation:
 
 const                  // Description                            Modified   By        Build #
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Adv. Game Tab Constants
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ MGTC = 8;               // GameTab Columns                      // 9/21/2012  LordJashin  718
+ MGTR = 2;               // GameTab Rows                         // 9/21/2012  LordJashin  718                         
+ MGTT = MGTC * MGTR + 1; // # of Game Tabs (+1 for logout tab)   // 9/21/2012  LordJashin  718
+ MGT1 = 523;             // GameTab(0) TopLeft pnt               // 9/21/2012  LordJashin  718
+ MGT2 = 169;                                                     // 9/21/2012  LordJashin  718
+ MGT3 = 550;             // GameTab(0) BtmRight pnt              // 9/21/2012  LordJashin  718
+ MGT4 = 203;                                                     // 9/21/2012  LordJashin  718
+ MGTW = MGT3 - MGT1 + 1; // GameTab Width                        // 9/21/2012  LordJashin  718
+ MGTH = MGT4 - MGT2 + 1; // GameTab Height                       // 9/21/2012  LordJashin  718
+ MGIX = 0;               // Space betw. Tabs Unclickable X       // 9/21/2012  LordJashin  718
+ MGIY = 264;             // Space betw. Tabs Unclickable Y       // 9/21/2012  LordJashin  718
+ MGTO = 2;               // GameTab X Offset                     // 9/21/2012  LordJashin  718 
+ MGTX = MGIX + MGTW;     // Space betw. Tab0.x1 & Tab1.x1        // 9/21/2012  LordJashin  718
+ MGTY = MGIY + MGTH;     // Space betw. Tab0.y1 & Tab8.y1 ROWS   // 9/21/2012  LordJashin  718
+ MGL1 = 746;             // Logout Tab TopLeft pnt               // 9/21/2012  LordJashin  718 
+ MGl2 = 1;                                                       // 9/21/2012  LordJashin  718
+ MGl3 = 764;             // Logout Tab                           // 9/21/2012  LordJashin  718
+ MGl4 = 17;                                                      // 9/21/2012  LordJashin  718
+ 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Adv. Inventory Constants
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

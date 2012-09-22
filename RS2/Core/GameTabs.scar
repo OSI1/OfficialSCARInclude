@@ -105,21 +105,22 @@ function GetTabBounds(Tab: Integer): TBox;
 Contributors: Wanted
 Description: Returns tab boundries.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: September 21, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetTabBounds(Tab: Integer): TBox;
 var
   P: TPoint;
 begin
-  Result := Box(0, 0, 0, 0);
+  Result := Box(0, 0, 0, 0);        
+  if Tab > 16 then Exit;
   if (Tab = Tab_Logout) then
   begin
-    Result := Box(746, 0, 764, 19);
+    Result := Box(MGL1, MGL2, MGL3, MGL4);
     Exit;
-  end;
-  P := Point(537 + ((Tab mod 8) * 30), 187 + ((Tab div 8) * 298));
-  Result := Box(P.X - 12, P.Y - 14, P.X + 12, P.Y + 14);
+  end;          
+  P := Point(MGT1 + ((Tab mod 8) * (MGTW + MGTO)), MGT2 + ((Tab div 8) * MGTY));
+  Result := Box(P.X, P.Y, P.X + MGTW - 1, P.Y + MGTH - 1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
