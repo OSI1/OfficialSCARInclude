@@ -82,7 +82,17 @@ const                  // Description                            Modified   By  
  MBTW = MBT3 - MBT1 + 1; // Bank Tab Width                       // 9/21/2012  LordJashin  718
  MBTH = MBT4 - MBT2 + 1; // Bank Tab Height                      // 9/21/2012  LordJashin  718
  MBTX = 0;               // Space btwn. Tabs Unclickable X       // 9/21/2012  LordJashin  718
- MBTS = MBTW + MBTX;     // Space btwn. Tab(0).x1 & Tab(1).x1    // 9/21/2012  LordJashin  718 
+ MBTS = MBTW + MBTX;     // Space btwn. Tab(0).x1 & Tab(1).x1    // 9/21/2012  LordJashin  718
+ MBS1 = 38;              // Bank Slot(0) TopLeft pnt             // 9/22/2012  LordJashin  718
+ MBS2 = 92;                                                      // 9/22/2012  LordJashin  718
+ MBS3 = 73;              // Bank Slot(0) BtmRight pnt            // 9/22/2012  LordJashin  718
+ MBS4 = 123;                                                     // 9/22/2012  LordJashin  718
+ MBSW = MBS3 - MBS1 + 1; // Bank Slot Width                      // 9/22/2012  LordJashin  718
+ MBSH = MBS4 - MBS2 + 1; // Bank Slot Height                     // 9/22/2012  LordJashin  718
+ MBSX = 8;               // Space btwn. Slots Unclickable X      // 9/22/2012  LordJashin  718
+ MBSY = 12;              // Space btwn. Slots Unclickable Y      // 9/22/2012  LordJashin  718
+ MBSR = MBSW + MBSX;     // Space btwn. Slot(0).x1 & Slot(1).x1  // 9/22/2012  LordJashin  718
+ MBSD = MBSH + MBSY;     // Space btwn. Slot(0).y1 & Slot(10).y1 // 9/22/2012  LordJashin  718 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Adv. Deposit Box Constants
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

@@ -407,8 +407,8 @@ Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 
 function GetBankSlotBounds(Slot: Integer): TBox;
 begin
-  Result := Box(38 + ((Slot mod 10) * 44), 92 + ((Slot div 10) * 44), 73 + ((Slot mod 10) * 44), 123 + ((Slot div 10) * 44));
-  ConstrainBox(Result.X1, Result.Y1, Result.X2, Result.Y2, MBX1, MBY1, MBX2, MBY2);
+  if Slot > 39 then Exit;
+  Result := Box(MBS1 + ((Slot mod 10) * MBSR), MBS2 + ((Slot div 10) * MBSD), MBS3 + ((Slot mod 10) * MBSR), MBS4 + ((Slot div 10) * MBSD));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
