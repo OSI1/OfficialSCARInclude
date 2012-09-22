@@ -421,7 +421,7 @@ Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
 
 function GetBankTabBounds(Tab: Integer): TBox;
 begin
-  Result := Box(25 + (Tab * 48), 47, 72 + (Tab * 48), 84);
+  Result := Box(MBT1 + (Tab * MBTS), MBT2, MBT3 + (Tab * MBTS), MBT4);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

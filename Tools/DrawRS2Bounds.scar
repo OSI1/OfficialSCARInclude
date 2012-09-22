@@ -7,8 +7,8 @@
 
 {$DEFINE RS2}
 {$DEFINE SMART}
-{$I OSI/OSI.scar}
-{$I OSI/RS2/Misc/DebugSmart.scar}
+{$I ../OSI.scar}
+{$I ../RS2/Misc/DebugSmart.scar}
 
 // Do not include this file. Run it!
 
@@ -16,18 +16,24 @@ procedure DrawGlobalsBounds;
 var
   ATPA: T2DPointArray;                                  
 begin
-  SetLength(ATPA, 6);
+  SetLength(ATPA, 8);
   //ATPA[0] := [Point(RSX1, RSY1), Point(RSX2, RSY2)]; // RS2 Client Bounds
   ATPA[1] := [Point(MSX1, MSY1), Point(MSX2, MSY2)]; // Main Screen Bounds
   ATPA[2] := [Point(MMX1, MMY1), Point(MMX2, MMY2)]; // Mini Map Bounds
   ATPA[3] := [Point(MIX1, MIY1), Point(MIX2, MIY2)]; // Inventory Bounds
   ATPA[4] := [Point(MCX1, MCY1), Point(MCX2, MCY2)]; // ChatBox Bounds
-  ATPA[5] := [Point(MBX1, MBY1), Point(MBX2, MBY2)]; // Bank Bounds   
-  SmartDebugATPABounds(ATPA); 
+  ATPA[5] := [Point(MBX1, MBY1), Point(MBX2, MBY2)]; // Bank Bounds
+  ATPA[7] := [Point(MDX1, MDY1), Point(MDX2, MDY2)]; // Deposit Box Bounds   
+  SmartDebugATPABoundsEx(ATPA, True, False, True, True); 
 end;
 
 begin
-  SetupOSI;                                                        
-  SmartSetDebug(SMART_Client, True);
-  DrawGlobalsBounds;
+  SetupOSI;            
+  if not SmartEnabled(SMART_Client) then             
+    SmartSetEnabled(SMART_Client, True);                               
+  SmartSetDebug(SMART_Client, True);  
+  DrawGlobalsBounds;                  
+  wait(5000);
+  SmartClearDebug(SMART_Client);
+  SmartSetDebug(SMART_Client, False);
 end.

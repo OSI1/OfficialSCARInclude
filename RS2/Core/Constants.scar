@@ -1,10 +1,10 @@
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Official SCAR Include
                                    Runescape 2
                                Advanced Constants
 -------------------------------------------------------------------------------
  * Adv. constants
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 Adv. Constants
@@ -41,9 +41,8 @@ const                  // Description                            Modified   By  
  MGTY = MGIY + MGTH;     // Space betw. Tab0.y1 & Tab8.y1 ROWS   // 9/21/2012  LordJashin  718
  MGL1 = 746;             // Logout Tab TopLeft pnt               // 9/21/2012  LordJashin  718 
  MGl2 = 1;                                                       // 9/21/2012  LordJashin  718
- MGl3 = 764;             // Logout Tab                           // 9/21/2012  LordJashin  718
+ MGl3 = 764;             // Logout Tab BtmRight pnt              // 9/21/2012  LordJashin  718
  MGl4 = 17;                                                      // 9/21/2012  LordJashin  718
- 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Adv. Inventory Constants
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -72,7 +71,18 @@ const                  // Description                            Modified   By  
  MCTH = MCT4 - MCT2 + 1; // Chat Tab Height                      // 9/19/2012  LordJashin  718
  MCTX = 1;               // Chat Space betwn. Tabs Unclickable X // 9/19/2012  LordJashin  718
  MCTS = MCTW + MCTX;     // Chat Space betwn. Tab0.x1 & Tab1.x1  // 9/19/2012  LordJashin  718 
- MCTL = 1;               // Chat Tab(8) x2 Offset!               // 9/19/2012  LordJashin  718    
+ MCTL = 1;               // Chat Tab(8) x2 Offset!               // 9/19/2012  LordJashin  718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Adv. Bank Constants
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}   
+ MBT1 = 25;              // Bank Tab(0) TopLeft pnt              // 9/21/2012  LordJashin  718
+ MBT2 = 48;                                                      // 9/21/2012  LordJashin  718
+ MBT3 = 72;              // Bank Tab(0) BtmRight pnt             // 9/21/2012  LordJashin  718
+ MBT4 = 84;                                                      // 9/21/2012  LordJashin  718
+ MBTW = MBT3 - MBT1 + 1; // Bank Tab Width                       // 9/21/2012  LordJashin  718
+ MBTH = MBT4 - MBT2 + 1; // Bank Tab Height                      // 9/21/2012  LordJashin  718
+ MBTX = 0;               // Space btwn. Tabs Unclickable X       // 9/21/2012  LordJashin  718
+ MBTS = MBTW + MBTX;     // Space btwn. Tab(0).x1 & Tab(1).x1    // 9/21/2012  LordJashin  718 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Adv. Deposit Box Constants
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

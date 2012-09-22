@@ -19,7 +19,7 @@ begin
       Login := 'Test';
       Pass  := 'Test';
       Member := False;
-      Active := True;
+      Active := True;  // Puts in Active player list (used for login function)
     end;  
 end;
 
