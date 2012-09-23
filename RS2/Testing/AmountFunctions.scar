@@ -1,0 +1,51 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             Amount Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestAmountFunctions;                   
+ * Instructions:
+                1. Set the constants
+                2. Run Test!
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2}
+{$DEFINE SMART}
+{$I ../../OSI.scar}
+
+const
+  RS2_Username = 'Test'; // Set these constants before running!
+  RS2_Password = 'Test';
+  RS2_Member = False;    // Use Member's world?
+  SMART_World = 11;      // What world do you want to go to?
+
+// Do not include this file. Run it!
+
+procedure SetupPlayers;                                  
+begin 
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := RS2_Username;
+      Pass  := RS2_Password;
+      Member := RS2_Member;  
+      WorldInfo:= [RS2_Member, SMART_World];
+      Active := True;
+    end;                                     
+  SetupOSI;
+  Login;       
+  wait(5000);
+end;
+
+procedure TestAmountFunctions;
+begin
+  if not LoggedIn then Exit;
+  if GetAmount(MIX1, MIY1, MIX2, MIY2) > 0 then WriteLn('GetAmount: Works!') else WriteLn('GetAmount: Failed!');
+  if GetItemAmount(Area_Inv, 0) > 0 then WriteLn('GetItemAmount: Works!') else WriteLn('GetItemAmount: Failed!');   
+end;
+
+begin
+  SetupPlayers;               
+  ClearDebug;    
+  MoveMouse(0, 0);
+  TestAmountFunctions;
+end.
