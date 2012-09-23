@@ -38,7 +38,6 @@ end;
 
 procedure TestAmountFunctions;
 begin
-  if not LoggedIn then Exit;
   WriteLn('GetAmount: Result: ' + IntToStr(GetAmount(MIX1, MIY1, MIX2, MIY2))); 
   WriteLn('GetItemAmount: Result: ' + IntToStr(GetItemAmount(Area_Inv, 0)));   
 end;

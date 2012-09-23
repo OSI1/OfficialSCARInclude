@@ -41,7 +41,6 @@ end;
 
 procedure TestBankFunctions;
 begin
-  if not LoggedIn then Exit;
   //Open Bank functions need work       
   //if OpenBankBooth(Loc_LBC) then WriteLn('OpenBankBooth: Opened Bank booth!') else WriteLn('Didn''t find bank booth or Failed!');     
   if PinScreen then WriteLn('PinScreen: Your PIN screen!') else WriteLn('PinScreen: No Pin Screen up or Failed!');

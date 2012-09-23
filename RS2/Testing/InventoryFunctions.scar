@@ -42,7 +42,6 @@ end;
 
 procedure TestInventoryFunctions;
 begin
-  if not LoggedIn then Exit;
   if GetInvSlotIndex(1, 1) = 0 then WriteLn('GetInvSlotIndex: Works!') else WriteLn('GetInvSlotIndex: Failed!');
   if GetItemBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetItemBounds: Works!') else WriteLn('GetItemBounds: Failed!');
   if CordsToItemSlot(Point(MII1, MII2)) = 0 then WriteLn('CordsToItemSlot: Works!') else WriteLn('CordsToItemSlot: Failed!');

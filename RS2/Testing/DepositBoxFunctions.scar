@@ -38,7 +38,6 @@ end;
 
 procedure TestDepositBoxFunctions;
 begin
-  if not LoggedIn then Exit;
   if GetDepositSlotIndex(1, 1) = 0 then WriteLn('GetDepositSlotIndex: Works!') else WriteLn('GetDepositSlotIndex: Failed!');
   if GetDepositItemBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetDepositItemBounds: Works!') else WriteLn('GetDepositItemBounds: Failed!');
   if CoordsToDepositItemSlot(Point(MDI1, MDI2)) = 0 then WriteLn('CoordsToDepositItemSlot: Works!') else WriteLn('CoordsToDepositItemSlot: Failed!');

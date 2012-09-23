@@ -402,12 +402,12 @@ begin
       Break;
     if (not (SetGameTab(Tab_Logout))) then
       Exit;
-    WaitRR(100, 250);
+    WaitRR(200, 450);
     if (IsTextInAreaEx(594, 352, 690, 375, P.X, P.Y, 'obby', 75, ScreenChars, False, False, -1, 2, clWhite)) then
       MouseBox(569, 348, 714, 374, ClickLeft)
     else
-      Exit;
-    Result := WaitFunc(@LobbyScreen, True, 250, 500, 3500, 4500);
+      Exit;                           
+    Result := WaitFunc(@LobbyScreen, True, 250, 1250, 3500, 4500);
     if (not (Result)) then
       Exit;
   until (True);

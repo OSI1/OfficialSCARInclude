@@ -1,0 +1,66 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              Login Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestLoginFunctions;                   
+ * Instructions:
+                1. Set the constants
+                2. Make sure you set the Username and Password constants
+                3. Run Test!
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2}
+{$DEFINE SMART}
+{$I ../../OSI.scar}
+
+const
+  RS2_Username = 'Test'; // Set these constants before running!
+  RS2_Password = 'Test';
+  RS2_Member = False;    // Use Member's world?
+  SMART_World = 11;      // What world do you want to go to?
+
+// Do not include this file. Run it!
+
+procedure SetupPlayers;                                  
+begin 
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := RS2_Username;
+      Pass  := RS2_Password;
+      Member := RS2_Member;  
+      WorldInfo:= [RS2_Member, SMART_World];
+      Active := True;
+    end;                                     
+  SetupOSI;
+  wait(5000);
+end;
+
+procedure TestLoginFunctions;
+begin
+  if RSReady then WriteLn('RSReady: You are either at the Lobby, Login, or you are logged in!') else WriteLn('RSReady: You are on a screen that RSReady can''t identify as lobby, loggedin, or login screen or Failed!');
+  if LoginScreen then WriteLn('LoginScreen: You are at this screen!') else WriteLn('LoginScreen: You are not as this screen or Failed!');
+  if LobbyScreen then WriteLn('LobbyScreen: You are at this screen!') else WriteLn('LobbyScreen: You are not at this screen or Failed!');
+  if LoggedIn then WriteLn('LoggedIn: You are loggedin already!') else WriteLn('LoggedIn: You are not logged in or Failed!');
+  if LoginToLobby then WriteLn('LoginToLobby: You logged in to the lobby!') else WriteLn('LoginToLobby: You didn''t login to lobby or Failed!');
+  if LeaveLobby then WriteLn('LeaveLobby: Went back to login screen from Lobby!') else WriteLn('LeaveLobby: You weren''t in the lobby to begin with or Failed!');
+  if Login then WriteLn('Login: Congrats you loggedin!') else WriteLn('Login: didn''t login or didn''t find loggedin or Failed!');
+  wait(1000);
+  WriteLn('Waiting one second for login!!');
+  if ExitToLobby then WriteLn('ExitToLobby: Loggedout to lobby!') else WriteLn('ExitToLobby: Didn''t logout to lobby or Failed!');
+  if SelectWorld(8) then WriteLn('SelectWorld: Selected World 8!') else WriteLn('SelectWorld: Didn''t select world 8 or Failed!');
+  WriteLn('Select World, will select it but not log you in with it. If you want to change worlds change the Players[0] variable WorldInfo before using login;');
+  WriteLn('Random World Non-Mem: ' + IntToStr(RandomWorld(false)));  
+  Login;                      
+  wait(1000);
+  WriteLn('Waiting one second for login!');
+  if Logout then WriteLn('Logout: Loggedout of RS2!') else WriteLn('Logout: Didn''t logout or Failed!');
+  // Player functions                    
+end;
+
+begin
+  SetupPlayers;               
+  ClearDebug;    
+  MoveMouse(0, 0); 
+  TestLoginFunctions;
+end.
