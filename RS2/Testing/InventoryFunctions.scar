@@ -46,19 +46,19 @@ begin
   if GetInvSlotIndex(1, 1) = 0 then WriteLn('GetInvSlotIndex: Works!') else WriteLn('GetInvSlotIndex: Failed!');
   if GetItemBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetItemBounds: Works!') else WriteLn('GetItemBounds: Failed!');
   if CordsToItemSlot(Point(MII1, MII2)) = 0 then WriteLn('CordsToItemSlot: Works!') else WriteLn('CordsToItemSlot: Failed!');
-  if InvItemExists(0, True) then WriteLn('InvItemExists: Works!') else WriteLn('InvItemExists: Failed!');
-  if InvCount(True) > 0 then WriteLn('InvCount: Works!') else WriteLn('InvCount: Failed!');
-  if InvFull(True) then WriteLn('InvFull: Works!') else WriteLn('InvFull: Failed!');
-  if not InvEmpty(True) then WriteLn('InvEmpty: Works!') else WriteLn('InvEmpty: Failed!');
-  if MouseItem(0, ClickLeft, True) then WriteLn('MouseItem: Works!') else WriteLn('MouseItem: Failed!');
-  if DragItem(1, 2, True) then WriteLn('DragItem: Works!') else WriteLn('DragItem: Failed!');
+  if InvItemExists(0, True) then WriteLn('InvItemExists: Works!') else WriteLn('InvItemExists: Doesn''t Exit or Failed!');
+  WriteLn('InvCount: Result: ' + IntToStr(InvCount(True)));
+  if InvFull(True) then WriteLn('InvFull: Full!') else WriteLn('InvFull: Not Full or Failed!');
+  if InvEmpty(True) then WriteLn('InvEmpty: Empty!') else WriteLn('InvEmpty: Not Empty or Failed!');
+  if MouseItem(0, ClickLeft, True) then WriteLn('MouseItem: Clicked Item(0)!') else WriteLn('MouseItem: Didn''t Click Item(0) or Failed!');
+  if DragItem(1, 2, True) then WriteLn('DragItem: Dragged Item(1) to Item(2)!') else WriteLn('DragItem: Didn''t Drag Item(1) to Item(2) or Failed!');
   if Length(GetDropPattern(0)) > 0 then WriteLn('GetDropPattern: Works!') else WriteLn('GetDropPattern: Failed!');
-  if DropItem(0, True) then WriteLn('DropItem: Works!') else WriteLn('DropItem: Failed!');
-  if DropItemsPEx([0,1,2], GetDropPattern(0), False, True) > 0 then WriteLn('DropItemsPEx: Works!') else WriteLn('DropItemsPEx: Failed!');
-  if DropItemsEx([0,1,2,3,4], False, True) > 0 then WriteLn('DropItemsEx: Works!') else WriteLn('DropItemsEx: Failed!');
-  if DropItems([0,1,2,3,4,5], True) > 0 then WriteLn('DropItems: Works!') else WriteLn('DropItems: Failed!');
-  if DropAllExclude([5,6,7,8,9,10,11,12,13,14,15], True) > 0 then WriteLn('DropAllExclude: Works!') else WriteLn('DropAllExclude: Failed!');
-  if DropAll(True) > 0 then WriteLn('DropAll: Works!') else WriteLn('DropAll: Failed!');
+  if DropItem(0, True) then WriteLn('DropItem: Dropped Item(0)!') else WriteLn('DropItem: Didn''t Drop Item(0) or Failed!');
+  WriteLn('DropItemsPEx: Result (dropped): ' + IntToStr(DropItemsPEx([0,1,2], GetDropPattern(0), False, True)));
+  WriteLn('DropItemsEx: Result (dropped): ' + IntToStr(DropItemsEx([0,1,2,3,4], False, True)));
+  WriteLn('DropItems: Result (dropped): ' + IntToStr(DropItems([0,1,2,3,4,5], True)));
+  WriteLn('DropAllExclude: Result (dropped): ' + IntToStr(DropAllExclude([5,6,7,8,9,10,11,12,13,14,15], True)));
+  WriteLn('DropAll: Result (dropped): ' + IntToStr(DropAll(True)));
   // FindInvItemsDTM
   // CountInvItemsDTM
   // FindInvItemsBMP         

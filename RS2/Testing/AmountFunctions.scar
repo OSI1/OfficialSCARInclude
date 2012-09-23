@@ -39,8 +39,8 @@ end;
 procedure TestAmountFunctions;
 begin
   if not LoggedIn then Exit;
-  if GetAmount(MIX1, MIY1, MIX2, MIY2) > 0 then WriteLn('GetAmount: Works!') else WriteLn('GetAmount: Failed!');
-  if GetItemAmount(Area_Inv, 0) > 0 then WriteLn('GetItemAmount: Works!') else WriteLn('GetItemAmount: Failed!');   
+  WriteLn('GetAmount: Result: ' + IntToStr(GetAmount(MIX1, MIY1, MIX2, MIY2))); 
+  WriteLn('GetItemAmount: Result: ' + IntToStr(GetItemAmount(Area_Inv, 0)));   
 end;
 
 begin

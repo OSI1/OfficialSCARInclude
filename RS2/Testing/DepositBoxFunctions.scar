@@ -43,11 +43,11 @@ begin
   if GetDepositSlotIndex(1, 1) = 0 then WriteLn('GetDepositSlotIndex: Works!') else WriteLn('GetDepositSlotIndex: Failed!');
   if GetDepositItemBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetDepositItemBounds: Works!') else WriteLn('GetDepositItemBounds: Failed!');
   if CoordsToDepositItemSlot(Point(MDI1, MDI2)) = 0 then WriteLn('CoordsToDepositItemSlot: Works!') else WriteLn('CoordsToDepositItemSlot: Failed!');
-  if DepositItemExists(0) then WriteLn('DepositItemExists: Works!') else WriteLn('DepositItemExists: Failed!');
-  if DepositCount > 0 then WriteLn('DepositCount: Works!') else WriteLn('DepositCount: Failed!');
-  if DepositFull then WriteLn('DepositFull: Works!') else WriteLn('DepositFull: Failed!');
-  if not DepositEmpty then WriteLn('DepositEmpty: Works!') else WriteLn('DepositEmpty: Failed!');
-  if MouseDepositItem(0, ClickLeft) then WriteLn('MouseDepositItem: Works!') else WriteLn('MouseDepositItem: Failed!');  
+  if DepositItemExists(0) then WriteLn('DepositItemExists: Found Item in Slot(0)!') else WriteLn('DepositItemExists: Slot(0) Empty or Failed!');
+  WriteLn('DepositCount: Result: ' + IntToStr(DepositCount));
+  if DepositFull then WriteLn('DepositFull: Full!') else WriteLn('DepositFull: Not Full or Failed!');
+  if DepositEmpty then WriteLn('DepositEmpty: Empty!') else WriteLn('DepositEmpty: Not Empty or Failed!');
+  if MouseDepositItem(0, ClickLeft) then WriteLn('MouseDepositItem: Clicked Item in Slot(0)!') else WriteLn('MouseDepositItem: Didn''t Click Item(0) or Failed!');  
   // FindDepositItemsDTM
   // CountDepositItemsDTM     
   // FindDepositItemsBMP     
