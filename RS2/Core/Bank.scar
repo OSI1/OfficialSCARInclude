@@ -402,7 +402,7 @@ function GetBankSlotBounds(Slot: Integer): TBox;
 Contributors: Wanted
 Description: Returns the bounds of an item in the bank slot.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: September 22nd, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetBankSlotBounds(Slot: Integer): TBox;
@@ -416,7 +416,7 @@ function GetBankTabBounds(Tab: Integer): TBox;
 Contributors: Wanted
 Description: Returns the bounds of a bank tab.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: September 22nd, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetBankTabBounds(Tab: Integer): TBox;

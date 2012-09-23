@@ -37,12 +37,28 @@ const                  // Description                            Modified   By  
  MGIX = 0;               // Space betw. Tabs Unclickable X       // 9/21/2012  LordJashin  718
  MGIY = 264;             // Space betw. Tabs Unclickable Y       // 9/21/2012  LordJashin  718
  MGTO = 2;               // GameTab X Offset                     // 9/21/2012  LordJashin  718 
- MGTX = MGIX + MGTW;     // Space betw. Tab0.x1 & Tab1.x1        // 9/21/2012  LordJashin  718
- MGTY = MGIY + MGTH;     // Space betw. Tab0.y1 & Tab8.y1 ROWS   // 9/21/2012  LordJashin  718
+ MGTX = MGTW + MGIX;     // Space betw. Tab0.x1 & Tab1.x1        // 9/21/2012  LordJashin  718
+ MGTY = MGTH + MGIY;     // Space betw. Tab0.y1 & Tab8.y1 ROWS   // 9/21/2012  LordJashin  718
  MGL1 = 746;             // Logout Tab TopLeft pnt               // 9/21/2012  LordJashin  718 
  MGl2 = 1;                                                       // 9/21/2012  LordJashin  718
  MGl3 = 764;             // Logout Tab BtmRight pnt              // 9/21/2012  LordJashin  718
  MGl4 = 17;                                                      // 9/21/2012  LordJashin  718
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Adv. Skill Constants
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ MSSC = 3;               // Skill Tab Columns                    // 9/22/2012  LordJashin  718
+ MSSR = 9;               // Skill Tab Rows                       // 9/22/2012  LordJashin  718
+ MSSS = MSSC * MSSR - 2; // Skills Slots (-2) for last row       // 9/22/2012  LordJashin  718
+ MSS1 = 550;             // Skill Slot(0) TopLeft pnt            // 9/22/2012  LordJashin  718            
+ MSS2 = 210;                                                     // 9/22/2012  LordJashin  718
+ MSS3 = 609;             // Skill Slot(0) BtmRight pnt           // 9/22/2012  LordJashin  718
+ MSS4 = 236;                                                     // 9/22/2012  LordJashin  718                             
+ MSSW = MSS3 - MSS1 + 1; // Skill Slot Width                     // 9/22/2012  LordJashin  718
+ MSSH = MSS4 - MSS2 + 1; // Skill Slot Height                    // 9/22/2012  LordJashin  718
+ MSSX = 2;               // Space btwn. Slots Unclickable X      // 9/22/2012  LordJashin  718
+ MSSY = 1;               // Space btwn. Slots Unclickable Y      // 9/22/2012  LordJashin  718
+ MSSL = MSSW + MSSX;     // Space btwn. Slot(0).x1 & Slot(1).x1  // 9/22/2012  LordJashin  718
+ MSSD = MSSH + MSSY;     // Space btwn. Slot(0).y1 & Slot(3).y1  // 9/22/2012  LordJashin  718
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Adv. Inventory Constants
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

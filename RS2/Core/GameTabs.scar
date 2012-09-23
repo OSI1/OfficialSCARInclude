@@ -537,12 +537,14 @@ function GetSkillBounds(Skill: Integer): TBox;
 Contributors: Wanted
 Description: Returns the box of the skill on the stats tab.
 Date Created: November 1st, 2011. By Wanted. RS2 Build 672.
-Last Modified: November 1st, 2011. By Wanted. RS2 Build 672.
+Last Modified: September 22nd, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetSkillBounds(Skill: Integer): TBox;
 begin
-  Result := Box(550 + ((Skill mod 3) * 62), 210 + ((Skill div 3) * 28), 609 + ((Skill mod 3) * 62), 235 + ((Skill div 3) * 28));
+  Result := Box(0, 0, 0, 0);
+  if Skill > 24 then Exit;
+  Result := Box(MSS1 + ((Skill mod 3) * MSSL), MSS2 + ((Skill div 3) * MSSD), MSS3 + ((Skill mod 3) * MSSL), MSS4 + ((Skill div 3) * MSSD));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

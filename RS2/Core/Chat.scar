@@ -22,7 +22,7 @@ function GetChatTabBounds(ChatTab: Integer): TBox;
 Contributors: Wanted
 Description: Returns the boundries of the chat tab you want.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
-Last Modified: January 9th, 2012. By Wanted. RS2 Build 695.
+Last Modified: September 22, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetChatTabBounds(ChatTab: Integer): TBox;
