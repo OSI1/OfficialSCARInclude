@@ -5,8 +5,7 @@
  * procedure TestDepositBoxFunctions;                   
  * Instructions:
                 1. Set the constants
-                2. Make sure your DepositBox is full!!!
-                3. Run Test!
+                2. Run Test!
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE RS2}

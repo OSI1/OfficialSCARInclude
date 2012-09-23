@@ -1,0 +1,82 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             MiniMap Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestMiniMapFunctions;                   
+ * Instructions:
+                1. Set the constants
+                2. Run Test!
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2}
+{$DEFINE SMART}
+{$I ../../OSI.scar}
+{$I ../../RS2/Misc/DebugSmart.scar}
+
+const
+  RS2_Username = 'Test'; // Set these constants before running!
+  RS2_Password = 'Test';
+  RS2_Member = False;    // Use Member's world?
+  SMART_World = 11;      // What world do you want to go to?
+
+// Do not include this file. Run it!
+
+procedure SetupPlayers;                                  
+begin 
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := RS2_Username;
+      Pass  := RS2_Password;
+      Member := RS2_Member;  
+      WorldInfo:= [RS2_Member, SMART_World];
+      Active := True;
+    end;                                     
+  SetupOSI;
+  Login;       
+  wait(5000);
+end;
+
+procedure TestMiniMapFunctions;
+var
+  P: TPoint;                                          
+  ATPA: T2DPointArray;
+begin
+  if OnMM(MMCX, MMCY) then WriteLn('OnMM: Works!') else WriteLn('OnMM: Failed!');
+  if MMOnMS(Point(MMCX, MMCY)) then WriteLn('MMOnMS: MiniMap Point is on the MainScreen too!') else WriteLn('Couldn''t find MiniMap point on MainScreen or Failed!');
+  P := MMToMSEx(Point(MMCX, MMCY), 30);
+  WriteLn('MMToMSEx: Result: (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
+  P := MMToMS(Point(MMCX, MMCY));
+  WriteLn('MMToMS: Result: (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
+  if not SmartEnabled(SMART_Client) then
+    SmartSetEnabled(SMART_Client, True);                         
+  SmartSetDebug(SMART_Client, True);  
+  SetLength(ATPA, 2);
+  ATPA[0] := MMsToMSs([Point(MMCX, MMCY), Point(MMCX + 5, MMCY + 5), Point(MMCX - 5, MMCY - 5)]);
+  ATPA[1] := FilterMMPointsMS([Point(MSCX, MSCY),Point(MSCX + 10, MSCY - 10), Point(MSCX + 20, MSCY + 20)]);   
+  SmartDebugATPABoundsEx(ATPA, True, False, True, True);
+  WriteLn('MMsToMSs: SMART Debug TPA');  
+  WriteLn('FilterMMPointsMS: SMART Debug TPA');
+  WriteLn('GetCompassAngleRadians: Result: ' + FloatToStr(GetCompassAngleRadians));
+  WriteLn('GetCompassAngleDegrees: Result: ' + FloatToStr(GetCompassAngleDegrees));
+  if MakeCompass(30) then WriteLn('MakeCompass: Rotated To 30!') else WriteLn('MakeCompass: Didn''t Rotate to 30 or Failed!');
+  SetAngle(True);
+  WriteLn('SetAngle: Can set the angle to highest!');
+  ClickCompass(false);
+  WriteLn('ClickCompass: Clicked to face north!');
+  // MMDots functions
+  // RadarRoadWalk
+  // Flag Functions :(
+  // FindMMColorTol
+  // FindMMColorTolEx           
+  wait(5000);
+  SmartClearDebug(SMART_Client);
+  SmartSetDebug(SMART_Client, False);    
+end;
+
+begin
+  SetupPlayers;               
+  ClearDebug;    
+  MoveMouse(0, 0);
+  TestMiniMapFunctions;
+end.
