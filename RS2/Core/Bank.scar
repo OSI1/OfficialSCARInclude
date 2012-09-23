@@ -269,21 +269,21 @@ function ToggleUseNotes(Use: Boolean): Boolean;
 Contributors: Wanted
 Description: Enables or disables note usage. Returns true if toggle was needed.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+Last Modified: September 23rd, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ToggleUseNotes(Use: Boolean): Boolean;
 begin
   Result := False;
-  case GetColor(251, 301) of
-    7967381: Result := not (Use);
-    10862787: Result := Use;
+  case GetColor(215, 301) of
+    2700606: Result := not (Use);
+    4806757: Result := Use;
   else
     Exit;
   end;
   if  (not (Result)) then
     Exit;
-  MouseBox(244, 297, 275, 318, ClickLeft);
+  MouseBox(213, 297, 245, 318, ClickLeft);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -291,21 +291,21 @@ function ToggleSwapMode(Use: Boolean): Boolean;
 Contributors: Wanted
 Description: Enables or disables note usage. Returns true if toggle was needed.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: September 23rd, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ToggleSwapMode(Use: Boolean): Boolean;
 begin
   Result := False;
-  case GetColor(36, 304) of
-    65536: Result := not (Use);
+  case GetColor(30, 300) of
+    2700606: Result := not (Use);
     4806757: Result := Use;
   else
     Exit;
   end;
   if  (not (Result)) then
     Exit;
-  MouseBox(32, 296, 62, 320, ClickLeft);
+  MouseBox(29, 296, 60, 320, ClickLeft);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -347,6 +347,24 @@ begin
     else
       Result := True;
   MouseBox(461, 48, 492, 79, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BankHideEquipStats: Boolean;
+Contributors: LordJashin
+Description: Returns true if at the bank screen.
+Date Created: September 23rd, 2012. By LordJashin. RS2 Build 718.
+Last Modified: September 23rd, 2012. By LordJashin. RS2 Build 718.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BankHideEquipStats: Boolean;
+begin
+  Result := True; 
+  if BankScreen then Exit;
+  MouseBox(461, 48, 488, 73, ClickLeft);  
+  WaitRR(100, 200);       
+  if not BankScreen then
+    Result := False;              
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -7,8 +7,8 @@
 
 {$DEFINE RS2}
 {$DEFINE SMART}
-{$I ../OSI.scar}
-{$I ../RS2/Misc/DebugSmart.scar}
+{$I ../../OSI.scar}
+{$I ../../RS2/Misc/DebugSmart.scar}
 
 // Do not include this file. Run it!
 
