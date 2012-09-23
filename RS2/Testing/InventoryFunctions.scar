@@ -1,0 +1,73 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                            Inventory Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestInventoryFunctions;                   
+ * Instructions:
+                1. Set the constants
+                2. Make sure your Inventory is full!!!
+                3. Make sure your Inventory items are droppable
+                4. Make sure your Inventory items aren't important
+                   because they will be dropped during this test
+                5. Run Test!
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2}
+{$DEFINE SMART}
+{$I ../../OSI.scar}
+
+const
+  RS2_Username = 'Test'; // Set these constants before running!
+  RS2_Password = 'Test';
+  RS2_Member = False;    // Use Member's world?
+  SMART_World = 11;      // What world do you want to go to?
+
+// Do not include this file. Run it!
+
+procedure SetupPlayers;                                  
+begin 
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := RS2_Username;
+      Pass  := RS2_Password;
+      Member := RS2_Member;  
+      WorldInfo:= [RS2_Member, SMART_World];
+      Active := True;
+    end;                                     
+  SetupOSI;
+  Login;       
+  wait(5000);
+end;
+
+procedure TestInventoryFunctions;
+begin
+  if not LoggedIn then Exit;
+  if GetInvSlotIndex(1, 1) = 0 then WriteLn('GetInvSlotIndex: Works!') else WriteLn('GetInvSlotIndex: Failed!');
+  if GetItemBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetItemBounds: Works!') else WriteLn('GetItemBounds: Failed!');
+  if CordsToItemSlot(Point(MII1, MII2)) = 0 then WriteLn('CordsToItemSlot: Works!') else WriteLn('CordsToItemSlot: Failed!');
+  if InvItemExists(0, True) then WriteLn('InvItemExists: Works!') else WriteLn('InvItemExists: Failed!');
+  if InvCount(True) > 0 then WriteLn('InvCount: Works!') else WriteLn('InvCount: Failed!');
+  if InvFull(True) then WriteLn('InvFull: Works!') else WriteLn('InvFull: Failed!');
+  if not InvEmpty(True) then WriteLn('InvEmpty: Works!') else WriteLn('InvEmpty: Failed!');
+  if MouseItem(0, ClickLeft, True) then WriteLn('MouseItem: Works!') else WriteLn('MouseItem: Failed!');
+  if DragItem(1, 2, True) then WriteLn('DragItem: Works!') else WriteLn('DragItem: Failed!');
+  if Length(GetDropPattern(0)) > 0 then WriteLn('GetDropPattern: Works!') else WriteLn('GetDropPattern: Failed!');
+  if DropItem(0, True) then WriteLn('DropItem: Works!') else WriteLn('DropItem: Failed!');
+  if DropItemsPEx([0,1,2], GetDropPattern(0), False, True) > 0 then WriteLn('DropItemsPEx: Works!') else WriteLn('DropItemsPEx: Failed!');
+  if DropItemsEx([0,1,2,3,4], False, True) > 0 then WriteLn('DropItemsEx: Works!') else WriteLn('DropItemsEx: Failed!');
+  if DropItems([0,1,2,3,4,5], True) > 0 then WriteLn('DropItems: Works!') else WriteLn('DropItems: Failed!');
+  if DropAllExclude([5,6,7,8,9,10,11,12,13,14,15], True) > 0 then WriteLn('DropAllExclude: Works!') else WriteLn('DropAllExclude: Failed!');
+  if DropAll(True) > 0 then WriteLn('DropAll: Works!') else WriteLn('DropAll: Failed!');
+  // FindInvItemsDTM
+  // CountInvItemsDTM
+  // FindInvItemsBMP         
+  // CountInvItemsBMP
+end;
+
+begin
+  SetupPlayers;               
+  ClearDebug;    
+  MoveMouse(0, 0);
+  TestInventoryFunctions;
+end.

@@ -10,7 +10,7 @@
  * function DepositCount: Integer;     
  * function DepositFull: Boolean;     
  * function DepositEmpty: Boolean;     
- * function MouseDepositItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;          
+ * function MouseDepositItem(Slot: Integer; TypeC: ClickActions): Boolean;          
  * function FindDepositItemsDTM(dtm: Integer): TIntArray;
  * function CountDepositItemsDTM(dtm: Integer): Integer;     
  * function FindDepositItemsBMP(bmp: TSCARBitmap; Tol: Integer): TIntArray;     
@@ -135,7 +135,7 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function MouseDepositItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
+function MouseDepositItem(Slot: Integer; TypeC: ClickActions): Boolean;
 Contributors: Wanted, LordJashin
 Description: Clicks on an item in the deposit box.
 Date Created: June 23, 2012. By LordJashin. RS2 Build 718.

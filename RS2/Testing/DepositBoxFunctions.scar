@@ -1,0 +1,62 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                           DepositBox Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestDepositBoxFunctions;                   
+ * Instructions:
+                1. Set the constants
+                2. Make sure your DepositBox is full!!!
+                3. Run Test!
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2}
+{$DEFINE SMART}
+{$I ../../OSI.scar}
+
+const
+  RS2_Username = 'Test'; // Set these constants before running!
+  RS2_Password = 'Test';
+  RS2_Member = False;    // Use Member's world?
+  SMART_World = 11;      // What world do you want to go to?
+
+// Do not include this file. Run it!
+
+procedure SetupPlayers;                                  
+begin 
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := RS2_Username;
+      Pass  := RS2_Password;
+      Member := RS2_Member;  
+      WorldInfo:= [RS2_Member, SMART_World];
+      Active := True;
+    end;                                     
+  SetupOSI;
+  Login;       
+  wait(5000);
+end;
+
+procedure TestDepositBoxFunctions;
+begin
+  if not LoggedIn then Exit;
+  if GetDepositSlotIndex(1, 1) = 0 then WriteLn('GetDepositSlotIndex: Works!') else WriteLn('GetDepositSlotIndex: Failed!');
+  if GetDepositItemBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetDepositItemBounds: Works!') else WriteLn('GetDepositItemBounds: Failed!');
+  if CoordsToDepositItemSlot(Point(MDI1, MDI2)) = 0 then WriteLn('CoordsToDepositItemSlot: Works!') else WriteLn('CoordsToDepositItemSlot: Failed!');
+  if DepositItemExists(0) then WriteLn('DepositItemExists: Works!') else WriteLn('DepositItemExists: Failed!');
+  if DepositCount > 0 then WriteLn('DepositCount: Works!') else WriteLn('DepositCount: Failed!');
+  if DepositFull then WriteLn('DepositFull: Works!') else WriteLn('DepositFull: Failed!');
+  if not DepositEmpty then WriteLn('DepositEmpty: Works!') else WriteLn('DepositEmpty: Failed!');
+  if MouseDepositItem(0, ClickLeft) then WriteLn('MouseDepositItem: Works!') else WriteLn('MouseDepositItem: Failed!');  
+  // FindDepositItemsDTM
+  // CountDepositItemsDTM     
+  // FindDepositItemsBMP     
+  // CountDepositItemsBMP
+end;
+
+begin
+  SetupPlayers;               
+  ClearDebug;    
+  MoveMouse(0, 0);
+  TestDepositBoxFunctions;
+end.
