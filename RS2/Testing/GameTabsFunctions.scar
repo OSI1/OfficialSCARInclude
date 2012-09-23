@@ -1,0 +1,79 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                            GameTabs Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestGameTabsFunctions;                   
+ * Instructions:
+                1. Set the constants
+                2. Run Test!
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2}
+{$DEFINE SMART}
+{$I ../../OSI.scar}
+
+const
+  RS2_Username = 'Test'; // Set these constants before running!
+  RS2_Password = 'Test';
+  RS2_Member = False;    // Use Member's world?
+  SMART_World = 11;      // What world do you want to go to?
+
+// Do not include this file. Run it!
+
+procedure SetupPlayers;                                  
+begin 
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := RS2_Username;
+      Pass  := RS2_Password;
+      Member := RS2_Member;  
+      WorldInfo:= [RS2_Member, SMART_World];
+      Active := True;
+    end;                                     
+  SetupOSI;
+  Login;       
+  wait(5000);
+end;
+
+procedure TestGameTabsFunctions;
+var
+  ColorState: string;
+begin
+  WriteLn('GetCurrentTab: Result: ' + IntToStr(GetCurrentTab));
+  if GetTabBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetTabBounds: Works!') else WriteLn('GetTabBounds: Failed!');          
+  if TabExists(0) then WriteLn('TabExists: Tab(0) Exists!') else WriteLn('TabExists: Tab(0) doesn''t exist or Failed!');
+  if SetGameTab(0) then WriteLn('SetGameTab: Clicked Game Tab(0)') else WriteLn('SetGameTab: Didn''t Click GameTab(0) or Failed!');
+  if GetEquipmentBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetEquipmentBounds: Works!') else WriteLn('GetEquipmentBounds: Failed!');
+  if IsSlotEquipped(Tab_Equip_Boots, True) then WriteLn('IsSlotEquipped: Boots are equipped!') else WriteLn('IsSlotEquipped: Boots are not equipped or Failed!');
+  if ClickEquipedItem(Tab_Equip_Boots, ClickLeft, True) then WriteLn('ClickEquipedItem: Clicked equipped Boots!') else WriteLn('ClickEquipedItem: Didn''t Click equipped Boots or Boots were not Equipped or Failed!');
+  WriteLn('GetCurrentMusic: Result: ' + GetCurrentMusic);
+  if IsRunning then WriteLn('IsRunning: Yes!') else WriteLn('IsRunning: No or Failed!');
+  if SetRun(True) then WriteLn('SetRun: Running!') else WriteLn('SetRun: Didn''t turn on running or Failed!');
+  if IsResting then WriteLn('IsResting: Resting!') else WriteLn('IsResting: Is not resting or didn''t find resting or Failed!');
+  if SetRest then WriteLn('SetRest: Is Now Resting!') else WriteLn('SetRest: Didn''t start resting or Failed!');
+  if IsMoneyPouchOpen then WriteLn('IsMoneyPouchOpen: Yes!') else WriteLn('IsMoneyPouchOpen: No or Failed!');
+  if ToggleMoneyPouch(True) then WriteLn('ToggleMoneyPouch: Opened Money Pouch if it was closed!') else WriteLn('ToggleMoneyPouch: It was already open or Failed!');
+  WriteLn('GetMoneyPouchAmount: Result: ' + IntToStr(GetMoneyPouchAmount));
+  if WithdrawMoneyPouch(1) then WriteLn('WithdrawMoneyPouch: Withdrew 1 gold!') else WriteLn('WithdrawMoneyPouch: Didn''t withdraw 1 gold or Failed!');
+  if IsXPBarOpen then WriteLn('IsXPBarOpen: Yes!') else WriteLn('IsXPBarOpen: No or Failed!');
+  if ToggleXPBar(true) then WriteLn('ToggleXPBar: Opened XP Bar if it was closed!') else WriteLn('ToggleXPBar: It was already open or Failed!');
+  WriteLn('GetXPBarTotal: Result: ' + IntToStr(GetXPBarTotal));
+  WriteLn('ConvertXPToLevel: From total: ' + IntToStr(ConvertXPToLevel(GetXPBarTotal)));
+  if GetSkillBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetSkillBounds: Works!') else WriteLn('GetSkillBounds: Failed!');
+  WriteLn('GetSkillLevelEx: Skill_Attack: ' + IntToStr(GetSkillLevelEx(Skill_Attack, False, True)));
+  WriteLn('GetSkillLevel: Skill_Attack: ' + IntToStr(GetSkillLevel(Skill_Attack, True)));
+  WriteLn('GetMMLevelEx: Skill_Attack: ' + IntToStr(GetMMLevelEx(Skill_Attack, ColorState)));
+  WriteLn('GetMMLevel: Skill_Attack: ' + IntToStr(GetMMLevel(Skill_Attack)));
+  if HoverSkill(Skill_Attack, True) then WriteLn('HoverSkill: Mouse to Attack!') else WriteLn('HoverSkill: No Mouse to Skill_Attack or Failed!');
+  WriteLn('GetXP: Skill_Attack: ' + IntToStr(GetXP(Skill_Attack, True)));
+  if GetAllLevels(True) then WriteLn('GetAllLevels: Stored to current player') else WriteLn('GetAllLevels: Couldn''t get all levels or Failed!');    
+  // GetSkillInfo    
+end;
+
+begin
+  SetupPlayers;               
+  ClearDebug;    
+  MoveMouse(0, 0);
+  TestGameTabsFunctions;
+end.
