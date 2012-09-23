@@ -428,18 +428,18 @@ begin
   T := GetSystemTime + RR(4000, 5000);
   B := False;
   repeat
-    CT := CountColor(clBlack, 210, 392, 309, 411);
-    if (CT = 314) then
+    CT := CountColor(clBlack, 200, 406, 295, 412);
+    if (CT = 259) then
       Break;
     if (not (B)) then
       if (PinScreen) then
       begin
-        CT := 314;
+        CT := 259;
         B := True;
         EnterBankPin(Players[CurrentPlayer].Pin, True);
       end;
   until (GetSystemTime > T);
-  if (CT <> 314) then
+  if (CT <> 259) then
     Exit;
   TypeSend(WText);
   Result := True;
