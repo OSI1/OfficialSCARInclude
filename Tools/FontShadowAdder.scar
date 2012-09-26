@@ -1,13 +1,13 @@
 // A simple utility used to add red outline to prexisitng font sets
 // By Wanted. November 29th 2011
 // Updated for SCAR 3.35: September 19, 2012. By LordJashin
-// But not yet working yet. Need to figure out how to set the bitmap target again
+// But not yet working yet. Need to figure out how to fix this
 
 program TextShadowAdder;
 
 const
   InitialFontsPath = 'C:\Users\LordJashin\Documents\SCAR Divi\Includes\OSI\RS2\Fonts\SmallChars\';
-  OutputFontsPath = 'C:\Users\LordJashin\Documents\SCAR Divi\Includes\OSI\RS2\Fonts\SmallCharsNew\';
+  OutputFontsPath =  'C:\Test\';
 
 procedure AddShadowToChar(Char: Integer);
 var
@@ -22,18 +22,21 @@ begin
   W := OldChar.Width;
   H := OldChar.Height;       
   Client1 := TSCARBitmapClient.Create(OldChar); 
-  SetClient(Client1);                      
+  SetClient(Client1);                                
   FindColorsEx(TPA, [clWhite], 0, 0, W - 1, H - 1);
   H := High(TPA);
   for I := 0 to H do
   begin
     P := Point(TPA[I].X + 1, TPA[I].Y + 1);
-    OldChar.SetSize(P.X, P.Y);
-    OldChar.Pixels[P.X, P.Y] := clRed;
+    if (not P.X > OldChar.Width) or (not P.Y > OldChar.Height) then
+      begin       
+        OldChar.Pixels[P.X, P.Y] := clRed;        
+      end;
   end;
   for I := 0 to H do
     OldChar.Pixels[TPA[I].X, TPA[I].Y] := clWhite;
-  OldChar.SaveToBmp(OutputFontsPath + IntToStr(Char) + '.bmp');
+  OldChar.SaveToBmp(OutputFontsPath + IntToStr(Char) + '.bmp'); 
+  WriteLn('Saved: ' + OutputFontsPath + IntToStr(Char) + '.bmp');
   OldChar.Free;
 end;
 
