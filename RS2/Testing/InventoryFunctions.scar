@@ -34,8 +34,9 @@ begin
       Member := RS2_Member;  
       WorldInfo:= [RS2_Member, SMART_World];
       Active := True;
-    end;                                     
-  SetupOSI;
+    end;  
+  if not LoggedIn then                                   
+    SetupOSI;
   Login;       
   wait(5000);
 end;

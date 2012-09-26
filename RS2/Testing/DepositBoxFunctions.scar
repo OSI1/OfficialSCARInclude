@@ -31,8 +31,9 @@ begin
       WorldInfo:= [RS2_Member, SMART_World];
       Active := True;
     end;                                     
-  SetupOSI;
-  Login;       
+  SetupOSI;     
+  if not LoggedIn then
+    Login;       
   wait(5000);
 end;
 
@@ -40,7 +41,7 @@ procedure TestDepositBoxFunctions;
 begin
   if GetDepositSlotIndex(1, 1) = 0 then WriteLn('GetDepositSlotIndex: Works!') else WriteLn('GetDepositSlotIndex: Failed!');
   if GetDepositItemBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetDepositItemBounds: Works!') else WriteLn('GetDepositItemBounds: Failed!');
-  if CoordsToDepositItemSlot(Point(MDI1, MDI2)) = 0 then WriteLn('CoordsToDepositItemSlot: Works!') else WriteLn('CoordsToDepositItemSlot: Failed!');
+  if CordsToDepositItemSlot(Point(MDI1, MDI2)) = 0 then WriteLn('CordsToDepositItemSlot: Works!') else WriteLn('CordsToDepositItemSlot: Failed!');
   if DepositItemExists(0) then WriteLn('DepositItemExists: Found Item in Slot(0)!') else WriteLn('DepositItemExists: Slot(0) Empty or Failed!');
   WriteLn('DepositCount: Result: ' + IntToStr(DepositCount));
   if DepositFull then WriteLn('DepositFull: Full!') else WriteLn('DepositFull: Not Full or Failed!');

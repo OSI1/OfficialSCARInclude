@@ -5,7 +5,7 @@
 --------------------------------------------------------------------------------
  * function GetDepositItemBounds(Slot: Integer): TBox;      
  * function GetDepositSlotIndex(Row, Column: Integer): Integer;
- * function CoordsToDepositItemSlot(P: TPoint): Integer;
+ * function CordsToDepositItemSlot(P: TPoint): Integer;
  * function DepositItemExists(Slot: Integer): Boolean;     
  * function DepositCount: Integer;     
  * function DepositFull: Boolean;     
@@ -48,14 +48,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CoordsToDepositItemSlot(P: TPoint): Integer;
+function CordsToDepositItemSlot(P: TPoint): Integer;
 Contributors: Wanted, LordJashin
 Description: Returns the slot of a point in the deposit box.
 Date Created: June 23, 2012. By LordJashin. RS2 Build 718.
 Last Modified: June 23, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CoordsToDepositItemSlot(P: TPoint): Integer;
+function CordsToDepositItemSlot(P: TPoint): Integer;
 var
   I: Integer;
   B: TBox;
@@ -214,7 +214,7 @@ begin
     Exit;
   SetLength(Result, H + 1);
   for I := 0 to H do
-    Result[I] := CoordsToDepositItemSlot(TPA[I]);
+    Result[I] := CordsToDepositItemSlot(TPA[I]);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

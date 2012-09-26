@@ -10,7 +10,32 @@
 {$I ../../OSI.scar}
 {$I ../../RS2/Misc/DebugSmart.scar}
 
+const
+  TestWithoutLogginIn = False;
+  RS2_Username = 'Test'; // Set these constants before running!
+  RS2_Password = 'Test';
+  RS2_Member = False;    // Use Member's world?
+  SMART_World = 11;      // What world do you want to go to?
+
 // Do not include this file. Run it!
+
+procedure SetupPlayers;                                  
+begin 
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := RS2_Username;
+      Pass  := RS2_Password;
+      Member := RS2_Member;  
+      WorldInfo:= [RS2_Member, SMART_World];
+      Active := True;
+    end;                                     
+  SetupOSI;    
+  if not LoggedIn then 
+    if not TestWithoutLogginIn then
+      Login;       
+  wait(5000);
+end;
 
 procedure DrawGlobalsBounds;
 var
@@ -27,7 +52,8 @@ begin
   SmartDebugATPABoundsEx(ATPA, True, False, True, True); 
 end;
 
-begin
+begin 
+  SetupPlayers;
   SetupOSI;            
   if not SmartEnabled(SMART_Client) then             
     SmartSetEnabled(SMART_Client, True);                               

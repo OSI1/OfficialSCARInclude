@@ -33,7 +33,8 @@ begin
       Active := True;
     end;                                     
   SetupOSI;
-  Login;       
+  if not LoggedIn then
+    Login;       
   wait(5000);
 end;
 

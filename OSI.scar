@@ -50,7 +50,8 @@
   {$I RS2\Core\Map.scar}
   {$I RS2\Core\Bank.scar}
   {$I RS2\Core\DepositBox.scar}
-  {$I RS2\Core\Amount.scar}
+  {$I RS2\Core\Amount.scar}     
+  {$I RS2\Core\NPC.scar}    
   {$IFDEF OSI_Color_Anti_Randoms}
     {$I RS2\Anti-Randoms\Anti-Randoms.scar}
   {$ENDIF}
