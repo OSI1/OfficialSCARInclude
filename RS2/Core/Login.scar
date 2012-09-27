@@ -34,36 +34,37 @@ function RandomWorld(Members: Boolean): Integer; forward;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function CurrentLobbyTab: Integer;
-Contributors: Wanted
+Contributors: Wanted, LordJashin
 Description: Returns what tab you have open at the lobby screen. 6 if failed.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modified: July 28th, 2011. By Freddy. RS2 Build 727.
+Last Modified: September 26th, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CurrentLobbyTab: Integer;
 begin
-  for Result := 0 to 5 do                                                    
-    if (SimilarColors(GetColor(102 + (Result * 102), 39), 3027766, 5)) then  
+  for Result := 0 to 6 do                                                    
+    if (SimilarColors(GetColor(MLTS + (Result * MLTS), 39), 3027766, 5)) then  
       Break;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LobbyTab(Tab: Integer): Boolean;
-Contributors: Wanted
+Contributors: Wanted, LordJashin
 Description: Clicks on a lobby tab, if not already open.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modified: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: September 26th, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LobbyTab(Tab: Integer): Boolean;
 var
   I: Integer;
 begin
+  if Tab > 5 then Exit;
   I := CurrentLobbyTab;
   Result := I = Tab;
-  if ((Result) or (I = 6)) then
+  if ((Result) or (I > 5)) then
     Exit;
-  MouseBox(67 + (Tab * 102), 26, 162 + (Tab * 102), 48, ClickLeft);
+  MouseBox(MLT1 + (Tab * MLTS), MLT2, MLT3 + (Tab * MLTS), MLT4, ClickLeft);
   WaitRR(250, 400);
   Result := CurrentLobbyTab = Tab;
 end;

@@ -64,13 +64,13 @@ begin
   end;
 end;
 
-{*******************************************************************************
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function WS_CurrentWorld: Boolean;
 Contributors: Wanted
 Description: Returns world number, returns -1 if failed. Only works at world screen.
 Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
 Last Modified: August 14th, 2011. By Wanted RS2 Build 662.
-*******************************************************************************}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WS_CurrentWorld: Integer;
 begin
@@ -80,13 +80,13 @@ begin
   Result := StrToIntDef(GetNumbers(Trim(GetTextAtEx(653, 78, 0, LoginChars, False, False, 0, 1, clLoginText, 15, False, tr_AllChars))), -1);
 end;
 
-{*******************************************************************************
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function WS_MemberWorld: Boolean;
 Contributors: Wanted
 Description: Returns true if current world is members. Only works at world screen.
 Date Created: August 14th, 2011. By Wanted. RS2 Build 662.
 Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
-*******************************************************************************}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WS_MemberWorld: Boolean;
 begin
@@ -96,13 +96,13 @@ begin
   Result := (GetColor(628, 82) = 3927547);
 end;
 
-{*******************************************************************************
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure LoadRS2WorldArray;
 Contributors: Wanted, Narcle.
 Description: Loads the worlds from Worlds.INI into RS2WorldArray.
 Date Created: August 7th, 2011. By Narcle & Wanted. RS2 Build 661.
 Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
-*******************************************************************************}
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure LoadRS2WorldArray;
 var

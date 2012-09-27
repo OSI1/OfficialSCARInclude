@@ -9,9 +9,9 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 Adv. Constants
 Contributors: Wanted, LordJashin
-Description: Constants that are very exact, useful for functions
+Description: Constants that are very exact, useful for keeping functions in line
 Date Created:  June 26, 2012. By LordJashin. RS2 Build 718.
-Last Modified: September 21, 2012. By LordJashin. RS2 Build 718.
+Last Modified: September 26, 2012. By LordJashin. RS2 Build 718.
 Explanation:
             Functions such as GetItemBounds, and others. Use exact coordinates.
             We can use color/dtm/bitmap and other methods later but for now
@@ -20,7 +20,21 @@ Explanation:
             coordinates for mouse procedures, dragging, etc. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const                  // Description                            Modified   By        Build #
+const                    // Description                             Modified   By          Build #
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                Adv. Login Constants
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ MLTT = 6;               // Total Number of Lobby Tabs           // 9/26/2012  LordJashin  718
+ MLT1 = 67;              // Lobby Tab(0) TopLeft pnt             // 9/26/2012  LordJashin  718
+ MLT2 = 26;                                                      // 9/26/2012  LordJashin  718
+ MLT3 = 162;             // Lobby Tab(0) BtmRight pnt            // 9/26/2012  LordJashin  718
+ MLT4 = 48;                                                      // 9/26/2012  LordJashin  718
+ MLTW = MLT3 - MLT1 + 1; // Lobby Tab Width                      // 9/26/2012  LordJashin  718
+ MLTH = MLT4 - MLT2 + 1; // Lobby Tab Height                     // 9/26/2012  LordJashin  718 
+ MLTX = 2;               // Space btwn. LobbyTabs Unclickable X  // 9/26/2012  LordJashin  718
+ MLTO = 4;               // Offset for Longer tabs               // 9/26/2012  LordJashin  718
+ MLTS = MLTW+MLTX+MLTO;  // Space btwn. Tab(0).x1 & Tab(1).x1    // 9/26/2012  LordJashin  718
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 Adv. Game Tab Constants
