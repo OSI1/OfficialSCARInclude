@@ -3,6 +3,7 @@
                                    Runescape 2
                                  Login Routines
 --------------------------------------------------------------------------------
+ * function GetLobbyTabBounds(Tab: Integer): TBox;
  * function CurrentLobbyTab: Integer;
  * function LobbyTab(Tab: Integer): Boolean;
  * function LoginScreen: Boolean;
@@ -33,6 +34,20 @@ function SelectWorld(World: Integer): Boolean; forward;
 function RandomWorld(Members: Boolean): Integer; forward;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetLobbyTabBounds(Tab: Integer): TBox;
+Contributors: Wanted, LordJashin
+Description: Gets the box for w/e lobby tab you want, but there is only so many
+Date Created: September 28th, 2012. By LordJashin. RS2 Build 718.
+Last Modified: September 28th, 2012. By LordJashin. RS2 Build 718.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetLobbyTabBounds(Tab: Integer): TBox;
+begin
+  if not Tab > 5 then
+    Result := Box(MLT1 + (Tab * MLTS), MLT2, MLT3 + (Tab * MLTS), MLT4);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function CurrentLobbyTab: Integer;
 Contributors: Wanted, LordJashin
 Description: Returns what tab you have open at the lobby screen. 6 if failed.
@@ -58,13 +73,15 @@ Last Modified: September 26th, 2012. By LordJashin. RS2 Build 718.
 function LobbyTab(Tab: Integer): Boolean;
 var
   I: Integer;
+  B1: TBox;
 begin
-  if Tab > 5 then Exit;
+  B1 := GetLobbyTabBounds(Tab);
+  if B1 = Box(0, 0, 0, 0) then Exit;
   I := CurrentLobbyTab;
   Result := I = Tab;
   if ((Result) or (I > 5)) then
     Exit;
-  MouseBox(MLT1 + (Tab * MLTS), MLT2, MLT3 + (Tab * MLTS), MLT4, ClickLeft);
+  MouseBox(B1.X1, B1.Y1, B1.X2, B1.Y2, ClickLeft);
   WaitRR(250, 400);
   Result := CurrentLobbyTab = Tab;
 end;

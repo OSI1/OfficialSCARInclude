@@ -118,14 +118,14 @@ begin
     SetLength(Players, 1);
     LoadRS2WorldArray;
     AllowQuickChat := True;
-    AllowLootShare := True;             
-    if (SMART_Server = 0) and (Length(Players[CurrentPlayer].WorldInfo) > 1) then
-      for i := 0 to high(RS2WorldArray) do
-        if Players[CurrentPlayer].WorldInfo[1] = i + 1 then
-          SMART_Server := i + 1;
-    if (SMART_Server = 0) then 
-      SMART_Server := RandomWorld(false);
-    {$IFDEF SMART}     
+    AllowLootShare := True;                 
+    {$IFDEF SMART}                      
+      if (SMART_Server = 0) and (Length(Players[CurrentPlayer].WorldInfo) > 1) then
+        for i := 0 to high(RS2WorldArray) do
+          if Players[CurrentPlayer].WorldInfo[1] = i + 1 then
+            SMART_Server := i + 1;
+      if (SMART_Server = 0) then 
+        SMART_Server := RandomWorld(false);
       if InitSmartLib(IncludesPath + 'OSI\RS2\Misc\libsmartremote32.dll') then
         SMART_Path := IncludesPath + 'OSI\RS2\Misc\'
       else if InitSmartLib(ScriptPath + 'OSI\RS2\Misc\libsmartremote32.dll') then   
