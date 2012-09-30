@@ -4,12 +4,13 @@
                                  Login Routines
 --------------------------------------------------------------------------------
  * function GetLobbyTabBounds(Tab: Integer): TBox;
- * function CurrentLobbyTab: Integer;
+ * function CurrentLobbyTab: Integer;                         
  * function LobbyTab(Tab: Integer): Boolean;
  * function LoginScreen: Boolean;
  * function LobbyScreen: Boolean;
  * function LoggedIn: Boolean;
- * function RSReady: Boolean;
+ * function RSReady: Boolean;         
+ * function SetupGraphics: Boolean;
  * function LoginToLobby: Boolean;
  * function Login: Boolean;
  * function ExitToLobby: Boolean;
@@ -88,15 +89,17 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoginScreen: Boolean;
-Contributors: Wanted, Freddy
+Contributors: Wanted, Freddy, LordJashin
 Description: Returns true if at the screen to type in user/pass.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modified: July 21th, 2012. By Freddy. RS2 Build 725.
+Last Modified: September 30th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginScreen: Boolean;
 begin
-  Result := (CountColor(clLoginText, 358, 103, 404, 122) = 160); // Big "Login" word
+  RevertRSClient;
+  Result := (CountColor(clLoginText, 357, 151, 404, 170) = 160); // Big "Login" word
+  UpdateRSClient;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -147,6 +150,35 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetupGraphics: Boolean;
+Contributors: LordJashin
+Description: Changes graphics settings to min fixed!
+Date Created: September 30th, 2012. By LordJashin. RS2 Build 718.
+Last Modified: September 30th, 2012. By LordJashin. RS2 Build 718.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetupGraphics: Boolean;
+begin
+  Result := False;
+  if (not (LoginScreen or LobbyScreen)) then Exit;
+  RevertRSClient;
+  MouseBox(715, 10, 732, 23, ClickLeft);             
+  WaitRR(750, 1400);    
+  if CountColor(12378347, 342, 88, 415, 105) > 230 then
+    begin                                
+      MouseBox(194, 189, 238, 212, ClickLeft);
+      WaitRR(700, 1200);                  
+      MouseBox(180, 275, 230, 310, ClickLeft);      
+      WaitRR(1200, 2500);
+      MouseBox(615, 84, 624, 92, ClickLeft);
+      WaitRR(200, 450);
+      if LoginScreen or LobbyScreen then
+        Result := True;
+    end;         
+  UpdateRSClient;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoginToLobby: Boolean;
 Contributors: Wanted, Anonymous, Freddy.
 Description: Logins in current active player to lobby.
@@ -185,11 +217,7 @@ begin
     CurrentPlayer := NextActivePlayerIndex;
   WriteLn('Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
   ProcStart:                                                  // Retry Login Mark
-  B := False;
-  B2 := False;
-  B3 := False;
-  B4 := False;
-  B3 := (CountColor(10141389, 345, 268, 418, 280) = 143);     // Autographics
+  B3 := (CountColor(10141389, 345, 268, 418, 280) = 143);     // Auto setup graphics
   if (not (B3)) then
     B4 := (CountColor(10141389, 343, 278, 418, 290) = 143);   // Available changed
   if (B3) then
@@ -273,7 +301,7 @@ begin
       1057: Actions := ['Too many incorrect logins', 5 * 60000,    2,      'PlayerFalse', 'Too many logins'];    // August 7, 2011      Anonymous       660      unconfirmed
       1088: Actions := ['Your account has been disabled',    0,    0,      'PlayerFalse', 'Acc Disabled'];       // August 7, 2011      Anonymous       660      unconfirmed
       1535: Actions := ['Your account has been locked',      0,    0,      'PlayerFalse', 'Acc Locked'];         // August 10, 2011     Wanted          661      confirmed 
-      1606: Actions := ['Game session has ended',            0,    0,      'Exit',        'RS updated'];         // July 26, 2012 Bixby Sayz 727 confirmed
+      1606: Actions := ['Game session has ended',            0,    0,      'Exit',        'RS updated'];         // July 26, 2012       Bixby Sayz      727      confirmed
     end;
     if (Length(Actions) > 0) then
     begin

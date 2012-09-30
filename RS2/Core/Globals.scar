@@ -656,21 +656,74 @@ end;
    
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure UpdateRSClient;
-Contributors: Freddy
-Description: Updates the client and excludes the toolbar from the client area.
+Contributors: Freddy, LordJashin
+Description: Updates the client/SMART, excludes the toolbar from the client area
 Date Created: July 21th 2012. By Freddy. RS2 Build 725.
-Last Modified: July 21th 2012. By Freddy. RS2 Build 725.
+Last Modified: September 30th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
 procedure UpdateRSClient;
+{$IFNDEF SMART}
 var
-  Client: TSCARClient; 
+  Client: TSCARClient;
+{$ENDIF} 
 begin
+{$IFDEF SMART}
+  if SMART_Client <> nil then  
+    begin                     
+      if SMART_Client.Update then
+        begin
+          with SMART_Client.ImageArea do
+            SMART_Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);
+          with SMART_Client.InputArea do
+            SMART_Client.InputArea := Box(X1, Y1 + 50, X2, Y2);              
+        end;      
+    end; 
+{$ELSE}  
+  Client := GetClient;
+  if Client.Update then
+    begin
+      with Client.ImageArea do
+        Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);   
+      with Client.InputArea do
+        Client.InputArea := Box(X1, Y1 + 50, X2, Y2);   
+    end;
+{$ENDIF}  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure RevertRSClient;
+Contributors: LordJashin
+Description: Reverts the client back to original image area for SMART/browser
+Date Created: September 30th 2012. By LordJashin. RS2 Build 735.
+Last Modified: September 30th 2012. By LordJashin. RS2 Build 735.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure RevertRSClient;
+{$IFNDEF SMART}
+var
+  Client: TSCARClient;
+{$ENDIF} 
+begin
+{$IFDEF SMART}
+  if SMART_Client <> nil then  
+    begin
+      if SMART_Client.Update then
+        begin      
+          with SMART_Client.ImageArea do
+            SMART_Client.ImageArea := Box(X1, Y1 - 50, X2, Y2);
+          with SMART_Client.InputArea do
+            SMART_Client.InputArea := Box(X1, Y1 - 50, X2, Y2);                
+        end;
+    end; 
+{$ELSE}
   Client := GetClient;
   if Client.Update then
   begin
     with Client.ImageArea do
-      Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);   
+      Client.ImageArea := Box(X1, Y1, X2, Y2);   
     with Client.InputArea do
-      Client.InputArea := Box(X1, Y1 + 50, X2, Y2);   
-  end;  
+      Client.InputArea := Box(X1, Y1, X2, Y2);   
+  end; 
+{$ENDIF} 
 end;
