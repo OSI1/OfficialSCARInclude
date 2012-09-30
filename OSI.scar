@@ -84,6 +84,8 @@ procedure SetUpOSI;
 {$IFDEF RS2}
 var
   RS2FontFolder: string;
+{$ENDIF}
+{$IFDEF SMART}
   i: Integer;
 {$ENDIF}
 begin

@@ -672,19 +672,23 @@ begin
   if SMART_Client <> nil then  
     begin                     
       with SMART_Client.ImageArea do
-        SMART_Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);
+        begin
+          if (Y1 < 50) then
+            SMART_Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);          
+        end;
       with SMART_Client.InputArea do
-        SMART_Client.InputArea := Box(X1, Y1 + 50, X2, Y2);              
+        begin                                                
+          if (Y1 < 50) then
+            SMART_Client.InputArea := Box(X1, Y1 + 50, X2, Y2);          
+        end;              
     end; 
 {$ELSE}  
   Client := GetClient;
-  if Client.Update then
-    begin
-      with Client.ImageArea do
-        Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);   
-      with Client.InputArea do
-        Client.InputArea := Box(X1, Y1 + 50, X2, Y2);   
-    end;
+  Client.Update;
+  with Client.ImageArea do
+    Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);   
+  with Client.InputArea do
+    Client.InputArea := Box(X1, Y1 + 50, X2, Y2);   
 {$ENDIF}  
 end;
 
@@ -706,18 +710,22 @@ begin
   if SMART_Client <> nil then  
     begin      
       with SMART_Client.ImageArea do
-        SMART_Client.ImageArea := Box(X1, Y1 - 50, X2, Y2);
-      with SMART_Client.InputArea do
-        SMART_Client.InputArea := Box(X1, Y1 - 50, X2, Y2);                
+        begin
+          if (Y1 >= 50) then
+            SMART_Client.ImageArea := Box(X1, Y1 - 50, X2, Y2);
+        end;
+      with SMART_Client.InputArea do                           
+        begin                                                
+          if (Y1 >= 50) then
+            SMART_Client.InputArea := Box(X1, Y1 - 50, X2, Y2);          
+        end;                
     end; 
 {$ELSE}
-  Client := GetClient;
-  if Client.Update then
-  begin
-    with Client.ImageArea do
-      Client.ImageArea := Box(X1, Y1, X2, Y2);   
-    with Client.InputArea do
-      Client.InputArea := Box(X1, Y1, X2, Y2);   
-  end; 
+  Client := GetClient;                           
+  Client.Update;
+  with Client.ImageArea do
+    Client.ImageArea := Box(X1, Y1, X2, Y2);   
+  with Client.InputArea do
+    Client.InputArea := Box(X1, Y1, X2, Y2);   
 {$ENDIF} 
 end;
