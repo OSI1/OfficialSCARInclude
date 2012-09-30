@@ -160,21 +160,21 @@ Last Modified: September 30th, 2012. By LordJashin. RS2 Build 718.
 function SetupGraphics: Boolean;
 begin
   Result := False;
-  if (not (LoginScreen or LobbyScreen)) then Exit;
   RevertRSClient;
   MouseBox(715, 10, 732, 23, ClickLeft);             
-  WaitRR(750, 1400);    
-  if CountColor(12378347, 342, 88, 415, 105) > 230 then
-    begin                                
-      MouseBox(194, 189, 238, 212, ClickLeft);
-      WaitRR(700, 1200);                  
-      MouseBox(180, 275, 230, 310, ClickLeft);      
-      WaitRR(1200, 2500);
-      MouseBox(615, 84, 624, 92, ClickLeft);
-      WaitRR(200, 450);
-      if LoginScreen or LobbyScreen then
-        Result := True;
-    end;         
+  WaitRR(750, 1400);                           
+  MouseBox(194, 189, 238, 212, ClickLeft);
+  WaitRR(700, 1200);                  
+  MouseBox(180, 275, 230, 310, ClickLeft);      
+  WaitRR(700, 1200);
+  MouseBox(490, 192, 560, 207, ClickLeft);
+  WaitRR(700, 1200);
+  MouseBox(218, 181, 314, 198, ClickLeft);
+  WaitRR(700, 1200);
+  MouseBox(616, 11, 623, 18, ClickLeft);
+  WaitRR(200, 450);
+  if LoginScreen then
+    Result := True;
   UpdateRSClient;
 end;
 
