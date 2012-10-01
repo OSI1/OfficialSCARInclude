@@ -142,7 +142,16 @@ begin
       if (not (NonAutomaticSMART)) then
         InitiateSMART;
     {$ELSE}
-      UpdateRSClient;
+      UpdateRSClient;                                               
+      GetClient.Activate;
+      if not WaitFunc(@RSReady, True, 5000, 13000, 5000, 13000) then
+        if not SetupGraphics then
+          begin
+            WriteLn('You must set the Graphics to MIN, Fixed, Software mode!');
+            WriteLn('Then re-select the Client with the Crosshairs(+) in SCAR Divi!');
+            WriteLn('Finally run the script again! Terminating now!');    
+            TerminateScript;
+          end;
     {$ENDIF}
     PlayerStartTime := GetSystemTime; 
   {$ENDIF}

@@ -158,24 +158,31 @@ Last Modified: September 30th, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetupGraphics: Boolean;
-begin
+begin 
   Result := False;
-  RevertRSClient;
+  if RSReady then 
+    begin
+      Result := True;
+      Exit;
+    end;
+  GetClient.Update;  
+  RevertRSClient;                                                                      
+  WriteLn('Attempting to change Graphics Settings to Software Mode, MIN, Fixed size!');
   MouseBox(715, 10, 732, 23, ClickLeft);             
-  WaitRR(750, 1400);                           
+  WaitRR(700, 1400);                           
   MouseBox(194, 189, 238, 212, ClickLeft);
   WaitRR(700, 1200);                  
   MouseBox(180, 275, 230, 310, ClickLeft);      
   WaitRR(700, 1200);
   MouseBox(490, 192, 560, 207, ClickLeft);
-  WaitRR(700, 1200);
+  WaitRR(900, 1200);
   MouseBox(218, 181, 314, 198, ClickLeft);
-  WaitRR(700, 1200);
+  WaitRR(1500, 2400);
   MouseBox(616, 11, 623, 18, ClickLeft);
-  WaitRR(200, 450);
-  if LoginScreen then
-    Result := True;
-  UpdateRSClient;
+  WaitRR(1000, 2000);  
+  MoveMouse(Random(100), Random(100));
+  UpdateRSClient;  
+  GetClient.Update;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
