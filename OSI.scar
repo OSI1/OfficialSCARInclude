@@ -77,7 +77,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: September 26th, 2012. By LordJashin. RS2 Build 718.
+Last Modified: September 30th, 2012. By LordJashin. RS2 Build 718.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -92,7 +92,6 @@ begin
   OSI_Variance := 3.0;
   {$IFDEF RS2}
     RS2FontFolder := '';
-    FriendChars := 0;
     WriteLn('OSI RS2 routines enabled');
     {$IFDEF OSI_Color_Anti_Randoms}
       WriteLn('OSI RS2 color random detection and solving enabled');

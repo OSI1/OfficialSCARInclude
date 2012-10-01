@@ -3,7 +3,7 @@ program New;
 {$DEFINE RS2}
 {$DEFINE OSI_Color_Anti_Randoms}
 {$DEFINE SMART}                   // Comment out to disable SMART
-
+                                  // and use browser instead
 {$I OSI\OSI.scar}
 
 procedure ScriptTerminate;
