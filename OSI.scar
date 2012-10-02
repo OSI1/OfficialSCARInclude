@@ -9,9 +9,9 @@
 // Check if SCAR Divi is version 3.35 or higher
 {$IFNDEF SCAR335_UP}
   {$IFDEF SCAR320_UP}
-    {$ERROR [OSI] Please update SCAR Divi to version 3.35 or higher to run this script!}
+    {$ERROR OSI: Please update SCAR Divi to version 3.35 or higher to run this script!}
   {$ELSE}
-    '[OSI] Please update SCAR Divi to version 3.35 or higher to run this script!'
+    'OSI: Please update SCAR Divi to version 3.35 or higher to run this script!'
   {$ENDIF}
 {$ENDIF}
 
@@ -103,7 +103,9 @@ var
 {$ENDIF}
 begin
   OSI_Variance := 3.0;
+  WriteLn('OSI: Routines Enabled');
   {$IFDEF RS2}
+    RS2GlobalVars;
     RS2FontFolder := '';
     WriteLn('OSI: RS2: Routines Enabled');
     {$IFDEF OSI_Color_Anti_Randoms}
