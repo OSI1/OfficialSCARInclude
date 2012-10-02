@@ -28,6 +28,8 @@
  * function AllPlayersInActive: Boolean;
  * function NextPlayerIndex: Integer;
  * function NextActivePlayerIndex: Integer;
+ * procedure UpdateRSClient;        
+ * procedure RevertRSClient;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -575,7 +577,7 @@ begin
     FreeChars2(FriendChars);
     FreeChars2(LoginChars);
     FreeChars2(XPChars);
-    WriteLn('Freed RS2 Fonts');
+    WriteLn('OSI: RS2: Freed Fonts');
   {$ENDIF}
 end;
 
@@ -683,12 +685,12 @@ begin
         end;              
     end; 
 {$ELSE}  
-  Client := GetClient;
+  Client := GetClient;  
   Client.Update;
   with Client.ImageArea do
-    Client.ImageArea := Box(X1, Y1 + 50, X2, Y2);   
+    Client.ImageArea := Box(X1, Y1 + 50, X2, Y2 + 50);   
   with Client.InputArea do
-    Client.InputArea := Box(X1, Y1 + 50, X2, Y2);   
+    Client.InputArea := Box(X1, Y1 + 50, X2, Y2 + 50);       
 {$ENDIF}  
 end;
 

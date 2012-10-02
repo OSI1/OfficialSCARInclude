@@ -5,7 +5,7 @@
  * procedure TestCompileOSI;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
                                            
-// OSI Defines                             // Test all combinations of in-depth.
+// OSI Defines                             // Test all combinations in-depth.
 //{$DEFINE OverrideVariance}               // Comment in in-depth testing   
 //{$DEFINE NoVariance}                     // Comment in in-depth testing
 //{$DEFINE DisableRS2Fonts}                // Comment in in-depth testing
@@ -13,12 +13,13 @@
 {$DEFINE OSI_Color_Anti_Randoms}           // Comment out in in-depth testing
 {$DEFINE SMART}                            // Comment out in in-depth testing
 
+//Main OSI Include file
 {$I OSI.scar}
 
-//Divi
+//OSI Debug Include
 {$I Divi\Misc\Debug.scar}        // Comment out in in-depth testing
 
-//RS2
+//RS2 Includes
 {$I RS2\Skill\Mining.scar}       // Comment out in in-depth testing
 {$I RS2\Skill\Runecrafting.scar} // Comment out in in-depth testing
 {$I RS2\Skill\Smithing.scar}     // Comment out in in-depth testing
@@ -35,16 +36,16 @@ procedure TestCompileOSI;
 Contributors: Wanted, LordJashin
 Description: Test compiles all of OSI. Comment out every combination of defines.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: September 19, 2012. By LordJashin
+Last Modified: October 1st, 2012. By LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TestCompileOSI;
 var
-  T: LongInt;
+  T: Integer;
 begin
   T := GetSystemTime;
   SetUpOSI;
-  WriteLn('OSI successfully set up (' + IntToStr(GetSystemTime - T) + ' ms)');
+  WriteLn('OSI: Successfully Set Up In: (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 
 begin

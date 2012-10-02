@@ -9,8 +9,8 @@
  * function LoginScreen: Boolean;
  * function LobbyScreen: Boolean;
  * function LoggedIn: Boolean;
- * function RSReady: Boolean;         
- * function SetupGraphics: Boolean;
+ * function RSReady: Boolean;   
+ * function FixLoginScreen: Boolean;      
  * function LoginToLobby: Boolean;
  * function Login: Boolean;
  * function ExitToLobby: Boolean;
@@ -149,40 +149,89 @@ begin
   Result := True;
 end;
 
+
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function SetupGraphics: Boolean;
+function FixLoginScreen: Boolean;
 Contributors: LordJashin
-Description: Changes graphics settings to min fixed!
-Date Created: September 30th, 2012. By LordJashin. RS2 Build 718.
-Last Modified: September 30th, 2012. By LordJashin. RS2 Build 718.
+Description: Trys to close popups at login screen, and fix any problems e.g Gfx
+Date Created: October 1st, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 1st, 2012. By LordJashin. RS2 Build 735.
+Handles: Auto Setup graphics, graphics problems
+Explanation: This is used when RS2 first starts up and you reach any popups 
+             before the login screen or reach the login screen itself. When 
+             using RS2 on an internet browser/SMART problems may occur at the 
+             login screen/first loading it. This attempts to solve those 
+             problems by color finding and with a fail safe, if the color find
+             doesn't fix it then it does exact coordinate (browser mostly has 
+             these problems) clicking. If it does resort to exact coordinate 
+             clicking the function will return false and tell the user to change 
+             his/her graphics settings to Min, Fixed, Custom->Software mode,
+             close any popups, and re-selec the client before running the script
+             again.
+
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function SetupGraphics: Boolean;
+function FixLoginScreen: Boolean;
+var
+  i: Integer;
 begin 
-  Result := False;
-  if RSReady then 
+  Result := True;
+  RevertRSClient;                                        
+  MouseBox(RSX1, RSY1, RSX1 + Random(100), RSY1 + Random(100), MoveTo);
+  UpdateRSClient;
+  if RSReady then Exit;
+  RevertRSClient;                                                                       
+  if (CountColorTol(12312808, 205, 217, 559, 279, 8) >= 500) then
     begin
-      Result := True;
-      Exit;
-    end;
-  GetClient.Update;  
+      WaitRR(750, 1500);
+      MouseBox(346, 319, 413, 325, ClickLeft); // "Leave Alone" at Auto Setup popup
+    end;      
+  UpdateRSClient;       
+  if RSReady then Exit;              
+  Result := False;  
+  {$IFDEF SMART}
+    Exit;
+  {$ENDIF}         
   RevertRSClient;                                                                      
-  WriteLn('Attempting to change Graphics Settings to Software Mode, MIN, Fixed size!');
-  MouseBox(715, 10, 732, 23, ClickLeft);             
-  WaitRR(700, 1400);                           
-  MouseBox(194, 189, 238, 212, ClickLeft);
-  WaitRR(700, 1200);                  
-  MouseBox(180, 275, 230, 310, ClickLeft);      
-  WaitRR(700, 1200);
-  MouseBox(490, 192, 560, 207, ClickLeft);
-  WaitRR(900, 1200);
-  MouseBox(218, 181, 314, 198, ClickLeft);
-  WaitRR(1500, 2400);
-  MouseBox(616, 11, 623, 18, ClickLeft);
-  WaitRR(1000, 2000);  
-  MoveMouse(Random(100), Random(100));
-  UpdateRSClient;  
-  GetClient.Update;
+  WriteLn('OSI: RS2: Attempting to Fix the Login Screen, and the Graphics Settings!');
+  WriteLn('OSI: RS2: You must set the graphics to (Min, Fixed, Custom->Software Mode)!');
+  WriteLn('OSI: RS2: You must close popups, make SURE you are at the Login Screen!');
+  WriteLn('OSI: RS2: You must re-select the Client (RS2) with the Crosshairs (+)!'); 
+  WriteLn('OSI: RS2: If you still can''t get it to work try Restarting SCAR Divi!');
+    Repeat
+      MouseBox(715, 10, 732, 23, ClickLeft);   // Graphics settings button
+      WaitRR(700, 1400);                           
+      MouseBox(194, 189, 238, 212, ClickLeft); // "MIN" graphics setting
+      WaitRR(700, 1200);                  
+      MouseBox(180, 275, 230, 310, ClickLeft); // "Fixed" screen size     
+      WaitRR(700, 1200);
+      MouseBox(490, 192, 560, 207, ClickLeft); // "Custom" graphics setting
+      WaitRR(900, 1200);                                                     
+      { 
+        "Software" graphics setting uses a box that accomadates the Safe mode button
+        being included, or if it is not included. Either way it will still work.
+        Do not change unless you know what you are doing. (Safe mode button shows up
+        in browser if you are running SMART as well). 
+      }
+      MouseBox(275, 180, 300, 197, ClickLeft); // "Software" graphics setting                                            
+      WaitRR(1500, 2400);
+      MouseBox(616, 11, 623, 18, ClickLeft);   // Exits the graphics settings
+      WaitRR(700, 1400);    
+      UpdateRSClient;
+      if RSReady then
+        begin
+          Result := True;
+          Exit;
+        end;   
+      RevertRSClient;
+      MouseBox(346, 319, 413, 325, ClickLeft); // "Leave Alone" at Auto Setup popup
+      WaitRR(700, 1400);
+      i := 1 + 1;                                   
+    Until (i = 2);   
+  UpdateRSClient;                 
+  WriteLn('OSI: RS2: Try running the script again after doing these things above! Terminating Script!');
+  TerminateScript;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -196,7 +245,7 @@ Last Modified: July 21th, 2012. By Freddy. RS2 Build 725.
 function LoginToLobby: Boolean;
 var
   B, B2, B3, B4, RetryLogin: Boolean;
-  T, I, Attempts: LongInt;
+  T, I, Attempts: Integer;
   Actions: TVariantArray;
   TPA: TPointArray;
   TBA: TBoxArray;
