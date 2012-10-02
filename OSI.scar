@@ -80,9 +80,9 @@ Last Modified: August 8th, 2011. By Wanted
 procedure FreeOSI;
 begin
   {$IFDEF RS2}
-    FreeRS2Fonts;
+    FreeRS2Fonts;   
+    WriteLn('OSI: RS2: Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
   {$ENDIF}          
-  WriteLn('OSI: Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
