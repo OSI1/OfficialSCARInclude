@@ -71,10 +71,10 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FreeOSI;
-Contributors: Wanted
+Contributors: Wanted, LordJashin
 Description: Frees things that are loaded into memory upon OSI setup.
 Date Created: August 8th, 2011. By Wanted
-Last Modified: August 8th, 2011. By Wanted
+Last Modified: October 1st, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeOSI;
