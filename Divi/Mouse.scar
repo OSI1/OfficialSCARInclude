@@ -14,17 +14,22 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MMouse(x, y, rx, ry: Integer);
-Contributors: Timer, Wanted, Freddy
+Contributors: Timer, Wanted, Freddy, Bixby Sayz, LordJashin.
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modified: September 10th, 2012. By Bixby Sayz.
+Last Modified: October 2nd, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(x, y, rx, ry: Integer);
 var
-  P: TPoint;
+  P: TPoint;     
+  B1: TBox;
 begin
-  P := RRectanglePoint(X - RX, Y - RY, X + RX, Y + RY);
+  B1 := Box(X - RX, Y - RY, X + RX, Y + RY);  
+  {$IFDEF RS2}
+    ConstrainToRSBounds(True, True, True, True, B1.X1, B1.Y1, B1.X2, B1.Y2);
+  {$ENDIF}
+  P := RRectanglePoint(B1.X1, B1.Y1, B1.X2, B1.Y2);   
   if (not (MouseSpeed = 0)) then
     {$IFDEF SCAR336_UP}
       MoveMouseEx(P.X, P.Y, MouseSpeed)
@@ -85,16 +90,19 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
-Contributors: Wanted, Timer
+Contributors: Wanted, Timer, LordJashin
 Description: Clicks/moves the mouse in a specified area.
 Date Created: August 7th, 2011. By Wanted & Timer.
-Last Modified: September 18th, 2011. By Wanted
+Last Modified: October 2nd, 2012. By LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MouseBox(x1, y1, x2, y2: Integer; TypeC: ClickActions);
 var
   P: TPoint;
 begin
+  {$IFDEF RS2}
+    ConstrainToRSBounds(True, True, True, True, x1, y1, x2, y2);
+  {$ENDIF}
   P := RRectanglePoint(X1, Y1, X2, Y2);
   case (TypeC) of
     ClickLeft: Mouse(P.X, P.Y, 0, 0, True);
@@ -105,10 +113,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
-Contributors: Zyt3x, Wanted
+Contributors: Zyt3x, Wanted, LordJashin
 Description: Clicks/moves the mouse in a circle with a specified radius.
 Date Created: September 4th, 2011. By Zyt3x & Wanted.
-Last Modified: September 18th, 2011. By Wanted
+Last Modified: October 2nd, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MouseCircle(Radius, CX, CY: Integer; TypeC: ClickActions);
@@ -116,6 +124,9 @@ var
   P: TPoint;
 begin
   P := RCirclePoint(CX, CY, Radius);
+  {$IFDEF RS2}
+    ConstrainToRSBounds(True, True, false, false, P.X, P.Y, RSBlank, RSBlank);
+  {$ENDIF}
   case TypeC of
     ClickLeft: Mouse(P.X, P.Y, 0, 0, True);
     ClickRight: Mouse(P.X, P.Y, 0, 0, False);

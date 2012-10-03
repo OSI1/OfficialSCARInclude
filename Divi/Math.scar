@@ -172,7 +172,3 @@ begin
       Ang := Ang - 360;
   until (False);
 end;
-
-//InAbstractBox
-//GroupDigits (123456778 -> 123,456,778
-//Numbers to words 1000000 -> one million

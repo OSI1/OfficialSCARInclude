@@ -5,30 +5,34 @@
  * procedure TestCompileOSI;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
                                            
-// OSI Defines                             // Test all combinations in-depth.
-//{$DEFINE OverrideVariance}               // Comment in in-depth testing   
-//{$DEFINE NoVariance}                     // Comment in in-depth testing
-//{$DEFINE DisableRS2Fonts}                // Comment in in-depth testing
-{$DEFINE RS2}                              // Comment out in in-depth testing
-{$DEFINE OSI_Color_Anti_Randoms}           // Comment out in in-depth testing
-{$DEFINE SMART}                            // Comment out in in-depth testing
+// OSI Defines                     // Test all combinations in-depth.
+//{$DEFINE OverrideVariance}       // Comment in in-depth testing   
+//{$DEFINE NoVariance}             // Comment in in-depth testing
+//{$DEFINE DisableRS2Fonts}        // Comment in in-depth testing
+{$DEFINE RS2}                      // Comment out in in-depth testing
+{$IFDEF RS2}
+  {$DEFINE OSI_Color_Anti_Randoms} // Comment out in in-depth testing
+  {$DEFINE SMART}                  // Comment out in in-depth testing
+{$ENDIF}
 
 //Main OSI Include file
 {$I OSI.scar}
 
 //OSI Debug Include
-{$I Divi\Misc\Debug.scar}        // Comment out in in-depth testing
+{$I Divi\Misc\Debug.scar}          // Comment out in in-depth testing
 
 //RS2 Includes
-{$I RS2\Skill\Mining.scar}       // Comment out in in-depth testing
-{$I RS2\Skill\Runecrafting.scar} // Comment out in in-depth testing
-{$I RS2\Skill\Smithing.scar}     // Comment out in in-depth testing
-{$I RS2\Skill\Woodcutting.scar}  // Comment out in in-depth testing
-{$I RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
-{$I RS2\Misc\Trading.scar}       // Comment out in in-depth testing
-{$I RS2\Misc\Symbols.scar}       // Comment out in in-depth testing
-{$IFDEF SMART}
-  {$I RS2\Misc\DebugSMART.scar}  // Comment out in in-depth testing
+{$IFDEF RS2}
+  {$I RS2\Skill\Mining.scar}       // Comment out in in-depth testing
+  {$I RS2\Skill\Runecrafting.scar} // Comment out in in-depth testing
+  {$I RS2\Skill\Smithing.scar}     // Comment out in in-depth testing
+  {$I RS2\Skill\Woodcutting.scar}  // Comment out in in-depth testing
+  {$I RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
+  {$I RS2\Misc\Trading.scar}       // Comment out in in-depth testing
+  {$I RS2\Misc\Symbols.scar}       // Comment out in in-depth testing
+  {$IFDEF SMART}
+    {$I RS2\Misc\DebugSMART.scar}  // Comment out in in-depth testing
+  {$ENDIF}    
 {$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
