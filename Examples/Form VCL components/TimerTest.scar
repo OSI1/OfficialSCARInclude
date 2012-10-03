@@ -1,0 +1,67 @@
+program TimerTest;
+
+var
+  frmDesign: TForm;
+  tmr1, tmr2: TTimer;
+
+procedure Timer1(sender: TObject);
+begin
+  WriteLn('Timer1 looping!');
+end;
+
+procedure Timer2(sender: TObject);
+begin
+  WriteLn('Timer2 looping!');
+end;
+
+procedure InitForm;
+begin
+  frmDesign := CreateForm;
+  frmDesign.Left := 259;
+  frmDesign.Top := 132;
+  frmDesign.Width := 354;
+  frmDesign.Height := 254;
+  frmDesign.Caption := 'Menu Testing Form';
+  frmDesign.Color := clBtnFace;
+  frmDesign.Font.Color := clWindowText;
+  frmDesign.Font.Height := -11;
+  frmDesign.Font.Name := 'MS Sans Serif';
+  frmDesign.Font.Style := [];
+  frmDesign.Visible := False;
+  frmDesign.PixelsPerInch := 96;
+
+  tmr1 := TTimer.Create(frmDesign);
+  tmr1.Interval := 500;
+  tmr1.OnTimer := @Timer1;
+
+  tmr2 := TTimer.Create(frmDesign);
+  tmr2.Interval := 1000;
+  tmr2.OnTimer := @Timer2;
+end;
+
+procedure SafeInitForm;
+var
+  v: TVariantArray;
+begin
+  setarraylength(v, 0);
+  ThreadSafeCall('InitForm', v);
+end;
+
+procedure ShowFormModal;
+begin
+  frmDesign.ShowModal;
+end;
+
+procedure SafeShowFormModal;
+var
+  v: TVariantArray;
+begin
+  setarraylength(v, 0);
+  ThreadSafeCall('ShowFormModal', v);
+end;
+
+begin
+  SafeInitForm;
+  SafeShowFormModal;
+  FreeForm(frmDesign);
+end.

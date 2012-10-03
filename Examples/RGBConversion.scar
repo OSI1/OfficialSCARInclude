@@ -1,0 +1,27 @@
+var
+  Color2: Integer;
+  r1, r2, g1, g2, b1, b2: Integer;
+  
+const
+  HexStr = '0123456789ABCDEF';
+  
+function ToHex(b: Byte): string;
+begin
+  Result := HexStr[Floor(b / 16)] + HexStr[b mod 16];
+end;
+  
+begin
+  Writeln('Color = 11439723');
+  ColorToRGB(11439723, r1, g1, b1);
+  Writeln('R1 = ' + FloatToStr(R1));
+  Writeln('G1 = ' + FloatToStr(G1));
+  Writeln('B1 = ' + FloatToStr(B1));
+  WriteLn('Hex = ' + ToHex(R1) + ToHex(G1) + ToHex(B1));
+  Color2 := RGBToColor(r1, g1, b1);
+  Writeln('Color = ' + IntToStr(Color2));
+  ColorToRGB(Color2, r2, g2, b2);
+  Writeln('R2 = ' + FloatToStr(R2));
+  Writeln('G2 = ' + FloatToStr(G2));
+  Writeln('B2 = ' + FloatToStr(B2));
+  WriteLn('Hex = ' + ToHex(R2) + ToHex(G2) + ToHex(B2));
+end.

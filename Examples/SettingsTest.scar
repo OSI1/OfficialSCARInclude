@@ -1,0 +1,7 @@
+var s: string;
+begin
+  s:= LoadSetting('Kaitniek''s scripts', 'username');
+  Writeln('Saved username is: ' + s);
+  s:= Readln('Enter your username (currently '+s+'):');
+  SaveSetting('Kaitniek''s scripts', 'username', s);
+end.

@@ -1,0 +1,9 @@
+program ArrayTest;
+var
+  a: array of string;
+begin
+  SetArrayLength(a, 10);
+  WriteLn(IntToStr(Length(a)));
+  SetLength(a, 5);
+  WriteLn(IntToStr(GetArrayLength(a)));
+end.

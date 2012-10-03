@@ -1,0 +1,9 @@
+program ScriptTerminateTest;
+
+procedure ScriptTerminate;
+begin
+  Writeln('Terminated');
+end;
+
+begin
+end.

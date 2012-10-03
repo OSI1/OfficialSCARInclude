@@ -1,0 +1,17 @@
+//message_plane communicates with message_towr
+//run message_plane first, then message_tower
+//they demostrate that two scripts can communicate
+program New;
+var
+  f: Integer;
+begin
+  f:= 0;
+  repeat
+    SendInterSCARMessage('ControlChannel', '');
+    f:= f + 1;
+    SendInterSCARMessage('CommandChannel', IntToStr(f) + '. hello sdgdsg dsghdshg dshd shdhs dsh dhsdhs dhs dhs dhs dhsdsh dhs dhs dhs hsd dhs dsh');
+    repeat
+      Sleep(1);
+    until(ReadInterSCARMessage('ControlChannel') = '1');
+  until(False);
+end.

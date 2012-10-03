@@ -1,0 +1,9 @@
+program GetFilesTest;
+var
+  a: TStrArray;
+  i: Integer;
+begin
+  a := GetFiles('C:\', '*');
+  for i := 0 to GetArrayLength(a) - 1 do
+    WriteLn(a[i]);
+end.

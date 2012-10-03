@@ -1,0 +1,23 @@
+program INITest;
+var
+  FileName: String;
+  Strings: TStringList;
+  i: Integer;
+begin
+  FileName := AppPath + 'Scripts\Test\IniTest.ini';
+  
+  WriteINI('TestSection', 'TestKey', 'TestString', FileName);
+  WriteLn('Written the ini file to path: ' + FileName);
+  
+  Strings := TStringList.Create;
+  LoadFromFile(Strings, FileName);
+
+  WriteLn('The ini file contains the following content:');
+  for i := 0 to Strings.Count - 1 do
+    WriteLn(Strings.Strings[i]);
+
+  Strings.Free;
+  
+  WriteLn('The key TestKey in the section TestSection contains the following string:');
+  WriteLn(ReadIni('TestSection', 'TestKey', FileName));
+end.

@@ -1,0 +1,63 @@
+program RichEditTest;
+var
+  frmDesign: TForm;
+  LabeledEdit1 : TLabeledEdit;
+  i: Integer;
+
+procedure InitForm;
+begin
+  frmDesign := CreateForm;
+  frmDesign.Left := 259;
+  frmDesign.Top := 132;
+  frmDesign.Width := 354;
+  frmDesign.Height := 254;
+  frmDesign.Caption := 'LabeledEdit Test';
+  frmDesign.Color := clBtnFace;
+  frmDesign.Font.Color := clWindowText;
+  frmDesign.Font.Height := -11;
+  frmDesign.Font.Name := 'MS Sans Serif';
+  frmDesign.Font.Style := [];
+  frmDesign.Visible := False;
+  frmDesign.PixelsPerInch := 96;
+  frmDesign.Position := poScreenCenter;
+
+  LabeledEdit1 := TLabeledEdit.Create(frmDesign);
+  LabeledEdit1.Parent := frmDesign;
+  LabeledEdit1.Left := 74;
+  LabeledEdit1.Top := 75;
+  LabeledEdit1.Width := 121;
+  LabeledEdit1.Height := 21;
+  LabeledEdit1.EditLabel.Width := 3;
+  LabeledEdit1.EditLabel.Height := 13;
+  LabeledEdit1.TabOrder := 8;
+  LabeledEdit1.Text := 'Think outside the box.';
+  LabeledEdit1.EditLabel.Caption := 'Think here.';
+end;
+
+procedure SafeInitForm;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('InitForm', v);
+end;
+
+function ShowFormModal: Boolean;
+begin
+  Result:= False;
+  if(frmDesign.ShowModal = mrOk)then Result := True;
+end;
+
+procedure SafeShowFormModal;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('ShowFormModal', v);
+end;
+
+begin
+  SafeInitForm;
+  SafeShowFormModal;
+  FreeForm(frmDesign);
+end.

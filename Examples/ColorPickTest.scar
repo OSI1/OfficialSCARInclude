@@ -1,0 +1,8 @@
+program New;
+var
+  Color, X, Y: Integer;
+begin
+  PickColor(Color, X, Y);
+  Writeln('User picked color ' + IntToStr(Color));
+  Writeln('User picked coordinates ' + IntToStr(X) + ', ' + IntToStr(Y));
+end.

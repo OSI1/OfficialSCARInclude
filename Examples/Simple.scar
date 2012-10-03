@@ -1,0 +1,9 @@
+program SimpleCalculation;
+var
+  a: Integer;
+begin
+  a:= 1;
+  a:= a * 2;
+  a:= a + 5;
+  Writeln(IntToStr(a));
+end.

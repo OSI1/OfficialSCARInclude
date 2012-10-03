@@ -1,0 +1,76 @@
+program StatusBarTest;
+var
+  frmDesign: TForm;
+  Button1: TButton;
+  StatusBar: TStatusBar;
+  sPanel1, sPanel2: TStatusPanel;
+  i: Integer;
+
+procedure buttonclick(sender: TObject);
+begin
+  i := i + 1;
+  sPanel2.Text := IntToStr(i);
+end;
+
+procedure InitForm;
+begin
+  frmDesign := CreateForm;
+  frmDesign.Left := 259;
+  frmDesign.Top := 132;
+  frmDesign.Width := 354;
+  frmDesign.Height := 254;
+  frmDesign.Caption := 'StatusBar Test';
+  frmDesign.Color := clBtnFace;
+  frmDesign.Font.Color := clWindowText;
+  frmDesign.Font.Height := -11;
+  frmDesign.Font.Name := 'MS Sans Serif';
+  frmDesign.Font.Style := [];
+  frmDesign.Visible := False;
+  frmDesign.PixelsPerInch := 96;
+  frmDesign.Position := poScreenCenter;
+
+  Button1 := TButton.Create(frmDesign);
+  Button1.OnClick:= @buttonclick;
+  Button1.Parent := frmDesign;
+  Button1.Left := 69;
+  Button1.Top := 61;
+  Button1.Width := 75;
+  Button1.Height := 25;
+  Button1.Caption := 'Increment...';
+  Button1.TabOrder := 8;
+  StatusBar := TStatusBar.Create(frmDesign);
+  StatusBar.Parent := frmDesign;
+  sPanel1 := StatusBar.Panels.Add;
+  sPanel1.Width := 100;
+  sPanel1.Text := 'Testing StatusBar';
+  sPanel2 := StatusBar.Panels.Add;
+  sPanel2.Width := 50;
+end;
+
+procedure SafeInitForm;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('InitForm', v);
+end;
+
+function ShowFormModal: Boolean;
+begin
+  Result:= False;
+  if(frmDesign.ShowModal = mrOk)then Result:= True;
+end;
+
+procedure SafeShowFormModal;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('ShowFormModal', v);
+end;
+
+begin
+  SafeInitForm;
+  SafeShowFormModal;
+  FreeForm(frmDesign);
+end.

@@ -1,0 +1,12 @@
+program MouseShiftTest;
+var
+  xx, yy, x, y: Longint;
+begin
+  for xx := 0 to 20 do
+  begin
+    yy := xx;
+    MoveMouse(xx, yy);
+    GetMousePos(x, y);
+    writeln('Now at ('+ IntToStr(x)+', '+IntToStr(y)+') ; Expected ('+ IntToStr(xx)+', '+IntToStr(yy)+')')
+  end;
+end.

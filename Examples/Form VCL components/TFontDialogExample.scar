@@ -1,0 +1,71 @@
+program TFontDialogExample;
+var
+  frmDesign: TForm;
+  Label1: TLabel;
+  a: TFontDialog;
+  
+procedure Click(Sender: TObject);
+begin
+  a.Font := Label1.Font;
+  if a.Execute then
+    Label1.Font := a.Font;
+end;
+
+procedure InitForm;
+begin
+  frmDesign := CreateForm;
+  frmDesign.Left := 250;
+  frmDesign.Top := 100;
+  frmDesign.Width := 750;
+  frmDesign.Height := 100;
+  frmDesign.Caption := 'TFontDialogTest Test';
+  frmDesign.Color := clBtnFace;
+  frmDesign.Font.Color := clWindowText;
+  frmDesign.Font.Height := -11;
+  frmDesign.Font.Name := 'MS Sans Serif';
+  frmDesign.Font.Style := [];
+  frmDesign.Visible := False;
+  frmDesign.PixelsPerInch := 96;
+  frmDesign.Position := poScreenCenter;
+  
+  Label1 := TLabel.Create(frmDesign);
+  Label1.Parent := frmDesign;
+  Label1.Left := 5;
+  Label1.Top := 0;
+  Label1.Width := 750;
+  Label1.Height := 20;
+  Label1.Visible := True;
+  Label1.Caption := 'Testing font dialog, click here';
+  Label1.OnClick := @Click;
+
+  a := TFontDialog.Create(frmDesign);
+end;
+
+procedure SafeInitForm;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('InitForm', v);
+end;
+
+function ShowFormModal: Boolean;
+begin
+  Result:= False;
+  if(frmDesign.ShowModal = mrOk)then Result:= True;
+end;
+
+procedure SafeShowFormModal;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('ShowFormModal', v);
+end;
+
+begin
+  SafeInitForm;
+  SafeShowFormModal;
+  a.Free;
+  FreeForm(frmDesign);
+end.

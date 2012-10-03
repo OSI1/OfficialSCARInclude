@@ -1,0 +1,13 @@
+// Open the FindColorCircle.bmp file in paint and drag the crosshair over the picture.
+
+program FindColorCircleExample;
+
+{$I ..\OSI.scar}
+
+var
+  xx, yy: Integer;
+begin
+  WriteLn('Script started.');
+  if FindColorCircleTol(xx, yy, 0, 0, 161, 161, 159) then
+    MoveMouse(xx, yy);                                       
+end.

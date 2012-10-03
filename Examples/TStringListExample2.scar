@@ -1,0 +1,19 @@
+program TStringListExample2;
+var
+  strlist: TStringList;
+  i: Integer;
+  
+procedure Split(Text: string; Delimiter: Char; var Dest: TStringList);
+begin
+  Dest.Clear;
+  Dest.DelimitedText := Text;
+  Dest.Delimiter := Delimiter;
+end;
+  
+begin
+  strlist := TStringList.Create;
+  Split('45d8,578,4,726,keo', ',', strlist);
+  for i := 0 to strlist.Count - 1 do
+    WriteLn(strlist.Strings[i]);
+  strlist.Free;
+end.

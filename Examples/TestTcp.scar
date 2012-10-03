@@ -1,0 +1,43 @@
+program POPTest;
+
+const
+  POP_SERVER = 'mail.no.lv'; //enter your mail server address here
+  POP_USER = 'user'; //enter your mailbox user here
+
+var
+  con1: Integer;
+  s: string;
+  
+procedure WaitForResponseAndRead;
+begin
+  repeat
+    if(ReadConnectionData(con1, s))then
+    begin
+      Writeln(s);
+    end else
+    begin
+      Writeln('Connection error');
+      Exit;
+    end;
+  until(s<>'')or(not IsConnectionOpen(con1));
+end;
+  
+begin
+  con1:= OpenConnection(POP_SERVER, 110, 15000);
+  if(con1 >= 0)then
+  begin
+    WaitForResponseAndRead;
+    SendConnectionData(con1, 'USER ' + POP_USER + #13#10);
+    WaitForResponseAndRead;
+    SendConnectionData(con1, 'PASS ' + Readln('Password?') + #13#10);
+    WaitForResponseAndRead;
+    SendConnectionData(con1, 'STAT' + #13#10);
+    WaitForResponseAndRead;
+    SendConnectionData(con1, 'LIST' + #13#10);
+    WaitForResponseAndRead;
+    FreeConnection(con1);
+  end else
+  begin
+    Writeln('Unable to connect');
+  end;
+end.

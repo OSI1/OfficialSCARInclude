@@ -1,0 +1,7 @@
+program chri;
+var
+  i: Integer;
+begin
+  for i := 1 to 255 do
+    WriteLn(IntToStr(i) + ' = ' + Chr(i));
+end.

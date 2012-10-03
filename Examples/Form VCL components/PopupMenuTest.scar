@@ -1,0 +1,97 @@
+program PopupMenuTest;
+
+var
+  frmDesign: TForm;
+  mnu: TPopupMenu;
+  btn: TButton;
+  mnuMenu1, mnuMenu2, mnuMenu3: TMenuItem;
+  x, y: Integer;
+
+procedure ButtonClick(sender: TObject);
+begin
+  GetMousePos(x, y);
+  mnu.Popup(x, y);
+end;
+
+procedure Mnu1Click(sender: TObject);
+begin
+  WriteLn('You clicked mnuMenu1.');
+end;
+
+procedure Mnu2Click(sender: TObject);
+begin
+  WriteLn('You clicked mnuMenu2.');
+end;
+
+procedure Mnu3Click(sender: TObject);
+begin
+  WriteLn('You clicked mnuMenu3.');
+end;
+
+procedure InitForm;
+begin
+  frmDesign := CreateForm;
+  frmDesign.Left := 259;
+  frmDesign.Top := 132;
+  frmDesign.Width := 354;
+  frmDesign.Height := 254;
+  frmDesign.Caption := 'Menu Testing Form';
+  frmDesign.Color := clBtnFace;
+  frmDesign.Font.Color := clWindowText;
+  frmDesign.Font.Height := -11;
+  frmDesign.Font.Name := 'MS Sans Serif';
+  frmDesign.Font.Style := [];
+  frmDesign.Visible := False;
+  frmDesign.PixelsPerInch := 96;
+
+  btn := TButton.Create(frmDesign);
+  btn.Parent := frmDesign;
+  btn.Caption := 'Open menu';
+  btn.Left := 128;
+  btn.Top := 41;
+  btn.Width := 75;
+  btn.Height := 25;
+  btn.TabOrder := 8;
+  btn.OnClick := @ButtonClick;
+
+  mnu := TPopupMenu.Create(frmDesign);
+  mnuMenu1 := TMenuItem.Create(frmDesign);
+  mnuMenu1.Caption := 'MenuItem1';
+  mnuMenu1.OnClick := @Mnu1Click;
+  mnu.Items.Add(mnuMenu1);
+  mnuMenu2 := TMenuItem.Create(frmDesign);
+  mnuMenu2.Caption := 'MenuItem2';
+  mnuMenu2.OnClick := @Mnu2Click;
+  mnu.Items.Add(mnuMenu2);
+  mnuMenu3 := TMenuItem.Create(frmDesign);
+  mnuMenu3.Caption := 'MenuItem3';
+  mnuMenu3.OnClick := @Mnu3Click;
+  mnu.Items.Add(mnuMenu3);
+end;
+
+procedure SafeInitForm;
+var
+  v: TVariantArray;
+begin
+  setarraylength(v, 0);
+  ThreadSafeCall('InitForm', v);
+end;
+
+procedure ShowFormModal;
+begin
+  frmDesign.ShowModal;
+end;
+
+procedure SafeShowFormModal;
+var
+  v: TVariantArray;
+begin
+  setarraylength(v, 0);
+  ThreadSafeCall('ShowFormModal', v);
+end;
+
+begin
+  SafeInitForm;
+  SafeShowFormModal;
+  FreeForm(frmDesign);
+end.

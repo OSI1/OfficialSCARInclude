@@ -1,0 +1,74 @@
+//form tutorial from manual
+program New;
+var
+  frmDesign : TForm;
+  Button1 : TButton;
+
+procedure buttonclick(sender: TObject);
+begin
+  Writeln('Button pressed!');
+  frmDesign.Caption:= frmDesign.Caption + '.';
+  frmDesign.ModalResult:= mrOk;
+end;
+
+procedure InitForm;
+begin
+frmDesign := CreateForm;
+frmDesign.Left := 259;
+frmDesign.Top := 132;
+frmDesign.Width := 354;
+frmDesign.Height := 254;
+frmDesign.Caption := 'frmDesign';
+frmDesign.Color := clBtnFace;
+frmDesign.Font.Color := clWindowText;
+frmDesign.Font.Height := -11;
+frmDesign.Font.Name := 'MS Sans Serif';
+frmDesign.Font.Style := [];
+frmDesign.Visible := False;
+frmDesign.PixelsPerInch := 96;
+Button1 := TButton.Create(frmDesign);
+Button1.OnClick:= @buttonclick;
+Button1.Parent := frmDesign;
+Button1.Left := 69;
+Button1.Top := 61;
+Button1.Width := 75;
+Button1.Height := 25;
+Button1.Caption := 'Button1';
+Button1.TabOrder := 8;
+end;
+
+procedure SafeInitForm;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('InitForm', v);
+end;
+
+function ShowFormModal: Boolean;
+begin
+  Result:= False;
+  //good thing about showmodal is that it can return value
+  if(frmDesign.ShowModal = mrOk)then
+    Result:= True;
+end;
+
+function SafeShowFormModal: Boolean;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  result:= ThreadSafeCall('ShowFormModal', v);
+end;
+
+begin
+  SafeInitForm;
+  if(SafeShowFormModal)then
+  begin
+    Writeln('Doing something');
+  end else
+    Writeln('User closed form or result was not "OK"');
+  begin
+  end;
+  FreeForm(frmDesign);
+end.

@@ -1,0 +1,8 @@
+// Open CountColor.bmp in paint and dragg the crosshair over it.
+program CountColorExample;
+var
+  z: Integer;
+begin
+  z := CountColor(0, 0, 0, 320, 320);
+  WriteLn(IntToStr(z));
+end.

@@ -1,0 +1,8 @@
+program TColorDialogTest;
+var
+  a: TColorDialog;
+begin
+  a := TColorDialog.Create(nil);
+  if a.Execute then WriteLn(IntToStr(a.Color));
+  a.Free;
+end.

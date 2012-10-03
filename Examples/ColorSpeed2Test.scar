@@ -1,0 +1,18 @@
+program New;
+const
+  C1 = 5526618;
+  C2 = 7105909;
+var
+  H, S, L: Extended;
+begin
+  ColorToleranceSpeed(2);
+  SetColorspeed2Modifiers(0.1, 0.2);
+  ColortoHSL(C1, H, S, L);
+  Writeln('H=' + FloatToStr(H) + ' S=' + FloatToStr(S) + ' L=' + FloatToStr(L));
+  ColortoHSL(C2, H, S, L);
+  Writeln('H=' + FloatToStr(H) + ' S=' + FloatToStr(S) + ' L=' + FloatToStr(L));
+  if(SimilarColors(C1, C2, 20))then
+    Writeln('Similar')
+  else
+    Writeln('Nope');
+end.

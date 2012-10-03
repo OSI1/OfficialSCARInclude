@@ -1,0 +1,64 @@
+program RichEditTest;
+var
+  frmDesign: TForm;
+  RichEdit1 : TRichEdit;
+  i: Integer;
+
+procedure InitForm;
+begin
+  frmDesign := CreateForm;
+  frmDesign.Left := 259;
+  frmDesign.Top := 132;
+  frmDesign.Width := 354;
+  frmDesign.Height := 254;
+  frmDesign.Caption := 'RichEdit Test';
+  frmDesign.Color := clBtnFace;
+  frmDesign.Font.Color := clWindowText;
+  frmDesign.Font.Height := -11;
+  frmDesign.Font.Name := 'MS Sans Serif';
+  frmDesign.Font.Style := [];
+  frmDesign.Visible := False;
+  frmDesign.PixelsPerInch := 96;
+  frmDesign.Position := poScreenCenter;
+
+  RichEdit1 := TRichEdit.Create(frmDesign);
+  RichEdit1.Parent := frmDesign;
+  RichEdit1.Left := 19;
+  RichEdit1.Top := 16;
+  RichEdit1.Width := 240;
+  RichEdit1.Height := 137;
+  RichEdit1.Lines.Add('Rich Edit Test');
+  RichEdit1.SelAttributes.Color := clRed;
+  RichEdit1.Lines.Add('Swap color?');
+  RichEdit1.TabOrder := 8;
+  for i := 1 to 3 do
+    RichEdit1.Lines.Add(IntToStr(i));
+end;
+
+procedure SafeInitForm;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('InitForm', v);
+end;
+
+function ShowFormModal: Boolean;
+begin
+  Result:= False;
+  if(frmDesign.ShowModal = mrOk)then Result := True;
+end;
+
+procedure SafeShowFormModal;
+var
+  v: TVariantArray;
+begin
+  setarraylength(V, 0);
+  ThreadSafeCall('ShowFormModal', v);
+end;
+
+begin
+  SafeInitForm;
+  SafeShowFormModal;
+  FreeForm(frmDesign);
+end.

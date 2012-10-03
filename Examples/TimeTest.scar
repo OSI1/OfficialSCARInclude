@@ -1,0 +1,12 @@
+program TimeTest;
+var
+  Ms, H, M, S: Integer;
+begin
+  repeat
+    Wait(1000);
+    Ms := GetTimeRunning;
+    ConvertTime(Ms, H, M, S);
+    WriteLn('The script has been running for ' + IntToStr(H) + 'H ' +
+      IntToStr(M) + 'M ' + IntToStr(S) + 'S.');
+  until False;
+end.

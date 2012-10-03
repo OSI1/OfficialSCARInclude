@@ -1,0 +1,7 @@
+program FormatTest;
+var
+  s: string;
+begin
+  s := Format('This is a %s %d...',['test', 123]);
+  WriteLn(s);
+end.

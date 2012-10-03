@@ -1,0 +1,9 @@
+program CompilerDirectivesTest;
+{$Define Hello}
+begin
+  {$IfDef Hello}
+    WriteLn('Hello World');
+  {$Else}
+    WriteLn('Hello Mars');
+  {$EndIf}
+end.

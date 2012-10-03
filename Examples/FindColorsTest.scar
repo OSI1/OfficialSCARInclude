@@ -1,0 +1,14 @@
+program New;
+var
+  P: TPointArray;
+  f: Integer;
+begin
+  //search for all black pixels         
+  FindColorsTolEx(P, [0], 83, 43, 85, 45, 0);
+  for f := 0 to GetArrayLength(P) - 1 do
+    Writeln('x=' + IntToStr(P[f].x) + ', y=' + IntToStr(P[f].y));
+  Writeln('');                                        
+  FindColorsSpiralTolEx(85, 45, P, [0], 83, 43, 85, 45, 0);
+  for f := 0 to GetArrayLength(P) - 1 do
+    Writeln('x=' + IntToStr(P[f].x) + ', y=' + IntToStr(P[f].y));
+end.
