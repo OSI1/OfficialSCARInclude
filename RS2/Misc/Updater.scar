@@ -1,0 +1,23 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+                                Updater routines
+--------------------------------------------------------------------------------
+ * function RSupdateGlobals: Boolean;  
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RSupdateGlobals: Boolean;
+Contributors: LordJashin
+Description: Will update OSI: RS2's Global Variables to the latest on github
+Date Created: October 3rd, 2012. By LordJashin.
+Last Modified: October 3rd, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ {
+function RSupdateGlobals: Boolean;
+var
+  Page: string;
+begin
+  Result := False;
+  Page := GetPage('https://raw.github.com/OSI1/OSI1/master/RS2/Core/Globals.scar');    
+end;}

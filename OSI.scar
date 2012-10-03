@@ -74,15 +74,16 @@ procedure FreeOSI;
 Contributors: Wanted, LordJashin
 Description: Frees things that are loaded into memory upon OSI setup.
 Date Created: August 8th, 2011. By Wanted
-Last Modified: October 1st, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 3rd, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeOSI;
 begin
   {$IFDEF RS2}
-    FreeRS2Fonts;   
-    WriteLn('OSI: RS2: Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
-  {$ENDIF}          
+    FreeRS2Fonts;    
+    WriteLn('OSI: RS2: Player(s) Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
+  {$ENDIF}
+  WriteLn('OSI: Successfully Ran For: (' + STimeRunning + ')');          
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

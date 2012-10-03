@@ -1,0 +1,2062 @@
+// Still works after all this time! Updated for SCAR 3.35+ By LordJashin
+{========================================================================]                                                                                             // Well hey there. :) This is Ron's secret text. My birthday was on Oct 30! You didn't wish me you bastard! :P As of 2007, I turned 18. Wooo. Hey I'll try to keep updating this script, but I need more user feedback. Comments are always loved. See ya. Posted: Nov 4, 2007.
+[  DFM Form Parser v.26c Beta by Ron                                     ]
+[  Copyright Jan 22, 2007 original to modified: Aug 23, 2008.            ]
+[  Version number signifies how many releases of this script.            ]
+[  Last Tested on: SCAR Divi 3.20                                        ]
+[   _____  ______ __  __      _____                                      ]
+[  |  __ \|  ____|  \/  |    |  __ \                                     ]
+[  | |  | | |__  | \  / |    | |__) |_ _ _ __ ___  ___ _ __              ]
+[  | |  | |  __| | |\/| |    |  ___/ _` | '__/ __|/ _ \ '__|             ]
+[  | |__| | |    | |  | |    | |  | (_| | |  \__ \  __/ |                ]
+[  |_____/|_|    |_|  |_|    |_|   \__,_|_|  |___/\___|_|                ]
+[                                                                        ]
+[   ____             _____                                               ]
+[  |  _ \           |  __ \                                              ]
+[  | |_) |_   _     | |__) |___  _ __                                    ]
+[  |  _ <| | | |    |  _  // _ \| '_ \                                   ]
+[  | |_) | |_| |    | | \ \ (_) | | | |                                  ]
+[  |____/ \__, |    |_|  \_\___/|_| |_|                                  ]
+[          __/ |                                                         ]
+[         |___/                                                          ]
+[                                                                        ]
+[  Instructions to convert DFM form code to SCAR code:                   ]
+[    1. Run the script.                                                  ]
+[    2i. Browse and select a valid DFM form file (.dfm) to convert it to ]
+[    SCAR code.                                                          ]
+[    2ii. Or you can paste the DFM code in the DFM tab.                  ]
+[    3. Check the options you like, change the name of the form, w/e. If ]
+[    you can't decide, then just click on Optimize or continue.          ]
+[    4. Click on "Generate Code" to generate the SCAR code.              ]
+[    5. You can now copy/save and run the scar code to see your form.    ]
+[    6. Please comment on the topic you downloaded this from! It will    ]
+[    make my day whether it's good or bad cause very few people comment. ]
+[    So please take some time and give me some feedback. :)              ]
+[                                                                        ]
+[  Instructions to convert SCAR code to DFM form code:                   ]
+[    1. Run the script.                                                  ]
+[    2i. Browse and select a valid SCAR file (.scar) to convert it to    ]
+[    DFM code. Please make sure the script is compileable, otherwise the ]
+[    file will get fucked. Keep in mind this feature is new and it's     ]
+[    about a 75% chance of it working. It depends on how complicated     ]
+[    your form is. Make sure you do not have any comments, no component  ]
+[    names are in arrays, each statement is on a different line, and if  ]
+[    you are using WITH statements, please do not switch from WITH to    ]
+[    regular statements. That may confuse the script.                    ]
+[    2ii. Or you can paste the SCAR code in the SCAR tab.                ]
+[    3. Check the options you like.                                      ]
+[    4. Click on "Generate Code" to generate the DFM code.               ]
+[    5. You can now copy/save and run the scar code to see your form.    ]
+[    6. Please comment on the topic you downloaded this from! It will    ]
+[    make my day whether it's good or bad cause very few people comment. ]
+[    So please take some time and give me some feedback. :)              ]
+[                                                                        ]
+[  If you find any bugs or you want to suggest a feature, then please    ]
+[  Post in one of these links:                                           ]
+[  - www.moparisthebest.com/smf/index.php/topic,70887.msg805857.html     ]
+[  - www.srl-forums.com/forum/dfm-form-parser-t6101.html - Deleted. Why? ]
+[                                                                        ]
+[  I wonder which asshole Deleted my DFM Form Parser thread from SRL     ]
+[  forums. Even though this is included in SCAR, does not give them the  ]
+[  right to Delete that topic. Next time check with me.                  ]
+[                                                                        ]
+[========================================================================]
+[  Change Log - From v.25 to v.26c - 25 listed changes                   ]
+[    * All of the changes increased the # of lines by 700. This is the   ]
+[    largest update ever to the DFM Parser in 1 version and may be the   ]
+[    last. I hope you enjoy it.                                          ]
+[    - FEATURE: SCAR code to DFM code is experimental, but is so far,    ]
+[    working. It's been tested with as many DFM files tranlasted into    ]
+[    SCAR code and back. It's worked w/ and w/o WITH statements. You may ]
+[    also check a few settings to modify the generated DFM. Enjoy! :)    ]
+[    - Added: Erase button.                                              ]
+[    - Added: Tabs of SCAR and DFM code.                                 ]
+[    - Added: Prompt if the user wanted to ignore the picture data or    ]
+[    keep the lines of code in SCAR. Constant modified slightly.         ]
+[    - Added: Tons of debug comments and Debug boolean const.            ]
+[    - Fixed: When saving, it now checks if the file already exists. If  ]
+[    it does, it prompts the user if he/she wants to overwrite it.       ]
+[    - Fixed: To prevent future problems, I created a TextBetw function  ]
+[    which replaces all instances of the Between() function. Since I'm   ]
+[    normally looking for the pos of text outside of single quotes, I    ]
+[    need to use a form of the Between() function accordingly.           ]
+[    - Fixed: SaveDialog used a default filename of the .dfm file parsed ]
+[    but it also added the .dfm ext by mistake.                          ]
+[    - Fixed: You are allowed to have blank variable names in dfm files. ]
+[    This caused the parser to print out unneeded, uncompilable code.    ]
+[    - Fixed: The TForm and the following object would be parsed         ]
+[    as a TForm. And we only want the 1st object to get parsed that way. ]
+[    - Fixed: Parser now ignores Parent, Top, and Left properties from   ]
+[    TTimer, TOpenDialog, TSaveDialog, TFontDialog, TColorDialog,        ]
+[    TFindDialog, and TReplaceDialog.                                    ]
+[    - Fixed: If with statements feature is on, and there aren't any     ]
+[    properties such as with invisible components, it won't show the     ]
+[    with code.                                                          ]
+[    - Fixed: If you checked the 1st box, changed the name of the form   ]
+[    to a 3 letter name, and ran the code. The code would be messed.     ]
+[    - Fixed: Form Name allowed you to put in SCAR globals/types which   ]
+[    would make the script unable to be compiled.                        ]
+[    - Removed: Extraneous Object Name prefix when WITH is checked for   ]
+[    *.Strings.                                                          ]
+[    - Removed: Replace function and decided to use built-in function    ]
+[    even though the built-in one is a ReplaceAll function.              ]
+[    - Changed: Objects to ObjName.                                      ]
+[    - Changed: ObjType from String to Array of String.                  ]
+[    - Changed: Form name from frmDFM_Parser to frmParser.               ]
+[    - Misc: Seperated finding vars from the generated code procedure    ]
+[    to clean it up a little and make debugging the main code easier.    ]
+[    - Misc: Changed TextBetw name to PosBetw, because PosBetw is a more ]
+[    accurate name. TextBetw is now a completely different function.     ]
+[    - Misc: PosBetw with CheckIn False now returns the position.        ]
+[    - Misc: GenerateDFMCode, GetProperty, TextBetw, InvisComp function. ]
+[    - Misc: You are now not allowed to make the Form Proc name blank.   ]
+[    - Misc: Recreated NumCom function. Much faster now.                 ]
+[                                                                        ]
+[  To do before full release (right now it's in beta):                   ]
+[    - Finish SCAR to DFM.                                               ]
+[      - Support for Parents and multiple parents.                       ]
+[        - PLAN - Have it create TGroup/TPanel normally, then when an    ]
+[        object is parented to that, then shift the new object in        ]
+[        between the TGroup/TPanel, right before its end and indent each ]
+[        of its lines by 2. Same goes for an object parented to a group  ]
+[        within a group.                                                 ]
+[    - Sort out the status bar messages. It's pretty fucked up.          ]
+[    - Maybe split mode btn into 2 radio buttons below optimize btn and  ]
+[    above the tabs from left to right. DFM to SCAR and SCAR to DFM.     ]
+[    - All available checkboxes for new SCAR to DFM mode have not been   ]
+[    utilized.                                                           ]
+[    - Add safe statements for minimize/normal scar on script start.     ]
+[                                                                        ]
+[  To add in future versions:                                            ]
+[    - Ability to change names of all objects. Such as by listing all    ]
+[    form var names in a TListBox or prompting (could be bothersome).    ]
+[    - Recreate parenting system. Needs to be cleaned a little. Right    ]
+[    now it's more like a system of hacks.                               ]
+[    - Checkbox to put variables in alphabetical order with according    ]
+[    variable type (TLabel, TEdit, etc).                                 ]
+[    - Checkbox to show long text on one line or broken down every X #   ]
+[    of chars and seperated with a "' + [carriage return]"               ]
+[    - Checkbox setting to save all values of form components.           ]
+[      - Edit box text, radio buttons ticked, checkboxes ticked,         ]
+[      checklistbox, labeled edit, memo text, listbox items, combobox    ]
+[      items, richedit text. - As suggested by sonny bill 9              ]
+[    - Checkbox setting to create a button procedure for every TButton,  ]
+[    TSpeedButton, TBitBtn, etc.                                         ]
+[    - Checkbox for making global form variables into temp form vars.    ]
+[    - Checkbox for resizing and positioning of form components.         ]
+[                                                                        ]
+[  Can you think of any more? If so, please post on the links above. :)  ]
+[                                                                        ]
+[========================================================================]
+[  Credits in order of occurrence:                                       ]
+[    Ron - Made everything. :)                                           ]
+[    Starblaster100 - Tested and notified me of bugs in the app.         ]
+[    Avaphi - Told me "Courier New" is the font SCAR is using.           ]
+[    Secet - Found a bug in the OnClose event.                           ]
+[    Spky - Found a bug where the script didn't handle components        ]
+[  parented to TPanels.                                                  ]
+[    Script_owned4 - Found a bug where names of vars in the form editor  ]
+[  can be blank. SCAR 3.12 bug. Fixed in new releases and the script can ]
+[  handle it if the bug comes up again or an old DFM form file is used.  ]
+[========================================================================}
+
+program DFMParserByRon;
+
+const
+  // TImage is believed not to be functional. Set this to True to have
+  // it prompt you, if you want to ignore the picture data lines or keep
+  // them. Set this to False to automatically ignore picture data lines.
+  // Default is False.
+  PromptIfTImageIsFound = True;
+  // Show message when switching mode to SCAR to DFM. Default is True.
+  ShowMsgIfSCARtoDFM = True;
+
+{************************************************************************]
+           DON'T TOUCH BELOW UNLESS YOU KNOW WHAT YOU'RE DOING!
+[************************************************************************}
+  // Title of the script.
+  ScriptTitle = 'DFM Form Parser v.26c Beta by Ron';
+  // Registry setting name. Default is 'DFMFormParserByRon'.
+  SettingsFolder = 'DFMFormParserByRon';
+  // Minimum height of the form. Default is 450.
+  MinHeight = 450;
+  // Minimum width of the form. Default is 500.
+  MinWidth  = 500;
+  // Show debug statements. Default is False.
+  Debug = False;
+
+var // total of 23 global vars
+  // miscellaneous vars
+  FormCreateTime : Integer;
+  LastFileLoc : String;
+  DFMToSCAR : Boolean;
+  Status : Array [0..1] of Array [0..2] of String;
+  // holds SaveSetting titles of checkboxes.
+  STitles : Array of String;
+  // main form vars
+  frmParser : TForm;
+  edLoc, edFormProc, edFormName : TEdit;
+  CheckBox : Array of TCheckBox;
+  ReadOnly : TCheckBox;
+  memoSCARBox, memoDFMBox : TMemo;
+  btnChangeMode, btnGenerate, btnCopy, btnSave, btnErase : TButton;
+  TabControl : TPageControl;
+  SCARTabSheet, DFMTabSheet : TTabSheet;
+  StatusBar : TStatusBar;
+  StatusPanel : Array [0..2] of TStatusPanel;
+
+{************************************************************************]
+                         Miscellaneous Functions
+[************************************************************************}
+
+// If Debug is True, then it will write to the debug box.
+// Made by Ron :) but I'm sure it's been made before.
+procedure Write(Text : String);
+begin
+  if (Debug) then
+    WriteLn(Text);
+end;
+
+// Popup message - Quick message shown.
+// Made by Ron :)
+function Popup(Text, Caption : String; Prompt : Integer) : Integer;
+begin
+  if (Caption = '') then
+    Caption := 'Error';
+  Result := GetApplication.Messagebox(Text, Caption, Prompt);
+end;
+
+{// The Replace() function will replace a string with another string.
+// Made by Ron. :)
+function Replace(TheString, Replacee, Replacer : String) : String;
+var
+  a : LongInt;
+begin
+  a := Pos(Replacee, TheString);
+  if (a > 0) then
+  begin
+    Delete(TheString, a, Length(Replacee));
+    Insert(Replacer, TheString, a);
+  end;
+  Result := TheString;
+end;}
+
+// Mistakenly called TextBetw, now PosBetw, does the following:
+// Checks if the Text in TheStr is in between Betw and Betw.
+// If CheckIn is true, then check if the Text is between Betw and Betw. If
+// so, then result in the Position. If not, then check if it's outside. If
+// so, result in -1. If not, then result in -2.
+// if CheckIn is false, then check if the Text is outside of Betw and Betw.
+// Whichever it is, it returns the position.
+// Made by Ron :)
+function PosBetw(TheStr, Text, Betw : String; CheckIn : Boolean) : Integer;
+var
+  i, n, o : Integer;
+begin
+  TheStr := Lowercase(TheStr);
+  Text := Lowercase(Text);
+  if (CheckIn) then
+  begin
+    i := Pos(Text, Between(Betw, Betw, TheStr));
+    if (i = 0) then
+    begin
+      if (Pos(Text, TheStr) > 0) then
+        Result := -1
+      else
+        Result := -2;
+    end else
+      Result := i;
+  end else
+  begin
+    n := Pos(Betw, TheStr);
+    if (n > 0) then // if 1 betw exists, then delete from 1 to n + len of betw
+    begin
+      o := Length(Between(Betw, Betw, TheStr));
+      Delete(TheStr, n + Length(Betw), o);
+    end;
+    i := Pos(Text, TheStr);
+    if (i > n) then
+      i := i + o;
+    Result := i;
+  end;
+end;
+
+// TextBetw now results in the text in between two strings. This is different
+// from the Between() function because this finds text that isn't in
+// between single quotes. So if there was quoted text and I wanted
+// to find the text outside of it, then I would use this.
+// Ex.  TheStr := '  frmDesign.Caption := ''.Caption'';'
+// Use: TextBetw('  ', '.Caption', TheStr); = frmDesign
+// Made by Ron :)
+function TextBetw(Betw1, Betw2, TheStr : String) : String;
+var
+  n, m : Integer;
+  TempStr : String;
+begin
+  n := PosBetw(TheStr, Betw1, '''', False);
+  TempStr := Copy(TheStr, n + Length(Betw1), Length(TheStr));
+  m := PosBetw(TempStr, Betw2, '''', False);
+  if (n > 0) and (m > 0) then
+  begin
+    IncEx(m, n + Length(Betw1) - 1);
+    Result := Copy(TheStr, n + Length(Betw1), m - n - Length(Betw1));
+  end else
+    Result := '';
+end;
+
+// NumCom() will convert extended into a string and then inserts a comma
+// every 3 characters.
+// Made by Ron and Ron's Dad. :)
+function NumCom(TheInt : LongInt) : String;
+var
+  i, LenOfStr, posComma : Integer;
+  strInt : String;
+begin
+  strInt := IntToStr(TheInt);
+  if (TheInt < 0) then
+    Delete(strInt, 1, 1); // Delete negative sign
+  LenOfStr := Length(strInt);
+  i := 1;
+  repeat
+    posComma := 3 * i;
+    if (LenOfStr > posComma) then
+      Insert(',', strInt, LenOfStr + 1 - posComma)
+    else
+      Break;
+    Inc(i);
+  until (False);
+  if (TheInt < 0) then
+    Insert('-', strInt, 1);
+  Result := strInt;
+end;
+
+// The Only() function will check a string to see if it only has something.
+// Made by Ron. :)
+function Only(TheString, OnlyWhat : String; CheckBlank : Boolean) : Boolean;
+var
+  i, n : Integer;
+begin
+  n := Length(TheString);
+  TheString := Trim(Lowercase(TheString));
+  Result := True;
+  if (CheckBlank) and (n < 1) then
+    Result := False
+  else
+    for i := 1 to n do
+      if (Pos(TheString[i], OnlyWhat) < 1) then
+      begin
+        Result := False;
+        Break;
+      end;
+end;
+
+// checks if a key exists in an array,
+// if so, return position, if not, return -1
+// name derived from php function
+// Made by Ron :)
+// Not used in script yet...
+{function array_key_exists(arr : Array of String; Find : String; CaseSensitive : Boolean) : Integer;
+var
+  i, n : Integer;
+begin
+  n := GetArrayLength(arr) - 1;
+  if (n > -1) then
+  begin
+    for i := 0 to n do
+      if (CaseSensitive) then
+      begin
+        if (arr[i] = Find) then
+        begin
+          Result := i;
+          Exit;
+        end;
+      end else
+      begin
+        if (Lowercase(arr[i]) = Lowercase(Find)) then
+        begin
+          Result := i;
+          Exit;
+        end;
+      end;
+    Result := -1; // returns -1 if it wasn't found
+  end;
+end;}
+
+{************************************************************************]
+                            Generate SCAR Code
+[************************************************************************}
+
+// forward UpdateStatus procedure in order to use it in other procs.
+procedure UpdateStatus; forward;
+
+// This will indent the Str according to the BaseIndent (without WITH) and the
+// WithIndent. The Str is the line of code and the Obj is the current Obj. If
+// there isn't one, it's safe to leave it blank.
+procedure SCARIndent(BaseIndent, WithIndent : Integer; Str, Obj : String);
+begin
+  if (Obj <> '') then
+    Obj := Obj + '.';
+  if (CheckBox[4].Checked) then
+    memoSCARBox.Lines.Add(Replicate(' ', WithIndent) + Str)
+  else
+    memoSCARBox.Lines.Add(Replicate(' ', BaseIndent) + Obj + Str);
+end;
+
+// Function to check if a str is an invisible component.
+// Returns true if it is an invisible component.
+function InvisComp(StrToCheck : String) : Boolean;
+var
+  CantBe : Array of String;
+  i, n : Integer;
+begin
+  CantBe := ['TTimer', 'TOpenDialog', 'TSaveDialog', 'TFontDialog',
+             'TColorDialog', 'TFindDialog', 'TReplaceDialog'];
+  n := GetArrayLength(CantBe) - 1;
+  for i := 0 to n do
+    if (StrToCheck = CantBe[i]) then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+// Finds all variables in a dfm file and formats them.
+procedure FindVariables(var Vars : Array of String; var DFM : TStringList);
+var
+  i, n, m, NumOfVarsInLine, NumOfVars : Integer;
+  TempStr, TempStr2 : String;
+begin
+  // Get variables from DFM file.
+  n := GetArrayLength(Vars);
+  NumOfVars := -1;
+  for i := 0 to n - 1 do
+    if (PosBetw(DFM[i], 'object ', '''', False) > 0) then
+    begin
+      Inc(NumOfVars);
+      m := Pos(': ', DFM[i]);
+      if (Pos(': ', DFM[i]) = 0) then // Check if comp doesn't have a name
+      begin
+        m := Pos('object ', DFM[i]);
+        TempStr := DFM[i];
+        Insert(Copy(TempStr, m + 8, Length(TempStr) - 1) + Padz(IntToStr(Random(99999)), 3) + ': ', TempStr, m + 7);
+        DFM[i] := TempStr;
+        m := Pos(': ', DFM[i]);
+      end;
+      //TempStr := Between('object ', ': ', DFM[i]);  // get obj name
+      TempStr := TextBetw('object ', ': ', DFM[i]);  // get obj name
+      TempStr2 := Copy(DFM[i], m + 2, Length(DFM[i])) + ';'; // get obj type
+      Write('Var = ' + TempStr + ' | Type = ' + TempStr2);
+      if (i > 0) then // i > 0 = not TForm
+        Vars[NumOfVars] := '  ' + TempStr + ' : ' + TempStr2
+      else if (CheckBox[0].Checked) then // change form name check
+        Vars[NumOfVars] := '  ' + edFormName.Text + ' : TForm;'
+      else
+        Vars[NumOfVars] := '  ' + TempStr + ' : TForm;';
+      if (not(CheckBox[14].Checked)) then // super vars check
+        memoSCARBox.Lines.Add(Vars[NumOfVars]);
+    end;
+  // Makes variables like this: Label1, Label2, Label3 : TLabel;
+  if (CheckBox[14].Checked) then // super vars check
+    for i := 0 to NumOfVars do
+    begin
+      if (Pos(Chr(13), Vars[i]) = 0) then
+      begin
+        //TempStr := Between(': ', ';', Vars[i]); // Get var type.
+        TempStr := TextBetw(': ', ';', Vars[i]); // Get var type.
+        if (TempStr = '') then
+          Break;
+        Delete(Vars[i], Pos(' :', Vars[i]), Length(Vars[i])); // Del var type.
+        for m := 0 to n - 1 do
+        begin
+          if (Vars[m] = '') then
+            Break;
+          TempStr2 := Trim(Copy(Vars[m], 1, Pos(' :', Vars[m]))); // get var name
+          if (not(m = i)) and {(TempStr = Between(': ', ';', Vars[m]))} (TempStr = TextBetw(': ', ';', Vars[m])) and (Pos(Trim(Vars[i]), TempStr2) = 0) then
+          begin
+            Inc(NumOfVarsInLine);
+            // experimental... breaks down variables.
+            if (CheckBox[15].Checked) and (NumOfVarsInLine > 3) then // inserts /r after 3 vars in one line.
+            begin
+              Vars[i] := Vars[i] + ', ';
+              memoSCARBox.Lines.Add(Vars[i]);
+              Vars[i] := '  ' + TempStr2;
+              Insert(Chr(13), Vars[m], 1);
+              NumOfVarsInLine := 0;
+            end else
+            begin
+              // original code before 'supervars' was implemented
+              Vars[i] := Vars[i] + ', ' + TempStr2; // seperate each var with a comma ,
+              Insert(Chr(13), Vars[m], 1); // insert carriage return in beginning
+            end;
+          end;
+        end;
+        NumOfVarsInLine := 0;
+        Vars[i] := Vars[i] + ' : ' + TempStr + ';';
+        if (not(Vars[i][1] = Chr(13))) then // if chr(13) != in the beginning, then
+          memoSCARBox.Lines.Add(Vars[i]);   // do not add
+      end;
+    end;
+  i := 0;
+  n := 0;
+  m := 0;
+  NumOfVarsInLine := 0;
+  NumOfVars := 0;
+  TempStr := '';
+  TempStr2 := '';
+end;
+
+// The meat of the program. This procedure generates ALL the code.
+procedure GenerateSCARCode(Sender : TObject);
+var
+  DFM : TStringList;
+  DotStringPrefix, TempStr : String;
+  Vars, Parents, ObjName, ObjType : Array of String;
+  i, n, m, Group, Group2, NumOfObjs, PauseTime, ResumeTime, Time : Integer;
+  DotString, DoNotAdd, DispImage : Boolean;
+begin
+  edLoc.Text := Trim(edLoc.Text);
+  if (FileExists(edLoc.Text)) then // Check if the file exists
+  begin
+    DFM := TStringList.Create; // Create TStringList
+    if (LoadFromFile(DFM, edLoc.Text)) then
+    begin
+      memoDFMBox.Text := DFM.Text
+      //Status[1][1] := NumCom(memoDFMBox.Lines.Count);
+      //Status[1][2] := NumCom(Length(memoDFMBox.Text));
+      UpdateStatus;
+    end else
+    begin
+      DFM.Free;
+      Popup('Please allow the file!', '', 0);
+      Exit;
+    end;
+  // if it can't load the file, then free a, display error, and exit proc.
+  end else
+  begin
+    Popup('File does not exist!', '', 0);
+    Exit;
+  end;
+  if (Pos('object ', DFM.Text) = 0) then
+  begin
+    DFM.Free;
+    Popup('The file is either invalid DFM file or corrupted.' + Chr(13) +
+          'Please fix it or choose a valid DFM file.', '', 0);
+    Exit;
+  end;
+  Write(Replicate('*', 30));
+  Write('DFM to SCAR generator.');
+  Time := GetSystemTime;
+  TabControl.ActivePageIndex := 0; // Select SCAR Tab.
+  LastFileLoc := edLoc.Text; // Get the generated file's location - this is for the SaveDialog
+  memoSCARBox.ShowHint := True; // Notify Memo Hint to show the hint.
+  SetArrayLength(ObjName, DFM.Count);
+  SetArrayLength(ObjType, DFM.Count);
+  SetArrayLength(Vars, DFM.Count);
+  // Setup form code.
+  with memoSCARBox.Lines do
+  begin
+    Clear;
+    if (not(CheckBox[11].Checked)) then // Procedure code check.
+    begin
+      Add('program New;');
+      Add('');
+    end;
+    Add('var');
+    Add('  // ' + edFormProc.Text + ' variables.');
+    if (not(CheckBox[11].Checked)) then // Procedure code check
+      if (CheckBox[1].Checked) then // End Script When Pressed the X button
+        Add('  End' + edFormProc.Text + ' : Boolean;');
+  end;
+  FindVariables(Vars, DFM);
+  // if End Script when clicked on the X button is true, then add this
+  // procedure to set the boolean variable to true.
+  with memoSCARBox.Lines do
+  begin
+    if (not(CheckBox[11].Checked)) and (CheckBox[1].Checked) then // end script and procedure check.
+    begin
+      Add('');
+      Add('// When the ' + edFormProc.Text + ' is closed, this code will be executed.');
+      Add('procedure ' + edFormProc.Text + 'OnClose(Sender : TObject; var Action : TCloseAction);');
+      Add('begin');
+      if (CheckBox[0].Checked) then // change form name
+        Add('  if (not(' + edFormName.Text + '.ModalResult = 1)) then')
+      else
+        Add('  if (not(' + Copy(Trim(Vars[0]), 1, Pos(' ', Trim(Vars[0])) - 1) + '.ModalResult = 1)) then');
+      Add('    End' + edFormProc.Text + ' := True;');
+      Add('end;');
+    end;
+    Add('');
+    Add('// This form was parsed using ' + ScriptTitle + '.');
+    Add('// Generated from ' + ExtractFileName(LastFileLoc) + '.');
+    Add('procedure ' + edFormProc.Text + ';'); // Init form proc name.
+    if (CheckBox[3].Checked) then // Show time to compile.
+    begin
+      Add('var');
+      Add('  Time' + edFormProc.Text + ' : Integer;');
+    end;
+    Add('begin');
+    if (CheckBox[3].Checked) then // Show time check
+      Add('  Time' + edFormProc.Text + ' := GetSystemTime;');
+  end;
+  NumOfObjs := -1;
+  SetArrayLength(Parents, 1);
+  // Loop that translate the objects from DFM file to executable SCAR code.
+  n := DFM.Count;
+  for i := 0 to n - 2 do
+  begin
+    Write('*** Loop Begin - i = ' + IntToStr(i) + ' | ' + DFM[i]);
+    if (PosBetw(DFM[i], 'object ', '''', False) > 0) then
+    begin
+      Write('Object found');
+      if (CheckBox[4].Checked) then // with check.
+        if (NumOfObjs >= 0) then
+        begin
+          if (PosBetw(memoSCARBox.Lines[memoSCARBox.Lines.Count - 1], 'begin', '''', False) > 0) then
+          begin
+            Write('Deleting WITH statement. No properties were added.');
+            memoSCARBox.Lines.Delete(memoSCARBox.Lines.Count - 1);
+            memoSCARBox.Lines.Delete(memoSCARBox.Lines.Count - 1);
+          end else
+          begin
+            Write('Closing WITH statement. Properties found.');
+            memoSCARBox.Lines.Add('  end;'); // Close WITH statement
+          end;
+        end;
+      Inc(NumOfObjs); // num of objects
+      // Gets main form name
+      if (CheckBox[0].Checked) and (i = 0) then // Form Proc Name Change check
+        ObjName[0] := edFormName.Text
+      else
+        //ObjName[NumOfObjs] := Between('object ', ': ', DFM[i]);
+        ObjName[NumOfObjs] := TextBetw('object ', ': ', DFM[i]);
+      ObjType[NumOfObjs] := Copy(DFM[i], Pos(': ', DFM[i]) + 2, Length(DFM[i]));
+      Write('NumOfObjs = ' + IntToStr(NumOfObjs) + ' | ObjName = ' + ObjName[NumOfObjs] + ' | ObjType = ' + ObjType[NumOfObjs]);
+      // if i > 0 then insert the current Lines value and set the line =
+      // to ComponentName.Create(Parent);
+      if (i > 0) then
+      begin
+        memoSCARBox.Lines.Add('  ' + ObjName[NumOfObjs] + ' := ' + ObjType[NumOfObjs] + '.Create(' + Parents[Group2] + ');')
+        // Check if it is parented to something other than the main form.
+        if (ObjType[NumOfObjs] = 'TGroupBox') or (ObjType[NumOfObjs] = 'TPanel') then
+        begin
+          Write('TGroupBox/TPanel found. Creating environment for items parented to groups/panels.');
+          SetArrayLength(Parents, GetArrayLength(Parents) + 1);
+          Inc(Group);
+          Group2 := GetArrayLength(Parents) - 1;
+          Parents[Group2] := ObjName[NumOfObjs];
+          Write('Current parent setting: ' + ObjName[NumOfObjs]);
+        end else if (Group > 0) then
+          Inc(Group);
+      end else // if i = 0 then
+      begin
+        Write('Change TfrmDesign to TForm');
+        ObjType[NumOfObjs] := 'TForm';
+        memoSCARBox.Lines.Add('  ' + ObjName[NumOfObjs] + ' := CreateForm;')
+      end;
+      if (CheckBox[4].Checked) then // WITH statements check
+      begin
+        Write('Begin WITH statement');
+        memoSCARBox.Lines.Add('  with ' + ObjName[NumOfObjs] + ' do');
+        memoSCARBox.Lines.Add('  begin');
+      end;
+      // check other boxes if i = 0, if i > 0 then add a Parent value.
+      if (i = 0) then
+      begin
+        Write('Setup special settings if certain checkboxes are checked.');
+        Parents[0] := ObjName[NumOfObjs];
+        if (CheckBox[1].Checked) and (not(CheckBox[11].Checked)) then // close and procedure only check
+          SCARIndent(2, 4, 'OnClose := @' + edFormProc.Text + 'OnClose;', ObjName[NumOfObjs]);
+        if (CheckBox[2].Checked) then // center check
+          SCARIndent(2, 4, 'Position := poScreenCenter;', ObjName[NumOfObjs]);
+        if (CheckBox[6].Checked) then // resize check
+          SCARIndent(2, 4, 'BorderStyle := bsSingle;', ObjName[NumOfObjs]);
+        // if any of the 'disable max/min/systemmenu' are checked then...
+        if (CheckBox[7].Checked) or (CheckBox[8].Checked) or (CheckBox[9].Checked) then
+        begin
+          TempStr := 'biMaximize,biMinimize,biSystemMenu';
+          if (CheckBox[7].Checked) then // disable Maximize
+            TempStr := Replace(TempStr, 'biMaximize,', '');
+          if (CheckBox[8].Checked) then // disable Minimize
+            TempStr := Replace(TempStr, 'biMinimize,', '');
+          if (CheckBox[9].Checked) then // disable SystemMenu
+            if (Pos(',', TempStr) > 0) then
+              Delete(TempStr, Pos('biSystemMenu', TempStr) - 1, Length(TempStr))
+            else
+              Delete(TempStr, Pos('biSystemMenu', TempStr), Length(TempStr));
+          SCARIndent(2, 4, 'BorderIcons := [' + TempStr + '];', ObjName[NumOfObjs]);
+          TempStr := '';
+        end;
+        if (CheckBox[10].Checked) then // Stay on top check
+          SCARIndent(2, 4, 'FormStyle := fsStayOnTop;', ObjName[NumOfObjs]);
+      end else
+      begin
+        // if t = some kind of nest, then make sure that group2 will =
+        // the nest before because nests can't parent to themselves.
+        if (ObjType[NumOfObjs] = 'TGroupBox') or (ObjType[NumOfObjs] = 'TPanel') then
+        begin
+          Dec(Group2);
+          Write('Group2 is decremented to ' + IntToStr(Group2));
+        end;
+        // Do not add the Parent property if
+        if not(InvisComp(ObjType[NumOfObjs])) then
+        begin
+          Write('Invisible components not detected, so set the Parent property.');
+          SCARIndent(2, 4, 'Parent := ' + Parents[Group2] + ';', ObjName[NumOfObjs]);
+        end;
+        // Set group2 back.
+        if (ObjType[NumOfObjs] = 'TGroupBox') or (ObjType[NumOfObjs] = 'TPanel') then
+        begin
+          Inc(Group2);
+          Write('Group2 is incremented to ' + IntToStr(Group2));
+        end;
+      end;
+    end else if (PosBetw(DFM[i], 'end', '''', False) > 0) and
+                ((CheckBox[4].Checked) or (Group2 > 0)) then // if Position of end is found
+    begin
+      // if group > 0 that means that there are components nested in
+      // something other than the main form. Ex. TGroupBox or TPanel.
+      if (Group > 0) then
+      begin
+        if (Group2 = Group) then // If group2 = group then - 1 from group2.
+        begin
+          Dec(Group2);
+          Write('Since Group2 = Group, Group2 is decremented to ' + IntToStr(Group2));
+          SetArrayLength(Parents, Group);
+        end;
+        Dec(Group); // Always subtract 1 from group cause it found
+                    // an end.
+        Write('Group is decremented to ' + IntToStr(Group));
+      end;
+    // If new object isn't found, then Copy the properties.
+    end else if (PosBetw(DFM[i], ' =', '''', False) > 0) then
+    begin
+      //TempStr := Trim(Between('  ', ' =', DFM[i]));
+      TempStr := Trim(TextBetw('  ', ' =', DFM[i]));
+      Write(''' ='' is found. TempStr = "' + TempStr + '"');
+      if (TempStr = '') then
+        Break;
+      TempStr := TempStr + ' := ' + Copy(DFM[i], Pos('= ', DFM[i]) + 2, Length(DFM[i])) + ';';
+      Write('TempStr is now = "' + TempStr + '"');
+      if (NumOfObjs > 0) and  // if b > 1, that means we're passed the initial frmDesign creation
+         (PosBetw(TempStr, 'ParentFont', '''', False) = 0) and
+         (PosBetw(TempStr, 'Charset', '''', False) = 0) then
+      begin
+        Write('NumOfObjs > 0. ParentFont and Charset are not found.');
+        DotString := (PosBetw(TempStr, '.Strings', '''', False) > 0);
+        // This gets info for Memo boxes.
+        // Check if there is some kind of .Strings identifier.
+        if (DotString) then
+        begin
+          Write('*.Strings was found.');
+          // Get whatever the * is in *.Strings.
+          DotStringPrefix := Trim(Copy(TempStr, 0, Pos('.', TempStr) - 1));
+          if (CheckBox[4].Checked) then // WITH statements check
+          begin
+            Write('Inputting WITH statement.');
+            memoSCARBox.Lines.Add('    with ' + DotStringPrefix + ' do')
+            memoSCARBox.Lines.Add('    begin');
+          end;
+          // Now loop and add all the strings until a ) is found.
+          while not(DFM[i][Length(DFM[i])] = ')') do
+          begin
+            Inc(i);
+            DFM[i] := Trim(DFM[i]);
+            if (DFM[i][Length(DFM[i])] = ')') then
+              TempStr := Copy(DFM[i], 1, Length(DFM[i]) - 1)
+            else
+              TempStr := DFM[i];
+            SCARIndent(2, 6, 'Add(' + TempStr + ');', ObjName[NumOfObjs] + '.' + DotStringPrefix)
+          end;
+          if (CheckBox[4].Checked) then // WITH statements check
+          begin
+            Write('Closing WITH statement.');
+            memoSCARBox.Lines.Add('    end;');
+          end;
+        // This gets info from anything that has very long text and
+        // is broken up by SCAR, such as a long hint and such.
+        end else if (PosBetw(TempStr, ':= ;', '''', False) > 0) then
+        begin
+          Write('A long string was found.');
+          // if := ; is found, then replace it.
+          TempStr := Replace(TempStr, ':= ;', ':=');
+          SCARIndent(2, 4, TempStr, ObjName[NumOfObjs]);
+          Inc(i);
+          // Loop to get all the lines that contain a ' + at the end.
+          while PosBetw(DFM[i], ''' +', '''', False) > 0 do
+          begin
+            SCARIndent(4, 6, Trim(DFM[i]), '');
+            Inc(i);
+          end;
+          // Last loop adds every line except the last one. This will
+          // add the very last line.
+          SCARIndent(4, 6, Trim(DFM[i]), '');
+        end else if (PosBetw(TempStr, '.Data', '''', False) > 0) then
+        begin
+          // for now, if Picture.Data is found, just ignore it.
+          if (PosBetw(TempStr, 'Picture.Data', '''', False) > 0) then
+          begin
+            Write('Picture.Data string was found.');
+            DispImage := False; // By default, it will be ignored.
+            // Promts if you want to add the image or not.
+            if (PromptIfTImageIsFound) then
+            begin
+              PauseTime := GetSystemTime; // This is so the prompt does not mess up the
+                                          // time it took the parser to generate the code.
+              DispImage := (Popup('Unfortunately, as of SCAR 3.12c, Pictures can''t be displayed using TImage.' + Chr(13) +
+                                  'Would you like to ignore the picture data?', 'Picture Data found!', 1) = 1);
+              ResumeTime := GetSystemTime; // This is so the prompt does not mess up the
+                                           // time it took the parser to generate the code.
+            end;
+            // Display the image code if it is true.
+            if (DispImage) then
+            begin
+              while (Pos('}', DFM[i]) = 0) do
+              begin
+                SCARIndent(2, 4, Trim(DFM[i]), '');
+                Inc(i);
+              end;
+              Write('Displaying image. Most likely will not compile.');
+            end else // Skip the lines of code
+            begin
+              while (Pos('}', DFM[i]) = 0) do
+                Inc(i);
+              Write('Skipped image.');
+            end;
+          end else // if Picture.Data is not found, then continue
+          begin
+            Write('Other *.Data was found. Adding each line.');
+            SCARIndent(2, 4, TempStr, ObjName[NumOfObjs]);
+            Inc(i);
+            while PosBetw(DFM[i], '}', '''', False) = 0 do
+            begin
+              SCARIndent(4, 6, Trim(DFM[i]), '');
+              Inc(i);
+            end;
+            // Last loop adds every line except the last one. This will
+            // add the very last line.
+            SCARIndent(4, 6, Trim(DFM[i]) + ';', '');
+          end;
+        // Make sure Top and Left properties are excluded if the ObjType
+        // is an invisible component.
+        end else if not(((PosBetw(TempStr, 'Left', '''', False) > 0) or
+                    (PosBetw(TempStr, 'Top', '''', False) > 0)) and
+                    (InvisComp(ObjType[NumOfObjs]))) then
+        begin
+          Write('Added line normally.');
+          SCARIndent(2, 4, TempStr, ObjName[NumOfObjs]);
+        end else // Print NOT ADDED!
+          Write('NOT ADDED!');
+      // Get rid of trash properties included in SCAR's DFM file.
+      end else if (NumOfObjs = 0) and
+                  (PosBetw(TempStr, 'Visible', '''', False) = 0) and
+                  (PosBetw(TempStr, 'OldCreateOrder', '''', False) = 0) and
+                  (PosBetw(TempStr, 'Charset', '''', False) = 0) and
+                  (PosBetw(TempStr, 'OnActivate', '''', False) = 0) and
+                  (PosBetw(TempStr, 'OnCloseQuery', '''', False) = 0) and
+                  (PosBetw(TempStr, 'OnCreate', '''', False) = 0) and
+                  (PosBetw(TempStr, 'OnShow', '''', False) = 0) and
+                  (PosBetw(TempStr, 'TextHeight', '''', False) = 0) and
+                  (PosBetw(TempStr, 'ParentFont', '''', False) = 0) then
+      begin // if b = 1, check for FormCenter and WITH.
+        // center form check
+        if (CheckBox[2].Checked) and
+           ((PosBetw(DFM[i], 'Left', '''', False) > 0) or
+           (PosBetw(DFM[i], 'Top', '''', False) > 0)) then
+          DoNotAdd := True;
+        // resize check
+        if (CheckBox[6].Checked) and
+           (PosBetw(DFM[i], 'BorderStyle', '''', False) > 0) then
+          DoNotAdd := True;
+        // disable any of the BorderIcons check
+        if ((CheckBox[7].Checked) or
+           (CheckBox[8].Checked) or
+           (CheckBox[9].Checked)) and
+           (PosBetw(DFM[i], 'BorderIcons', '''', False) > 0) then
+          DoNotAdd := True;
+        // stay on top check
+        if (CheckBox[10].Checked) and
+           (PosBetw(DFM[i], 'FormStyle', '''', False) > 0) then
+          DoNotAdd := True;
+        // Replace Width/Height with Client W/H
+        if (CheckBox[13].Checked) and
+           (Pos('Font', DFM[i]) = 0) and
+           (Pos('Client', DFM[i]) = 0) then
+        begin
+          if (PosBetw(DFM[i], 'Width', '''', False) > 0) then
+          begin
+            TempStr := Replace(TempStr, 'Width', 'ClientWidth');
+            TempStr := Replace(TempStr, TextBetw('= ', ';', TempStr),
+                       IntToStr(StrToInt(TextBetw('= ', ';', TempStr)) - 8));
+          end else if (PosBetw(DFM[i], 'Height', '''', False) > 0) then
+          begin
+            TempStr := Replace(TempStr, 'Height', 'ClientHeight');
+            TempStr := Replace(TempStr, TextBetw('= ', ';', TempStr),
+                       IntToStr(StrToInt(TextBetw('= ', ';', TempStr)) - 34));
+          end;
+        end;
+        if not(DoNotAdd) then
+          SCARIndent(2, 4, TempStr, ObjName[NumOfObjs]);
+        DoNotAdd := False;
+      end;
+    end;
+    Write('*** Loop End - i = ' + IntToStr(i));
+  end;
+  //if (NumOfObjs = 0) then // Check if TForm is the only object.
+  if (CheckBox[4].Checked) then // WITH check
+    memoSCARBox.Lines.Add('  end;');
+  // nils and free variables.
+  DotString := False;
+  DoNotAdd := False;
+  Group := 0;
+  Group2 := 0;
+  i := 0;
+  n := 0;
+  m := 0;
+  TempStr := '';
+  DotStringPrefix := '';
+  DFM.Text := '';
+  DFM.Free; // Frees the TStringList component from memory.
+  // After all that shit just write in the normal stuff. Like the Safe
+  // procedures, etc.
+  with memoSCARBox.Lines do
+  begin
+    if (CheckBox[3].Checked) and (not(CheckBox[11].Checked)) then // Show time and not procedure check
+      Add('  WriteLn(''' + edFormProc.Text + ' compiled in '' + IntToStr(GetSystemTime - Time' + edFormProc.Text + ') + '' milliseconds!'');');
+    Add('end;');
+    Add('');
+    Add('procedure Safe' + edFormProc.Text + ';');
+    Add('var');
+    Add('  v : TVariantArray;');
+    Add('begin');
+    Add('  SetArrayLength(v, 0);');
+    Add('  ThreadSafeCall(''' + edFormProc.Text + ''', v);');
+    Add('end;');
+    Add('');
+    Add('procedure Show' + edFormProc.Text + 'Modal;');
+    Add('begin');
+    Add('  ' + ObjName[0] + '.ShowModal;');
+    Add('end;');
+    Add('');
+    Add('procedure SafeShow' + edFormProc.Text + 'Modal;');
+    Add('var');
+    Add('  v : TVariantArray;');
+    Add('begin');
+    Add('  SetArrayLength(v, 0);');
+    Add('  ThreadSafeCall(''Show' + edFormProc.Text + 'Modal'', v);');
+    Add('end;');
+    Add('');
+    Add('procedure Main' + edFormProc.Text + ';');
+    Add('begin');
+    if (CheckBox[12].Checked) then // try/except error check
+    begin
+      Add('  try');
+      Add('    Safe' + edFormProc.Text + ';');
+      Add('    SafeShow' + edFormProc.Text + 'Modal;');
+      Add('  finally');
+      Add('    FreeForm(' + ObjName[0] + ');'); // can't forget to free the form!
+      Add('  except'); // If there is an error in the form, tell the user!
+      Add('    WriteLn(''An error seems to have occurred in: ' + edFormProc.Text + ''');');
+      Add('  end;');
+    end else
+    begin
+      Add('  Safe' + edFormProc.Text + ';');
+      Add('  SafeShow' + edFormProc.Text + 'Modal;');
+      Add('  FreeForm(' + ObjName[0] + ');'); // can't forget to free the form!
+    end;
+    Add('end;');
+    if (not(CheckBox[11].Checked)) then // procedure only check
+    begin
+      Add('');
+      Add('begin');
+      Add('  ClearDebug;');
+      if (CheckBox[5].Checked) then // minimize SCAR check
+        Add('  GetSelf.WindowState := wsMinimized;');
+      Add('  Main' + edFormProc.Text + ';');
+      if (CheckBox[5].Checked) then // minimize SCAR check
+        Add('  GetSelf.WindowState := wsNormal;');
+      if (CheckBox[1].Checked) then // End script when Xed out check
+      begin
+        Add('  if (End' + edFormProc.Text + ') then');
+        Add('    TerminateScript;');
+      end;
+      Add('end.');
+    end;
+    Status[0][1] := NumCom(memoSCARBox.Lines.Count);
+    Status[0][2] := NumCom(Length(memoSCARBox.Text));
+    // If a popup, prompt, or some kind of window popped up, it automatically
+    // pauses the script because it needs a user's answer. But, if we do not
+    // check if it paused, then the time it took to generate the script would
+    // keep increasing depending on how long it took the person to answer.
+    // To solve that, we create 2 variables, PauseTime and ResumeTime and let
+    // them GetSystemTime before and after the prompt message and have it do
+    // this: (PauseTime - StartingTime) + (GetSystemTime - ResumeTime)
+    if (PauseTime > 0) then
+      Time := (PauseTime - Time) + (GetSystemTime - ResumeTime)
+    else
+      Time := GetSystemTime - Time;
+    Status[0][0] := NumCom(Time);
+    StatusPanel[0].Text := 'Generated in: ' + Status[0][0] + ' msc.';
+    StatusPanel[1].Text := 'Lines: ' + Status[0][1];
+    StatusPanel[2].Text := 'Chars: ' + Status[0][2];
+  end;
+  NumOfObjs := 0;
+  SetArrayLength(ObjName, 0);
+  SetArrayLength(ObjType, 0);
+  SetArrayLength(Vars, 0);
+  SetArrayLength(Parents, 0);
+end;
+
+{************************************************************************]
+                            Generate DFM Code
+[************************************************************************}
+
+// Get's the property from SCAR code.
+function GetProperty(Line, CompName : String) : String;
+var
+  m, n, o : Integer;
+begin
+  n := Length(Line);
+  if (n > 0) then
+  begin
+    if ((Line[n]) = ';') then // deletes semicolon
+      Delete(Line, Length(Line), 1);
+  end else
+  begin
+    Result := '';
+    Exit;
+  end;
+  n := PosBetw(Line, '.', '''', False);
+  if (n > 0) then
+  begin
+    m := PosBetw(Line, CompName, '''', False);
+    if (m > 0) and (m < n) then
+      Delete(Line, 1, n);
+  end;
+  m := PosBetw(Line, ':=', '''', False);
+  o := PosBetw(Line, 'add(', '''', False);
+  if (m > 0) then
+    Result := Trim(Copy(Line, 1, m - 1)) +  ' = ' +
+              Trim(Copy(Line, m + 2, Length(Line)))
+  else if (o > 0) then
+    Result := '  ' + TextBetw('(', ')', Line)
+  else
+    Result := '';
+end;
+
+// Generate DFM code from SCAR code
+procedure GenerateDFMCode(Sender : TObject);
+var
+  SCAR : TStringList;
+  ObjName, ObjType, Parents : Array of String;
+  i, n, NumOfObjs, NumOfPars, Time, Indent, intTemp, ParPos : Integer;
+  TempStr : String;
+  boolWith, InGroup : Boolean;
+begin
+  edLoc.Text := Trim(edLoc.Text);
+  if (FileExists(edLoc.Text)) then // Check if the file exists
+  begin
+    SCAR := TStringList.Create; // Create TStringList
+    if (LoadFromFile(SCAR, edLoc.Text)) then
+    begin
+      memoSCARBox.Text := SCAR.Text;
+      //Status[0][1] := NumCom(memoSCARBox.Lines.Count);
+      //Status[0][2] := NumCom(Length(memoSCARBox.Text));
+      UpdateStatus;
+    end else
+    begin
+      SCAR.Free;
+      Popup('Please allow the file!', '', 0);
+      Exit;
+    end;
+  // if it can't load the file, then free a, display error, and exit proc.
+  end else
+  begin
+    Popup('File does not exist!', '', 0);
+    Exit;
+  end;
+  Write(Replicate('*', 30));
+  Write('SCAR to DFM generator.');
+  Time := GetSystemTime;
+  TabControl.ActivePageIndex := 1;
+  memoDFMBox.Clear;
+  n := SCAR.Count - 1;
+  for i := 0 to n do
+    if (PosBetw(SCAR[i], 'CreateForm', '''', False) > 0) then
+      Break;
+  if (i = n) then
+  begin
+    Popup('Your SCAR code doesn''t contain a form! Unable to generate DFM code.', '', 0);
+    SCAR.Free;
+    Exit;
+  end;
+  SetArrayLength(ObjName, n);
+  SetArrayLength(ObjType, n);
+  SetArrayLength(Parents, 1);
+  NumOfPars := 0;
+  NumOfObjs := -1;
+  for i := i to n do
+  begin
+    Write('*** ' + IntToStr(i) + ' | ' + SCAR[i]);
+    if (PosBetw(SCAR[i], '.Create(', '''', False) > 0) or
+       (PosBetw(SCAR[i], 'CreateForm', '''', False) > 0) then
+    begin
+      Write('IN!');
+      Inc(NumOfObjs);
+      ObjName[NumOfObjs] := Trim(Copy(SCAR[i], 1, Pos(':=', SCAR[i]) - 1));
+      if (NumOfObjs > 0) then
+      begin
+        if not(InGroup) then
+          Indent := 2;
+        //ObjType[NumOfObjs] := Trim(Between(':=', '.Create(', SCAR[i]));
+        ObjType[NumOfObjs] := Trim(TextBetw(':=', '.Create(', SCAR[i]));
+        if (ObjType[NumOfObjs] = '') then
+          Popup('Error finding ObjType. Please send this scar code to' + Chr(13) +
+                'for inspection and a solution. Thank you.', '', 0);
+        if (NumOfPars > 0) then // If in a group, and the group is over.
+        begin
+          Dec(NumOfPars);
+          SetArrayLength(Parents, NumOfPars + 1);
+          DecEx(Indent, 2);
+          if (NumOfPars = 0) then
+            InGroup := False;
+        end;
+        if (Lowercase(ObjType[NumOfObjs]) = 'tgroup') or
+           (Lowercase(ObjType[NumOfObjs]) = 'tpanel') then
+        begin
+          Inc(NumOfPars);
+          SetArrayLength(Parents, NumOfPars + 1);
+          Parents[NumOfPars] := ObjName[NumOfObjs];
+          IncEx(Indent, 2);
+          InGroup := True;
+        end;
+      end else
+      begin
+        Indent := 0;
+        ObjType[0] := Trim(Copy(SCAR[i], Pos(':=', SCAR[i]) + 2, Length(SCAR[i])));
+        if (ObjType[0][Length(ObjType[0])] = ';') then
+          Delete(ObjType[0], Length(ObjType[0]), 1);
+        if (Lowercase(ObjType[0]) = 'createform') then
+          ObjType[0] := 'TfrmDesign';
+        Parents[0] := ObjName[0];
+      end;
+      memoDFMBox.Lines.Add(Replicate(' ', Indent) + 'object ' + ObjName[NumOfObjs] + ': ' + ObjType[NumOfObjs]);
+      Inc(i);
+      if (PosBetw(SCAR[i], 'with ', '''', False) > 0) then
+      begin
+        boolWith := True;
+        IncEx(i, 2);
+      end;
+      Write('BeforeWhile: ' + SCAR[i]);
+      while (PosBetw(SCAR[i], 'Create', '''', False) = 0) and
+            not((PosBetw(SCAR[i], 'end', '''', False) = 0) and
+                (Length(Trim(SCAR[i])) < 5)) and (i <= n) do
+      begin
+        TempStr := GetProperty(SCAR[i], ObjName[NumOfObjs]);
+        Write(TempStr + ' | ' + ObjName[NumOfObjs] + ' | ' + SCAR[i]);
+        ParPos := PosBetw(Copy(TempStr, 1, Pos('=', TempStr)), 'Parent', '''', False);
+        if (ParPos = 0) then
+        begin
+          if (PosBetw(SCAR[i], 'with ', '''', False) > 0) or
+             (PosBetw(SCAR[i], '.add(', '''', False) > 0) then
+          begin
+            TempStr := TextBetw('with ', ' do', SCAR[i]);
+            if (TempStr <> '') then
+            begin
+              // Remove everything before the very last period to find
+              // something SCAR can read such as Lines/Tabs/etc.
+              intTemp := Pos('.', TempStr);
+              while (intTemp > 0) do
+              begin
+                Delete(TempStr, 1, intTemp);
+                intTemp := Pos('.', TempStr);
+              end;
+              memoDFMBox.Lines.Add(Replicate(' ', Indent + 2) + TempStr + '.Strings = (')
+              IncEx(i, 2); // get passed with and begin statements.
+            end else
+            begin
+              TempStr := TextBetw('.', '.', SCAR[i]);
+              Write('TempStr: "' + TempStr + '"');
+              memoDFMBox.Lines.Add(Replicate(' ', Indent + 2) + TempStr + '.Strings = (');
+            end;
+            while PosBetw(SCAR[i + 1], '.add(', '''', False) > 0 do
+            begin
+              //memoDFMBox.Lines.Add(Replicate(' ', Indent + 4) + Between('(', ')', SCAR[i]));
+              memoDFMBox.Lines.Add(Replicate(' ', Indent + 2) + GetProperty(SCAR[i], ObjName[NumOfObjs]));
+              Inc(i);
+            end;
+            //dec(i);
+            memoDFMBox.Lines.Add(Replicate(' ', Indent + 2) + GetProperty(SCAR[i], ObjName[NumOfObjs]){Between('(', ')', SCAR[i])} + ')');
+          end else
+            memoDFMBox.Lines.Add(Replicate(' ', Indent + 2) + TempStr);
+        end else
+          Write('Parent skipped.');
+        Inc(i);
+      end;
+      if (boolWith) then // del current i, because it has an 'end;'
+        memoDFMBox.Lines.Delete(i);
+      // Decrease i by 1, since the for loop increments i anyway.
+      // if we do not dec i, then the script will parse every other comp.
+      Dec(i);
+      if (NumOfObjs > 0) and (InGroup = False) then
+        memoDFMBox.Lines.Add(Replicate(' ', Indent) + 'end');
+    end;
+  end;
+  memoDFMBox.Lines.Add('end');
+  SetArrayLength(ObjName, 0);
+  SetArrayLength(ObjType, 0);
+  SetArrayLength(Parents, 0);
+  SCAR.Free;
+  Status[1][1] := NumCom(memoDFMBox.Lines.Count);
+  Status[1][2] := NumCom(Length(memoDFMBox.Text));
+  Time := GetSystemTime - Time;
+  Status[1][0] := NumCom(Time);
+  StatusPanel[0].Text := 'Generated in: ' + Status[1][0] + ' msc.';
+  StatusPanel[1].Text := 'Lines: ' + Status[1][1];
+  StatusPanel[2].Text := 'Chars: ' + Status[1][2];
+end;
+
+{************************************************************************]
+                                Main Form
+[************************************************************************}
+
+// Generates the code depending on what the mode is set to.
+procedure GenerateCode(Sender : TObject);
+begin
+  if (DFMToSCAR) then
+    GenerateSCARCode(btnGenerate)
+  else
+    GenerateDFMCode(btnGenerate);
+end;
+
+// procedure to enable/disable the edFormName box once the CheckBox[0] has been
+// clicked.
+procedure ChangeFormName(Sender : TObject);
+begin
+  edFormName.Enabled := CheckBox[0].Checked;
+end;
+
+// For check 11 - Show form procedure code.
+procedure DisableChecksNotInProc(Sender : TObject);
+begin
+  CheckBox[1].Enabled := not(CheckBox[11].Checked);
+  CheckBox[5].Enabled := CheckBox[1].Enabled;
+end;
+
+// If 'read only' is checked then the memos will be 'read only'.
+procedure OnClickReadOnly(Sender : TObject);
+begin
+  memoSCARBox.ReadOnly := ReadOnly.Checked;
+  memoDFMBox.ReadOnly := ReadOnly.Checked;
+  if (ReadOnly.Checked) then
+  begin
+    memoSCARBox.Font.Color := clGray;
+    memoDFMBox.Font.Color := clGray;
+  end else
+  begin
+    memoSCARBox.Font.Color := clBlack;
+    memoDFMBox.Font.Color := clBlack;
+  end;
+end;
+
+// Make sure the form name doesn't have any characters that will make SCAR
+// unable to compile the program.
+procedure FormNameCharCheck(Sender : TObject);
+var
+  CantBe : Array of String;
+  ContainOnly, Text : String;
+  i, n : Integer;
+  FormName : Boolean;
+begin
+  ContainOnly := 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789';
+  FormName := (Sender = edFormName);
+  if (FormName) then
+  begin
+    edFormName.Text := Trim(edFormName.Text);
+    Text := edFormName.Text;
+  end else
+  begin
+    edFormProc.Text := Trim(edFormProc.Text);
+    Text := edFormProc.Text;
+  end;
+  if not(Only(Text, ContainOnly, False)) then
+  begin
+    Popup('Your Form Name contains illegal characters. Removing all except A-Z, a-z, 0-9, and _''s.', '', 0)
+    n := Length(Text);
+    for i := 1 to n do
+      if (Pos(Text[i], ContainOnly) = 0) then
+        Delete(Text, i, 1);
+    if (FormName) then
+      edFormName.Text := Text
+    else
+      edFormProc.Text := Text;
+  end else if (Text = '') then
+  begin
+    if (FormName) then
+      edFormName.Text := 'frmDesign'
+    else
+      edFormProc.Text := 'InitForm';
+    Exit;
+  end;
+  Text := Lowercase(Text);
+  CantBe := ['as', 'var', 'const', 'while', 'do', 'for', 'to', 'repeat',
+             'until', 'with', 'record', 'type', 'string', 'integer', 'byte',
+             'smallint', 'in', 'of', 'case', 'int64', 'longint', 'boolean',
+             'and', 'then', 'begin', 'end', 'function', 'procedure', 'forward',
+             'end', 'else', 'if', 'or', 'xor', 'not'];
+  n := GetArrayLength(CantBe) - 1;
+  for i := 0 to n do
+    if (Text = CantBe[i]) then
+    begin
+      //Popup('Your form name can''t be "' + Text + '" because it''s a SCAR global/type.', '', 0);
+      if (FormName) then
+        edFormName.Text := 'frm' + Uppercase(edFormName.Text[1]) + Copy(edFormName.Text, 2, Length(edFormName.Text))
+      else
+        edFormProc.Text := 'Init' + Uppercase(edFormProc.Text[1]) + Copy(edFormProc.Text, 2, Length(edFormProc.Text));
+      Break;
+    end;
+  CantBe := [];
+  Text := '';
+  ContainOnly := '';
+end;
+
+// Updates status panels.
+procedure UpdateStatus;
+var
+  Tab : Integer;
+begin
+  Tab := TabControl.ActivePageIndex;
+  if (Tab = 1) then
+  begin
+    Status[Tab][1] := NumCom(memoDFMBox.Lines.Count);
+    Status[Tab][2] := NumCom(Length(memoDFMBox.Text));
+  end else
+  begin
+    Status[Tab][1] := NumCom(memoSCARBox.Lines.Count);
+    Status[Tab][2] := NumCom(Length(memoSCARBox.Text));
+  end;
+  //if (Status[Tab][2] = '0') then // Clear generated message
+  //  Status[Tab][0] := '';
+  if (Status[Tab][0] <> '') then
+    StatusPanel[0].Text := 'Generated in: ' + Status[Tab][0] + ' msc.'
+  else
+  begin
+    Status[Tab][0] := '';
+    StatusPanel[0].Text := '';
+  end;
+  StatusPanel[1].Text := 'Lines: ' + Status[Tab][1];
+  StatusPanel[2].Text := 'Chars: ' + Status[Tab][2];
+end;
+
+// Each time a tab is changed, show different status labels at the bottom.
+procedure TabControlOnChange(Sender : TObject);
+begin
+  UpdateStatus;
+end;
+
+// Change the lines/chars of the current memo
+procedure MemoOnChange(Sender : TObject);
+begin
+  UpdateStatus;
+end;
+
+// This picks the best settings, according to me (Ron), for your form.
+procedure OptimizeSettings(Sender : TObject);
+begin
+  CheckBox[2].Checked := True; // center form
+  CheckBox[3].Checked := True; // time compiled
+  CheckBox[4].Checked := True; // with statements
+  CheckBox[5].Checked := True; // min/max
+  CheckBox[6].Checked := True; // disable resize
+  CheckBox[7].Checked := True; // disable maximize
+  CheckBox[12].Checked := True; // try/except
+  CheckBox[13].Checked := True; // client w/h
+  CheckBox[14].Checked := True; // super vars
+  CheckBox[15].Checked := True; // break down vars
+end;
+
+// Clears all the settings.
+procedure ClearSettings(Sender : TObject);
+var
+  i, n : Integer;
+begin
+  n := GetArrayLength(STitles) - 1;
+  for i := 0 to n do
+    CheckBox[i].Checked := False;
+  edFormName.Text := 'frmDesign';
+end;
+
+// reload settings from settings folder.
+procedure LoadSettings(Sender : TObject);
+var
+  i, n : Integer;
+begin
+  n := GetArrayLength(STitles) - 1;
+  for i := 0 to n do
+    CheckBox[i].Checked := LoadSetting(SettingsFolder, STitles[i]) = 'True';
+end;
+
+// Changes the code mode. DFM to SCAR / SCAR to DFM
+procedure ChangeMode(Sender : TObject);
+var
+  i, n : Integer;
+begin
+  DFMToSCAR := not(btnChangeMode.Caption = 'Mode: DFM to SCAR');
+  n := GetArrayLength(CheckBox) - 1;
+  if (DFMToSCAR) then
+  begin
+    btnChangeMode.Caption := 'Mode: DFM to SCAR'
+    for i := 0 to n do
+      CheckBox[i].Enabled := True;
+  end else
+  begin
+    if (ShowMsgIfSCARtoDFM) then
+      Popup('This is a new feature and it may have some problems' + Chr(13) +
+            'because of its very high potential for breaking down.' + Chr(13) +
+            'I try to keep things bug free, but there are always' + Chr(13) +
+            'surprises even though I have extensively tested it.' + Chr(13) + Chr(13) +
+            'Right now, the SCAR to DFM code works except when there' + Chr(13) +
+            'are objects on top of (parented to) TGroups or TPanels.', 'Note', 0);
+    btnChangeMode.Caption := 'Mode: SCAR to DFM';
+    for i := 0 to n do
+      CheckBox[i].Enabled := False;
+  end;
+  edFormProc.Enabled := DFMToSCAR;
+  {CheckBox[1].Enabled := DFMToSCAR; // End script
+  CheckBox[2].Enabled := DFMToSCAR; // center form
+  CheckBox[3].Enabled := DFMToSCAR; // display time to compile
+  CheckBox[4].Enabled := DFMToSCAR; // with statements
+  CheckBox[5].Enabled := DFMToSCAR; // min/max scar
+  CheckBox[11].Enabled := DFMToSCAR; // display only vars
+  CheckBox[12].Enabled := DFMToSCAR; // try/except
+  CheckBox[14].Enabled := DFMToSCAR; // vars shown: label1, label2
+  CheckBox[15].Enabled := DFMToSCAR; // break down every 4 vars}
+end;
+
+// This will open the browse window so you can select the .dfm file
+// in order to open it into the DFM Parser.
+procedure Browse(Sender : TObject);
+var
+  OpenDialog1 : TOpenDialog;
+begin
+  OpenDialog1 := TOpenDialog.Create(frmParser);
+  with OpenDialog1 do
+  begin
+    InitialDir := LoadSetting(SettingsFolder, 'OpenDialogFolder');
+    if (InitialDir = '') then // If the InitialDir is empty, set it to the AppPath
+      InitialDir := AppPath;
+    Options := [ofFileMustExist, ofReadOnly]; // the file must exist and open it read-only
+    if (DFMToSCAR) then
+      Filter := 'Delphi Form (*.dfm)|*.dfm|'
+    else
+      Filter := 'SCAR Script (*.scar)|*.scar|';
+    Filter := Filter + 'All Files (*.*)|*|'; // setup the filter
+    if (Execute) then
+    begin
+      edLoc.Text := FileName;
+      SaveSetting(SettingsFolder, 'OpenDialogFolder', ExtractFilePath(FileName));
+    end;
+    Free;
+  end;
+end;
+
+// procedure to Copy all the code to your clipboard.
+procedure CopyToClip(Sender : TObject);
+var
+  Msg : Boolean;
+  strCode : String;
+  Tab : Integer;
+begin
+  Tab := TabControl.ActivePageIndex;
+  if (Tab = 0) then // SCAR page is active
+  begin
+    strCode := 'SCAR';
+    if (memoSCARBox.Lines.Count > 2) then
+    begin
+      memoSCARBox.SelectAll;
+      memoSCARBox.CopyToClipboard;
+    end else
+      Msg := True;
+  end else
+  if (Tab = 1) then // DFM page is active
+  begin
+    strCode := 'DFM';
+    if (memoDFMBox.Lines.Count > 2) then
+    begin
+      memoDFMBox.SelectAll;
+      memoDFMBox.CopyToClipboard;
+    end else
+      Msg := True;
+  end;
+  if (Msg) then
+    Popup('You''re trying to copy empty (or almost empty) ' + strCode + ' code into your clipboard, dopey!', '', 0)
+  else
+    Popup('Copied ' + strCode + ' code to clipboard successfully!', 'Copied', 0);
+end;
+
+// Saves the code to a .scar/.dfm file.
+procedure SaveToAFile(Sender : TObject);
+var
+  SaveDialog1 : TSaveDialog;
+  Msg, TheFileExists, Executed : Boolean;
+  strCode : String;
+begin
+  SaveDialog1 := TSaveDialog.Create(frmParser);
+  with SaveDialog1 do
+  begin
+    Title := 'Save your generated SCAR code to a file.';
+    InitialDir := LoadSetting(SettingsFolder, 'OpenDialogFolder');
+    Filter := 'All Files (*.*)|*.*';
+    FileName := ExtractFileName(LastFileLoc);
+    FileName := Copy(FileName, 1, Pos('.', FileName) - 1);
+    if (TabControl.ActivePageIndex = 0) then // SCAR page is active
+    begin
+      strCode := 'SCAR';
+      if (memoSCARBox.Lines.Count > 2) then
+      begin
+        DefaultExt := strCode;
+        Filter := 'SCAR file (*.scar)|*.scar|' + Filter;
+        if (Execute) then
+        begin
+          if (FileExists(FileName)) then
+            TheFileExists := True
+          else
+            SaveToFile(memoSCARBox, FileName);
+        end;
+      end else
+        Msg := True;
+    end else // DFM page is active
+    begin
+      strCode := 'DFM';
+      if (memoDFMBox.Lines.Count > 2) then
+      begin
+        DefaultExt := strCode;
+        Filter := 'DFM file (*.dfm)|*.dfm|' + Filter;
+        if (Execute) then
+        begin
+          Executed := True;
+          if (FileExists(FileName)) then
+            TheFileExists := True
+          else
+            SaveToFile(memoDFMBox, FileName);
+        end;
+      end else
+        Msg := True;
+    end;
+  end;
+  if (Msg) then
+    Popup('You''re trying to save an empty (or almost empty) ' + strCode + ' file!', '', 0)
+  else
+  begin
+    if (TheFileExists) then
+      if (Popup('This file already exists. Do you want to overwrite it?', 'File Exists', 1) = 1) then
+      begin
+        if (strCode = 'SCAR') then
+          SaveToFile(memoSCARBox, SaveDialog1.FileName)
+        else
+          SaveToFile(memoDFMBox, SaveDialog1.FileName);
+      end else
+        Exit;
+    if (Executed) then
+    begin
+      if (FileExists(SaveDialog1.FileName)) then
+        Popup('Your file was saved successfully!', 'Saved', 0)
+      else
+        Popup('Unable to save file. Please try again.', '', 0);
+    end;
+  end;
+  SaveDialog1.Free;
+end;
+
+procedure EraseCurrentMemo(Sender : TObject);
+var
+  Tab : Integer;
+begin
+  if (Popup('Are you sure you want to erase the code?', 'Are you sure?', 1) = 1) then
+  begin
+    Tab := TabControl.ActivePageIndex;
+    if (Tab = 0) then
+    begin
+      memoSCARBox.Clear;
+      if (DFMToSCAR) then
+        Status[Tab][0] := '';
+    end else
+      memoDFMBox.Clear;
+    UpdateStatus;
+  end;
+end;
+
+// Makes sure that when you resize the window, everything important
+// resizes with it!
+procedure InitFormOnResize(Sender : TObject);
+begin
+  // *sigh* constraints were taken out of SCAR. I don't know why,
+  // so I have to put this code back in... :/
+  if (frmParser.ClientWidth < MinWidth) then
+    frmParser.ClientWidth := MinWidth;
+  if (frmParser.ClientHeight < MinHeight) then
+    frmParser.ClientHeight := MinHeight;
+  // Change Memo Width and Height depending on the current Width and
+  // Height of the main form.
+  memoSCARBox.Width := frmParser.Width - 35; // - 28
+  memoSCARBox.Height := frmParser.Height - 310; // - 285
+  memoDFMBox.Width := memoSCARBox.Width;
+  memoDFMBox.Height := memoSCARBox.Height;
+  TabControl.Width := memoSCARBox.Width + 12;
+  TabControl.Height := memoSCARBox.Height + 30;
+  // Adjust the Buttons' locations to less than 64 of whatever the
+  // current main form's height is.
+  btnGenerate.Top := frmParser.Height - 82;
+  btnCopy.Top := btnGenerate.Top;
+  btnSave.Top := btnGenerate.Top;
+  btnErase.Top := btnGenerate.Top;
+  ReadOnly.Top := btnGenerate.Top + 4;
+  StatusPanel[0].Width := frmParser.ClientWidth div 3;
+  StatusPanel[1].Width := StatusPanel[0].Width;
+  StatusPanel[2].Width := StatusPanel[0].Width;
+end;
+
+// save all settings when you close the form.
+procedure InitFormOnClose(Sender : TObject; var Action: TCloseAction);
+var
+  n, i : Integer;
+begin
+  SaveSetting(SettingsFolder, 'LocationOfDFM', edLoc.Text);
+  SaveSetting(SettingsFolder, 'ProcName', edFormProc.Text);
+  SaveSetting(SettingsFolder, 'ChangeFormNameTo', edFormName.Text);
+  SaveSetting(SettingsFolder, 'ReadOnly', BoolToStr(ReadOnly.Checked));
+  SaveSetting(SettingsFolder, 'ClientWidth', IntToStr(frmParser.ClientWidth));
+  SaveSetting(SettingsFolder, 'ClientHeight', IntToStr(frmParser.ClientHeight));
+  SaveSetting(SettingsFolder, 'ClientPosY', IntToStr(frmParser.Top));
+  SaveSetting(SettingsFolder, 'ClientPosX', IntToStr(frmParser.Left));
+  n := GetArrayLength(STitles) - 1;
+  for i := 0 to n do
+    SaveSetting(SettingsFolder, STitles[i], BoolToStr(CheckBox[i].Checked));
+end;
+
+// This form was parsed using the DFM Form Parser by Ron.
+procedure InitForm;
+var
+  ScrollBox1 : TScrollBox;
+  lbLocOfDFM, lbFormProcName : TLabel;
+  btnBrowse, btnOptimize, btnClear, btnReload : TButton;
+  CompileTime : String;
+  Titles : Array of String;
+  i, n, FormCreateTime : Integer;
+begin
+  FormCreateTime := GetSystemTime;
+  frmParser := CreateForm;
+  with frmParser do
+  begin
+    Caption := ScriptTitle;
+    if (LoadSetting(SettingsFolder, 'ClientPosY') <> '') then
+    begin
+      Top := StrToInt(LoadSetting(SettingsFolder, 'ClientPosY'));
+      Left := StrToInt(LoadSetting(SettingsFolder, 'ClientPosX'));
+    end else
+      Position := poDesktopCenter;
+    BorderStyle := bsSizeable;
+    if (LoadSetting(SettingsFolder, 'ClientHeight') <> '') then
+    begin
+      try
+        ClientHeight := StrToInt(LoadSetting(SettingsFolder, 'ClientHeight'))
+      except
+        ClientHeight := MinHeight;
+      end;
+    end else
+      ClientHeight := MinHeight;
+    if (LoadSetting(SettingsFolder, 'ClientWidth') <> '') then
+    begin
+      try
+        ClientWidth := StrToInt(LoadSetting(SettingsFolder, 'ClientWidth'))
+      except
+        ClientWidth := MinWidth;
+      end;
+    end else
+      ClientWidth := MinWidth;
+    OnResize := @InitFormOnResize;
+    OnClose := @InitFormOnClose;
+    //Constraints.MinHeight := MinHeight; // These were put in and taken out.
+    //Constraints.MinWidth := MinWidth; // Why... I don't know. They worked fine.
+  end;
+  lbLocOfDFM := TLabel.Create(frmParser);
+  with lbLocOfDFM do
+  begin
+    Parent := frmParser;
+    Left := 10;
+    Top := 14;
+    Width := 84;
+    Height := 13;
+    Caption := 'Location of File:';
+  end;
+  lbFormProcName := TLabel.Create(frmParser);
+  with lbFormProcName do
+  begin
+    Parent := frmParser;
+    Left := 10;
+    Top := 39;
+    Width := 131;
+    Height := 13;
+    Caption := 'Form Procedure Name:';
+  end;
+  edLoc := TEdit.Create(frmParser);
+  with edLoc do
+  begin
+    Parent := frmParser;
+    Left := 135;
+    Top := 10;
+    Width := 266;
+    Height := 21;
+    Text := LoadSetting(SettingsFolder, 'LocationOfDFM');
+    if (Text = '') then
+      Text := AppPath;
+    Enabled := not(LoadSetting(SettingsFolder, 'DFMCode') <> '');
+    AutoSelect := false;
+  end;
+  btnBrowse := TButton.Create(frmParser);
+  with btnBrowse do
+  begin
+    Parent := frmParser;
+    Left := edLoc.Width + 140;
+    Top := 10;
+    Height := 21;
+    Caption := 'Browse';
+    OnClick := @Browse;
+  end;
+  edFormProc := TEdit.Create(frmParser);
+  with edFormProc do
+  begin
+    Parent := frmParser;
+    Left := 135;
+    Top := 35;
+    Width := 266;
+    Height := 21;
+    Text := LoadSetting(SettingsFolder, 'ProcName');
+    if (Text = '') then
+      Text := 'InitForm';
+    MaxLength := 50;
+    OnChange := @FormNameCharCheck;
+  end;
+  edFormName := TEdit.Create(frmParser);
+  with edFormName do
+  begin
+    Parent := frmParser;
+    Left := 135;
+    Top := 60;
+    Width := 266;
+    Height := 21;
+    Enabled := False;
+    Text := LoadSetting(SettingsFolder, 'ChangeFormNameTo');
+    if (Text = '') then
+      Text := 'Form1';
+    MaxLength := 50;
+    OnChange := @FormNameCharCheck;
+  end;
+  ScrollBox1 := TScrollBox.Create(frmParser);
+  with ScrollBox1 do
+  begin
+    Parent := frmParser;
+    Top := 85;
+    Left := 10;
+    Height := 80;
+    Width := 472;
+    BorderStyle := bsNone;
+    HorzScrollBar.Visible := False;
+  end;
+  // Set the setting names for the checkboxes.
+  STitles := ['ChangeFormName', 'EndScript', 'CenterForm',
+              'CompileTime', 'WITHState', 'MinScar', 'DisResize',
+              'DisMax', 'DisMin', 'DisHelp', 'StayOnTop',
+              'ProcAndVarsOnly', 'TryExcept', 'ClientW/H',
+              'SuperVars', 'BreakDownVars'];
+  n := GetArrayLength(STitles);
+  SetArrayLength(CheckBox, n);
+  Titles := ['Change Form Name:',
+             'End script after user X''s out of the form.',
+             'Center the form on the screen.',
+             'Display # of msc the form took to compile.',
+             'Use WITH Statements to improve readability.',
+             'Min/Maximize SCAR when script starts/ends.',
+             'Disable Resize.',
+             'Disable Maximize.',
+             'Disable Minimize.',
+             'Disable SystemHelp.',
+             'Force form to Stay On Top.',
+             'Display only vars and main procedure.',
+             'Insert Try/Except for error checking.',
+             'Replace Width/Height with Client W/H.',
+             'Variables shown: Label1, Label2, etc.',
+             'Break down var list every 4 vars.'];
+  CheckBox[0] := TCheckBox.Create(frmParser);
+  with CheckBox[0] do
+  begin
+    Parent := frmParser;
+    Left := 10;
+    Top := 64;
+    Width := 220;
+    Caption := Titles[0];
+    Checked := (LoadSetting(SettingsFolder, STitles[0]) = 'True');
+    ShowHint := True;
+    Hint := 'Let''s you change the form name in case you made a mistake.' + Chr(13) +
+            'Default is frmDesign.';
+  end;
+  // 2 loops for splitting the checkboxes in half
+  for i := 1 to n div 2 do
+  begin
+    CheckBox[i] := TCheckBox.Create(frmParser);
+    with CheckBox[i] do
+    begin
+      Parent := ScrollBox1;
+      Top := 20 * (i - 1);
+      Width := 228;
+      Caption := Titles[i];
+      Checked := (LoadSetting(SettingsFolder, STitles[i]) = 'True');
+      TabOrder := i + 3;
+      //ShowHint := True; // Checkbox hints do not seem to work. SCAR bug?
+      //Hint := SHints[i];
+    end;
+  end;
+  for i := (n + 2) div 2 to n - 1 do
+  begin
+    CheckBox[i] := TCheckBox.Create(frmParser);
+    with CheckBox[i] do
+    begin
+      Parent := ScrollBox1;
+      Left := 240;
+      Top := 20 * (i - (n + 2) div 2);
+      Width := 210;
+      Caption := Titles[i];
+      Checked := (LoadSetting(SettingsFolder, STitles[i]) = 'True');
+      TabOrder := i + 4;
+    end;
+  end;
+  SetArrayLength(Titles, 0); // Erase Titles array to free memory.
+  CheckBox[0].Width := 120;
+  CheckBox[0].OnClick := @ChangeFormName;
+  CheckBox[11].OnClick := @DisableChecksNotInProc;
+  if (CheckBox[11].Checked) then // proc only check
+    DisableChecksNotInProc(CheckBox[11]);
+  edFormName.Enabled := CheckBox[0].Checked; // change form name check
+  btnOptimize := TButton.Create(frmParser);
+  with btnOptimize do
+  begin
+    Parent := frmParser;
+    Left := 10;
+    Top := ScrollBox1.Top + ScrollBox1.Height + 3;
+    Height := 21;
+    Width := 110;
+    Caption := 'Optimize Settings';
+    OnClick := @OptimizeSettings;
+    ShowHint := True;
+    Hint := 'This will optimize the settings for the best looking form' + Chr(13) +
+            'according to Ron (me).';
+  end;
+  btnClear := TButton.Create(frmParser);
+  with btnClear do
+  begin
+    Parent := frmParser;
+    Left := 130;
+    Top := btnOptimize.Top;
+    Height := 21;
+    Width := 110;
+    Caption := 'Clear Settings';
+    OnClick := @ClearSettings;
+    ShowHint := True;
+    Hint := 'This will erase all the checkbox settings.';
+  end;
+  btnReload := TButton.Create(frmParser);
+  with btnReload do
+  begin
+    Parent := frmParser;
+    Left := 250;
+    Top := btnOptimize.Top;
+    Height := 21;
+    Width := 110;
+    Caption := 'Reload Settings';
+    OnClick := @LoadSettings;
+    ShowHint := True;
+    Hint := 'This will reload the settings from the last time' + Chr(13) +
+            'the DFM Parser was used.';
+  end;
+  btnChangeMode := TButton.Create(frmParser);
+  with btnChangeMode do
+  begin
+    Parent := frmParser;
+    Left := 370;
+    Top := btnOptimize.Top;
+    Height := 21;
+    Width := 110;
+    Caption := 'Mode: DFM to SCAR';
+    OnClick := @ChangeMode;
+    ShowHint := True;
+    Hint := 'Changes the mode. DFM code to SCAR code or' + Chr(13) +
+            'SCAR code to DFM code.';
+  end;
+  TabControl := TPageControl.Create(frmParser);
+  TabControl.OnChange := @TabControlOnChange;
+  with TabControl do
+  begin
+    Parent := frmParser;
+    Top := ScrollBox1.Top + ScrollBox1.Height + 30;
+    Left := 10;
+  end;
+  SCARTabSheet := TTabSheet.Create(frmParser);
+  SCARTabSheet.Caption := 'SCAR Code';
+  SCARTabSheet.PageControl := TabControl;
+  DFMTabSheet := TTabSheet.Create(frmParser);
+  DFMTabSheet.Caption := 'DFM Code';
+  DFMTabSheet.PageControl := TabControl;
+  memoSCARBox := TMemo.Create(frmParser);
+  with memoSCARBox do
+  begin
+    Parent := SCARTabSheet;
+    Height := 120;
+    Scrollbars := ssBoth;
+    Font.Name := 'Courier New'; // Thank you Avaphi
+    Font.Height := -12;
+    OnChange := @MemoOnChange;
+  end;
+  memoDFMBox := TMemo.Create(frmParser);
+  with memoDFMBox do
+  begin
+    Parent := DFMTabSheet;
+    Height := 120;
+    Scrollbars := ssBoth;
+    Font.Name := 'Courier New'; // Thank you Avaphi
+    Font.Height := -12;
+    OnChange := @MemoOnChange;
+  end;
+  btnGenerate := TButton.Create(frmParser);
+  with btnGenerate do
+  begin
+    Parent := frmParser;
+    Left := 10;
+    Width := 100;
+    Height := 25;
+    Caption := 'Generate Code';
+    OnClick := @GenerateCode;
+    ShowHint := True;
+    Hint := 'This will generate the SCAR code from the DFM file.';
+  end;
+  btnCopy := TButton.Create(frmParser);
+  with btnCopy do
+  begin
+    Parent := frmParser;
+    Left := 115;
+    Width := 100;
+    Height := 25;
+    Caption := 'Copy to Clipboard';
+    OnClick := @CopyToClip;
+    ShowHint := True;
+    Hint := 'This copies the generated code''s contents so you' + Chr(13) +
+            'can then paste it somewhere else.';
+  end;
+  btnSave := TButton.Create(frmParser);
+  with btnSave do
+  begin
+    Parent := frmParser;
+    Left := 220;
+    Width := 90;
+    Height := 25;
+    Caption := 'Save to File';
+    OnClick := @SaveToAFile;
+    ShowHint := True;
+    Hint := 'This will save the generated code to a location you choose.';
+  end;
+  btnErase := TButton.Create(frmParser);
+  with btnErase do
+  begin
+    Parent := frmParser;
+    Left := 315;
+    Width := 80;
+    Height := 25;
+    Caption := 'Erase';
+    OnClick := @EraseCurrentMemo;
+    ShowHint := True;
+    Hint := 'This will erase the current tab''s memo.';
+  end;
+  ReadOnly := TCheckBox.Create(frmParser);
+  with ReadOnly do
+  begin
+    Parent := frmParser;
+    Left := 400;
+    Caption := 'Read Only';
+    OnClick := @OnClickReadOnly;
+    Checked := not(LoadSetting(SettingsFolder, 'ReadOnly') = 'False');
+    ShowHint := True;
+    Hint := 'This makes the generated code read-only, so you don''t' + Chr(13) +
+            'mess it up by accident.';
+  end;
+  StatusBar := TStatusBar.Create(frmParser);
+  StatusBar.Parent := frmParser;
+  StatusPanel[0] := StatusBar.Panels.Add; // 'Generated in' status bar.
+  StatusPanel[1] := StatusBar.Panels.Add; // Lines
+  StatusPanel[2] := StatusBar.Panels.Add; // Chars
+  // Tab Orders...
+  edLoc.TabOrder := 1;
+  edFormProc.TabOrder := 2;
+  CheckBox[0].TabOrder := 3;
+  edFormName.TabOrder := 4;
+  memoSCARBox.TabOrder := n + 1;
+  btnGenerate.TabOrder := memoSCARBox.TabOrder + 1;
+  btnCopy.TabOrder := memoSCARBox.TabOrder + 2;
+  ReadOnly.TabOrder := memoSCARBox.TabOrder + 4;
+  // Compile time
+  FormCreateTime := GetSystemTime - FormCreateTime;
+  CompileTime := NumCom(FormCreateTime);
+  StatusPanel[0].Text := 'Compiled in: ' + CompileTime + ' msc.';
+  Status[0][0] := CompileTime;
+  Status[1][0] := CompileTime;
+  StatusPanel[1].Text := 'Lines: 0';
+  StatusPanel[2].Text := 'Chars: 0';
+  DFMToSCAR := True;
+end;
+
+procedure SafeInitForm;
+var
+  V : TVariantArray;
+begin
+  SetArrayLength(V, 0);
+  ThreadSafeCall('InitForm', V);
+end;
+
+procedure ShowInitFormModal;
+begin
+  frmParser.ShowModal;
+end;
+
+procedure SafeShowInitFormModal;
+var
+  V : TVariantArray;
+begin
+  SetArrayLength(V, 0);
+  ThreadSafeCall('ShowInitFormModal', V);
+end;
+
+procedure MainInitForm;
+begin
+  try
+    SafeInitForm;
+    SafeShowInitFormModal;
+  finally
+    // empties arrays to free memory
+    SetArrayLength(CheckBox, 0);
+    SetArrayLength(STitles, 0);
+    FreeForm(frmParser);
+  except
+    WriteLn('An error seems to have occurred in: InitForm');
+  end;
+end;
+
+begin
+  ClearDebug;
+  // Check SCAR version.
+  {if (GetSCARVersion <> 320) and (LoadSetting(SettingsFolder, 'DiffVersionButCont') = '') then
+    if (Popup('I''m sorry, but this script has only been tested for SCAR 3.20.' + Chr(13) + 'Would you like to try to run the script anyhow?', '', 1) = 1) then
+      SaveSetting(SettingsFolder, 'DiffVersionButCont', 'True')
+    else
+      TerminateScript;}
+  GetSelf.WindowState := wsMinimized;
+  MainInitForm;
+  GetSelf.WindowState := wsNormal;
+  TerminateScript; // Just for the hell of it.
+end.

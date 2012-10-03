@@ -207,20 +207,25 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function STimeRunning: string;
-By: Timer, Freddy
+By: Timer, Freddy, LordJashin
 Description: Returns time running.
 Date Created: August 7th, 2011. By Timer
-Last Modified: July 20th, 2012. By Freddy
+Last Modified: October 3rd, 2012. By LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function STimeRunning: string;
 var
-  tr: LongInt;
-  tD, tH, tM, tS: LongInt;
+  tr: Integer;
+  tD, tH, tM, tS: Integer;
   TheTimeRInfo: array[0..3] of TStrArray;
   tDD, tHH, tMM, tSS: Boolean;
 begin
-  tr := GetTimeRunning;
+  tr := GetTimeRunning;      
+  if (tr < 1000) then
+    begin
+      Result := IntToStr(tr) + ' milliseconds';
+      Exit;
+    end;
   ConvertTime(tr, tH, tM, tS);
   TheTimeRInfo[0] := [' day, ', ' days, ', ' day ', ' days '];
   TheTimeRInfo[1] := [' hour, ', ' hours, ', ' hour ', ' hours'];
