@@ -5,6 +5,7 @@
  * var OSI_Variance
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
  * var MouseSpeed: Integer;
+ * const Centralization Methods
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -40,3 +41,18 @@ Last Modified: August 7th, 2011. By Timer
 
 var
   MouseSpeed: Integer;
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Centralization Methods
+Contributors: Janilabo
+Description: Constants for the BoxCentralization function 
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  muWidth = 0;
+  muHeight = 1;
+  muWidthHeight = 2;
+  
+  

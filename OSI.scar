@@ -30,6 +30,7 @@
 // OSI Include files
 {$I Divi\Globals.scar}
 {$I Divi\Math.scar}
+{$I Divi\Box.scar}
 {$I Divi\Array.scar}
 {$I Divi\Timing.scar}
 
