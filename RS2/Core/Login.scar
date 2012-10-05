@@ -156,7 +156,7 @@ function FixLoginScreen: Boolean;
 Contributors: LordJashin
 Description: Trys to close popups at login screen, and fix any problems e.g Gfx
 Date Created: October 1st, 2012. By LordJashin. RS2 Build 735.
-Last Modified: October 1st, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 4, 2012. By LordJashin. RS2 Build 735.
 Handles: Auto Setup graphics, graphics problems
 Explanation: This is used when RS2 first starts up and you reach any popups 
              before the login screen or reach the login screen itself. When 
@@ -168,13 +168,16 @@ Explanation: This is used when RS2 first starts up and you reach any popups
              clicking the function will return false and tell the user to change 
              his/her graphics settings to Min, Fixed, Custom->Software mode,
              close any popups, and re-selec the client before running the script
-             again.
+             again. If this doesn't fix it, then a ShowMessage, popup is 
+             displayed telling the user to fix the graphics settings manually!
+             Then the script will be terminated because the graphics settings
+             weren't fixed!
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FixLoginScreen: Boolean;
 var
-  i: Integer;
+  i, OldRSX2, OldRSY2: Integer;          
 begin 
   Result := True;
   RevertRSClient;                                        
@@ -199,13 +202,39 @@ begin
   WriteLn('OSI: RS2: You must close popups, make SURE you are at the Login Screen!');
   WriteLn('OSI: RS2: You must re-select the Client (RS2) with the Crosshairs (+)!'); 
   WriteLn('OSI: RS2: If you still can''t get it to work try Restarting SCAR Divi!');
-    Repeat
-      MouseBox(715, 10, 732, 23, ClickLeft);   // Graphics settings button
-      WaitRR(700, 1400);                           
-      MouseBox(194, 189, 238, 212, ClickLeft); // "MIN" graphics setting
-      WaitRR(700, 1200);                  
-      MouseBox(180, 275, 230, 310, ClickLeft); // "Fixed" screen size     
+    Repeat             
+      GetClient.Update;      
+      with GetClient.ImageArea do
+      if ((X2 < 700) or (Y2 < 400) or (X2 > 1050) or (Y2 > 800))  then
+        Break;                 
+      with GetClient.InputArea do
+      MouseBox(X2 - 47, 8, X2 - 37, 13, ClickLeft); // Graphics settings button (Med Resizable 2)
+      waitRR(700, 1400);     
+      MouseBox(715, 10, 732, 23, ClickLeft);   // Graphics settings button (Min)
+      WaitRR(700, 1400);
+      MouseBox(752, 60, 763, 65, ClickLeft);   // Graphics settings button (Min Resizable)
+      WaitRR(700, 1400);
+      OldRSX2 := RSX2;
+      OldRSY2 := RSY2;
+      RSX2 := RSMedX2;
+      RSY2 := RSMedY2;           
+      with GetClient.InputArea do
+      if (X2 > 900) then
+      MouseBox(941, 141, 955, 151, ClickLeft); // Graphics settings button (Med Resizable)
+      WaitRR(700, 1400);                                                      
+      MouseBox(180, 275, 230, 310, ClickLeft); // "Fixed" screen size (Min)    
+      WaitRR(700, 1200);                                       
+      GetClient.Update;               
+      MouseBox(200, 300, 246, 329, ClickLeft); // "Fixed" screen size (Min Resizable) 
       WaitRR(700, 1200);
+      GetClient.Update;
+      MouseBox(312, 388, 355, 412, ClickLeft); // "Fixed" screen size (Med Resizable)                                                     
+      WaitRR(700, 1200);       
+      RSX2 := OldRSX2;
+      RSY2 := OldRSY2;
+      GetClient.Update;
+      MouseBox(194, 189, 238, 212, ClickLeft); // "MIN" graphics setting
+      WaitRR(700, 1400);                                         
       MouseBox(490, 192, 560, 207, ClickLeft); // "Custom" graphics setting
       WaitRR(900, 1200);                                                     
       { 
@@ -227,10 +256,11 @@ begin
       RevertRSClient;
       MouseBox(346, 319, 413, 325, ClickLeft); // "Leave Alone" at Auto Setup popup
       WaitRR(700, 1400);
-      i := 1 + 1;                                   
-    Until (i = 2);   
-  UpdateRSClient;                 
-  WriteLn('OSI: RS2: Try running the script again after doing these things above! Terminating Script!');
+      i := 1 + 1;    
+      GetClient.Update;                            
+    Until (i = 2);          
+  UpdateRSClient;
+  wait(500);            
   TerminateScript;
 end;
 
