@@ -13,7 +13,8 @@
  * procedure ResizeBox(var bx: TBox; pixels, method: Integer);
  * procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
  * procedure BoxDimensions(bx: TBox; var w, h: Integer);
- * procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: Integer);
+ * procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasurementUnits);
+ * function TBACopyEx(TBA: TBoxArray; pos1, pos2: Integer): TBoxArray;
  * function TBABounds(TBA: TBoxArray): TBox;
  * function TBASame(TBA1, TBA2: TBoxArray): Boolean;
  * procedure TBAInsert(var TBA: TBoxArray; index: Integer; bx: TBox);
@@ -24,7 +25,8 @@
  * function TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
  * function TBAPositions(TBA: TBoxArray; bx: TBox): TIntArray;
  * function TBAAllValuesSame(TBA: TBoxArray): Boolean;
- * function TBAAllValuesUnique(TBA: TBoxArray): Boolean;
+ * function TBAAllValuesUnique(TBA: TBoxArray): Boolean; 
+ * function TBAToParts(TBA: TBoxArray; method: (pm_PartSize, pm_PartAmount); x: Integer): T2DBoxArray;
  * function TBOutlineToTPA(TB: TBox): TPointArray;
  * function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -163,21 +165,21 @@ Last Modified: September 30th, 2012. By Janilabo.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure ResizeBox(var bx: TBox; pixels, method: Integer);
-begin 
-  if (pixels = 0) then Exit;
-  case method of
-    0: bx := Box((bx.X1 - pixels), (bx.Y1 - pixels), (bx.X2 + pixels), (bx.Y2 + pixels)); // ALL AREAS 
-    1: bx := Box((bx.X1 - pixels), bx.Y1, (bx.X2 + pixels), bx.Y2); // WIDTH
-    2: bx := Box(bx.X1, (bx.Y1 - pixels), bx.X2, (bx.Y2 + pixels)); // HEIGHT
-    3: bx := Box(bx.X1, (bx.Y1 - pixels), bx.X2, bx.Y2); // UP
-    4: bx := Box(bx.X1, bx.Y1, bx.X2, (bx.Y2 + pixels)); // DOWN
-    5: bx := Box((bx.X1 - pixels), bx.Y1, bx.X2, bx.Y2); // LEFT 
-    6: bx := Box(bx.X1, bx.Y1, (bx.X2 + pixels), bx.Y2); // RIGHT
-    7: bx := Box((bx.X1 - pixels), (bx.Y1 - pixels), bx.X2, bx.Y2); // TOP-LEFT 
-    8: bx := Box(bx.X1, (bx.Y1 - pixels), (bx.X2 + pixels), bx.Y2); // TOP-RIGHT
-    9: bx := Box((bx.X1 - pixels), bx.X1, bx.X2, (bx.Y2 + pixels)); // BOTTOM-LEFT
-    10: bx := Box(bx.X1, bx.Y1, (bx.X2 + pixels), (bx.Y2 + pixels)); // BOTTOM-RIGHT 
-  end;
+begin
+  if (pixels <> 0) then 
+    case method of
+      0: bx := Box((bx.X1 - pixels), (bx.Y1 - pixels), (bx.X2 + pixels), (bx.Y2 + pixels)); // ALL AREAS 
+      1: bx := Box((bx.X1 - pixels), bx.Y1, (bx.X2 + pixels), bx.Y2); // WIDTH
+      2: bx := Box(bx.X1, (bx.Y1 - pixels), bx.X2, (bx.Y2 + pixels)); // HEIGHT
+      3: bx := Box(bx.X1, (bx.Y1 - pixels), bx.X2, bx.Y2); // UP
+      4: bx := Box(bx.X1, bx.Y1, bx.X2, (bx.Y2 + pixels)); // DOWN
+      5: bx := Box((bx.X1 - pixels), bx.Y1, bx.X2, bx.Y2); // LEFT 
+      6: bx := Box(bx.X1, bx.Y1, (bx.X2 + pixels), bx.Y2); // RIGHT
+      7: bx := Box((bx.X1 - pixels), (bx.Y1 - pixels), bx.X2, bx.Y2); // TOP-LEFT 
+      8: bx := Box(bx.X1, (bx.Y1 - pixels), (bx.X2 + pixels), bx.Y2); // TOP-RIGHT
+      9: bx := Box((bx.X1 - pixels), bx.X1, bx.X2, (bx.Y2 + pixels)); // BOTTOM-LEFT
+      10: bx := Box(bx.X1, bx.Y1, (bx.X2 + pixels), (bx.Y2 + pixels)); // BOTTOM-RIGHT 
+    end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -212,7 +214,7 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: Integer);
+procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasurementUnits);
 Contributors: Janilabo
 Description: Sets inner bx to center of outer bx. Contains 3 methods.
 Date Created: September 30th, 2012. By Janilabo.
@@ -222,7 +224,7 @@ Explanation: Methods: muWidthHeight = center width & heightwise,
                       muHeight = center heightwise.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: Integer);
+procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasurementUnits);
 var
   i_w, i_h: Integer;
   c_pt, d_pt: TPoint;
@@ -231,9 +233,40 @@ begin
   c_pt := BoxCenter(outer_bx);
   d_pt := Point((c_pt.X - (i_w div 2)), (c_pt.Y - (i_h div 2)));
   case method of
-    muWidthHeight: OffsetBox(inner_bx, (d_pt.Y - inner_bx.Y1), (d_pt.X - inner_bx.X1));
-    muWidth: OffsetBox(inner_bx, (d_pt.X - inner_bx.X1), 0);
-    muHeight: OffsetBox(inner_bx, 0, (d_pt.Y - inner_bx.Y1));
+    mu_WidthHeight: OffsetBox(inner_bx, (d_pt.Y - inner_bx.Y1), (d_pt.X - inner_bx.X1));
+    mu_Width: OffsetBox(inner_bx, (d_pt.X - inner_bx.X1), 0);
+    mu_Height: OffsetBox(inner_bx, 0, (d_pt.Y - inner_bx.Y1));
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBACopyEx(TBA: TBoxArray; pos1, pos2: Integer): TBoxArray;
+Contributors: Janilabo
+Description: Copies TBA from pos1 to pos2.                  
+Date Created: October 6th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By Janilabo.       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBACopyEx(TBA: TBoxArray; pos1, pos2: Integer): TBoxArray;
+var
+  i, l: Integer;
+begin
+  l := Length(TBA);
+  if (l > 0) then 
+  begin   
+    IntSetRange(pos1, 0, (l - 1));
+    IntSetRange(pos2, 0, (l - 1));
+    if (pos1 <> pos2) then
+    begin
+      SetLength(Result, (IAbs(pos1 - pos2) + 1));
+      if (pos1 < pos2) then
+        for i := pos1 to pos2 do
+          Result[(i - pos1)] := TBA[i]
+      else
+        for i := pos1 downto pos2 do
+          Result[(pos1 - i)] := TBA[i]; 
+    end else
+      Result := [TBA[pos1]]; 
   end;
 end;
 
@@ -484,6 +517,85 @@ begin
         if not Result then
           Exit;
       end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBAToParts(TBA: TBoxArray; method: (pm_PartSize, pm_PartAmount); x: Integer): T2DBoxArray;
+Contributors: Janilabo
+Description: Breaks TBA to parts (TBA => ATBA). Contains 2 methods:                 
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.       
+Explanation: pm_PartSize (Breaks TBA to ATBA by size of the parts) [x = size]
+             pm_PartAmount (Breaks TBA to ATBA by amount of the parts) [x = amount]
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBAToParts(TBA: TBoxArray; method: (pm_PartSize, pm_PartAmount); x: Integer): T2DBoxArray;
+var
+  a, e, h, h2, i, i2, p: Integer;
+begin
+  h := High(TBA);
+  case method of
+    pm_PartSize:
+    if ((h >= 0) and (x > 0)) then
+      if (x <= h) then
+      begin
+        Inc(h);
+        p := (h div x);
+        if ((p * x) < h) then
+          Inc(p);
+        SetLength(Result, p);
+        for i := 0 to (p - 1) do
+          for i2 := 0 to (x - 1) do
+          begin
+            SetLength(Result[i], x);
+            if (a < h) then
+            begin
+              Result[i][i2] := TBA[a];
+              Inc(a);
+            end else
+            begin
+              SetLength(Result[i], i2);
+              Exit;
+            end;
+          end;
+      end else
+        Result := [TBA];      
+    pm_PartAmount:
+    begin
+      if ((h <= 0) or (x < 2)) then
+      begin
+        if (x = 1) then
+          Result := [TBA]
+        else
+          if (x > 0) then
+            SetLength(Result, x);
+        Exit;
+      end;
+      if (h < (x - 1)) then
+        x := (h + 1);
+      p := Floor((h + 1) / x);
+      if (p = 0) then
+        p := 1;
+      e := ((h + 1) - (p * x));
+      if (e >= (h + 1)) then
+        e := 0;
+      SetLength(Result, x);
+      for i := 0 to (x - 1) do
+      begin
+        if ((e >= (i + 1)) and (e > 0)) then
+          SetLength(Result[i], (p + 1))
+        else
+          if (i <= h) then
+            SetLength(Result[i], p);
+        h2 := High(Result[i]);
+        for i2 := 0 to h2 do
+        begin
+          Result[i][i2] := TBA[a];
+          Inc(a);
+        end;
+      end;      
+    end;
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

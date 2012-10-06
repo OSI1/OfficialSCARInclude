@@ -2,10 +2,115 @@
                               Official SCAR Include
                                  String Routines
 --------------------------------------------------------------------------------
+ * function StrReverse(str: string): string; 
+ * function StrCompare(s1, s2: string): Integer;                    
+ * function StrStuff(str, s: string; iFrom, iCount: Integer): string;          
+ * function StrBetween(str: string; pos1, pos2: Integer): string;             
+ * function StrCopy(str: string; pos1, pos2: Integer): string;
  * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
  * function StrInStr(SubStr, S: string): Boolean;
  * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
+ * function MultiReplace(oldStr, newStr: string; offset: Integer; replaceFlags: TReplaceFlags): TMultiReplace;
+ * function MultiReplace2(oldStr, newStr: string; offset: Integer; matchMethods: TMatchMethods): TMultiReplace2;  
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrReverse(str: string): string;
+Contributors: Janilabo
+Description: Returns reversed str.                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrReverse(str: string): string;
+var
+  i, l: Integer;
+begin
+  l := Length(str);
+  SetLength(Result, l);
+  for i := l downto 1 do    
+    Result[i] := str[((l - i) + 1)];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrCompare(s1, s2: string): Integer;
+Contributors: Janilabo
+Description: Compares s1 with s2. Results: 0=EQUAL, 1=s1>s2, -1=s1<s2                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrCompare(s1, s2: string): Integer;
+begin
+  if (s1 <> s2) then
+    if (s1 > s2) then
+      Result := 1
+    else
+      Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrStuff(str, s: string; iFrom, iCount: Integer): string;
+Contributors: Janilabo
+Description: Stuffs str with s, iFrom=start position, iCount=count of chars to stuff with.                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrStuff(str, s: string; iFrom, iCount: Integer): string;
+begin
+  Result := Copy(str, 1, Length(str));
+  Delete(Result, iFrom, iCount);
+  Insert(s, Result, iFrom);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrBetween(str: string; pos1, pos2: Integer): string;
+Contributors: Janilabo
+Description: Returns the string between pos1 and pos2 of str.                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrBetween(str: string; pos1, pos2: Integer): string;
+var
+  l: Integer;
+begin
+  l := Length(str);
+  if ((pos1 < pos2) and InRange(pos1, 0, (l + 1)) and InRange(pos2, 0, (l + 1))) then
+    Result := Copy(str, (pos1 + 1), ((pos2 - pos1) - 2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrCopy(str: string; pos1, pos2: Integer): string;
+Contributors: Janilabo
+Description: Copies str from pos1 to pos2.                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrCopy(str: string; pos1, pos2: Integer): string;
+var
+  i, l: Integer;
+begin
+  l := Length(str);
+  if (l > 0) then 
+  begin   
+    IntSetRange(pos1, 1, l);
+    IntSetRange(pos2, 1, l);
+    case (pos1 < pos2) of
+      False:
+      if (pos1 <> pos2) then
+      begin
+        SetLength(Result, ((pos1 - pos2) + 1));
+        for i := pos1 downto pos2 do
+          Result[((pos1 - i) + 1)] := str[i]; 
+      end else
+        Result := Copy(str, pos1, 1);
+      True: Result := Copy(str, pos1, ((pos2 - pos1) + 1)); 
+    end;
+  end;
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
@@ -69,3 +174,36 @@ begin
       Exit;
   Result := False;
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MultiReplace(oldStr, newStr: string; offset: Integer; replaceFlags: TReplaceFlags): TMultiReplace;
+Contributors: Janilabo
+Description: Builds multireplacing type with parameters.                                      
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MultiReplace(oldStr, newStr: string; offset: Integer; replaceFlags: TReplaceFlags): TMultiReplace;
+begin
+  Result.oldStr := oldStr;
+  Result.newStr := newStr;  
+  Result.offset := offset;
+  Result.replaceFlags := replaceFlags;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MultiReplace2(oldStr, newStr: string; offset: Integer; matchMethods: TMatchMethods): TMultiReplace2;
+Contributors: Janilabo
+Description: Builds multireplacing type II with parameters.                                                         
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MultiReplace2(oldStr, newStr: string; offset: Integer; matchMethods: TMatchMethods): TMultiReplace2;
+begin
+  Result.oldStr := oldStr;
+  Result.newStr := newStr;   
+  Result.offset := offset;
+  Result.matchMethods := matchMethods;
+end;
+

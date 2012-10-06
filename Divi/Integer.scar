@@ -1,0 +1,29 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                 Integer Routines
+--------------------------------------------------------------------------------
+ * procedure IntSetRange(var val: Integer; mn, mx: Integer);  
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure IntSetRange(var val: Integer; mn, mx: Integer);
+Contributors: Janilabo
+Description: Sets val inside range (mn = minimum, mx = maximum)                                                              
+Date Created: October 6th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure IntSetRange(var val: Integer; mn, mx: Integer);
+begin
+  if (mn > mx) then
+    Swap(mn, mx);
+  if (mn <> mx) then
+  begin         
+    if (val < mn) then
+      val := mn;
+    if (val > mx) then
+      val := mx; 
+  end else    
+    if ((val < mn) or (val > mx)) then
+      val := mn;
+end;

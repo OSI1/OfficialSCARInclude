@@ -29,6 +29,7 @@
 
 // OSI Include files
 {$I Divi\Globals.scar}
+{$I Divi\Integer.scar}
 {$I Divi\Math.scar}
 {$I Divi\Box.scar}
 {$I Divi\String.scar}

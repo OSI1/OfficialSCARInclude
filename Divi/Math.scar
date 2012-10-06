@@ -19,11 +19,8 @@
  * function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
  * function RCirclePoint(CX, CY, Radius: Integer): TPoint;
  * function GetAngle(x, y, x2, y2: Integer): Extended; 
- * function GetAngle2(pt1, pt2: TPoint): Extended;       
- * function GetAngleBetweenPoints(pt1, pt2: TPoint): Extended;
  * function AngleBetweenPointsDegress(P1, P2: TPoint): Extended;
  * function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
- * function DistanceEx2(pt1, pt2: TPoint): Extended;
  * procedure ConstrainBox(var X1, Y1, X2, Y2: Integer; CX1, CY1, CX2, CY2: Integer);
  * procedure ConstrainBoxes(var TBA: TBoxArray; CX1, CY1, CX2, CY2: Integer);
  * function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
@@ -62,28 +59,28 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function Odd(x: Integer): Boolean;
-Contributors: Janilabo
+Contributors: Janilabo, Freddy
 Description: Returns true if the given value [x] is an odd number.
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By Freddy.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Odd(x: Integer): Boolean;
 begin
-  Result := ((iAbs(x) mod 2) <> 0);
+  Result := x and 1 = 1;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function Even(x: Integer): Boolean;
-Contributors: Janilabo
+Contributors: Janilabo, Freddy
 Description: Returns true if the given value [x] is an even number.
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By Freddy.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Even(x: Integer): Boolean;
 begin
-  Result := ((iAbs(x) mod 2) = 0);
+  Result := x and 1 = 0;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -251,23 +248,19 @@ function RandomRangeEx(aFrom, aTo, amount: Integer; duplicates: Boolean): TIntAr
 Contributors: Janilabo
 Description: Generates an array of random numbers from aFrom to aTo.
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.
+Last Modified: October 5th, 2012. By Janilabo.
 Explanation: Amount is the size of the array.
              If duplicates is set as true, the values wont be unique to each other.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RandomRangeEx(aFrom, aTo, amount: Integer; duplicates: Boolean): TIntArray;
 var
-  a, r, i, n: Integer;
+  a, d, e, m, n, r, i, t: Integer;
+  tmp: TIntArray;
+  b: Boolean;
 begin
   if (amount > 0) then
   case duplicates of
-    True:   
-    begin 
-      SetLength(Result, amount);
-      for i := 0 to (amount - 1) do
-        Result[i] := RandomRange(aFrom, aTo);
-    end;
     False:
     begin
       if (aFrom > aTo) then
@@ -278,12 +271,59 @@ begin
       if (amount < 1) then
         Result := [aFrom]
       else
-        for r := 0 to (amount - 1) do
-          repeat  
-            n := RandomRange(aFrom, aTo);
-            if not TIAContains(Result, n) then
-              i := TIAAppend(Result, n);
-          until (i >= r);    
+        case (amount < 20000) of
+          True:
+          for r := 0 to (amount - 1) do
+            repeat  
+              n := RandomRange(aFrom, aTo);
+              if not TIAContains(Result, n) then
+                i := TIAAppend(Result, n);
+            until (i >= r);
+          False:
+          begin     
+            SetLength(Result, amount);
+            m := IAbs(aFrom - aTo); 
+            if (m > 10) then
+              b := (m > Trunc(amount * 1.1));
+            case b of
+              True:
+              begin          
+                d := (Trunc(m / amount) + 3); 
+                e := aFrom;
+                for i := 0 to (amount - 1) do
+                begin                            
+                  r := Random(d);         
+                  IncEx(e, r);      
+                  IncEx(t, (r + 1));
+                  Result[i] := (e + i); 
+                  Swap(Result[Random(i)], Result[Random(i)]);         
+                  d := (Trunc(((m - t) / (amount - i))) * 2); 
+                end;
+                for i := 0 to (amount div 2) do
+                  Swap(Result[Random(amount)], Result[Random(amount)]);
+              end;
+              False: 
+              begin     
+                SetLength(tmp, (aTo - aFrom));
+                for i := aFrom to (aTo - 1) do
+                  tmp[(i - aFrom)] := i;      
+                for i := 0 to (amount - 1) do
+                begin   
+                  r := Random((aTo - aFrom) - i);  
+                  Result[i] := tmp[r];   
+                  Delete(tmp, r, 1);
+                end;
+                SetLength(tmp, 0);
+              end;
+            end;                        
+          end;                     
+        end;   
+    end;
+    True:   
+    begin 
+      SetLength(Result, amount);
+      for i := 0 to (amount - 1) do
+        Result[i] := RandomRange(aFrom, aTo);
     end;
   end;
 end;
@@ -323,46 +363,16 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetAngle(x, y, x2, y2: Integer): Extended;
-Contributors: Janilabo
-Description: Calculates the angle of x, y and x2, y2 coordinates.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function GetAngle(x, y, x2, y2: Integer): Extended;
-begin
-  Result := ((ArcTan2((y2 - y), (x2 - x)) * (180 / Pi)) + 90);
-  if (Result < 0.0) then
-    Result := (Result + 360.0);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetAngle2(pt1, pt2: TPoint): Extended;
+function GetAngle(pt1, pt2: TPoint): Extended;
 Contributors: Janilabo
 Description: Calculates the angle of pt1 and pt2 coordinates.
 Date Created: September 30th, 2012. By Janilabo.
 Last Modified: September 30th, 2012. By Janilabo.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetAngle2(pt1, pt2: TPoint): Extended;
+function GetAngle(pt1, pt2: TPoint): Extended;
 begin
   Result := ((ArcTan2((pt2.Y - pt1.Y), (pt2.X - pt1.X)) * (180 / Pi)) + 90);
-  if (Result < 0.0) then
-    Result := (Result + 360.0);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetAngleBetweenPoints(pt1, pt2: TPoint): Extended;
-Contributors: Janilabo
-Description: Calculates the angle between pt1 and pt2 coordinates.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function GetAngleBetweenPoints(pt1, pt2: TPoint): Extended;
-begin
-  Result := Degrees(ArcTan2((pt2.Y - pt1.Y), (pt1.X - pt2.X)));
   if (Result < 0.0) then
     Result := (Result + 360.0);
 end;
@@ -385,29 +395,15 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
-Contributors: Wanted
-Description: Returns the exact distance between two points.
-Date Created: October 31st, 2011. By Wanted
-Last Modified: October 31st, 2011. By Wanted
+Contributors: Wanted.
+Description: Returns the exact distance
+Date Created: September 30th, 2012. By Wanted.
+Last Modified: September 30th, 2012. By Wanted.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
 begin
   Result := (Sqrt(Sqr(X1 - X2) + Sqr(Y1 - Y2)));
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DistanceEx2(pt1, pt2: TPoint): Extended;
-Contributors: Janilabo
-Description: Returns the exact distance from pt1 to pt2.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function DistanceEx2(pt1, pt2: TPoint): Extended;
-begin
-  if ((pt1.X <> pt2.X) or (pt1.Y <> pt2.Y)) then
-    Result := Sqrt(Sqr(pt1.X - pt2.X) + Sqr(pt1.Y - pt2.Y));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
