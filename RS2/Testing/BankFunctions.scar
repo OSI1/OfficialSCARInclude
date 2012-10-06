@@ -2,7 +2,8 @@
                               Official SCAR Include
                               Bank Function Testing
 --------------------------------------------------------------------------------
- * procedure TestBankFunctions;                   
+ * procedure TestBankFunctions;           
+   Last Modified: October 6th, 2012. By LordJashin. RS2 Build 735.     
  * Instructions:
                 1. Set the constants (Bank PIN too if you want to test those)
                 2. Make sure you are at Bank Screen or PIN screen!

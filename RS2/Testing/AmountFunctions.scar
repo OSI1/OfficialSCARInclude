@@ -2,7 +2,8 @@
                               Official SCAR Include
                              Amount Function Testing
 --------------------------------------------------------------------------------
- * procedure TestAmountFunctions;                   
+ * procedure TestAmountFunctions;      
+   Last Modified: October 6th, 2012. By LordJashin. RS2 Build 735.           
  * Instructions:
                 1. Set the constants
                 2. Run Test!

@@ -39,7 +39,7 @@ var Useful Global Variables to alter if needed
 Contributors: Wanted, Freddy, LordJashin.
 Description: Global variables to alter like RSX1, RSY1
 Date Created: October 2nd, 2012. By LordJashin. RS2 Build 735.
-Last Modified: October 4, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 6, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
   var
@@ -51,21 +51,21 @@ begin
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 RS2 Client Constants 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-  RSX1 := 0;              // Client Edge Points    // 8/16/2011    Wanted       667
-  RSY1 := 0;                                       // 8/16/2011    Wanted       667
-  RSX2 := 764;                                     // 7/20/2012    Freddy       725
-  RSY2 := 502;                                     // 7/20/2012    Freddy       725 
-  RSCX := RSX2 div 2;     // Client Center Points  // 9/17/2012    LordJashin   725
-  RSCY := RSY2 div 2;                              // 9/17/2012    LordJashin   725
-  RSPW := RSX2;           // Client Width          // 9/17/2012    LordJashin   725
-  RSPH := RSY2;           // Client Height         // 9/17/2012    LordJashin   725
-  RSPA := RSPW * RSPH;    // Client Pixel Area     // 9/17/2012    LordJashin   725
-  RSClientY1Offset := 50; // Client Y1 Offset      // 10/2/2012    LordJashin   735
-  RSBlank := 0;           // Blank var 4 functions // 10/2/2012    LordJashin   735                 
-  RSMedX1 := 0;           // MedClient Edge points // 10/4/2012    LordJashin   735
-  RSMedY1 := 0;                                    // 10/4/2012    LordJashin   735
-  RSMedX2 := 1023;                                 // 10/4/2012    LordJashin   735
-  RSMedY2 := 767;                                  // 10/4/2012    LordJashin   735
+  RSX1 := 0;               // Client Edge Points    // 8/16/2011    Wanted       667
+  RSY1 := 0;                                        // 8/16/2011    Wanted       667
+  RSX2 := 764;                                      // 7/20/2012    Freddy       725
+  RSY2 := 502;                                      // 7/20/2012    Freddy       725 
+  RSCX := RSX2 div 2;      // Client Center Points  // 9/17/2012    LordJashin   725
+  RSCY := RSY2 div 2;                               // 9/17/2012    LordJashin   725
+  RSPW := RSX2 - RSX1 + 1; // Client Width          // 10/6/2012    LordJashin   735
+  RSPH := RSY2 - RSY1 + 1; // Client Height         // 10/6/2012    LordJashin   735
+  RSPA := RSPW * RSPH;     // Client Pixel Area     // 9/17/2012    LordJashin   725
+  RSClientY1Offset := 50;  // Client Y1 Offset      // 10/2/2012    LordJashin   735
+  RSBlank := 0;            // Blank var 4 functions // 10/2/2012    LordJashin   735                 
+  RSMedX1 := 0;            // MedClient Edge points // 10/4/2012    LordJashin   735
+  RSMedY1 := 0;                                     // 10/4/2012    LordJashin   735
+  RSMedX2 := 1023;                                  // 10/4/2012    LordJashin   735
+  RSMedY2 := 767;                                   // 10/4/2012    LordJashin   735
 end;                       
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -73,16 +73,12 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Anonymous, Wanted, LordJashin.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Anonymous & Wanted. RS2 Build 660.
-Last Modified: September 17, 2012. By LordJashin. RS2 Build 718.
+Last Modified: October 6th, 2012. By LordJashin. RS2 Build 735.
 Explanation:
             Most of the constants are relative to each other, so that if we
             need to change one. It will automatically update the rest of them.
             Things like toolbar changes will be easier to overcome with Relative
-            constants. The formulas used are all relatively the same except for
-            when ZERO is involved. If something starts at 1 and ends at 3 the 
-            width of it is not 3. But 3 - 1. Now if it was 0 to 3, the width 
-            would be 3. Things like this make the math look different, etc.
-
+            constants, some math is used too. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
   const                            // Description              Modified     By           Build #

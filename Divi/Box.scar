@@ -129,8 +129,7 @@ Last Modified: September 30th, 2012. By Janilabo.
 
 procedure ExpandBox(var bx: TBox; eSize: Integer);
 begin
-  if (eSize < 1) then
-    Exit;
+  if (eSize < 1) then Exit;
   bx.X1 := (bx.X1 - eSize);
   bx.Y1 := (bx.Y1 - eSize);
   bx.X2 := (bx.X2 + eSize);
@@ -147,8 +146,7 @@ Last Modified: September 30th, 2012. By Janilabo.
 
 procedure ShrinkBox(var bx: TBox; sSize: Integer);
 begin
-  if (sSize < 1) then
-    Exit;
+  if (sSize < 1) then Exit;
   bx.X1 := (bx.X1 + sSize);
   bx.Y1 := (bx.Y1 + sSize);
   bx.X2 := (bx.X2 - sSize);
@@ -184,15 +182,15 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
-Contributors: Janilabo
+Contributors: Janilabo, LordJashin
 Description: Offsets bx using xOffset, yOffset.
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.       
+Last Modified: October 6th, 2012. By LordJashin.       
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
 begin
-  if ((xOffset and yOffset) = 0) then Exit;
+  if (xOffset = 0) and (yOffset = 0) then Exit;
   bx.X1 := (bx.X1 + xOffset);
   bx.Y1 := (bx.Y1 + yOffset);
   bx.X2 := (bx.X2 + xOffset);
@@ -219,9 +217,9 @@ Contributors: Janilabo
 Description: Sets inner bx to center of outer bx. Contains 3 methods.
 Date Created: September 30th, 2012. By Janilabo.
 Last Modified: September 30th, 2012. By Janilabo.       
-Explanation: Methods: muWidthHeight = center width & heightwise, 
-                      muWidth = center widthwise, 
-                      muHeight = center heightwise.
+Explanation: Methods: mu_WidthHeight = center width & heightwise, 
+                      mu_Width = center widthwise, 
+                      mu_Height = center heightwise.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasurementUnits);
@@ -283,8 +281,7 @@ var
   h, i: Integer;
 begin
   h := High(TBA);
-  if (h < 0) then
-    Exit;
+  if (h < 0) then Exit;
   Result := TBA[0];
   for i := 0 to h do
   begin
@@ -526,7 +523,11 @@ Description: Breaks TBA to parts (TBA => ATBA). Contains 2 methods:
 Date Created: September 30th, 2012. By Janilabo.
 Last Modified: September 30th, 2012. By Janilabo.       
 Explanation: pm_PartSize (Breaks TBA to ATBA by size of the parts) [x = size]
-             pm_PartAmount (Breaks TBA to ATBA by amount of the parts) [x = amount]
+             pm_PartAmount (Breaks TBA to ATBA by amount of the parts) [x = amount] 
+Example: partAmount of 2. Then the TBA is broken into 2 parts. One with TBA[0]
+         and another with TBA[1] e.g. ATBA := [[TBA[0]], [TBA[1]]].
+         partSize of 1. Then the TBA is broken into parts of 1. So we get the same
+         thing. e.g. ATBA := [[TBA[0]], [TBA[1]]].   
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TBAToParts(TBA: TBoxArray; method: (pm_PartSize, pm_PartAmount); x: Integer): T2DBoxArray;

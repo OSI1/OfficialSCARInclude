@@ -1,0 +1,100 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              Box Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestBoxFunctions;                      
+   Last Modified: October 6th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$I ../../OSI.scar}
+{$I ../Misc/Debug.scar}
+
+procedure TestBoxFunctions;
+var
+  bx1, bx2: TBox;        
+  bxArr, bx2Arr: TBoxArray;     
+  a2DbxArr: T2DBoxArray;                            
+  P: TPoint; 
+  w, h: Integer;   
+  BoxPos: TIntArray;
+begin
+  bx1 := Box(0, 0, 5, 5);
+  ClearBox(bx1);
+  WriteLn('ClearBox: Clearing box(0,0,5,5) -> ' + BoxToStr(bx1));   
+  bx1 := Box(8, 10, 5, 3);
+  FixBox(bx1);
+  WriteLn('FixBox: Fixes if x2>x1, etc. box(8,10,5,3) -> ' + BoxToStr(bx1));
+  bx2 := Box(0, 0, 10, 10);
+  if BoxInBox(bx1, bx2) then WriteLn('BoxInBox: True: ' + BoxToStr(bx1) + ' is inside ' + BoxToStr(bx2));
+  if ValidBox(bx1) then WriteLn('ValidBox: True: ' + BoxToStr(bx1) + ', x1 <= x2, etc.');
+  if SameBoxes(bx1, bx1) then WriteLn('SameBoxes: True: ' + BoxToStr(bx1) + ' is the same as ' + BoxToStr(bx1));
+  P := BoxCenter(bx2);  
+  WriteLn('BoxCenter: of (0,0,10,10) is (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
+  bx2 := Box(10, 10, 20, 20);
+  ExpandBox(bx2, 5);
+  WriteLn('ExpandBox: of (10,10,20,20) by 5 pixels = ' + BoxToStr(bx2));  
+  ShrinkBox(bx2, 5);
+  WriteLn('ShrinkBox: of (5,5,25,25) by 5 pixels = ' + BoxToStr(bx2));     
+  ResizeBox(bx2, -5, 0);
+  WriteLn('ResizeBox: of (10,10,20,20) by -5 pixels using method(0) = ' + BoxToStr(bx2));
+  WriteLn('ResizeBox: Contains 11 methods for whichever part of the box you want to change');
+  OffsetBox(bx2, 10, 5);
+  WriteLn('OffsetBox: of (15,15,15,15) of XOffset(10) & YOffset(5) = ' + BoxToStr(bx2));
+  BoxDimensions(bx2, w, h);
+  WriteLn('BoxDimensions: of (25,20,25,20) Stores width and height of box into variables: w: ' + IntToStr(w) + ', h: ' + IntToStr(h));
+  bx1 := Box(0, 0, 20, 20);    
+  ClearBox(bx2);
+  BoxCentralization(bx2, bx1, mu_WidthHeight);    
+  WriteLn('BoxCentralization: outerbox(0,0,20,20) mu_WidthHeight innerbox(0,0,0,0) is now: ' + BoxToStr(bx2));
+  SetLength(bxArr, 2);
+  SetLength(bx2Arr, 1);  
+  bxArr := [Box(0,0,10,10), Box(20,20,40,40)];
+  bx2Arr := TBACopyEx(bxArr, 1, 1);
+  WriteLn('TBACopyEx: Copied from bxArr from pos(1) to pos(1) (20,20,40,40) as new bx2arr: ' + BoxToStr(bx2Arr[0]));
+  WriteLn('TBABounds: bounds of bxArr TBA := [Box(0,0,10,10), Box(20,20,40,40))] are: ' + BoxToStr(TBABounds(bxArr)));
+  if TBASame(bxArr, bxArr) then WriteLn('TBASame: True: bxArr is the same as bxArr');
+  TBAInsert(bx2Arr, 1, Box(5, 5, 15, 15));
+  WriteLn('TBAInsert: inserting Box(5,5,15,15) at new [1] index, bx2arr[1]: ' + BoxToStr(bx2Arr[1]));
+  bxArr := [Box(0, 0, 10, 10), Box(0, 0, 10, 10), Box(5, 5, 10, 10)];  
+  TBAUnique(bxArr);
+  WriteLn('TBAUnique: Removes duplicates: we have 2 boxes of (0,0,10,10) in bx3arr, now we have: ');
+  WriteLn('[Box' + BoxToStr(bxArr[0]) + ', Box' + BoxToStr(bxArr[1]) + ']' + ' in bx3arr after using TBAUnique');
+  if TBADelete(bxArr, 1) then WriteLn('TBADelete: Deleted index 1 in bx3arr so now bx3arr: [Box' + BoxToStr(bxArr[0]) + ']');
+  bxArr := [Box(0, 0, 10, 10), Box(5, 5, 10, 10)];
+  TBARandomize(bxArr);
+  WriteLn('TBARandomize: Randomizes where the boxes are in the TBA bxArr[1]: ' + BoxToStr(bxArr[1]));
+  TBAClear(bxArr, [1]);
+  WriteLn('TBAClear: Clears boxes at indexs given bxArr[1]: ' + BoxToStr(bxArr[1]));   
+  if TBAContains(bxArr, Box(0, 0, 0, 0)) then WriteLn('TBAContains: True: bxArr does contain Box(0,0,0,0)!');        
+  BoxPos := TBAPositions(bxArr, Box(0,0,0,0));       
+  WriteLn('TBAPositions: Returns indexs of w/e box. Box(0,0,0,0) in bxArr indexs: ' + IntToStr(BoxPos[0]));
+  TBAClear(bxArr, [0, 1]);
+  if TBAAllValuesSame(bxArr) then WriteLn('TBAAllValuesSame: True: bxArr of [Box(0,0,0,0), Box(0,0,0,0)]');
+  bxArr[1] := Box(5, 5, 15, 15);
+  if TBAAllValuesUnique(bxArr) then WriteLn('TBAAllValuesUnique: True: bxArr of [Box(0,0,0,0), Box(5,5,15,15)]');
+  a2DbxArr := TBAToParts(bxArr, pm_PartAmount, 2);
+  WriteLn('TBAToParts: bxArr, using pm_PartAmount of 2, makes bxArr into ATBA of: [[(0, 0, 0, 0)], [(5, 5, 15, 15)]]');
+  a2DbxArr := TBAToParts(bxArr, pm_PartSize, 1);
+  WriteLn('TBAToParts: bxArr, using pm_PartSize of 1, makes bxArr into ATBA of: [[(0, 0, 0, 0)], [(5, 5, 15, 15)]]');
+  WriteLn('TBOutLineToTPA: Debugged this. Should show bxArr[1]: Box(5,5,15,15)');
+  DebugTPA(TBOutLineToTPA(bxArr[1]));                
+  wait(5000);                                        
+  HideDebugImgWindow;
+  WriteLn('TBAOutlineToATPA: Debugged this. Should show [Box(5,5,25,25), Box(30,30,50,50)]');      
+  DebugATPABoundsEx(TBAOutlineToATPA([Box(5, 5, 25, 25), Box(30, 30, 50, 50)]), False, True, False, True, True, '');
+  wait(5000);                                                           
+  HideDebugImgWindow;
+  WriteLn('DebugTB: Debugging Box(0,0,50,50)');  
+  DebugTB(Box(0, 0, 50, 50));
+  wait(5000);                
+  HideDebugImgWindow;   
+  WriteLn('DebugTBA: Debugging BoxArray: [Box(10,10,50,50), Box(100,100,200,200)]');
+  DebugTBA([Box(10,10,50,50), Box(100,100,200,200)]);
+  wait(5000);                                        
+  HideDebugImgWindow;
+end;
+
+begin
+  ClearDebug;
+  TestBoxFunctions;                              
+end.
