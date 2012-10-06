@@ -1,0 +1,71 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                 String Routines
+--------------------------------------------------------------------------------
+ * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+ * function StrInStr(SubStr, S: string): Boolean;
+ * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if the string is in the array and returns position.
+Date Created: October 10th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+var
+  H, L: Integer;
+  SS: string;
+begin
+  Result := True;
+  H := High(Arr);
+  L := Low(Arr);
+  if (not (CaseSenstive)) then
+  begin
+    SS := LowerCase(S);
+    for Pos := L to H do
+      if (SS = LowerCase(Arr[Pos])) then
+        Exit;
+  end
+  else
+    for Pos := L to H do
+      if (S = Arr[Pos]) then
+        Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrInStr(SubStr, S: string): Boolean;
+Contributors: Wanted
+Description: Results true if a string is inside of another string.
+Date Created: December 31st, 2011. By Wanted
+Last Modified: December 31st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrInStr(SubStr, S: string): Boolean;
+begin
+  Result := (Pos(SubStr, S) > 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
+Contributors: Wanted
+Description: Results true if any strings are inside a string.
+Date Created: December 31st, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
+var
+  I, H: Integer;
+begin
+  H := High(SubStrs);
+  Result := True;
+  for I := 0 to H do
+    if (StrInStr(SubStrs[I], S)) then
+      Exit;
+  Result := False;
+end;

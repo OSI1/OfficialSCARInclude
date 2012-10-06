@@ -2,29 +2,31 @@
                               Official SCAR Include
                                   Box Routines
 --------------------------------------------------------------------------------
-* procedure ClearBox(var bx: TBox);
-* procedure FixBox(var bx: TBox);
-* function BoxInBox(inner_bx, outer_bx: TBox): Boolean;
-* function ValidBox(bx: TBox): Boolean;
-* function SameBoxes(bx1, bx2: TBox): Boolean;
-* function BoxCenter(bx: TBox): TPoint;
-* procedure ExpandBox(var bx: TBox; eSize: Integer);
-* procedure ShrinkBox(var bx: TBox; sSize: Integer);
-* procedure ResizeBox(var bx: TBox; pixels, method: Integer);
-* procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
-* procedure BoxDimensions(bx: TBox; var w, h: Integer);
-* procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: Integer);
-* function TBABounds(TBA: TBoxArray): TBox;
-* function TBASame(TBA1, TBA2: TBoxArray): Boolean;
-* procedure TBAInsert(var TBA: TBoxArray; index: Integer; bx: TBox);
-* procedure TBAUnique(var TBA: TBoxArray);
-* function TBADelete(var TBA: TBoxArray; x: Integer): Boolean;
-* procedure TBARandomize(var TBA: TBoxArray);
-* procedure TBAClear(var TBA: TBoxArray; IDs: TIntArray);
-* function TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
-* function TBAPositions(TBA: TBoxArray; bx: TBox): TIntArray;
-* function TBAAllValuesSame(TBA: TBoxArray): Boolean;
-* function TBAAllValuesUnique(TBA: TBoxArray): Boolean;
+ * procedure ClearBox(var bx: TBox);
+ * procedure FixBox(var bx: TBox);
+ * function BoxInBox(inner_bx, outer_bx: TBox): Boolean;
+ * function ValidBox(bx: TBox): Boolean;
+ * function SameBoxes(bx1, bx2: TBox): Boolean;
+ * function BoxCenter(bx: TBox): TPoint;
+ * procedure ExpandBox(var bx: TBox; eSize: Integer);
+ * procedure ShrinkBox(var bx: TBox; sSize: Integer);
+ * procedure ResizeBox(var bx: TBox; pixels, method: Integer);
+ * procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
+ * procedure BoxDimensions(bx: TBox; var w, h: Integer);
+ * procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: Integer);
+ * function TBABounds(TBA: TBoxArray): TBox;
+ * function TBASame(TBA1, TBA2: TBoxArray): Boolean;
+ * procedure TBAInsert(var TBA: TBoxArray; index: Integer; bx: TBox);
+ * procedure TBAUnique(var TBA: TBoxArray);
+ * function TBADelete(var TBA: TBoxArray; x: Integer): Boolean;
+ * procedure TBARandomize(var TBA: TBoxArray);
+ * procedure TBAClear(var TBA: TBoxArray; IDs: TIntArray);
+ * function TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
+ * function TBAPositions(TBA: TBoxArray; bx: TBox): TIntArray;
+ * function TBAAllValuesSame(TBA: TBoxArray): Boolean;
+ * function TBAAllValuesUnique(TBA: TBoxArray): Boolean;
+ * function TBOutlineToTPA(TB: TBox): TPointArray;
+ * function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -483,3 +485,64 @@ begin
           Exit;
       end;
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBOutlineToTPA(TB: TBox): TPointArray;
+Contributors: Wanted
+Description: Turns the outline of a TBox into a TPA.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBOutlineToTPA(TB: TBox): TPointArray;
+var
+  I, II, Hi, Lo: Integer;
+begin
+  Result := [];
+  SetLength(Result, (((TB.X2 - TB.X1) * 2) + ((TB.Y2 - TB.Y1) * 2)));
+  if (Length(Result) < 1) then
+    Exit;
+  II := 0;
+  for I := TB.X1 to TB.X2 do
+  begin
+    Result[II] := Point(I, TB.Y1);
+    Inc(II);
+  end;
+  Lo := TB.Y1 + 1;
+  Hi := TB.Y2 - 1;
+  for I := Lo to Hi do
+  begin
+    Result[II] := Point(TB.X2, I);
+    Inc(II);
+  end;
+  if (TB.Y1 <> TB.Y2) then
+    for I := TB.X2 downto TB.X1 do
+    begin
+      Result[II] := Point(I, TB.Y2);
+      Inc(II);
+    end;
+  for I := Hi downto Lo do
+  begin
+    Result[II] := Point(TB.X1, I);
+    Inc(II);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
+Contributors: Wanted
+Description: Turns the outline of multiple TBoxes into multi TPAs.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: October 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TBA);
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := TBOutlineToTPA(TBA[I]);
+end;
+

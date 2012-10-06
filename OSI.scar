@@ -31,7 +31,10 @@
 {$I Divi\Globals.scar}
 {$I Divi\Math.scar}
 {$I Divi\Box.scar}
+{$I Divi\String.scar}
 {$I Divi\Array.scar}
+{$I Divi\Point.scar}
+{$I Divi\Color.scar}
 {$I Divi\Timing.scar}
 
 // RS2 Globals includes (needs to be included before SMART, keyboard/mouse) 

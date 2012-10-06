@@ -1,0 +1,33 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                  Color Routines
+--------------------------------------------------------------------------------
+ * function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+ * function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+Contributors: Freddy
+Description: Finds a color within circle.
+Date Created: July 20th, 2012. By Freddy
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorCircleTol(var X, Y: Integer; Color, Tol, CX, CY, R: Integer): Boolean;
+begin
+  Result := FindColorTPATol(X, Y, Color, TPAFromCircle(Point(CX, CY), R), Tol);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
+Contributors: Wanted, Freddy
+Description: Finds colors within circle.
+Date Created: October 28th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorCircleTolEx(var Points: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
+begin
+  Result := FindColorTPATolEx(Points, Color, TPAFromCircle(Point(CX, CY), R), Tol);
+end;

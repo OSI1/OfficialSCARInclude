@@ -1,0 +1,202 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                  Point Routines
+--------------------------------------------------------------------------------
+ * function PointsNotInTPA(TPA: TPointArray): TPointArray;
+ * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
+ * function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
+ * function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+ * procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+ * procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+ * procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PointsNotInTPA(TPA: TPointArray): TPointArray;
+Contributors: Wanted, Freddy.
+Description: Finds empty points in TPA bounds.
+Date Created: November 18th, 2011. By Wanted
+Last Modified: September 11th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PointsNotInTPA(TPA: TPointArray): TPointArray;
+begin
+  {$IFDEF SCAR336_UP}
+    Result := CopyTPA(TPA);
+    InvertTPA(Result);
+  {$ELSE}
+    Result := TPAFromBox(TPABounds(TPA));
+    TPAFilterPoints(Result, TPA);
+  {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
+Contributors: Wanted
+Description: Removes a TPA by index from an ATPA.
+Date Created: November 14th, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
+var
+  NewATPA: T2DPointArray;
+  I, H, II: Integer;
+begin
+  if (Length(ATPA) < 1) then
+    Exit;
+  H := High(ATPA);
+  if (Index > H) then
+    Exit;
+  SetLength(NewATPA, Length(ATPA) - 1);
+  II := 0;
+  for I := 0 to H do
+    if (not (I = Index)) then
+    begin
+      NewATPA[II] := ATPA[I];
+      Inc(II);
+    end;
+  ATPA := NewATPA;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
+Contributors: Raymond, Wanted, Freddy.
+Description: Turns a line of text into an array of points.
+Date Created: August 7th, 2011. By Anonymous
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
+var      
+  BmpText: TSCARBitmap; 
+  Client: TSCARClient;
+begin
+  Result := [];
+  if (Length(Text) < 1) then
+    Exit;
+  BmpText := CreateBitmapMaskFromText(Text, Chars);  
+  Client := SetClient(TSCARBitmapClient.Create(BmpText));    
+  try                              
+    FindColorEx(Result, clWhite, 0, 0, BmpText.Width - 1, BmpText.Height - 1);
+  finally      
+    SetClient(Client).Free;
+    BmpText.Free;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+Contributors: Wanted, Freddy.
+Description: Checks a TPA to see if contains the a line of text using its TPA.
+Date Created: October 20th, 2011. By Wanted
+Last Modified: November 28th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+var
+  TextTPA, TPA: TPointArray;
+begin
+  Result := False;
+  TextTPA := LoadTextTPA(Text, Chars);
+  try
+    if (not (TPAInTPARelEx(TextTPA, SearchTPA, TPA))) then
+      Exit;
+  except
+    Exit;
+  end;
+  X := TPA[0].X;
+  Y := TPA[0].Y;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+Contributors: Wanted, Freddy.
+Description: Sorts ATPAs based in their TPA lengths.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: September 10th, 2012. By Bixby Sayz.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+begin
+  SortATPABySize(ATPA);
+  if (BigFirst) then
+    {$IFDEF SCAR336_UP}
+      ReverseATPA(ATPA);
+    {$ELSE}
+      InvertATPA(ATPA);
+    {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+Contributors: Wanted
+Description: Removes all points not within distance.
+Date Created: October 28th, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+var
+  H, L, I, HH: Integer;
+  NewTPA: TPointArray;
+  Dist: Extended;
+begin
+  H := High(Points);
+  L := Low(Points);
+  HH := 0;
+  for I := L to H do
+  begin
+    Dist := DistanceEx(Points[I].X, Points[I].Y, CX, CY);
+    if (Dist >= MinDist) then
+      if (Dist <= MaxDist) then
+      begin
+        SetLength(NewTPA, HH + 1);
+        NewTPA[HH] := Points[I];
+        Inc(HH);
+      end;
+  end;
+  Points := NewTPA;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+Contributors: Freddy, Wanted, Wizzup.
+Description: Removes all points from a TPA except for a given slice.
+Date Created: November 3rd, 2011. By Wanted
+Last Modified: November 5th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+var
+  StartAngle, EndAngle, StartAngle2, EndAngle2: Extended;
+  TPA, TPA2: TPointArray;
+begin
+  {$IFDEF RS2}
+    StartAngle := SAng - 90;
+    EndAngle := EAng - 90;
+  {$ELSE}
+    StartAngle := SAng;
+    EndAngle := EAng;
+  {$ENDIF}
+  if (StartAngle < 0) then
+  begin
+    StartAngle2 := FixD(StartAngle);
+    if (EndAngle < 0) then
+    begin
+      EndAngle2 := FixD(EndAngle);
+      TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(StartAngle2), Radians(EndAngle2));
+      Exit;
+    end;
+    StartAngle := 0;
+    EndAngle2 := 360;
+    TPA := Points;
+    TPA2 := Points;
+    TPAExtractPie(TPA, Point(CX, CY), SRad, ERad, Radians(StartAngle2), Radians(EndAngle2));
+    TPAExtractPie(TPA2, Point(CX, CY), SRad, ERad, Radians(StartAngle), Radians(EndAngle));
+    Points := CombineTPA(TPA, TPA2);
+    Exit;
+  end;
+  TPAExtractPie(Points, Point(CX, CY), SRad, ERad, Radians(StartAngle), Radians(EndAngle));
+end; 
