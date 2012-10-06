@@ -1,0 +1,29 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              Math Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestMathFunctions;                      
+   Last Modified: October 6th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$I ../../OSI.scar}
+
+procedure TestMathFunctions;
+var
+  I: Integer;
+  Ext1: Extended;
+begin            
+  IncE(Ext1, 5.5);
+  WriteLn('IncE: Ext1 by 5.5 makes Ext1 = ' + FloatToStr(Ext1));     
+  DecE(Ext1, 5.5);
+  WriteLn('DecE: Ext1 by 5.5 makes Ext1 = ' + FloatToStr(Ext1));
+  I := 1;
+  if Odd(I) then WriteLn('Odd: True: I is odd because I = ' + IntToStr(I));
+  I := I + 1;
+  if Even(I) then WriteLn('Even: True: I is even because I = ' + IntToStr(I));
+end;
+
+begin
+  ClearDebug;
+  TestMathFunctions;  
+end.

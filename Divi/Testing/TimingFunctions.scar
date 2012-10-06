@@ -1,0 +1,35 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             Timing Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestTimingFunctions;                      
+   Last Modified: October 6th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$I ../../OSI.scar}
+
+procedure TestTimingFunctions;
+begin
+  WriteLn('RR(100, 200) returns a random number from 100 to 200');
+  WriteLn('WaitRR(100, 200): waits for a number of milliseconds decided by the RR range');
+  WaitRR(0, 0);
+  WriteLn('WaitNone: waits none');   
+  WaitNone;                       
+  WriteLn('The various WaitFunc or WaitFind functions use the following:');
+  WriteLn('Min/Max wait: a random wait is taken from that range randomly and is used betwn. loop checks');
+  WriteLn('MinTotalWait, MaxTotalWait: a random wait is taken from that range randomly and if met breaks loop'); 
+  WriteLn('DesiredResult: Is the result you want for the function you are waiting for');
+  WriteLn('So WaitFunc(@fFunc4, true, 0, 100, 200, 300)' + #13#10 +  
+          'will wait a RR of 200-300 wait for the func fFunc4 to return True.' + #13#10 + 
+          'With RR 0-100 wait of checks on the func in the loop');
+  WriteLn('WaitFindColorTolEx: DesiredCount is the length you want the TPA to be above to return true!');
+  WriteLn('TheTime: ' + TheTime);
+  WriteLn('TheDate: ' + TheDate);
+  WriteLn('TheMonth: ' + TheMonth);
+  WriteLn('STimeRunning: Time the script has been ran: ' + STimeRunning);   
+end;
+
+begin
+  ClearDebug;
+  TestTimingFunctions;  
+end.

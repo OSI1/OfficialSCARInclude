@@ -1,0 +1,31 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             String Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestStringFunctions;                      
+   Last Modified: October 6th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$I ../../OSI.scar}
+
+procedure TestStringFunctions;
+var
+  Pos1: Integer;
+begin   
+  WriteLn('StrReverse: Reverse of ''SCAR-Divi'' is: ' + StrReverse('SCAR-Divi'));   
+  if (StrCompare('Scar-divi', 'Scar-divi') = 0) then WriteLn('StrCompare: True: Compares to see if same, then the length. 0-same 1:s1>s2 -1:s1<s2');
+  WriteLn('StrStuff: Stuffing SCAR-Divi with Macro from Pos(6) for Count(4): ' + StrStuff('SCAR-Divi', 'Macro', 6, 4));
+  WriteLn('StrBetween: ''SCAR-Divi Macro Development Environment'' from Pos(10) to Pos(30): ' + StrBetween('SCAR-Divi Macro Development Environment', 10, 30));
+  WriteLn('StrCopy: Copies from & to pos but not between! Pos(1) to Pos(4): ' + StrCopy('www.scar-divi.com', 1, 4));
+  if InStrArrPos('Scar-divi', ['Scar-divi'], Pos1, True) then WriteLn('InStrArrPos: True: Found ''Scar-divi'' inside the [''Scar-divi''] array! Returned pos in Pos1 variable'); 
+  WriteLn('Pos1 = ' + IntToStr(Pos1)); 
+  if StrInStr('boo', 'booya') then WriteLn('StrInStr: True: ''boo'' is inside string ''booya''!');
+  if StrInStrMulti(['boo', 'ya'], 'booya') then WriteLn('StrInStrMulti: True: ''boo'' and ''ya'' are both in string ''booya''!');
+  // MultiReplace
+  // MultiReplace2           
+end;
+
+begin
+  ClearDebug;
+  TestStringFunctions;  
+end.

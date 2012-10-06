@@ -4,7 +4,7 @@
 --------------------------------------------------------------------------------
  * function StrReverse(str: string): string; 
  * function StrCompare(s1, s2: string): Integer;                    
- * function StrStuff(str, s: string; iFrom, iCount: Integer): string;          
+ * function StrStuff(str, stuff: string; iFrom, iCount: Integer): string;          
  * function StrBetween(str: string; pos1, pos2: Integer): string;             
  * function StrCopy(str: string; pos1, pos2: Integer): string;
  * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
@@ -50,18 +50,19 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrStuff(str, s: string; iFrom, iCount: Integer): string;
-Contributors: Janilabo
-Description: Stuffs str with s, iFrom=start position, iCount=count of chars to stuff with.                                                              
+function StrStuff(str, stuff: string; iFrom, iCount: Integer): string;
+Contributors: Janilabo, LordJashin
+Description: Stuffs str with stuff, iFrom=start position, iCount=count of chars
+to stuff with.                                                              
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
+Last Modified: October 6th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrStuff(str, s: string; iFrom, iCount: Integer): string;
+function StrStuff(str, stuff: string; iFrom, iCount: Integer): string;
 begin
   Result := Copy(str, 1, Length(str));
   Delete(Result, iFrom, iCount);
-  Insert(s, Result, iFrom);
+  Insert(stuff, Result, iFrom);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
