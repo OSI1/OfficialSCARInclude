@@ -11,7 +11,9 @@
 procedure TestMathFunctions;
 var
   I: Integer;
-  Ext1: Extended;
+  Ext1: Extended;     
+  arrRandom, tmp: TIntArray;
+  P: TPoint;
 begin            
   IncE(Ext1, 5.5);
   WriteLn('IncE: Ext1 by 5.5 makes Ext1 = ' + FloatToStr(Ext1));     
@@ -20,7 +22,29 @@ begin
   I := 1;
   if Odd(I) then WriteLn('Odd: True: I is odd because I = ' + IntToStr(I));
   I := I + 1;
-  if Even(I) then WriteLn('Even: True: I is even because I = ' + IntToStr(I));
+  if Even(I) then WriteLn('Even: True: I is even because I = ' + IntToStr(I));  
+  WriteLn('Difference: diff between (-5) and (25) = ' + IntToStr(Difference(-5, 25))); 
+  WriteLn('DifferenceE: diff between (-5.6) and (25.9) = ' + FloatToStr(DifferenceE(-5.6, 25.9)));
+  WriteLn('ValueToPercent: pos(50) of source (150), (50/150)x100 =  percent = ' + FloatToStr(ValueToPercent(50, 150)));
+  WriteLn('PercentToValue: percent(33) of source(150), (33/100)x150 = value = ' + FloatToStr(PercentToValue(33, 150)));
+  WriteLn('ValueToFraction: pos(50) of source(150), 50/150 = fraction = ' + FloatToStr(ValueToFraction(50, 150)));
+  WriteLn('FractionToValue: fraction(0.33) of source(150), 0.33x150 = value = ' + FloatToStr(FractionToValue(0.33, 150)));
+  if InRangeE(5.5, 0.5, 10.5) then WriteLn('InRangeE: True: 5.5 is in the range of 0.5 to 10.5!');  
+  arrRandom := RandomEx(10, 5, false);                                                            
+  WriteLn('RandomEx: range of 10, amount of indexs = 5, duplicates(false), Result TIA = ' + TIAToStr(arrRandom));
+  WriteLn('RR: Random range. Min is 0, Max is 10. Random Result = ' + IntToStr(RR(0, 10)));
+  arrRandom := tmp;
+  arrRandom := RandomRangeEx(3, 9, 5, false);
+  WriteLn('RandomRangeEx: from(3) to(9), amount of indexs = 5, duplicates(false), Result TIA = ' + TIAToStr(arrRandom));    
+  P := RRectanglePoint(0, 0, 10, 10);
+  WriteLn('RRectanglePoint: Box of (0,0,10,10) random point from the box = (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');      
+  P := RCirclePoint(5, 5, 5);
+  WriteLn('RCirclePoint: Starting point of (5,5) with a radius of 5, random point = (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');    
+  WriteLn('GetAngle: of P(' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ') and Point(15,15) = ' + FloatToStr(GetAngle(P, Point(15, 15))));
+  WriteLn('AngleBetweenPointsExDegress: of P(' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ') and Point(15,15) = ' + FloatToStr(AngleBetweenPointsExDegress(P, Point(15, 15))));
+  WriteLn('DistanceEx: bewteen points of (0, 0, 15, 15) = ' + FloatToStr(DistanceEx(0, 0, 15, 15)));
+  // ConstrainBoxes
+  // GenerateSpiral          
 end;
 
 begin
