@@ -7,6 +7,12 @@
  * function StrStuff(str, stuff: string; iFrom, iCount: Integer): string;          
  * function StrBetween(str: string; pos1, pos2: Integer): string;             
  * function StrCopy(str: string; pos1, pos2: Integer): string;
+ * function StrAfter(SubStr, s: string): string;
+ * function StrBefore(SubStr, s: string): string;
+ * function StrAfterEx(SubStr, s: string; offset: Integer): string;
+ * function StrBeforeEx(SubStr, s: string; offset: Integer): string;
+ * function StrLastAfter(SubStr, s: string): string;  
+ * function StrLastBefore(SubStr, s: string): string;
  * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
  * function StrInStr(SubStr, S: string): Boolean;
  * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
@@ -111,6 +117,131 @@ begin
       True: Result := Copy(str, pos1, ((pos2 - pos1) + 1)); 
     end;
   end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrAfter(SubStr, s: string): string;
+Contributors: Janilabo, LordJashin
+Description: Returns the string after SubStr in s.                  
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrAfter(SubStr, s: string): string;
+var
+  p, sL, subL: Integer;
+begin
+  subL := Length(SubStr);
+  sL := Length(s);
+  if (subL >= sL) then Exit;
+  p := Pos(SubStr, s);
+  if (p > 0) then
+    Result := Copy(s, (p + subL), ((1 + sL) - (p + subL)));
+end;
+         
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrBefore(SubStr, s: string): string;
+Contributors: Janilabo, LordJashin
+Description: Returns the string before SubStr in s.                  
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrBefore(SubStr, s: string): string;
+var
+  p: Integer;
+begin
+  if (Length(SubStr) >= Length(s)) then Exit;
+  p := Pos(SubStr, s);
+  if (p > 1) then
+    Result := Copy(s, 1, (p - 1));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrAfterEx(SubStr, s: string; offset: Integer): string;
+Contributors: Janilabo, LordJashin
+Description: Returns the string after SubStr in s AFTER offset.                  
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrAfterEx(SubStr, s: string; offset: Integer): string;
+var
+  p, subL, sL: Integer;
+begin
+  subL := Length(SubStr);
+  sL := Length(s);
+  if ((subL >= sL) or (offset >= sL)) then Exit;
+  p := PosEx(SubStr, s, offset);
+  if (p > 0) then
+    Result := Copy(s, (p + subL), ((1 + sL) - (p + subL)));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrBeforeEx(SubStr, s: string; offset: Integer): string;
+Contributors: Janilabo, LordJashin
+Description: Returns the string before SubStr in s AFTER offset.
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrBeforeEx(SubStr, s: string; offset: Integer): string;
+var
+  p, sL: Integer;
+begin
+  sL := Length(s);
+  if ((Length(SubStr) >= sL) or (offset >= sL)) then Exit;
+  p := PosEx(SubStr, s, offset);
+  if (p > 1) then
+    Result := Copy(s, 1, (p - 1));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrLastAfter(SubStr, s: string): string;
+Contributors: Janilabo, LordJashin
+Description: Returns the string after LAST SubStr in s.
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrLastAfter(SubStr, s: string): string;
+var
+  subL, l, p, lp: Integer;
+begin
+  l := Length(s);
+  subL := Length(SubStr);
+  if (subL > l) then Exit;
+  repeat
+    p := PosEx(SubStr, s, (p + 1));
+    if (p > 0) then
+      lp := p;
+  until (p <= 0);
+  if (lp > 0) then
+    Result := Copy(s, (lp + subL), ((1 + l) - (lp + subL)));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrLastBefore(SubStr, s: string): string;
+Contributors: Janilabo
+Description: Returns the string before the LAST SubStr in s.
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrLastBefore(SubStr, s: string): string;
+var
+  l, p, lp: Integer;
+begin
+  l := Length(s);
+  if (Length(SubStr) > l) then
+    Exit;
+  repeat
+    p := PosEx(SubStr, s, (p + 1));
+    if (p > 0) then
+      lp := p;
+  until (p <= 0);
+  if (lp > 0) then
+    Result := Copy(s, 1, (lp - 1));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
