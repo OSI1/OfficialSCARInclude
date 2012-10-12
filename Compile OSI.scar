@@ -40,7 +40,7 @@ procedure TestCompileOSI;
 Contributors: Wanted, LordJashin
 Description: Test compiles all of OSI. Comment out every combination of defines.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: October 1st, 2012. By LordJashin
+Last Modified: October 12th, 2012. By LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TestCompileOSI;
@@ -52,7 +52,11 @@ begin
   WriteLn('OSI: Successfully Set Up In: (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 
+procedure ScriptTerminate;
+begin
+  FreeOSI;
+end;
+
 begin
   TestCompileOSI; 
-  FreeOSI;
 end.

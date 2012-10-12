@@ -15,6 +15,10 @@
   {$ENDIF}
 {$ENDIF}
 
+// Boolean that is set to true when SetupOSI completes successfully
+var
+  IsOSISetup: Boolean;
+
 // SMART in OSI uses RS2, thus RS2 must be defined if SMART is defined!
 {$IFDEF SMART}
   {$DEFINE RS2}
@@ -43,6 +47,9 @@
   {$I RS2\Core\Globals.scar} 
   {$I RS2\Core\Constants.scar}  
 {$ENDIF} 
+
+// RS2 Updater (Globals, etc)
+{$I RS2\Misc\Updater.scar}
 
 // RS2 SMART Include for using SMART
 {$IFDEF SMART}
@@ -79,14 +86,16 @@ procedure FreeOSI;
 Contributors: Wanted, LordJashin
 Description: Frees things that are loaded into memory upon OSI setup.
 Date Created: August 8th, 2011. By Wanted
-Last Modified: October 3rd, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 12th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeOSI;
 begin
+  if not IsOSISetup then Exit;
   {$IFDEF RS2}
-    FreeRS2Fonts;    
-    WriteLn('OSI: RS2: Player(s) Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
+    FreeRS2Fonts;           
+    if (PlayerStartTime <> 0) then
+      WriteLn('OSI: RS2: Player(s) Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
   {$ENDIF}
   WriteLn('OSI: Successfully Ran For: (' + STimeRunning + ')');          
 end;
@@ -96,7 +105,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: September 30th, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 12th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -108,71 +117,82 @@ var
   i: Integer;
 {$ENDIF}
 begin
-  OSI_Variance := 3.0;
-  WriteLn('OSI: Routines Enabled');
-  {$IFDEF RS2}
-    RS2GlobalVars;
-    RS2FontFolder := '';
-    WriteLn('OSI: RS2: Routines Enabled');
-    {$IFDEF OSI_Color_Anti_Randoms}
-      WriteLn('OSI: RS2: Color Random Detection and Solving Enabled');
-      InitiateAntiRandoms;
-    {$ELSE}
-      WriteLn('OSI: RS2: Color Random Detection and Solving Disabled');
+  try
+    OSI_Variance := 3.0;
+    WriteLn('OSI: Routines Enabled');
+    {$IFDEF RS2}
+      RS2GlobalVars; 
+      RSupdateGlobals;
+      RS2FontFolder := '';
+      WriteLn('OSI: RS2: Routines Enabled');
+      {$IFDEF OSI_Color_Anti_Randoms}
+        WriteLn('OSI: RS2: Color Random Detection and Solving Enabled');
+        InitiateAntiRandoms;
+      {$ELSE}
+        WriteLn('OSI: RS2: Color Random Detection and Solving Disabled');
+      {$ENDIF}
+      {$IFNDEF DisableRS2Fonts}
+        RS2FontFolder := IncludesPath + 'OSI\RS2\Fonts\';
+        if (not (DirectoryExists(RS2FontFolder))) then
+          RS2FontFolder := FontsPath;
+        OptionChars := rs_LoadChars(RS2FontFolder + 'ScreenChars\');
+        UpChars := rs_LoadChars(RS2FontFolder + 'UpChars\');
+        ScreenChars := LoadChars2(RS2FontFolder + 'ScreenChars\');
+        NPCChars := LoadChars2(RS2FontFolder + 'NPCChars\');
+        SmallChars := LoadChars2(RS2FontFolder + 'SmallChars\');
+        StatChars := LoadChars2(RS2FontFolder + 'StatChars\');
+        FriendChars := LoadChars2(RS2FontFolder + 'FriendChars\');
+        LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
+        XPChars := LoadChars2(RS2FontFolder + 'UpChars\');
+        WriteLn('OSI: RS2: Loaded Fonts: OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
+      {$ELSE}
+        WriteLn('OSI: RS2: Font Loading Disabled.');
+      {$ENDIF}
+      SetLength(Players, 1);
+      LoadRS2WorldArray;
+      AllowQuickChat := True;
+      AllowLootShare := True;                 
+      {$IFDEF SMART}                      
+        if (SMART_Server = 0) and (Length(Players[CurrentPlayer].WorldInfo) > 1) then
+          for i := 0 to high(RS2WorldArray) do
+            if Players[CurrentPlayer].WorldInfo[1] = i + 1 then
+              SMART_Server := i + 1;
+        if (SMART_Server = 0) then 
+          SMART_Server := RandomWorld(false);
+        if InitSmartLib(IncludesPath + 'OSI\RS2\Misc\libsmartremote32.dll') then
+          SMART_Path := IncludesPath + 'OSI\RS2\Misc\'
+        else if InitSmartLib(ScriptPath + 'OSI\RS2\Misc\libsmartremote32.dll') then   
+          SMART_Path := ScriptPath + 'OSI\RS2\Misc\'    
+        else if InitSmartLib(ScriptPath + 'RS2\Misc\libsmartremote32.dll') then   
+          SMART_Path := ScriptPath + 'RS2\Misc\'  
+        else
+        begin
+          WriteLn('OSI: RS2: Couldn''t load SMART (libsmartremote32.dll)');
+          WriteLn('OSI: RS2: Try restarting SCAR Divi, SMART, or Re-installing OSI');
+          WriteLn('OSI: RS2: If problems persist post a thread on the forums at www.scar-divi.com');
+          TerminateScript;
+        end;
+        if (not (NonAutomaticSMART)) then
+          InitiateSMART;
+      {$ELSE}                                                         
+        GetClient.Activate;
+        UpdateRSClient;                                                
+        WriteLn('OSI: RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...8-13secs');
+        if not WaitFunc(@RSReady, True, 100, 250, 8000, 13000) then
+          FixLoginScreen;
+      {$ENDIF}
+      PlayerStartTime := GetSystemTime; 
     {$ENDIF}
-    {$IFNDEF DisableRS2Fonts}
-      RS2FontFolder := IncludesPath + 'OSI\RS2\Fonts\';
-      if (not (DirectoryExists(RS2FontFolder))) then
-        RS2FontFolder := FontsPath;
-      OptionChars := rs_LoadChars(RS2FontFolder + 'ScreenChars\');
-      UpChars := rs_LoadChars(RS2FontFolder + 'UpChars\');
-      ScreenChars := LoadChars2(RS2FontFolder + 'ScreenChars\');
-      NPCChars := LoadChars2(RS2FontFolder + 'NPCChars\');
-      SmallChars := LoadChars2(RS2FontFolder + 'SmallChars\');
-      StatChars := LoadChars2(RS2FontFolder + 'StatChars\');
-      FriendChars := LoadChars2(RS2FontFolder + 'FriendChars\');
-      LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
-      XPChars := LoadChars2(RS2FontFolder + 'UpChars\');
-      WriteLn('OSI: RS2: Loaded Fonts: OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
-    {$ELSE}
-      WriteLn('OSI: RS2: Font Loading Disabled.');
-    {$ENDIF}
-    SetLength(Players, 1);
-    LoadRS2WorldArray;
-    AllowQuickChat := True;
-    AllowLootShare := True;                 
-    {$IFDEF SMART}                      
-      if (SMART_Server = 0) and (Length(Players[CurrentPlayer].WorldInfo) > 1) then
-        for i := 0 to high(RS2WorldArray) do
-          if Players[CurrentPlayer].WorldInfo[1] = i + 1 then
-            SMART_Server := i + 1;
-      if (SMART_Server = 0) then 
-        SMART_Server := RandomWorld(false);
-      if InitSmartLib(IncludesPath + 'OSI\RS2\Misc\libsmartremote32.dll') then
-        SMART_Path := IncludesPath + 'OSI\RS2\Misc\'
-      else if InitSmartLib(ScriptPath + 'OSI\RS2\Misc\libsmartremote32.dll') then   
-        SMART_Path := ScriptPath + 'OSI\RS2\Misc\'    
-      else if InitSmartLib(ScriptPath + 'RS2\Misc\libsmartremote32.dll') then   
-        SMART_Path := ScriptPath + 'RS2\Misc\'  
-      else
-      begin
-        WriteLn('OSI: RS2: Couldn''t load SMART (libsmartremote32.dll)');
-        WriteLn('OSI: RS2: Try restarting SCAR Divi, SMART, or Re-installing OSI');
-        WriteLn('OSI: RS2: If problems persist post a thread on the forums at www.scar-divi.com');
-        TerminateScript;
-      end;
-      if (not (NonAutomaticSMART)) then
-        InitiateSMART;
-    {$ELSE}                                                         
-      GetClient.Activate;
-      UpdateRSClient;                                                
-      WriteLn('OSI: RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...8-13secs');
-      if not WaitFunc(@RSReady, True, 100, 250, 8000, 13000) then
-        FixLoginScreen;
-    {$ENDIF}
-    PlayerStartTime := GetSystemTime; 
-  {$ENDIF}
-  MouseSpeed := 15;
-  SetColorSpeed2Modifiers(0.2, 0.2);
-  ColorToleranceSpeed(1); 
+    MouseSpeed := 15;
+    SetColorSpeed2Modifiers(0.2, 0.2);
+    ColorToleranceSpeed(1);
+  Except
+    WriteLn('OSI: Failed to load!');
+    WriteLn('OSI: Try restarting SCAR Divi, SMART, or Re-installing OSI');
+    WriteLn('OSI: If problems persist post a thread on the forums at www.scar-divi.com');
+    WriteLn('OSI: Terminating Script!');  
+    TerminateScript; 
+  finally
+    IsOSISetup := True;     
+  end; 
 end;

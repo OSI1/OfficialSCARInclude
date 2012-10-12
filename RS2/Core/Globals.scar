@@ -583,23 +583,32 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FreeRS2Fonts;
-Contributors: Wanted
+Contributors: Wanted, LordJashin
 Description: Frees RS2 fonts from memory.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modified: November 23rd, 2011. By Wanted. RS2 Build 683.
+Last Modified: October 12th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeRS2Fonts;
+var
+  b: Boolean;
 begin
-  {$IFNDEF DisableRS2Fonts}
-	  FreeChars2(ScreenChars);
-    FreeChars2(NPCChars);
-    FreeChars2(SmallChars);
-    FreeChars2(StatChars);
-    FreeChars2(FriendChars);
-    FreeChars2(LoginChars);
-    FreeChars2(XPChars);
-    WriteLn('OSI: RS2: Freed Fonts');
+  {$IFNDEF DisableRS2Fonts}     
+    try
+      FreeChars2(ScreenChars);
+      FreeChars2(NPCChars);
+      FreeChars2(SmallChars);
+      FreeChars2(StatChars);
+      FreeChars2(FriendChars);
+      FreeChars2(LoginChars);
+      FreeChars2(XPChars);
+    except
+      WriteLn('OSI: RS2: Failed to Free Fonts');
+      b := true;      
+    finally                            
+      if not b then
+        WriteLn('OSI: RS2: Freed Fonts');
+    end;
   {$ENDIF}
 end;
 
