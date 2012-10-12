@@ -186,7 +186,7 @@ begin
     MouseSpeed := 15;
     SetColorSpeed2Modifiers(0.2, 0.2);
     ColorToleranceSpeed(1);
-  Except
+  except
     WriteLn('OSI: Failed to load!');
     WriteLn('OSI: Try restarting SCAR Divi, SMART, or Re-installing OSI');
     WriteLn('OSI: If problems persist post a thread on the forums at www.scar-divi.com');
