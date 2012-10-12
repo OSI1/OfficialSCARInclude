@@ -25,6 +25,9 @@ begin
   if Even(I) then WriteLn('Even: True: I is even because I = ' + IntToStr(I));  
   WriteLn('Difference: diff between (-5) and (25) = ' + IntToStr(Difference(-5, 25))); 
   WriteLn('DifferenceE: diff between (-5.6) and (25.9) = ' + FloatToStr(DifferenceE(-5.6, 25.9)));
+  if (Compare(0, 1) = -1) then WriteLn('Compare: 0 < 1 so the result is -1. Good for variables later');
+  if (CompareE(0.1, 1.1) = -1) then WriteLn('CompareE: 0.1 < 1.1 so the result is -1. Good for variables later');
+  WriteLn('DecAcc: 1.1 with a DecAcc of 0 = ' + FloatToStr(DecAcc(1.1, 0)));
   WriteLn('ValueToPercent: pos(50) of source (150), (50/150)x100 =  percent = ' + FloatToStr(ValueToPercent(50, 150)));
   WriteLn('PercentToValue: percent(33) of source(150), (33/100)x150 = value = ' + FloatToStr(PercentToValue(33, 150)));
   WriteLn('ValueToFraction: pos(50) of source(150), 50/150 = fraction = ' + FloatToStr(ValueToFraction(50, 150)));

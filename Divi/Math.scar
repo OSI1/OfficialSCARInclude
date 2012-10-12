@@ -7,7 +7,10 @@
  * function Odd(x: Integer): Boolean;             
  * function Even(x: Integer): Boolean;            
  * function Difference(value1, value2: Integer): Integer;      
- * function DifferenceE(value1, value2: Extended): Extended;         
+ * function DifferenceE(value1, value2: Extended): Extended;      
+ * function Compare(v, x: Integer): Integer;    
+ * function CompareE(v, x: Extended): Integer;    
+ * function DecAcc(x: Extended; a: Integer): Extended;
  * function ValueToPercent(position, source: Extended): Extended; 
  * function PercentToValue(percent, source: Extended): Extended;
  * function ValueToFraction(position, source: Extended): Extended; 
@@ -107,6 +110,72 @@ Last Modified: September 30th, 2012. By Janilabo.
 function DifferenceE(value1, value2: Extended): Extended;
 begin
   Result := Abs(value2 - value1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Compare(v, x: Integer): Integer;
+Contributors: Janilabo
+Description: Compares v with x. Results: 0=EQUAL, 1=v>x, -1=v<x
+Date Created: October 9th, 2012. By Janilabo.
+Last Modified: October 9th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+function Compare(v, x: Integer): Integer;
+begin
+  if (v <> x) then
+    if (v > x) then
+      Result := 1
+    else
+      Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CompareE(v, x: Extended): Integer;
+Contributors: Janilabo
+Description: Compares v with x. Results: 0=EQUAL, 1=v>x, -1=v<x
+Date Created: October 9th, 2012. By Janilabo.
+Last Modified: October 9th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+function CompareE(v, x: Extended): Integer;
+begin
+  if (v <> x) then
+    if (v > x) then
+      Result := 1
+    else
+      Result := -1;
+end;                         
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DecAcc(x: Extended; a: Integer): Extended;
+Contributors: Janilabo
+Description: Decimal accuracy according the amount of decimal places (significance)
+Date Created: October 11th, 2012. By Janilabo.
+Last Modified: October 11th, 2012. By Janilabo.
+Explanation: Returns x with decimal accuracy of a. Examples below with '123.456789'.
+               a=0    a=1     a=2       a=3       a=4         a=5     etc.
+               123   123.4   123.45   123.456   123.4567   123.45678                  
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DecAcc(x: Extended; a: Integer): Extended;
+var
+  d: Extended;
+  z: Boolean;
+begin
+  Result := Int(x);
+  if (a > 0) then
+  begin
+    d := DecRet(x);
+    z := (d < 0.1);
+    if z then
+      d := (d + 0.1);
+    try
+      Result := (Result + StrToFloat('.' + Copy(FloatToStr(d), 3, a)));
+    except
+    end;
+    if z then
+      Result := (Result - 0.1);
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
