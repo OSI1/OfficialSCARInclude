@@ -47,7 +47,9 @@ begin
   WriteLn('AngleBetweenPointsExDegress: of P(' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ') and Point(15,15) = ' + FloatToStr(AngleBetweenPointsExDegress(P, Point(15, 15))));
   WriteLn('DistanceEx: bewteen points of (0, 0, 15, 15) = ' + FloatToStr(DistanceEx(0, 0, 15, 15)));
   // ConstrainBoxes
-  // GenerateSpiral          
+  // GenerateSpiral                                                                               
+  WriteLn('IntToBin: Translates an Integer into its binary equivalent: 328: ' + IntToBin(328));  
+  WriteLn('BinToInt: Translates a string of binary numbers to its Integer equivalent: 101001000: ' + IntToStr(BinToInt('101001000')));
 end;
 
 begin

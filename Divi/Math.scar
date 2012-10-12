@@ -27,6 +27,8 @@
  * procedure ConstrainBox(var X1, Y1, X2, Y2: Integer; CX1, CY1, CX2, CY2: Integer);
  * procedure ConstrainBoxes(var TBA: TBoxArray; CX1, CY1, CX2, CY2: Integer);
  * function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
+ * function IntToBin(Value: Integer): string;       
+ * function BinToInt(Value: string): Integer;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -545,4 +547,47 @@ begin
     if (Ang > 360) then
       Ang := Ang - 360;
   until (False);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IntToBin(Value: Integer): string;
+Contributors: Freddy
+Description: Translates an integer into its Binary bit equivalent
+Date Created: September 9th, 2012. By Freddy.
+Last Modified: September 9th, 2012. By Freddy.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IntToBin(Value: Integer): string;
+begin
+  Result := '';
+  while Value > 0 do
+  begin           
+    if Boolean(Value and 1) then
+      Result := '1' + Result
+    else
+      Result := '0' + Result;     
+    Value := Value shr 1;
+  end; 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BinToInt(Value: string): Integer;
+Contributors: Freddy
+Description: Translates a string of binary numbers to its Integer equivalent
+Date Created: September 9th, 2012. By Freddy.
+Last Modified: September 9th, 2012. By Freddy.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ 
+function BinToInt(Value: string): Integer;
+var
+  I, L: Integer;
+begin
+  Result := 0;
+  L := Length(Value);
+  for I := 1 to L do
+  begin
+    Result := Result shl 1;
+    if Value[I] = '1' then
+      Result := Result or 1;
+  end;
 end;
