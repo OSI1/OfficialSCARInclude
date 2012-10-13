@@ -169,14 +169,14 @@ begin
     begin
       ClickMouse(685, 17, mbLeft);
       WaitRR(500, 100);
-      WriteLn('OSI: RS2: Tried Setting Audio to Max' )
+      OSI_WriteAndLog('OSI: RS2: Tried Setting Audio to Max' )
       ClickMouse(685, 17, mbLeft);  
     end
   else
     begin   
       ClickMouse(632, 17, mbLeft);
       WaitRR(500, 100);
-      WriteLn('OSI: RS2: Tried Setting Audio to Disabled');
+      OSI_WriteAndLog('OSI: RS2: Tried Setting Audio to Disabled');
       ClickMouse(632, 17, mbLeft);      
     end;     
   WaitRR(700, 1200);
@@ -239,14 +239,14 @@ begin
     MouseBox(270, 260, 275, 260, ClickLeft); // Lowest Brightness
     WaitRR(2000, 2500);
     MouseBox(616, 11, 623, 18, ClickLeft);   // Exits the graphics settings   
-    WriteLn('OSI: RS2: You need to make sure your graphics settings on SMART are on Fixed size');   
+    OSI_WriteAndLog('OSI: RS2: You need to make sure your graphics settings on SMART are on Fixed size');   
     Exit;
   {$ENDIF}                                                                              
-  WriteLn('OSI: RS2: Attempting to Fix the Login Screen, and the Graphics Settings!');
-  WriteLn('OSI: RS2: You must set the graphics to (Min, Fixed, Custom->Software Mode)!');
-  WriteLn('OSI: RS2: You must close popups, make SURE you are at the Login Screen!');
-  WriteLn('OSI: RS2: You must re-select the Client (RS2) with the Crosshairs (+)!'); 
-  WriteLn('OSI: RS2: If you still can''t get it to work try Restarting SCAR Divi!');
+  OSI_WriteAndLog('OSI: RS2: Attempting to Fix the Login Screen, and the Graphics Settings!');
+  OSI_WriteAndLog('OSI: RS2: You must set the graphics to (Min, Fixed, Custom->Software Mode)!');
+  OSI_WriteAndLog('OSI: RS2: You must close popups, make SURE you are at the Login Screen!');
+  OSI_WriteAndLog('OSI: RS2: You must re-select the Client (RS2) with the Crosshairs (+)!'); 
+  OSI_WriteAndLog('OSI: RS2: If you still can''t get it to work try Restarting SCAR Divi!');
     Repeat             
       GetClient.Update;      
       with GetClient.ImageArea do
@@ -343,12 +343,12 @@ begin
   end;
   if (AllPlayersInActive) then
   begin
-    WriteLn('OSI: RS2: No active players to login!');
+    OSI_WriteAndLog('OSI: RS2: No active players to login!');
     Exit;
   end;
   if (not (Players[CurrentPlayer].Active)) then
     CurrentPlayer := NextActivePlayerIndex;
-  WriteLn('OSI: RS2: Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
+  OSI_WriteAndLog('OSI: RS2: Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
   ProcStart:                                                  // Retry Login Mark
   B3 := (CountColor(10141389, 345, 268, 418, 280) = 143);     // Auto setup graphics
   if (not (B3)) then
@@ -377,7 +377,7 @@ begin
   if (not (B2)) then
     if (not (WaitFunc(@LoginScreen, True, 250, 400, 3500, 4500))) then
     begin
-      WriteLn('OSI: RS2: Couldn''t find Login Screen!');
+      OSI_WriteAndLog('OSI: RS2: Couldn''t find Login Screen!');
       Exit;
     end;
   {$IFNDEF SMART}
@@ -440,7 +440,7 @@ begin
     begin
       WaitRR(500, 1500);
       PushKey(VK_Escape);
-      WriteLn(Actions[0]);
+      OSI_WriteAndLog(Actions[0]);
       WaitRR(Actions[1] - 100, Actions[1] + 100);
       if (Actions[2] <> 0) then
         if (Attempts < Actions[2]) then
@@ -491,7 +491,7 @@ begin
   Result := LoggedIn;
   if (Result) then
   begin
-    WriteLn('OSI: RS2: ' + Players[CurrentPlayer].Name + ' logged in.');
+    OSI_WriteAndLog('OSI: RS2: ' + Players[CurrentPlayer].Name + ' logged in.');
     PlayerStartTime := GetSystemTime;
     Exit;
   end;
@@ -545,7 +545,7 @@ begin
     begin
       WaitRR(500, 1500);
       PushKey(VK_Escape);
-      WriteLn(Actions[0]);
+      OSI_WriteAndLog(Actions[0]);
       WaitRR(Actions[1] - 100, Actions[1] + 100);
       if (Actions[2] > 0) then
         if (Attempts < Actions[2]) then
@@ -628,7 +628,7 @@ begin
     if (not (Result)) then
       Exit;
   until (True);
-  WriteLn('OSI: RS2: ' + Players[CurrentPlayer].Name + ' exited to lobby.');
+  OSI_WriteAndLog('OSI: RS2: ' + Players[CurrentPlayer].Name + ' exited to lobby.');
   IncEx(Players[CurrentPlayer].Worked, GetSystemTime - PlayerStartTime);
   PlayerStartTime := GetSystemTime;
 end;
@@ -686,7 +686,7 @@ begin
     if (not (Result)) then
       Exit;
   until (True);
-  WriteLn('OSI: RS2: Logged out ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '.');
+  OSI_WriteAndLog('OSI: RS2: Logged out ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '.');
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -699,7 +699,7 @@ Last Modified: November 20th, 2011. By Wanted. RS2 Build 679.
 
 function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
 begin
-  WriteLn('OSI: RS2: SwitchToPlayer(' + Players[Player].Name + ', ' + BoolToStr(Active) + ');');
+  OSI_WriteAndLog('OSI: RS2: SwitchToPlayer(' + Players[Player].Name + ', ' + BoolToStr(Active) + ');');
   Players[CurrentPlayer].Active := Active;
   CurrentPlayer := Player;
   Result := Login;
@@ -716,7 +716,7 @@ Last Modified: September 25th, 2011. By Wanted. RS2 Build 666.
 
 function NextPlayer(Active: Boolean): Boolean;
 begin
-  WriteLn('OSI: RS2: NextPlayer(' + BoolToStr(Active) + ');');
+  OSI_WriteAndLog('OSI: RS2: NextPlayer(' + BoolToStr(Active) + ');');
   Logout;
   Result := SwitchToPlayer(NextActivePlayerIndex, Active);
 end;
@@ -732,7 +732,7 @@ Last Modified: September 25th, 2011. By Wanted. RS2 Build 666.
 
 function RandomNextPlayer(Active: Boolean): Boolean;
 begin
-  WriteLn('OSI: RS2: NextPlayer(' + BoolToStr(Active) + ');');
+  OSI_WriteAndLog('OSI: RS2: NextPlayer(' + BoolToStr(Active) + ');');
   Logout;
   Result := SwitchToPlayer(Random(Length(Players)), Active);            // FIX
 end;

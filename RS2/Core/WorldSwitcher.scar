@@ -112,7 +112,7 @@ begin
   try
     H := StrToInt(ReadINI('Worlds', 'High', WorldsINIPath));
   except
-    WriteLn('*WARNING* procedure LoadRS2WorldArray failed!');
+    OSI_WriteAndLog('*WARNING* procedure LoadRS2WorldArray failed!');
     Exit;
   end;
   SetLength(RS2WorldArray, H + 1);
@@ -188,7 +188,7 @@ begin
     end;
   if (I > H) then
   begin
-    WriteLn('World number ' + IntToStr(World) + ' is invalid!');
+    OSI_WriteAndLog('World number ' + IntToStr(World) + ' is invalid!');
     Exit;
   end;
   if (World > 9) then
@@ -262,7 +262,7 @@ begin
         TextColor := clF2PWorld;
       Break;
     end;
-  WriteLn(IntToStr(P.X) + ', ' + IntToStr(P.Y));
+  OSI_WriteAndLog(IntToStr(P.X) + ', ' + IntToStr(P.Y));
   WorldInfo := RS2WorldArray[I];
   WorldInfo.Number := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 4, False, tr_AllChars)), 0);
   PlayerAmount := GetTextAtEx(P.X + 30, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 5, False, tr_AllChars);
@@ -400,7 +400,7 @@ begin
   end;
   if (Length(NewArray) < 1) then
   begin
-    WriteLn('No world met this criteria!');
+    OSI_WriteAndLog('No world met this criteria!');
     Result := 0;
     Exit;
   end;

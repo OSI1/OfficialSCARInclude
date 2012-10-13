@@ -1,0 +1,51 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                               Logging Routines
+--------------------------------------------------------------------------------
+ * procedure OSI_WriteAndLog(s: string);
+ * procedure OSI_ClearLog;
+ * function OSI_SaveLog(Path: string): Boolean; 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure OSI_WriteAndLog(s: string);
+begin
+  try
+    WriteLn(s);
+    SetLength(OSI_Log, Length(OSI_Log) + 1);
+    OSI_Log[Length(OSI_Log) - 1] := '[' + TheDate + ']: [' + TheTime + ']: ' + s;
+  except
+    WriteLn('OSI: Failed to Log some text...');
+  end;
+end;
+
+procedure OSI_ClearLog;
+var
+  tmp: TStrArray;
+begin
+  OSI_Log := tmp;
+end;
+
+function OSI_SaveLog(Path: string): Boolean;
+var
+  i, F1: Integer;
+begin
+  if (Length(OSI_Log) = 0) then Exit;
+  Result := False;
+  try
+    F1 := RewriteFile(Path, True);
+    WriteFileString(F1, '{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=' + #13#10 +
+                        '                             Official SCAR Include' + #13#10 + 
+                        '                                      Log' + #13#10 + 
+                        '                       Created On: ' + TheDate + #13#10 +                      
+                        '                               At: ' + TheTime + #13#10 + 
+                        '=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}' + #13#10 +
+                        ' ' + #13#10);
+    for i := 0 to High(OSI_Log) do
+      WriteFileString(F1, OSI_Log[i] + #13#10);                                 
+    if (FileSize(F1) > 0) and (FileExists(Path)) then
+      Result := True;
+    CloseFile(F1);
+  except
+    OSI_WriteAndLog('OSI: Failed to Save Log to: ' + Path);
+  end;                                                     
+end;

@@ -94,8 +94,8 @@ begin
   FreeDTM(dtmGift);
   if (not (REsult)) then
     Exit;
-  WriteLn('Found Random event gift!');
-  WriteLn('Solving Random event gift...');
+  OSI_WriteAndLog('Found Random event gift!');
+  OSI_WriteAndLog('Solving Random event gift...');
   MouseItem(CordsToItemSlot(P), ClickLeft, False);
   WaitRR(3500, 4500);
   MouseBox(42, 74, 189, 124, ClickLeft);  // Temp solution soon, BoxRewards
@@ -291,15 +291,15 @@ begin
         if (Result) then
         begin
           Players[CurrentPlayer].Rand := RS2Randoms[I].Name;
-          WriteLn(RS2Randoms[I].Name + ' random detected!');
+          OSI_WriteAndLog(RS2Randoms[I].Name + ' random detected!');
           if (RS2Randoms[I].SolveRandom <> nil) then
           begin
             InitCompassAngle := GetCompassAngleDegrees;
             if (not (RS2Randoms[I].SolveRandom())) then
             begin
-              WriteLn(RS2Randoms[I].Name + ' random solver failed! Needs fixing by an expert!');
-              WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
-              WriteLn('Player stuck in ' + RS2Randoms[I].Name + ' random.');
+              OSI_WriteAndLog(RS2Randoms[I].Name + ' random solver failed! Needs fixing by an expert!');
+              OSI_WriteAndLog('Please contact an OSI developer http://forums.scar-divi.com');
+              OSI_WriteAndLog('Player stuck in ' + RS2Randoms[I].Name + ' random.');
               Players[CurrentPlayer].Active := False;
               Logout;
               Exit;
@@ -312,9 +312,9 @@ begin
           end
           else
           begin
-            WriteLn(RS2Randoms[I].Name + ' random solver either doesn''t exist yet or has been disabled.');
-            WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
-            WriteLn('Player stuck in ' + RS2Randoms[I].Name + ' random.');
+            OSI_WriteAndLog(RS2Randoms[I].Name + ' random solver either doesn''t exist yet or has been disabled.');
+            OSI_WriteAndLog('Please contact an OSI developer http://forums.scar-divi.com');
+            OSI_WriteAndLog('Player stuck in ' + RS2Randoms[I].Name + ' random.');
             Players[CurrentPlayer].Active := False;
             Logout;
             Exit;
@@ -325,9 +325,9 @@ begin
     if (not (RandomSolved)) then
     begin
       Result := True;
-      WriteLn('Unknown random deteced! Detection and solver needs to be made by an expert!');
-      WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
-      WriteLn('Player stuck in unknown random.');
+      OSI_WriteAndLog('Unknown random deteced! Detection and solver needs to be made by an expert!');
+      OSI_WriteAndLog('Please contact an OSI developer http://forums.scar-divi.com');
+      OSI_WriteAndLog('Player stuck in unknown random.');
       Players[CurrentPlayer].Rand := 'Unknown random';
       Players[CurrentPlayer].Active := False;
       Logout;

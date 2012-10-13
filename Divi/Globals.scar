@@ -18,6 +18,17 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OSI_Log
+Contributors: LordJashin
+Description: For All OSI's logging functions in Divi\Misc\Logging.scar
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  OSI_Log: TStrArray;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Variance
 Contributors: Wanted, Freddy.
 Description: The default level of variance, or tendency, for randomized values

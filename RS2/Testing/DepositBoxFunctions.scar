@@ -40,14 +40,14 @@ end;
 
 procedure TestDepositBoxFunctions;
 begin
-  if GetDepositSlotIndex(1, 1) = 0 then WriteLn('GetDepositSlotIndex: Works!') else WriteLn('GetDepositSlotIndex: Failed!');
-  if GetDepositItemBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetDepositItemBounds: Works!') else WriteLn('GetDepositItemBounds: Failed!');
-  if CordsToDepositItemSlot(Point(MDI1, MDI2)) = 0 then WriteLn('CordsToDepositItemSlot: Works!') else WriteLn('CordsToDepositItemSlot: Failed!');
-  if DepositItemExists(0) then WriteLn('DepositItemExists: Found Item in Slot(0)!') else WriteLn('DepositItemExists: Slot(0) Empty or Failed!');
-  WriteLn('DepositCount: Result: ' + IntToStr(DepositCount));
-  if DepositFull then WriteLn('DepositFull: Full!') else WriteLn('DepositFull: Not Full or Failed!');
-  if DepositEmpty then WriteLn('DepositEmpty: Empty!') else WriteLn('DepositEmpty: Not Empty or Failed!');
-  if MouseDepositItem(0, ClickLeft) then WriteLn('MouseDepositItem: Clicked Item in Slot(0)!') else WriteLn('MouseDepositItem: Didn''t Click Item(0) or Failed!');  
+  if GetDepositSlotIndex(1, 1) = 0 then OSI_WriteAndLog('GetDepositSlotIndex: Works!') else OSI_WriteAndLog('GetDepositSlotIndex: Failed!');
+  if GetDepositItemBounds(0) <> Box(0, 0, 0, 0) then OSI_WriteAndLog('GetDepositItemBounds: Works!') else OSI_WriteAndLog('GetDepositItemBounds: Failed!');
+  if CordsToDepositItemSlot(Point(MDI1, MDI2)) = 0 then OSI_WriteAndLog('CordsToDepositItemSlot: Works!') else OSI_WriteAndLog('CordsToDepositItemSlot: Failed!');
+  if DepositItemExists(0) then OSI_WriteAndLog('DepositItemExists: Found Item in Slot(0)!') else OSI_WriteAndLog('DepositItemExists: Slot(0) Empty or Failed!');
+  OSI_WriteAndLog('DepositCount: Result: ' + IntToStr(DepositCount));
+  if DepositFull then OSI_WriteAndLog('DepositFull: Full!') else OSI_WriteAndLog('DepositFull: Not Full or Failed!');
+  if DepositEmpty then OSI_WriteAndLog('DepositEmpty: Empty!') else OSI_WriteAndLog('DepositEmpty: Not Empty or Failed!');
+  if MouseDepositItem(0, ClickLeft) then OSI_WriteAndLog('MouseDepositItem: Clicked Item in Slot(0)!') else OSI_WriteAndLog('MouseDepositItem: Didn''t Click Item(0) or Failed!');  
   // FindDepositItemsDTM
   // CountDepositItemsDTM     
   // FindDepositItemsBMP     

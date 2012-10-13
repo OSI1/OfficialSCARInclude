@@ -36,15 +36,15 @@ begin
   end
   else
     S2 := 'disabled';
-  WriteLn('OSI: RS2: Initializing SMART Runescape Client World: ' + IntToStr(Server) + ' (or an already paired SMART) with safe mode ' + S2 + '...');  
+  OSI_WriteAndLog('OSI: RS2: Initializing SMART Runescape Client World: ' + IntToStr(Server) + ' (or an already paired SMART) with safe mode ' + S2 + '...');  
   try
     Prefix := ReadINI('World' + IntToStr(Server), 'Prefix', WorldsINIPath);
     if (Prefix = '') then
     begin
-      WriteLn('OSI: RS2: Invalid world number or corrupted world list. Please review your settings');
-      WriteLn('OSI: RS2: Failed to load SMART!');
-      WriteLn('OSI: RS2: Try restarting SCAR Divi, SMART, or re-installing OSI');
-      WriteLn('OSI: RS2: If you are still having problems post a thread on the forums at www.scar-divi.com');
+      OSI_WriteAndLog('OSI: RS2: Invalid world number or corrupted world list. Please review your settings');
+      OSI_WriteAndLog('OSI: RS2: Failed to load SMART!');
+      OSI_WriteAndLog('OSI: RS2: Try restarting SCAR Divi, SMART, or re-installing OSI');
+      OSI_WriteAndLog('OSI: RS2: If you are still having problems post a thread on the forums at www.scar-divi.com');
       Exit;
     end;
     if not ForceNew then
@@ -74,9 +74,9 @@ begin
     with Result.InputArea do
       Result.InputArea := Box(X1, Y1 + 50, X2, Y2); 
   except
-    WriteLn('Failed to load SMART!');    
-    WriteLn('OSI: RS2: Try restarting SCAR Divi, SMART, or re-installing OSI');
-    WriteLn('OSI: RS2: If you are still having problems post a thread on the forums at www.scar-divi.com');
+    OSI_WriteAndLog('Failed to load SMART!');    
+    OSI_WriteAndLog('OSI: RS2: Try restarting SCAR Divi, SMART, or re-installing OSI');
+    OSI_WriteAndLog('OSI: RS2: If you are still having problems post a thread on the forums at www.scar-divi.com');
     TerminateScript;
   end;
 end;
@@ -97,24 +97,24 @@ begin
   try
     SMART_Client := InitSmartEx(SMART_Server, True, False);
   Except
-    WriteLn('OSI: RS2: Failed to load SMART!');
-    WriteLn('OSI: RS2: Do not close the command prompt at all it is for SMART!');
-    WriteLn('OSI: RS2: Try running the script again, if problems persist restart SMART/SCAR');
-    WriteLn('OSI: RS2: If you still cannot get SMART to work post a thread at the forums at www.scar-divi.com');
-    WriteLn('OSI: RS2: Terminating Script!');      
+    OSI_WriteAndLog('OSI: RS2: Failed to load SMART!');
+    OSI_WriteAndLog('OSI: RS2: Do not close the command prompt at all it is for SMART!');
+    OSI_WriteAndLog('OSI: RS2: Try running the script again, if problems persist restart SMART/SCAR');
+    OSI_WriteAndLog('OSI: RS2: If you still cannot get SMART to work post a thread at the forums at www.scar-divi.com');
+    OSI_WriteAndLog('OSI: RS2: Terminating Script!');      
   end;
   if (SMART_Client = nil) then
     Exit;
   SetClient(SMART_Client).Free;        
-  WriteLn('OSI: RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...10-25secs');                         
+  OSI_WriteAndLog('OSI: RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...10-25secs');                         
   if not WaitFunc(@RSReady, True, 100, 250, 10000, 25000) then
     if not FixLoginScreen then
       begin      
-        WriteLn('OSI: RS2: SMART may be loading slow or updating!');
-        WriteLn('OSI: RS2: Failed to find RS2 screens (Login, Lobby, or LoggedIn)');
-        WriteLn('OSI: RS2: Close any popups, if SMART cannot load (Black Screen) try moving the refresh slider!');
-        WriteLn('OSI: RS2: If you still can''t get it to work try Restarting SCAR Divi!');        
-        WriteLn('OSI: RS2: If you still cannot get SMART to work post a thread at the forums at www.scar-divi.com');          
+        OSI_WriteAndLog('OSI: RS2: SMART may be loading slow or updating!');
+        OSI_WriteAndLog('OSI: RS2: Failed to find RS2 screens (Login, Lobby, or LoggedIn)');
+        OSI_WriteAndLog('OSI: RS2: Close any popups, if SMART cannot load (Black Screen) try moving the refresh slider!');
+        OSI_WriteAndLog('OSI: RS2: If you still can''t get it to work try Restarting SCAR Divi!');        
+        OSI_WriteAndLog('OSI: RS2: If you still cannot get SMART to work post a thread at the forums at www.scar-divi.com');          
       end;
   Result := WaitFunc(@RSReady, True, 100, 250, 15000, 20000);
 end;

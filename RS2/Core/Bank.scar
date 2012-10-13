@@ -772,7 +772,7 @@ begin
   //DebugATPABounds(ATPA);
   H := High(ATPA);
   //for I := 0 to High(ATPA) do
-    //WriteLn(IntToStr(I) + ', ' + IntToStr(Length(ATPA[I])));
+    //OSI_WriteAndLog(IntToStr(I) + ', ' + IntToStr(Length(ATPA[I])));
   for I := 0 to High(ATPA) do
     if (InRange(Length(ATPA[I]), BankInfo[8], BankInfo[9])) then
     begin
@@ -796,7 +796,7 @@ begin
         if (PinScreen) then
           if (not (EnterBankPin(Players[CurrentPlayer].Pin, False))) then
           begin
-            WriteLn('Pin failed!');
+            OSI_WriteAndLog('Pin failed!');
             Exit;
           end
           else
@@ -884,7 +884,7 @@ begin
       if (PinScreen) then
         if (not (EnterBankPin(Players[CurrentPlayer].Pin, False))) then
         begin
-          WriteLn('Pin failed!');
+          OSI_WriteAndLog('Pin failed!');
           Exit;
         end
         else

@@ -47,7 +47,7 @@ var
 begin
   ClickCompass(True);
   P := GetNearestNPC;  
-  WriteLn('GetNearestNPC: Result: (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
+  OSI_WriteAndLog('GetNearestNPC: Result: (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
   SetLength(ATPA, 2);    
   ATPA[0] := FindAllNPCMM;
   ATPA[1] := FindAllNPCMS;                              
@@ -60,10 +60,10 @@ begin
   wait(6000);
   SmartClearDebug(SMART_Client);
   SmartSetDebug(SMART_Client, False);
-  if InteractNPC('Banker', 'Banker') then WriteLn('InteractNPC: You were near a bank and talked with a banker!') else WriteLn('InteractNPC: You were not near a bank or Failed!');
+  if InteractNPC('Banker', 'Banker') then OSI_WriteAndLog('InteractNPC: You were near a bank and talked with a banker!') else OSI_WriteAndLog('InteractNPC: You were not near a bank or Failed!');
   SetMousePos(0, 0);  
   wait(1000);  
-  if InteractNPCEx(['Banker'], ['Banker'], 0, 0) then WriteLn('InteractNPCEx: We found bankers and talked with them!!') else WriteLn('InteractNPCEx: Didn''t find any banker npcs or Failed!');                 
+  if InteractNPCEx(['Banker'], ['Banker'], 0, 0) then OSI_WriteAndLog('InteractNPCEx: We found bankers and talked with them!!') else OSI_WriteAndLog('InteractNPCEx: Didn''t find any banker npcs or Failed!');                 
 end;
 
 begin

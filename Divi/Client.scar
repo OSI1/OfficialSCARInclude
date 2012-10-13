@@ -1,0 +1,158 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                 Client Routines
+--------------------------------------------------------------------------------
+ * function FindWindowEx(Title: string, CaseSensitive, PartialMatch: Boolean): HWND;
+ * function SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
+ * procedure SCARSetCaption(Title: string); 
+ * procedure SCARMoveToTray; 
+ * procedure SCARMinimize;         
+ * procedure SCARMaximize; 
+ * procedure SCARHide;
+ * procedure SCARShow;        
+ * procedure SCARSetEnabled(Enabled: Boolean);   
+ * function SCARHandle: HWND;
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindWindowEx(Title: string, CaseSensitive, PartialMatch: Boolean): HWND;
+Contributors: LordJashin
+Description: Finds a window using FindWindowsEx returns first one found as result
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindWindowEx(Title: string; CaseSensitive, PartialMatch: Boolean): HWND;
+var
+  arr: THwndArray;
+begin
+  Result := 0;  
+  SetLength(arr, 1);
+  arr := FindWindowsEx(GetDesktopWindow, Title, '', false, CaseSensitive, PartialMatch);
+  if (Length(arr) > 0) then
+    Result := arr[0];  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
+Contributors: LordJashin
+Description: Sets the Clients box (ImageArea, and InputArea)
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
+begin
+  Result := False;
+  if not Client.Exists then Exit;
+  Client.Update;  
+  with Client.ImageArea do
+    Client.ImageArea := Box(cX1, cY1, cX2, cY2);     
+  with Client.InputArea do
+    Client.InputArea := Box(cX1, cY1, cX2, cY2);
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SCARSetCaption(Title: string);
+Contributors: LordJashin
+Description: Sets SCAR Divi's caption, uses Disguise
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SCARSetCaption(Title: string);
+begin
+  Disguise(Title);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SCARMoveToTray;
+Contributors: LordJashin
+Description: Moves SCAR Divi to the system tray
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SCARMoveToTray;
+begin
+  MoveToTray;
+end;  
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SCARMinimize;
+Contributors: LordJashin
+Description: Minimizes SCAR Divi
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SCARMinimize;
+begin
+  GetSelf.WindowState := wsMinimized;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SCARMaximize;
+Contributors: LordJashin
+Description: Maximizes SCAR Divi
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SCARMaximize;
+begin
+  GetSelf.WindowState := wsMaximized;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SCARHide;
+Contributors: LordJashin
+Description: Hides SCAR Divi, can't be shown again until SCARShow; is called
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SCARHide;
+begin
+  GetSelf.Hide;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SCARShow;
+Contributors: LordJashin
+Description: Shows SCAR Divi
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SCARShow;
+begin
+  GetSelf.Show;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SCARSetEnabled(Enabled: Boolean);
+Contributors: LordJashin
+Description: Enables or Disables SCAR Divi
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SCARSetEnabled(Enabled: Boolean);
+begin
+  GetSelf.Enabled := Enabled;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SCARHandle: HWND;
+Contributors: LordJashin
+Description: Returns SCAR Divi's window handle
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SCARHandle: HWND;
+begin
+  Result := GetSelf.Handle;
+end;

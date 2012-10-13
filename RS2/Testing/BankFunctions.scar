@@ -44,25 +44,25 @@ end;
 procedure TestBankFunctions;
 begin
   //Open Bank functions need work       
-  //if OpenBankBooth(Loc_LBC) then WriteLn('OpenBankBooth: Opened Bank booth!') else WriteLn('Didn''t find bank booth or Failed!');     
-  if PinScreen then WriteLn('PinScreen: Your PIN screen!') else WriteLn('PinScreen: No Pin Screen up or Failed!');
-  if EnterBankPin(Players[0].Pin, True) then WriteLn('EnterBankPin: Pin entered and bank is open!') else WriteLn('EnterBankPin: Wrong PIN, or Failed!');
-  if BankScreen then WriteLn('BankScreen: Your bank is open!') else WriteLn('BankScreen: Your bank is closed or Failed!');
-  WriteLn('GetCurrentBankTab: Result: ' + IntToStr(GetCurrentBankTab));
-  if BankTabExists(0) then WriteLn('BankTabExists: Tab0 exists!') else WriteLn('BankTabExists: Tab0 doesn''t exist or Failed!');
-  if SetBankTab(0, True) then WriteLn('SetBankTab: Set to Tab0!') else WriteLn('SetBankTab: Didn''t set to tab0 or Failed!');    
-  if GetTabBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetTabBounds: Works!') else WriteLn('GetTabBounds: Failed!');
-  if GetBankSlotIndex(1, 1) = 0 then WriteLn('GetBankSlotIndex: Works!') else WriteLn('GetBankSlotIndex: Failed!');
-  if GetBankSlotBounds(0) <> Box(0, 0, 0, 0) then WriteLn('GetBankSlotBounds: Works!') else WriteLn('GetBankSlotBounds: Failed!');
-  if CordsToBankSlot(Point(MBS1, MBS2)) = 0 then WriteLn('CordsToBankSlot: Works!') else WriteLn('CordsToBankSlot: Failed!');
-  if FixBank(True) then WriteLn('FixBank: Scrolled up!') else WriteLn('FixBank: Didn''t scroll up or Failed!');
-  if ToggleUseNotes(true) then WriteLn('ToggleUseNotes: Toggled Noted mode!') else WriteLn('ToggleUseNotes: Didn''t toggle note mode or Failed!');
-  if ToggleSwapMode(true) then WriteLn('ToggleSwapMode: Toggled Swap mode!') else WriteLn('ToggleSwapMode: Didn''t toggle swap mode or Failed!');
-  if BankShowEquipStats(True) then WriteLn('BankShowEquipStats: Equip stats!') else WriteLn('BankShowEquipStats: Didn''t show equip stats or Failed!'); 
-  if BankHideEquipStats then WriteLn('BankHideEquipStats: Closed the Equip Stats!') else WriteLn('BankHideEquipStats: Didn''t close equip stats or Failed!');
-  if DepositAll(True) then WriteLn('DepositAll: Deposited all items!') else WriteLn('DepositAll: Didn''t deposit all items or Failed!'); 
-  if Withdraw(Withdraw_All, 0, True) then WriteLn('Withdraw: Withdrew all from Slot0 in bank!') else WriteLn('Withdraw: Didn''t withdraw all from Slot0 or Failed!');  
-  if SearchBank('Hatchet', True) then WriteLn('SearchBank: Searched the bank for Hatchet!') else WriteLn('SearchBank: Didn''t search the bank or Failed!');
+  //if OpenBankBooth(Loc_LBC) then OSI_WriteAndLog('OpenBankBooth: Opened Bank booth!') else OSI_WriteAndLog('Didn''t find bank booth or Failed!');     
+  if PinScreen then OSI_WriteAndLog('PinScreen: Your PIN screen!') else OSI_WriteAndLog('PinScreen: No Pin Screen up or Failed!');
+  if EnterBankPin(Players[0].Pin, True) then OSI_WriteAndLog('EnterBankPin: Pin entered and bank is open!') else OSI_WriteAndLog('EnterBankPin: Wrong PIN, or Failed!');
+  if BankScreen then OSI_WriteAndLog('BankScreen: Your bank is open!') else OSI_WriteAndLog('BankScreen: Your bank is closed or Failed!');
+  OSI_WriteAndLog('GetCurrentBankTab: Result: ' + IntToStr(GetCurrentBankTab));
+  if BankTabExists(0) then OSI_WriteAndLog('BankTabExists: Tab0 exists!') else OSI_WriteAndLog('BankTabExists: Tab0 doesn''t exist or Failed!');
+  if SetBankTab(0, True) then OSI_WriteAndLog('SetBankTab: Set to Tab0!') else OSI_WriteAndLog('SetBankTab: Didn''t set to tab0 or Failed!');    
+  if GetTabBounds(0) <> Box(0, 0, 0, 0) then OSI_WriteAndLog('GetTabBounds: Works!') else OSI_WriteAndLog('GetTabBounds: Failed!');
+  if GetBankSlotIndex(1, 1) = 0 then OSI_WriteAndLog('GetBankSlotIndex: Works!') else OSI_WriteAndLog('GetBankSlotIndex: Failed!');
+  if GetBankSlotBounds(0) <> Box(0, 0, 0, 0) then OSI_WriteAndLog('GetBankSlotBounds: Works!') else OSI_WriteAndLog('GetBankSlotBounds: Failed!');
+  if CordsToBankSlot(Point(MBS1, MBS2)) = 0 then OSI_WriteAndLog('CordsToBankSlot: Works!') else OSI_WriteAndLog('CordsToBankSlot: Failed!');
+  if FixBank(True) then OSI_WriteAndLog('FixBank: Scrolled up!') else OSI_WriteAndLog('FixBank: Didn''t scroll up or Failed!');
+  if ToggleUseNotes(true) then OSI_WriteAndLog('ToggleUseNotes: Toggled Noted mode!') else OSI_WriteAndLog('ToggleUseNotes: Didn''t toggle note mode or Failed!');
+  if ToggleSwapMode(true) then OSI_WriteAndLog('ToggleSwapMode: Toggled Swap mode!') else OSI_WriteAndLog('ToggleSwapMode: Didn''t toggle swap mode or Failed!');
+  if BankShowEquipStats(True) then OSI_WriteAndLog('BankShowEquipStats: Equip stats!') else OSI_WriteAndLog('BankShowEquipStats: Didn''t show equip stats or Failed!'); 
+  if BankHideEquipStats then OSI_WriteAndLog('BankHideEquipStats: Closed the Equip Stats!') else OSI_WriteAndLog('BankHideEquipStats: Didn''t close equip stats or Failed!');
+  if DepositAll(True) then OSI_WriteAndLog('DepositAll: Deposited all items!') else OSI_WriteAndLog('DepositAll: Didn''t deposit all items or Failed!'); 
+  if Withdraw(Withdraw_All, 0, True) then OSI_WriteAndLog('Withdraw: Withdrew all from Slot0 in bank!') else OSI_WriteAndLog('Withdraw: Didn''t withdraw all from Slot0 or Failed!');  
+  if SearchBank('Hatchet', True) then OSI_WriteAndLog('SearchBank: Searched the bank for Hatchet!') else OSI_WriteAndLog('SearchBank: Didn''t search the bank or Failed!');
 end;
 
 begin

@@ -44,12 +44,12 @@ var
   P: TPoint;                                          
   ATPA: T2DPointArray;
 begin
-  if OnMM(MMCX, MMCY) then WriteLn('OnMM: Works!') else WriteLn('OnMM: Failed!');
-  if MMOnMS(Point(MMCX, MMCY)) then WriteLn('MMOnMS: MiniMap Point is on the MainScreen too!') else WriteLn('Couldn''t find MiniMap point on MainScreen or Failed!');
+  if OnMM(MMCX, MMCY) then OSI_WriteAndLog('OnMM: Works!') else OSI_WriteAndLog('OnMM: Failed!');
+  if MMOnMS(Point(MMCX, MMCY)) then OSI_WriteAndLog('MMOnMS: MiniMap Point is on the MainScreen too!') else OSI_WriteAndLog('Couldn''t find MiniMap point on MainScreen or Failed!');
   P := MMToMSEx(Point(MMCX, MMCY), 30);
-  WriteLn('MMToMSEx: Result: (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
+  OSI_WriteAndLog('MMToMSEx: Result: (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
   P := MMToMS(Point(MMCX, MMCY));
-  WriteLn('MMToMS: Result: (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
+  OSI_WriteAndLog('MMToMS: Result: (' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')');
   if not SmartEnabled(SMART_Client) then
     SmartSetEnabled(SMART_Client, True);                         
   SmartSetDebug(SMART_Client, True);  
@@ -57,15 +57,15 @@ begin
   ATPA[0] := MMsToMSs([Point(MMCX, MMCY), Point(MMCX + 5, MMCY + 5), Point(MMCX - 5, MMCY - 5)]);
   ATPA[1] := FilterMMPointsMS([Point(MSCX, MSCY),Point(MSCX + 10, MSCY - 10), Point(MSCX + 20, MSCY + 20)]);   
   SmartDebugATPABoundsEx(ATPA, True, False, True, True);
-  WriteLn('MMsToMSs: SMART Debug TPA');  
-  WriteLn('FilterMMPointsMS: SMART Debug TPA');
-  WriteLn('GetCompassAngleRadians: Result: ' + FloatToStr(GetCompassAngleRadians));
-  WriteLn('GetCompassAngleDegrees: Result: ' + FloatToStr(GetCompassAngleDegrees));
-  if MakeCompass(30) then WriteLn('MakeCompass: Rotated To 30!') else WriteLn('MakeCompass: Didn''t Rotate to 30 or Failed!');
+  OSI_WriteAndLog('MMsToMSs: SMART Debug TPA');  
+  OSI_WriteAndLog('FilterMMPointsMS: SMART Debug TPA');
+  OSI_WriteAndLog('GetCompassAngleRadians: Result: ' + FloatToStr(GetCompassAngleRadians));
+  OSI_WriteAndLog('GetCompassAngleDegrees: Result: ' + FloatToStr(GetCompassAngleDegrees));
+  if MakeCompass(30) then OSI_WriteAndLog('MakeCompass: Rotated To 30!') else OSI_WriteAndLog('MakeCompass: Didn''t Rotate to 30 or Failed!');
   SetAngle(True);
-  WriteLn('SetAngle: Can set the angle to highest!');
+  OSI_WriteAndLog('SetAngle: Can set the angle to highest!');
   ClickCompass(false);
-  WriteLn('ClickCompass: Clicked to face north!');
+  OSI_WriteAndLog('ClickCompass: Clicked to face north!');
   // MMDots functions
   // RadarRoadWalk
   // Flag Functions :(

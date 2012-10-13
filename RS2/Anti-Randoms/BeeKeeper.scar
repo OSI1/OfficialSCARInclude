@@ -70,7 +70,7 @@ begin
     Result := True;
     Exit;
   end;
-  WriteLn('Failed to find BeeKeeper!');
+  OSI_WriteAndLog('Failed to find BeeKeeper!');
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -115,7 +115,7 @@ begin
     Inc(Trys);
     if (Trys > 5) then
     begin
-      WriteLn('Failed! 1 try left saving it...');
+      OSI_WriteAndLog('Failed! 1 try left saving it...');
       Logout;
       Exit;
     end;
@@ -213,11 +213,11 @@ begin
     if (WaitFunc(@BeeKeeper_InRandom, False, 200, 300, 4000, 5000)) then
       if (not (BeeKeeper_BeeScreen)) then
       begin
-        WriteLn('Beekeeper Solved!');
+        OSI_WriteAndLog('Beekeeper Solved!');
         Result := True;
         Exit;
       end;
     if (Trys < 5) then
-      WriteLn('Incorrect! trying again... ' + IntToStr(6 - Trys) + ' trys left.'); 
+      OSI_WriteAndLog('Incorrect! trying again... ' + IntToStr(6 - Trys) + ' trys left.'); 
   until (False); 
 end;

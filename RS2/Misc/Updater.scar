@@ -51,5 +51,5 @@ begin
       RSMedY2 := uRSMedY2;
       Result := True;
     end;             
-  if Result then WriteLn('OSI: RS2: Globals (RS2, RSMed bounds) Updated!');
+  if Result then OSI_WriteAndLog('OSI: RS2: Globals (RS2, RSMed bounds) Updated!');
 end;

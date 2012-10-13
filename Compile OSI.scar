@@ -9,17 +9,16 @@
 //{$DEFINE OverrideVariance}       // Comment in in-depth testing   
 //{$DEFINE NoVariance}             // Comment in in-depth testing
 //{$DEFINE DisableRS2Fonts}        // Comment in in-depth testing
+{$DEFINE OSIDebug}                 // Comment out in in-depth testing
 {$DEFINE RS2}                      // Comment out in in-depth testing
 {$IFDEF RS2}
+  {$DEFINE RS2Debug}               // Comment out in in-depth testing
   {$DEFINE OSI_Color_Anti_Randoms} // Comment out in in-depth testing
   {$DEFINE SMART}                  // Comment out in in-depth testing
 {$ENDIF}
 
 //Main OSI Include file
 {$I OSI.scar}
-
-//OSI Debug Include
-{$I Divi\Misc\Debug.scar}          // Comment out in in-depth testing
 
 //RS2 Includes
 {$IFDEF RS2}
@@ -30,9 +29,6 @@
   {$I RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
   {$I RS2\Misc\Trading.scar}       // Comment out in in-depth testing
   {$I RS2\Misc\Symbols.scar}       // Comment out in in-depth testing
-  {$IFDEF SMART}
-    {$I RS2\Misc\DebugSMART.scar}  // Comment out in in-depth testing
-  {$ENDIF}    
 {$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -49,7 +45,7 @@ var
 begin
   T := GetSystemTime;
   SetUpOSI;
-  WriteLn('OSI: Successfully Set Up In: (' + IntToStr(GetSystemTime - T) + ' ms)');
+  OSI_WriteAndLog('OSI: Successfully Set Up In: (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 
 procedure ScriptTerminate;
