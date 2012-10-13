@@ -70,7 +70,8 @@
   {$I RS2\Core\Bank.scar}
   {$I RS2\Core\DepositBox.scar}
   {$I RS2\Core\Amount.scar}     
-  {$I RS2\Core\NPC.scar}                
+  {$I RS2\Core\NPC.scar}  
+  {$I RS2\Misc\Trading.scar}              
   
 // RS2 Include Anit-Randoms, if def OSI_Color_Anti_Randoms
   {$IFDEF OSI_Color_Anti_Randoms}
@@ -211,6 +212,7 @@ begin
     OSI_WriteAndLog('OSI: Terminating Script!');  
     TerminateScript; 
   finally
-    IsOSISetup := True;     
+    IsOSISetup := True; 
+    OSI_WriteAndLog('OSI: Successfully setup!');    
   end; 
 end;

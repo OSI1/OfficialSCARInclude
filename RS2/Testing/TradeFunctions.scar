@@ -1,0 +1,92 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              Trade Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestTradeFunctions;       
+   Last Modified: October 13th, 2012. By LordJashin. RS2 Build 735.           
+ * Instructions:
+                1. Set the constants 
+                2. Open a trade window!
+                3. Follow Instructions
+                4. Run Test!
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2Debug}
+{$DEFINE RS2}
+{$DEFINE SMART}
+{$I ../../OSI.scar}
+
+const
+  RS2_Username = 'Kirizmaxx@aim.com'; // Set these constants before running!
+  RS2_Password = 'dontfear32';
+  RS2_Member = False;    // Use Member's world?
+  SMART_World = 7;      // What world do you want to go to?     
+  TraderName = 'henchkitty'; // Person you are trading with
+
+// Do not include this file. Run it!
+
+procedure SetupPlayers;                                  
+begin 
+  SetLength(Players, 1);
+  with Players[0] do
+    begin
+      Login := RS2_Username;
+      Pass  := RS2_Password;
+      Member := RS2_Member;  
+      WorldInfo:= [RS2_Member, SMART_World];
+      Active := True;
+    end;                                     
+  SetupOSI;    
+  if not LoggedIn then
+    Login;       
+  wait(5000);
+end;
+
+procedure TestTradeFunctions;
+var
+  i: Integer;   
+  TBA1: TBoxArray;
+begin   
+  if TradeScreen then WriteLn('TradeScreen: True: Woot we are at the TradeScreen!');
+  WriteLn('GetTradersName: The traders name is: ' + GetTradersName); 
+  if AddTradeMoneyPouch(30, True) then WriteLn('AddTradeMoneyPouch: True: Added 30 coins to the trade!');
+  WriteLn('GetTradeItemBounds: My Offer: Slot(0) bounds: ' + BoxToStr(GetTradeItemBounds(0, True)));
+  WriteLn('GetTradeItemBounds: Their Offer: Slot(0) bounds: ' + BoxToStr(GetTradeItemBounds(0, False)));
+  {$IFDEF SMART}  
+  if not SmartEnabled(SMART_Client) then
+    SmartSetEnabled(SMART_Client, True);
+  SmartSetDebug(SMART_Client, True);  
+  for i := 0 to 27 do
+    begin               
+      SetLength(TBA1, Length(TBA1) + 1);
+      TBA1[High(TBA1)] := GetTradeItemBounds(i, true);
+      SetLength(TBA1, Length(TBA1) + 1);
+      TBA1[High(TBA1)] := GetTradeItemBounds(i, false);
+    end;                                               
+  SmartDebugTBA(TBA1);
+  wait(5000);
+  {$ENDIF}
+  if FirstScreenAccept(True) then WriteLn('FirstScreenAccept: True: Accepted trade on first screen!');
+  wait(2000);
+  if FirstScreenDecline(True) then WriteLn('FirstScreenDecline: True: Declined trade on first screen!');
+  WriteLn('Open the trading window again but this time go to the final trade window');  
+  wait(5000);
+  FirstScreenAccept(true);
+  if FinalTradeScreen then WriteLn('FinalTradeScreen: True: Woot the other trader accepted!');
+  WriteLn('GetFinalCoinAmount: Final coin amount: ' + IntToStr(GetFinalCoinAmount));
+  WriteLn('GetApproxFinalCoinAmount Approx final coin amount: ' + IntToStr(GetApproxFinalCoinAmount));
+  if FinalScreenAccept(True) then WriteLn('FinalScreenAccept: True: Woot we accepted the final part of the trade!');
+  wait(2000);        
+  if FinalScreenDecline(True) then WriteLn('FinalScreenDecline: True: Woot we declined the final part of the trade!');
+  {$IFDEF SMART}                       
+    SmartClearDebug(SMART_Client);
+    SmartSetDebug(SMART_Client, False);
+  {$ENDIF}                
+end;
+
+begin
+  SetupPlayers;               
+  ClearDebug;    
+  MoveMouse(0, 0);
+  TestTradeFunctions;
+end.

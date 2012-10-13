@@ -6,10 +6,10 @@
    Last Modified: October 6th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{$DEFINE RS2Debug}
 {$DEFINE RS2}
 {$DEFINE SMART}
 {$I ../../OSI.scar}
-{$I ../../RS2/Misc/DebugSmart.scar}
 
 const
   TestWithoutLogginIn = False;

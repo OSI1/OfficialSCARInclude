@@ -10,10 +10,10 @@
                 3. Run Test!
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{$DEFINE RS2Debug}
 {$DEFINE RS2}
 {$DEFINE SMART}
 {$I ../../OSI.scar}
-{$I ../Misc/DebugSMART.scar}
 
 const
   RS2_Username = 'Test'; // Set these constants before running!
