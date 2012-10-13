@@ -2,9 +2,36 @@
                               Official SCAR Include
                                Logging Routines
 --------------------------------------------------------------------------------
+ * procedure OSI_AddToLog(s: string);
  * procedure OSI_WriteAndLog(s: string);
  * procedure OSI_ClearLog;
  * function OSI_SaveLog(Path: string): Boolean; 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure OSI_AddToLog(s: string);
+Contributors: LordJashin
+Description: Adds the string to the OSI_Log TStrArray, only no writeln used, try block 
+Date Created: October 13th, 2012. By LordJashin.
+Last Modified: October 13th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure OSI_AddToLog(s: string);
+begin
+  try
+    SetLength(OSI_Log, Length(OSI_Log) + 1);
+    OSI_Log[Length(OSI_Log) - 1] := '[' + TheDate + ']: [' + TheTime + ']: ' + s;    
+  except
+    WriteLn('OSI: Failed to Log some text...');  
+  end;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure OSI_WriteAndLog(s: string);
+Contributors: LordJashin
+Description: Uses WriteLn and adds to OSI_Log TStrArray the text 
+Date Created: October 13th, 2012. By LordJashin.
+Last Modified: October 13th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OSI_WriteAndLog(s: string);
@@ -14,9 +41,17 @@ begin
     SetLength(OSI_Log, Length(OSI_Log) + 1);
     OSI_Log[Length(OSI_Log) - 1] := '[' + TheDate + ']: [' + TheTime + ']: ' + s;
   except
-    WriteLn('OSI: Failed to Log some text...');
+    WriteLn('OSI: Failed to Log some text2...');
   end;
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure OSI_ClearLog;
+Contributors: LordJashin
+Description: Clears the OSI_Log TStrArray that has all the writelns saved 
+Date Created: October 13th, 2012. By LordJashin.
+Last Modified: October 13th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OSI_ClearLog;
 var
@@ -24,6 +59,14 @@ var
 begin
   OSI_Log := tmp;
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OSI_SaveLog(Path: string): Boolean;
+Contributors: LordJashin
+Description: Will save the OSI_Log to Path, uses try block 
+Date Created: October 13th, 2012. By LordJashin.
+Last Modified: October 13th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OSI_SaveLog(Path: string): Boolean;
 var
