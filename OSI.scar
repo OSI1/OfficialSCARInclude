@@ -15,10 +15,6 @@
   {$ENDIF}
 {$ENDIF}
 
-// Boolean that is set to true when SetupOSI completes successfully
-var
-  IsOSISetup: Boolean;
-
 // SMART in OSI uses RS2, thus RS2 must be defined if SMART is defined!
 {$IFDEF SMART}
   {$DEFINE RS2}
@@ -102,6 +98,8 @@ Last Modified: October 12th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeOSI;
+var
+  Time1: string;
 begin
   if not IsOSISetup then Exit;
   {$IFDEF RS2}
@@ -109,7 +107,14 @@ begin
     if (PlayerStartTime <> 0) then
       OSI_WriteAndLog('OSI: RS2: Player(s) Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
   {$ENDIF}
-  OSI_WriteAndLog('OSI: Successfully Ran For: (' + STimeRunning + ')');          
+  OSI_WriteAndLog('OSI: Successfully Ran For: (' + STimeRunning + ')');  
+  if OSI_AutoLog then                               
+    begin                                                                     
+      Time1 := TheTime;
+      while StrInStr(':', Time1) do
+        Time1 := Replace(Time1, ':', '-');                         
+      OSI_SaveLog(LogsPath + '[' + TheDate + '] [' + Time1 + '] ' + OSI_AutoLogName + '.txt');      
+    end;                
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

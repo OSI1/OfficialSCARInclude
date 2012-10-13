@@ -2,6 +2,10 @@
                               Official SCAR Include
                                  Global Routines
 --------------------------------------------------------------------------------
+ * var IsOSISetup
+ * var OSI_Log
+ * var OSI_AutoLog     
+ * var OSI_AutoLogName
  * var OSI_Variance
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
  * var MouseSpeed: Integer;      
@@ -18,6 +22,17 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var IsOSISetup
+Contributors: LordJashin
+Description: True if OSI's Setup procedure completed successfully
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  IsOSISetup: Boolean;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Log
 Contributors: LordJashin
 Description: For All OSI's logging functions in Divi\Misc\Logging.scar
@@ -26,7 +41,29 @@ Last Modified: October 12th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  OSI_Log: TStrArray;
+  OSI_Log: TStrArray;            
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OSI_AutoLog
+Contributors: LordJashin
+Description: If set to true, will automatically log each run to a new file in LogsPath
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+var
+  OSI_AutoLog: Boolean;   
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OSI_AutoLogName
+Contributors: LordJashin
+Description: When using AutoLog, you can add a name to the log as well for saving
+Date Created: October 12th, 2012. By LordJashin.
+Last Modified: October 12th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+var
+  OSI_AutoLogName: string;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Variance

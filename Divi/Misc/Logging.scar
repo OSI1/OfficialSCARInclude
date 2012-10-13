@@ -29,8 +29,9 @@ function OSI_SaveLog(Path: string): Boolean;
 var
   i, F1: Integer;
 begin
-  if (Length(OSI_Log) = 0) then Exit;
-  Result := False;
+  Result := False;          
+  if (Length(OSI_Log) = 0) then Exit; 
+  OSI_WriteAndLog('OSI: Saving Log to: ' + Path);
   try
     F1 := RewriteFile(Path, True);
     WriteFileString(F1, '{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=' + #13#10 +
