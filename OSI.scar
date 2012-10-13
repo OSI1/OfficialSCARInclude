@@ -39,6 +39,7 @@
 {$I Divi\Client.scar}
 {$I Divi\Timing.scar}
 {$I Divi\Misc\Logging.scar}
+{$I Divi\Bitmap.scar}
 
 // RS2 Globals includes (needs to be included before SMART, keyboard/mouse) 
 {$IFDEF RS2}

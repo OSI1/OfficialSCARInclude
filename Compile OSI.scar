@@ -10,7 +10,7 @@
 //{$DEFINE NoVariance}             // Comment in in-depth testing
 //{$DEFINE DisableRS2Fonts}        // Comment in in-depth testing
 {$DEFINE OSIDebug}                 // Comment out in in-depth testing
-{$DEFINE RS2}                      // Comment out in in-depth testing
+//{$DEFINE RS2}                    // Comment in in-depth testing
 {$IFDEF RS2}
   {$DEFINE RS2Debug}               // Comment out in in-depth testing
   {$DEFINE OSI_Color_Anti_Randoms} // Comment out in in-depth testing

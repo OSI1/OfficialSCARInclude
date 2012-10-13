@@ -1,0 +1,25 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                 Bitmap Routines
+--------------------------------------------------------------------------------
+ * procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string);   
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string);
+Contributors: LordJashin
+Description: Creates the bmp, sets its size, and loads it from string
+Date Created: October 13th, 2012. By LordJashin.
+Last Modified: October 13th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string);
+begin
+  try
+    bmp := TSCARBitmap.Create('');
+    bmp.SetSize(w, h);
+    bmp.LoadFromStr(FromStr);    
+  except
+    OSI_WriteAndLog('OSI: Failed to Create Bitmap');
+  end;  
+end;
