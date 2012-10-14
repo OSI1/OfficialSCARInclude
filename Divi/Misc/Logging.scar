@@ -37,9 +37,9 @@ begin
           Time1 := Replace(Time1, ':', '-');                                   
         if (OSI_AutoLogScreenFolderName <> '') then
           if DirectoryExists(ScreenPath + OSI_AutoLogScreenFolderName + '\') then
-            SavePath := OSI_AutoLogScreenFolderName + '\' + TheDate(1) + ' ' + Time1 + ' ' + OSI_AutoLogName + '-';
+            SavePath := OSI_AutoLogScreenFolderName + '\' + TheDate(1) + ' ' + Time1 + ' ' + OSI_AutoLogScreenSaveName + '-';
         if (OSI_AutoLogScreenFolderName = '') then 
-          SavePath := TheDate(1) + ' ' + Time1 + ' ' + OSI_AutoLogName + '-';          
+          SavePath := TheDate(1) + ' ' + Time1 + ' ' + OSI_AutoLogScreenSaveName + '-';          
         if OSI_AutoLogScreenClientOnly then
           ScreenBmp := GetClient.Capture
         else

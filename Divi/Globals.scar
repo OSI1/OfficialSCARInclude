@@ -6,7 +6,8 @@
  * var OSI_Log
  * var OSI_AutoLog     
  * var OSI_AutoLogName
- * var OSI_AutoLogScreenSave       
+ * var OSI_AutoLogScreenSave     
+ * var OSI_AutoLogScreenSaveName  
  * var OSI_AutoLogScreenClientOnly
  * var OSI_AutoLogScreenFolderName
  * var OSI_Variance
@@ -73,7 +74,20 @@ Last Modified: October 14th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
   
 var
-  OSI_AutoLogScreenSave: Boolean;     
+  OSI_AutoLogScreenSave: Boolean; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OSI_AutoLogScreenSaveName
+Contributors: LordJashin
+Description: This will be appended to the screenshots saved with the Auto saver 
+             This will not be the entire name of the file. It is just appended
+             on to the end of it!
+Date Created: October 14th, 2012. By LordJashin.
+Last Modified: October 14th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+ var 
+  OSI_AutoLogScreenSaveName: string;    
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_AutoLogScreenClientOnly
