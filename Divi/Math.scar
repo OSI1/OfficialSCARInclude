@@ -4,6 +4,10 @@
 --------------------------------------------------------------------------------
  * procedure IncE(var x: Extended; N: Extended);  
  * procedure DecE(var x: Extended; N: Extended);
+ * function Opposite(i: Integer): Integer;         
+ * function Negative(i: Integer): Integer;
+ * function OppositeE(e: Extended): Extended;
+ * function NegativeE(e: Extended): Extended;
  * function Odd(x: Integer): Boolean;             
  * function Even(x: Integer): Boolean;            
  * function Difference(value1, value2: Integer): Integer;      
@@ -60,6 +64,58 @@ begin
     Exit;
   end;
   x := (x - N);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Opposite(i: Integer): Integer;
+Contributors: Janilabo
+Description: Returns the number with the opposite sign. e.g. -1 to 1, 1 to -1
+Date Created: October 11th, 2012. By Janilabo.
+Last Modified: October 11th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Opposite(i: Integer): Integer;
+begin
+  Result := (i * -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Negative(i: Integer): Integer;
+Contributors: Janilabo
+Description: Always Returns the negative number of i, even if i is negative.
+Date Created: October 11th, 2012. By Janilabo.
+Last Modified: October 11th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Negative(i: Integer): Integer;
+begin
+  Result := (IAbs(i) * -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OppositeE(e: Extended): Extended;
+Contributors: Janilabo
+Description: Returns Extended number with the opposite sign. -1.1 to 1.1, 1.1 to -1.1
+Date Created: October 11th, 2012. By Janilabo.
+Last Modified: October 11th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OppositeE(e: Extended): Extended;
+begin
+  Result := (e * -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function NegativeE(e: Extended): Extended;
+Contributors: Janilabo
+Description: Always Returns the negative number of e, even if e is negative.
+Date Created: October 11th, 2012. By Janilabo.
+Last Modified: October 11th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NegativeE(e: Extended): Extended;
+begin
+  Result := (Abs(e) * -1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -13,36 +13,67 @@ procedure OSI_AddToLog(s: string);
 Contributors: LordJashin
 Description: Adds the string to the OSI_Log TStrArray, only no writeln used, try block 
 Date Created: October 13th, 2012. By LordJashin.
-Last Modified: October 13th, 2012. By LordJashin. 
+Last Modified: October 14th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OSI_AddToLog(s: string);
+var
+  Time1, SavePath, NewPath: string;                                                       
+  ScreenBmp: TSCARBitmap;
+  Window1: TSCARWindowClient;
+  i: Integer;
 begin
   try
     SetLength(OSI_Log, Length(OSI_Log) + 1);
-    OSI_Log[Length(OSI_Log) - 1] := '[' + TheDate + ']: [' + TheTime + ']: ' + s;    
-  except
-    WriteLn('OSI: Failed to Log some text...');  
+    OSI_Log[Length(OSI_Log) - 1] := '[' + TheDate(0) + ']: [' + TheTime + ']: ' + s;   
+    if OSI_AutoLogScreenSave then
+      begin                                                                     
+        ScreenBmp := TSCARBitmap.Create('');
+        Window1 := TSCARWindowClient.Create(GetDesktopWindow);
+        if (OSI_AutoLogScreenFolderName <> '') then
+          ForceDirectories(ScreenPath + OSI_AutoLogScreenFolderName + '\');        
+        Time1 := TheTime;
+        while StrInStr(':', Time1) do
+          Time1 := Replace(Time1, ':', '-');                                   
+        if (OSI_AutoLogScreenFolderName <> '') then
+          if DirectoryExists(ScreenPath + OSI_AutoLogScreenFolderName + '\') then
+            SavePath := OSI_AutoLogScreenFolderName + '\' + TheDate(1) + ' ' + Time1 + ' ' + OSI_AutoLogName + '-';
+        if (OSI_AutoLogScreenFolderName = '') then 
+          SavePath := TheDate(1) + ' ' + Time1 + ' ' + OSI_AutoLogName + '-';          
+        if OSI_AutoLogScreenClientOnly then
+          ScreenBmp := GetClient.Capture
+        else
+          ScreenBmp := Window1.Capture;  
+        NewPath := SavePath; 
+        while FileExists(ScreenPath + SavePath + '.png') do
+          begin                                          
+            i := i + 1;
+            SavePath := NewPath + IntToStr(i);           
+          end;
+        ScreenBmp.SaveToPng(ScreenPath + SavePath + '.png');     
+        ScreenBmp.Free;      
+        Window1.Free;
+      end;     
+  except                                    
+    if not OSI_AutoLogScreenSave then
+      WriteLn('OSI: Failed to Log some text...')
+    else
+      WriteLn('OSI: Failed to Log some text or Save screenshot...');  
   end;  
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure OSI_WriteAndLog(s: string);
 Contributors: LordJashin
-Description: Uses WriteLn and adds to OSI_Log TStrArray the text 
+Description: Uses WriteLn and adds to OSI_Log TStrArray the text using OSI_AddToLog 
 Date Created: October 13th, 2012. By LordJashin.
-Last Modified: October 13th, 2012. By LordJashin. 
+Last Modified: October 14th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OSI_WriteAndLog(s: string);
-begin
-  try
-    WriteLn(s);
-    SetLength(OSI_Log, Length(OSI_Log) + 1);
-    OSI_Log[Length(OSI_Log) - 1] := '[' + TheDate + ']: [' + TheTime + ']: ' + s;
-  except
-    WriteLn('OSI: Failed to Log some text2...');
-  end;
+begin  
+  WriteLn(s);
+  OSI_AddToLog(s);  
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -50,14 +81,12 @@ procedure OSI_ClearLog;
 Contributors: LordJashin
 Description: Clears the OSI_Log TStrArray that has all the writelns saved 
 Date Created: October 13th, 2012. By LordJashin.
-Last Modified: October 13th, 2012. By LordJashin. 
+Last Modified: October 14th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OSI_ClearLog;
-var
-  tmp: TStrArray;
 begin
-  OSI_Log := tmp;
+  SetLength(OSI_Log, 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -80,7 +109,7 @@ begin
     WriteFileString(F1, '{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=' + #13#10 +
                         '                             Official SCAR Include' + #13#10 + 
                         '                                      Log' + #13#10 + 
-                        '                       Created On: ' + TheDate + #13#10 +                      
+                        '                       Created On: ' + TheDate(0) + #13#10 +                      
                         '                               At: ' + TheTime + #13#10 + 
                         '=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}' + #13#10 +
                         ' ' + #13#10);

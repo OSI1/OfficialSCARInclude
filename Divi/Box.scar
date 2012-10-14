@@ -33,17 +33,15 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure ClearBox(var bx: TBox);
-Contributors: Janilabo
-Description: Clears the bx..Basically, bx is replaced with an empty TBox (tmp).
+Contributors: Janilabo, LordJashin
+Description: Clears the bx..Basically, bx is replaced wth an empty box
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.
+Last Modified: October 14th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure ClearBox(var bx: TBox);
-var
-  tmp: TBox;
 begin
-  bx := tmp;
+  bx := Box(0,0,0,0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -9,7 +9,7 @@
  * function WaitFindColorTolEx(var TPA: TPointArray; Color, X1, Y1, X2, Y2, Tol, DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
  * procedure WaitNone;
  * function TheTime: string;
- * function TheDate: string;
+ * function TheDate(Format: Integer): string;
  * function TheMonth: string;
  * function STimeRunning: string;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -162,14 +162,15 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TheDate: string;
+function TheDate(Format: Integer): string;
 By: Timer, Freddy
-Description: Gets the Date.
+Description: Gets the Date. Format of 0 = Month Day, Year
+                            Format of 1 = Month-Day-Year abreviated 
 Date Created: August 7th, 2011. By Timer
-Last Modified: July 20th, 2012. By Freddy
+Last Modified: October 14th, 2012. By LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function TheDate: string;
+function TheDate(Format: Integer): string;
 var
   Year, Month, Day: Word;
   Months, suffixs: TStrArray;
@@ -182,8 +183,11 @@ begin
   if (InRange(Day mod 10, 1, 3)) and (not InRange(Day, 11, 13)) then
     suffix := suffixs[(Day mod 10) - 1]
   else
-    suffix := 'th';
-  Result := Months[Month - 1] + ' ' + IntToStr(Day) + suffix + ', ' + IntToStr(Year);
+    suffix := 'th';                                                 
+  case Format of
+    0 : Result := Months[Month - 1] + ' ' + IntToStr(Day) + suffix + ', ' + IntToStr(Year);
+    1 : Result := IntToStr(Month) + '-' + IntToStr(Day) + '-' + IntToStr(Year);
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

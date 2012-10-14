@@ -2,23 +2,17 @@
                               Official SCAR Include
                                  Global Routines
 --------------------------------------------------------------------------------
- * var IsOSISetup
+ * var IsOSISetup        
  * var OSI_Log
  * var OSI_AutoLog     
  * var OSI_AutoLogName
+ * var OSI_AutoLogScreenSave       
+ * var OSI_AutoLogScreenClientOnly
+ * var OSI_AutoLogScreenFolderName
  * var OSI_Variance
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
  * var MouseSpeed: Integer;      
  * type TMeasurementUnits    
- * type TTCMethod = (tc_AnyMatch, tc_AllMatch, tc_NonMatch);
- * type TReplaceFlag = (rfReplaceAll, rfIgnoreCase);            
- * type TReplaceFlags = set of TReplaceFlag;         
- * type TMatchMethod = (mmAll, mmBackward, mmIgnoreCase, mmOverlap, mmWholeWords, mmStrictWW);    
- * type TMatchMethods = set of TMatchMethod;           
- * type TMultiReplace = record                     
- * type TMultiReplaceArray = array of TMultiReplace;     
- * type TMultiReplace2 = record                
- * type TMultiReplaceArray2 = array of TMultiReplace2;  
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -30,7 +24,7 @@ Last Modified: October 12th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  IsOSISetup: Boolean;
+  IsOSISetup: Boolean;          
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Log
@@ -58,12 +52,57 @@ var
 var OSI_AutoLogName
 Contributors: LordJashin
 Description: When using AutoLog, you can add a name to the log as well for saving
+             should be used if multiple scripts are using autolog at same time
 Date Created: October 12th, 2012. By LordJashin.
-Last Modified: October 12th, 2012. By LordJashin.
+Last Modified: October 14th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
 var
-  OSI_AutoLogName: string;
+  OSI_AutoLogName: string;                     
+                          
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OSI_AutoLogScreenSave
+Contributors: LordJashin
+Description: If set to True. Saves a Screenshot every Log to SCAR's Screenshot 
+             folder, but if AutoLogScreenFolderName, is used. It will create a 
+             new folder for the screenshots in SCAR's screenshot folder. And 
+             save them there. Will take a screenshot of your whole screen unless
+             OSI_AutoLogScreenClientOnly is set to true 
+Date Created: October 14th, 2012. By LordJashin.
+Last Modified: October 14th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+  
+var
+  OSI_AutoLogScreenSave: Boolean;     
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OSI_AutoLogScreenClientOnly
+Contributors: LordJashin
+Description: Will only be used if OSI_AutoLogScreenSave is set to
+             true. If set to true. The Auto screen saver will only take
+             screenshots of the Client Only, not the whole desktop. If this
+             isn't set to true, screenshots are of the whole screen. 
+Date Created: October 14th, 2012. By LordJashin.
+Last Modified: October 14th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+var
+  OSI_AutoLogScreenClientOnly: Boolean;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OSI_AutoLogScreenFolderName: string;
+Contributors: LordJashin
+Description: The folder inside SCAR's screenshot folder, where you want the 
+             log screenshots to be saved. Will be created if it doesn't already
+             exist. OSI_AutLogScreenSave must be enabled for this to be used
+             If not used, the screenshots will just be saved in SCAR's screen
+             shot folder. 
+Date Created: October 14th, 2012. By LordJashin.
+Last Modified: October 14th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+var
+  OSI_AutoLogScreenFolderName: string;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Variance
@@ -111,110 +150,3 @@ type
   TMeasurementUnits = (mu_Width, mu_Height, mu_Length, mu_Depth, mu_Weight,
                        mu_WidthHeight, mu_HeightWidthDepth, mu_DepthWidthLength,
                        mu_HeightWidthWeight, mu_LengthWidthHeightWeight);
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TTCMethod = (tc_AnyMatch, tc_AllMatch, tc_NonMatch);
-Contributors: Janilabo
-Description: Methods for Character Matching. 
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-   
-type
-  TTCMethod = (tc_AnyMatch, tc_AllMatch, tc_NonMatch);
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TReplaceFlag = (rfReplaceAll, rfIgnoreCase);
-Contributors: Janilabo
-Description: Replace flags. ReplaceAll & IgnoreCase.                    
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-type
-  TReplaceFlag = (rfReplaceAll, rfIgnoreCase);
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TReplaceFlags = set of TReplaceFlag;
-Contributors: Janilabo
-Description: Set of Replace Flags.                    
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-    
-type
-  TReplaceFlags = set of TReplaceFlag;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TMatchMethod = (mmAll, mmBackward, mmIgnoreCase, mmOverlap, mmWholeWords, mmStrictWW);
-Contributors: Janilabo
-Description: Match Methods for string matching.                    
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-    
-type
-  TMatchMethod = (mmAll, mmBackward, mmIgnoreCase, mmOverlap, mmWholeWords, mmStrictWW);
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TMatchMethods = set of TMatchMethod;
-Contributors: Janilabo
-Description: Set of Match Methods.                    
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-    
-type
-  TMatchMethods = set of TMatchMethod;
-  
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TMultiReplace = record
-Contributors: Janilabo
-Description: Type for multireplacing. Based on Replace Flags.                    
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-    
-type
-  TMultiReplace = record
-    oldStr, newStr: string;  
-    offset: Integer;
-    replaceFlags: TReplaceFlags;
-  end;
-                                                               
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TMultiReplaceArray = array of TMultiReplace;
-Contributors: Janilabo
-Description: An array of multireplacing type...                    
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-  
-type
-  TMultiReplaceArray = array of TMultiReplace;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TMultiReplace2 = record
-Contributors: Janilabo
-Description: Type for multireplacing. Based on Match Methods.                    
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-    
-type
-  TMultiReplace2 = record
-    oldStr, newStr: string;      
-    offset: Integer;
-    matchMethods: TMatchMethods;
-  end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TMultiReplaceArray2 = array of TMultiReplace2;  
-Contributors: Janilabo
-Description: An array of multireplacing type II...                    
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-    
-type
-  TMultiReplaceArray2 = array of TMultiReplace2;  

@@ -15,9 +15,7 @@
  * function StrLastBefore(SubStr, s: string): string;
  * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
  * function StrInStr(SubStr, S: string): Boolean;
- * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
- * function MultiReplace(oldStr, newStr: string; offset: Integer; replaceFlags: TReplaceFlags): TMultiReplace;
- * function MultiReplace2(oldStr, newStr: string; offset: Integer; matchMethods: TMatchMethods): TMultiReplace2;  
+ * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;  
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -306,36 +304,3 @@ begin
       Exit;
   Result := False;
 end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function MultiReplace(oldStr, newStr: string; offset: Integer; replaceFlags: TReplaceFlags): TMultiReplace;
-Contributors: Janilabo
-Description: Builds multireplacing type with parameters.                                      
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function MultiReplace(oldStr, newStr: string; offset: Integer; replaceFlags: TReplaceFlags): TMultiReplace;
-begin
-  Result.oldStr := oldStr;
-  Result.newStr := newStr;  
-  Result.offset := offset;
-  Result.replaceFlags := replaceFlags;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function MultiReplace2(oldStr, newStr: string; offset: Integer; matchMethods: TMatchMethods): TMultiReplace2;
-Contributors: Janilabo
-Description: Builds multireplacing type II with parameters.                                                         
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function MultiReplace2(oldStr, newStr: string; offset: Integer; matchMethods: TMatchMethods): TMultiReplace2;
-begin
-  Result.oldStr := oldStr;
-  Result.newStr := newStr;   
-  Result.offset := offset;
-  Result.matchMethods := matchMethods;
-end;
-

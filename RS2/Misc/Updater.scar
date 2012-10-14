@@ -11,7 +11,7 @@ function RSupdateGlobals: Boolean;
 Contributors: LordJashin
 Description: Will update OSI: RS2's Global Variables to the latest on github
 Date Created: October 3rd, 2012. By LordJashin.
-Last Modified: October 12th, 2012. By LordJashin.
+Last Modified: October 14th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
  
 function RSupdateGlobals: Boolean;
@@ -20,6 +20,7 @@ var
   uRSX1, uRSY1, uRSX2, uRSY2, uRSMedX1, uRSMedY1, uRSMedX2, uRSMedY2: Integer;
 begin
   Result := False;
+  OSI_WriteAndLog('OSI: RS2: Checking for updates to Globals...');
   Page := GetPage('https://raw.github.com/OSI1/OSI1/master/RS2/Core/Globals.scar');
      
   // RS2 Min Bounds                      
@@ -51,5 +52,8 @@ begin
       RSMedY2 := uRSMedY2;
       Result := True;
     end;             
-  if Result then OSI_WriteAndLog('OSI: RS2: Globals (RS2, RSMed bounds) Updated!');
+  if Result then 
+    OSI_WriteAndLog('OSI: RS2: Globals (RS2, RSMed bounds) Updated!')
+  else
+    OSI_WriteAndLog('OSI: RS2: Globals (RS2, RSMed bounds) are Up To Date!')    
 end;

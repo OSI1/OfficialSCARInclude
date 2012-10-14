@@ -4,6 +4,7 @@
                                  Global Routines
 -------------------------------------------------------------------------------
  * var Useful Global Variables to alter if needed
+ * var RS2_CheckForUpdates
  * const Useful in game boundaries, points, areas, widths, etc. etc.
  * const Skill_ Indexes
  * const Lobby_Tab_ Indexes
@@ -67,6 +68,17 @@ begin
   RSMedX2 := 1023;                                  // 10/4/2012    LordJashin   735
   RSMedY2 := 767;                                   // 10/4/2012    LordJashin   735
 end;                       
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var RS2_CheckForUpdates
+Contributors: LordJashin 
+Description: If set to true, will check github for updates to GlobalVars (RSX1..RSMed, etc)
+Date Created: October 14th, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 14th, 2012. By LordJashin. RS2 Build 735.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  RS2_CheckForUpdates: Boolean;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game boundaries, points, areas, widths, etc. etc.

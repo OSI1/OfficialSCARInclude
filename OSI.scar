@@ -115,7 +115,7 @@ begin
       Time1 := TheTime;
       while StrInStr(':', Time1) do
         Time1 := Replace(Time1, ':', '-');                         
-      OSI_SaveLog(LogsPath + '[' + TheDate + '] [' + Time1 + '] ' + OSI_AutoLogName + '.txt');      
+      OSI_SaveLog(LogsPath + '[' + TheDate(0) + '] [' + Time1 + '] ' + OSI_AutoLogName + '.txt');      
     end;                
 end;
 
@@ -124,7 +124,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: October 12th, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 14th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -141,7 +141,8 @@ begin
     OSI_WriteAndLog('OSI: Routines Enabled');
     {$IFDEF RS2}
       RS2GlobalVars; 
-      RSupdateGlobals;
+      if RS2_CheckForUpdates then
+        RSupdateGlobals;
       RS2FontFolder := '';
       OSI_WriteAndLog('OSI: RS2: Routines Enabled');
       {$IFDEF OSI_Color_Anti_Randoms}
