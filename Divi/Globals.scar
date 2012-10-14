@@ -5,7 +5,8 @@
  * var IsOSISetup        
  * var OSI_Log
  * var OSI_AutoLog     
- * var OSI_AutoLogName
+ * var OSI_AutoLogName  
+ * var OSI_AutoLogFolderName
  * var OSI_AutoLogScreenSave     
  * var OSI_AutoLogScreenSaveName  
  * var OSI_AutoLogScreenClientOnly
@@ -59,7 +60,20 @@ Last Modified: October 14th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
 var
-  OSI_AutoLogName: string;                     
+  OSI_AutoLogName: string;            
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var OSI_AutoLogFolderName         
+Contributors: LordJashin
+Description: If set to anything but ''. Autologging will be saved to this folder,
+             and if the folder is not created, then it will be created. Will be
+             created inside SCAR's LogsPath folder 
+Date Created: October 14th, 2012. By LordJashin.
+Last Modified: October 14th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+var
+  OSI_AutoLogFolderName: string;       
                           
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_AutoLogScreenSave

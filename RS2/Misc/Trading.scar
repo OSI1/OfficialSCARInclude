@@ -17,8 +17,6 @@
  * function GetApproxFinalCoinAmount: LongInt;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{$DEFINE Trading}
-
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function TradeScreen: Boolean;
 Contributors: Wanted, Freddy
