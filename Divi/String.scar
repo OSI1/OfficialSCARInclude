@@ -4,7 +4,8 @@
 --------------------------------------------------------------------------------
  * function StrReverse(str: string): string; 
  * function StrCompare(s1, s2: string): Integer;                    
- * function StrStuff(str, stuff: string; iFrom, iCount: Integer): string;          
+ * function StrStuff(str, s: string; iFrom, iCount: Integer): string;
+ * function StrStuffEx(str, s: string; pos1, pos2: Integer): string;          
  * function StrBetween(str: string; pos1, pos2: Integer): string;             
  * function StrCopy(str: string; pos1, pos2: Integer): string;
  * function StrAfter(SubStr, s: string): string;
@@ -54,20 +55,61 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrStuff(str, stuff: string; iFrom, iCount: Integer): string;
+function StrStuff(str, s: string; iFrom, iCount: Integer): string;
 Contributors: Janilabo, LordJashin
-Description: Stuffs str with stuff, iFrom=start position, iCount=count of chars
-to stuff with.                                                              
+Description: Returns str stuffed with s.
+             iFrom=start position, iCount=count of chars to stuff with.                                                              
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: October 6th, 2012. By LordJashin. 
+Last Modified: October 15th, 2012. By Janilabo.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrStuff(str, stuff: string; iFrom, iCount: Integer): string;
+function StrStuff(str, s: string; iFrom, iCount: Integer): string;
+var
+  l: Integer;
 begin
-  Result := Copy(str, 1, Length(str));
+  Result := str;
+  l := Length(Result);
+  IntSetRange(iFrom, 1, l);
+  IntSetRange(iCount, 1, l);
   Delete(Result, iFrom, iCount);
-  Insert(stuff, Result, iFrom);
+  Insert(s, Result, iFrom);
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrStuffEx(str, s: string; pos1, pos2: Integer): string;
+Contributors: Janilabo, LordJashin
+Description: Returns str stuffed with s.
+             pos1=start position, pos2=finish position.
+             With pos1 > pos2 s will be reversed.                                                                                 
+Date Created: October 15th, 2012. By Janilabo.
+Last Modified: October 15th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrStuffEx(str, s: string; pos1, pos2: Integer): string;
+var
+  i, l: Integer;
+begin
+  Result := str;
+  l := Length(Result); 
+  IntSetRange(pos1, 1, l);
+  IntSetRange(pos2, 1, l);
+  case (pos1 > pos2) of
+    True:
+    begin          
+      Delete(Result, pos2, ((pos1 - pos2) + 1));
+      l := Length(s);
+      SetLength(str, l);
+      for i := l downto 1 do    
+        str[i] := s[((l - i) + 1)];
+      Insert(str, Result, pos2);
+    end;
+    False:
+    begin
+      Delete(Result, pos1, ((pos2 - pos1) + 1));
+      Insert(s, Result, pos1);
+    end;   
+  end;
+end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function StrBetween(str: string; pos1, pos2: Integer): string;

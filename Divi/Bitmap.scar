@@ -23,3 +23,25 @@ begin
     OSI_WriteAndLog('OSI: Failed to Create Bitmap');
   end;  
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CreateBitmaps(FromStr: TStrArray; Width, Height: TIntArray): array of TSCARBitmap;
+Contributors: LordJashin
+Description: Creates an array of bitmaps fromstr arr, and width and height arrays
+Date Created: October 14th, 2012. By LordJashin.
+Last Modified: October 14th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CreateBitmaps(FromStr: TStrArray; Width, Height: TIntArray): array of TSCARBitmap;
+var
+  i: Integer;
+begin
+  i := Length(FromStr);  
+  if (i <> Length(Width)) or (i <> Length(Height)) then Exit;
+  SetLength(Result, i);          
+  for i := 0 to high(FromStr) do              
+    begin
+      Result[i] := TSCARBitmap.Create(FromStr[i]);
+      Result[i].SetSize(Width[i], Height[i]);
+    end;
+end;
