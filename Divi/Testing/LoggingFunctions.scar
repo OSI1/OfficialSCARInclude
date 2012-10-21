@@ -1,0 +1,37 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             Logging Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestLoggingFunctions;                      
+   Last Modified: October 21st, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$I ../../OSI.scar}
+
+procedure ScriptTerminate;
+begin
+  FreeOSI;
+end;
+
+procedure TestLoggingFunctions;
+begin
+  OSI_SetupAutoScreenSave(ScreenPath, 'TestName', 'TestFolder', False);
+  OSI_AddToLog('I added to the log :D');
+  OSI_WriteAndLog('Adding this string to OSI''s awesome log and WriteLn''ing it!');
+  OSI_WriteAndLog('Testing multiple lines: ' #13 '1 - woot' #10 '2 - boo' #10#13 '3 - Cool' #13#10 '4 - It works!');   
+  OSI_WriteLog;  
+  OSI_SetupAutoLog(LogsPath, 'txt', 'TestFolder', 'TestName');
+  WriteLn('Autosaving log using OSI_AutoSaveLog function, can only be used if Autologging is enabled');  
+  OSI_AutoSaveLog;                               
+  OSI_ClearLog;
+  OSI_WriteAndLog('Cleared the log!!! So this should show up at the top!');
+  OSI_SaveLog(LogsPath + 'OSILogTest123.txt');     
+  SetupOSI;                                    
+  WriteLn('Booooooooooooo Testing AutoScreenSave');
+  OSI_AutoSaveScreen;
+end;
+
+begin
+  ClearDebug;                                  
+  TestLoggingFunctions;  
+end.

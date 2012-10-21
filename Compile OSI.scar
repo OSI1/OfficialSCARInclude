@@ -44,7 +44,7 @@ var
 begin
   T := GetSystemTime;
   SetUpOSI;
-  OSI_WriteAndLog('OSI: Successfully Set Up In: (' + IntToStr(GetSystemTime - T) + ' ms)');
+  OSI_WriteAndLog('Successfully Set Up In: (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 
 procedure ScriptTerminate;

@@ -10,8 +10,6 @@
  * procedure DebugTB(TB: TBox);
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{$DEFINE OSIDebug}
-
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
 Contributors: Wanted, Freddy

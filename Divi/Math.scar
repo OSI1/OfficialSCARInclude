@@ -8,8 +8,8 @@
  * function Negative(i: Integer): Integer;
  * function OppositeE(e: Extended): Extended;
  * function NegativeE(e: Extended): Extended;
- * function Odd(x: Integer): Boolean;             
- * function Even(x: Integer): Boolean;            
+ * function Odd(Value: Integer): Boolean;       
+ * function Even(Value: Integer): Boolean;            
  * function Difference(value1, value2: Integer): Integer;      
  * function DifferenceE(value1, value2: Extended): Extended;      
  * function Compare(v, x: Integer): Integer;    
@@ -118,31 +118,35 @@ begin
   Result := (Abs(e) * -1);
 end;
 
+{$IFNDEF SCAR336_UP}
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function Odd(x: Integer): Boolean;
+function Odd(Value: Integer): Boolean;
 Contributors: Janilabo, Freddy
-Description: Returns true if the given value [x] is an odd number.
+Description: Returns true if the given value is an odd number.
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: October 6th, 2012. By Freddy.
+Last Modified: October 17th, 2012. By Freddy.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function Odd(x: Integer): Boolean;
+function Odd(Value: Integer): Boolean;
 begin
-  Result := x and 1 = 1;
+  Result := Value and 1 = 1;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function Even(x: Integer): Boolean;
+function Even(Value: Integer): Boolean;
 Contributors: Janilabo, Freddy
-Description: Returns true if the given value [x] is an even number.
+Description: Returns true if the given value is an even number.
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: October 6th, 2012. By Freddy.
+Last Modified: October 17th, 2012. By Freddy.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function Even(x: Integer): Boolean;
+function Even(Value: Integer): Boolean;
 begin
-  Result := x and 1 = 0;
-end;
+  Result := Value and 1 = 0;
+end;                
+  
+{$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function Difference(value1, value2: Integer): Integer;

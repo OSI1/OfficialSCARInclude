@@ -20,7 +20,7 @@ var
   uRSX1, uRSY1, uRSX2, uRSY2, uRSMedX1, uRSMedY1, uRSMedX2, uRSMedY2: Integer;
 begin
   Result := False;
-  OSI_WriteAndLog('OSI: RS2: Checking for updates to Globals...');
+  OSI_WriteAndLog('RS2: Checking for updates to Globals...');
   Page := GetPage('https://raw.github.com/OSI1/OSI1/master/RS2/Core/Globals.scar');
      
   // RS2 Min Bounds                      
@@ -53,7 +53,7 @@ begin
       Result := True;
     end;             
   if Result then 
-    OSI_WriteAndLog('OSI: RS2: Globals (RS2, RSMed bounds) Updated!')
+    OSI_WriteAndLog('RS2: Globals (RS2, RSMed bounds) Updated!')
   else
-    OSI_WriteAndLog('OSI: RS2: Globals (RS2, RSMed bounds) are Up To Date!')    
+    OSI_WriteAndLog('RS2: Globals (RS2, RSMed bounds) are Up To Date!')    
 end;

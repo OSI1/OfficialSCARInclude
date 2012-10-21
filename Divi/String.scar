@@ -16,7 +16,8 @@
  * function StrLastBefore(SubStr, s: string): string;
  * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
  * function StrInStr(SubStr, S: string): Boolean;
- * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;  
+ * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;     
+ * function StrExplodeMulti(d: TStrArray; str: string): TStrArray;         
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -345,4 +346,56 @@ begin
     if (StrInStr(SubStrs[I], S)) then
       Exit;
   Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrExplodeMulti(d: TStrArray; str: string): TStrArray;
+Contributors: Janilabo 
+Date Created: October 21st, 2012. By Janilabo
+Last Modified: October 21st, 2012. By Janilabo
+Explanation: Explodes str with multiple separators/delimiters (d).
+             The importance order for d items is from left to right (=>).
+             So place the important ones first and then less important after those.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrExplodeMulti(d: TStrArray; str: string): TStrArray;
+var                          
+  p, h, i, x, o, m, l: Integer;
+begin
+  h := High(d);
+  if (h > -1) then
+  begin 
+    o := 1;
+    SetLength(Result, Length(str));
+    repeat  
+      l := 0;           
+      for x := 0 to h do
+      begin
+        p := Pos(d[x], str);
+        case (p < 1) of
+          True:
+          begin
+            Delete(d, x, 1);
+            Dec(x);
+            Dec(h);
+          end;
+          False:
+          if ((l = 0) or (p < l)) then
+          begin     
+            m := x;
+            l := p;
+          end;
+        end;
+      end;
+      if (l > 0) then            
+      begin      
+        Result[i] := Copy(str, 1, (l - 1));
+        Delete(str, 1, ((l + Length(d[m])) - 1));         
+        Inc(i);
+      end else
+        Result[i] := Copy(str, 1, Length(str));
+    until (l = 0);
+    SetLength(Result, (i + 1));
+  end else
+    Result := [str];
 end;

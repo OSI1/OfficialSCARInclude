@@ -96,36 +96,20 @@ procedure FreeOSI;
 Contributors: Wanted, LordJashin
 Description: Frees things that are loaded into memory upon OSI setup. Save logs
 Date Created: August 8th, 2011. By Wanted
-Last Modified: October 14th, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 21st, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeOSI;
-var
-  Time1: string;
 begin
   if not IsOSISetup then Exit;
   {$IFDEF RS2}
     FreeRS2Fonts;           
     if (PlayerStartTime <> 0) then
-      OSI_WriteAndLog('OSI: RS2: Player(s) Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
+      OSI_WriteAndLog('RS2: Player(s) Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
   {$ENDIF} 
-  OSI_WriteAndLog('OSI: Successfully Ran For: (' + STimeRunning + ')');
-  if OSI_AutoLogScreenSave then
-    OSI_WriteAndLog('OSI: Saved Screen Shots to: ' + ScreenPath);  
-  if OSI_AutoLog then                               
-    begin                                                                     
-      Time1 := TheTime;
-      while StrInStr(':', Time1) do
-        Time1 := Replace(Time1, ':', '-');
-      if (OSI_AutoLogFolderName <> '') then
-        begin
-          if ForceDirectories(LogsPath + OSI_AutoLogFolderName + '\') then
-            if DirectoryExists(LogsPath + OSI_AutoLogFolderName + '\') then
-              OSI_SaveLog(LogsPath + OSI_AutoLogFolderName + '\[' + TheDate(0) + '] [' + Time1 + '] ' + OSI_AutoLogName + '.txt');          
-        end
-      else
-        OSI_SaveLog(LogsPath + '[' + TheDate(0) + '] [' + Time1 + '] ' + OSI_AutoLogName + '.txt');              
-    end;                
+  OSI_WriteAndLog('Successfully Ran For: (' + STimeRunning + ')');
+  if OSILog.AutoScreen then OSI_WriteAndLog('Saved Screenshots to: ' + OSILog.AutoScreenFolderPath + OSILog.AutoScreenNewFolder);  
+  OSI_AutoSaveLog;                
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -147,18 +131,18 @@ var
 begin
   try
     OSI_Variance := 3.0;
-    OSI_WriteAndLog('OSI: Routines Enabled');
+    OSI_WriteAndLog('Routines Enabled');
     {$IFDEF RS2}
       RS2GlobalVars; 
       if RS2_CheckForUpdates then
         RSupdateGlobals;
       RS2FontFolder := '';
-      OSI_WriteAndLog('OSI: RS2: Routines Enabled');
+      OSI_WriteAndLog('RS2: Routines Enabled');
       {$IFDEF OSI_Color_Anti_Randoms}
-        OSI_WriteAndLog('OSI: RS2: Color Random Detection and Solving Enabled');
+        OSI_WriteAndLog('RS2: Color Random Detection and Solving Enabled');
         InitiateAntiRandoms;
       {$ELSE}
-        OSI_WriteAndLog('OSI: RS2: Color Random Detection and Solving Disabled');
+        OSI_WriteAndLog('RS2: Color Random Detection and Solving Disabled');
       {$ENDIF}
       {$IFNDEF DisableRS2Fonts}
         RS2FontFolder := IncludesPath + 'OSI\RS2\Fonts\';
@@ -173,9 +157,9 @@ begin
         FriendChars := LoadChars2(RS2FontFolder + 'FriendChars\');
         LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
         XPChars := LoadChars2(RS2FontFolder + 'UpChars\');
-        OSI_WriteAndLog('OSI: RS2: Loaded Fonts: OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
+        OSI_WriteAndLog('RS2: Loaded Fonts: OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
       {$ELSE}
-        OSI_WriteAndLog('OSI: RS2: Font Loading Disabled.');
+        OSI_WriteAndLog('RS2: Font Loading Disabled.');
       {$ENDIF}
       SetLength(Players, 1);
       LoadRS2WorldArray;
@@ -196,9 +180,9 @@ begin
           SMART_Path := ScriptPath + 'RS2\Misc\'  
         else
         begin
-          OSI_WriteAndLog('OSI: RS2: Couldn''t load SMART (libsmartremote32.dll)');
-          OSI_WriteAndLog('OSI: RS2: Try restarting SCAR Divi, SMART, or Re-installing OSI');
-          OSI_WriteAndLog('OSI: RS2: If problems persist post a thread on the forums at www.scar-divi.com');
+          OSI_WriteAndLog('RS2: Couldn''t load SMART (libsmartremote32.dll)' + #13#10 +
+                          'RS2: Try restarting SCAR Divi, SMART, or Re-installing OSI' + #13#10 +
+                          'RS2: If problems persist post a thread on the forums at www.scar-divi.com');
           TerminateScript;
         end;
         if (not (NonAutomaticSMART)) then
@@ -206,7 +190,7 @@ begin
       {$ELSE}                                                         
         GetClient.Activate;
         UpdateRSClient;                                                
-        OSI_WriteAndLog('OSI: RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...8-13secs');
+        OSI_WriteAndLog('RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...8-13secs');
         if not WaitFunc(@RSReady, True, 100, 250, 8000, 13000) then
           FixLoginScreen;
       {$ENDIF}
@@ -216,13 +200,13 @@ begin
     SetColorSpeed2Modifiers(0.2, 0.2);
     ColorToleranceSpeed(1);
   except
-    OSI_WriteAndLog('OSI: Failed to load!');
-    OSI_WriteAndLog('OSI: Try restarting SCAR Divi, SMART, or Re-installing OSI');
-    OSI_WriteAndLog('OSI: If problems persist post a thread on the forums at www.scar-divi.com');
-    OSI_WriteAndLog('OSI: Terminating Script!');  
+    OSI_WriteAndLog('Failed to load!' + #13#10 +
+                    'Try restarting SCAR Divi, SMART, or Re-installing OSI' + #13#10 +
+                    'If problems persist post a thread on the forums at www.scar-divi.com' + #13#10 +
+                    'Terminating Script!');  
     TerminateScript; 
   finally
     IsOSISetup := True; 
-    OSI_WriteAndLog('OSI: Successfully setup!');    
+    OSI_WriteAndLog('Successfully Setup!');    
   end; 
 end;

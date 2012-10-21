@@ -169,14 +169,14 @@ begin
     begin
       ClickMouse(685, 17, mbLeft);
       WaitRR(500, 100);
-      OSI_WriteAndLog('OSI: RS2: Tried Setting Audio to Max' )
+      OSI_WriteAndLog('RS2: Tried Setting Audio to Max' )
       ClickMouse(685, 17, mbLeft);  
     end
   else
     begin   
       ClickMouse(632, 17, mbLeft);
       WaitRR(500, 100);
-      OSI_WriteAndLog('OSI: RS2: Tried Setting Audio to Disabled');
+      OSI_WriteAndLog('RS2: Tried Setting Audio to Disabled');
       ClickMouse(632, 17, mbLeft);      
     end;     
   WaitRR(700, 1200);
@@ -239,14 +239,14 @@ begin
     MouseBox(270, 260, 275, 260, ClickLeft); // Lowest Brightness
     WaitRR(2000, 2500);
     MouseBox(616, 11, 623, 18, ClickLeft);   // Exits the graphics settings   
-    OSI_WriteAndLog('OSI: RS2: You need to make sure your graphics settings on SMART are on Fixed size');   
+    OSI_WriteAndLog('RS2: You need to make sure your graphics settings on SMART are on Fixed size');   
     Exit;
   {$ENDIF}                                                                              
-  OSI_WriteAndLog('OSI: RS2: Attempting to Fix the Login Screen, and the Graphics Settings!');
-  OSI_WriteAndLog('OSI: RS2: You must set the graphics to (Min, Fixed, Custom->Software Mode)!');
-  OSI_WriteAndLog('OSI: RS2: You must close popups, make SURE you are at the Login Screen!');
-  OSI_WriteAndLog('OSI: RS2: You must re-select the Client (RS2) with the Crosshairs (+)!'); 
-  OSI_WriteAndLog('OSI: RS2: If you still can''t get it to work try Restarting SCAR Divi!');
+  OSI_WriteAndLog('RS2: Attempting to Fix the Login Screen, and the Graphics Settings!' + #13#10 +
+                  'RS2: You must set the graphics to (Min, Fixed, Custom->Software Mode)!' + #13#10 +
+                  'RS2: You must close popups, make SURE you are at the Login Screen!' + #13#10 +
+                  'RS2: You must re-select the Client (RS2) with the Crosshairs (+)!' + #13#10 + 
+                  'RS2: If you still can''t get it to work try Restarting SCAR Divi!');
     Repeat             
       GetClient.Update;      
       with GetClient.ImageArea do
@@ -343,12 +343,12 @@ begin
   end;
   if (AllPlayersInActive) then
   begin
-    OSI_WriteAndLog('OSI: RS2: No active players to login!');
+    OSI_WriteAndLog('RS2: No active players to login!');
     Exit;
   end;
   if (not (Players[CurrentPlayer].Active)) then
     CurrentPlayer := NextActivePlayerIndex;
-  OSI_WriteAndLog('OSI: RS2: Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
+  OSI_WriteAndLog('RS2: Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
   ProcStart:                                                  // Retry Login Mark
   B3 := (CountColor(10141389, 345, 268, 418, 280) = 143);     // Auto setup graphics
   if (not (B3)) then
@@ -377,7 +377,7 @@ begin
   if (not (B2)) then
     if (not (WaitFunc(@LoginScreen, True, 250, 400, 3500, 4500))) then
     begin
-      OSI_WriteAndLog('OSI: RS2: Couldn''t find Login Screen!');
+      OSI_WriteAndLog('RS2: Couldn''t find Login Screen!');
       Exit;
     end;
   {$IFNDEF SMART}
@@ -422,19 +422,19 @@ begin
   repeat
     SetLength(Actions, 0);
     if (GetSystemTime > T) then // Response                            Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
-      Actions :=       ['OSI: RS2: About one minute has passed...',    0,    0,      'PlayerFalse', 'Login Failed']        // August 10, 2011     Wanted          661      confirmed
+      Actions :=       ['RS2: About one minute has passed...',    0,    0,      'PlayerFalse', 'Login Failed']        // August 10, 2011     Wanted          661      confirmed
     else
     case (CountColor(clLoginText, 260, 140, 506, 395)) of
-      364: Actions :=  ['OSI: RS2: Error connecting',              20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
-      732: Actions :=  ['OSI: RS2: Runescape has been updated',        0,    0,      'Exit',        'RS updated'];         // August 7, 2011      Anonymous       660      unconfirmed
+      364: Actions :=  ['RS2: Error connecting',              20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
+      732: Actions :=  ['RS2: Runescape has been updated',        0,    0,      'Exit',        'RS updated'];         // August 7, 2011      Anonymous       660      unconfirmed
       763, 2348, 2299:
-            Actions := ['OSI: RS2: Invalid username / password',       0,    2,      'PlayerFalse', 'Wrong User/Pass'];    // August 10, 2011     Wanted          661      confirmed
-      777: Actions :=  ['OSI: RS2: Login limit exceeded',          20000,   10,      '',            'Waiting for login.']; // August 7, 2011      Anonymous       660      unconfirmed
-      951: Actions :=  ['OSI: RS2: Your account is already logged in', 5,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
-      1057: Actions := ['OSI: RS2: Too many incorrect logins', 5 * 60000,    2,      'PlayerFalse', 'Too many logins'];    // August 7, 2011      Anonymous       660      unconfirmed
-      1088: Actions := ['OSI: RS2: Your account has been disabled',    0,    0,      'PlayerFalse', 'Acc Disabled'];       // August 7, 2011      Anonymous       660      unconfirmed
-      1535: Actions := ['OSI: RS2: Your account has been locked',      0,    0,      'PlayerFalse', 'Acc Locked'];         // August 10, 2011     Wanted          661      confirmed 
-      1606: Actions := ['OSI: RS2: Game session has ended',            0,    0,      'Exit',        'RS updated'];         // July 26, 2012       Bixby Sayz      727      confirmed
+            Actions := ['RS2: Invalid username / password',       0,    2,      'PlayerFalse', 'Wrong User/Pass'];    // August 10, 2011     Wanted          661      confirmed
+      777: Actions :=  ['RS2: Login limit exceeded',          20000,   10,      '',            'Waiting for login.']; // August 7, 2011      Anonymous       660      unconfirmed
+      951: Actions :=  ['RS2: Your account is already logged in', 5,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
+      1057: Actions := ['RS2: Too many incorrect logins', 5 * 60000,    2,      'PlayerFalse', 'Too many logins'];    // August 7, 2011      Anonymous       660      unconfirmed
+      1088: Actions := ['RS2: Your account has been disabled',    0,    0,      'PlayerFalse', 'Acc Disabled'];       // August 7, 2011      Anonymous       660      unconfirmed
+      1535: Actions := ['RS2: Your account has been locked',      0,    0,      'PlayerFalse', 'Acc Locked'];         // August 10, 2011     Wanted          661      confirmed 
+      1606: Actions := ['RS2: Game session has ended',            0,    0,      'Exit',        'RS updated'];         // July 26, 2012       Bixby Sayz      727      confirmed
     end;
     if (Length(Actions) > 0) then
     begin
@@ -491,7 +491,7 @@ begin
   Result := LoggedIn;
   if (Result) then
   begin
-    OSI_WriteAndLog('OSI: RS2: ' + Players[CurrentPlayer].Name + ' logged in.');
+    OSI_WriteAndLog('RS2: ' + Players[CurrentPlayer].Name + ' logged in.');
     PlayerStartTime := GetSystemTime;
     Exit;
   end;
@@ -528,18 +528,18 @@ begin
   repeat
     SetLength(Actions, 0);
     if (GetSystemTime > T) then           // Response                          Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
-      Actions :=       ['OSI: RS2: About one minute has passed...',            0,    0,      'NextPlayer',  'Login Failed']        // September 25, 2011  Wanted          666      confirmed
+      Actions :=       ['RS2: About one minute has passed...',            0,    0,      'NextPlayer',  'Login Failed']        // September 25, 2011  Wanted          666      confirmed
     else
       case CountColor(clLoginText, 260, 115, 510, 375) of
       //-1: Actions :=   ['You need 20 combat for PvP',              0,    1,      'PlayerFalse', 'PvP warning'];        // August 7, 2011      Anonymous       660      unconfirmed
       //-1: Actions :=   ['You need skill total of 1500.',           0,    9,      'PlayerTrue',  '1500 skill club'];    // August 7, 2011      Anonymous       660      unconfirmed
-        364: Actions :=  ['OSI: RS2: Error connecting',                    20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
-        777: Actions :=  ['OSI: RS2: Login limit exceeded',                    0,    10,     '',            'Waiting for login.']; // August 7, 2011      Anonymous       660      unconfirmed
-        850: Actions :=  ['OSI: RS2: You need skill total of 1000',            0,    9,      'PlayerTrue',  '1000 skill club'];    // August 7, 2011      Anonymous       660      unconfirmed
-        951: Actions :=  ['OSI: RS2: Your account is already logged in',    5000,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
-        1028: Actions := ['OSI: RS2: You are standing in a members only area', 0,    1,      'PlayerFalse', 'In Mems-Only Area'];  // August 7, 2011      Anonymous       660      unconfirmed
-        1239: Actions := ['OSI: RS2: Not a members account',                   0,    1,      'PlayerFalse', 'Non-member'];         // September 25, 2011  Wanted          666      confirmed
-        1709: Actions := ['OSI: RS2: World full. Waiting in que...',        3500,    1,      'PlayerFalse', 'In full world que'];  // February 19, 20212  Wanted          701      confirmed
+        364: Actions :=  ['RS2: Error connecting',                    20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
+        777: Actions :=  ['RS2: Login limit exceeded',                    0,    10,     '',            'Waiting for login.']; // August 7, 2011      Anonymous       660      unconfirmed
+        850: Actions :=  ['RS2: You need skill total of 1000',            0,    9,      'PlayerTrue',  '1000 skill club'];    // August 7, 2011      Anonymous       660      unconfirmed
+        951: Actions :=  ['RS2: Your account is already logged in',    5000,    0,      'PlayerTrue',  'Already logged in'];  // August 7, 2011      Anonymous       660      unconfirmed
+        1028: Actions := ['RS2: You are standing in a members only area', 0,    1,      'PlayerFalse', 'In Mems-Only Area'];  // August 7, 2011      Anonymous       660      unconfirmed
+        1239: Actions := ['RS2: Not a members account',                   0,    1,      'PlayerFalse', 'Non-member'];         // September 25, 2011  Wanted          666      confirmed
+        1709: Actions := ['RS2: World full. Waiting in que...',        3500,    1,      'PlayerFalse', 'In full world que'];  // February 19, 20212  Wanted          701      confirmed
       end;
     if (Length(Actions) > 0) then                             // Respond
     begin
@@ -628,7 +628,7 @@ begin
     if (not (Result)) then
       Exit;
   until (True);
-  OSI_WriteAndLog('OSI: RS2: ' + Players[CurrentPlayer].Name + ' exited to lobby.');
+  OSI_WriteAndLog('RS2: ' + Players[CurrentPlayer].Name + ' exited to lobby.');
   IncEx(Players[CurrentPlayer].Worked, GetSystemTime - PlayerStartTime);
   PlayerStartTime := GetSystemTime;
 end;
@@ -686,7 +686,7 @@ begin
     if (not (Result)) then
       Exit;
   until (True);
-  OSI_WriteAndLog('OSI: RS2: Logged out ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '.');
+  OSI_WriteAndLog('RS2: Logged out ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '.');
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -699,7 +699,7 @@ Last Modified: November 20th, 2011. By Wanted. RS2 Build 679.
 
 function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
 begin
-  OSI_WriteAndLog('OSI: RS2: SwitchToPlayer(' + Players[Player].Name + ', ' + BoolToStr(Active) + ');');
+  OSI_WriteAndLog('RS2: SwitchToPlayer(' + Players[Player].Name + ', ' + BoolToStr(Active) + ');');
   Players[CurrentPlayer].Active := Active;
   CurrentPlayer := Player;
   Result := Login;
@@ -716,7 +716,7 @@ Last Modified: September 25th, 2011. By Wanted. RS2 Build 666.
 
 function NextPlayer(Active: Boolean): Boolean;
 begin
-  OSI_WriteAndLog('OSI: RS2: NextPlayer(' + BoolToStr(Active) + ');');
+  OSI_WriteAndLog('RS2: NextPlayer(' + BoolToStr(Active) + ');');
   Logout;
   Result := SwitchToPlayer(NextActivePlayerIndex, Active);
 end;
@@ -732,7 +732,7 @@ Last Modified: September 25th, 2011. By Wanted. RS2 Build 666.
 
 function RandomNextPlayer(Active: Boolean): Boolean;
 begin
-  OSI_WriteAndLog('OSI: RS2: NextPlayer(' + BoolToStr(Active) + ');');
+  OSI_WriteAndLog('RS2: NextPlayer(' + BoolToStr(Active) + ');');
   Logout;
   Result := SwitchToPlayer(Random(Length(Players)), Active);            // FIX
 end;

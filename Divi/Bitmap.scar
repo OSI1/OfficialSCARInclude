@@ -20,7 +20,7 @@ begin
     bmp.SetSize(w, h);
     bmp.LoadFromStr(FromStr);    
   except
-    OSI_WriteAndLog('OSI: Failed to Create Bitmap');
+    OSI_WriteAndLog('Failed to Create Bitmap');
   end;  
 end;
 

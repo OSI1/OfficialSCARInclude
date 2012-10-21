@@ -615,11 +615,11 @@ begin
       FreeChars2(LoginChars);
       FreeChars2(XPChars);
     except
-      OSI_WriteAndLog('OSI: RS2: Failed to Free Fonts');
+      OSI_WriteAndLog('RS2: Failed to Free Fonts');
       b := true;      
     finally                            
       if not b then
-        OSI_WriteAndLog('OSI: RS2: Freed Fonts');
+        OSI_WriteAndLog('RS2: Freed Fonts');
     end;
   {$ENDIF}
 end;
@@ -713,25 +713,25 @@ begin
     if (x1 < RSX1) or (x1 > RSX2) then
       begin
         x1 := RSX1;       
-        OSI_WriteAndLog('OSI: RS2: Constrained x1 to RSX1!');
+        OSI_WriteAndLog('RS2: Constrained x1 to RSX1!');
       end;
   if cRSX2 then
     if (x2 < RSX1) or (x2 > RSX2) then
       begin
         x2 := RSX2;
-        OSI_WriteAndLog('OSI: RS2: Constrained x2 to RSX2!');
+        OSI_WriteAndLog('RS2: Constrained x2 to RSX2!');
       end;               
   if cRSY1 then
     if (y1 < RSY1) or (y1 > RSY2) then
       begin
         y1 := RSY1;                                  
-        OSI_WriteAndLog('OSI: RS2: Constrained y1 to RSY1!');
+        OSI_WriteAndLog('RS2: Constrained y1 to RSY1!');
       end;
   if cRSY2 then
     if (y2 < RSY1) or (y2 > RSY2) then
       begin
         y2 := RSY2;                             
-        OSI_WriteAndLog('OSI: RS2: Constrained y2 to RSY2!');
+        OSI_WriteAndLog('RS2: Constrained y2 to RSY2!');
       end;
 end;
    
