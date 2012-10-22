@@ -598,12 +598,14 @@ procedure FreeRS2Fonts;
 Contributors: Wanted, LordJashin
 Description: Frees RS2 fonts from memory.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modified: October 12th, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 18th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeRS2Fonts;
+{$IFNDEF DisableRS2Fonts}
 var
-  b: Boolean;
+  b: Boolean;              
+{$ENDIF}
 begin
   {$IFNDEF DisableRS2Fonts}     
     try

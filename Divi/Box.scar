@@ -14,6 +14,8 @@
  * procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
  * procedure BoxDimensions(bx: TBox; var w, h: Integer);
  * procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasurementUnits);
+ * function CountBoxesInBoxBySize(bx: TBox; width, height: Integer): Integer;
+ * function GetBoxesInBoxBySize(bx: TBox; width, height: Integer): TBoxArray;
  * function TBACopyEx(TBA: TBoxArray; pos1, pos2: Integer): TBoxArray;
  * function TBABounds(TBA: TBoxArray): TBox;
  * function TBASame(TBA1, TBA2: TBoxArray): Boolean;
@@ -214,24 +216,69 @@ procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasure
 Contributors: Janilabo
 Description: Sets inner bx to center of outer bx. Contains 3 methods.
 Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.       
+Last Modified: October 18th, 2012. By Janilabo.       
 Explanation: Methods: mu_WidthHeight = center width & heightwise, 
                       mu_Width = center widthwise, 
                       mu_Height = center heightwise.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasurementUnits);
-var
-  i_w, i_h: Integer;
-  c_pt, d_pt: TPoint;
 begin
-  BoxDimensions(inner_bx, i_w, i_h);
-  c_pt := BoxCenter(outer_bx);
-  d_pt := Point((c_pt.X - (i_w div 2)), (c_pt.Y - (i_h div 2)));
   case method of
-    mu_WidthHeight: OffsetBox(inner_bx, (d_pt.Y - inner_bx.Y1), (d_pt.X - inner_bx.X1));
-    mu_Width: OffsetBox(inner_bx, (d_pt.X - inner_bx.X1), 0);
-    mu_Height: OffsetBox(inner_bx, 0, (d_pt.Y - inner_bx.Y1));
+    mu_WidthHeight: OffsetBox(inner_bx, (((Round(outer_bx.Y1 + ((outer_bx.Y2 - outer_bx.Y1) / 2)) - (((inner_bx.Y2 - inner_bx.Y1) + 1) div 2)) - inner_bx.Y1)), (Round(outer_bx.X1 + ((outer_bx.X2 - outer_bx.X1) / 2)) - (((inner_bx.X2 - inner_bx.X1) + 1) div 2)) - inner_bx.X1);
+    mu_Width: OffsetBox(inner_bx, ((Round(outer_bx.X1 + ((outer_bx.X2 - outer_bx.X1) / 2)) - (((inner_bx.X2 - inner_bx.X1) + 1) div 2)) - inner_bx.X1), 0);
+    mu_Height: OffsetBox(inner_bx, 0, ((Round(outer_bx.Y1 + ((outer_bx.Y2 - outer_bx.Y1) / 2)) - (((inner_bx.Y2 - inner_bx.Y1) + 1) div 2)) - inner_bx.Y1));
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountBoxesInBoxBySize(bx: TBox; width, height: Integer): Integer;
+Contributors: Janilabo
+Description: Returns count of ALL the possible boxes in a box (bx) by size (width*height).
+Date Created: October 18th, 2012. By Janilabo.
+Last Modified: October 18th, 2012. By Janilabo.       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountBoxesInBoxBySize(bx: TBox; width, height: Integer): Integer;
+var
+  w, h: Integer;
+begin
+  if ((bx.X1 > bx.X2) or (bx.Y1 > bx.Y2) or (width < 1) or (height < 1)) then
+    Exit;
+  GetBoxSize(bx, w, h);                                                
+  if ((width < (w + 1)) and (height < (h + 1))) then
+    Result := ((h - (height - 1)) * (w - (width - 1)));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBoxesInBoxBySize(bx: TBox; width, height: Integer): TBoxArray;
+Contributors: Janilabo
+Description: Returns ALL the possible boxes in a box (bx) by size (width*height).
+Date Created: October 18th, 2012. By Janilabo.
+Last Modified: October 18th, 2012. By Janilabo.       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBoxesInBoxBySize(bx: TBox; width, height: Integer): TBoxArray;
+var
+  r, c, w, h, x, y, i: Integer;
+begin
+  if ((bx.X1 > bx.X2) or (bx.Y1 > bx.Y2) or (width < 1) or (height < 1)) then
+    Exit;
+  GetBoxSize(bx, w, h);                                                
+  if ((width < (w + 1)) and (height < (h + 1))) then
+  begin
+    r := (h - (height - 1));
+    c := (w - (width - 1));        
+    SetLength(Result, (r * c));
+    for y := bx.Y1 to (bx.Y1 + (r - 1)) do
+      for x := bx.X1 to (bx.X1 + (c - 1)) do 
+      begin     
+        i := (((y - bx.Y1) * c) + (x - bx.X1));
+        Result[i].X1 := x;
+        Result[i].Y1 := y;
+        Result[i].X2 := (x + (width - 1));
+        Result[i].Y2 := (y + (height - 1));
+      end;
   end;
 end;
 

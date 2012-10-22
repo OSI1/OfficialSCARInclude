@@ -132,7 +132,8 @@ begin
   try
     OSI_Variance := 3.0;
     OSI_WriteAndLog('Routines Enabled');
-    {$IFDEF RS2}
+    {$IFDEF RS2}    
+      FriendChars := 0;
       RS2GlobalVars; 
       if RS2_CheckForUpdates then
         RSupdateGlobals;
@@ -200,13 +201,12 @@ begin
     SetColorSpeed2Modifiers(0.2, 0.2);
     ColorToleranceSpeed(1);
   except
-    OSI_WriteAndLog('Failed to load!' + #13#10 +
-                    'Try restarting SCAR Divi, SMART, or Re-installing OSI' + #13#10 +
-                    'If problems persist post a thread on the forums at www.scar-divi.com' + #13#10 +
-                    'Terminating Script!');  
-    TerminateScript; 
-  finally
-    IsOSISetup := True; 
-    OSI_WriteAndLog('Successfully Setup!');    
+    HandleOSIException; 
+  finally   
+    if not OSIExceptionThrown then
+      begin
+        IsOSISetup := True; 
+        OSI_WriteAndLog('Successfully Setup!');        
+      end;    
   end; 
 end;

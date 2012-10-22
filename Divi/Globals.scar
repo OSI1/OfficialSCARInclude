@@ -2,6 +2,7 @@
                               Official SCAR Include
                                  Global Routines
 --------------------------------------------------------------------------------
+ * procedure HandleOSIException;
  * var IsOSISetup
  * type TOSIScriptInfo        
  * type TOSILog
@@ -10,6 +11,36 @@
  * var MouseSpeed: Integer;      
  * type TMeasurementUnits    
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure OSI_WriteAndLog(s: string); forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure HandleOSIException;
+Contributors: LordJashin
+Description: Used in SetupOSI to handle any errors! OSIExceptionThrown is set
+Date Created: October 21st, 2012. By LordJashin.
+Last Modified: October 21st, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  OSIExceptionThrown: Boolean;
+
+procedure HandleOSIException;
+var
+  s: string;
+begin
+  s := ExceptionToString(ExceptionType, ExceptionParam) + #13#10 + 
+       '***WARNING***' + #13#10 + 
+       'Failed to load! An Error has occurred!' + #13#10 +
+       'Try restarting SCAR Divi, SMART, or Re-installing OSI' + #13#10 +
+       'If problems persist post a thread on the forums at www.scar-divi.com' + #13#10 +
+       'Terminating Script!'; 
+  OSI_WriteAndLog(s);        
+  OSIExceptionThrown := True;
+  ShowMessage(s);            
+  RaiseLastException;
+  TerminateScript;   
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var IsOSISetup
