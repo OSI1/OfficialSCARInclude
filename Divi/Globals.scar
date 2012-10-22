@@ -37,7 +37,8 @@ begin
        'Terminating Script!'; 
   OSI_WriteAndLog(s);        
   OSIExceptionThrown := True;
-  ShowMessage(s);            
+  ShowMessage(s);          
+  OSI_AutoSaveLog;  
   RaiseLastException;
   TerminateScript;   
 end;
