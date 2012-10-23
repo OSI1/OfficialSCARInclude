@@ -2,7 +2,9 @@
                               Official SCAR Include
                                  Client Routines
 --------------------------------------------------------------------------------
- * function FindWindowEx(Title: string, CaseSensitive, PartialMatch: Boolean): HWND;
+ * function FindWindowEx(Title: string; CaseSensitive, PartialMatch: Boolean): HWND;
+ * procedure SetDesktopWindowAsClient;
+ * procedure SetSCARWindowAsClient;
  * function SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
  * procedure SCARSetCaption(Title: string); 
  * procedure SCARMoveToTray; 
@@ -15,7 +17,7 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindWindowEx(Title: string, CaseSensitive, PartialMatch: Boolean): HWND;
+function FindWindowEx(Title: string; CaseSensitive, PartialMatch: Boolean): HWND;
 Contributors: LordJashin
 Description: Finds a window using FindWindowsEx returns first one found as result
 Date Created: October 12th, 2012. By LordJashin.
@@ -26,11 +28,37 @@ function FindWindowEx(Title: string; CaseSensitive, PartialMatch: Boolean): HWND
 var
   arr: THwndArray;
 begin
-  Result := 0;  
+  Result := 0;                                                                 
   SetLength(arr, 1);
   arr := FindWindowsEx(GetDesktopWindow, Title, '', false, CaseSensitive, PartialMatch);
   if (Length(arr) > 0) then
     Result := arr[0];  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SetDesktopWindowAsClient;
+Contributors: LordJashin
+Description: Sets the Desktop Window (GetDesktopWindow) as the client for SCAR
+Date Created: October 22nd, 2012. By LordJashin.
+Last Modified: October 22nd, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SetDesktopWindowAsClient;
+begin
+  SetClient(TSCARWindowClient.Create(GetDesktopWindow));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SetSCARWindowAsClient;
+Contributors: LordJashin
+Description: Sets the SCAR Divi Window (interface) as the client for SCAR
+Date Created: October 22nd, 2012. By LordJashin.
+Last Modified: October 22nd, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SetSCARWindowAsClient;
+begin
+  SetClient(TSCARWindowClient.Create(GetSelf.Handle));  
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
