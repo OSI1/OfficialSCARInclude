@@ -2,40 +2,75 @@
                               Official SCAR Include
                                  String Routines
 --------------------------------------------------------------------------------
- * function StrReverse(str: string): string; 
- * function StrCompare(s1, s2: string): Integer;                    
- * function StrStuff(str, s: string; iFrom, iCount: Integer): string;
- * function StrStuffEx(str, s: string; pos1, pos2: Integer): string;          
- * function StrBetween(str: string; pos1, pos2: Integer): string;             
- * function StrCopy(str: string; pos1, pos2: Integer): string;
+ * function StrCount(SubStr, s: string; overlap: Boolean): Integer;
+ * function StrReverse(s: string): string; 
+ * function StrCompare(s1, s2: string): Integer;    
+ * function StrSplit(text, separator: string; ID: Integer): string;
+ * function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;                
+ * function StrStuff(SubStr, s: string; iFrom, iCount: Integer): string;
+ * function StrStuffEx(SubStr, s: string; pos1, pos2: Integer): string;          
+ * function StrBetweenEx(s: string; pos1, pos2: Integer): string;             
+ * function StrCopyEx(s: string; pos1, pos2: Integer): string;
+ * function StrReplaceEx(Text, FindS, ReplaceS: string; Offset: Integer): string;
  * function StrAfter(SubStr, s: string): string;
  * function StrBefore(SubStr, s: string): string;
  * function StrAfterEx(SubStr, s: string; offset: Integer): string;
  * function StrBeforeEx(SubStr, s: string; offset: Integer): string;
  * function StrLastAfter(SubStr, s: string): string;  
- * function StrLastBefore(SubStr, s: string): string;
+ * function StrLastBefore(SubStr, s: string): string;              
+ * function StrClosestPos(SubStr, s: string; iFrom: Integer): Integer;
+ * function StrFarthestPos(SubStr, s: string; iFrom: Integer): Integer;
  * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
- * function StrInStr(SubStr, S: string): Boolean;
- * function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;     
- * function StrExplodeMulti(d: TStrArray; str: string): TStrArray;         
+ * function StrContainsC(x: Char; s: string): Boolean;
+ * function StrContains(SubStr, s: string): Boolean;
+ * function StrContainsEx(SubStrs: TStrArray; s: string): Boolean;  
+ * function StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;     
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrReverse(str: string): string;
+function StrCount(SubStr, s: string; overlap: Boolean): Integer;
+Contributors: Janilabo                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 12th, 2012. By Janilabo.
+Explanation:   Counts all strings (SubStr) in text (s).
+               If overlap is set to true, strings can overlap.
+               ('test', 'testestest', False) => 2
+               ('test', 'testestest', True) => 3 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrCount(SubStr, s: string; overlap: Boolean): Integer;
+var
+  p, o: Integer;
+begin
+  if not overlap then
+  begin      
+    o := Length(SubStr);
+    p := (p - (o - 1));
+  end else      
+    o := 1; 
+  repeat
+    p := PosEx(SubStr, s, (p + o));
+    if (p > 0) then
+      Inc(Result);
+  until (p <= 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrReverse(s: string): string;
 Contributors: Janilabo
 Description: Returns reversed str.                                                              
 Date Created: September 30th, 2012. By Janilabo.
 Last Modified: September 30th, 2012. By Janilabo. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrReverse(str: string): string;
+function StrReverse(s: string): string;
 var
   i, l: Integer;
 begin
-  l := Length(str);
+  l := Length(s);
   SetLength(Result, l);
   for i := l downto 1 do    
-    Result[i] := str[((l - i) + 1)];
+    Result[i] := s[((l - i) + 1)];
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -56,41 +91,91 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrStuff(str, s: string; iFrom, iCount: Integer): string;
+function StrSplit(text, separator: string; ID: Integer): string;
+Contributors: Janilabo
+Description: Splits text using separator and returns a string specified by the ID (Index in the array of splitted text)                                  
+Date Created: October 18th, 2012. By Janilabo.
+Last Modified: October 18th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrSplit(text, separator: string; ID: Integer): string;
+var
+  tmp: TStrArray;
+begin
+  if (ID > -1) then
+    if (text <> '') then
+    begin
+      tmp := ExplodeEx(separator, text, (ID + 2));
+      if ((ID < (High(tmp) + 1)) and (ID > -1))then
+        Result := tmp[ID];
+      SetLength(tmp, 0);
+    end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;
+Contributors: Janilabo
+Description: Splits text using separator and returns splitted text specified by IDs (Indexs in the array of splitted text)                                                              
+Date Created: October 18th, 2012. By Janilabo.
+Last Modified: October 18th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;
+var
+  h, i, l: Integer;
+  tmp: TStrArray;
+begin
+  l := Length(IDs);
+  if (l < 1) then
+    Exit;
+  SetLength(Result, l);
+  if (text <> '') then
+  begin
+    tmp := ExplodeEx(separator, text, (TIAMax(IDs) + 2));
+    h := High(tmp);
+    for i := 0 to (l - 1) do
+      if ((IDs[i] < (h + 1)) and (IDs[i] > -1)) then
+        Result[i] := tmp[IDs[i]];
+    SetLength(tmp, 0);
+  end;
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrStuff(SubStr, s: string; iFrom, iCount: Integer): string;
 Contributors: Janilabo, LordJashin
-Description: Returns str stuffed with s.
+Description: Returns s stuffed with SubStr.
              iFrom=start position, iCount=count of chars to stuff with.                                                              
 Date Created: September 30th, 2012. By Janilabo.
 Last Modified: October 15th, 2012. By Janilabo.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrStuff(str, s: string; iFrom, iCount: Integer): string;
+function StrStuff(SubStr, s: string; iFrom, iCount: Integer): string;
 var
   l: Integer;
 begin
-  Result := str;
+  Result := s;
   l := Length(Result);
   IntSetRange(iFrom, 1, l);
   IntSetRange(iCount, 1, l);
   Delete(Result, iFrom, iCount);
-  Insert(s, Result, iFrom);
+  Insert(SubStr, Result, iFrom);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrStuffEx(str, s: string; pos1, pos2: Integer): string;
+function StrStuffEx(SubStr, s: string; pos1, pos2: Integer): string;
 Contributors: Janilabo, LordJashin
-Description: Returns str stuffed with s.
+Description: Returns s stuffed with SubStr.
              pos1=start position, pos2=finish position.
              With pos1 > pos2 s will be reversed.                                                                                 
 Date Created: October 15th, 2012. By Janilabo.
 Last Modified: October 15th, 2012. By Janilabo.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrStuffEx(str, s: string; pos1, pos2: Integer): string;
+function StrStuffEx(SubStr, s: string; pos1, pos2: Integer): string;
 var
   i, l: Integer;
 begin
-  Result := str;
+  Result := s;
   l := Length(Result); 
   IntSetRange(pos1, 1, l);
   IntSetRange(pos2, 1, l);
@@ -98,50 +183,50 @@ begin
     True:
     begin          
       Delete(Result, pos2, ((pos1 - pos2) + 1));
-      l := Length(s);
-      SetLength(str, l);
+      l := Length(SubStr);
+      SetLength(s, l);
       for i := l downto 1 do    
-        str[i] := s[((l - i) + 1)];
-      Insert(str, Result, pos2);
+        s[i] := SubStr[((l - i) + 1)];
+      Insert(s, Result, pos2);
     end;
     False:
     begin
       Delete(Result, pos1, ((pos2 - pos1) + 1));
-      Insert(s, Result, pos1);
+      Insert(SubStr, Result, pos1);
     end;   
   end;
 end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrBetween(str: string; pos1, pos2: Integer): string;
+function StrBetweenEx(s: string; pos1, pos2: Integer): string;
 Contributors: Janilabo
-Description: Returns the string between pos1 and pos2 of str.                                                              
+Description: Returns the string between pos1 and pos2 of s.                                                              
 Date Created: September 30th, 2012. By Janilabo.
 Last Modified: September 30th, 2012. By Janilabo. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrBetween(str: string; pos1, pos2: Integer): string;
+function StrBetweenEx(s: string; pos1, pos2: Integer): string;
 var
   l: Integer;
 begin
-  l := Length(str);
+  l := Length(s);
   if ((pos1 < pos2) and InRange(pos1, 0, (l + 1)) and InRange(pos2, 0, (l + 1))) then
-    Result := Copy(str, (pos1 + 1), ((pos2 - pos1) - 2));
+    Result := Copy(s, (pos1 + 1), ((pos2 - pos1) - 2));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrCopy(str: string; pos1, pos2: Integer): string;
+function StrCopyEx(s: string; pos1, pos2: Integer): string;
 Contributors: Janilabo
-Description: Copies str from pos1 to pos2.                                                              
+Description: Copies s from pos1 to pos2.                                                              
 Date Created: September 30th, 2012. By Janilabo.
 Last Modified: October 6th, 2012. By Janilabo. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrCopy(str: string; pos1, pos2: Integer): string;
+function StrCopyEx(s: string; pos1, pos2: Integer): string;
 var
   i, l: Integer;
 begin
-  l := Length(str);
+  l := Length(s);
   if (l > 0) then 
   begin   
     IntSetRange(pos1, 1, l);
@@ -152,12 +237,33 @@ begin
       begin
         SetLength(Result, ((pos1 - pos2) + 1));
         for i := pos1 downto pos2 do
-          Result[((pos1 - i) + 1)] := str[i]; 
+          Result[((pos1 - i) + 1)] := s[i]; 
       end else
-        Result := Copy(str, pos1, 1);
-      True: Result := Copy(str, pos1, ((pos2 - pos1) + 1)); 
+        Result := Copy(s, pos1, 1);
+      True: Result := Copy(s, pos1, ((pos2 - pos1) + 1)); 
     end;
   end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrReplaceEx(Text, FindS, ReplaceS: string; Offset: Integer): string;
+Contributors: Janilabo
+Description: Basic Replacing function. Replaces FindS with ReplaceS in Text.
+             Starts from offset... Returns the replaced Text.                  
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrReplaceEx(Text, FindS, ReplaceS: string; Offset: Integer): string;
+var
+  tL: Integer;
+begin
+  tL := Length(Text);
+  if ((Length(FindS) > tL) or (Offset > tL)) then
+    Exit;                        
+  if (Offset < 1) then
+    Offset := 1;
+  Result := (Copy(Text, 1, (Offset - 1)) + Replace(Copy(Text, Offset, ((tL - Offset) + 1)), FindS, ReplaceS)); 
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -286,6 +392,70 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrClosestPos(SubStr, s: string; iFrom: Integer): Integer;
+Contributors: Janilabo
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 12th, 2012. By Janilabo.
+Explanation:   Returns closest position of string (SubStr) in text (s)
+               -in comparison to the target position (iFrom).
+               ('test', 'test string for testing purposes.', 9) => 1
+               ('test', 'test string for testing purposes.', 10) => 17
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrClosestPos(SubStr, s: string; iFrom: Integer): Integer;
+var
+  sL, o, p: Integer;
+begin
+  sL := Length(s);
+  if ((Length(SubStr) <= sL) and (iFrom > 0) and (iFrom <= sL)) then
+  repeat
+    p := PosEx(SubStr, s, (o + 1));
+    if (p > 0) then
+    begin
+      if (Result = 0) then
+        Result := p
+      else
+        if (IAbs(iFrom - p) < IAbs(iFrom - Result)) then
+          Result := p
+        else
+          Exit;
+      o := p;
+    end;
+  until (p <= 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrFarthestPos(SubStr, s: string; iFrom: Integer): Integer;
+Contributors: Janilabo
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 12th, 2012. By Janilabo.
+Explanation:   Returns farthest position of string (SubStr) in text (s)
+               -in comparison to the target position (iFrom).
+               ('test', 'test string for testing purposes.', 9) => 17
+               ('test', 'test string for testing purposes.', 10) => 1
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrFarthestPos(SubStr, s: string; iFrom: Integer): Integer;
+var
+  sL, o, p: Integer;
+begin
+  sL := Length(s);
+  if ((Length(SubStr) <= sL) and (iFrom > 0) and (iFrom <= sL)) then
+  repeat
+    p := PosEx(SubStr, s, (o + 1));
+    if (p > 0) then
+    begin    
+      if (Result = 0) then
+        Result := p
+      else
+        if (IAbs(iFrom - p) >= IAbs(iFrom - Result)) then
+          Result := p;
+      o := p;
+    end;
+  until (p <= 0);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if the string is in the array and returns position.
@@ -316,66 +486,79 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrInStr(SubStr, S: string): Boolean;
-Contributors: Wanted
-Description: Results true if a string is inside of another string.
-Date Created: December 31st, 2011. By Wanted
-Last Modified: December 31st, 2011. By Wanted
+function StrContainsC(x: Char; s: string): Boolean;
+Contributors: Janilabo
+Description: Returns true if text (s) contains char (x).
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 12th, 2012. By Janilabo.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrInStr(SubStr, S: string): Boolean;
+function StrContainsC(x: Char; s: string): Boolean;
 begin
-  Result := (Pos(SubStr, S) > 0);
+  Result := (Pos(x, s) > 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
-Contributors: Wanted
-Description: Results true if any strings are inside a string.
-Date Created: December 31st, 2011. By Wanted
-Last Modified: July 20th, 2012. By Freddy
+function StrContains(SubStr, s: string): Boolean;
+Contributors: Janilabo
+Description: Returns true if text (s) contains string (SubStr).
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: October 12th, 2012. By Janilabo.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrInStrMulti(SubStrs: TStrArray; S: string): Boolean;
+function StrContains(SubStr, s: string): Boolean;
+begin
+  Result := (Pos(SubStr, s) > 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrContainsEx(SubStrs: TStrArray; s: string): Boolean;
+Contributors: Wanted, Freddy, LordJashin
+Description: Results true if any strings are inside a string.
+Date Created: December 31st, 2011. By Wanted
+Last Modified: October 23rd, 2012. By LordJashin
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrContainsEx(SubStrs: TStrArray; s: string): Boolean;
 var
   I, H: Integer;
 begin
   H := High(SubStrs);
   Result := True;
   for I := 0 to H do
-    if (StrInStr(SubStrs[I], S)) then
+    if (StrContains(SubStrs[I], s)) then
       Exit;
   Result := False;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrExplodeMulti(d: TStrArray; str: string): TStrArray;
+function StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;
 Contributors: Janilabo 
 Date Created: October 21st, 2012. By Janilabo
 Last Modified: October 21st, 2012. By Janilabo
-Explanation: Explodes str with multiple separators/delimiters (d).
-             The importance order for d items is from left to right (=>).
+Explanation: Explodes s with multiple separators/delimiters (Separators).
+             The importance order for Separators items is from left to right (=>).
              So place the important ones first and then less important after those.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function StrExplodeMulti(d: TStrArray; str: string): TStrArray;
+function StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;
 var                          
   p, h, i, x, o, m, l: Integer;
 begin
-  h := High(d);
+  h := High(Separators);
   if (h > -1) then
   begin 
     o := 1;
-    SetLength(Result, Length(str));
+    SetLength(Result, Length(s));
     repeat  
       l := 0;           
       for x := 0 to h do
       begin
-        p := Pos(d[x], str);
+        p := Pos(Separators[x], s);
         case (p < 1) of
           True:
           begin
-            Delete(d, x, 1);
+            Delete(Separators, x, 1);
             Dec(x);
             Dec(h);
           end;
@@ -389,13 +572,13 @@ begin
       end;
       if (l > 0) then            
       begin      
-        Result[i] := Copy(str, 1, (l - 1));
-        Delete(str, 1, ((l + Length(d[m])) - 1));         
+        Result[i] := Copy(s, 1, (l - 1));
+        Delete(s, 1, ((l + Length(Separators[m])) - 1));         
         Inc(i);
       end else
-        Result[i] := Copy(str, 1, Length(str));
+        Result[i] := Copy(s, 1, Length(s));
     until (l = 0);
     SetLength(Result, (i + 1));
   end else
-    Result := [str];
+    Result := [s];
 end;

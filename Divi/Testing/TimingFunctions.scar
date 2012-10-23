@@ -3,7 +3,7 @@
                              Timing Function Testing
 --------------------------------------------------------------------------------
  * procedure TestTimingFunctions;                      
-   Last Modified: October 6th, 2012. By LordJashin. 
+   Last Modified: October 23rd, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$I ../../OSI.scar}
@@ -24,7 +24,7 @@ begin
           'With RR 0-100 wait of checks on the func in the loop');
   WriteLn('WaitFindColorTolEx: DesiredCount is the length you want the TPA to be above to return true!');
   WriteLn('TheTime: ' + TheTime);
-  WriteLn('TheDate: ' + TheDate);
+  WriteLn('TheDate: ' + TheDate(0));
   WriteLn('TheMonth: ' + TheMonth);
   WriteLn('STimeRunning: Time the script has been ran: ' + STimeRunning);   
 end;

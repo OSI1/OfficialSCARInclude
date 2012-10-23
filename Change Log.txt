@@ -1,0 +1,98 @@
+﻿-------------------------
+Name - Date :
+-------------------------
+
+
+
+
+
+
+
+
+
+-------------------------
+LordJashin - 10/23/2012 :
+-------------------------
+
+Added:
+
+Divi/Bitmap.scar:
+    - function GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
+
+Divi/Integer.scar:
+    - function StrIsInt(s: string): Boolean;
+
+Divi/Math.scar:
+    - function RandomAbs(Range: Integer): Integer;   
+    - function RandomRangeAbs(AFrom, ATo: Integer): Integer;
+
+Divi/Point.scar:
+    - function PointToStr(P: TPoint): string;
+
+Divi/String.scar:
+    - function StrCount(SubStr, s: string; overlap: Boolean): Integer;
+    - function StrSplit(text, separator: string; ID: Integer): string;
+    - function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;                
+    - function StrReplaceEx(Text, FindS, ReplaceS: string; Offset: Integer): string;
+    - function StrClosestPos(SubStr, s: string; iFrom: Integer): Integer;
+    - function StrFarthestPos(SubStr, s: string; iFrom: Integer): Integer;
+    - function StrContainsC(x: Char; s: string): Boolean;
+
+File:
+   - Divi/Extended.scar:
+                      - function StrIsExt(s: string): Boolean;  
+   - Change Log.txt :D!!!
+
+Improvements:
+           - StrInStr => StrContains
+           - StrInStrMulti => StrContainsEx
+           - StrCopy => StrCopyEx
+           - StrBetween => StrBetweenEx
+           - StrStuff:
+                    - StrStuff(SubStr, s: string; iFrom, iCount: Integer): string;
+           - StrStuffEx: 
+                    - StrStuffEx(SubStr, s: string; pos1, pos2: Integer): string;                          
+           - Other param name changes, mostly from s => SubStr, and str => s
+           - Updated OSI with new function/procedure names
+           - Updated Dates
+
+-------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+++++++++++++++++++++++++++++
+Change Log Contrib Template
+----------------------------
+Name of Contributor - Date :
+----------------------------
+Added:
+
+Where:
+    - funct or proc
+
+File:
+   - Name:
+        - funct or proc
+
+Improvements:
+           - Old name => New
+           - Improvements
+
+Removed:
+
+(maybe) where:
+            - funct or proc
+- funct or proc
+- File/Other
+
+Others:

@@ -2,8 +2,32 @@
                               Official SCAR Include
                                  Bitmap Routines
 --------------------------------------------------------------------------------
- * procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string);   
+ * function GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
+ * procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string);
+ * function CreateBitmaps(FromStr: TStrArray; Width, Height: TIntArray): array of TSCARBitmap;   
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
+Contributors: Janilabo
+Description: Gets width and height of Bitmap and returns them in var Width & Height
+             Returns false if it failed to do this
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
+begin
+  try
+    width := bmp.Width;
+    height := bmp.Height;
+    Result := True;
+  except
+    width := 0;
+    height := 0;
+    Result := False;
+  end;
+end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string);

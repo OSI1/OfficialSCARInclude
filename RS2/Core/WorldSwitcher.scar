@@ -275,8 +275,8 @@ begin
   WorldInfo.Members := (Trim(GetTextAtEx(P.X + 413, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 8, False, tr_AllChars)) = 'Members');
   WorldInfo.LootShare := FindColorTol(LS.X, LS.Y, 4824144, P.X + 490, P.Y, P.X + 499, P.Y + 10, 40);
   WorldInfo.Ping := StrToIntDef(GetNumbers(GetTextAtEx(P.X + 520, P.Y, 0, StatChars, False, False, -1, 2, TextColor, 4, False, tr_AllChars)), 0);
-  WorldInfo.QuickChat := ((StrInStr('uick', WorldInfo.Activity)) or (RS2WorldArray[I].QuickChat));
-  WorldInfo.HRW := StrInStr('derness', WorldInfo.Activity);
+  WorldInfo.QuickChat := ((StrContains('uick', WorldInfo.Activity)) or (RS2WorldArray[I].QuickChat));
+  WorldInfo.HRW := StrContains('derness', WorldInfo.Activity);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

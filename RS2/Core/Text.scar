@@ -48,7 +48,7 @@ begin
   Result := True;
   T := GetSystemTime + RR(1000, 2000);
   while (GetSystemTime < T) do
-    if (StrInStr(Text, GetUpText)) then
+    if (StrContains(Text, GetUpText)) then
       Exit
     else
       WaitRR(50, 80);
@@ -74,7 +74,7 @@ begin
     TheText := GetUpText;
     H := High(Text);
     for I := 0 to H do
-      if (StrInStr(Text[I], TheText)) then
+      if (StrContains(Text[I], TheText)) then
       begin
         Result := True;
         Exit;
@@ -193,7 +193,7 @@ begin
   for I := 0 to H do
     for II := 0 to HH do
       if (not (Result[II])) then
-        if (StrInStr(Options[II], Lines[I])) then
+        if (StrContains(Options[II], Lines[I])) then
         begin
           Result[II] := True;
           InBox[II] := Box(B.X1 + 2, B.Y1 + 2 + (I * 16), B.X2 - 2, B.Y1 + 17 + (I * 16));

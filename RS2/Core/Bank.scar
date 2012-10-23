@@ -616,13 +616,13 @@ begin
   if (H < 0) then
     Exit;
   C := InvCount(False);
-  if (not (StrInStr('-1 ', Options[0]))) then
+  if (not (StrContains('-1 ', Options[0]))) then
   begin
     MouseBox(B.X1, B.Y1, B.X2, B.Y2, ClickRight);
     WX := False;
     H := High(Options);
     for I := 0 to H do
-      if (StrInStr('-X', Options[I])) then
+      if (StrContains('-X', Options[I])) then
       begin
         WX := True;
         Break;

@@ -19,9 +19,11 @@
  * function PercentToValue(percent, source: Extended): Extended;
  * function ValueToFraction(position, source: Extended): Extended; 
  * function FractionToValue(fraction, source: Extended): Extended;
- * function InRangeE(value, minimum, maximum: Extended): Boolean;   
+ * function InRangeE(value, minimum, maximum: Extended): Boolean;
+ * function RandomAbs(Range: Integer): Integer;   
  * function RandomEx(range, amount: Integer; duplicates: Boolean): TIntArray;
- * function RR(Min, Max: Integer): Integer;   
+ * function RR(Min, Max: Integer): Integer;
+ * function RandomRangeAbs(AFrom, ATo: Integer): Integer;   
  * function RandomRangeEx(aFrom, aTo, amount: Integer; duplicates: Boolean): TIntArray;
  * function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
  * function RCirclePoint(CX, CY, Radius: Integer): TPoint;
@@ -310,6 +312,23 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomAbs(Range: Integer): Integer;
+Contributors: Janilabo
+Description: Random() with support for negative Range.
+Date Created: October 21st, 2012. By Janilabo.
+Last Modified: October 21st, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomAbs(Range: Integer): Integer;
+begin
+  if (Range <> 0) then
+    if (Range > 0) then
+      Result := Random(Range)
+    else
+      Result := (Random(IAbs(Range)) * -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RandomEx(range, amount: Integer; duplicates: Boolean): TIntArray;
 Contributors: Janilabo
 Description: Generates an array of random numbers from 0 to (Range - 1).
@@ -373,6 +392,27 @@ function RR(Min, Max: Integer): Integer;
     end;
   end;
 {$ENDIF}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomRangeAbs(AFrom, ATo: Integer): Integer;
+Contributors: Janilabo
+Description: RandomRange() with support for negative AFrom / ATo.
+Date Created: October 21st, 2012. By Janilabo.
+Last Modified: October 21st, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomRangeAbs(AFrom, ATo: Integer): Integer;
+var
+  r: Integer;
+begin
+  if (AFrom > ATo) then
+    Swap(AFrom, ATo);
+  r := (ATo - AFrom);
+  if (r < 0) then
+    Result := ((Random(IAbs(r)) + AFrom) * -1)
+  else
+    Result := (Random(r) + AFrom);
+end;  
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RandomRangeEx(aFrom, aTo, amount: Integer; duplicates: Boolean): TIntArray;

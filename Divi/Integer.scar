@@ -2,8 +2,27 @@
                               Official SCAR Include
                                  Integer Routines
 --------------------------------------------------------------------------------
+ * function StrIsInt(s: string): Boolean;
  * procedure IntSetRange(var val: Integer; mn, mx: Integer);  
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrIsInt(s: string): Boolean;
+Contributors: Janilabo
+Description: Returns true if s is integer value.                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrIsInt(s: string): Boolean;
+begin
+  try
+    StrToInt(s);
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure IntSetRange(var val: Integer; mn, mx: Integer);

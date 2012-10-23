@@ -3,7 +3,7 @@
                              String Function Testing
 --------------------------------------------------------------------------------
  * procedure TestStringFunctions;                      
-   Last Modified: October 15th, 2012. By LordJashin. 
+   Last Modified: October 23rd, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$I ../../OSI.scar}
@@ -16,8 +16,8 @@ begin
   if (StrCompare('Scar-divi', 'Scar-divi') = 0) then WriteLn('StrCompare: True: Compares to see if same, then the length. 0-same 1:s1>s2 -1:s1<s2');
   WriteLn('StrStuff: Stuffing SCAR-Divi with Macro from Pos(6) for Count(4): ' + StrStuff('SCAR-Divi', 'Macro', 6, 4));
   WriteLn('StrStuffEx: Stuffing SCAR-Divi with Macro from Pos(6) to Pos(10): ' + StrStuff('SCAR-Divi', 'Macro', 6, 10));
-  WriteLn('StrBetween: ''SCAR-Divi Macro Development Environment'' from Pos(10) to Pos(30): ' + StrBetween('SCAR-Divi Macro Development Environment', 10, 30));
-  WriteLn('StrCopy: Copies from & to pos but not between! Pos(1) to Pos(4): ' + StrCopy('www.scar-divi.com', 1, 4)); 
+  WriteLn('StrBetweenEx: ''SCAR-Divi Macro Development Environment'' from Pos(10) to Pos(30): ' + StrBetweenEx('SCAR-Divi Macro Development Environment', 10, 30));
+  WriteLn('StrCopyEx: Copies from & to pos but not between! Pos(1) to Pos(4): ' + StrCopyEx('www.scar-divi.com', 1, 4)); 
   WriteLn('StrAfter: string after ''boo'' in string ''booya'' = ' + StrAfter('boo', 'booya')); 
   WriteLn('StrBefore: string before ''ya'' in string ''booya'' = ' + StrBefore('ya', 'booya'));
   WriteLn('StrAfterEx: string after ''boo'' in ''abooya1booya2'' after 5 offset = ' + StrAfterEx('boo', 'abooya1booya2', 5));       
@@ -26,8 +26,8 @@ begin
   WriteLn('StrLastBefore: string before last ''boo'' in ''boolikeyoumeanitboo'' = ' + StrLastBefore('boo', 'boolikeyoumeanitboo'));
   if InStrArrPos('Scar-divi', ['Scar-divi'], Pos1, True) then WriteLn('InStrArrPos: True: Found ''Scar-divi'' inside the [''Scar-divi''] array! Returned pos in Pos1 variable'); 
   WriteLn('Pos1 = ' + IntToStr(Pos1)); 
-  if StrInStr('boo', 'booya') then WriteLn('StrInStr: True: ''boo'' is inside string ''booya''!');
-  if StrInStrMulti(['boo', 'ya'], 'booya') then WriteLn('StrInStrMulti: True: ''boo'' and ''ya'' are both in string ''booya''!');          
+  if StrContains('boo', 'booya') then WriteLn('StrContains: True: ''boo'' is inside string ''booya''!');
+  if StrContainsEx(['boo', 'ya'], 'booya') then WriteLn('StrContainsEx: True: ''boo'' and ''ya'' are both in string ''booya''!');          
 end;
 
 begin

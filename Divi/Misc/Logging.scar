@@ -70,7 +70,7 @@ begin
     if (OSILog.AutoScreenNewFolder <> '') then
       ForceDirectories(OSILog.AutoScreenFolderPath + OSILog.AutoScreenNewFolder + '\');
     T := TheTime;
-    while StrInStr(':', T) do
+    while StrContains(':', T) do
       T := Replace(T, ':', '-');
     if (OSILog.AutoScreenNewFolder <> '') then
       if DirectoryExists(OSILog.AutoScreenFolderPath + OSILog.AutoScreenNewFolder + '\') then
@@ -236,7 +236,7 @@ begin
   if not OSILog.AutoLog then Exit; 
   try                                                                                         
     T := TheTime;
-    while StrInStr(':', T) do
+    while StrContains(':', T) do
       T := Replace(T, ':', '-');                               
     Path1 := OSILog.AutoLogFolderPath + OSILog.AutoLogNewFolder + '\[' + TheDate(0) + '] [' + T + '] ' + OSILog.AutoLogName;
     Path2 := OSILog.AutoLogFolderPath + '[' + TheDate(0) + '] [' + T + '] ' + OSILog.AutoLogName;
