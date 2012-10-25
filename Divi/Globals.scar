@@ -8,7 +8,8 @@
  * type TOSILog
  * var OSI_Variance
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
- * var MouseSpeed: Integer;      
+ * var MouseSpeed: Integer;
+ * type T3DPoint & T3DPointArray      
  * type TMeasurementUnits    
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -126,6 +127,22 @@ Last Modified: August 7th, 2011. By Timer
 
 var
   MouseSpeed: Integer;
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+type T3DPoint & T3DPointArray
+Contributors: LordJashin
+Description: T3DPoint types
+Date Created: October 24th, 2012. By LordJashin.
+Last Modified: October 24th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+                                       
+type T3DPoint = record
+  X: Integer;
+  Y: Integer;
+  Z: Integer;
+end;  
+
+type T3DPointArray = array of T3DPoint;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TMeasurementUnits

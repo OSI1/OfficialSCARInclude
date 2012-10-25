@@ -19,9 +19,6 @@
  * function TBACopyEx(TBA: TBoxArray; pos1, pos2: Integer): TBoxArray;
  * function TBABounds(TBA: TBoxArray): TBox;
  * function TBASame(TBA1, TBA2: TBoxArray): Boolean;
- * procedure TBAInsert(var TBA: TBoxArray; index: Integer; bx: TBox);
- * procedure TBAUnique(var TBA: TBoxArray);
- * function TBADelete(var TBA: TBoxArray; x: Integer): Boolean;
  * procedure TBARandomize(var TBA: TBoxArray);
  * procedure TBAClear(var TBA: TBoxArray; IDs: TIntArray);
  * function TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
@@ -360,70 +357,6 @@ begin
     if ((TBA1[i].X1 <> TBA2[i].X1) or (TBA1[i].Y1 <> TBA2[i].Y1) or (TBA1[i].X2 <> TBA2[i].X2) or (TBA1[i].Y2 <> TBA2[i].Y2)) then
       Exit;
   Result := True;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure TBAInsert(var TBA: TBoxArray; index: Integer; bx: TBox);
-Contributors: Janilabo
-Description: Inserts bx to index position of TBA.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure TBAInsert(var TBA: TBoxArray; index: Integer; bx: TBox);
-var
-  i, l: Integer;
-begin
-  l := Length(TBA);
-  SetLength(TBA, (l + 1));    
-  if (index < 0) then
-    index := 0;
-  if (index > l) then
-    index := l;
-  if (l > index) then
-    for i := (l - 1) downto index do
-      TBA[(i + 1)] := TBA[i];
-  TBA[index] := bx; 
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure TBAUnique(var TBA: TBoxArray);
-Contributors: Janilabo
-Description: Removes any and all duplicates from TBA.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure TBAUnique(var TBA: TBoxArray);
-var
-  h, i2, i, d: Integer; 
-begin
-  h := High(TBA);   
-  if (h < 1) then
-    Exit;         
-  for i := (h - d) downto 1 do
-    for i2 := (i - 1) downto 0 do
-      if (TBA[i] = TBA[i2]) then
-      begin
-        Delete(TBA, i, 1);
-        Inc(d);
-        Break;  
-      end;  
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBADelete(var TBA: TBoxArray; x: Integer): Boolean;
-Contributors: Janilabo, LordJashin
-Description: Deletes TBA item by x as the index position. Returns true with success.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: October 5th, 2012. By Janilabo.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function TBADelete(var TBA: TBoxArray; x: Integer): Boolean;
-begin
-  Result := ((x < (High(TBA) + 1)) and (x > -1));
-  if Result then
-    Delete(TBA, x, 1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

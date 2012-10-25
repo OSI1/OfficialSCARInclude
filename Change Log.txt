@@ -2,13 +2,26 @@
 Name - Date :
 -------------------------
 
+-------------------------
+LordJashin - 10/24/2012 :
+-------------------------
 
+Added:
 
+Divi/Globals.scar:
+    - type T3DPoint & type T3DPointArray
 
+Divi/String.scar:
+    - function StrIndentation(s: string; count: Integer): string;
+    - function StrStartWith(suffix: string; var s: string): Boolean;
+    - function StrEndWith(suffix: string; var s: string): Boolean;
 
+Improvements:
 
-
-
+Moved:
+    - TBAInsert (Divi/Box.scar -> Divi/Array.scar)
+    - TBAUnique (Divi/Box.scar -> Divi/Array.scar)
+    - TBADelete (Divi/Box.scar -> Divi/Array.scar)
 
 -------------------------
 LordJashin - 10/23/2012 :

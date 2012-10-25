@@ -8,10 +8,13 @@
  * function StrSplit(text, separator: string; ID: Integer): string;
  * function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;                
  * function StrStuff(SubStr, s: string; iFrom, iCount: Integer): string;
- * function StrStuffEx(SubStr, s: string; pos1, pos2: Integer): string;          
+ * function StrStuffEx(SubStr, s: string; pos1, pos2: Integer): string;
+ * function StrIndentation(s: string; count: Integer): string;          
  * function StrBetweenEx(s: string; pos1, pos2: Integer): string;             
  * function StrCopyEx(s: string; pos1, pos2: Integer): string;
  * function StrReplaceEx(Text, FindS, ReplaceS: string; Offset: Integer): string;
+ * function StrStartWith(suffix: string; var s: string): Boolean;
+ * function StrEndWith(suffix: string; var s: string): Boolean;
  * function StrAfter(SubStr, s: string): string;
  * function StrBefore(SubStr, s: string): string;
  * function StrAfterEx(SubStr, s: string; offset: Integer): string;
@@ -198,6 +201,38 @@ begin
 end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrIndentation(s: string; count: Integer): string;
+Contributors: Janilabo, LordJashin
+Description: Returns s indented with spaces (just like the feature in SCAR, Ctrl+Shift+[I/U]).
+             Count is the amount of spaces. It can be positive value (indent) or negative value (unindent).                                                                                 
+Date Created: October 14th, 2012. By Janilabo.
+Last Modified: October 14th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrIndentation(s: string; count: Integer): string;
+var
+  s2: string; 
+  c: Integer;
+  m: TRegexMatchArray;
+begin
+  if ((s <> '') and (count <> 0)) then
+    if (count < 1) then
+    begin 
+      c := iAbs(count);
+      Result := PregReplace('/(\r\n?|\n|\r)\s{1,' + IntToStr(c) + '}/', #13#10, s);
+      if PregMatchEx('/\A\s{1,' + IntToStr(c) + '}/', Result, m) then
+      begin
+        Delete(Result, m[0].Offset, m[0].Length);
+        SetLength(m, 0);   
+      end;
+    end else
+    begin
+      s2 := StringOfChar(' ', iAbs(count));
+      Result := PregReplace('/(\r\n?|\n|\r)/', (#13#10 + s2), (s2 + s)); 
+    end; 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function StrBetweenEx(s: string; pos1, pos2: Integer): string;
 Contributors: Janilabo
 Description: Returns the string between pos1 and pos2 of s.                                                              
@@ -264,6 +299,48 @@ begin
   if (Offset < 1) then
     Offset := 1;
   Result := (Copy(Text, 1, (Offset - 1)) + Replace(Copy(Text, Offset, ((tL - Offset) + 1)), FindS, ReplaceS)); 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrStartWith(suffix: string; var s: string): Boolean;
+Contributors: Janilabo
+Description: If suffix is found returns true & sets the start of the string to the suffix  
+Date Created: October 24th, 2012. By Janilabo.
+Last Modified: October 24th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrStartWith(suffix: string; var s: string): Boolean;
+var
+  p, l: Integer;
+begin
+  l := Length(suffix);
+  if ((s = '') or (l > Length(s))) then
+    Exit;
+  p := Pos(suffix, s);
+  Result := (p > 0);
+  if Result then
+    s := Copy(s, p, (Length(s) - (p - 1)));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrEndWith(suffix: string; var s: string): Boolean;
+Contributors: Janilabo
+Description: If suffix is found returns true & sets the end of the string to the suffix
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrEndWith(suffix: string; var s: string): Boolean;
+var
+  p, l: Integer;
+begin
+  l := Length(suffix);
+  if ((s = '') or (l > Length(s))) then
+    Exit;
+  p := LastPos(suffix, s);
+  Result := (p > 0);
+  if Result then
+    s := Copy(s, 1, ((p + l) - 1));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
