@@ -3,12 +3,12 @@
                                  Global Routines
 --------------------------------------------------------------------------------
  * procedure HandleOSIException;
- * var IsOSISetup
+ * var  IsOSISetup
  * type TOSIScriptInfo        
  * type TOSILog
- * var OSI_Variance
+ * var  OSI_Variance
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
- * var MouseSpeed: Integer;
+ * var  MouseSpeed: Integer;
  * type T3DPoint & T3DPointArray      
  * type TMeasurementUnits    
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

@@ -2,11 +2,11 @@
                               Official SCAR Include
                                   Point Routines
 --------------------------------------------------------------------------------
- * function PointToStr(P: TPoint): string;
- * function PointsNotInTPA(TPA: TPointArray): TPointArray;
+ * function  PointToStr(P: TPoint): string;
+ * function  PointsNotInTPA(TPA: TPointArray): TPointArray;
  * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
- * function LoadTextTPA(Text: string; Chars: Integer): TPointArray;
- * function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+ * function  LoadTextTPA(Text: string; Chars: Integer): TPointArray;
+ * function  FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
  * procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
  * procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
  * procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);

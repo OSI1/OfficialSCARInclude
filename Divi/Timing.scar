@@ -3,15 +3,15 @@
                                  Timing Routines
 --------------------------------------------------------------------------------
  * procedure WaitRR(Min, Max);
- * function WaitFunc(Func: function: Boolean; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
- * function WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
- * function WaitFindColorTol(var X, Y: Integer; Color, X1, Y1, X2, Y2, Tol: Integer; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
- * function WaitFindColorTolEx(var TPA: TPointArray; Color, X1, Y1, X2, Y2, Tol, DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+ * function  WaitFunc(Func: function: Boolean; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+ * function  WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+ * function  WaitFindColorTol(var X, Y: Integer; Color, X1, Y1, X2, Y2, Tol: Integer; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
+ * function  WaitFindColorTolEx(var TPA: TPointArray; Color, X1, Y1, X2, Y2, Tol, DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
  * procedure WaitNone;
- * function TheTime: string;
- * function TheDate(Format: Integer): string;
- * function TheMonth: string;
- * function STimeRunning: string;
+ * function  TheTime: string;
+ * function  TheDate(Format: Integer): string;
+ * function  TheMonth: string;
+ * function  STimeRunning: string;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

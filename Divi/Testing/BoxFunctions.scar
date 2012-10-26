@@ -25,7 +25,7 @@ begin
   FixBox(bx1);
   WriteLn('FixBox: Fixes if x2>x1, etc. box(8,10,5,3) -> ' + BoxToStr(bx1));
   bx2 := Box(0, 0, 10, 10);
-  if BoxInBox(bx1, bx2) then WriteLn('BoxInBox: True: ' + BoxToStr(bx1) + ' is inside ' + BoxToStr(bx2));
+  if BoxContains(bx1, bx2) then WriteLn('BoxContains: True: ' + BoxToStr(bx1) + ' is inside ' + BoxToStr(bx2));
   if ValidBox(bx1) then WriteLn('ValidBox: True: ' + BoxToStr(bx1) + ', x1 <= x2, etc.');
   if SameBoxes(bx1, bx1) then WriteLn('SameBoxes: True: ' + BoxToStr(bx1) + ' is the same as ' + BoxToStr(bx1));
   P := BoxCenter(bx2);  

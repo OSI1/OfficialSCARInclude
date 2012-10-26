@@ -4,30 +4,29 @@
 --------------------------------------------------------------------------------
  * procedure ClearBox(var bx: TBox);
  * procedure FixBox(var bx: TBox);
- * function BoxInBox(inner_bx, outer_bx: TBox): Boolean;
- * function ValidBox(bx: TBox): Boolean;
- * function SameBoxes(bx1, bx2: TBox): Boolean;
- * function BoxCenter(bx: TBox): TPoint;
+ * function  BoxContains(inner_bx, outer_bx: TBox): Boolean;
+ * function  ValidBox(bx: TBox): Boolean;
+ * function  SameBoxes(bx1, bx2: TBox): Boolean;
+ * function  BoxCenter(bx: TBox): TPoint;
  * procedure ExpandBox(var bx: TBox; eSize: Integer);
  * procedure ShrinkBox(var bx: TBox; sSize: Integer);
  * procedure ResizeBox(var bx: TBox; pixels, method: Integer);
  * procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
  * procedure BoxDimensions(bx: TBox; var w, h: Integer);
  * procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasurementUnits);
- * function CountBoxesInBoxBySize(bx: TBox; width, height: Integer): Integer;
- * function GetBoxesInBoxBySize(bx: TBox; width, height: Integer): TBoxArray;
- * function TBACopyEx(TBA: TBoxArray; pos1, pos2: Integer): TBoxArray;
- * function TBABounds(TBA: TBoxArray): TBox;
- * function TBASame(TBA1, TBA2: TBoxArray): Boolean;
+ * function  CountBoxesInBoxBySize(bx: TBox; width, height: Integer): Integer;
+ * function  GetBoxesInBoxBySize(bx: TBox; width, height: Integer): TBoxArray;
+ * function  TBABounds(TBA: TBoxArray): TBox;
  * procedure TBARandomize(var TBA: TBoxArray);
  * procedure TBAClear(var TBA: TBoxArray; IDs: TIntArray);
- * function TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
- * function TBAPositions(TBA: TBoxArray; bx: TBox): TIntArray;
- * function TBAAllValuesSame(TBA: TBoxArray): Boolean;
- * function TBAAllValuesUnique(TBA: TBoxArray): Boolean; 
- * function TBAToParts(TBA: TBoxArray; method: (pm_PartSize, pm_PartAmount); x: Integer): T2DBoxArray;
- * function TBOutlineToTPA(TB: TBox): TPointArray;
- * function TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
+ * function  TBAPositions(TBA: TBoxArray; bx: TBox): TIntArray;
+ * function  TBAAllValuesSame(TBA: TBoxArray): Boolean;
+ * function  TBAAllValuesUnique(TBA: TBoxArray): Boolean; 
+ * procedure TBASkipBoxesByArea(var TBA: TBoxArray; skipArea: TBox; fromInside: Boolean);    
+ * procedure TBASkipBoxesByAreas(var TBA: TBoxArray; skipAreas: TBoxArray; fromInside: Boolean);
+ * function  TBAToParts(TBA: TBoxArray; method: (pm_PartSize, pm_PartAmount); x: Integer): T2DBoxArray;
+ * function  TBOutlineToTPA(TB: TBox): TPointArray;
+ * function  TBAOutlineToATPA(TBA: TBoxArray): T2DPointArray;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -61,14 +60,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function BoxInBox(inner_bx, outer_bx: TBox): Boolean;
+function BoxContains(inner_bx, outer_bx: TBox): Boolean;
 Contributors: Janilabo
 Description: Returns true if inner_bx is inside outer_bx.
 Date Created: September 30th, 2012. By Janilabo.
 Last Modified: September 30th, 2012. By Janilabo.       
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function BoxInBox(inner_bx, outer_bx: TBox): Boolean;
+function BoxContains(inner_bx, outer_bx: TBox): Boolean;
 begin
   if ((inner_bx.X1 <= inner_bx.X2) and (inner_bx.Y1 <= inner_bx.Y2) and (outer_bx.X1 <= outer_bx.X2) and (outer_bx.Y1 <= outer_bx.Y2)) then
     Result := ((inner_bx.X1 >= outer_bx.X1) and (inner_bx.X1 <= outer_bx.X2) and (inner_bx.X2 >= outer_bx.X1) and (inner_bx.X2 <= outer_bx.X2) and
@@ -280,37 +279,6 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBACopyEx(TBA: TBoxArray; pos1, pos2: Integer): TBoxArray;
-Contributors: Janilabo
-Description: Copies TBA from pos1 to pos2.                  
-Date Created: October 6th, 2012. By Janilabo.
-Last Modified: October 6th, 2012. By Janilabo.       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function TBACopyEx(TBA: TBoxArray; pos1, pos2: Integer): TBoxArray;
-var
-  i, l: Integer;
-begin
-  l := Length(TBA);
-  if (l > 0) then 
-  begin   
-    IntSetRange(pos1, 0, (l - 1));
-    IntSetRange(pos2, 0, (l - 1));
-    if (pos1 <> pos2) then
-    begin
-      SetLength(Result, (IAbs(pos1 - pos2) + 1));
-      if (pos1 < pos2) then
-        for i := pos1 to pos2 do
-          Result[(i - pos1)] := TBA[i]
-      else
-        for i := pos1 downto pos2 do
-          Result[(pos1 - i)] := TBA[i]; 
-    end else
-      Result := [TBA[pos1]]; 
-  end;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function TBABounds(TBA: TBoxArray): TBox;
 Contributors: Janilabo
 Description: Returns the bounds of TBA.
@@ -336,27 +304,6 @@ begin
     if (Result.Y2 < TBA[i].Y2) then
       Result.Y2 := TBA[i].Y2;
   end;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBASame(TBA1, TBA2: TBoxArray): Boolean;
-Contributors: Janilabo
-Description: Returns true if TBA1 and TBA2 are identical.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function TBASame(TBA1, TBA2: TBoxArray): Boolean;
-var
-  h, i: Integer;
-begin
-  h := High(TBA1);
-  if ((h < 0) or (h <> High(TBA2))) then
-    Exit;
-  for i := 0 to h do
-    if ((TBA1[i].X1 <> TBA2[i].X1) or (TBA1[i].Y1 <> TBA2[i].Y1) or (TBA1[i].X2 <> TBA2[i].X2) or (TBA1[i].Y2 <> TBA2[i].Y2)) then
-      Exit;
-  Result := True;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -394,28 +341,6 @@ begin
   for i := 0 to h do
     if InRange(IDs[i], 0, h2) then
       TBA[IDs[i]] := tmp;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
-Contributors: Janilabo
-Description: Returns true if TBA contains bx.                 
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
-var
-  i, h: Integer;
-begin
-  h := High(TBA);
-  for i := 0 to h do
-    if ((bx.x1 = TBA[i].x1) and (bx.y1 = TBA[i].y1) and
-        (bx.x2 = TBA[i].x2) and (bx.y2 = TBA[i].y2)) then
-    begin
-      Result := True;
-      Exit;
-    end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -492,6 +417,92 @@ begin
         if not Result then
           Exit;
       end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TBASkipBoxesByArea(var TBA: TBoxArray; skipArea: TBox; fromInside: Boolean);
+Contributors: Janilabo
+Description: TBA will be returned with the boxs not skipped using skipArea. From
+             Inside means skip the boxes from inside skipArea, if false then skip
+             the boxes from outside the skipArea.
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TBASkipBoxesByArea(var TBA: TBoxArray; skipArea: TBox; fromInside: Boolean);
+var
+  i, h, t: Integer;
+  tmpArr: TBoxArray;
+  sb: Boolean;
+begin
+  h := High(TBA);
+  SetLength(tmpArr, (h + 1));
+  for i := 0 to h do
+  begin
+    case fromInside of
+      True: sb := ((TBA[i].x1 >= skipArea.x1) and (TBA[i].y1 >= skipArea.y1) and
+                   (TBA[i].x2 <= skipArea.x2) and (TBA[i].y2 <= skipArea.y2));
+      False: sb := ((TBA[i].x2 >= skipArea.x1) and (TBA[i].x2 <= skipArea.x2) and
+                    (TBA[i].y2 >= skipArea.y1) and (TBA[i].y2 <= skipArea.y2) or
+                    (TBA[i].x1 <= skipArea.x2) and (TBA[i].x1 >= skipArea.x1) and
+                    (TBA[i].y1 <= skipArea.y2) and (TBA[i].y1 >= skipArea.y1));
+    end;
+    if not sb then
+    begin
+      tmpArr[t] := TBA[i];
+      Inc(t);
+    end;
+  end;
+  SetLength(tmpArr, t);
+  SetLength(TBA, 0);
+  TBA := tmpArr;
+  SetLength(tmpArr, 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TBASkipBoxesByAreas(var TBA: TBoxArray; skipAreas: TBoxArray; fromInside: Boolean);
+Contributors: Janilabo
+Description: TBA will be returned with the boxs not skipped using skipAreas. From
+             Inside means skip the boxes from inside skipAreas, if false then skip
+             the boxes from outside the skipAreas.
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TBASkipBoxesByAreas(var TBA: TBoxArray; skipAreas: TBoxArray; fromInside: Boolean);
+var
+  i, h, i2, h2, t: Integer;
+  tmpArr: TBoxArray;
+  sb: Boolean;
+begin
+  h := High(TBA);
+  SetLength(tmpArr, (h + 1));
+  h2 := High(skipAreas);
+  for i := 0 to h do
+  begin
+    for i2 := 0 to h2 do
+    begin
+      case fromInside of
+        True: sb := ((TBA[i].x1 >= skipAreas[i2].x1) and (TBA[i].y1 >= skipAreas[i2].y1) and
+                     (TBA[i].x2 <= skipAreas[i2].x2) and (TBA[i].y2 <= skipAreas[i2].y2));
+        False: sb := ((TBA[i].x2 >= skipAreas[i2].x1) and (TBA[i].x2 <= skipAreas[i2].x2) and
+                      (TBA[i].y2 >= skipAreas[i2].y1) and (TBA[i].y2 <= skipAreas[i2].y2) or
+                      (TBA[i].x1 <= skipAreas[i2].x2) and (TBA[i].x1 >= skipAreas[i2].x1) and
+                      (TBA[i].y1 <= skipAreas[i2].y2) and (TBA[i].y1 >= skipAreas[i2].y1));
+      end;
+      if sb then
+        Break;
+    end;
+    if not sb then
+    begin
+      tmpArr[t] := TBA[i];
+      Inc(t);
+    end;
+  end;
+  SetLength(tmpArr, t);
+  SetLength(TBA, 0);
+  TBA := tmpArr;
+  SetLength(tmpArr, 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -3,7 +3,7 @@
                                    Runescape 2
                               Mining Skill Routines
 --------------------------------------------------------------------------------
- * const Item database indexes
+ * const    Item database indexes
  * function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 

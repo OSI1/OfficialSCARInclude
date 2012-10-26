@@ -4,12 +4,12 @@
                              Random Solving Routines
 --------------------------------------------------------------------------------
  * type TRS2Random, TRS2RandomArray.
- * var RS2Randoms: TRS2RandomArray;
- * var OverideRandInvTab: Boolean;
- * function FindRandomEventGift: Boolean;
- * function GetMissingTabs: TIntegerArray;
+ * var  RS2Randoms: TRS2RandomArray;
+ * var  OverideRandInvTab: Boolean;
+ * function  FindRandomEventGift: Boolean;
+ * function  GetMissingTabs: TIntegerArray;
  * procedure InitiateAntiRandoms;
- * function OSIFindRandoms: Boolean;
+ * function  OSIFindRandoms: Boolean;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$I Abyssal.scar}

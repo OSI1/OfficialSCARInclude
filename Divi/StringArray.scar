@@ -1,0 +1,526 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              String Array Routines
+--------------------------------------------------------------------------------
+ * function  StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;                
+ * function  InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+ * function  StrContainsEx(SubStrs: TStrArray; s: string): Boolean;  
+ * function  StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;
+ * function  TSAToStr(arr: TStrArray): string;
+ * function  TSAConcat(arr: TStrArray): string;
+ * procedure TSAReverse(var arr: TStrArray);
+ * function  TSARandomize(arr: TStrArray): TStrArray;     
+ * procedure TSATrim(arr: TStrArray; delEmpty: Boolean);                      
+ * function  TSAOfString(x: string; count: Integer): TStrArray;
+ * procedure TSASetItems(var arr: TStrArray; x: string);
+ * procedure TSASetItemsEx(var arr: TStrArray; x: string; exceptions: TIntArray);
+ * procedure TSARemoveNulls(var arr: TStrArray);
+ * procedure TSARemoveEmptyItems(var arr: TStrArray);
+ * function  TSAPos(arr: TStrArray; s: string): Integer;
+ * function  TSAPosAll(arr: TStrArray; s: string): TIntArray;
+ * function  TSAAllSame(arr: TStrArray): Boolean;
+ * function  TSAAllUnique(arr: TStrArray): Boolean;
+ * function  TSAAllBetween(s1, s2: string; arr: TStrArray): TStrArray;
+ * function  TSAItemsByTIA(arr: TStrArray; x: TIntArray): TStrArray;
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;
+Contributors: Janilabo
+Description: Splits text using separator and returns splitted text specified by IDs (Indexs in the array of splitted text)                                                              
+Date Created: October 18th, 2012. By Janilabo.
+Last Modified: October 18th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;
+var
+  h, i, l: Integer;
+  tmp: TStrArray;
+begin
+  l := Length(IDs);
+  if (l < 1) then
+    Exit;
+  SetLength(Result, l);
+  if (text <> '') then
+  begin
+    tmp := ExplodeEx(separator, text, (TIAMax(IDs) + 2));
+    h := High(tmp);
+    for i := 0 to (l - 1) do
+      if ((IDs[i] < (h + 1)) and (IDs[i] > -1)) then
+        Result[i] := tmp[IDs[i]];
+    SetLength(tmp, 0);
+  end;
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if the string is in the array and returns position.
+Date Created: October 10th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+var
+  H, L: Integer;
+  SS: string;
+begin
+  Result := True;
+  H := High(Arr);
+  L := Low(Arr);
+  if (not (CaseSenstive)) then
+  begin
+    SS := LowerCase(S);
+    for Pos := L to H do
+      if (SS = LowerCase(Arr[Pos])) then
+        Exit;
+  end
+  else
+    for Pos := L to H do
+      if (S = Arr[Pos]) then
+        Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrContainsEx(SubStrs: TStrArray; s: string): Boolean;
+Contributors: Wanted, Freddy, LordJashin
+Description: Results true if any strings are inside a string.
+Date Created: December 31st, 2011. By Wanted
+Last Modified: October 23rd, 2012. By LordJashin
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrContainsEx(SubStrs: TStrArray; s: string): Boolean;
+var
+  I, H: Integer;
+begin
+  H := High(SubStrs);
+  Result := True;
+  for I := 0 to H do
+    if (StrContains(SubStrs[I], s)) then
+      Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;
+Contributors: Janilabo 
+Date Created: October 21st, 2012. By Janilabo
+Last Modified: October 21st, 2012. By Janilabo
+Explanation: Explodes s with multiple separators/delimiters (Separators).
+             The importance order for Separators items is from left to right (=>).
+             So place the important ones first and then less important after those.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;
+var                          
+  p, h, i, x, o, m, l: Integer;
+begin
+  h := High(Separators);
+  if (h > -1) then
+  begin 
+    o := 1;
+    SetLength(Result, Length(s));
+    repeat  
+      l := 0;           
+      for x := 0 to h do
+      begin
+        p := Pos(Separators[x], s);
+        case (p < 1) of
+          True:
+          begin
+            Delete(Separators, x, 1);
+            Dec(x);
+            Dec(h);
+          end;
+          False:
+          if ((l = 0) or (p < l)) then
+          begin     
+            m := x;
+            l := p;
+          end;
+        end;
+      end;
+      if (l > 0) then            
+      begin      
+        Result[i] := Copy(s, 1, (l - 1));
+        Delete(s, 1, ((l + Length(Separators[m])) - 1));         
+        Inc(i);
+      end else
+        Result[i] := Copy(s, 1, Length(s));
+    until (l = 0);
+    SetLength(Result, (i + 1));
+  end else
+    Result := [s];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAToStr(arr: TStrArray): string;
+Contributors: Janilabo 
+Description: Result is the arr (array of string) combined into one string with quotes and commas
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAToStr(arr: TStrArray): string;
+var
+  h, i: Integer;
+begin
+  h := High(arr);
+  if (h < 0) then
+    Exit;
+  for i := 0 to (h - 1) do
+    Result := (Result + '''' + arr[i] + '''' + ',');
+  Result := (Result + '''' + arr[i] + '''');
+end;
+                                                                                
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAConcat(arr: TStrArray): string;
+Contributors: Janilabo
+Description: Result is the arr (array of string) combined into one string. Concatenated 
+Date Created: October 12th, 2012. By Janilabo
+Last Modified: October 12th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAConcat(arr: TStrArray): string;
+var
+  h, i: Integer;
+begin
+  h := High(arr);
+  if (h > -1) then
+  for i := 0 to h do
+    Result := (Result + arr[i]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSAReverse(var arr: TStrArray);
+Contributors: Janilabo 
+Description: Reverses the whole arr (array of string), so index 0 is now the highest and etc
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSAReverse(var arr: TStrArray);
+var
+  g, i, l: Integer;
+begin
+  l := (Length(arr) - 1);
+  if (l < 1) then
+    Exit;
+  g := (l div 2);
+  for i := 0 to g do
+    Swap(arr[i], arr[(l - i)]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSARandomize(arr: TStrArray): TStrArray;
+Contributors: Janilabo
+Description: Randomizes arr (array of string) by its indexs 
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSARandomize(arr: TStrArray): TStrArray;
+var
+  h, i: Integer;
+begin
+  Result := arr;
+  h := High(Result);
+  if (h > 0) then 
+    for i := 0 to h do
+      Swap(Result[Random(h + 1)], Result[Random(h + 1)]);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSATrim(arr: TStrArray; delEmpty: Boolean);
+Contributors: Janilabo 
+Date Created: October 21st, 2012. By Janilabo
+Last Modified: October 21st, 2012. By Janilabo
+Explanation: Trims all arr (array of string) items.
+             If delEmpty is set as true, procedure will delete all empty items.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSATrim(arr: TStrArray; delEmpty: Boolean);
+var
+  l, i, r: Integer;
+  tmp: TStrArray;
+begin
+  l := Length(arr); 
+  if (l > 0) then
+    if delEmpty then
+    begin 
+      SetLength(tmp, l);
+      for i := 0 to (l - 1) do
+        if (arr[i] <> '') then
+        begin
+          tmp[r] := Trim(arr[i]);
+          if (tmp[r] <> '') then
+            Inc(r); 
+        end;
+      SetLength(tmp, r);
+      SetLength(arr, r);
+      arr := tmp;
+      SetLength(tmp, 0);      
+    end else
+    for i := 0 to (l - 1) do
+      arr[i] := Trim(arr[i]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAOfString(x: string; count: Integer): TStrArray;
+Contributors: Janilabo
+Description: array is set to length of count, and x fills all of the array
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAOfString(x: string; count: Integer): TStrArray;
+var
+  i: Integer;
+begin
+  if (count < 1) then
+    Exit;
+  SetLength(Result, count);
+  for i := 0 to (count - 1) do
+    Result[i] := x;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSASetItems(var arr: TStrArray; x: string);
+Contributors: Janilabo
+Description: Sets all indexs of TSA to the same string(x) 
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSASetItems(var arr: TStrArray; x: string);
+var
+  i, h: Integer;
+begin
+  h := High(arr);
+  for i := 0 to h do
+    arr[i] := x;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSASetItemsEx(var arr: TStrArray; x: string; exceptions: TIntArray);
+Contributors: Janilabo
+Description: Sets all indexs Except the ones in exceptions to string (x)
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSASetItemsEx(var arr: TStrArray; x: string; exceptions: TIntArray);
+var
+  i, h: Integer;
+begin
+  h := High(arr);
+  for i := 0 to h do
+    if not TIAContains(exceptions, i) then
+      arr[i] := x;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSARemoveNulls(var arr: TStrArray);
+Contributors: Janilabo
+Description: Removes all the null items from TSA ('')                   
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSARemoveNulls(var arr: TStrArray);
+var
+  h, i: Integer;
+begin
+  h := High(arr);
+  for i := h downto 0 do
+    if (arr[i] = '') then
+      Delete(arr, i, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSARemoveEmptyItems(var arr: TStrArray);
+Contributors: Janilabo
+Description: Removes all the empty items from TSA ('', ' ', '  ', '    ', etc.)                   
+Date Created: October 21st, 2012. By Janilabo
+Last Modified: October 21st, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSARemoveEmptyItems(var arr: TStrArray);
+var
+  h, i: Integer;
+begin
+  h := High(arr);
+  for i := h downto 0 do
+    if (arr[i] = '') then
+      Delete(arr, i, 1)
+    else
+      if (Trim(arr[i]) = '') then
+        Delete(arr, i, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAPos(arr: TStrArray; s: string): Integer;
+Contributors: Janilabo
+Description: Returns first position (index) of s in the array of strings (arr)                    
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAPos(arr: TStrArray; s: string): Integer;
+var
+  i, h: Integer;
+begin
+  Result := -1;
+  h := High(arr);
+  if (h > -1) then
+    for i := 0 to h do
+      if (arr[i] = s) then
+      begin
+        Result := i;
+        Exit;
+      end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAPosAll(arr: TStrArray; s: string): TIntArray;
+Contributors: Janilabo
+Description: Returns all positions (indexs) of s in the array of strings (arr)                    
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAPosAll(arr: TStrArray; s: string): TIntArray;
+var
+  i, rC, h: Integer;
+begin
+  h := High(arr);  
+  if (h < 0) then
+    Exit;
+  SetLength(Result, (h + 1));
+  for i := 0 to h do
+    if (arr[i] = s) then
+    begin
+      Result[rC] := i;
+      Inc(rC);
+    end;
+  SetLength(Result, rC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAAllSame(arr: TStrArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if each string at every index of the array is the same                    
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAAllSame(arr: TStrArray): Boolean;
+var
+  h, i: Integer;
+begin
+  h := High(arr);
+  if (h < 1) then
+  begin
+    Result := (h = 0);
+    Exit;
+  end;
+  for i := 1 to h do
+    if (arr[i] <> arr[0]) then
+      Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAAllUnique(arr: TStrArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if each string at every index is unique (different)                    
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAAllUnique(arr: TStrArray): Boolean;
+var
+  h, i, i2: Integer;
+begin
+  h := High(arr);
+  if (h < 1) then
+  begin
+    Result := (h = 0);
+    Exit;
+  end;
+  for i := 0 to (h - 1) do
+    for i2 := (i + 1) to h do
+      if (i <> i2) then
+      begin
+        Result := (arr[i] <> arr[i2]);
+        if not Result then
+          Exit;
+      end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAAllBetween(s1, s2: string; arr: TStrArray): TStrArray;
+Contributors: Janilabo
+Description: Checks whole array for s1 & s2, and if found returns the text between them                                  
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAAllBetween(s1, s2: string; arr: TStrArray): TStrArray;
+var
+  start, finish, h, i, l, r, s1L, s2L: Integer;
+  s: string;
+begin
+  h := High(arr);
+  if (h < 0) then
+    Exit;
+  s1L := Length(s1);
+  s2L := Length(s2);
+  SetLength(Result, (h + 1));
+  for i := 0 to h do
+  begin
+    s := arr[i];
+    l := Length(s);
+    if (l > ((s1L + s2L) - 1)) then
+    begin
+      start := Pos(s1, s);
+      if (start > 0) then
+        if (((start + s1L) - 1) < ((l - s2L) + 1)) then  
+        begin
+          finish := LastPos(s2, s);
+          if (finish > ((start + s1L) - 1)) then
+          begin
+            Result[r] := Copy(s, (start + s1L), (finish - (start + s1L)));
+            Inc(r);
+          end;
+        end;
+    end;
+    s := '';
+  end;
+  SetLength(Result, r);
+end;
+                                                   
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAItemsByTIA(arr: TStrArray; x: TIntArray): TStrArray;
+Contributors: Janilabo
+Description: Returns arr (array of string) at indexs in x (array of int)                              
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAItemsByTIA(arr: TStrArray; x: TIntArray): TStrArray;
+var
+  i, h, h2, rC: Integer;
+begin
+  h := High(arr);
+  h2 := High(x);
+  SetLength(Result, (h2 + 1));
+  for i := 0 to h2 do
+    if ((x[i] <= h) and (x[i] > -1)) then
+    begin
+      Result[rC] := arr[x[i]];
+      Inc(rC);
+    end;
+  SetLength(Result, rC);
+end;

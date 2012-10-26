@@ -2,7 +2,7 @@
                               Official SCAR Include
                                  Integer Routines
 --------------------------------------------------------------------------------
- * function StrIsInt(s: string): Boolean;
+ * function  StrIsInt(s: string): Boolean;
  * procedure IntSetRange(var val: Integer; mn, mx: Integer);  
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 

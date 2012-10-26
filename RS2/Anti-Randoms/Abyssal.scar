@@ -3,10 +3,10 @@
                                    Runescape 2
                          Abyssal Random Solving Routines
 --------------------------------------------------------------------------------
- * function Abyss_InRandom: Boolean;
+ * function  Abyss_InRandom: Boolean;
  * procedure Abyss_WalkToCenter;
- * function Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
- * function Abyss_SolveRandom: Boolean;
+ * function  Abyss_OddManOut(var ATPA: T2DPointArray): Integer;
+ * function  Abyss_SolveRandom: Boolean;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -2,9 +2,9 @@
                               Official SCAR Include
                                  Bitmap Routines
 --------------------------------------------------------------------------------
- * function GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
+ * function  GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
  * procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string);
- * function CreateBitmaps(FromStr: TStrArray; Width, Height: TIntArray): array of TSCARBitmap;   
+ * function  CreateBitmaps(FromStr: TStrArray; Width, Height: TIntArray): array of TSCARBitmap;   
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

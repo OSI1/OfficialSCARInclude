@@ -3,34 +3,34 @@
                                    Runescape 2
                                   Map Routines
 --------------------------------------------------------------------------------
- * function OnMM(X, Y: Integer): Boolean;
- * function MMToMSEx(MM: TPoint; Height: Extended): TPoint;
- * function MMToMS(MM: TPoint): TPoint;
- * function MMOnMS(MM: TPoint): Boolean;
- * function MMsToMSs(TPA: TPointArray): TPointArray;
- * function FilterMMPointsMS(TPA: TPointArray): TPointArray;
- * function FindMMColorTol(var X, Y: Integer; Color, Tol: Integer): Boolean;
- * function FindMMColorTolEx(var Points: TPointArray; Color, Tol: Integer): Boolean;
- * function GetCompassAngleRadians: Extended;
- * function GetCompassAngleDegress: Extended;
- * function MakeCompass(Angle: Extended): Boolean;
+ * function  OnMM(X, Y: Integer): Boolean;
+ * function  MMToMSEx(MM: TPoint; Height: Extended): TPoint;
+ * function  MMToMS(MM: TPoint): TPoint;
+ * function  MMOnMS(MM: TPoint): Boolean;
+ * function  MMsToMSs(TPA: TPointArray): TPointArray;
+ * function  FilterMMPointsMS(TPA: TPointArray): TPointArray;
+ * function  FindMMColorTol(var X, Y: Integer; Color, Tol: Integer): Boolean;
+ * function  FindMMColorTolEx(var Points: TPointArray; Color, Tol: Integer): Boolean;
+ * function  GetCompassAngleRadians: Extended;
+ * function  GetCompassAngleDegress: Extended;
+ * function  MakeCompass(Angle: Extended): Boolean;
  * procedure SetAngle(Highest: Boolean);
  * procedure ClickCompass(AdjustToHigh: Boolean);
- * function FindFlag(var X, Y: Integer): Boolean;
- * function FlagExists: Boolean;
- * function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
- * function GetFlagDistance: Extended;
- * function FlagEx(Distance: Extended): Boolean;
- * function Flag: Boolean;
- * function MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
- * function MouseFlag(X, Y, RX, RY: Integer): Boolean;
- * function FindMMDotsExOverlap(ColorDiffs: TIntArray): T2DPointArray;
- * function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
- * function FindMMDots(cldDot: Integer): TPointArray;
- * function CountMMDotsEx2(ColorDiffs: TIntArray): TIntArray;
- * function CountMMDotsEx(ColorDiffs: TIntArray): Integer;
- * function CountMMDots(cldDot: Integer): Integer;
- * function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
+ * function  FindFlag(var X, Y: Integer): Boolean;
+ * function  FlagExists: Boolean;
+ * function  GetFlagDistanceEx(FromX, FromY: Extended): Extended;
+ * function  GetFlagDistance: Extended;
+ * function  FlagEx(Distance: Extended): Boolean;
+ * function  Flag: Boolean;
+ * function  MouseFlagEx(X, Y, RX, RY: Integer; Distance: Extended): Boolean;
+ * function  MouseFlag(X, Y, RX, RY: Integer): Boolean;
+ * function  FindMMDotsExOverlap(ColorDiffs: TIntArray): T2DPointArray;
+ * function  FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
+ * function  FindMMDots(cldDot: Integer): TPointArray;
+ * function  CountMMDotsEx2(ColorDiffs: TIntArray): TIntArray;
+ * function  CountMMDotsEx(ColorDiffs: TIntArray): Integer;
+ * function  CountMMDots(cldDot: Integer): Integer;
+ * function  RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

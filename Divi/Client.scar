@@ -2,10 +2,10 @@
                               Official SCAR Include
                                  Client Routines
 --------------------------------------------------------------------------------
- * function FindWindowEx(Title: string; CaseSensitive, PartialMatch: Boolean): HWND;
+ * function  FindWindowEx(Title: string; CaseSensitive, PartialMatch: Boolean): HWND;
  * procedure SetDesktopWindowAsClient;
  * procedure SetSCARWindowAsClient;
- * function SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
+ * function  SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
  * procedure SCARSetCaption(Title: string); 
  * procedure SCARMoveToTray; 
  * procedure SCARMinimize;         
@@ -13,7 +13,7 @@
  * procedure SCARHide;
  * procedure SCARShow;        
  * procedure SCARSetEnabled(Enabled: Boolean);   
- * function SCARHandle: HWND;
+ * function  SCARHandle: HWND;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

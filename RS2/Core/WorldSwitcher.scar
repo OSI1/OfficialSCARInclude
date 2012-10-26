@@ -3,19 +3,19 @@
                                    Runescape 2
                               World Switch Routines
 --------------------------------------------------------------------------------
- * function WorldScreen: Boolean;
- * function OpenWorldScreen: Boolean;
- * function WS_CurrentWorld: Boolean;
- * function WS_MemberWorld: Boolean;
+ * function  WorldScreen: Boolean;
+ * function  OpenWorldScreen: Boolean;
+ * function  WS_CurrentWorld: Boolean;
+ * function  WS_MemberWorld: Boolean;
  * procedure LoadRS2WorldArray;
  * procedure OrderWorlds(By: Integer; Descending: Boolean);
- * function FindWorld(var P: TPoint; World: Integer): Boolean;
- * function GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
- * function SelectWorld(World: Integer): Boolean;
- * function SwitchWorld(World: Integer): Boolean;
+ * function  FindWorld(var P: TPoint; World: Integer): Boolean;
+ * function  GetWorldInfo(World: Integer; var WorldInfo: TRS2World): Boolean;
+ * function  SelectWorld(World: Integer): Boolean;
+ * function  SwitchWorld(World: Integer): Boolean;
  * procedure DeleteInTRS2WorldArray(Index: Integer; var WorldArray: TRS2WorldArray);
- * function RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
- * function RandomWorld(Members: Boolean): Integer;
+ * function  RandomWorldEx(Members, HRW, QuickChat, LootShare: Integer): Integer;
+ * function  RandomWorld(Members: Boolean): Integer;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

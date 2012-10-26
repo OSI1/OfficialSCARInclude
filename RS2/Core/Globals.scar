@@ -3,8 +3,8 @@
                                    Runescape 2
                                  Global Routines
 -------------------------------------------------------------------------------
- * var Useful Global Variables to alter if needed
- * var RS2_CheckForUpdates
+ * var   Useful Global Variables to alter if needed
+ * var   RS2_CheckForUpdates
  * const Useful in game boundaries, points, areas, widths, etc. etc.
  * const Skill_ Indexes
  * const Lobby_Tab_ Indexes
@@ -17,19 +17,19 @@
  * const Chat function indexes
  * const Area_ indexes
  * const Useful in game colors
- * type TRS2Player = record
- * type TRS2World = record
- * var SMART Related vars
- * var RS2WorldArray
- * var World switching related defaults
- * var CurrentPlayer: LongInt; & PlayerStartTime
- * var Font Variables
- * function WorldsINIPath: string;
+ * type  TRS2Player = record
+ * type  TRS2World = record
+ * var   SMART Related vars
+ * var   RS2WorldArray
+ * var   World switching related defaults
+ * var   CurrentPlayer: LongInt; & PlayerStartTime
+ * var   Font Variables
+ * function  WorldsINIPath: string;
  * procedure FreeRS2Fonts;
- * function ActivePlayers: Integer;
- * function AllPlayersInActive: Boolean;
- * function NextPlayerIndex: Integer;
- * function NextActivePlayerIndex: Integer;           
+ * function  ActivePlayers: Integer;
+ * function  AllPlayersInActive: Boolean;
+ * function  NextPlayerIndex: Integer;
+ * function  NextActivePlayerIndex: Integer;           
  * procedure ConstrainToRSBounds(cRSX1, cRSY1, cRSX2, cRSY2: Boolean; var x1, y1, x2, y2: Integer);
  * procedure UpdateRSClient;        
  * procedure RevertRSClient;

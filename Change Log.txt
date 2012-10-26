@@ -3,6 +3,78 @@ Name - Date :
 -------------------------
 
 -------------------------
+LordJashin - 10/25/2012 :
+-------------------------
+
+Added:
+
+File:
+   - Divi/Boolean.scar:
+                     - function StrIsBool(s: string): Boolean;
+                     - function TBoAPos(bool: Boolean; arr: TBoolArray): Integer;
+                     - function TBoALastPos(bool: Boolean; arr: TBoolArray): Integer;
+                     - function TBoAPositions(bool: Boolean; arr: TBoolArray): TIntArray;
+
+   - Divi/StringArray.scar:                     
+                     - function  TSAToStr(arr: TStrArray): string;
+                     - function  TSAConcat(arr: TStrArray): string;
+                     - procedure TSAReverse(var arr: TStrArray);
+                     - function  TSARandomize(arr: TStrArray): TStrArray;     
+                     - procedure TSATrim(arr: TStrArray; delEmpty: Boolean);                      
+                     - function  TSAOfString(x: string; count: Integer): TStrArray;
+                     - procedure TSASetItems(var arr: TStrArray; x: string);
+                     - procedure TSASetItemsEx(var arr: TStrArray; x: string; exceptions: TIntArray);
+                     - procedure TSARemoveNulls(var arr: TStrArray);
+                     - procedure TSARemoveEmptyItems(var arr: TStrArray);
+                     - function  TSAPos(arr: TStrArray; s: string): Integer;
+                     - function  TSAPosAll(arr: TStrArray; s: string): TIntArray;
+                     - function  TSAAllSame(arr: TStrArray): Boolean;
+                     - function  TSAAllUnique(arr: TStrArray): Boolean;
+                     - function  TSAAllBetween(s1, s2: string; arr: TStrArray): TStrArray;
+                     - function  TSAItemsByTIA(arr: TStrArray; x: TIntArray): TStrArray;
+
+Divi/Array.scar:
+              - procedure TSAInsert(var arr: TStrArray; index: Integer; s: string);
+              - procedure TSAUnique(var arr: TStrArray);
+              - function  TSASame(arr1, arr2: TStrArray): Boolean;
+              - function  TSAContains(arr: TStrArray; x: string): Boolean;
+              - function  TSADelete(var arr: TStrArray; x: Integer): Boolean;
+              - procedure TSADeleteEx(var arr: TStrArray; x: TIntArray);
+              - procedure TSAAppend(var arr: TStrArray; x: string);                            
+              - procedure TSACopy(source: TStrArray; var target: TStrArray; resetTarget: Boolean);
+              - function  TSACopyEx(arr: TStrArray; pos1, pos2: Integer): TStrArray;
+              - procedure TBoAInsert(var arr: TBoolArray; index: Integer; bool: Boolean);
+              - function  TBoAContains(arr: TBoolArray; x: Boolean): Boolean;
+              - function  TBoADelete(var arr: TBoolArray; x: Integer): Boolean;
+              - procedure TBoAAppend(var arr: TBoolArray; x: Boolean);
+              - procedure TBoACopy(source: TBoolArray; var target: TBoolArray; resetTarget: Boolean);
+              - function  TBoACopyEx(arr: TBoolArray; pos1, pos2: Integer): TBoolArray; 
+
+Divi/Box.scar:
+            - procedure TBASkipBoxesByArea(var TBA: TBoxArray; skipArea: TBox; fromInside: Boolean);
+            - procedure TBASkipBoxesByAreas(var TBA: TBoxArray; skipAreas: TBoxArray; fromInside: Boolean);
+                  
+Improvements:
+
+Renamed:
+      - (BoxInBox  -> BoxContains)
+      - (CheckTBoA -> TBoATrueAmmount)
+
+Moved:
+    - TBoATrueAmmount (Divi/Array.scar -> Divi/Boolean.scar)
+    - StrSplitEx      (Divi/String.scar -> Divi/StringArray.scar)
+    - InStrArrPos     (Divi/String.scar -> Divi/StringArray.scar)
+    - StrContainsEx   (Divi/String.scar -> Divi/StringArray.scar)
+    - StrExplodeMulti (Divi/String.scar -> Divi/StringArray.scar)
+    - TBAContains     (Divi/Box.scar -> Divi/Array.scar)
+    - TBASame         (Divi/Box.scar -> Divi/Array.scar)
+    - TBACopyEx       (Divi/Box.scar -> Divi/Array.scar)
+
+Updated all comment headers in files to make them look better
+
+Thanks to MSSL for more awesome functions!
+
+-------------------------
 LordJashin - 10/24/2012 :
 -------------------------
 
@@ -57,10 +129,10 @@ File:
    - Change Log.txt :D!!!
 
 Improvements:
-           - StrInStr => StrContains
+           - StrInStr      => StrContains
            - StrInStrMulti => StrContainsEx
-           - StrCopy => StrCopyEx
-           - StrBetween => StrBetweenEx
+           - StrCopy       => StrCopyEx
+           - StrBetween    => StrBetweenEx
            - StrStuff:
                     - StrStuff(SubStr, s: string; iFrom, iCount: Integer): string;
            - StrStuffEx: 

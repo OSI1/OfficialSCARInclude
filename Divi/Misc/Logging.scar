@@ -4,13 +4,13 @@
 --------------------------------------------------------------------------------
  * procedure OSI_SetupAutoLog(FolderPath, FileType, NewFolder, LogName: string);
  * procedure OSI_SetupAutoScreenSave(FolderPath, SaveName, NewFolder: string; ClientOnly: Boolean);
- * function OSI_AutoSaveScreen: Boolean;
+ * function  OSI_AutoSaveScreen: Boolean;
  * procedure OSI_AddToLog(s: string);
  * procedure OSI_WriteAndLog(s: string);
  * procedure OSI_ClearLog;
  * procedure OSI_WriteLog;
- * function OSI_SaveLog(Path: string): Boolean;
- * function OSI_AutoSaveLog: Boolean; 
+ * function  OSI_SaveLog(Path: string): Boolean;
+ * function  OSI_AutoSaveLog: Boolean; 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

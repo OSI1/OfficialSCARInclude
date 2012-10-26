@@ -5,8 +5,7 @@
  * function StrCount(SubStr, s: string; overlap: Boolean): Integer;
  * function StrReverse(s: string): string; 
  * function StrCompare(s1, s2: string): Integer;    
- * function StrSplit(text, separator: string; ID: Integer): string;
- * function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;                
+ * function StrSplit(text, separator: string; ID: Integer): string;                
  * function StrStuff(SubStr, s: string; iFrom, iCount: Integer): string;
  * function StrStuffEx(SubStr, s: string; pos1, pos2: Integer): string;
  * function StrIndentation(s: string; count: Integer): string;          
@@ -23,11 +22,8 @@
  * function StrLastBefore(SubStr, s: string): string;              
  * function StrClosestPos(SubStr, s: string; iFrom: Integer): Integer;
  * function StrFarthestPos(SubStr, s: string; iFrom: Integer): Integer;
- * function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
  * function StrContainsC(x: Char; s: string): Boolean;
  * function StrContains(SubStr, s: string): Boolean;
- * function StrContainsEx(SubStrs: TStrArray; s: string): Boolean;  
- * function StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;     
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -50,7 +46,7 @@ begin
     o := Length(SubStr);
     p := (p - (o - 1));
   end else      
-    o := 1; 
+    o := 1;     
   repeat
     p := PosEx(SubStr, s, (p + o));
     if (p > 0) then
@@ -114,34 +110,6 @@ begin
       SetLength(tmp, 0);
     end;
 end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;
-Contributors: Janilabo
-Description: Splits text using separator and returns splitted text specified by IDs (Indexs in the array of splitted text)                                                              
-Date Created: October 18th, 2012. By Janilabo.
-Last Modified: October 18th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;
-var
-  h, i, l: Integer;
-  tmp: TStrArray;
-begin
-  l := Length(IDs);
-  if (l < 1) then
-    Exit;
-  SetLength(Result, l);
-  if (text <> '') then
-  begin
-    tmp := ExplodeEx(separator, text, (TIAMax(IDs) + 2));
-    h := High(tmp);
-    for i := 0 to (l - 1) do
-      if ((IDs[i] < (h + 1)) and (IDs[i] > -1)) then
-        Result[i] := tmp[IDs[i]];
-    SetLength(tmp, 0);
-  end;
-end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function StrStuff(SubStr, s: string; iFrom, iCount: Integer): string;
@@ -533,36 +501,6 @@ begin
 end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
-Contributors: Wanted
-Description: Returns true if the string is in the array and returns position.
-Date Created: October 10th, 2011. By Wanted
-Last Modified: July 20th, 2012. By Freddy
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
-var
-  H, L: Integer;
-  SS: string;
-begin
-  Result := True;
-  H := High(Arr);
-  L := Low(Arr);
-  if (not (CaseSenstive)) then
-  begin
-    SS := LowerCase(S);
-    for Pos := L to H do
-      if (SS = LowerCase(Arr[Pos])) then
-        Exit;
-  end
-  else
-    for Pos := L to H do
-      if (S = Arr[Pos]) then
-        Exit;
-  Result := False;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function StrContainsC(x: Char; s: string): Boolean;
 Contributors: Janilabo
 Description: Returns true if text (s) contains char (x).
@@ -588,74 +526,3 @@ begin
   Result := (Pos(SubStr, s) > 0);
 end;
 
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrContainsEx(SubStrs: TStrArray; s: string): Boolean;
-Contributors: Wanted, Freddy, LordJashin
-Description: Results true if any strings are inside a string.
-Date Created: December 31st, 2011. By Wanted
-Last Modified: October 23rd, 2012. By LordJashin
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function StrContainsEx(SubStrs: TStrArray; s: string): Boolean;
-var
-  I, H: Integer;
-begin
-  H := High(SubStrs);
-  Result := True;
-  for I := 0 to H do
-    if (StrContains(SubStrs[I], s)) then
-      Exit;
-  Result := False;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;
-Contributors: Janilabo 
-Date Created: October 21st, 2012. By Janilabo
-Last Modified: October 21st, 2012. By Janilabo
-Explanation: Explodes s with multiple separators/delimiters (Separators).
-             The importance order for Separators items is from left to right (=>).
-             So place the important ones first and then less important after those.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function StrExplodeMulti(Separators: TStrArray; s: string): TStrArray;
-var                          
-  p, h, i, x, o, m, l: Integer;
-begin
-  h := High(Separators);
-  if (h > -1) then
-  begin 
-    o := 1;
-    SetLength(Result, Length(s));
-    repeat  
-      l := 0;           
-      for x := 0 to h do
-      begin
-        p := Pos(Separators[x], s);
-        case (p < 1) of
-          True:
-          begin
-            Delete(Separators, x, 1);
-            Dec(x);
-            Dec(h);
-          end;
-          False:
-          if ((l = 0) or (p < l)) then
-          begin     
-            m := x;
-            l := p;
-          end;
-        end;
-      end;
-      if (l > 0) then            
-      begin      
-        Result[i] := Copy(s, 1, (l - 1));
-        Delete(s, 1, ((l + Length(Separators[m])) - 1));         
-        Inc(i);
-      end else
-        Result[i] := Copy(s, 1, Length(s));
-    until (l = 0);
-    SetLength(Result, (i + 1));
-  end else
-    Result := [s];
-end;
