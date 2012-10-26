@@ -3,7 +3,7 @@
                                 Boolean Routines
 --------------------------------------------------------------------------------
  * function StrIsBool(s: string): Boolean;
- * function TBoATrueAmmount(arr: TBoolArray): Integer; 
+ * function TBoATrueAmount(arr: TBoolArray): Integer; 
  * function TBoAPos(bool: Boolean; arr: TBoolArray): Integer;
  * function TBoALastPos(bool: Boolean; arr: TBoolArray): Integer;
  * function TBoAPositions(bool: Boolean; arr: TBoolArray): TIntArray;
@@ -25,14 +25,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBoATrueAmmount(arr: TBoolArray): Integer;
+function TBoATrueAmount(arr: TBoolArray): Integer;
 Contributors: Wanted, Freddy
 Description: Results the amount of true booleans in boolean array.
 Date Created: December 12th, 2011. By Wanted
 Last Modified: July 20th, 2012. By Freddy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function TBoATrueAmmount(arr: TBoolArray): Integer;
+function TBoATrueAmount(arr: TBoolArray): Integer;
 var
   I, H: Integer;
 begin

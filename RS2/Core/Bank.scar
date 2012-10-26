@@ -627,8 +627,8 @@ begin
         WX := True;
         Break;
       end;
-    if (TBoATrueAmmount(OptionExistsMulti(Options, TBA)) < 1) then
-      if (TBoATrueAmmount(OptionExistsMulti(['w-X', '-X', 'X '], TBA)) < 1) then
+    if (TBoATrueAmount(OptionExistsMulti(Options, TBA)) < 1) then
+      if (TBoATrueAmount(OptionExistsMulti(['w-X', '-X', 'X '], TBA)) < 1) then
         Exit
       else
         WX := True;

@@ -218,7 +218,7 @@ var
   TBA: TBoxArray;
 begin
   TBoA := OptionExistsMulti([Option], TBA);
-  Result := (TBoATrueAmmount(TBoA) > 0);
+  Result := (TBoATrueAmount(TBoA) > 0);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

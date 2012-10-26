@@ -58,7 +58,7 @@ Improvements:
 
 Renamed:
       - (BoxInBox  -> BoxContains)
-      - (CheckTBoA -> TBoATrueAmmount)
+      - (CheckTBoA -> TBoATrueAmount)
 
 Moved:
     - TBoATrueAmmount (Divi/Array.scar -> Divi/Boolean.scar)
