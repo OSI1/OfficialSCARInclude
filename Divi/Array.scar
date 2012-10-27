@@ -11,6 +11,14 @@
  * procedure TSAAppend(var arr: TStrArray; x: string);                            
  * procedure TSACopy(source: TStrArray; var target: TStrArray; resetTarget: Boolean);
  * function  TSACopyEx(arr: TStrArray; pos1, pos2: Integer): TStrArray;
+ * procedure TEAInsert(var arr: TExtArray; index: Integer; float: Extended);
+ * procedure TEAUnique(var arr: TExtArray);
+ * function  TEASame(arr1, arr2: TExtArray): Boolean;
+ * function  TEAContains(arr: TExtArray; x: Extended): Boolean;
+ * procedure TEACopy(source: TExtArray; var target: TExtArray; resetTarget: Boolean);
+ * function  TEACopyEx(arr: TExtArray; pos1, pos2: Integer): TExtArray;
+ * procedure TEAAppend(x: Extended; var arr: TExtArray);
+ * function  TEADelete(var arr: TExtArray; x: Integer): Boolean;
  * procedure TBAInsert(var TBA: TBoxArray; index: Integer; bx: TBox);
  * function  TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
  * procedure TBAUnique(var TBA: TBoxArray);      
@@ -22,7 +30,12 @@
  * function  TBoADelete(var arr: TBoolArray; x: Integer): Boolean;
  * procedure TBoAAppend(var arr: TBoolArray; x: Boolean);
  * procedure TBoACopy(source: TBoolArray; var target: TBoolArray; resetTarget: Boolean);
- * function  TBoACopyEx(arr: TBoolArray; pos1, pos2: Integer): TBoolArray; 
+ * function  TBoACopyEx(arr: TBoolArray; pos1, pos2: Integer): TBoolArray;
+ * procedure TVAInsert(var arr: TVariantArray; index: Integer; item: Variant);
+ * procedure TVAAppend(var arr: TVariantArray; x: Variant);
+ * function  TVADelete(var arr: TVariantArray; x: Integer): Boolean;
+ * procedure TVACopy(source: TVariantArray; var target: TVariantArray; resetTarget: Boolean);
+ * function  TVACopyEx(arr: TVariantArray; pos1, pos2: Integer): TVariantArray; 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
              
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -222,6 +235,182 @@ begin
     end else
       Result := [arr[pos1]]; 
   end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TEAInsert(var arr: TExtArray; index: Integer; float: Extended);
+Contributors: Janilabo
+Description: Inserts float into arr (TExtendedArray) at index                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TEAInsert(var arr: TExtArray; index: Integer; float: Extended);
+var
+  i, l: Integer;
+begin
+  l := Length(arr);
+  SetLength(arr, (l + 1));    
+  if (index < 0) then
+    index := 0;
+  if (index > l) then
+    index := l;
+  if (l > index) then
+    for i := (l - 1) downto index do
+      arr[(i + 1)] := arr[i];
+  arr[index] := float; 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TEAUnique(var arr: TExtArray);
+Contributors: Janilabo
+Description: Makes each value in arr (TExtendedArray) unique                                                                                                            
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TEAUnique(var arr: TExtArray);
+var
+  h, i2, i, d: Integer; 
+begin
+  h := High(arr);   
+  if (h < 1) then
+    Exit;         
+  for i := (h - d) downto 1 do
+    for i2 := (i - 1) downto 0 do
+      if (arr[i] = arr[i2]) then
+      begin
+        Delete(arr, i, 1);
+        Inc(d);
+        Break;  
+      end;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEASame(arr1, arr2: TExtArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if arr1 and arr2 are identical.                                                                                
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEASame(arr1, arr2: TExtArray): Boolean;
+var
+  h, i: Integer;
+begin
+  h := High(arr1);
+  if ((h < 0) or (h <> High(arr2))) then
+    Exit;
+  for i := 0 to h do
+    if (arr1[i] <> arr2[i]) then
+      Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAContains(arr: TExtArray; x: Extended): Boolean;
+Contributors: Janilabo
+Description: Returns true if arr (TExtendedArray) contains x value.                                                                                
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAContains(arr: TExtArray; x: Extended): Boolean;
+var
+  i, h: Integer;
+begin
+  h := High(arr);
+  for i := 0 to h do
+  begin
+    Result := (x = arr[i]);
+    if Result then
+      Exit;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TEACopy(source: TExtArray; var target: TExtArray; resetTarget: Boolean);
+Contributors: Janilabo
+Description: Copies source to target. If resetTarget is set to true,
+             target will be cleared before the copying process.                                                                                                         
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TEACopy(source: TExtArray; var target: TExtArray; resetTarget: Boolean);
+var
+  i, tAL, sAL: Integer;
+begin
+  if resetTarget then
+    SetLength(target, 0);
+  tAL := Length(target);
+  sAL := Length(source);
+  SetLength(target, (tAL + sAL));
+  for i := 0 to (sAL - 1) do
+    target[(tAL + i)] := source[i];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEACopyEx(arr: TExtArray; pos1, pos2: Integer): TExtArray;
+Contributors: Janilabo
+Description: Result (TExtendedArray) = from pos1 (index) to pos2 (index) in arr (TExtArray)                                                                                        
+Date Created: October 6th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEACopyEx(arr: TExtArray; pos1, pos2: Integer): TExtArray;
+var
+  i, l: Integer;
+begin
+  l := Length(arr);
+  if (l > 0) then 
+  begin   
+    IntSetRange(pos1, 0, (l - 1));
+    IntSetRange(pos2, 0, (l - 1));
+    if (pos1 <> pos2) then
+    begin
+      SetLength(Result, (IAbs(pos1 - pos2) + 1));
+      if (pos1 < pos2) then
+        for i := pos1 to pos2 do
+          Result[(i - pos1)] := arr[i]
+      else
+        for i := pos1 downto pos2 do
+          Result[(pos1 - i)] := arr[i]; 
+    end else
+      Result := [arr[pos1]]; 
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TEAAppend(x: Extended; var arr: TExtArray);
+Contributors: Janilabo
+Description: Appends x (Extended) to arr (TExtendedArray)                                                                                
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TEAAppend(x: Extended; var arr: TExtArray);
+var
+  aL: Integer;
+begin
+  aL := (Length(arr) + 1);
+  SetLength(arr, aL);
+  arr[(aL - 1)] := x;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEADelete(var arr: TExtArray; x: Integer): Boolean;
+Contributors: Janilabo, LordJashin
+Description: Deletes index (x) in arr (TExtendedArray). Returns true if successful                                                                                 
+Date Created: October 5th, 2012. By Janilabo.
+Last Modified: October 5th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEADelete(var arr: TExtArray; x: Integer): Boolean;
+begin
+  Result := ((x < (High(arr) + 1)) and (x > -1));
+  if Result then
+    Delete(arr, x, 1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -470,6 +659,115 @@ Last Modified: October 6th, 2012. By Janilabo.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TBoACopyEx(arr: TBoolArray; pos1, pos2: Integer): TBoolArray;
+var
+  i, l: Integer;
+begin
+  l := Length(arr);
+  if (l > 0) then 
+  begin   
+    IntSetRange(pos1, 0, (l - 1));
+    IntSetRange(pos2, 0, (l - 1));
+    if (pos1 <> pos2) then
+    begin
+      SetLength(Result, (IAbs(pos1 - pos2) + 1));
+      if (pos1 < pos2) then
+        for i := pos1 to pos2 do
+          Result[(i - pos1)] := arr[i]
+      else
+        for i := pos1 downto pos2 do
+          Result[(pos1 - i)] := arr[i]; 
+    end else
+      Result := [arr[pos1]]; 
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TVAInsert(var arr: TVariantArray; index: Integer; item: Variant);
+Contributors: Janilabo
+Description: Inserts item (Variant) at index in arr (TVariantArray)    
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TVAInsert(var arr: TVariantArray; index: Integer; item: Variant);
+var
+  i, l: Integer;
+begin
+  l := Length(arr);
+  SetLength(arr, (l + 1));    
+  if (index < 0) then
+    index := 0;
+  if (index > l) then
+    index := l;
+  if (l > index) then
+    for i := (l - 1) downto index do
+      arr[(i + 1)] := arr[i];
+  arr[index] := item;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TVAAppend(var arr: TVariantArray; x: Variant);
+Contributors: Janilabo
+Description: Appends x (variant) to arr (TVariantArray).     
+Date Created: October 5th, 2012. By Janilabo.
+Last Modified: October 5th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TVAAppend(var arr: TVariantArray; x: Variant);
+var
+  aL: Integer;
+begin
+  aL := (Length(arr) + 1);
+  SetLength(arr, aL);
+  arr[(aL - 1)] := x;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVADelete(var arr: TVariantArray; x: Integer): Boolean;
+Contributors: Janilabo, LordJashin
+Description: Deletes index (x) in arr (TVariantArray), returns true if successfull     
+Date Created: October 5th, 2012. By Janilabo.
+Last Modified: October 5th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVADelete(var arr: TVariantArray; x: Integer): Boolean;
+begin
+  Result := ((x < (High(arr) + 1)) and (x > -1));
+  if Result then
+    Delete(arr, x, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TVACopy(source: TVariantArray; var target: TVariantArray; resetTarget: Boolean);
+Contributors: Janilabo
+Description: Copies source to target. If resetTarget is set to true,
+             target will be cleared before the copying process.                        
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TVACopy(source: TVariantArray; var target: TVariantArray; resetTarget: Boolean);
+var
+  i, tAL, sAL: Integer;
+begin
+  if resetTarget then
+    SetLength(target, 0);
+  tAL := Length(target);
+  sAL := Length(source);
+  SetLength(target, (tAL + sAL));
+  for i := 0 to (sAL - 1) do
+    target[(tAL + i)] := source[i];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVACopyEx(arr: TVariantArray; pos1, pos2: Integer): TVariantArray;
+Contributors: Janilabo
+Description: Copies arr (TVariantArray) from pos1 to pos2.     
+Date Created: October 6th, 2012. By Janilabo.
+Last Modified: October 6th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVACopyEx(arr: TVariantArray; pos1, pos2: Integer): TVariantArray;
 var
   i, l: Integer;
 begin

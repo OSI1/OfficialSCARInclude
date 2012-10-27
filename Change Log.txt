@@ -3,6 +3,57 @@ Name - Date :
 -------------------------
 
 -------------------------
+LordJashin - 10/26/2012 :
+-------------------------
+
+Added:
+
+File:
+   - Divi/Variant.scar:
+                     - function TVAGetItems(arr: TVariantArray; IDs: TIntArray): TVariantArray;
+                     - function TVAToParts(arr: TVariantArray; method: (pm_PartSize, pm_PartAmount); x: Integer): array of TVariantArray;
+                     - function TVAAllValuesSame(valueArr: TVariantArray): Boolean;
+                     - function TVAAllValuesUnique(arr: TVariantArray): Boolean;
+
+Divi/Array.scar:
+              - procedure TVAInsert(var arr: TVariantArray; index: Integer; item: Variant);
+              - procedure TVAAppend(var arr: TVariantArray; x: Variant);
+              - function  TVADelete(var arr: TVariantArray; x: Integer): Boolean;
+              - procedure TVACopy(source: TVariantArray; var target: TVariantArray; resetTarget: Boolean);
+              - function  TVACopyEx(arr: TVariantArray; pos1, pos2: Integer): TVariantArray;
+              - procedure TEAInsert(var arr: TExtArray; index: Integer; float: Extended);
+              - procedure TEAUnique(var arr: TExtArray);
+              - function  TEASame(arr1, arr2: TExtArray): Boolean;
+              - function  TEAContains(arr: TExtArray; x: Extended): Boolean;
+              - procedure TEACopy(source: TExtArray; var target: TExtArray; resetTarget: Boolean);
+              - function  TEACopyEx(arr: TExtArray; pos1, pos2: Integer): TExtArray;
+              - procedure TEAAppend(x: Extended; var arr: TExtArray);
+              - function  TEADelete(var arr: TExtArray; x: Integer): Boolean;
+
+Divi/Extended.scar:
+                 - function  TEASum(x: TExtArray): Extended;
+                 - procedure TEAReverse(var arr: TExtArray);
+                 - function  TEAPos(arr: TExtArray; ext: Extended): Integer;
+                 - function  TEAPositions(arr: TExtArray; ext: Extended): TIntArray;
+                 - function  TEAGetItems(arr: TExtArray; IDs: TIntArray): TExtArray;
+                 - function  TEAAllValuesSame(arr: TExtArray): Boolean;
+                 - function  TEAAllValuesUnique(arr: TExtArray): Boolean;
+                 - function  ATEAGetItems(arr: T2DExtArray; TIA: TIntArray): T2DExtArray;
+
+Divi/Math.scar:
+             - function RandomBool: Boolean;
+
+Divi/String.scar:
+               - function StrStartWithEx(suffix: string; var s: string; offset: Integer): Boolean;
+               - function StrEndWithEx(suffix: string; var s: string; offset: Integer): Boolean;
+
+Divi/StringArray.scar:
+                    - procedure ATSACopy(source: T2DStrArray; var target: T2DStrArray; resetTarget: Boolean);
+                    - function  ATSAMerge(arr: T2DStrArray): TStrArray;
+                    - function  ATSAItemsByTIA(arr: T2DStrArray; TIA: TIntArray): T2DStrArray;
+                    - function  ATSAOfTSA(x: TStrArray; amount: Integer): T2DStrArray;
+
+-------------------------
 LordJashin - 10/25/2012 :
 -------------------------
 

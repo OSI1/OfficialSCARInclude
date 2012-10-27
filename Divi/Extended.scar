@@ -2,7 +2,15 @@
                               Official SCAR Include
                                  Extended Routines
 --------------------------------------------------------------------------------
- * function StrIsExt(s: string): Boolean;  
+ * function  StrIsExt(s: string): Boolean;
+ * function  TEASum(x: TExtArray): Extended;
+ * procedure TEAReverse(var arr: TExtArray);
+ * function  TEAPos(arr: TExtArray; ext: Extended): Integer;
+ * function  TEAPositions(arr: TExtArray; ext: Extended): TIntArray;
+ * function  TEAGetItems(arr: TExtArray; IDs: TIntArray): TExtArray;
+ * function  TEAAllValuesSame(arr: TExtArray): Boolean;
+ * function  TEAAllValuesUnique(arr: TExtArray): Boolean;
+ * function  ATEAGetItems(arr: T2DExtArray; TIA: TIntArray): T2DExtArray;                                
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -21,4 +29,265 @@ begin
   except
     Result := False;
   end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEASum(x: TExtArray): Extended;
+Contributors: Janilabo
+Description: Returns sum of all of the values of x (TExtendedArray)                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEASum(x: TExtArray): Extended;
+var
+  h, i: Integer;
+begin
+  h := High(x);
+  for i := 0 to h do
+    Result := (Result + x[i]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TEAReverse(var arr: TExtArray);
+Contributors: Janilabo
+Description: Reverses the arr (TExtendedArray). So index 0 would now be the highest index, and etc.                                                                      
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TEAReverse(var arr: TExtArray);
+var
+  g, i, l: Integer;
+begin
+  l := (Length(arr) - 1);
+  if (l < 1) then
+    Exit;
+  g := (l div 2);
+  for i := 0 to g do
+    Swap(arr[i], arr[(l - i)]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAPos(arr: TExtArray; ext: Extended): Integer;
+Contributors: Janilabo
+Description: Returns the position of ext in arr. Returns -1 if ext is not in arr.                                                                                                         
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAPos(arr: TExtArray; ext: Extended): Integer;
+var
+  i, h: Integer;
+begin
+  h := High(arr);
+  for i := 0 to h do
+    if (arr[i] = ext) then
+    begin
+      Result := i;
+      Exit;
+    end;
+  Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAPositions(arr: TExtArray; ext: Extended): TIntArray;
+Contributors: Janilabo
+Description: Returns all the positions in arr (TExtendedArray) where ext (Extended) is found/matched.                                                                                                         
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAPositions(arr: TExtArray; ext: Extended): TIntArray;
+var
+  i, rC, h: Integer;
+begin
+  h := High(arr);
+  SetLength(Result, (h + 1));
+  for i := 0 to h do
+    if (arr[i] = ext) then
+    begin
+      Result[rC] := i;
+      Inc(rC);
+    end;
+  SetLength(Result, rC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAGetItems(arr: TExtArray; IDs: TIntArray): TExtArray;
+Contributors: Janilabo
+Description: Returns indexs (IDs) in arr (TExtendedArray).                                                                                                          
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAGetItems(arr: TExtArray; IDs: TIntArray): TExtArray;
+var
+  i, h, h2, rC: Integer;
+begin
+  h := High(arr);
+  h2 := High(IDs);
+  SetLength(Result, (h2 + 1));
+  for i := 0 to h2 do
+    if ((IDs[i] <= h) and (IDs[i] > -1)) then
+    begin
+      Result[rC] := arr[IDs[i]];
+      Inc(rC);
+    end;
+  SetLength(Result, rC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAAllValuesSame(arr: TExtArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if all values at indexs in arr (TExtendedArray) are the same                                                                                                          
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAAllValuesSame(arr: TExtArray): Boolean;
+var
+  h, i: Integer;
+begin
+  h := High(arr);
+  if (h < 1) then
+  begin
+    Result := (h = 0);
+    Exit;
+  end;
+  for i := 1 to h do
+    if (arr[i] <> arr[0]) then
+      Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAAllValuesUnique(arr: TExtArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if each value at each index in arr (TExtendedArray) is unique                                                                                                           
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAAllValuesUnique(arr: TExtArray): Boolean;
+var
+  h, i, i2: Integer;
+begin
+  h := High(arr);
+  if (h < 1) then
+  begin
+    Result := (h = 0);
+    Exit;
+  end;
+  for i := 0 to (h - 1) do
+    for i2 := (i + 1) to h do
+      if (i <> i2) then
+      begin
+        Result := (arr[i] <> arr[i2]);
+        if not Result then
+          Exit;
+      end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAToParts(arr: TExtArray; method: (pm_PartSize, pm_PartAmount); x: Integer): T2DExtArray;
+Contributors: Janilabo                                                                                                            
+Date Created: October 5th, 2012. By Janilabo.
+Last Modified: October 5th, 2012. By Janilabo.
+Explanation: Breaks arr (TExtendedArray) to parts (TEA => ATEA). Contains 2 methods:
+             pm_PartSize (Breaks TEA to ATEA by size of the parts) [x = size]
+             pm_PartAmount (Breaks TEA to ATEA by amount of the parts) [x = amount] 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAToParts(arr: TExtArray; method: (pm_PartSize, pm_PartAmount); x: Integer): T2DExtArray;
+var
+  a, e, h, h2, i, i2, p: Integer;
+begin
+  h := High(arr);
+  case method of
+    pm_PartSize:
+    if ((h >= 0) and (x > 0)) then
+      if (x <= h) then
+      begin
+        Inc(h);
+        p := (h div x);
+        if ((p * x) < h) then
+          Inc(p);
+        SetLength(Result, p);
+        for i := 0 to (p - 1) do
+          for i2 := 0 to (x - 1) do
+          begin
+            SetLength(Result[i], x);
+            if (a < h) then
+            begin
+              Result[i][i2] := arr[a];
+              Inc(a);
+            end else
+            begin
+              SetLength(Result[i], i2);
+              Exit;
+            end;
+          end;
+      end else
+        Result := [arr];      
+    pm_PartAmount:
+    begin
+      if ((h <= 0) or (x < 2)) then
+      begin
+        if (x = 1) then
+          Result := [arr]
+        else
+          if (x > 0) then
+            SetLength(Result, x);
+        Exit;
+      end;
+      if (h < (x - 1)) then
+        x := (h + 1);
+      p := Floor((h + 1) / x);
+      if (p = 0) then
+        p := 1;
+      e := ((h + 1) - (p * x));
+      if (e >= (h + 1)) then
+        e := 0;
+      SetLength(Result, x);
+      for i := 0 to (x - 1) do
+      begin
+        if ((e >= (i + 1)) and (e > 0)) then
+          SetLength(Result[i], (p + 1))
+        else
+          if (i <= h) then
+            SetLength(Result[i], p);
+        h2 := High(Result[i]);
+        for i2 := 0 to h2 do
+        begin
+          Result[i][i2] := arr[a];
+          Inc(a);
+        end;
+      end;      
+    end;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ATEAGetItems(arr: T2DExtArray; TIA: TIntArray): T2DExtArray;
+Contributors: Janilabo                                                                                                            
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+Explanation: Gets indexs (TIA) in arr (Array of TExtendedArray) returns Array of TExtendedArray   
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ATEAGetItems(arr: T2DExtArray; TIA: TIntArray): T2DExtArray;
+var
+  i, h, h2, rC: Integer;
+begin
+  h := High(arr);
+  h2 := High(TIA);
+  SetLength(Result, (h2 + 1));
+  for i := 0 to h2 do
+    if ((TIA[i] <= h) and (TIA[i] > -1)) then
+    begin
+      Result[rC] := arr[TIA[i]];
+      Inc(rC);
+    end;
+  SetLength(Result, rC);
 end;

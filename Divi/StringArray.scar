@@ -22,6 +22,10 @@
  * function  TSAAllUnique(arr: TStrArray): Boolean;
  * function  TSAAllBetween(s1, s2: string; arr: TStrArray): TStrArray;
  * function  TSAItemsByTIA(arr: TStrArray; x: TIntArray): TStrArray;
+ * procedure ATSACopy(source: T2DStrArray; var target: T2DStrArray; resetTarget: Boolean);
+ * function  ATSAMerge(arr: T2DStrArray): TStrArray;
+ * function  ATSAItemsByTIA(arr: T2DStrArray; TIA: TIntArray): T2DStrArray;
+ * function  ATSAOfTSA(x: TStrArray; amount: Integer): T2DStrArray;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -523,4 +527,96 @@ begin
       Inc(rC);
     end;
   SetLength(Result, rC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ATSACopy(source: T2DStrArray; var target: T2DStrArray; resetTarget: Boolean);
+Contributors: Janilabo
+Description:                
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ATSACopy(source: T2DStrArray; var target: T2DStrArray; resetTarget: Boolean);
+var
+  i, tAL, sAL: Integer;
+begin
+  if resetTarget then
+    SetLength(target, 0);
+  tAL := Length(target);
+  sAL := Length(source);
+  SetLength(target, (tAL + sAL));
+  for i := 0 to (sAL - 1) do
+    target[(tAL + i)] := source[i];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ATSAMerge(arr: T2DStrArray): TStrArray;
+Contributors: Janilabo
+Description:                
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ATSAMerge(arr: T2DStrArray): TStrArray;
+var
+  i, i2, h, h2, r: Integer;
+begin
+  h := High(arr);
+  for i := 0 to h do
+    IncEx(r, (High(arr[i]) + 1));
+  SetLength(Result, r); 
+  r := 0;
+  for i := 0 to h do
+  begin
+    h2 := High(arr[i]);
+    for i2 := 0 to h2 do
+    begin
+      Result[r] := arr[i][i2];
+      Inc(r);
+    end;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ATSAItemsByTIA(arr: T2DStrArray; TIA: TIntArray): T2DStrArray;
+Contributors: Janilabo
+Description:                
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ATSAItemsByTIA(arr: T2DStrArray; TIA: TIntArray): T2DStrArray;
+var
+  i, h, h2, rC: Integer;
+begin
+  h := High(arr);
+  h2 := High(TIA);
+  SetLength(Result, (h2 + 1));
+  for i := 0 to h2 do
+    if ((TIA[i] <= h) and (TIA[i] > -1)) then
+    begin
+      Result[rC] := arr[TIA[i]];
+      Inc(rC);
+    end;
+  SetLength(Result, rC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ATSAOfTSA(x: TStrArray; amount: Integer): T2DStrArray;
+Contributors: Janilabo
+Description:                
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ATSAOfTSA(x: TStrArray; amount: Integer): T2DStrArray;
+var
+  i: Integer;
+begin
+  if (amount < 1) then
+    Exit;
+  SetLength(Result, amount);
+  for i := 0 to (amount - 1) do
+    Result[i] := x;
 end;

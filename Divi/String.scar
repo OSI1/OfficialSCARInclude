@@ -13,7 +13,9 @@
  * function StrCopyEx(s: string; pos1, pos2: Integer): string;
  * function StrReplaceEx(Text, FindS, ReplaceS: string; Offset: Integer): string;
  * function StrStartWith(suffix: string; var s: string): Boolean;
- * function StrEndWith(suffix: string; var s: string): Boolean;
+ * function StrStartWithEx(suffix: string; var s: string; offset: Integer): Boolean;
+ * function StrEndWith(suffix: string; var s: string): Boolean;                
+ * function StrEndWithEx(suffix: string; var s: string; offset: Integer): Boolean;
  * function StrAfter(SubStr, s: string): string;
  * function StrBefore(SubStr, s: string): string;
  * function StrAfterEx(SubStr, s: string; offset: Integer): string;
@@ -291,6 +293,28 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrStartWithEx(suffix: string; var s: string; offset: Integer): Boolean;
+Contributors: Janilabo
+Description: Returns true if suffix was found in s (AFTER offset) and it is set as the beginning of the s.
+             Offset is based on PosEx().         
+Date Created: October 24th, 2012. By Janilabo.
+Last Modified: October 24th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrStartWithEx(suffix: string; var s: string; offset: Integer): Boolean;
+var
+  p, l: Integer;
+begin
+  l := Length(suffix);
+  if ((s = '') or (l > Length(s))) then
+    Exit;
+  p := PosEx(suffix, s, offset);
+  Result := (p > 0);
+  if Result then
+    s := Copy(s, p, (Length(s) - (p - 1)));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function StrEndWith(suffix: string; var s: string): Boolean;
 Contributors: Janilabo
 Description: If suffix is found returns true & sets the end of the string to the suffix
@@ -306,6 +330,28 @@ begin
   if ((s = '') or (l > Length(s))) then
     Exit;
   p := LastPos(suffix, s);
+  Result := (p > 0);
+  if Result then
+    s := Copy(s, 1, ((p + l) - 1));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrEndWithEx(suffix: string; var s: string; offset: Integer): Boolean;
+Contributors: Janilabo
+Description: Returns true if suffix was found in s (BEFORE offset) and it is set as the ending of the s.
+             Offset is based on LastPosEx().  
+Date Created: October 24th, 2012. By Janilabo.
+Last Modified: October 24th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrEndWithEx(suffix: string; var s: string; offset: Integer): Boolean;
+var
+  p, l: Integer;
+begin
+  l := Length(suffix);
+  if ((s = '') or (l > Length(s))) then
+    Exit;
+  p := LastPosEx(suffix, s, offset);
   Result := (p > 0);
   if Result then
     s := Copy(s, 1, ((p + l) - 1));

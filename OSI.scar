@@ -37,6 +37,7 @@
 {$I Divi\String.scar}
 {$I Divi\StringArray.scar}
 {$I Divi\Array.scar}
+{$I Divi\Variant.scar}
 {$I Divi\Point.scar}
 {$I Divi\Color.scar}
 {$I Divi\Client.scar}

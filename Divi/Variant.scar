@@ -1,0 +1,170 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                 Variant Routines
+--------------------------------------------------------------------------------
+ * function TVAGetItems(arr: TVariantArray; IDs: TIntArray): TVariantArray;
+ * function TVAToParts(arr: TVariantArray; method: (pm_PartSize, pm_PartAmount); x: Integer): array of TVariantArray;
+ * function TVAAllValuesSame(valueArr: TVariantArray): Boolean;
+ * function TVAAllValuesUnique(arr: TVariantArray): Boolean;
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVAGetItems(arr: TVariantArray; IDs: TIntArray): TVariantArray;
+Contributors: Janilabo
+Description: Returns TVariantArray from arr (TVariantArray) at indexs (IDs) in arr                                                              
+Date Created: October 5th, 2012. By Janilabo.
+Last Modified: October 5th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVAGetItems(arr: TVariantArray; IDs: TIntArray): TVariantArray;
+var
+  i, h, h2, rC: Integer;
+begin
+  h := High(arr);
+  h2 := High(IDs);
+  SetLength(Result, (h2 + 1));
+  for i := 0 to h2 do
+    if ((IDs[i] <= h) and (IDs[i] > -1)) then
+    begin
+      Result[rC] := arr[IDs[i]];
+      Inc(rC);
+    end;
+  SetLength(Result, rC);
+end;
+ 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVAToParts(arr: TVariantArray; method: (pm_PartSize, pm_PartAmount); x: Integer): array of TVariantArray;
+Contributors: Janilabo                                         
+Date Created: October 5th, 2012. By Janilabo.
+Last Modified: October 5th, 2012. By Janilabo.
+Explanation: Breaks arr (TVariantArray) to parts (TVariantArray => Array of TVariantArray). 
+             Contains 2 methods:
+             pm_PartSize (Breaks TVA to ATVA by size of the parts) [x = size]
+             pm_PartAmount (Breaks TVA to ATVA by amount of the parts) [x = amount]                  
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVAToParts(arr: TVariantArray; method: (pm_PartSize, pm_PartAmount); x: Integer): array of TVariantArray;
+var
+  a, e, h, h2, i, i2, p: Integer;
+begin
+  h := High(arr);
+  case method of
+    pm_PartSize:
+    if ((h >= 0) and (x > 0)) then
+      if (x <= h) then
+      begin
+        Inc(h);
+        p := (h div x);
+        if ((p * x) < h) then
+          Inc(p);
+        SetLength(Result, p);
+        for i := 0 to (p - 1) do
+          for i2 := 0 to (x - 1) do
+          begin
+            SetLength(Result[i], x);
+            if (a < h) then
+            begin
+              Result[i][i2] := arr[a];
+              Inc(a);
+            end else
+            begin
+              SetLength(Result[i], i2);
+              Exit;
+            end;
+          end;
+      end else
+        Result := [arr];      
+    pm_PartAmount:
+    begin
+      if ((h <= 0) or (x < 2)) then
+      begin
+        if (x = 1) then
+          Result := [arr]
+        else
+          if (x > 0) then
+            SetLength(Result, x);
+        Exit;
+      end;
+      if (h < (x - 1)) then
+        x := (h + 1);
+      p := Floor((h + 1) / x);
+      if (p = 0) then
+        p := 1;
+      e := ((h + 1) - (p * x));
+      if (e >= (h + 1)) then
+        e := 0;
+      SetLength(Result, x);
+      for i := 0 to (x - 1) do
+      begin
+        if ((e >= (i + 1)) and (e > 0)) then
+          SetLength(Result[i], (p + 1))
+        else
+          if (i <= h) then
+            SetLength(Result[i], p);
+        h2 := High(Result[i]);
+        for i2 := 0 to h2 do
+        begin
+          Result[i][i2] := arr[a];
+          Inc(a);
+        end;
+      end;      
+    end;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVAAllValuesSame(valueArr: TVariantArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if all values in valueArr are the same                                                              
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVAAllValuesSame(valueArr: TVariantArray): Boolean;
+var
+  h, i: Integer;
+begin
+  h := High(valueArr);
+  if (h < 1) then
+  begin
+    Result := (h = 0);
+    Exit;
+  end;
+  for i := 1 to h do
+    if (VarType(valueArr[i]) = VarType(valueArr[0])) then
+    begin
+      if (valueArr[i] <> valueArr[0]) then
+        Exit;
+    end else
+      Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVAAllValuesUnique(arr: TVariantArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if all values at indexs in arr (TVariantArray) are Unique                                                            
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVAAllValuesUnique(arr: TVariantArray): Boolean;
+var
+  h, i, i2: Integer;
+begin
+  h := High(arr);
+  if (h < 1) then
+  begin
+    Result := (h = 0);
+    Exit;
+  end;
+  for i := 0 to (h - 1) do
+    for i2 := (i + 1) to h do
+      if (i <> i2) then
+      begin
+        if (VarType(arr[i]) = VarType(arr[i2])) then
+          Result := (arr[i] <> arr[i2]);
+        if not Result then
+          Exit;
+      end;
+end;

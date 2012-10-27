@@ -20,6 +20,7 @@
  * function  ValueToFraction(position, source: Extended): Extended; 
  * function  FractionToValue(fraction, source: Extended): Extended;
  * function  InRangeE(value, minimum, maximum: Extended): Boolean;
+ * function  RandomBool: Boolean; 
  * function  RandomAbs(Range: Integer): Integer;   
  * function  RandomEx(range, amount: Integer; duplicates: Boolean): TIntArray;
  * function  RR(Min, Max: Integer): Integer;
@@ -309,6 +310,19 @@ Last Modified: September 30th, 2012. By Janilabo.
 function InRangeE(value, minimum, maximum: Extended): Boolean;
 begin
   Result := ((value >= minimum) and (value <= maximum));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomBool: Boolean; 
+Contributors: Janilabo
+Description: Random() with support for negative Range.
+Date Created: October 25th, 2012. By Janilabo.
+Last Modified: October 25th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomBool: Boolean; 
+begin
+  Result := (Random(2) = 1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
