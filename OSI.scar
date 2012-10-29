@@ -28,22 +28,39 @@
 {$ENDIF}
 
 // OSI Include files
-{$I Divi\Globals.scar}
-{$I Divi\Integer.scar}
-{$I Divi\Boolean.scar}
-{$I Divi\Extended.scar}
-{$I Divi\Math.scar}
-{$I Divi\Box.scar}
-{$I Divi\String.scar}
-{$I Divi\StringArray.scar}
-{$I Divi\Array.scar}
-{$I Divi\Variant.scar}
-{$I Divi\Point.scar}
-{$I Divi\Color.scar}
-{$I Divi\Client.scar}
-{$I Divi\Timing.scar}
-{$I Divi\Misc\Logging.scar}
-{$I Divi\Bitmap.scar}
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                 Level 1 Includes                                                            
+                           Basic SCAR Types & functions                       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+{$I Divi\Level 1\Globals.scar}
+{$I Divi\Level 1\Integer.scar}
+{$I Divi\Level 1\Boolean.scar}
+{$I Divi\Level 1\String.scar}
+{$I Divi\Level 1\Extended.scar}
+{$I Divi\Level 1\Variant.scar}
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                 Level 2 Includes
+                         Complex SCAR Types & functions
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+{$I Divi\Level 2\Math.scar}
+{$I Divi\Level 2\Box.scar}
+{$I Divi\Level 2\StringArray.scar}
+{$I Divi\Level 2\Array.scar}
+{$I Divi\Level 2\Point.scar}
+{$I Divi\Level 2\Color.scar}
+{$I Divi\Level 2\Bitmap.scar}
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                 Level 3 Includes
+                       Input/Client/Math/Timing functions
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+{$I Divi\Level 3\Timing.scar}
+{$I Divi\Level 3\Client.scar}
+{$I Divi\Level 3\Mouse.scar}
+{$I Divi\Level 3\Keyboard.scar}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                  RS2 Includes
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 // RS2 Globals includes (needs to be included before SMART, keyboard/mouse) 
 {$IFDEF RS2}
@@ -56,10 +73,6 @@
 {$IFDEF SMART}
   {$I RS2\Misc\SMART.scar}
 {$ENDIF}
-
-// OSI Mouse and Keyboard includes
-{$I Divi\Mouse.scar}
-{$I Divi\Keyboard.scar}
 
 // RS2 Includes!
 {$IFDEF RS2}
@@ -90,7 +103,10 @@
   {$ENDIF}
 {$ENDIF}
 
-// OSI Debug Functions
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                         OSI Debug Includes and Misc
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+{$I Divi\Misc\Logging.scar}
 {$IFDEF OSIDebug}
   {$I Divi\Misc\Debug.scar}
 {$ENDIF}

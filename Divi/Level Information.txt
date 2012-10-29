@@ -1,0 +1,70 @@
+﻿Last Modified: October 28th, 2012
+---------------------------------
+
+
+This details every include for OSI in the OSI\Divi folder
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                 Level 1 Includes                                                            
+                           Basic SCAR Types & functions                       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+- Divi\Level 1\Globals.scar    : Has OSI's types/vars & new ones such as T3DPoint
+
+- Divi\Level 1\Integer.scar    : Has functions/other for Integer or TIntArray types
+
+- Divi\Level 1\Boolean.scar    : Has functions/other for Boolean or TBoolArray types
+
+- Divi\Level 1\String.scar     : Has functions/other for String type
+
+- Divi\Level 1\Extended.scar   : Has functions/other for Extended or TExtArray types
+
+- Divi\Level 1\Variant.scar    : Has functions/other for Variant or TVariantArray types
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                 Level 2 Includes
+                         Complex SCAR Types & functions
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+- Divi\Level 2\Math.scar       : Has tons of math functions using tons of types
+
+- Divi\Level 2\Box.scar        : Has functions/other for TBox or TBoxArray types
+
+- Divi\Level 2\StringArray.scar: Has functions/other for TStrArray type
+
+- Divi\Level 2\Array.scar      : Has common functions/other for TIA/TSA/TEA/etc array types
+
+- Divi\Level 2\Point.scar      : Has functions/other for TPoint or TPointArray types
+
+- Divi\Level 2\Color.scar      : Has functions/other for Color
+
+- Divi\Level 2\Bitmap.scar     : Has functions/other for TSCARBitmap type
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                 Level 3 Includes
+                       Input/Client/Math/Timing functions
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+- Divi\Level 3\Timing.scar     : Has functions/other for Time & waiting
+
+- Divi\Level 3\Client.scar     : Has functions/other for TSCARClient & SCAR
+
+- Divi\Level 3\Mouse.scar      : Has functions/other for the mouse
+
+- Divi\Level 3\Keyboard.scar   : Has functions/other for the keyboard
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+- Divi\Misc\Logging.scar       : Has functions/other for OSI's built in logging system
+
+- Divi\Misc\Debug.scar         : Has functions/other for debugging
+                                 will only be included if you use
+                                 {$DEFINE OSIDebug} at the top above
+                                 {$I OSI/OSI.scar}
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+

@@ -3,6 +3,36 @@ Name - Date :
 -------------------------
 
 -------------------------
+LordJashin - 10/28/2012 :
+-------------------------
+
+Added:
+
+File:
+   - Divi/Level Information.txt
+
+Improvements:
+
+Array.scar:
+         - Mostly structural improvements on OSI
+           I moved the functions around so that they 
+           are grouped together by Name
+           e.g. TBAInsert, TEAInsert, TSAInsert, etc.
+
+- BIG Update to OSI/Divi FOLDER STRUCTURE
+  New OSI/Level 1/ folder
+  New OSI/Level 2/ folder
+  New OSI/Level 3/ folder
+
+- To find out how OSI/Divi levels are organized look
+at OSI/Divi/Level Information.txt
+
+Moved:
+
+- All files in OSI/Divi folder moved to appropriate
+  Levels e.g. OSI/Divi/Level 1/ 
+
+-------------------------
 LordJashin - 10/26/2012 :
 -------------------------
 

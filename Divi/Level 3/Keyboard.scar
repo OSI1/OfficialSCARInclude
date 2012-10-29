@@ -1,0 +1,52 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                Keyboard Routines
+--------------------------------------------------------------------------------
+ * procedure PushKey(C: Char);
+ * procedure TypeSendEx(Text: string; PressEnter: Boolean);
+ * procedure TypeSend(Text: string);
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure PushKey(C: Char);
+Contributors: Wanted, Freddy
+Description: Types one char human like.
+Date Created: August 7th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure PushKey(C: Char);
+begin
+  PressVKeyEx(CharToVKey(C), RR(10, 60));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TypeSendEx(Text: string; PressEnter: Boolean);
+Contributors: Wanted, Freddy
+Description: Types human like, presses enter if chosen.
+Date Created: August 26th, 2011. By Wanted
+Last Modified: July 21th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TypeSendEx(Text: string; PressEnter: Boolean);
+begin
+  TypeTextEx(Text, True, True); // TypeText(Ex) is not bound to a keyboard layout
+  if (PressEnter) then
+  begin
+    PushKey(Chr(13));
+    WaitRR(40, 80);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TypeSend(Text: string);
+Contributors: Wanted
+Description: Types human like, presses enter.
+Date Created: August 7th, 2011. By Wanted
+Last Modified: August 26th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TypeSend(Text: string);
+begin
+  TypeSendEx(Text, True);
+end;

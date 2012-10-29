@@ -12,6 +12,12 @@
  * procedure DragMouseBox(sX1, sY1, sX2, sY2, eX1, eY1, eX2, eY2: Integer; Left: Boolean);
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{$IFDEF RS2}
+  procedure ConstrainToRSBounds(cRSX1, cRSY1, cRSX2, cRSY2: Boolean; var x1, y1, x2, y2: Integer); forward; 
+  var
+    RSBlank: Integer; 
+{$ENDIF}
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MMouse(x, y, rx, ry: Integer);
 Contributors: Timer, Wanted, Freddy, Bixby Sayz, LordJashin.
