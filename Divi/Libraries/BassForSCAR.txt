@@ -21,7 +21,8 @@
 
      This is a library LordJashin made from Delphi, that is loaded by OSI to
      extend SCAR and add some Sound functions! But in order for it to be loaded
-     by OSI, you must put the {$DEFINE BASS} at the top of your script!
+     by OSI, you must put the {$DEFINE BASS} at the top of your script and
+     use SetupOSI;
   
      SCAR's PlaySound function only allows .wav format at the moment. This
      allows you to play sound from SCAR, and even simultaneously if you want
@@ -31,8 +32,7 @@
 
      Lib_Bass_IsLoaded, returns true if the Bass library was loaded by Lib_Bass_Init
      Lib_Bass_Init must be ran, and the Bass.dll must be loaded for any of the
-     other functions to work. This is done automatically if you put {$DEFINE BASS}
-     in your script if you are using OSI.
+     other functions to work. This is done automatically if you define BASS and use
+     SetupOSI; before using any of the functions.
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
