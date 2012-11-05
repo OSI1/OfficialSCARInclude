@@ -59,9 +59,9 @@ var
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TOSIScriptInfo
 Contributors: LordJashin
-Description: Hold info for your script! Will be used in logging eventually
+Description: Hold info for your script! Used in logging if desired
 Date Created: October 16th, 2012. By LordJashin.
-Last Modified: October 16th, 2012. By LordJashin.
+Last Modified: October 30th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
 type TOSIScriptInfo = record
@@ -73,12 +73,14 @@ type TOSILog
 Contributors: LordJashin
 Description: For All OSI's logging functions in Divi\Misc\Logging.scar
 Date Created: October 16th, 2012. By LordJashin.
-Last Modified: October 21st, 2012. By LordJashin.
+Last Modified: October 30th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
 type TOSILog = record
   Script: TOSIScriptInfo;
-  Log: TStrArray;     
+  ScriptInfoInLog: Boolean; 
+  Log: TStrArray;           
+  CustomLogHeaderForSaveLog: string;
   AutoLog: Boolean;   
   AutoLogName: string;                                                 
   AutoLogFolderPath: string;    
@@ -92,7 +94,7 @@ type TOSILog = record
 end;         
 
 var
-  OSILog: TOSILog;     
+  OSI_Log: TOSILog;     
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Variance

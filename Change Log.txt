@@ -3,13 +3,54 @@ Name - Date :
 -------------------------
 
 -------------------------
-LordJashin - 10/28/2012 :
+LordJashin - 11\05\2012 :
+-------------------------
+
+Added:
+
+Folder:
+     - Divi\Libraries
+
+File:
+   - Divi\Libraries\MoreKeyboardFunctions.dll
+   - Divi\Libraries\MoreKeyboardFunctions.txt
+   - Divi\Libraries\Bass.dll
+   - Divi\Libraries\BassForSCAR.dll
+   - Divi\Libraries\BassForSCAR.txt
+
+Divi\Misc\Logging.scar:
+                     - procedure OSI_SetupScriptInfo(sName, sVersion, sAuthor, sDescription, sCreated, sLastUpdated: string);
+
+Improvements:
+           
+OSI.scar:
+       - Loads MoreKeyboardFunctions.dll plugin 
+       - Loads Bass Plugin, and is setup in SetupOSI, if BASS is defined
+
+Divi\Level 1\Globals.scar:
+                        - Added to type TOSIScriptInfo:
+                                                     - ScriptInfoInLog: Boolean;
+                                                     - CustomLogHeaderForSaveLog: string;
+
+Divi\Misc\Logging.scar:
+                     - Added ability to add script info to logs using OSI_Log variable. Will only show if not blank ''
+                     - Added ability to use your own header in logs completely replacing OSI's header (For log saving)
+
+Divi\Testing\LoggingFunctions.scar:
+                                 - Updated to use newest logging features
+
+                        
+- Changed OSILog -> OSI_Log Everywhere!
+
+
+-------------------------
+LordJashin - 10\28\2012 :
 -------------------------
 
 Added:
 
 File:
-   - Divi/Level Information.txt
+   - Divi\Level Information.txt
 
 Improvements:
 
@@ -19,33 +60,33 @@ Array.scar:
            are grouped together by Name
            e.g. TBAInsert, TEAInsert, TSAInsert, etc.
 
-- BIG Update to OSI/Divi FOLDER STRUCTURE
-  New OSI/Level 1/ folder
-  New OSI/Level 2/ folder
-  New OSI/Level 3/ folder
+- BIG Update to OSI\Divi FOLDER STRUCTURE
+  New OSI\Level 1\ folder
+  New OSI\Level 2\ folder
+  New OSI\Level 3\ folder
 
-- To find out how OSI/Divi levels are organized look
-at OSI/Divi/Level Information.txt
+- To find out how OSI\Divi levels are organized look
+at OSI\Divi\Level Information.txt
 
 Moved:
 
-- All files in OSI/Divi folder moved to appropriate
-  Levels e.g. OSI/Divi/Level 1/ 
+- All files in OSI\Divi folder moved to appropriate
+  Levels e.g. OSI\Divi\Level 1\ 
 
 -------------------------
-LordJashin - 10/26/2012 :
+LordJashin - 10\26\2012 :
 -------------------------
 
 Added:
 
 File:
-   - Divi/Variant.scar:
+   - Divi\Variant.scar:
                      - function TVAGetItems(arr: TVariantArray; IDs: TIntArray): TVariantArray;
                      - function TVAToParts(arr: TVariantArray; method: (pm_PartSize, pm_PartAmount); x: Integer): array of TVariantArray;
                      - function TVAAllValuesSame(valueArr: TVariantArray): Boolean;
                      - function TVAAllValuesUnique(arr: TVariantArray): Boolean;
 
-Divi/Array.scar:
+Divi\Array.scar:
               - procedure TVAInsert(var arr: TVariantArray; index: Integer; item: Variant);
               - procedure TVAAppend(var arr: TVariantArray; x: Variant);
               - function  TVADelete(var arr: TVariantArray; x: Integer): Boolean;
@@ -60,7 +101,7 @@ Divi/Array.scar:
               - procedure TEAAppend(x: Extended; var arr: TExtArray);
               - function  TEADelete(var arr: TExtArray; x: Integer): Boolean;
 
-Divi/Extended.scar:
+Divi\Extended.scar:
                  - function  TEASum(x: TExtArray): Extended;
                  - procedure TEAReverse(var arr: TExtArray);
                  - function  TEAPos(arr: TExtArray; ext: Extended): Integer;
@@ -70,33 +111,33 @@ Divi/Extended.scar:
                  - function  TEAAllValuesUnique(arr: TExtArray): Boolean;
                  - function  ATEAGetItems(arr: T2DExtArray; TIA: TIntArray): T2DExtArray;
 
-Divi/Math.scar:
+Divi\Math.scar:
              - function RandomBool: Boolean;
 
-Divi/String.scar:
+Divi\String.scar:
                - function StrStartWithEx(suffix: string; var s: string; offset: Integer): Boolean;
                - function StrEndWithEx(suffix: string; var s: string; offset: Integer): Boolean;
 
-Divi/StringArray.scar:
+Divi\StringArray.scar:
                     - procedure ATSACopy(source: T2DStrArray; var target: T2DStrArray; resetTarget: Boolean);
                     - function  ATSAMerge(arr: T2DStrArray): TStrArray;
                     - function  ATSAItemsByTIA(arr: T2DStrArray; TIA: TIntArray): T2DStrArray;
                     - function  ATSAOfTSA(x: TStrArray; amount: Integer): T2DStrArray;
 
 -------------------------
-LordJashin - 10/25/2012 :
+LordJashin - 10\25\2012 :
 -------------------------
 
 Added:
 
 File:
-   - Divi/Boolean.scar:
+   - Divi\Boolean.scar:
                      - function StrIsBool(s: string): Boolean;
                      - function TBoAPos(bool: Boolean; arr: TBoolArray): Integer;
                      - function TBoALastPos(bool: Boolean; arr: TBoolArray): Integer;
                      - function TBoAPositions(bool: Boolean; arr: TBoolArray): TIntArray;
 
-   - Divi/StringArray.scar:                     
+   - Divi\StringArray.scar:                     
                      - function  TSAToStr(arr: TStrArray): string;
                      - function  TSAConcat(arr: TStrArray): string;
                      - procedure TSAReverse(var arr: TStrArray);
@@ -114,7 +155,7 @@ File:
                      - function  TSAAllBetween(s1, s2: string; arr: TStrArray): TStrArray;
                      - function  TSAItemsByTIA(arr: TStrArray; x: TIntArray): TStrArray;
 
-Divi/Array.scar:
+Divi\Array.scar:
               - procedure TSAInsert(var arr: TStrArray; index: Integer; s: string);
               - procedure TSAUnique(var arr: TStrArray);
               - function  TSASame(arr1, arr2: TStrArray): Boolean;
@@ -131,7 +172,7 @@ Divi/Array.scar:
               - procedure TBoACopy(source: TBoolArray; var target: TBoolArray; resetTarget: Boolean);
               - function  TBoACopyEx(arr: TBoolArray; pos1, pos2: Integer): TBoolArray; 
 
-Divi/Box.scar:
+Divi\Box.scar:
             - procedure TBASkipBoxesByArea(var TBA: TBoxArray; skipArea: TBox; fromInside: Boolean);
             - procedure TBASkipBoxesByAreas(var TBA: TBoxArray; skipAreas: TBoxArray; fromInside: Boolean);
                   
@@ -142,29 +183,29 @@ Renamed:
       - (CheckTBoA -> TBoATrueAmount)
 
 Moved:
-    - TBoATrueAmmount (Divi/Array.scar -> Divi/Boolean.scar)
-    - StrSplitEx      (Divi/String.scar -> Divi/StringArray.scar)
-    - InStrArrPos     (Divi/String.scar -> Divi/StringArray.scar)
-    - StrContainsEx   (Divi/String.scar -> Divi/StringArray.scar)
-    - StrExplodeMulti (Divi/String.scar -> Divi/StringArray.scar)
-    - TBAContains     (Divi/Box.scar -> Divi/Array.scar)
-    - TBASame         (Divi/Box.scar -> Divi/Array.scar)
-    - TBACopyEx       (Divi/Box.scar -> Divi/Array.scar)
+    - TBoATrueAmmount (Divi\Array.scar -> Divi\Boolean.scar)
+    - StrSplitEx      (Divi\String.scar -> Divi\StringArray.scar)
+    - InStrArrPos     (Divi\String.scar -> Divi\StringArray.scar)
+    - StrContainsEx   (Divi\String.scar -> Divi\StringArray.scar)
+    - StrExplodeMulti (Divi\String.scar -> Divi\StringArray.scar)
+    - TBAContains     (Divi\Box.scar -> Divi\Array.scar)
+    - TBASame         (Divi\Box.scar -> Divi\Array.scar)
+    - TBACopyEx       (Divi\Box.scar -> Divi\Array.scar)
 
 Updated all comment headers in files to make them look better
 
 Thanks to MSSL for more awesome functions!
 
 -------------------------
-LordJashin - 10/24/2012 :
+LordJashin - 10\24\2012 :
 -------------------------
 
 Added:
 
-Divi/Globals.scar:
+Divi\Globals.scar:
     - type T3DPoint & type T3DPointArray
 
-Divi/String.scar:
+Divi\String.scar:
     - function StrIndentation(s: string; count: Integer): string;
     - function StrStartWith(suffix: string; var s: string): Boolean;
     - function StrEndWith(suffix: string; var s: string): Boolean;
@@ -172,30 +213,30 @@ Divi/String.scar:
 Improvements:
 
 Moved:
-    - TBAInsert (Divi/Box.scar -> Divi/Array.scar)
-    - TBAUnique (Divi/Box.scar -> Divi/Array.scar)
-    - TBADelete (Divi/Box.scar -> Divi/Array.scar)
+    - TBAInsert (Divi\Box.scar -> Divi\Array.scar)
+    - TBAUnique (Divi\Box.scar -> Divi\Array.scar)
+    - TBADelete (Divi\Box.scar -> Divi\Array.scar)
 
 -------------------------
-LordJashin - 10/23/2012 :
+LordJashin - 10\23\2012 :
 -------------------------
 
 Added:
 
-Divi/Bitmap.scar:
+Divi\Bitmap.scar:
     - function GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
 
-Divi/Integer.scar:
+Divi\Integer.scar:
     - function StrIsInt(s: string): Boolean;
 
-Divi/Math.scar:
+Divi\Math.scar:
     - function RandomAbs(Range: Integer): Integer;   
     - function RandomRangeAbs(AFrom, ATo: Integer): Integer;
 
-Divi/Point.scar:
+Divi\Point.scar:
     - function PointToStr(P: TPoint): string;
 
-Divi/String.scar:
+Divi\String.scar:
     - function StrCount(SubStr, s: string; overlap: Boolean): Integer;
     - function StrSplit(text, separator: string; ID: Integer): string;
     - function StrSplitEx(text, separator: string; IDs: TIntArray): TStrArray;                
@@ -205,7 +246,7 @@ Divi/String.scar:
     - function StrContainsC(x: Char; s: string): Boolean;
 
 File:
-   - Divi/Extended.scar:
+   - Divi\Extended.scar:
                       - function StrIsExt(s: string): Boolean;  
    - Change Log.txt :D!!!
 
@@ -219,7 +260,7 @@ Improvements:
            - StrStuffEx: 
                     - StrStuffEx(SubStr, s: string; pos1, pos2: Integer): string;                          
            - Other param name changes, mostly from s => SubStr, and str => s
-           - Updated OSI with new function/procedure names
+           - Updated OSI with new function\procedure names
            - Updated Dates
 
 -------------------------
@@ -259,6 +300,6 @@ Removed:
 (maybe) where:
             - funct or proc
 - funct or proc
-- File/Other
+- File\Other
 
 Others:

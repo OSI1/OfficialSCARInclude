@@ -27,6 +27,13 @@
   {$ENDIF}
 {$ENDIF}
 
+// Libraries for OSI
+{$L Divi\Libraries\MoreKeyboardFunctions.dll}
+{$IFDEF BASS}
+  {$L Divi\Libraries\Bass.dll}  
+  {$L Divi\Libraries\BassForSCAR.dll}  
+{$ENDIF}  
+
 // OSI Include files
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                  Level 1 Includes                                                            
@@ -116,7 +123,7 @@ procedure FreeOSI;
 Contributors: Wanted, LordJashin
 Description: Frees things that are loaded into memory upon OSI setup. Save logs
 Date Created: August 8th, 2011. By Wanted
-Last Modified: October 21st, 2012. By LordJashin. RS2 Build 735.
+Last Modified: October 30th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeOSI;
@@ -128,7 +135,7 @@ begin
       OSI_WriteAndLog('RS2: Player(s) Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
   {$ENDIF} 
   OSI_WriteAndLog('Successfully Ran For: (' + STimeRunning + ')');
-  if OSILog.AutoScreen then OSI_WriteAndLog('Saved Screenshots to: ' + OSILog.AutoScreenFolderPath + OSILog.AutoScreenNewFolder);  
+  if OSI_Log.AutoScreen then OSI_WriteAndLog('Saved Screenshots to: ' + OSI_Log.AutoScreenFolderPath + OSI_Log.AutoScreenNewFolder);  
   OSI_AutoSaveLog;                
 end;
 
@@ -151,7 +158,10 @@ var
 begin
   try
     OSI_Variance := 3.0;
-    OSI_WriteAndLog('Routines Enabled');
+    OSI_WriteAndLog('Routines Enabled');  
+    {$IFDEF BASS}
+      Lib_Bass_Init('Divi\Libraries\Bass.dll');
+    {$ENDIF}
     {$IFDEF RS2}    
       FriendChars := 0;
       RS2GlobalVars; 

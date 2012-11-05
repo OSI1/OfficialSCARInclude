@@ -3,7 +3,7 @@
                              Logging Function Testing
 --------------------------------------------------------------------------------
  * procedure TestLoggingFunctions;                      
-   Last Modified: October 21st, 2012. By LordJashin. 
+   Last Modified: October 30th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$I ../../OSI.scar}
@@ -15,6 +15,7 @@ end;
 
 procedure TestLoggingFunctions;
 begin
+  OSI_Log.CustomLogHeaderForSaveLog := '';
   OSI_SetupAutoScreenSave(ScreenPath, 'TestName', 'TestFolder', False);
   OSI_AddToLog('I added to the log :D');
   OSI_WriteAndLog('Adding this string to OSI''s awesome log and WriteLn''ing it!');
@@ -23,7 +24,8 @@ begin
   OSI_SetupAutoLog(LogsPath, 'txt', 'TestFolder', 'TestName');
   WriteLn('Autosaving log using OSI_AutoSaveLog function, can only be used if Autologging is enabled');  
   OSI_AutoSaveLog;                               
-  OSI_ClearLog;
+  OSI_ClearLog;                      
+  OSI_SetupScriptInfo('ScriptNameText', 'VersionText', 'AuthorText', 'DescriptionnnnnText', 'CreatedDateText', 'Last Updated Text');
   OSI_WriteAndLog('Cleared the log!!! So this should show up at the top!');
   OSI_SaveLog(LogsPath + 'OSILogTest123.txt');     
   SetupOSI;                                    

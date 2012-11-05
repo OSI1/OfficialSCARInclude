@@ -1,0 +1,38 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                            MoreKeyboardFunctions.dll
+--------------------------------------------------------------------------------
+ * procedure VKKeybdDown(VKey: Byte);
+ * procedure VKKeybdUp(VKey: Byte);
+ * function  VKSendKeyDown(VKey: Byte): Boolean; 
+ * function  VKSendKeyUp(VKey: Byte): Boolean;
+--------------------------------------------------------------------------------
+
+                        Last Modified: October 30th, 2012
+
+ These functions are for VK_ or VKey Codes only!!! example: VK_F1 or VK_DELETE
+
+
+                                    About: 
+
+     This is a library LordJashin made from Delphi, that is loaded by OSI to
+     extend SCAR and add some keyboard functions!
+  
+     At the moment, SCAR's KeyDown & KeyUp functions send SCAN CODES. But if
+     you look at their params. They only allow a char to be in there, not
+     a VKey. So we can't send a VKey as a Scan code with SCAR. Some games &
+     applications will only accept the "simulated" input with the VKey sent 
+     as a scan code, and that is what these functions are for.
+
+     VKKeybdDown & VKKeybdUp: Use the Windows API - keybd_event function
+     which has been superceded by
+
+     VKSendKeyDown & VKSendKeyUp: Which both use SendInput API which superceded
+     (should be used) over the Keybd_event function. 
+
+
+     I provided both ways, just in case you wanted to try them out anyway, and
+     to provide more...
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
