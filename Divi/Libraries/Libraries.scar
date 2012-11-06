@@ -1,0 +1,10 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                External Libraries 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$L MoreKeyboardFunctions.dll}
+{$IFDEF BASS}
+  {$L Bass.dll}  
+  {$L BassForSCAR.dll}  
+{$ENDIF}  

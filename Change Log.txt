@@ -8,6 +8,18 @@ LordJashin - 11\05\2012 :
 
 Added:
 
+File:
+   - Divi\Libraries\Libraries.scar
+
+Improvements:
+           - In OSI.scar I changed the code to include the libraries.scar
+
+-------------------------
+LordJashin - 11\05\2012 :
+-------------------------
+
+Added:
+
 Folder:
      - Divi\Libraries
 

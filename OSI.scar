@@ -28,11 +28,7 @@
 {$ENDIF}
 
 // Libraries for OSI
-{$L Divi\Libraries\MoreKeyboardFunctions.dll}
-{$IFDEF BASS}
-  {$L Divi\Libraries\Bass.dll}  
-  {$L Divi\Libraries\BassForSCAR.dll}  
-{$ENDIF}  
+{$I Divi\Libraries\Libraries.scar}
 
 // OSI Include files
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
