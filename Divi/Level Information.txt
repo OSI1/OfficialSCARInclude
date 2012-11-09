@@ -54,6 +54,8 @@ This details every include for OSI in the OSI\Divi folder
 
 - Divi\Level 3\Keyboard.scar   : Has functions/other for the keyboard
 
+- Divi\Level 3\Multi.scar      : Has functions/other for combined, and multiple things
+
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
@@ -63,6 +65,8 @@ This details every include for OSI in the OSI\Divi folder
                                  will only be included if you use
                                  {$DEFINE OSIDebug} at the top above
                                  {$I OSI/OSI.scar}
+
+- Divi\Libraries\              : Has libraries that OSI may or may not load at runtime
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

@@ -2,6 +2,7 @@
                               Official SCAR Include
                                   Point Routines
 --------------------------------------------------------------------------------
+ * procedure PointToCoord(P: TPoint; var X, Y: Integer);
  * function  PointToStr(P: TPoint): string;
  * function  PointsNotInTPA(TPA: TPointArray): TPointArray;
  * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
@@ -11,6 +12,20 @@
  * procedure FilterPointsDist(var Points: TPointArray; MinDist, MaxDist, CX, CY: Extended);
  * procedure FilterPointsPie(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure PointToCoord(P: TPoint; var X, Y: Integer);
+Contributors: LordJashin
+Description: Sets X, and Y variables to P.X, and P.Y values
+Date Created: November 8th, 2012. By LordJashin.
+Last Modified: November 8th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure PointToCoord(P: TPoint; var X, Y: Integer);
+begin
+  X := P.X;
+  Y := P.Y;
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function PointToStr(P: TPoint): string;

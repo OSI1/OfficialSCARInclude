@@ -3,6 +3,23 @@ Name - Date :
 -------------------------
 
 -------------------------
+LordJashin - 11\08\2012 :
+-------------------------
+
+Added:
+
+File:
+   - Divi\Level 3\Multi.scar:
+                           - function FindBitmapAndDtm(out X, Y: Integer; Bmp: TSCARBitmap; DTM: Integer; PrefDTM: Boolean): Integer;
+
+Divi\Level 2\Point.scar:
+                      - procedure PointToCoord(P: TPoint; var X, Y: Integer);
+
+Improvements:
+           - Updated OSI.scar and Level Information
+
+
+-------------------------
 LordJashin - 11\05\2012 :
 -------------------------
 
