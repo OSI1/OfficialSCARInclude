@@ -8,6 +8,9 @@ LordJashin - 11\10\2012 :
 
 Added:
 
+Divi\Misc\Forms\UpdateSCAR.scar:
+                              - Has some functions used by OSI.scar if your SCAR is outdated
+
 Divi\Level 3\Client.scar:
                        - procedure SCARCaptionReset;
 
@@ -37,6 +40,7 @@ Improvements:
 
 OSI.scar:
        - Included Forms.scar
+       - Improved how OSI tells you if you need to update your SCAR Divi
 
 Divi\Level 3\Multi.scar: 
                       - Forgot to put in comment in header
