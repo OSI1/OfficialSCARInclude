@@ -1,0 +1,255 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                        RS2 Player Setup Form & routines  
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SetupOSI; forward;
+
+type
+  TOSI_Form_RS2_SetupPlayer = record
+    OSI_Form_RS2_SetupPlayer: TForm;
+    labelRS2SetupPlayer: TLabel;
+    labelUsername: TLabel;
+    labelPassword: TLabel;
+    labelVersion: TLabel;
+    labelWorld: TLabel;
+    editUsername: TEdit;
+    editPassword: TEdit;
+    buttonStartScript: TButton;
+    comboWorldSelector: TComboBox;
+    checkSetWorldAsDefault: TCheckBox; 
+    ScriptStarted: Boolean; 
+  end;
+
+var
+  OSI_Form_RS2_SetupPlayer: TOSI_Form_RS2_SetupPlayer; 
+  
+procedure _DontUse_OSI_Form_RS2_SetupPlayer_StartClick(Sender: TObject);
+begin          
+  if (OSI_Form_RS2_SetupPlayer.editUsername.Text = '') or (OSI_Form_RS2_SetupPlayer.editPassword.Text = '') then
+    begin
+      ShowMessage('You need to set your Username and Password before starting!' + #13#10 +
+                  'This will be used to login to RS2 for you, and start!');
+      Exit;      
+    end;                                            
+  if OSI_Form_RS2_SetupPlayer.checkSetWorldAsDefault.Checked then
+    SaveSetting('OSI_Form_RS2_PlayerSetup', 'World', IntToStr(OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex));
+  OSI_Form_RS2_SetupPlayer.ScriptStarted := True;   
+  OSI_Form_RS2_SetupPlayer.OSI_Form_RS2_SetupPlayer.Close;
+end;
+
+procedure _DontUse_OSI_Form_RS2_SetupPlayer_Init;
+var
+  i, h: Integer;
+  s: string;   
+begin
+  with OSI_Form_RS2_SetupPlayer do
+  begin
+    OSI_Form_RS2_SetupPlayer := CreateForm;
+    labelRS2SetupPlayer := TLabel.Create(OSI_Form_RS2_SetupPlayer);
+    labelUsername := TLabel.Create(OSI_Form_RS2_SetupPlayer);
+    labelPassword := TLabel.Create(OSI_Form_RS2_SetupPlayer);
+    labelVersion := TLabel.Create(OSI_Form_RS2_SetupPlayer);
+    labelWorld := TLabel.Create(OSI_Form_RS2_SetupPlayer);
+    editUsername := TEdit.Create(OSI_Form_RS2_SetupPlayer);
+    editPassword := TEdit.Create(OSI_Form_RS2_SetupPlayer);
+    buttonStartScript := TButton.Create(OSI_Form_RS2_SetupPlayer);
+    comboWorldSelector := TComboBox.Create(OSI_Form_RS2_SetupPlayer);
+    checkSetWorldAsDefault := TCheckBox.Create(OSI_Form_RS2_SetupPlayer);
+    with OSI_Form_RS2_SetupPlayer do
+    begin
+      Left := 533;
+      Top := 315;
+      BorderIcons := [biSystemMenu, biMinimize, biHelp];
+      BorderStyle := bsSingle;
+      Caption := 'OSI RS2 Setup - Player';
+      ClientHeight := 250;
+      ClientWidth := 452;
+      Color := clWhite;
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -11;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      OldCreateOrder := False;
+      Position := poScreenCenter;
+      PixelsPerInch := 96;
+    end;
+    with labelRS2SetupPlayer do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 44;
+      Top := 16;
+      Width := 363;
+      Height := 58;
+      Caption := 'RS2 Setup Player';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clBlack;
+      Font.Height := -48;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with labelUsername do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 74;
+      Top := 80;
+      Width := 116;
+      Height := 29;
+      Caption := 'Username:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -24;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with labelPassword do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 81;
+      Top := 115;
+      Width := 109;
+      Height := 29;
+      Caption := 'Password:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -24;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with labelVersion do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 415;
+      Top := 229;
+      Width := 31;
+      Height := 19;
+      Caption := 'v0.1';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -16;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with labelWorld do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 120;
+      Top := 147;
+      Width := 70;
+      Height := 29;
+      Caption := 'World:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -24;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with editUsername do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 200;
+      Top := 88;
+      Width := 145;
+      Height := 21;
+      MaxLength := 100;
+      TabOrder := 0;
+    end;
+    with editPassword do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 200;
+      Top := 119;
+      Width := 145;
+      Height := 21;
+      MaxLength := 30;
+      PasswordChar := '*';
+      TabOrder := 1;
+    end;
+    with buttonStartScript do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 162;
+      Top := 213;
+      Width := 145;
+      Height := 25;
+      Caption := 'Start RS2 Script!';
+      ModalResult := 0;
+      TabOrder := 2;  
+      OnClick := @_DontUse_OSI_Form_RS2_SetupPlayer_StartClick;
+    end;
+    with comboWorldSelector do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 200;
+      Top := 151;
+      Width := 145;
+      Height := 21;
+      Style := csDropDownList;
+      TabOrder := 3;
+    end;
+    with checkSetWorldAsDefault do
+    begin
+      Parent := OSI_Form_RS2_SetupPlayer;
+      Left := 128;
+      Top := 184;
+      Width := 208;
+      Height := 17;
+      Caption := 'Set as Default World for OSI RS2 Setup';
+      TabOrder := 4;
+    end;
+  end;           
+  h := StrToInt(ReadINI('Worlds', 'High', WorldsINIPath));
+  for i := 1 to h do
+  begin                            
+    if ((ReadINI('World' + IntToStr(i), 'Type', WorldsINIPath) = 'Members')) then 
+      OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Add(IntToStr(i) + ' - Members')
+    else                                   
+      OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Add(IntToStr(i) + ' - Non Members')                 
+  end;        
+  s := LoadSetting('OSI_Form_RS2_PlayerSetup', 'World');
+  if StrIsInt(s) and (s <> '') then
+    i := StrToInt(s);                                        
+  if InRange(i, 1, h) then
+    OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex := i
+  else                                                
+    begin
+      OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex := RandomRange(1, h);
+      while StrContains('- Members', OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Strings[OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex]) do
+        OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex := RandomRange(1, h);      
+    end;   
+end;
+
+function _DontUse_OSI_Form_RS2_SetupPlayer_ShowModal: Boolean;
+begin
+  Result := OSI_Form_RS2_SetupPlayer.OSI_Form_RS2_SetupPlayer.ShowModal = mrOk;
+end;
+
+procedure _DontUse_OSI_Form_RS2_SetupPlayer_SetupPlayers;
+begin  
+  SetLength(Players, Length(Players) + 1);
+  with Players[Length(Players) - 1] do
+  begin
+    Login := OSI_Form_RS2_SetupPlayer.editUsername.Text;
+    Pass := OSI_Form_RS2_SetupPlayer.editPassword.Text;
+    if StrContains('- Members', OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Strings[OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex]) then 
+      WorldInfo := [True, OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex + 1]
+    else
+      WorldInfo := [False, OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex + 1];         
+    Active := True;
+  end;  
+  SetupOSI;
+  Login;
+end;           
+  
+function OSI_Form_RS2_SetupPlayer_Run: Boolean;
+begin
+  Result := OSI_FormRun('_DontUse_OSI_Form_RS2_SetupPlayer_Init', '_DontUse_OSI_Form_RS2_SetupPlayer_ShowModal', OSI_Form_RS2_SetupPlayer.OSI_Form_RS2_SetupPlayer);
+  if OSI_Form_RS2_SetupPlayer.ScriptStarted then
+    _DontUse_OSI_Form_RS2_SetupPlayer_SetupPlayers;
+end;

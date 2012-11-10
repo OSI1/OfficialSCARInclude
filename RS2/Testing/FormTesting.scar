@@ -1,0 +1,24 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                 Form Testing
+--------------------------------------------------------------------------------
+ * procedure TestForms;                      
+   Last Modified: November 10th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE RS2}
+{$DEFINE SMART}
+{$I ../../OSI.scar}
+
+procedure TestForms;
+begin   
+  if OSI_Form_RS2_SetupPlayer_Run then
+    WriteLn('OSI_Form_RS2_SetupPlayer_Run: Woot Successful! Returned True!')
+  else
+    WriteLn('OSI_Form_RS2_SetupPlayer_Run: Returned False: Woops you didn''t hit Start, you must hit start for this to return true');  
+end;
+
+begin
+  ClearDebug;
+  TestForms;  
+end.

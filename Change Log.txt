@@ -3,6 +3,49 @@ Name - Date :
 -------------------------
 
 -------------------------
+LordJashin - 11\10\2012 :
+-------------------------
+
+Added:
+
+Divi\Level 3\Client.scar:
+                       - procedure SCARCaptionReset;
+
+Divi\Level 1\Globals.scar:
+                        - procedure _DontUse_OSI_ShowLastExecptMsg;
+                        - function OSI_SafeShowLastExecptMsg: Boolean;
+
+File:
+   - Divi\Misc\Forms.scar:
+                        - function OSI_FormSafeShow(frmShowFunctName: string): Boolean;
+                        - function OSI_FormSafeInit(frmInitProcName: string): Boolean;
+                        - function OSI_FormRun(frmInitProcName, frmShowFunctName: string; Form: TForm): Boolean;
+
+Folder & File:
+     - Divi\Misc\Forms:
+                     - RS2_PlayerSetup.scar:
+                                          - Check out the testing file in RS2/Testing
+              
+File:
+   - RS2\Testing\FormTesting.scar:
+                                - Tests out the RS2_PlayerSetup.scar form
+
+Renamed:
+      - (SCARSetCaption -> SCARCaptionSet)
+
+Improvements:
+
+OSI.scar:
+       - Included Forms.scar
+
+Divi\Level 3\Multi.scar: 
+                      - Forgot to put in comment in header
+
+Divi\Level 1\Globals: 
+                   - Updated HandleOSIException to use new OSI_SafeShowLastExecptMsg function
+
+
+-------------------------
 LordJashin - 11\08\2012 :
 -------------------------
 

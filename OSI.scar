@@ -114,6 +114,7 @@
 {$IFDEF OSIDebug}
   {$I Divi\Misc\Debug.scar}
 {$ENDIF}
+{$I Divi\Misc\Forms.scar}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FreeOSI;

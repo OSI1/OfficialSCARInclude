@@ -2,6 +2,8 @@
                               Official SCAR Include
                                  Global Routines
 --------------------------------------------------------------------------------
+ * procedure _DontUse_OSI_ShowLastExecptMsg;
+ * function OSI_SafeShowLastExecptMsg: Boolean;
  * procedure HandleOSIException;
  * var  IsOSISetup
  * type TOSIScriptInfo        
@@ -17,11 +19,57 @@ procedure OSI_WriteAndLog(s: string); forward;
 function OSI_AutoSaveLog: Boolean; forward;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure _DontUse_OSI_ShowLastExecptMsg;
+Contributors: LordJashin
+Description: NOT TO BE USED!!! Use OSI_SafeShowLastExceptMsg Instead!
+Date Created: November 10th, 2012. By LordJashin.
+Last Modified: November 10th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure _DontUse_OSI_ShowLastExecptMsg;
+var
+  s: string;
+begin
+  s := ExceptionToString(ExceptionType, ExceptionParam) + #13#10 + 
+       '***WARNING***' + #13#10 + 
+       'An Error has occurred!' + #13#10 +
+       'Try restarting SCAR Divi, SMART, or Re-installing OSI' + #13#10 +
+       'If problems persist post a thread on the forums at www.scar-divi.com' + #13#10 +
+       'Terminating Script!';                       
+  {$IFDEF SCAR337_UP}
+    TaskMessageDlg('OSI Error: ' + ExceptionToString(ExceptionType, ExceptionParam), s, mtError, [mbClose]);
+  {$ELSE}
+    TaskMessageDlg('OSI Error: ' + ExceptionToString(ExceptionType, ExceptionParam), s, mtError, [mbClose], 0);  
+  {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OSI_SafeShowLastExecptMsg: Boolean;
+Contributors: LordJashin
+Description: Uses _DontUse_OSI_ShowLastExecptMsg; in a ThreadSafeCall that uses TaskMessageDlg
+             to display the last exception error, and restart/reinstall/OSI details.
+Date Created: November 10th, 2012. By LordJashin.
+Last Modified: November 10th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OSI_SafeShowLastExecptMsg: Boolean;
+var
+  v: TVariantArray;
+begin
+  try 
+    SetLength(v, 0);
+    ThreadSafeCall('_DontUse_OSI_ShowLastExecptMsg', v);
+    Result := True;
+  finally
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure HandleOSIException;
 Contributors: LordJashin
 Description: Used in SetupOSI to handle any errors! OSIExceptionThrown is set
 Date Created: October 21st, 2012. By LordJashin.
-Last Modified: October 21st, 2012. By LordJashin.
+Last Modified: November 10th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
@@ -29,17 +77,17 @@ var
 
 procedure HandleOSIException;
 var
-  s: string;
+  s: string;                                     
 begin
   s := ExceptionToString(ExceptionType, ExceptionParam) + #13#10 + 
        '***WARNING***' + #13#10 + 
-       'Failed to load! An Error has occurred!' + #13#10 +
+       'An Error has occurred!' + #13#10 +
        'Try restarting SCAR Divi, SMART, or Re-installing OSI' + #13#10 +
        'If problems persist post a thread on the forums at www.scar-divi.com' + #13#10 +
        'Terminating Script!'; 
   OSI_WriteAndLog(s);        
   OSIExceptionThrown := True;
-  ShowMessage(s);          
+  OSI_SafeShowLastExecptMsg;          
   OSI_AutoSaveLog;  
   RaiseLastException;
   TerminateScript;   

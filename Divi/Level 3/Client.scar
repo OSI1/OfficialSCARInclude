@@ -6,7 +6,8 @@
  * procedure SetDesktopWindowAsClient;
  * procedure SetSCARWindowAsClient;
  * function  SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
- * procedure SCARSetCaption(Title: string); 
+ * procedure SCARCaptionSet(Title: string);
+ * procedure SCARCaptionReset; 
  * procedure SCARMoveToTray; 
  * procedure SCARMinimize;         
  * procedure SCARMaximize; 
@@ -82,16 +83,29 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure SCARSetCaption(Title: string);
+procedure SCARCaptionSet(Title: string);
 Contributors: LordJashin
 Description: Sets SCAR Divi's caption, uses Disguise
 Date Created: October 12th, 2012. By LordJashin.
-Last Modified: October 12th, 2012. By LordJashin.
+Last Modified: November 9th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure SCARSetCaption(Title: string);
+procedure SCARCaptionSet(Title: string);
 begin
   Disguise(Title);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SCARCaptionReset;
+Contributors: LordJashin
+Description: Reset's SCAR Divi's caption
+Date Created: November 9th, 2012. By LordJashin.
+Last Modified: November 9th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SCARCaptionReset;
+begin
+  ResetCaption;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
