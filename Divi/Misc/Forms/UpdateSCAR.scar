@@ -1,0 +1,50 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                               Update SCAR Routines
+--------------------------------------------------------------------------------
+ * procedure _DontUse_OSI_ShowUpdateSCARMsg;
+ * function OSI_SafeShowUpdateSCARMsg: Boolean;
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure _DontUse_OSI_ShowUpdateSCARMsg;
+Contributors: LordJashin
+Description: NOT TO BE USED, Use OSI_SafeShowUpdateSCARMsg instead!
+Date Created: November 10th, 2012. By LordJashin.
+Last Modified: November 10th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure _DontUse_OSI_ShowUpdateSCARMsg;
+var
+  s: string;
+begin
+  s := 'OSI: Please update SCAR Divi to version 3.35 or higher to run this script!' + #13#10 +
+       'SCAR Divi 3.37 has tons of new things/bug fixes! ' + #13#10 +
+       'Terminating Script!';                   
+  {$IFDEF SCAR337_UP}
+    TaskMessageDlg('Error: Please Update SCAR Divi! ', s, mtError, [mbClose]);
+  {$ELSE}
+    TaskMessageDlg('Error: Please Update SCAR Divi! ', s, mtError, [mbClose], 0);
+  {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OSI_SafeShowUpdateSCARMsg: Boolean;
+Contributors: LordJashin
+Description: Uses _DontUse_OSI_ShowUpdateSCARMsg in a ThreadSafeCall to show a message 
+             dialog telling people to Update their SCAR Divi
+Date Created: November 10th, 2012. By LordJashin.
+Last Modified: November 10th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OSI_SafeShowUpdateSCARMsg: Boolean;
+var
+  v: TVariantArray;
+begin
+  try
+    SetLength(v, 0);
+    ThreadSafeCall('_DontUse_OSI_ShowUpdateSCARMsg', v)
+    Result := True;
+  finally
+  end;
+end;

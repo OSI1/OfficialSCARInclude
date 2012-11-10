@@ -6,13 +6,13 @@
  * procedure FreeOSI;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+{$I Divi\Misc\Forms\UpdateSCAR.scar}
+
 // Check if SCAR Divi is version 3.35 or higher
 {$IFNDEF SCAR335_UP}
-  {$IFDEF SCAR320_UP}
-    {$ERROR OSI: Please update SCAR Divi to version 3.35 or higher to run this script!}
-  {$ELSE}
-    'OSI: Please update SCAR Divi to version 3.35 or higher to run this script!'
-  {$ENDIF}
+  begin
+    OSI_SafeShowUpdateSCARMsg;  
+  end.
 {$ENDIF}
 
 // SMART in OSI uses RS2, thus RS2 must be defined if SMART is defined!
