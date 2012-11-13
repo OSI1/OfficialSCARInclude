@@ -140,11 +140,11 @@ begin
     with labelVersion do
     begin
       Parent := OSI_Form_RS2_SetupPlayer;
-      Left := 415;
+      Left := 368;
       Top := 229;
       Width := 31;
       Height := 19;
-      Caption := 'v0.1';
+      Caption := 'v0.1 Stable';
       Font.Charset := DEFAULT_CHARSET;
       Font.Color := clWindowText;
       Font.Height := -16;
