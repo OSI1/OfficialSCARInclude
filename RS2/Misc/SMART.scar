@@ -21,7 +21,7 @@ function InitSmartEx(Server: Integer; SafeMode, ForceNew: Boolean): Integer;
 Contributors: BenLand100, Freddy, LordJashin
 Description: Initiates SMART.
 Date Created: April 25th. By BenLand100. RS2 Build Unknown.
-Last Modified: October 1st, 2012. By LordJashin. RS2 Build 735.
+Last Modified: November 12th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InitSmartEx(Server: Integer; SafeMode, ForceNew: Boolean): TSCARClient;
@@ -57,9 +57,11 @@ begin
           ID := SmartClientID(i); 
           if SmartPairClient(ID) then 
           begin                  
-            Result := CreateSmartClient(ID);   
-            with Result.ImageArea do
-              Result.ImageArea := Box(X1, Y1 + 50, X2, Y2);  
+            Result := CreateSmartClient(ID); 
+            RSClientOriginalImageArea := Result.ImageArea;            
+            RSClientOriginalInputArea := Result.InputArea;
+            with Result.ImageArea do 
+              Result.ImageArea := Box(X1, Y1 + 50, X2, Y2);                
             with Result.InputArea do
               Result.InputArea := Box(X1, Y1 + 50, X2, Y2);
             Exit;
@@ -68,7 +70,9 @@ begin
       end;
     end;  
     ID := SmartSpawnClient(SMART_Path, 'http://' + Prefix + '.runescape.com/', ',f5', RSPW, RSPH + 50, S, '', '', -1);
-    Result := CreateSmartClient(ID);  
+    Result := CreateSmartClient(ID);
+    RSClientOriginalImageArea := Result.ImageArea;            
+    RSClientOriginalInputArea := Result.InputArea;  
     with Result.ImageArea do
       Result.ImageArea := Box(X1, Y1 + 50, X2, Y2); 
     with Result.InputArea do

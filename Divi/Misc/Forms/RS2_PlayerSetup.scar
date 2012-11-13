@@ -17,13 +17,28 @@ type
     editPassword: TEdit;
     buttonStartScript: TButton;
     comboWorldSelector: TComboBox;
-    checkSetWorldAsDefault: TCheckBox; 
-    ScriptStarted: Boolean; 
+    checkSetWorldAsDefault: TCheckBox;  
   end;
 
 var
-  OSI_Form_RS2_SetupPlayer: TOSI_Form_RS2_SetupPlayer; 
-  
+  OSI_Form_RS2_SetupPlayer: TOSI_Form_RS2_SetupPlayer;
+  _DontUse_OSI_Form_RS2_SetupPlayer_ScriptStarted: Boolean; 
+         
+procedure _DontUse_OSI_Form_RS2_SetupPlayer_SetupPlayers;
+begin  
+  SetLength(Players, Length(Players) + 1);
+  with Players[Length(Players) - 1] do
+  begin
+    Login := OSI_Form_RS2_SetupPlayer.editUsername.Text;
+    Pass := OSI_Form_RS2_SetupPlayer.editPassword.Text;
+    if StrContains('- Members', OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Strings[OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex]) then 
+      WorldInfo := [True, StrToInt(GetNumbers(OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Strings[OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex]))]
+    else
+      WorldInfo := [False, StrToInt(GetNumbers(OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Strings[OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex]))];         
+    Active := True;
+  end;  
+end;        
+
 procedure _DontUse_OSI_Form_RS2_SetupPlayer_StartClick(Sender: TObject);
 begin          
   if (OSI_Form_RS2_SetupPlayer.editUsername.Text = '') or (OSI_Form_RS2_SetupPlayer.editPassword.Text = '') then
@@ -31,11 +46,13 @@ begin
       ShowMessage('You need to set your Username and Password before starting!' + #13#10 +
                   'This will be used to login to RS2 for you, and start!');
       Exit;      
-    end;                                            
+    end;                                                         
+  DeleteSetting('OSI_Form_RS2_PlayerSetup', 'World');
   if OSI_Form_RS2_SetupPlayer.checkSetWorldAsDefault.Checked then
-    SaveSetting('OSI_Form_RS2_PlayerSetup', 'World', IntToStr(OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex));
-  OSI_Form_RS2_SetupPlayer.ScriptStarted := True;   
-  OSI_Form_RS2_SetupPlayer.OSI_Form_RS2_SetupPlayer.Close;
+    SaveSetting('OSI_Form_RS2_PlayerSetup', 'World', GetNumbers(OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Strings[OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex]));
+  _DontUse_OSI_Form_RS2_SetupPlayer_ScriptStarted := True;  
+  _DontUse_OSI_Form_RS2_SetupPlayer_SetupPlayers; 
+  OSI_Form_RS2_SetupPlayer.OSI_Form_RS2_SetupPlayer.Close;  
 end;
 
 procedure _DontUse_OSI_Form_RS2_SetupPlayer_Init;
@@ -213,10 +230,12 @@ begin
       OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Add(IntToStr(i) + ' - Non Members')                 
   end;        
   s := LoadSetting('OSI_Form_RS2_PlayerSetup', 'World');
-  if StrIsInt(s) and (s <> '') then
-    i := StrToInt(s);                                        
-  if InRange(i, 1, h) then
-    OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex := i
+  if (s <> '') and StrIsInt(s) then
+  begin
+    i := StrToInt(s);    
+    if InRange(i, 1, h) then
+      OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex := i;    
+  end      
   else                                                
     begin
       OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex := RandomRange(1, h);
@@ -228,28 +247,14 @@ end;
 function _DontUse_OSI_Form_RS2_SetupPlayer_ShowModal: Boolean;
 begin
   Result := OSI_Form_RS2_SetupPlayer.OSI_Form_RS2_SetupPlayer.ShowModal = mrOk;
-end;
-
-procedure _DontUse_OSI_Form_RS2_SetupPlayer_SetupPlayers;
-begin  
-  SetLength(Players, Length(Players) + 1);
-  with Players[Length(Players) - 1] do
-  begin
-    Login := OSI_Form_RS2_SetupPlayer.editUsername.Text;
-    Pass := OSI_Form_RS2_SetupPlayer.editPassword.Text;
-    if StrContains('- Members', OSI_Form_RS2_SetupPlayer.comboWorldSelector.Items.Strings[OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex]) then 
-      WorldInfo := [True, OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex + 1]
-    else
-      WorldInfo := [False, OSI_Form_RS2_SetupPlayer.comboWorldSelector.ItemIndex + 1];         
-    Active := True;
-  end;  
-  SetupOSI;
-  Login;
-end;           
+end;     
   
 function OSI_Form_RS2_SetupPlayer_Run: Boolean;
 begin
   Result := OSI_FormRun('_DontUse_OSI_Form_RS2_SetupPlayer_Init', '_DontUse_OSI_Form_RS2_SetupPlayer_ShowModal', OSI_Form_RS2_SetupPlayer.OSI_Form_RS2_SetupPlayer);
-  if OSI_Form_RS2_SetupPlayer.ScriptStarted then
-    _DontUse_OSI_Form_RS2_SetupPlayer_SetupPlayers;
+  if _DontUse_OSI_Form_RS2_SetupPlayer_ScriptStarted then
+  begin
+    SetupOSI;
+    Login;    
+  end;
 end;

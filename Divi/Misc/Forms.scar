@@ -14,7 +14,7 @@ Description: Used by OSI_RunForm. frmShowFunctName, is the name of the function
              that uses Form.ShowModal to show the form on the screen.. (SAFE)
              e.g. Form1_SafeShowModal. Uses try block 
 Date Created: November 10th, 2012. By LordJashin.
-Last Modified: November 10th, 2012. By LordJashin. 
+Last Modified: November 12th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OSI_FormSafeShow(frmShowFunctName: string): Boolean;
@@ -23,7 +23,8 @@ var
 begin
   try
     SetLength(v, 0);
-    Result := ThreadSafeCall(frmShowFunctName, v); 
+    ThreadSafeCall(frmShowFunctName, v);
+    Result := True; 
   finally  
   end;   
 end;

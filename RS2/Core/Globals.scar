@@ -29,8 +29,8 @@
  * function  ActivePlayers: Integer;
  * function  AllPlayersInActive: Boolean;
  * function  NextPlayerIndex: Integer;
- * function  NextActivePlayerIndex: Integer;           
- * procedure ConstrainToRSBounds(cRSX1, cRSY1, cRSX2, cRSY2: Boolean; var x1, y1, x2, y2: Integer);
+ * function  NextActivePlayerIndex: Integer;  
+ * procedure ConstrainToRSBounds(cRSX1, cRSY1, cRSX2, cRSY2: Boolean; var x1, y1, x2, y2: Integer);         
  * procedure UpdateRSClient;        
  * procedure RevertRSClient;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-}
@@ -40,33 +40,35 @@ var Useful Global Variables to alter if needed
 Contributors: Wanted, Freddy, LordJashin.
 Description: Global variables to alter like RSX1, RSY1
 Date Created: October 2nd, 2012. By LordJashin. RS2 Build 735.
-Last Modified: October 6, 2012. By LordJashin. RS2 Build 735.
+Last Modified: November 12th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
   var
     RSX1, RSY1, RSX2, RSY2, RSCX, RSCY, RSPW, RSPH, RSPA, RSClientY1Offset,
-    RSMedX1, RSMedY1, RSMedX2, RSMedY2: Integer;
+    RSMedX1, RSMedY1, RSMedX2, RSMedY2: Integer;  
+    RSClientOriginalImageArea, RSClientOriginalInputArea: TBox;
+  
     
 procedure RS2GlobalVars;
 begin
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                 RS2 Client Constants 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-  RSX1 := 0;               // Client Edge Points    // 8/16/2011    Wanted       667
-  RSY1 := 0;                                        // 8/16/2011    Wanted       667
-  RSX2 := 764;                                      // 7/20/2012    Freddy       725
-  RSY2 := 502;                                      // 7/20/2012    Freddy       725 
-  RSCX := RSX2 div 2;      // Client Center Points  // 9/17/2012    LordJashin   725
-  RSCY := RSY2 div 2;                               // 9/17/2012    LordJashin   725
-  RSPW := RSX2 - RSX1 + 1; // Client Width          // 10/6/2012    LordJashin   735
-  RSPH := RSY2 - RSY1 + 1; // Client Height         // 10/6/2012    LordJashin   735
-  RSPA := RSPW * RSPH;     // Client Pixel Area     // 9/17/2012    LordJashin   725
-  RSClientY1Offset := 50;  // Client Y1 Offset      // 10/2/2012    LordJashin   735
-  RSBlank := 0;            // Blank var 4 functions // 10/2/2012    LordJashin   735                 
-  RSMedX1 := 0;            // MedClient Edge points // 10/4/2012    LordJashin   735
-  RSMedY1 := 0;                                     // 10/4/2012    LordJashin   735
-  RSMedX2 := 1023;                                  // 10/4/2012    LordJashin   735
-  RSMedY2 := 767;                                   // 10/4/2012    LordJashin   735
+  RSX1 := 0;               // Client Edge Points      // 8/16/2011    Wanted       667
+  RSY1 := 0;                                          // 8/16/2011    Wanted       667
+  RSX2 := 764;                                        // 7/20/2012    Freddy       725
+  RSY2 := 502;                                        // 7/20/2012    Freddy       725 
+  RSCX := RSX2 div 2;      // Client Center Points    // 9/17/2012    LordJashin   725
+  RSCY := RSY2 div 2;                                 // 9/17/2012    LordJashin   725
+  RSPW := RSX2 - RSX1 + 1; // Client Width            // 10/6/2012    LordJashin   735
+  RSPH := RSY2 - RSY1 + 1; // Client Height           // 10/6/2012    LordJashin   735
+  RSPA := RSPW * RSPH;     // Client Pixel Area       // 9/17/2012    LordJashin   725
+  RSClientY1Offset := 50;  // Client Y1 Offset        // 10/2/2012    LordJashin   735 
+  RSBlank := 0;            // Blank var 4 functions   // 10/2/2012    LordJashin   735                 
+  RSMedX1 := 0;            // MedClient Edge points   // 10/4/2012    LordJashin   735
+  RSMedY1 := 0;                                       // 10/4/2012    LordJashin   735
+  RSMedX2 := 1023;                                    // 10/4/2012    LordJashin   735
+  RSMedY2 := 767;                                     // 10/4/2012    LordJashin   735
 end;                       
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -513,13 +515,13 @@ var SMART Related vars
 Contributors: Wanted, Anonymous.
 Description: Handles all of SMART related info and variables.
 Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: November 12th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$IFDEF SMART}
 var
   NonAutomaticSMART: Boolean;  
-  SMART_Client: TSCARClient;  
+  SMART_Client: TSCARClient;                                    
   SMART_Server: Integer;   
   SMART_Path: string;
 {$ENDIF}
@@ -704,7 +706,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure ConstrainToRSBounds(cRSX1, cRSY1, cRSX2, cRSY2: Boolean; var x1, y1, x2, y2: Integer);
 Contributors: LordJashin
-Description: Constrains to RS2 bounds. Returns true if had to contrain.
+Description: Constrains to RS2 bounds. Returns true if had to constrain.
 Date Created: October 2nd, 2012. By LordJashin. RS2 Build 735. 
 Last Modified: October 2nd, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -742,7 +744,7 @@ procedure UpdateRSClient;
 Contributors: Freddy, LordJashin
 Description: Updates the client/SMART, excludes the toolbar from the client area
 Date Created: July 21th 2012. By Freddy. RS2 Build 725.
-Last Modified: September 30th, 2012. By LordJashin. RS2 Build 735.
+Last Modified: November 12th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure UpdateRSClient;
@@ -752,26 +754,24 @@ var
 {$ENDIF} 
 begin
 {$IFDEF SMART}
-  if SMART_Client <> nil then  
-    begin                     
-      with SMART_Client.ImageArea do
-        begin
-          if (Y1 < 50) then
-            SMART_Client.ImageArea := Box(X1, Y1 + RSClientY1Offset, X2, Y2);          
-        end;
-      with SMART_Client.InputArea do
-        begin                                                
-          if (Y1 < 50) then
-            SMART_Client.InputArea := Box(X1, Y1 + RSClientY1Offset, X2, Y2);          
-        end;              
+  if SMART_Client <> nil then
+    begin                           
+      if (SMART_Client.ImageArea = RSClientOriginalImageArea) then
+        with SMART_Client.ImageArea do
+          SMART_Client.ImageArea := Box(X1, Y1 + RSClientY1Offset, X2, Y2);
+      if (SMART_Client.InputArea = RSClientOriginalInputArea) then          
+        with SMART_Client.InputArea do
+          SMART_Client.InputArea := Box(X1, Y1 + RSClientY1Offset, X2, Y2);          
     end; 
 {$ELSE}  
   Client := GetClient;  
-  Client.Update;
-  with Client.ImageArea do
-    Client.ImageArea := Box(X1, Y1 + RSClientY1Offset, X2, Y2 + RSClientY1Offset);   
-  with Client.InputArea do
-    Client.InputArea := Box(X1, Y1 + RSClientY1Offset, X2, Y2 + RSClientY1Offset);       
+  Client.Update;   
+  if (Client.ImageArea = RSClientOriginalImageArea) then
+    with Client.ImageArea do
+      Client.ImageArea := Box(X1, Y1 + RSClientY1Offset, X2, Y2 + RSClientY1Offset);
+  if (Client.InputArea = RSClientOriginalInputArea) then   
+    with Client.InputArea do
+      Client.InputArea := Box(X1, Y1 + RSClientY1Offset, X2, Y2 + RSClientY1Offset);       
 {$ENDIF}  
 end;
 
@@ -780,35 +780,38 @@ procedure RevertRSClient;
 Contributors: LordJashin
 Description: Reverts the client back to original image area for SMART/browser
 Date Created: September 30th 2012. By LordJashin. RS2 Build 735.
-Last Modified: September 30th 2012. By LordJashin. RS2 Build 735.
+Last Modified: November 12th 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure RevertRSClient;
-{$IFNDEF SMART}
 var
+{$IFNDEF SMART}
   Client: TSCARClient;
 {$ENDIF} 
+  B, B1: TBox;
 begin
+  with RSClientOriginalImageArea do                              
+    B := Box(X1, Y1 + RSClientY1Offset, X2, Y2 {$IFNDEF SMART} + RSClientY1Offset{$ENDIF} );
+  with RSClientOriginalInputArea do                              
+    B1 := Box(X1, Y1 + RSClientY1Offset, X2, Y2 {$IFNDEF SMART} + RSClientY1Offset{$ENDIF} );  
 {$IFDEF SMART}
   if SMART_Client <> nil then  
-    begin      
-      with SMART_Client.ImageArea do
-        begin
-          if (Y1 >= 50) then
-            SMART_Client.ImageArea := Box(X1, Y1 - 50, X2, Y2);
-        end;
-      with SMART_Client.InputArea do                           
-        begin                                                
-          if (Y1 >= 50) then
-            SMART_Client.InputArea := Box(X1, Y1 - 50, X2, Y2);          
-        end;                
-    end; 
+    begin                                                            
+      if (SMART_Client.ImageArea = B) then
+        with SMART_Client.ImageArea do      
+          SMART_Client.ImageArea := Box(X1, Y1 - RSClientY1Offset, X2, Y2);                           
+      if (SMART_Client.InputArea = B1) then
+        with SMART_Client.InputArea do
+          SMART_Client.InputArea := Box(X1, Y1 - RSClientY1Offset, X2, Y2);          
+    end;                 
 {$ELSE}
   Client := GetClient;                           
-  Client.Update;
-  with Client.ImageArea do
-    Client.ImageArea := Box(X1, Y1, X2, Y2);   
-  with Client.InputArea do
-    Client.InputArea := Box(X1, Y1, X2, Y2);   
+  Client.Update;        
+  if (Client.ImageArea = B) then
+    with Client.ImageArea do
+      Client.ImageArea := Box(X1, Y1, X2, Y2);
+  if (Client.InputArea = B1) then   
+    with Client.InputArea do
+      Client.InputArea := Box(X1, Y1, X2, Y2);   
 {$ENDIF} 
 end;

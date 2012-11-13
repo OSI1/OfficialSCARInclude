@@ -217,7 +217,9 @@ begin
         if (not (NonAutomaticSMART)) then
           InitiateSMART;
       {$ELSE}                                                         
-        GetClient.Activate;
+        GetClient.Activate; 
+        RSClientOriginalImageArea := GetClient.ImageArea;
+        RSClientOriginalInputArea := GetClient.InputArea;
         UpdateRSClient;                                                
         OSI_WriteAndLog('RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...8-13secs');
         if not WaitFunc(@RSReady, True, 100, 250, 8000, 13000) then

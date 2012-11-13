@@ -79,6 +79,7 @@ procedure HandleOSIException;
 var
   s: string;                                     
 begin
+  if (ExceptionType = ErNoError) then Exit;
   s := ExceptionToString(ExceptionType, ExceptionParam) + #13#10 + 
        '***WARNING***' + #13#10 + 
        'An Error has occurred!' + #13#10 +
