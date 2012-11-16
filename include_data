@@ -5,7 +5,7 @@
 		"compile_file": "Compile OSI.scar"
 	}
 	"scar": {
-		"min_version": 335
+		"min_version": 337
 		"max_version": 0
 	}
 }

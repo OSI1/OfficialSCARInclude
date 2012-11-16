@@ -11,15 +11,14 @@ procedure _DontUse_OSI_ShowUpdateSCARMsg;
 Contributors: LordJashin
 Description: NOT TO BE USED, Use OSI_SafeShowUpdateSCARMsg instead!
 Date Created: November 10th, 2012. By LordJashin.
-Last Modified: November 10th, 2012. By LordJashin.
+Last Modified: November 15th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure _DontUse_OSI_ShowUpdateSCARMsg;
 var
   s: string;
 begin
-  s := 'OSI: Please update SCAR Divi to version 3.35 or higher to run this script!' + #13#10 +
-       'SCAR Divi 3.37 has tons of new things/bug fixes! ' + #13#10 +
+  s := 'OSI: Please update SCAR Divi to version 3.37 or higher to run this script!' + #13#10 +
        'Terminating Script!';                   
   {$IFDEF SCAR337_UP}
     TaskMessageDlg('Error: Please Update SCAR Divi! ', s, mtError, [mbClose]);

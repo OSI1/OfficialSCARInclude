@@ -76,5 +76,6 @@ begin
 end;
 
 {$IFDEF RS2}
-  {$I Forms\RS2_PlayerSetup.scar}  
+  {$I Forms\RS2_PlayerSetup.scar} 
+  {$I Forms\RS2_ScriptSetup.scar} 
 {$ENDIF} 

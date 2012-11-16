@@ -3,7 +3,6 @@
                                   Point Routines
 --------------------------------------------------------------------------------
  * procedure PointToCoord(P: TPoint; var X, Y: Integer);
- * function  PointToStr(P: TPoint): string;
  * function  PointsNotInTPA(TPA: TPointArray): TPointArray;
  * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
  * function  LoadTextTPA(Text: string; Chars: Integer): TPointArray;
@@ -25,19 +24,6 @@ procedure PointToCoord(P: TPoint; var X, Y: Integer);
 begin
   X := P.X;
   Y := P.Y;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function PointToStr(P: TPoint): string;
-Contributors: LordJashin
-Description: Makes a string from the Point (P) in the form of (Point's x, Point's y)
-Date Created: October 23rd, 2012. By LordJashin.
-Last Modified: October 23rd, 2012. By LordJashin.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function PointToStr(P: TPoint): string;
-begin
-  Result := '(' + IntToStr(P.X) +  ',' + IntToStr(P.Y) + ')';  
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

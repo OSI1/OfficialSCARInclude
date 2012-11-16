@@ -1,6 +1,11 @@
-﻿-------------------------
-Name - Date :
--------------------------
+﻿
+LordJashin - 11\15\2012:
+
+- Updated OSI for SCAR Divi 3.37
+- Started on the RS2 Setup Script form
+- Removed some functions that SCAR Divi 3.37 already has
+
+                       
 
 -------------------------
 LordJashin - 11\10\2012 :
@@ -340,42 +345,3 @@ Improvements:
            - Updated Dates
 
 -------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-++++++++++++++++++++++++++++
-Change Log Contrib Template
-----------------------------
-Name of Contributor - Date :
-----------------------------
-Added:
-
-Where:
-    - funct or proc
-
-File:
-   - Name:
-        - funct or proc
-
-Improvements:
-           - Old name => New
-           - Improvements
-
-Removed:
-
-(maybe) where:
-            - funct or proc
-- funct or proc
-- File\Other
-
-Others:

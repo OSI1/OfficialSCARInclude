@@ -8,8 +8,8 @@
 
 {$I Divi\Misc\Forms\UpdateSCAR.scar}
 
-// Check if SCAR Divi is version 3.35 or higher
-{$IFNDEF SCAR335_UP}
+// Check if SCAR Divi is version 3.37 or higher
+{$IFNDEF SCAR337_UP}
   begin
     OSI_SafeShowUpdateSCARMsg;  
   end.

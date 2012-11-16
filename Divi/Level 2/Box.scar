@@ -7,11 +7,8 @@
  * function  BoxContains(inner_bx, outer_bx: TBox): Boolean;
  * function  ValidBox(bx: TBox): Boolean;
  * function  SameBoxes(bx1, bx2: TBox): Boolean;
- * function  BoxCenter(bx: TBox): TPoint;
- * procedure ExpandBox(var bx: TBox; eSize: Integer);
  * procedure ShrinkBox(var bx: TBox; sSize: Integer);
  * procedure ResizeBox(var bx: TBox; pixels, method: Integer);
- * procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
  * procedure BoxDimensions(bx: TBox; var w, h: Integer);
  * procedure BoxCentralization(var inner_bx: TBox; outer_bx: TBox; method: TMeasurementUnits);
  * function  CountBoxesInBoxBySize(bx: TBox; width, height: Integer): Integer;
@@ -102,37 +99,6 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function BoxCenter(bx: TBox): TPoint;
-Contributors: Janilabo
-Description: Returns the center point of bx.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function BoxCenter(bx: TBox): TPoint;
-begin
-  if ((bx.X1 <= bx.X2) and (bx.Y1 <= bx.Y2)) then
-    Result := Point(Round(bx.X1 + ((bx.X2 - bx.X1) / 2)), Round(bx.Y1 + ((bx.Y2 - bx.Y1) / 2)));
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure ExpandBox(var bx: TBox; eSize: Integer);
-Contributors: Janilabo
-Description: Expands bx to all directions using eSize as the pixel amount to expand.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure ExpandBox(var bx: TBox; eSize: Integer);
-begin
-  if (eSize < 1) then Exit;
-  bx.X1 := (bx.X1 - eSize);
-  bx.Y1 := (bx.Y1 - eSize);
-  bx.X2 := (bx.X2 + eSize);
-  bx.Y2 := (bx.Y2 + eSize);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure ShrinkBox(var bx: TBox; sSize: Integer);
 Contributors: Janilabo
 Description: Shrinks bx from all directions using sSize as the pixel amount to shrink.
@@ -174,23 +140,6 @@ begin
       9: bx := Box((bx.X1 - pixels), bx.X1, bx.X2, (bx.Y2 + pixels)); // BOTTOM-LEFT
       10: bx := Box(bx.X1, bx.Y1, (bx.X2 + pixels), (bx.Y2 + pixels)); // BOTTOM-RIGHT 
     end;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
-Contributors: Janilabo, LordJashin
-Description: Offsets bx using xOffset, yOffset.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: October 6th, 2012. By LordJashin.       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure OffsetBox(var bx: TBox; xOffset, yOffset: Integer);
-begin
-  if (xOffset = 0) and (yOffset = 0) then Exit;
-  bx.X1 := (bx.X1 + xOffset);
-  bx.Y1 := (bx.Y1 + yOffset);
-  bx.X2 := (bx.X2 + xOffset);
-  bx.Y2 := (bx.Y2 + yOffset);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
