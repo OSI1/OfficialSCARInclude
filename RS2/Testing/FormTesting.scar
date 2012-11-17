@@ -3,7 +3,7 @@
                                  Form Testing
 --------------------------------------------------------------------------------
  * procedure TestForms;                      
-   Last Modified: November 10th, 2012. By LordJashin. 
+   Last Modified: November 16th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE RS2}
@@ -11,7 +11,16 @@
 {$I ../../OSI.scar}
 
 procedure TestForms;
-begin   
+begin
+  OSI_SetupScriptInfo('Bdsofpdsfopdsfsfdsfsffdsffsfdfdfs43534543543',
+                       'Bdsofpdsfopdsfsfdsfsffdsffsfdfdfs43534543543',
+                        'Bdsofpdsfopdsfsfdsfsffdsffsfdfdfs43534543543',
+                         'Bdsoffpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543fpdsfopdsfsfdsfsffdsffsfdfdfs43534543543pdsfopdsfsfdsfsffdsffsfdfdfs43534543543', 'Bdsofpdsfopdsfsfdsfsffdsffsfdfdfs43534', 
+                         'Bdsofpdsfopdsfsfdsfsffdsffsfdfdfs43534543543');
+  if OSI_Form_RS2_ScriptSetup_Run then
+    WriteLn('OSI_Form_RS2_ScriptSetup_Run: Woot Successful! Returned True!')
+  else
+    WriteLn('OSI_Form_RS2_ScriptSetup_Run: Returned False: Woops you didn''t hit Start, you must hit start for this to return true');     
   if OSI_Form_RS2_SetupPlayer_Run then
     WriteLn('OSI_Form_RS2_SetupPlayer_Run: Woot Successful! Returned True!')
   else
@@ -20,5 +29,5 @@ end;
 
 begin
   ClearDebug;
-  TestForms;  
+  TestForms;   
 end.

@@ -8,46 +8,340 @@ type
     OSI_Form_RS2_ScriptSetup: TForm;
     labelRS2SetupScript: TLabel;
     labelVersion: TLabel;
-    buttonStartScript: TButton;
+    imgSCAR: TImage;
     listviewPlayers: TListView;
     GroupboxBtns: TGroupBox;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Button5: TButton;
-    btnScriptSettings: TButton;
+    rectGroup: TShape;
+    btnAddPlayer: TButton;
+    btnEditPlayer: TButton;
+    btnDeletePlayer: TButton;
+    btnClearPlayers: TButton;
+    btnLoadPlayers: TButton;
+    btnSavePlayers: TButton;
     btnAboutScript: TButton;
+    colorPicker: TNxColorPicker;
+    btnStartScript: TBitBtn;
+    btnScriptOptions: TBitBtn;
+    btnOptions: TBitBtn;
+    btnHelp: TBitBtn;
   end;
+   
+  type
+  T_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm = record
+    _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm: TForm;
+    ScriptName: TLabel;
+    ScriptVersion: TLabel;
+    ScriptAuthor: TLabel;
+    ScriptDesc: TLabel;
+    ScriptLastUpdate: TLabel;
+    ScriptCreated: TLabel;
+    edtScriptName: TEdit;
+    edtScriptAuthor: TEdit;
+    edtScriptVersion: TEdit;
+    edtScriptCreated: TEdit;
+    edtScriptLastUpdated: TEdit;
+    memoScriptDesc: TMemo;
+  end;  
 
 var
   OSI_Form_RS2_ScriptSetup: TOSI_Form_RS2_ScriptSetup;
+  _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm: T_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
   _DontUse_OSI_Form_RS2_ScriptSetup_ScriptStarted: Boolean;
 
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_CloseClick(Sender: TObject; var Action: TCloseAction);
+begin               
+  OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Enabled := True;                                                   
+  Action := caFree;    
+end;
+
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_Init;
+begin
+  with _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm do
+  begin
+    _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm := CreateForm;
+    ScriptName := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);                                
+    ScriptVersion := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    ScriptAuthor := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    ScriptDesc := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    ScriptLastUpdate := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    ScriptCreated := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    edtScriptName := TEdit.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    edtScriptAuthor := TEdit.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    edtScriptVersion := TEdit.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    edtScriptCreated := TEdit.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    edtScriptLastUpdated := TEdit.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    memoScriptDesc := TMemo.Create(_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm);
+    with _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm do
+    begin
+      Left := 710;
+      Top := 300;
+      BorderIcons := [biSystemMenu];
+      BorderStyle := bsSingle;
+      Caption := 'About Script';
+      ClientHeight := 434;
+      ClientWidth := 361;
+      Color := clWindow;     
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -11;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      OldCreateOrder := False;
+      Position := poScreenCenter;
+      PixelsPerInch := 96;   
+      OnClose := @_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_CloseClick;
+    end;
+    with ScriptName do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Left := 146;
+      Top := 12;
+      Width := 73;
+      Height := 31;
+      Caption := 'Script:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -26;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with ScriptVersion do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Left := 135;
+      Top := 128;
+      Width := 95;
+      Height := 31;
+      Caption := 'Version:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -26;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with ScriptAuthor do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Left := 139;
+      Top := 72;
+      Width := 87;
+      Height := 31;
+      Caption := 'Author:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -26;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with ScriptDesc do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Left := 114;
+      Top := 304;
+      Width := 138;
+      Height := 31;
+      Caption := 'Description:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -26;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with ScriptLastUpdate do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Left := 102;
+      Top := 240;
+      Width := 161;
+      Height := 31;
+      Caption := 'Last Updated:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -26;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with ScriptCreated do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Left := 133;
+      Top := 184;
+      Width := 99;
+      Height := 31;
+      Caption := 'Created:';
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -26;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      ParentFont := False;
+    end;
+    with edtScriptName do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Alignment := taCenter;
+      Left := 18;
+      Top := 49;
+      Width := 329;
+      Height := 21;
+      BevelInner := bvNone;
+      BevelOuter := bvNone;
+      ReadOnly := True;
+      TabOrder := 0;
+    end;
+    with edtScriptAuthor do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;    
+      Alignment := taCenter;
+      Left := 18;
+      Top := 105;
+      Width := 329;
+      Height := 21;
+      BevelInner := bvNone;
+      BevelOuter := bvNone;
+      ReadOnly := True;
+      TabOrder := 1;
+    end;
+    with edtScriptVersion do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Alignment := taCenter;
+      Left := 18;
+      Top := 161;
+      Width := 329;
+      Height := 21;
+      BevelInner := bvNone;
+      BevelOuter := bvNone;
+      ReadOnly := True;
+      TabOrder := 2;
+    end;
+    with edtScriptCreated do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Alignment := taCenter;
+      Left := 18;
+      Top := 217;
+      Width := 329;
+      Height := 21;
+      BevelInner := bvNone;
+      BevelOuter := bvNone;
+      ReadOnly := True;
+      TabOrder := 3;
+    end;
+    with edtScriptLastUpdated do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Alignment := taCenter;
+      Left := 18;
+      Top := 277;
+      Width := 329;
+      Height := 21;
+      BevelInner := bvNone;
+      BevelOuter := bvNone;
+      ReadOnly := True;
+      TabOrder := 4;
+    end;
+    with memoScriptDesc do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
+      Left := 18;
+      Top := 342;
+      Width := 329;
+      Height := 77;
+      BevelInner := bvNone;
+      BevelOuter := bvNone;
+      ReadOnly := True;
+      TabOrder := 5;
+    end;
+  end;
+end;   
+
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_btnAboutScriptClick(Sender: TObject);  
+begin
+  if Sender = OSI_Form_RS2_ScriptSetup.btnAboutScript then
+  begin
+    with OSI_ScriptInfo do
+      if (Name = '') and (Author = '') and (Version = '') and (Description = '') and (LastUpdated = '') and (Created = '') then 
+      begin  
+        TaskMessageDlg('About: No Script Information', 'The creator of this script has not provided information such as Name, Version, Description, etc.', mtInformation, [mbClose]);
+        Exit;
+      end;               
+    try      
+      OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Enabled := False;
+      _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm._DontUse_OSI_Form_RS2_ScriptSetup_AboutForm := CreateForm; 
+      _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_Init;
+      with _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm do
+        begin
+          edtScriptName.Text := OSI_ScriptInfo.Name;
+          edtScriptAuthor.Text := OSI_ScriptInfo.Author;
+          edtScriptVersion.Text := OSI_ScriptInfo.Version;
+          memoScriptDesc.Text := OSI_ScriptInfo.Description;
+          edtScriptLastUpdated.Text := OSI_ScriptInfo.LastUpdated;
+          edtScriptCreated.Text := OSI_ScriptInfo.Created;        
+        end;                   
+      _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm._DontUse_OSI_Form_RS2_ScriptSetup_AboutForm.Show;
+    finally
+    end;
+  end;
+end;
+
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_ColorPickerChange(Sender: TObject);
+var
+  R, G, B, NewColor: Integer;
+begin
+  if (Sender = OSI_Form_RS2_ScriptSetup.colorPicker) then
+  begin                                                                            
+    OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Color := OSI_Form_RS2_ScriptSetup.colorPicker.SelectedColor;
+    if (OSI_Form_RS2_ScriptSetup.colorPicker.SelectedColor = 536870911) then
+    begin
+      OSI_Form_RS2_ScriptSetup.labelRS2SetupScript.Font.Color := clWhite;
+      Exit;
+    end;
+    ColorToRGB(OSI_Form_RS2_ScriptSetup.colorPicker.SelectedColor, R, G, B);
+    NewColor := RGBToColor(255 - R, 255 - G, 255 - B);
+    OSI_Form_RS2_ScriptSetup.labelRS2SetupScript.Font.Color := NewColor; 
+  end;     
+end;
+
 procedure _DontUse_OSI_Form_RS2_ScriptSetup_Init;
+var
+  Bmp: TSCARBitmap;
 begin
   with OSI_Form_RS2_ScriptSetup do
   begin
     OSI_Form_RS2_ScriptSetup := CreateForm;
     labelRS2SetupScript := TLabel.Create(OSI_Form_RS2_ScriptSetup);
     labelVersion := TLabel.Create(OSI_Form_RS2_ScriptSetup);
-    buttonStartScript := TButton.Create(OSI_Form_RS2_ScriptSetup);
+    imgSCAR := TImage.Create(OSI_Form_RS2_ScriptSetup);
     listviewPlayers := TListView.Create(OSI_Form_RS2_ScriptSetup);
     GroupboxBtns := TGroupBox.Create(OSI_Form_RS2_ScriptSetup);
-    Button1 := TButton.Create(GroupboxBtns);
-    Button2 := TButton.Create(GroupboxBtns);
-    Button3 := TButton.Create(GroupboxBtns);
-    Button5 := TButton.Create(GroupboxBtns);
-    btnScriptSettings := TButton.Create(OSI_Form_RS2_ScriptSetup);
+    rectGroup := TShape.Create(GroupboxBtns);
+    btnAddPlayer := TButton.Create(GroupboxBtns);
+    btnEditPlayer := TButton.Create(GroupboxBtns);
+    btnDeletePlayer := TButton.Create(GroupboxBtns);
+    btnClearPlayers := TButton.Create(GroupboxBtns);
+    btnLoadPlayers := TButton.Create(GroupboxBtns);
+    btnSavePlayers := TButton.Create(GroupboxBtns);
     btnAboutScript := TButton.Create(OSI_Form_RS2_ScriptSetup);
+    colorPicker := TNxColorPicker.Create(OSI_Form_RS2_ScriptSetup);
+    btnStartScript := TBitBtn.Create(OSI_Form_RS2_ScriptSetup);
+    btnScriptOptions := TBitBtn.Create(OSI_Form_RS2_ScriptSetup);
+    btnOptions := TBitBtn.Create(OSI_Form_RS2_ScriptSetup);
+    btnHelp := TBitBtn.Create(OSI_Form_RS2_ScriptSetup);
     with OSI_Form_RS2_ScriptSetup do
     begin
-      Left := 665;
+      Left := 589;
       Top := 315;
       BorderIcons := [biSystemMenu, biMinimize, biHelp];
       BorderStyle := bsSingle;
       Caption := 'OSI RS2 Script Setup';
-      ClientHeight := 284;
-      ClientWidth := 438;
+      ClientHeight := 364;
+      ClientWidth := 541;
       Color := clWhite;
       Font.Charset := DEFAULT_CHARSET;
       Font.Color := clWindowText;
@@ -61,122 +355,211 @@ begin
     with labelRS2SetupScript do
     begin
       Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 36;
-      Top := 16;
-      Width := 370;
-      Height := 60;
+      Left := 17;
+      Top := 10;
+      Width := 380;
+      Height := 75;         
+      Alignment := taCenter;
+      AutoSize := False;
       Caption := 'RS2 Script Setup';
+      Color := clWhite;
       Font.Charset := DEFAULT_CHARSET;
       Font.Color := clBlack;
       Font.Height := -50;
       Font.Name := 'Tahoma';
       Font.Style := [];
+      ParentColor := True;
       ParentFont := False;
+      Transparent := False; 
     end;
     with labelVersion do
     begin
       Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 411;
-      Top := 270;
+      Left := 517;
+      Top := 350;
       Width := 24;
       Height := 14;
-      Caption := 'v0.2';
+      Caption := 'v0.3';
+      Color := clWhite;
       Font.Charset := DEFAULT_CHARSET;
-      Font.Color := clWindowText;
+      Font.Color := clBlack;
       Font.Height := -12;
       Font.Name := 'Tahoma';
       Font.Style := [];
+      ParentColor := False;
       ParentFont := False;
-    end;
-    with buttonStartScript do
+      Transparent := False;
+    end;         
+    Bmp := TSCARBitmap.Create('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');
+    with imgSCAR do
     begin
       Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 175;
-      Top := 241;
-      Width := 127;
-      Height := 33;
-      Caption := 'Start RS2 Script!';
-      ModalResult := 1;
-      TabOrder := 0;
+      Stretch := True;
+      Left := 413;
+      Top := 0;
+      Width := 130;
+      Height := 90;
     end;
+    Bmp.AssignTo(imgSCAR.Picture.Bitmap);
+    Bmp.Free;
     with listviewPlayers do
     begin
       Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 36;
+      Left := 16;
       Top := 90;
-      Width := 266;
-      Height := 138;
-      TabOrder := 1;
+      Width := 382;
+      Height := 213;
+      TabOrder := 0;
     end;
     with GroupboxBtns do
     begin
       Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 313;
+      Left := 413;
       Top := 90;
       Width := 114;
-      Height := 137;
-      TabOrder := 2;
+      Height := 213;
+      TabOrder := 1;
     end;
-    with Button1 do
+    with rectGroup do
+    begin
+      Parent := GroupboxBtns;
+      Left := 0;
+      Top := 0;
+      Width := 113;
+      Height := 213;
+    end;
+    with btnAddPlayer do
     begin
       Parent := GroupboxBtns;
       Left := 12;
-      Top := 15;
+      Top := 96;
       Width := 90;
       Height := 21;
       Caption := 'Add Player';
       TabOrder := 0;
     end;
-    with Button2 do
+    with btnEditPlayer do
     begin
       Parent := GroupboxBtns;
       Left := 12;
-      Top := 45;
+      Top := 125;
       Width := 90;
       Height := 21;
       Caption := 'Edit Player';
       TabOrder := 1;
     end;
-    with Button3 do
+    with btnDeletePlayer do
     begin
       Parent := GroupboxBtns;
       Left := 12;
-      Top := 75;
+      Top := 155;
       Width := 90;
       Height := 21;
       Caption := 'Delete Player';
       TabOrder := 2;
     end;
-    with Button5 do
+    with btnClearPlayers do
     begin
       Parent := GroupboxBtns;
       Left := 12;
-      Top := 103;
+      Top := 183;
       Width := 90;
       Height := 21;
       Caption := 'Clear Players';
       TabOrder := 3;
     end;
-    with btnScriptSettings do
+    with btnLoadPlayers do
     begin
-      Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 36;
-      Top := 241;
-      Width := 127;
-      Height := 33;
-      Caption := 'Script Settings';
-      ModalResult := 1;
-      TabOrder := 3;
+      Parent := GroupboxBtns;
+      Left := 12;
+      Top := 11;
+      Width := 90;
+      Height := 21;
+      Caption := 'Load Player List';
+      TabOrder := 4;
+    end;
+    with btnSavePlayers do
+    begin
+      Parent := GroupboxBtns;
+      Left := 12;
+      Top := 39;
+      Width := 90;
+      Height := 21;
+      Caption := 'Save Player List';
+      TabOrder := 5;
     end;
     with btnAboutScript do
     begin
-      Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 330;
-      Top := 241;
+      Parent := OSI_Form_RS2_ScriptSetup;  
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_btnAboutScriptClick;
+      Left := 430;
+      Top := 319;
       Width := 80;
       Height := 24;
       Caption := 'About Script';
+      TabOrder := 2;
+    end;
+    with colorPicker do
+    begin
+      Parent := OSI_Form_RS2_ScriptSetup;
+      Left := 504;
+      Top := 0;
+      Width := 37;
+      Height := 21;
+      BevelInner := bvNone;
+      BevelOuter := bvNone;
+      TabOrder := 3;
+      Text := '$00FFFFFF';
+      ShowPreview := True;
+      Options := [coColorsButton, coNoneButton];
+      HideFocus := False;
+      SelectedColor := clWhite;  
+      OnChange := @_DontUse_OSI_Form_RS2_ScriptSetup_ColorPickerChange;
+    end;
+    with btnStartScript do
+    begin
+      Parent := OSI_Form_RS2_ScriptSetup;
+      Left := 267;
+      Top := 313;
+      Width := 131;
+      Height := 43;
+      Caption := 'Start Script';
+      Default := True;
+      NumGlyphs := 2;
       TabOrder := 4;
+    end;
+    with btnScriptOptions do
+    begin
+      Parent := OSI_Form_RS2_ScriptSetup;
+      Left := 135;
+      Top := 313;
+      Width := 123;
+      Height := 43;
+      Caption := 'Script Settings';
+      NumGlyphs := 1;
+      TabOrder := 5;
+    end;
+    with btnOptions do
+    begin
+      Parent := OSI_Form_RS2_ScriptSetup;
+      Left := 18;
+      Top := 313;
+      Width := 107;
+      Height := 22;
+      Caption := 'Options';
+      NumGlyphs := 1;
+      TabOrder := 6;
+    end;
+    with btnHelp do
+    begin
+      Parent := OSI_Form_RS2_ScriptSetup;
+      Left := 18;
+      Top := 338;
+      Width := 107;
+      Height := 18;
+      Caption := 'Help';
+      NumGlyphs := 1;
+      TabOrder := 7;
     end;
   end;
 end;

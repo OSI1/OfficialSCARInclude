@@ -20,13 +20,13 @@ Contributors: LordJashin
 Description: Will setup the OSI_Log's Script info. If you use this, then in logs saved
              this info will be used in the log
 Date Created: October 30th, 2012. By LordJashin.
-Last Modified: October 30th, 2012. By LordJashin. 
+Last Modified: November 16th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OSI_SetupScriptInfo(sName, sVersion, sAuthor, sDescription, sCreated, sLastUpdated: string);
 begin
   OSI_Log.ScriptInfoInLog := True;
-  with OSI_Log.Script do
+  with OSI_ScriptInfo do
   begin
     Name := sName;
     Version := sVersion;
@@ -217,7 +217,7 @@ function OSI_SaveLog(Path: string): Boolean;
 Contributors: LordJashin
 Description: Will save the OSI_Log log to Path, uses try block 
 Date Created: October 13th, 2012. By LordJashin.
-Last Modified: October 30th, 2012. By LordJashin. 
+Last Modified: November 16th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
                
 function OSI_SaveLog(Path: string): Boolean;
@@ -229,7 +229,7 @@ begin
   if (Length(OSI_Log.Log) = 0) then Exit;
   if OSI_Log.ScriptInfoInLog then
   begin
-    with OSI_Log.Script do
+    with OSI_ScriptInfo do
     begin                                                                                                    
       if (Name <> '') or (Author <> '') or (Version <> '') or (Created <> '') or (LastUpdated <> '') or (Description <> '') then
         s := '--------------------------------------------------------------------------------' + #13#10 + ''; 

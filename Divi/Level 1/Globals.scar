@@ -5,8 +5,8 @@
  * procedure OSI_ShowLastExecptMsg;
  * procedure HandleOSIException;
  * var  IsOSISetup
- * type TOSIScriptInfo        
- * type TOSILog
+ * type TOSI_ScriptInfo        
+ * type TOSI_Log
  * var  OSI_Variance
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
  * var  MouseSpeed: Integer;
@@ -80,27 +80,29 @@ var
   IsOSISetup: Boolean;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TOSIScriptInfo
+type TOSI_ScriptInfo
 Contributors: LordJashin
 Description: Hold info for your script! Used in logging if desired
 Date Created: October 16th, 2012. By LordJashin.
-Last Modified: October 30th, 2012. By LordJashin.
+Last Modified: November 16th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
-type TOSIScriptInfo = record
+type TOSI_ScriptInfo = record
   Name, Version, Author, Description, Created, LastUpdated: string;
 end; 
 
+var
+  OSI_ScriptInfo: TOSI_ScriptInfo;
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TOSILog
+type TOSI_Log
 Contributors: LordJashin
 Description: For All OSI's logging functions in Divi\Misc\Logging.scar
 Date Created: October 16th, 2012. By LordJashin.
-Last Modified: October 30th, 2012. By LordJashin.
+Last Modified: November 16th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
-type TOSILog = record
-  Script: TOSIScriptInfo;
+type TOSI_Log = record
   ScriptInfoInLog: Boolean; 
   Log: TStrArray;           
   CustomLogHeaderForSaveLog: string;
@@ -117,7 +119,7 @@ type TOSILog = record
 end;         
 
 var
-  OSI_Log: TOSILog;     
+  OSI_Log: TOSI_Log;     
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OSI_Variance

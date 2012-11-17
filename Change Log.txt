@@ -1,4 +1,12 @@
 ﻿
+LordJashin - 11\17\2012:
+
+- Updated the RS2 script setup form for 3.37 & new looks
+- Changed Types (TOSILog -> TOSI_Log) (TOSIScriptInfo -> TOSI_ScriptInfo)
+- New variable OSIScriptInfo. Removed ScriptInfo from TOSI_Log
+- Log saving uses script info from OSIScriptInfo variable now.
+
+
 LordJashin - 11\15\2012:
 
 - Updated OSI for SCAR Divi 3.37

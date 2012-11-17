@@ -72,7 +72,7 @@ begin
         Result := True;    
   finally
     FreeForm(Form);  
-  end;  
+  end;                                    
 end;
 
 {$IFDEF RS2}
