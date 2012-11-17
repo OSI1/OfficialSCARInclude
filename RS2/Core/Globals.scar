@@ -243,7 +243,7 @@ const Game Tab Indexes
 Contributors: Dynamite, Wanted.
 Description: Index handles for Game RS2 tabs.
 Date Created: August 31st, 2011. By Dynamite & Wanted. RS2 Build 662.
-Last Modified: November 16th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 17th, 2012. By Bixby Sayz. RS2 Build 742.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -256,7 +256,7 @@ const
   Tab_Prayer            = 6;
   Tab_Magic             = 7;
   Tab_Objectives        = 8;   // Legacy - Left in to avoid breaking scripts
-  Tab_Squeal            = 8;   // Squeal of Fortune  // 11/16/2012  Bixby Sayz  742
+  Tab_Store             = 8;   // Squeal of Fortune & Store  // 11/17/2012  Bixby Sayz  742
   Tab_Friends           = 9;
   Tab_FriendChat        = 10;
   Tab_Clan              = 11;

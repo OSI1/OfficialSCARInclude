@@ -1,4 +1,9 @@
 ﻿
+Bixby Says - 11\17\2012:
+
+- Fix for GetCurrentTab, also should work in EoC beta when it goes live
+- Renamed (Tab_Squeel->Tab_Store) constant for Gametabs for the new Squeel of Fortune & Store in RS2
+
 LordJashin - 11\17\2012:
 
 - Updated the RS2 script setup form for 3.37 & new looks
