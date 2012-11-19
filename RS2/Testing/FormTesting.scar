@@ -3,7 +3,7 @@
                                  Form Testing
 --------------------------------------------------------------------------------
  * procedure TestForms;                      
-   Last Modified: November 16th, 2012. By LordJashin. 
+   Last Modified: November 19th, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE RS2}
@@ -28,6 +28,7 @@ begin
 end;
 
 begin
-  ClearDebug;
+  ClearDebug;  
   TestForms;   
+
 end.

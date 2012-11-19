@@ -1,0 +1,38 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              Color Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestColorFunctions;                      
+   Last Modified: November 18th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$I ../../OSI.scar}
+
+procedure TestColorFunctions;
+var
+  R, G, B, Color1, Color2: Integer;
+  Bmp: TSCARBitmap;      
+begin
+  Bmp := TSCARBitmap.Create('');
+  Bmp.SetSize(100, 100);
+  Color1 := clRed;
+  ColorToRGB(Color1, R, G, B);
+  Color2 := RGBToColor(255 - R, 255 - G, 255 - B);
+  Bmp.Clear(Color1);
+  DebugBitmap(Bmp);
+  wait(3000);
+  Bmp.Clear(Color2);
+  DebugBitmap(Bmp);
+  WriteLn('GetColor: Color1 at (50, 50) either in bmp or in client: ' + IntToStr(GetColor(50, 50)));
+  WriteLn('CountColor: Color2: ' + IntToStr(Color2) + '; Was found this many times: ' + IntToStr(CountColor(Color2, 0, 0, 200, 200)));
+  wait(3000);       
+  PickColor(Color1, r, g);
+  WriteLn('PickColor: Picked color at (' + IntToStr(r) + ', ' + IntToStr(g) + '): ' + IntToStr(Color1));
+  HideDebugImgWindow;     
+  Bmp.Free;
+end;
+
+begin
+  ClearDebug;
+  TestColorFunctions;  
+end.

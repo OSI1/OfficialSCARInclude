@@ -1,0 +1,47 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             Bitmap Function Testing
+--------------------------------------------------------------------------------
+ * procedure TestBitmapFunctions;                      
+   Last Modified: November 18th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$I ../../OSI.scar}
+
+procedure WaitDebugBitmap(Bmp: TSCARBitmap);
+begin
+  DebugBitmap(Bmp);
+  wait(3250);   
+end;
+
+procedure TestBitmapFunctions;
+var
+  Bmp: TSCARBitmap;
+  w, h: Integer; 
+  s: string;
+begin
+  s := 'deNptVmtQVOcZfnZhWS4uFESItIBcvGGISUxUQFmE3QVUIqnWJrbGpMj9si6womg0CCiKYqy3ODpJOmm9N8ZaazSTRu1l0um06XU0SYm0FRXFCOyyu5zb2/c7ONM/mflmzpnvO9/z3p73ec8UTIZMskySRgHiJUsUkMeIRjXS+CHLGslE96cBMwGSBknhXVVSxjRS+ViT/IomjxJ5iUgjUnjxvsSAfpLGiKFURd+WSfH5R8SpQh5ZbJLsobF7k4HpwHX3oqtN1gwgla2M3hFH5GMc0mSG9ZLm1+GFTb6pqZrwmZfKzmkSKZLwkk/UgKJJY2yd5HtJwDygb+Pch87U+z+KG6pP7m+e9se6jKzxWPwD5HtEsvBHFpGL6/T/KHRb45uKMMPfDPlV4QNJQcATwCcbi3pdM73lYVQRRGtAlSH+cgyvi72xbuq1Vht/YDGDb2pjqvY4AxIjCXxZRCaWbkKPiEaV8QJwoCMxwDb7nK/qsr3lk6nSTGtBFaBqSK/BU2UYaDVfXT+x/0/7YIKXhvnWmCYFZK9CXo1BFR35cTo4exLXiN/YrF/lcnBWh5OBHOD9LMunuRgsmxSojZLrDb4ajLgi7rgtdNEWuLomxgDGD5BvhHwcPdNDI49wUI9EeD5eD43fAprsZVKoAa8e5TANfH5oyXNWIA/4ycLE81bLg5q42+vC6Mr3Bj9akwJwgGYuAcPK7E+AOTeqjog6j+MrjK2OiSVyomo+nZl8xMtD3n8vAt7KSyix4PKmtc/rVs7ajfTBynk6l97uXCYPfhYeBNWvp1yRtccM13E04bkiyCkxuF9Y00kgovEmAM8Cvc6nf1lgWABcfr3MHha6NDKIkX/XMvt4ScQRu1n6cNOZrS9MBEI5hMcuikSwiRHFI2orMhPQeyIga6PiRJGigETgV+tX/a0x7+uqlI9zUAA4IpGi788Grm22vxyC8jC8VxzfY5uUDpza0cCV4gYh9T7RIDcLaR4AOgllVRLlEG3rHWGEPfnWd61zf2F/+qOcON+aGdezsFjPRjQQC8wCPtxYyphPAhUGuEzIZ4uN2XTR/Wl7bqLOZxr969bSXP5eNKnOU7/ehHxaHBX5SpCxBigDmoA/ZD/x63mhX79Z+vmx1Wl6z2YDv9+w+Cm9405lT78wL/qOe/YXDbF9jd+6uSFauvyi/2rFc8Cu0lmJQkYeicSw64rIHzu5yGRaGRmzIjxsaThWWVALuIHj2XGn7VFDPYWBg7blwO3GmZdy8PEC44PaJ4ea0u7W4oELdCCeumOHWib0rp9M110sU53LU9mlCLai6SwN0BQgPy7+UKVzf0X1QWdFbmTwd0PCfwhDvRlOA85n4UouaEfuQHXS6JoYuSqhb23CK3x9VwztMns3GwecGKmz3KqO+c2m6c/ojeO5tClG4D9iajHfmQY9He0927Z3NreuLsjfUVZ21OW2RUYWm/CSEU4z3EZcsCZcyjGN1E4fqEo/Vxi7AhiqiZDXmW+Vhf2nKf0L58wXOMnAjZaMW+5ouvT9lGDujt4xFiiNEIx8hz3fUbyjs2tfW0dXo3tZzsJuZ8PhhqpCS8TyoMjVCC03oMGAiwuizlmjj+an24H+urSBqti7TRlsi7PX2/jUrfr0267Y/ib8vRWD11+NDoGmPOT8wwC7veDs6TNLCotKCmy7t7X3dG7f2txYmpvd7aw72uByRFiWh4WuDhHMKTPggC2Lk3C9OrMUWAl8WZnkrUkerYz2OMP7uSLvRt09YlI+yZtm5BDuePS+mpKc2NHedvbkCbvVuthhL7Q7tne27+3uamtx257J/HGT63BFtSM0YoXZ8oOIyBdDMR8oAf7ckHKzMemuK36k0ihVg7ottNckHzTRtXn/2BI0euVV7imZSaSpxuCgmdNntLdtO338RGGB7eTxU0VFRbl5C7t2dhx8c/cWV+3LixYecDn3l5fbJ5i4wd9xJPyrJsXTEt9Xg3vNzCIzHTbQIQOdn9FfgYeuqL66+M82PD/w28MRBgQ0LrPGWWJFnDUtIz05bfeuPT/92QnH4uJcW16e3dresWXP9jc6WlzLFszdW/8ad8E7hZNu18Q+KAftT6B9E+hIOH2QxIZ6qzC4cdrNmsy6UGTpjU9arxBwXvpsMSA4CMEZMzJ37uw+fvrM/EW5Jy+cy1titzqsr7+xsW1ba0dzJdP78JKEr9ZPoh5eE+n0nMG18DRabjfF39j0LKti2jhy4KFQS9UzrMrjJnz+MSGsAY1NsKHEpClTZ83q2LP72In38ksK8xbnb+ncUmTL2dVQxnL08xLQubz7TtODdTF36tP/WZu5yoQ5QBwj+4ZIVcVw1ieXXwiFJnSPx7okpMM/5GdBDTayxhtT06Z27uw6c+59m6NgZ3eXu7lxa3Mru3dyScyXlQl9roy/NM0vmSCUSgidNECqb1yiVR2cVYI99/Ifx/jA0XR5VR8PaJ6uwUZTsDEo8dvfmZqSunlDiy3fbjBYIgFu1WNL41+yIBNIFtnwib8EnlI8aiW+p88ZRcShieGoauPDWPumpWomGEL0mRUMoz4Aefe/EUZYGFkeFn9Lfn3s6k99jIkhqQu1+j+XSFlG';  
+  Bmp := TSCARBitmap.Create(s);
+  WaitDebugBitmap(Bmp);
+  Bmp.Flip(false);
+  WaitDebugBitmap(Bmp); 
+  Bmp.Resize(200, 200);
+  WaitDebugBitmap(Bmp);
+  Bmp.RotateEx(77, true);
+  WaitDebugBitmap(Bmp);
+  Bmp.Rotate(30.51);
+  WaitDebugBitmap(Bmp);
+  Bmp.SkewEx(0.5, 0.5, true);
+  WaitDebugBitmap(Bmp);
+  Bmp.Skew(0.2, 0.2);
+  WaitDebugBitmap(Bmp);  
+  GetBitmapSize(Bmp, w, h);
+  WriteLn('GetBitmapSize: for Bmp: w: ' + IntToStr(w) + '; h: ' + IntToStr(h) + ';');  
+  HideDebugImgWindow;
+  Bmp.free;      
+end;
+
+begin
+  ClearDebug;
+  TestBitmapFunctions;             
+end.

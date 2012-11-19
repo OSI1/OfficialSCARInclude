@@ -1,0 +1,96 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+              ___________         __                                 
+              \_   _____/__  ____/  |________   ____   _____   ____  
+              |    __)_\  \/  /\   __\_  __ \_/ __ \ /     \_/ __ \ 
+              |        \>    <  |  |  |  | \/\  ___/|  Y Y  \  ___/ 
+              /_______  /__/\_ \ |__|  |__|    \___  >__|_|  /\___  >
+                      \/      \/                   \/      \/     \/                              
+                                Function Testing
+--------------------------------------------------------------------------------
+   About: This is it folks, Jashin has decided to get down and dirty with all
+          of it. And to even speed test. Anyway feel free to GAWK at everything.
+          Things covered will be about just every search/other functions using
+          Color, TPA, ColorArr, DTM, Bitmap, TIA, TEA, etc.                       
+
+   Last Modified: November 18th, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE OSIDEBUG}
+{$I ../../OSI.scar}
+
+var
+  functIndex: Integer; // For Function Speed Testing
+  functHigh: Integer;
+  functName: string;  
+  
+  DTM, Color: Integer;
+  Bmp: TSCARBitmap;
+  TPA: TPointArray;  
+  TIA: TIntArray;
+  TEA: TExtArray;  
+  ColorArr: T2DIntArray;
+  TPAarr: T2DPointArray;
+
+// Time a function in seconds or if below 1 second in milliseconds and return in string the time it took to run Funct
+function TimeFunct(Func: function: Boolean): string;
+var
+  i: Integer;
+begin
+  i := GetTimeRunning;
+  Func();
+  i := GetTimeRunning - i;   
+  if (i < 1000) then
+    Result := IntToStr(i) + ' msc'
+  else 
+    Result := IntToStr((i div 1000)) + ' secs';
+  Result := functName + ' ' + Result;
+end;
+
+// Small operations, and functions
+function SmallOperationsTest: Boolean;
+var
+  x, y, Color: Integer;
+begin
+  case functIndex of
+    0: begin GetColor(50, 50); 
+             functName := 'GetColor(50, 50)                        :'; end;
+    1: begin CountColor(ClRed, 0, 0, 50, 50); 
+             functName := 'CountColor(ClRed, 0, 0, 50, 50)         :'; end;
+    2: begin FindColor(x, y, ClRed, 0, 0, 50, 50);
+             functName := 'FindColor(x, y, ClRed, 0, 0, 50, 50)    :'; end;
+  end;       
+  Result := True;
+end;
+
+procedure TestSpeed;
+var
+  Bmp: TSCARBitmap;
+  Client1: TSCARWindowClient;          
+begin
+  Bmp := TSCARBitmap.Create('');
+  Bmp.SetSize(50, 50);
+  Bmp.Clear(ClRed);
+  DebugBitmap(Bmp);        
+  wait(2000);                                      
+  Client1 := TSCARWindowClient.Create(FindWindowEx('Debug Image', false, true));  
+
+  Client1.ClientArea := True;
+  SetClient(Client1);  
+  Client1.Activate;                                                          
+  wait(1000);      
+  //                
+  WriteLn(GetColor(1, 1));
+  functHigh := 2; 
+  for functIndex := 0 to functHigh do
+    WriteLn(TimeFunct(@SmallOperationsTest));
+  //  
+  wait(1000);      
+  HideDebugImgWindow;
+  Bmp.Free;   
+end;
+
+begin
+  ClearDebug;           
+  TestSpeed;
+end.

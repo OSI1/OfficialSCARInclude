@@ -1,4 +1,10 @@
-﻿
+﻿LordJashin - 11\19\2012:
+
+- Removed CreateBitmap & CreateBitmaps functions
+- Added more testing stuff
+- Updated form, but it throws an error when you close SCAR
+
+
 Bixby Says - 11\17\2012:
 
 - Fix for GetCurrentTab, also should work in EoC beta when it goes live

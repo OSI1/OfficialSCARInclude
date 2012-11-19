@@ -1,8 +1,9 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Official SCAR Include
-                          RS2 Script Setup & routines
+                           RS2 Script Setup & routines
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
+// Main Form
 type
   TOSI_Form_RS2_ScriptSetup = record
     OSI_Form_RS2_ScriptSetup: TForm;
@@ -23,10 +24,31 @@ type
     btnStartScript: TBitBtn;
     btnScriptOptions: TBitBtn;
     btnOptions: TBitBtn;
-    btnHelp: TBitBtn;
+    btnHelp: TBitBtn;         
+    LoadedSettingsFromFunct: Boolean;  // Settings were loaded by the funct
+    OverrideOptions: Boolean;          // Override options and use default file    
+  end;  
+
+// Options Form  
+type
+  T_DontUse_OSI_Form_RS2_ScriptSetup_Options = record
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options: TForm;
+    labelWaveFile: TLabel;
+    labelSplashFile: TLabel;    
+    labelSplashSize: TLabel;
+    btnSaveCurrentBgColor: TButton;
+    editWAVPath: TEdit;
+    btnWavBrowse: TButton;
+    btnLoadOpt: TButton;
+    btnSaveOpt: TButton;
+    editSplashPath: TEdit;
+    btnSplashBrowse: TButton;
+    openWavDialog: TOpenDialog;
+    openSplashDialog: TOpenDialog;
   end;
-   
-  type
+               
+// About Script Form  
+type
   T_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm = record
     _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm: TForm;
     ScriptName: TLabel;
@@ -41,19 +63,348 @@ type
     edtScriptCreated: TEdit;
     edtScriptLastUpdated: TEdit;
     memoScriptDesc: TMemo;
+  end;
+
+// Main Settings 
+type
+  T_DontUse_OSI_Form_RS2_ScriptSetup_Settings = record
+    DefaultFormBackColorBool: Boolean; // Main Form Bg Color Boolean 
+    DefaultFormBackColor: Integer;     // Main Form Background Color
+    SplashPath: string;                // Splash Screen Image Path
+    WAVPath: string;                   // .Wav audio file path                                             
+  
+    Players: array of TRS2Player;      // RS2 Players
+    CurrentPlayer: Integer;            // RS2 Current Player            
   end;  
 
 var
-  OSI_Form_RS2_ScriptSetup: TOSI_Form_RS2_ScriptSetup;
-  _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm: T_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm;
-  _DontUse_OSI_Form_RS2_ScriptSetup_ScriptStarted: Boolean;
-
-procedure _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_CloseClick(Sender: TObject; var Action: TCloseAction);
-begin               
-  OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Enabled := True;                                                   
-  Action := caFree;    
+  OSI_Form_RS2_ScriptSetup_Settings: T_DontUse_OSI_Form_RS2_ScriptSetup_Settings;     
+  OSI_Form_RS2_ScriptSetup: TOSI_Form_RS2_ScriptSetup;                                       // Main Form
+  _DontUse_OSI_Form_RS2_ScriptSetup_OpenDialog: TOpenDialog;                                 // Open Dialog
+  _DontUse_OSI_Form_RS2_ScriptSetup_SaveDialog: TSaveDialog;                                 // Save Dialog                                    
+  _DontUse_OSI_Form_RS2_ScriptSetup_Options: T_DontUse_OSI_Form_RS2_ScriptSetup_Options;     // Options Form                  
+  _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm: T_DontUse_OSI_Form_RS2_ScriptSetup_AboutForm; // About Script Form
+  _DontUse_OSI_Form_RS2_ScriptSetup_ScriptStarted: Boolean;                                  // Script Started Boolean
+                  
+// Options Form - Close
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_OptionsClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if (Sender = _DontUse_OSI_Form_RS2_ScriptSetup_Options._DontUse_OSI_Form_RS2_ScriptSetup_Options) then
+  begin
+    OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Enabled := True;
+    Action := caFree;    
+  end;
 end;
 
+// Options Form - Wav Browse Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_btnWavBrowseClick(Sender: TObject);
+begin
+  if (Sender = _DontUse_OSI_Form_RS2_ScriptSetup_Options.btnWavBrowse) then
+  begin           
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options.openWavDialog := TOpenDialog.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options._DontUse_OSI_Form_RS2_ScriptSetup_Options);     
+    with _DontUse_OSI_Form_RS2_ScriptSetup_Options.openWavDialog do
+    begin     
+      InitialDir := ScriptPath;
+      Filter := 'Waveform Audio File|*.wav';
+      FilterIndex := 1;
+      Title := 'Select WAV file';             
+      Options := [ofFileMustExist, ofPathMustExist];
+    end;
+    if _DontUse_OSI_Form_RS2_ScriptSetup_Options.openWavDialog.Execute then  
+      if EndsWith('.wav', Lowercase(_DontUse_OSI_Form_RS2_ScriptSetup_Options.openWavDialog.FileName)) then 
+      begin  
+        _DontUse_OSI_Form_RS2_ScriptSetup_Options.editWAVPath.Text := _DontUse_OSI_Form_RS2_ScriptSetup_Options.openWavDialog.FileName;
+        OSI_Form_RS2_ScriptSetup_Settings.WAVPath := _DontUse_OSI_Form_RS2_ScriptSetup_Options.editWAVPath.Text;        
+      end
+      else
+        TaskMessageDlg('Wrong file type: ', 'Must be a .wav file!', mtWarning, [mbClose]);
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options.openWavDialog.Free;    
+  end;  
+end;
+
+// Options Form - Spash Image Browse Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_Options_SplashClick(Sender: TObject);
+var
+  s: string;
+begin
+  if (Sender = _DontUse_OSI_Form_RS2_ScriptSetup_Options.btnSplashBrowse) then
+  begin        
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options.openSplashDialog := TOpenDialog.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options._DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    with _DontUse_OSI_Form_RS2_ScriptSetup_Options.openSplashDialog do
+    begin
+      InitialDir := ScriptPath;
+      Filter := 'Image File|*.png;*.jpeg;*.bmp|';
+      FilterIndex := 1;
+      Title := 'Select Image file';
+      Options := [ofFileMustExist, ofPathMustExist];
+    end;    
+    if _DontUse_OSI_Form_RS2_ScriptSetup_Options.openSplashDialog.Execute then
+    begin
+      s := Lowercase(_DontUse_OSI_Form_RS2_ScriptSetup_Options.openSplashDialog.FileName);   
+      if EndsWith('.png', s) or EndsWith('.jpeg', s) or EndsWith('.bmp', s) then
+      begin    
+        _DontUse_OSI_Form_RS2_ScriptSetup_Options.editSplashPath.Text := _DontUse_OSI_Form_RS2_ScriptSetup_Options.openSplashDialog.FileName;
+        OSI_Form_RS2_ScriptSetup_Settings.SplashPath := _DontUse_OSI_Form_RS2_ScriptSetup_Options.editSplashPath.Text;  
+      end
+      else
+        TaskMessageDlg('Wrong file type: ', 'Must be one of the supported image file types!', mtWarning, [mbClose]);     
+    end;
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options.openSplashDialog.Free;    
+  end;  
+end;
+
+// For Saving Settings 
+// Does all the basic operations for Save Dialog, returns if it executed or not, then returns the save path
+function _DontUse_OSI_Form_RS2_ScriptSetup_SaveDOpen(Title: string; var Path: string; Form: TForm): Boolean;
+begin
+  _DontUse_OSI_Form_RS2_ScriptSetup_SaveDialog := TSaveDialog.Create(Form);
+  with _DontUse_OSI_Form_RS2_ScriptSetup_SaveDialog do
+  begin
+    InitialDir := ScriptPath;
+    Filter := 'Settings File|*.ini|';
+    FilterIndex := 1;
+    Title := Title;
+    Options := [ofPathMustExist]; 
+  end;               
+  Result := _DontUse_OSI_Form_RS2_ScriptSetup_SaveDialog.Execute;
+  Path := _DontUse_OSI_Form_RS2_ScriptSetup_SaveDialog.FileName;
+  _DontUse_OSI_Form_RS2_ScriptSetup_SaveDialog.Free;     
+end;
+
+// For Opening Settings
+// Does all the basic operations for Open Dialog, returns if it executed or not, then returns the save path
+function _DontUse_OSI_Form_RS2_ScriptSetup_OpenD(Title: string; var Path: string; Form: TForm): Boolean;
+begin
+  _DontUse_OSI_Form_RS2_ScriptSetup_OpenDialog := TOpenDialog.Create(Form);
+  with _DontUse_OSI_Form_RS2_ScriptSetup_OpenDialog do
+  begin
+    InitialDir := ScriptPath;
+    Filter := 'Settings File|*.ini|';
+    FilterIndex := 1;
+    Title := Title;
+    Options := [ofPathMustExist, ofFileMustExist]; 
+  end;               
+  Result := _DontUse_OSI_Form_RS2_ScriptSetup_OpenDialog.Execute;
+  Path := _DontUse_OSI_Form_RS2_ScriptSetup_OpenDialog.FileName;
+  _DontUse_OSI_Form_RS2_ScriptSetup_OpenDialog.Free;     
+end;
+
+// Options Form - Save Options Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_btnSaveClick(Sender: TObject);
+var
+  Path: string;
+begin
+  if (Sender = _DontUse_OSI_Form_RS2_ScriptSetup_Options.btnSaveOpt) then
+    if _DontUse_OSI_Form_RS2_ScriptSetup_SaveDOpen('Save Options', Path, _DontUse_OSI_Form_RS2_ScriptSetup_Options._DontUse_OSI_Form_RS2_ScriptSetup_Options) then
+    begin                                                                                                     
+      if EndsWith('.ini', Path) then                                                                          
+        begin                                                                                                 
+          try                                                             
+            WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'WAVPath', OSI_Form_RS2_ScriptSetup_Settings.WAVPath, Path)                          
+            WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'SplashPath', OSI_Form_RS2_ScriptSetup_Settings.SplashPath, Path);
+            WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'BackColorBool', BoolToStr(OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColorBool), Path);
+            WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'BackColor', IntToStr(OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColor), Path);
+            MessageDlg('Successfully Saved!', mtInformation, [mbClose]);                        
+          except
+            TaskMessageDlg('Invalid Path: ', 'Failed to save!', mtWarning, [mbClose]);                      
+          end;
+        end      
+      else
+        TaskMessageDlg('Wrong file type: ', 'Must save as .ini file!', mtWarning, [mbClose]);            
+    end;  
+end;
+
+// Options Form - Load Options Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_btnLoadClick(Sender: TObject);
+var
+  Path: string;
+begin        
+  if (Sender = _DontUse_OSI_Form_RS2_ScriptSetup_Options.btnLoadOpt) then
+    if _DontUse_OSI_Form_RS2_ScriptSetup_OpenD('Load Options', Path, _DontUse_OSI_Form_RS2_ScriptSetup_Options._DontUse_OSI_Form_RS2_ScriptSetup_Options) then
+      begin
+        if EndsWith('.ini', Path) then 
+          begin                                                                                                             
+            OSI_Form_RS2_ScriptSetup_Settings.WAVPath := ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'WAVPath', Path);                          
+            OSI_Form_RS2_ScriptSetup_Settings.SplashPath := ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'SplashPath', Path);
+            OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColorBool := StrToBool(ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'BackColorBool', Path));
+            OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColor := StrToInt(ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'BackColor', Path));
+            if OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColorBool then            
+              OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Color := OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColor; 
+            _DontUse_OSI_Form_RS2_ScriptSetup_Options.editSplashPath.Text := OSI_Form_RS2_ScriptSetup_Settings.SplashPath;
+            _DontUse_OSI_Form_RS2_ScriptSetup_Options.editWAVPath.Text := OSI_Form_RS2_ScriptSetup_Settings.WAVPath;            
+            MessageDlg('Successfully Loaded!', mtInformation, [mbClose]);            
+          end      
+        else
+          TaskMessageDlg('Wrong file type: ', 'Must be .ini file!', mtWarning, [mbClose]);            
+      end; 
+end;
+
+// Options Form - Save Background Color - Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_SaveBgClick(Sender: TObject);
+begin
+  if (Sender = _DontUse_OSI_Form_RS2_ScriptSetup_Options.btnSaveCurrentBgColor) then
+  begin                     
+    OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColorBool := True;
+    OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColor := OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Color;    
+  end;  
+end;
+  
+// Options Form - Init
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_Options_Init;
+begin
+  with _DontUse_OSI_Form_RS2_ScriptSetup_Options do
+  begin
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options := CreateForm;
+    labelWaveFile := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    labelSplashFile := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    labelSplashSize := TLabel.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    btnSaveCurrentBgColor := TButton.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    editWAVPath := TEdit.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    btnWavBrowse := TButton.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    btnLoadOpt := TButton.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    btnSaveOpt := TButton.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    editSplashPath := TEdit.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    btnSplashBrowse := TButton.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    openWavDialog := TOpenDialog.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    openSplashDialog := TOpenDialog.Create(_DontUse_OSI_Form_RS2_ScriptSetup_Options);
+    with _DontUse_OSI_Form_RS2_ScriptSetup_Options do
+    begin
+      Left := 609;
+      Top := 315;
+      BorderIcons := [biSystemMenu];
+      BorderStyle := bsSingle;
+      Caption := 'Options';
+      ClientHeight := 218;
+      ClientWidth := 277;
+      Color := clWindow;
+      Font.Charset := DEFAULT_CHARSET;
+      Font.Color := clWindowText;
+      Font.Height := -11;
+      Font.Name := 'Tahoma';
+      Font.Style := [];
+      OldCreateOrder := False;
+      Position := poScreenCenter;
+      PixelsPerInch := 96;     
+      OnClose := @_DontUse_OSI_Form_RS2_ScriptSetup_OptionsClose;
+    end;
+    with labelWaveFile do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Font.Style := [fsBold];
+      Left := 50;
+      Top := 47;
+      Width := 151;
+      Height := 13;     
+      Caption := 'Play .WAV Sound on Form Load:';
+    end;
+    with labelSplashFile do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Font.Style := [fsBold];
+      Left := 35;
+      Top := 99;
+      Width := 172;
+      Height := 13;
+      Caption := 'Image Splash Screen on Form Load:';
+    end;        
+    with labelSplashSize do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Left := 17;
+      Top := 150;
+      Width := 172;
+      Height := 13;
+      Caption := '*Image size cannot excede your desktop resolution';      
+    end;
+    with btnSaveCurrentBgColor do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Left := 10;
+      Top := 12;
+      Width := 258;
+      Height := 25;
+      Caption := 'Save Current Form Background Color As Default';
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_SaveBgClick;
+      TabOrder := 0;  
+    end;
+    with editWAVPath do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Left := 10;
+      Top := 69;
+      Width := 198;
+      Height := 21;           
+      Text := OSI_Form_RS2_ScriptSetup_Settings.WAVPath;
+      TabOrder := 2;
+    end;
+    with btnWavBrowse do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Left := 209;
+      Top := 68;
+      Width := 59;
+      Height := 22;
+      Caption := 'Browse';
+      TabOrder := 3;         
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_btnWavBrowseClick;
+    end;
+    with btnLoadOpt do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Left := 65;
+      Top := 185;
+      Width := 78;
+      Height := 25;
+      Caption := 'Load Options';
+      TabOrder := 4;        
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_btnLoadClick;
+    end;
+    with btnSaveOpt do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Left := 150;
+      Top := 185;
+      Width := 78;
+      Height := 25;
+      Caption := 'Save Options';
+      TabOrder := 5;            
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_btnSaveClick;
+    end;
+    with editSplashPath do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Left := 10;
+      Top := 121;
+      Width := 198;
+      Height := 21; 
+      Text := OSI_Form_RS2_ScriptSetup_Settings.SplashPath;
+      TabOrder := 6;
+    end;
+    with btnSplashBrowse do
+    begin
+      Parent := _DontUse_OSI_Form_RS2_ScriptSetup_Options;
+      Left := 209;
+      Top := 120;
+      Width := 59;
+      Height := 22;
+      Caption := 'Browse';
+      TabOrder := 7;      
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_Options_SplashClick;
+    end;
+  end;
+end;
+  
+// About Script Form - Close
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_CloseClick(Sender: TObject; var Action: TCloseAction);
+begin               
+  if (Sender = _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm._DontUse_OSI_Form_RS2_ScriptSetup_AboutForm) then
+  begin
+    OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Enabled := True;                                                   
+    Action := caFree;    
+  end;    
+end;
+
+// About Script Form - Init
 procedure _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_Init;
 begin
   with _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm do
@@ -261,35 +612,75 @@ begin
   end;
 end;   
 
+// Main Form - Player Functions <Start>---------------------------------------->
+
+// Main Form - Clear Players Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_btnClearPlayersClick(Sender: TObject);
+begin
+  if (Sender = OSI_Form_RS2_ScriptSetup.btnClearPlayers) then
+    if (MessageDlg('Are you sure you want to Clear all the Players?', mtConfirmation, [mbOK, mbCancel]) = mrOK) then
+    begin              
+      if (Length(OSI_Form_RS2_ScriptSetup_Settings.Players) > 0) then                              
+        SetLength(OSI_Form_RS2_ScriptSetup_Settings.Players, 0);
+      OSI_Form_RS2_ScriptSetup.listviewPlayers.Items.Clear;           
+      OSI_Form_RS2_ScriptSetup_Settings.CurrentPlayer := 0;
+    end;      
+end;
+
+// Main Form - Load Players Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_LoadPClick(Sender: TObject);
+begin
+  
+end;
+
+// Main Form - Save Players Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_SavePClick(Sender: TObject);
+begin
+  
+end;
+
+// Main Form - Player Functions <End>------------------------------------------>
+
+// Main Form - Options Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_OptionsClick(Sender: TObject);
+begin
+  if (Sender = OSI_Form_RS2_ScriptSetup.btnOptions) then
+  begin
+    OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Enabled := False;
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options._DontUse_OSI_Form_RS2_ScriptSetup_Options := CreateForm;
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options_Init;
+    _DontUse_OSI_Form_RS2_ScriptSetup_Options._DontUse_OSI_Form_RS2_ScriptSetup_Options.Show;
+  end;  
+end;
+
+// Main Form - About Script Click
 procedure _DontUse_OSI_Form_RS2_ScriptSetup_btnAboutScriptClick(Sender: TObject);  
 begin
-  if Sender = OSI_Form_RS2_ScriptSetup.btnAboutScript then
+  if (Sender = OSI_Form_RS2_ScriptSetup.btnAboutScript) then
   begin
     with OSI_ScriptInfo do
       if (Name = '') and (Author = '') and (Version = '') and (Description = '') and (LastUpdated = '') and (Created = '') then 
       begin  
-        TaskMessageDlg('About: No Script Information', 'The creator of this script has not provided information such as Name, Version, Description, etc.', mtInformation, [mbClose]);
+        TaskMessageDlg('About: No Script Information', 'The creator of this script hasn''t provided any information, such as Script Name, Version, Description, etc. for this script.', mtInformation, [mbClose]);
         Exit;
       end;               
-    try      
-      OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Enabled := False;
-      _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm._DontUse_OSI_Form_RS2_ScriptSetup_AboutForm := CreateForm; 
-      _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_Init;
-      with _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm do
-        begin
-          edtScriptName.Text := OSI_ScriptInfo.Name;
-          edtScriptAuthor.Text := OSI_ScriptInfo.Author;
-          edtScriptVersion.Text := OSI_ScriptInfo.Version;
-          memoScriptDesc.Text := OSI_ScriptInfo.Description;
-          edtScriptLastUpdated.Text := OSI_ScriptInfo.LastUpdated;
-          edtScriptCreated.Text := OSI_ScriptInfo.Created;        
-        end;                   
-      _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm._DontUse_OSI_Form_RS2_ScriptSetup_AboutForm.Show;
-    finally
-    end;
+    OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.Enabled := False;
+    _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm._DontUse_OSI_Form_RS2_ScriptSetup_AboutForm := CreateForm; 
+    _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm_Init;
+    with _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm do
+      begin
+        edtScriptName.Text := OSI_ScriptInfo.Name;
+        edtScriptAuthor.Text := OSI_ScriptInfo.Author;
+        edtScriptVersion.Text := OSI_ScriptInfo.Version;
+        memoScriptDesc.Text := OSI_ScriptInfo.Description;
+        edtScriptLastUpdated.Text := OSI_ScriptInfo.LastUpdated;
+        edtScriptCreated.Text := OSI_ScriptInfo.Created;        
+      end;                   
+    _DontUse_OSI_Form_RS2_ScriptSetup_AboutForm._DontUse_OSI_Form_RS2_ScriptSetup_AboutForm.Show;
   end;
 end;
 
+// Main Form - Color Picker - Change
 procedure _DontUse_OSI_Form_RS2_ScriptSetup_ColorPickerChange(Sender: TObject);
 var
   R, G, B, NewColor: Integer;
@@ -308,10 +699,88 @@ begin
   end;     
 end;
 
+// Main Form - Help Click
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_btnHelpClick(Sender: TObject);
+begin
+  if (Sender = OSI_Form_RS2_ScriptSetup.btnHelp) then
+    OpenWebPage('http://forums.scar-divi.com');    
+end;
+
+// Main Form - OnClose
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_OnClose(Sender: TObject; var Action: TCloseAction);
+var
+  Path: string;
+begin          
+  if (Sender = OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup) then
+  begin                                                                                      
+    Path := ScriptPath + 'RS2_ScriptSetup_Settings.ini';                              
+    WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'OverrideOptions', BoolToStr(OSI_Form_RS2_ScriptSetup.OverrideOptions), Path);
+    WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'WAVPath', OSI_Form_RS2_ScriptSetup_Settings.WAVPath, Path);                          
+    WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'SplashPath', OSI_Form_RS2_ScriptSetup_Settings.SplashPath, Path);                         
+    WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'BackColorBool', BoolToStr(OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColorBool), Path);
+    WriteINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'BackColor', IntToStr(OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColor), Path);
+    Action := caFree;                  
+  end;          
+end;
+
+// Main Form - Load Default INI
+procedure _DontUse_OSI_Form_RS2_ScriptSetup_LoadDefaultIni;
+var
+  s, Path: string; 
+  Bmp: TSCARBitmap;
+  B: Boolean;
+begin            
+   try  
+      Path := ScriptPath + 'RS2_ScriptSetup_Settings.ini';                          
+      s := ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'OverrideOptions', Path);
+      if StrIsBool(s) then 
+      OSI_Form_RS2_ScriptSetup.OverrideOptions := StrToBool(s);
+      if (OSI_Form_RS2_ScriptSetup.OverrideOptions) or (not OSI_Form_RS2_ScriptSetup.LoadedSettingsFromFunct) then 
+      begin
+        OSI_Form_RS2_ScriptSetup_Settings.WAVPath := ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'WAVPath', Path);                          
+        OSI_Form_RS2_ScriptSetup_Settings.SplashPath := ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'SplashPath', Path);
+        s := ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'BackColorBool', Path);
+        if StrIsBool(s) then
+          OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColorBool := StrToBool(s);
+        s := ReadINI('_DontUse_OSI_Form_RS2_ScriptSetup', 'BackColor', Path);
+        if StrIsInt(s) then        
+          OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColor := StrToInt(s);
+      end;   
+    finally    
+    end;                                                                                                                                    
+    try                                                 
+      s := OSI_Form_RS2_ScriptSetup_Settings.WAVPath; 
+      if EndsWith('.wav', lowerCase(s)) then
+        PlaySound(OSI_Form_RS2_ScriptSetup_Settings.WAVPath);
+      s := OSI_Form_RS2_ScriptSetup_Settings.SplashPath; 
+      if EndsWith('.png', LowerCase(s)) or EndsWith('.bmp', LowerCase(s)) or EndsWith('.jpeg', LowerCase(s)) then
+      begin
+        Bmp := TSCARBitmap.Create('');
+        if EndsWith('.png', LowerCase(s)) then
+          B := Bmp.LoadFromPng(s);
+        if EndsWith('.bmp', Lowercase(s)) then
+          B := Bmp.LoadFromBmp(s);
+        if EndsWith('.jpeg', LowerCase(s)) then
+          B := Bmp.LoadFromJpeg(s);
+        if B then
+        begin
+          DebugBitmap(Bmp);
+          wait(4000);
+          HideDebugImgWindow;
+        end;    
+        Bmp.Free;
+      end;      
+    finally               
+    end;          
+end;
+
+// Main Form - Init
 procedure _DontUse_OSI_Form_RS2_ScriptSetup_Init;
 var
   Bmp: TSCARBitmap;
+  R, G, B: Integer;
 begin
+  //_DontUse_OSI_Form_RS2_ScriptSetup_LoadDefaultIni;
   with OSI_Form_RS2_ScriptSetup do
   begin
     OSI_Form_RS2_ScriptSetup := CreateForm;
@@ -334,23 +803,27 @@ begin
     btnOptions := TBitBtn.Create(OSI_Form_RS2_ScriptSetup);
     btnHelp := TBitBtn.Create(OSI_Form_RS2_ScriptSetup);
     with OSI_Form_RS2_ScriptSetup do
-    begin
+    begin                            
       Left := 589;
       Top := 315;
       BorderIcons := [biSystemMenu, biMinimize, biHelp];
       BorderStyle := bsSingle;
       Caption := 'OSI RS2 Script Setup';
       ClientHeight := 364;
-      ClientWidth := 541;
-      Color := clWhite;
-      Font.Charset := DEFAULT_CHARSET;
-      Font.Color := clWindowText;
+      ClientWidth := 541;       
+      if OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColorBool then
+        Color := OSI_Form_RS2_ScriptSetup_Settings.DefaultFormBackColor
+      else
+        Color := clWhite;  
+      Font.Charset := DEFAULT_CHARSET; 
+      Font.Color := clWindowText;             
       Font.Height := -11;
       Font.Name := 'Tahoma';
       Font.Style := [];
       OldCreateOrder := False;
       Position := poScreenCenter;
-      PixelsPerInch := 96;
+      PixelsPerInch := 96;     
+      OnClose := @_DontUse_OSI_Form_RS2_ScriptSetup_OnClose;      
     end;
     with labelRS2SetupScript do
     begin
@@ -364,7 +837,13 @@ begin
       Caption := 'RS2 Script Setup';
       Color := clWhite;
       Font.Charset := DEFAULT_CHARSET;
-      Font.Color := clBlack;
+      if (OSI_Form_RS2_ScriptSetup.Color = 536870911) then
+        Font.Color := clWhite
+      else
+        begin
+          ColorToRGB(OSI_Form_RS2_ScriptSetup.Color, R, G, B);
+          Font.Color := RGBToColor(255 - R, 255 - G, 255 - B);          
+        end; 
       Font.Height := -50;
       Font.Name := 'Tahoma';
       Font.Style := [];
@@ -375,7 +854,7 @@ begin
     with labelVersion do
     begin
       Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 517;
+      Left := 459;
       Top := 350;
       Width := 24;
       Height := 14;
@@ -466,7 +945,8 @@ begin
       Width := 90;
       Height := 21;
       Caption := 'Clear Players';
-      TabOrder := 3;
+      TabOrder := 3;   
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_btnClearPlayersClick;
     end;
     with btnLoadPlayers do
     begin
@@ -476,7 +956,8 @@ begin
       Width := 90;
       Height := 21;
       Caption := 'Load Player List';
-      TabOrder := 4;
+      TabOrder := 4;            
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_LoadPClick;
     end;
     with btnSavePlayers do
     begin
@@ -487,6 +968,7 @@ begin
       Height := 21;
       Caption := 'Save Player List';
       TabOrder := 5;
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_SavePClick;
     end;
     with btnAboutScript do
     begin
@@ -502,13 +984,12 @@ begin
     with colorPicker do
     begin
       Parent := OSI_Form_RS2_ScriptSetup;
-      Left := 504;
-      Top := 0;
+      Left := 510;
+      Top := 350;
       Width := 37;
       Height := 21;
       BevelInner := bvNone;
       BevelOuter := bvNone;
-      TabOrder := 3;
       Text := '$00FFFFFF';
       ShowPreview := True;
       Options := [coColorsButton, coNoneButton];
@@ -541,7 +1022,8 @@ begin
     end;
     with btnOptions do
     begin
-      Parent := OSI_Form_RS2_ScriptSetup;
+      Parent := OSI_Form_RS2_ScriptSetup; 
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_OptionsClick;
       Left := 18;
       Top := 313;
       Width := 107;
@@ -559,19 +1041,23 @@ begin
       Height := 18;
       Caption := 'Help';
       NumGlyphs := 1;
-      TabOrder := 7;
+      TabOrder := 7;       
+      OnClick := @_DontUse_OSI_Form_RS2_ScriptSetup_btnHelpClick;
     end;
   end;
 end;
 
+// Main Form - Show Modal 
 function _DontUse_OSI_Form_RS2_ScriptSetup_ShowModal: Boolean;
 begin
   Result := OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.ShowModal = mrOk;
 end;
 
+// Main Form - Run - Will use Show Modal, and Init then afterwards if script started then will Setup OSI and Login
 function OSI_Form_RS2_ScriptSetup_Run: Boolean;
 begin
   Result := OSI_FormRun('_DontUse_OSI_Form_RS2_ScriptSetup_Init', '_DontUse_OSI_Form_RS2_ScriptSetup_ShowModal', OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup);
+  OSI_Form_RS2_ScriptSetup.OSI_Form_RS2_ScriptSetup.OnClose := nil;  
   if _DontUse_OSI_Form_RS2_ScriptSetup_ScriptStarted then
   begin
     SetupOSI;
