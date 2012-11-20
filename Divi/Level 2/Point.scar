@@ -28,21 +28,16 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function PointsNotInTPA(TPA: TPointArray): TPointArray;
-Contributors: Wanted, Freddy.
+Contributors: Wanted, Freddy, LordJashin.
 Description: Finds empty points in TPA bounds.
 Date Created: November 18th, 2011. By Wanted
-Last Modified: September 11th, 2012. By Freddy
+Last Modified: November 20th, 2012. By LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PointsNotInTPA(TPA: TPointArray): TPointArray;
 begin
-  {$IFDEF SCAR336_UP}
-    Result := CopyTPA(TPA);
-    InvertTPA(Result);
-  {$ELSE}
-    Result := TPAFromBox(TPABounds(TPA));
-    TPAFilterPoints(Result, TPA);
-  {$ENDIF}
+  Result := TPAFromBox(TPABounds(TPA));
+  TPAFilterPoints(Result, TPA);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -137,11 +132,7 @@ procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
 begin
   SortATPABySize(ATPA);
   if (BigFirst) then
-    {$IFDEF SCAR336_UP}
-      ReverseATPA(ATPA);
-    {$ELSE}
-      InvertATPA(ATPA);
-    {$ENDIF}
+    InvertATPA(ATPA);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
