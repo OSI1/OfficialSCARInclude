@@ -36,8 +36,8 @@ Last Modified: November 20th, 2012. By LordJashin
 
 function PointsNotInTPA(TPA: TPointArray): TPointArray;
 begin
-  Result := TPAFromBox(TPABounds(TPA));
-  TPAFilterPoints(Result, TPA);
+  Result := CopyTPA(TPA);
+  InvertTPA(Result);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -132,7 +132,7 @@ procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
 begin
   SortATPABySize(ATPA);
   if (BigFirst) then
-    InvertATPA(ATPA);
+    ReverseATPA(ATPA);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

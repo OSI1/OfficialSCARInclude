@@ -37,7 +37,7 @@ begin
   {$ENDIF}
   P := RRectanglePoint(B1.X1, B1.Y1, B1.X2, B1.Y2);   
   if (not (MouseSpeed = 0)) then
-    MoveMouseEx(P.X, P.Y, 0, 0, MouseSpeed)
+    MoveMouseEx(P.X, P.Y, MouseSpeed)
   else
     MoveMouse(P.X, P.Y);
 end;
