@@ -8,6 +8,7 @@
  * procedure DebugTPA(TPA: TPointArray);
  * procedure DebugTBA(TBA: TBoxArray);
  * procedure DebugTB(TB: TBox);
+ * procedure DebugBitmaps(BmpArr: array of TSCARBitmap; Interval: Integer; HideDebugWndAfter: Boolean);
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -182,4 +183,29 @@ Last Modified: October 22nd, 2011. By Wanted
 procedure DebugTB(TB: TBox);
 begin
   DebugTBA([TB]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DebugBitmaps(BmpArr: array of TSCARBitmap; Interval: Integer; HideDebugWndAfter: Boolean);
+Contributors: LordJashin
+Description: Debugs multiple Bitmaps at a certain interval. Allows to hide Debug window afterwards
+Date Created: November 19th, 2012. By LordJashin.
+Last Modified: November 19th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DebugBitmaps(BmpArr: array of TSCARBitmap; Interval: Integer; HideDebugWndAfter: Boolean);
+var
+  i, h: Integer;
+begin
+  h := high(BmpArr);
+  if (h < 0) then Exit;
+  for i := 0 to h do
+    if BitmapExists(BmpArr[i]) then
+    begin
+      DebugBitmap(BmpArr[i]);
+      wait(Interval);
+      if i = h then
+        if HideDebugWndAfter then                                                 
+          HideDebugImgWindow;
+    end;                                                                                            
 end;

@@ -2,9 +2,26 @@
                               Official SCAR Include
                                  Bitmap Routines
 --------------------------------------------------------------------------------
+ * function  BitmapExists(bmp: TSCARBitmap): Boolean;
  * function  GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
- * procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string);   
+ * procedure CreateBitmap(var bmp: TSCARBitmap; w, h: Integer; FromStr: string); 
+ * function  BitmapLine(BmpArr: array of TSCARBitmap; Vertical: Boolean): TSCARBitmap;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BitmapExists(bmp: TSCARBitmap): Boolean;
+Contributors: LordJashin, Bixby Sayz
+Description: Checks if Bitmap Exists, using Assigned and checking the width & height
+Date Created: November 19th, 2012. By LordJashin.
+Last Modified: November 19th, 2012. By Bixby Sayz.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BitmapExists(bmp: TSCARBitmap): Boolean;
+begin
+  Result := False;             
+  if Assigned(bmp) then
+    Result := ((bmp.Width > 0) and (bmp.Height > 0));
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetBitmapSize(bmp: TSCARBitmap; var width, height: Integer): Boolean;
@@ -45,4 +62,57 @@ begin
   except
     OSI_WriteAndLog('Failed to Create Bitmap');
   end;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BitmapLine(BmpArr: array of TSCARBitmap; Vertical: Boolean): TSCARBitmap;
+Contributors: LordJashin
+Description: Puts bitmaps side by side in a line either horizontally or vertically depending on Vertical boolean
+             There must be 2 or more bitmaps for this to do anything
+Date Created: November 19th, 2012. By LordJashin.
+Last Modified: November 19th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BitmapLine(BmpArr: array of TSCARBitmap; Vertical: Boolean): TSCARBitmap;
+var
+  i, j, w, h, x, y: Integer;
+  b, bw, bh: TIntArray;
+begin
+  Result := TSCARBitmap.Create('');
+  h := high(BmpArr);
+  if (h < 1) then Exit;
+  for i := 0 to h do
+    if BitmapExists(BmpArr[i]) then
+    begin
+      SetLength(b, j + 1);
+      SetLength(bw, j + 1);
+      SetLength(bh, j + 1);
+      b[j] := i;  
+      bw[j] := BmpArr[i].Width;
+      bh[j] := BmpArr[i].Height;
+      Inc(j);      
+    end;                     
+  if ((j - 1) < 1) then Exit;
+  if not Vertical then
+    begin
+      h := TIAMax(bh);
+      w := TIASum(bw);
+    end
+  else                             
+    begin
+      h := TIASum(bh);
+      w := TIAMax(bw);      
+    end;
+  Result.SetSize(w, h);
+  for i := 0 to (j - 1) do                                             
+    if not Vertical then
+      begin
+        BmpArr[b[i]].DrawTo(Result, x, y);
+        x := x + BmpArr[b[i]].Width;
+      end
+    else                           
+      begin
+        BmpArr[b[i]].DrawTo(Result, x, y);
+        y := y + BmpArr[b[i]].Height;        
+      end;    
 end;

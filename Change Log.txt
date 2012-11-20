@@ -1,5 +1,11 @@
 ﻿LordJashin - 11\19\2012:
 
+- Added function  OSI_Path
+- Added function  BitmapExists 
+- Added function  BitmapLine
+- Added function  SetBitmapAsClient
+- Added procedure DebugBitmaps
+
 - Removed CreateBitmap & CreateBitmaps functions
 - Added more testing stuff
 - Updated form, but it throws an error when you close SCAR

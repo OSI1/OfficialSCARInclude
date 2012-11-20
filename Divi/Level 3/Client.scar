@@ -3,9 +3,10 @@
                                  Client Routines
 --------------------------------------------------------------------------------
  * function  FindWindowEx(Title: string; CaseSensitive, PartialMatch: Boolean): HWND;
+ * function  SetBitmapAsClient(bmp: TSCARBitmap): Boolean;
  * procedure SetDesktopWindowAsClient;
  * procedure SetSCARWindowAsClient;
- * function  SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
+ * function  SetClientBox(Client1: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
  * procedure SCARCaptionSet(Title: string);
  * procedure SCARCaptionReset; 
  * procedure SCARMoveToTray; 
@@ -37,6 +38,27 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetBitmapAsClient(bmp: TSCARBitmap): Boolean;
+Contributors: LordJashin
+Description: Will set the bitmap as the client for SCAR. All SCAR's searching
+             functions will work on this. But none of the input functions will e.g. MoveMouse
+Date Created: November 19th, 2012. By LordJashin.
+Last Modified: November 19th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetBitmapAsClient(bmp: TSCARBitmap): Boolean;
+var
+  BmpClient: TSCARBitmapClient;
+begin
+  Result := False;
+  if not BitmapExists(bmp) then Exit;
+  BmpClient := TSCARBitmapClient.Create(bmp);
+  SetClient(BmpClient);
+  if Assigned(BmpClient) then
+    Result := True;    
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SetDesktopWindowAsClient;
 Contributors: LordJashin
 Description: Sets the Desktop Window (GetDesktopWindow) as the client for SCAR
@@ -63,22 +85,22 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
+function SetClientBox(Client1: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
 Contributors: LordJashin
 Description: Sets the Clients box (ImageArea, and InputArea)
 Date Created: October 12th, 2012. By LordJashin.
 Last Modified: October 12th, 2012. By LordJashin.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function SetClientBox(Client: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
+function SetClientBox(Client1: TSCARClient; cX1, cY1, cX2, cY2: Integer): Boolean;
 begin
   Result := False;
-  if not Client.Exists then Exit;
-  Client.Update;  
-  with Client.ImageArea do
-    Client.ImageArea := Box(cX1, cY1, cX2, cY2);     
-  with Client.InputArea do
-    Client.InputArea := Box(cX1, cY1, cX2, cY2);
+  if not Client1.Exists then Exit;
+  Client1.Update;  
+  with Client1.ImageArea do
+    Client1.ImageArea := Box(cX1, cY1, cX2, cY2);     
+  with Client1.InputArea do
+    Client1.InputArea := Box(cX1, cY1, cX2, cY2);
   Result := True;
 end;
 

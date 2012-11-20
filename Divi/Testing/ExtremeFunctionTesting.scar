@@ -66,26 +66,21 @@ end;
 procedure TestSpeed;
 var
   Bmp: TSCARBitmap;
-  Client1: TSCARWindowClient;          
+  BmpClient: TSCARBitmapClient;          
 begin
   Bmp := TSCARBitmap.Create('');
   Bmp.SetSize(50, 50);
   Bmp.Clear(ClRed);
-  DebugBitmap(Bmp);        
-  wait(2000);                                      
-  Client1 := TSCARWindowClient.Create(FindWindowEx('Debug Image', false, true));  
-
-  Client1.ClientArea := True;
-  SetClient(Client1);  
-  Client1.Activate;                                                          
-  wait(1000);      
+  BmpClient := TSCARBitmapClient.Create(Bmp);
+  DebugBitmap(Bmp);                          
+  SetClient(BmpClient);
+  wait(500);                                     
   //                
-  WriteLn(GetColor(1, 1));
   functHigh := 2; 
   for functIndex := 0 to functHigh do
     WriteLn(TimeFunct(@SmallOperationsTest));
   //  
-  wait(1000);      
+  wait(500);      
   HideDebugImgWindow;
   Bmp.Free;   
 end;

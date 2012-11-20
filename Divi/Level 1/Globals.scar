@@ -3,7 +3,8 @@
                                  Global Routines
 --------------------------------------------------------------------------------
  * procedure OSI_ShowLastExecptMsg;
- * procedure HandleOSIException;
+ * procedure HandleOSIException;                  
+ * function  OSI_Path: string;
  * var  IsOSISetup
  * type TOSI_ScriptInfo        
  * type TOSI_Log
@@ -66,6 +67,19 @@ begin
   OSI_AutoSaveLog;  
   RaiseLastException;
   TerminateScript;   
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OSI_Path: string;
+Contributors: LordJashin
+Description: Returns the location of OSI based on Includes Path
+Date Created: November 19th, 2012. By LordJashin.
+Last Modified: November 19th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OSI_Path: string;
+begin
+  Result := IncludesPath + 'OSI\';
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
