@@ -23,23 +23,22 @@ var
   functIndex: Integer; // For Function Speed Testing
   functHigh: Integer;
   functName: string;  
+                      
+procedure DebugBitmapAndSetAsClient(Bmp: TSCARBitmap; Interval: Integer);
+begin
+  DebugBitmap(Bmp);
+  SetBitmapAsClient(Bmp);                                              
+  wait(Interval);
+end;
   
-  DTM, Color: Integer;
-  Bmp: TSCARBitmap;
-  TPA: TPointArray;  
-  TIA: TIntArray;
-  TEA: TExtArray;  
-  ColorArr: T2DIntArray;
-  TPAarr: T2DPointArray;
-
 // Time a function in seconds or if below 1 second in milliseconds and return in string the time it took to run Funct
 function TimeFunct(Func: function: Boolean): string;
 var
   i: Integer;
 begin
-  i := GetTimeRunning;
+  i := GetSystemTime;
   Func();
-  i := GetTimeRunning - i;   
+  i := GetSystemTime - i;   
   if (i < 1000) then
     Result := IntToStr(i) + ' msc'
   else 
@@ -50,7 +49,7 @@ end;
 // Small operations, and functions
 function SmallOperationsTest: Boolean;
 var
-  x, y, Color: Integer;
+  x, y: Integer;
 begin
   case functIndex of
     0: begin GetColor(50, 50); 
@@ -59,33 +58,102 @@ begin
              functName := 'CountColor(ClRed, 0, 0, 50, 50)         :'; end;
     2: begin FindColor(x, y, ClRed, 0, 0, 50, 50);
              functName := 'FindColor(x, y, ClRed, 0, 0, 50, 50)    :'; end;
-  end;       
+    3: begin SimilarColors(ClRed, 300, 0); 
+             functName := 'SimilarColors(ClRed, 300, 0)            :'; end;
+    4: begin GetClosestColor(ClRed, [257, 254, 256]);               
+             functName := 'GetClosestColor(ClRed, [257, 254, 256]) :'; end;
+  end;                                                                     
   Result := True;
 end;
 
 procedure TestSpeed;
 var
-  Bmp: TSCARBitmap;
-  BmpClient: TSCARBitmapClient;          
+  Bmp: TSCARBitmap;          
 begin
   Bmp := TSCARBitmap.Create('');
-  Bmp.SetSize(50, 50);
+  Bmp.SetSize(51, 51);
   Bmp.Clear(ClRed);
-  BmpClient := TSCARBitmapClient.Create(Bmp);
-  DebugBitmap(Bmp);                          
-  SetClient(BmpClient);
-  wait(500);                                     
-  //                
-  functHigh := 2; 
+  DebugBitmapAndSetAsClient(Bmp, 0);  
+  functHigh := 4;
   for functIndex := 0 to functHigh do
-    WriteLn(TimeFunct(@SmallOperationsTest));
-  //  
-  wait(500);      
+    WriteLn(TimeFunct(@SmallOperationsTest));      
   HideDebugImgWindow;
   Bmp.Free;   
 end;
 
+{
+Before, and after bitmaps of everything
+-------------------------------------------
+TPA sorting, tolerance, finding, everything
+
+
+}
+
+function OffsetTPA2(TPA: TPointArray; XOffset, YOffset: Integer): TPointArray;
+begin
+  Result := TPA;
+  OffsetTPA(Result, XOffset, YOffset);
+end;
+
+procedure BlinkDebugBitmap(Bmp: TSCARBitmap; TPA: TPointArray; Text: string; Color, Times, Interval: Integer);
+var
+  i, h, Verdana: Integer;
+  Bmp2, Bmp3: TSCARBitmap;
+  TPA2: TPointArray;
+begin
+  if not BitmapExists(Bmp) then Exit;
+  TPA2 := TPA;                                                               
+  if (Text <> '') then
+  begin 
+    Verdana := LoadCharsFromFont2('Verdana', 8, false, false, false, false);
+    Bmp3 := CreateBitmapFromText(Text, Verdana, ClWhite);
+    h := Bmp3.Height;
+    OffsetTPA(TPA2, 0, h);    
+  end;
+  repeat                              
+    Bmp2 := TSCARBitmap.Create('');
+    Bmp2.SetSize(Bmp.Width, Bmp.Height + h);
+    if (Text <> '') then
+      Bmp3.DrawTo(Bmp2, 0, 0);
+    Bmp.DrawTo(Bmp2, 0, h);
+    DebugBitmap(Bmp2);
+    Bmp2.SetPixels(TPA2, Color);        
+    wait(Interval);     
+    DebugBitmap(Bmp2);                                 
+    wait(Interval);
+    Bmp2.Free;            
+    Inc(i);
+  until (i = Times);
+  if (Text <> '') then        
+    Bmp3.Free;
+end;
+
+procedure BlinkDebugBitmaps(BmpArr: array of TSCARBitmap; TPA: TPointArray; Text: string; Color, Times, Interval: Integer; Vertical: Boolean);
+var
+  Bmp: TSCARBitmap;
+begin
+  Bmp := BitmapLine(BmpArr, Vertical);
+  BlinkDebugBitmap(Bmp, TPA, Text, Color, Times, Interval);
+end;
+
+procedure TestStuff;
+var
+  Bmp, Bmp2: TSCARBitmap;                   
+  TPA, TPA2: TPointArray;
+begin
+  Bmp := TSCARBitmap.Create('deNrt3LGN2zAUgGH1GSDdASkyQJob6DKI1/AmGSBImXGCw1VO6lCAH54fKVL+frA9nyB/jR8p/dp+bDdJkiRJkqTnaIvlRgkn4SScJJyEk6al8uf7S2QhJ5yEk3DCCSechJNmplK1kMMJJ+EknHDCCSeccFLcyXgqI8lRhxNOOOGEE07CCSeccDofp5/fPrdrUU4fv7+2CyeccMIJJ5xwEk444YQTTjjpwbnTrrFjye1SuSvH3AknnHDCCSechBNOOOH0DO1SGUyukAo8OOGEE07CSTjhhBNOTzgo2GXwtn36b+UOZrefnKZyaQqOQXzpOOGEE0444SSccMIJp6WpRB7vDQ4K2j9sybUr+HxxZObQImyBGR3ghBNOOOGEE0444YQTTks7Sb+UKcgpQiV9kRGZEXLBCcNgcrN5xgknnHDCCSeccMIJJ5zm2aXNrTSnqtJv3M3NJXb/Y9eZQ+Rm4oQTTjjhhBNOOOGEE0444YRTHE/kvqVXUN379cvdNZjT4FdORR5M3j3ljhNOOOGEE0444YQTTjjh1JtTobocufRZ8UIqkStPq8sBqzrVgBNOOOGEE0444YQTTjhNy+mSbUJyhSraWxdxUnsNuaFH8A1XOOGEE0444YQTTjjhhNO6nNJ4XpuWIBccAuReQjXYSfAacMIJJ5xwwgknnHDCCafTc3qNNZLcJOr6cer3+qxHzhIngOGEE0444YQTTjjhhBNOOOH0DJyue/Ujt8oIq/AR465UIocccMIJJ5xwwgknnHDCCaelObUFv8ocsDORK9zi70olgid98AAnnHDCCSeccMIJJ5xwmpNTcFM4ByyN8PAd58h7kw53EqdStVN8VxdOOOGEE0444YQTTjjhdAinCLDdcirS+8uDZw6FnKqcFFJJT0JKnhTGCSeccMIJJ5xwwgknnAZwKlRXuL88+LxxmtPhv+7Tm9e3Q8MJJ5xwwgknnHDCCSeccMJpdU4TjrDSA6uqSdS/NSGV21nCCSeccMIJJ5xwwgknnFZXVwis3+ggfYD8xL/uccIJJ5yEE0444YQTTnqQXHpQsGVrgfl1jxNOOOEknHDCCSeccFL5jnPXbxMVnHASTsIJJ5xwwgknSZIkSZIkSZIkSZIkSZIkSZIk6Rz9BYCmQ9M=');
+  Bmp2 := Bmp.Clone;       
+  SetBitmapAsClient(Bmp);
+  FindColorsEx(TPA, [2477561], 0, 0, Bmp.Width, Bmp.Height);
+  TPA2 := CopyTPA(TPA);
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'FindColorsEx(TPA, [2477561], 0, 0, Bmp.Width, Bmp.Height)', clRed, 10, 500, False);    
+  TPAEdge(TPA2);
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA2, Bmp.Width, 0), 'TPAEdge(TPA)', clRed, 10, 500, False);            
+  Bmp.Free;  
+end;
+
 begin
   ClearDebug;           
-  TestSpeed;
+  TestSpeed;         
+  TestStuff;
 end.
