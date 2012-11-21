@@ -1,0 +1,383 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+                              Ability Book Routines
+--------------------------------------------------------------------------------
+
+ * function OpenAbilityBook(): Boolean;
+ * function GetAbilityBookTabBounds(const Book: Integer): TBox;
+ * function GetAbilityTabBounds(const Tab: Integer): TBox;
+ * function GetAbilityIconBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
+ * function GetAbilityBook(): Integer;
+ * function SetAbilityBook(const Book: Integer): Boolean;
+ * function GetAbilityTab(): Integer;
+ * function SetAbilityTab(const Tab: Integer): Boolean;
+ * function ClickAbilityIcon(const Slot: Integer; const ClickType: ClickActions): Boolean;
+
+With the introduction of the Evolution of Combat weapons have lost their special
+attacks. These have been replaced with abilities. These new abilities have been
+combined with the Magic Tab into one new tab the Ability Book. This replaces the
+old Magic Tab.
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OpenAbilityBook(): Boolean;
+Contributors: Bixby Sayz
+Description: Switches gametab to ability book.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OpenAbilityBook(): Boolean;
+begin
+  Result := (GetCurrentTab() = Tab_Ability);
+  if not Result then
+    Result := SetGameTab(Tab_Ability);
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAbilityBookTabBounds(const Book: Integer): TBox;
+Contributors: Bixby Sayz
+Description: Calculates bounds of ability book tab (1st row of tabs).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAbilityBookTabBounds(const Book: Integer): TBox;
+var
+  Tmp: Integer;  // Used for calculations.
+begin
+  Tmp := (Book * 47);
+  Result := Box((Tmp + 554), 211, (Tmp + 588), 237); 
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAbilityTabBounds(const Tab: Integer): TBox;
+Contributors: Bixby Sayz
+Description: Calculates bounds of ability tab (2nd row of tabs).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAbilityTabBounds(const Tab: Integer): TBox;
+var
+  Tmp: Integer;  // Used for calculations.
+begin
+  Tmp := ((Tab mod 4) * 47);
+  Result := Box((Tmp + 557), 249, (Tmp + 584), 276);
+  // Just to make life fun the leftmost slot is 2 pixels wider.
+  if (Tab = 0) then
+    IncEx(Result.X2, 2);
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAbilityIconBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
+Contributors: Bixby Sayz
+Description: Calculates bounds of ability/spell icon.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Note: This is only accurate if the ability book is scrolled all the way up.
+Note2: Every ability book/tab is the same except for combat spells. A different
+       calculation is required for them.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAbilityIconBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
+var
+  XTmp: Integer;  // Used for calculations.
+  YTmp: Integer;  // Used for calculations.
+begin
+  Result := Box(0, 0, 0, 0);
+  case CombatSpell of
+    True: begin
+            if not InRange(Slot, 0, 23) then
+              Exit;
+              XTmp := ((Slot mod 4) * 41);
+              YTmp := ((Slot div 4) * 33);
+              Result := Box((XTmp + MIX1 + 1), (YTmp + MIY1 + 76), (XTmp + MIX1 + 32), Min((YTmp + MIY1 + 107), (MIY2 + 5)));
+          end;
+    False: begin
+             if not InRange(Slot, 0, 19) then
+               Exit;
+               XTmp := ((Slot mod 4) * 44);
+               YTmp := ((Slot div 4) * 36);
+               Result := Box((XTmp + MIX1 + 5), (YTmp + MIY1 + 80), (XTmp + MIX1 + 34), Min((YTmp + MIY1 + 109), MIY2));
+           end;
+  end;  
+end;
+
+    
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAbilityBook(): Integer;
+Contributors: Bixby Sayz
+Description: Returns active ability book (1st row of tabs).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+    
+function GetAbilityBook(): Integer;
+var
+  TabBounds: TBox;  // Bounds of current tab.
+  Book: Integer;    // Loop counter.
+begin
+  Result := (-1);
+  if not LoggedIn() then
+    Exit;
+  
+  // Make sure ability book is open.
+  if not OpenAbilityBook() then
+    Exit;
+    
+  // Loop through ability books checking color to find active one.
+  for Book := 0 to 3 do
+  begin
+    TabBounds := GetAbilityBookTabBounds(Book);
+
+    // Inactive books have a grey line along the bottom.
+    if (GetColor(TabBounds.X2, (TabBounds.Y2 + 1)) = 8816262) then
+      Continue;
+    
+    // If gray line is missing this is active book.  
+    Result := Book;
+    Exit;  
+  end;
+end;
+
+    
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetAbilityBook(const Book: Integer): Boolean;
+Contributors: Bixby Sayz
+Description: Sets active ability book (1st row of tabs).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+    
+function SetAbilityBook(const Book: Integer): Boolean;
+var
+  TabBounds: TBox;  // Bounds of tab.
+  T: Integer;       // Time counter. 
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+  if not InRange(Book, 0, 3) then
+    Exit;
+    
+  // Make sure ability book is open.
+  if not OpenAbilityBook() then
+    Exit;
+
+  // If book already active we are done.
+  Result := (GetAbilityBook() = Book);
+  if Result then
+    Exit;
+    
+  // Get bounds of tab and click on it.
+  TabBounds := GetAbilityBookTabBounds(Book);
+  MouseBox(TabBounds.X1, TabBounds.Y1, TabBounds.X2, TabBounds.Y2, ClickLeft);
+  
+  // Wait for ability book to change.
+  T := GetSystemTime() + RR(7500, 10000);
+  repeat
+    WaitRR(25, 50);
+    if (GetSystemTime() > T) then
+      Exit;
+    Result := (GetAbilityBook() = Book);
+  until Result;
+end;    
+
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAbilityTab(): Integer;
+Contributors: Bixby Sayz
+Description: Gets active ability tab (2nd row of tabs).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+    
+function GetAbilityTab(): Integer;
+var
+  Book: Integer;    // Active ability book. 
+  Border: Integer;  // Color of active tab border.
+  TabBounds: TBox;  // Bounds of current tab.
+  Tab: Integer;     // Loop counter.
+begin
+  Result := (-1);
+  if not LoggedIn() then
+    Exit;
+  
+  // Make sure ability book is open.
+  if not OpenAbilityBook() then
+    Exit;
+  
+  // Get the active ability book and determine border color of tab.
+  Book := GetAbilityBook();
+  case Book of
+    0: Border := 6872061;
+    1: Border := 2804853;
+    2: Border := 16695068;
+    3: Border := 2044876;
+  else
+    Exit; 
+  end;  
+
+  // Loop through tabs checking for border color to find active one.
+  for Tab := 0 to 3 do
+  begin
+    TabBounds := GetAbilityTabBounds(Tab);
+
+    // Active tab will have a border around it.
+    if (GetColor((TabBounds.X1 + 10), (TabBounds.Y1 - 3)) = Border) then
+    begin
+      Result := Tab;
+      Exit;
+    end;
+  end;
+end;
+
+      
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetAbilityTab(const Tab: Integer): Boolean;
+Contributors: Bixby Sayz
+Description: Sets active ability tab (2nd row of tabs).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetAbilityTab(const Tab: Integer): Boolean;
+var
+  TabBounds: TBox;  // Bounds of ability tab.
+  T: Integer;       // Time counter.
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+  if not InRange(Tab, 0, 3) then
+    Exit;
+    
+  // Make sure ability book is open.
+  if not OpenAbilityBook() then
+    Exit;
+
+  // If tab already active we are done.
+  Result := (GetAbilityTab() = Tab);
+  if Result then
+    Exit;
+    
+  // Get bounds of tab and click on it. Make sure it exists first (not all
+  // ability books have 4 tabs).
+  TabBounds := GetAbilityTabBounds(Tab);
+  if (CountColorTol(1644847, TabBounds.X1, TabBounds.Y1, TabBounds.X2, TabBounds.Y2, 59) > 700) then
+    Exit; 
+  MouseBox(TabBounds.X1, TabBounds.Y1, TabBounds.X2, TabBounds.Y2, ClickLeft);
+  
+  // Wait for ability tab to change.
+  T := GetSystemTime() + RR(7500, 10000);
+  repeat
+    WaitRR(25, 50);
+    if (GetSystemTime() > T) then
+      Exit;
+    Result := (GetAbilityTab() = Tab);
+  until Result;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickAbilityIcon(const Slot: Integer; const ClickType: ClickActions): Boolean;
+Contributors: Bixby Sayz
+Description: Clicks on ability/spell icon.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+Note: This is only accurate if the ability book is scrolled all the way up.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickAbilityIcon(const Slot: Integer; const ClickType: ClickActions): Boolean;
+var
+  CombatSpell: Boolean;  // Is this a combat spell?
+  SlotBounds: TBox;      // Bounds of ability/spell icon.
+  MousePos: TPoint;      // Current mouse position.
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+    
+  // Make sure ability book is open.
+  if not OpenAbilityBook() then
+    Exit;
+  
+  // Click on ability/spell.
+  CombatSpell := ((GetAbilityBook() = 2) and (GetAbilityTab() = 1)); 
+  SlotBounds := GetAbilityIconBounds(Slot, CombatSpell);
+  if MouseInBox(SlotBounds) then
+  begin
+    GetMousePos(MousePos.X, MousePos.Y);
+    SlotBounds := Box(MousePos.X, MousePos.Y, MousePos.X, MousePos.Y);
+  end;
+  MouseBox(SlotBounds.X1, SlotBounds.Y1, SlotBounds.X2, SlotBounds.Y2, ClickType);
+  Result := True;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ScrollAbilityBook(const Up: Boolean): Boolean;
+Contributors: Bixby Sayz
+Description: Scrolls ability book up/down.
+Date Created: November 19th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ScrollAbilityBook(const Up: Boolean): Boolean;
+var
+  Color: Integer;    // Color to search for.
+  ColorPos: TPoint;  // Where to search for color.
+  ClickPos: TPoint;  // Position to click.
+  T: Integer;        // Time counter.
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure ability book is open.
+  if not OpenAbilityBook() then
+    Exit;
+
+  // If the scroll bar doesn't exist we are done. Check for one of the stripes
+  // in the scroll bar mid way down.
+  Result := not (GetColor((MIX1 + 172), (MIY1 + 169)) = 4814228);
+  if Result then
+    Exit;
+
+  // Setup searching.
+  if Up then
+  begin
+    Color := 10407641;
+    ColorPos := Point(MIX2, (MIY1 + 92));
+    ClickPos := Point(RR((MIX2 - 5), (MIX2 + 2)), RR((MIY1 + 88), (MIY1 + 92)));
+  end
+  else
+  begin
+    Color := 10341848;
+    ColorPos := Point(MIX2, (MIY1 + 237));
+    ClickPos := Point(RR((MIX2 - 5), (MIX2 + 2)), RR((MIY1 + 238), (MIY1 + 242)));
+  end;
+
+  // Is scroll bar already scrolled up/down?
+  Result := (GetColor(ColorPos.X, ColorPos.Y) = Color);
+  if Result then
+    Exit;
+    
+  // Hold mouse down until scroll bar all the way up/down.
+  MouseBtnDown(ClickPos.X, ClickPos.Y, mbLeft);
+  T := GetSystemTime() + RR(2500, 3500);
+  repeat
+    WaitRR(75, 125);
+    if (GetSystemTime() > T) then
+      Exit;
+    Result := (GetColor(ColorPos.X, ColorPos.Y) = Color);
+  until Result;
+  MouseBtnUp(ClickPos.X, ClickPos.Y, mbLeft);
+end;

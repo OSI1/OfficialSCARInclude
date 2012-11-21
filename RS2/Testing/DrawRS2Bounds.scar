@@ -3,7 +3,7 @@
                                Draw RS2 Global Bounds
 --------------------------------------------------------------------------------
  * procedure DrawGlobalsBounds;                  
-   Last Modified: October 6th, 2012. By LordJashin. RS2 Build 735.
+   Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE RS2Debug}
@@ -42,14 +42,15 @@ procedure DrawGlobalsBounds;
 var
   ATPA: T2DPointArray;                                  
 begin
-  SetLength(ATPA, 8);
+  SetLength(ATPA, 9);
   ATPA[0] := [Point(RSX1, RSY1), Point(RSX2 - 1, RSY2 - 1)]; // RS2 Client Bounds
   ATPA[1] := [Point(MSX1, MSY1), Point(MSX2, MSY2)];         // Main Screen Bounds
   ATPA[2] := [Point(MMX1, MMY1), Point(MMX2, MMY2)];         // Mini Map Bounds
   ATPA[3] := [Point(MIX1, MIY1), Point(MIX2, MIY2)];         // Inventory Bounds
   ATPA[4] := [Point(MCX1, MCY1), Point(MCX2, MCY2)];         // ChatBox Bounds
   ATPA[5] := [Point(MBX1, MBY1), Point(MBX2, MBY2)];         // Bank Bounds
-  ATPA[7] := [Point(MDX1, MDY1), Point(MDX2, MDY2)];         // Deposit Box Bounds   
+  ATPA[7] := [Point(MDX1, MDY1), Point(MDX2, MDY2)];         // Deposit Box Bounds 
+  ATPA[8] := [Point(MAX1, MAY1), Point(MAX2, MAY2)];         // Action Bar Bounds  
   SmartDebugATPABoundsEx(ATPA, True, False, True, True); 
 end;
 

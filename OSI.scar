@@ -92,7 +92,9 @@
   {$I RS2\Core\DepositBox.scar}
   {$I RS2\Core\Amount.scar}     
   {$I RS2\Core\NPC.scar}  
-  {$I RS2\Misc\Trading.scar}              
+  {$I RS2\Misc\Trading.scar}
+  {$I RS2\Core\AbilityBook.scar}
+  {$I RS2\Core\ActionBar.scar}              
   
 // RS2 Include Anit-Randoms, if def OSI_Color_Anti_Randoms
   {$IFDEF OSI_Color_Anti_Randoms}

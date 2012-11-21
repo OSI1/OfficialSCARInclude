@@ -1,4 +1,18 @@
-﻿LordJashin - 11\19\2012:
+﻿Bixby Says - 11\20\2012:
+
+Support for Evolution of Combat changes
+
+- New File - RS2\Core\AbilityBook.scar
+  - Deals with new Ability Book Tab which combines Magic Tab and abilities which
+    replace weapon Special Attacks.
+- New File - RS2\Core\ActionBar.scar
+  - Deals with new programmable Action Bar.  
+- Added Ability Book to list of game tabs in RS2\Core\Globals.scar
+- Added Action Bar constants to RS2\Core\Globals.scar
+- Updated OSI.scar to include AbilityBook.scar and ActionBar.scar
+- Updated RS2\Testing\DrawRS2Bounds.scar to display Action Bar bounds 
+
+LordJashin - 11\19\2012:
 
 - Added function  OSI_Path
 - Added function  BitmapExists 

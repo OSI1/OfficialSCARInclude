@@ -1,0 +1,649 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+                               Action Bar Routines
+--------------------------------------------------------------------------------
+ 
+ * function IsActionBarOpen(): Boolean;
+ * function ToggleActionBar(const Open: Boolean): Boolean;
+ * function IsActionBarLocked(): Boolean;
+ * function ToggleActionBarLock(const Lock: Boolean): Boolean;
+ * function GetActionBar(): Integer;
+ * function SetActionBar(const ActionBar: Integer; const UseKeyboard: Boolean): Boolean;
+ * function GetActionBarSlotBounds(const Slot: Integer): TBox;
+ * function IsActionBarSlotEmpty(const Slot: Integer): Boolean;
+ * function FindEmptyActionBarSlot(): Integer;
+ * function EmptyActionBarSlot(const Slot: Integer): Boolean;
+ * function ClickActionBarSlot(const Slot: Integer; const ClickType: ClickActions): Boolean;
+ * function GetActionBarSlotKeyBind(const Slot: Integer): string;
+ * function SetActionBarSlotKeyBind(const Slot: Integer; const Key: string): Boolean;
+ * function SetActionBarSlotInvItem(const Slot, InvSlot: Integer): Boolean;
+ * function SetActionBarSlotAbility(const Slot, AbilitySlot: Integer): Boolean;
+ * function SwapActionBarSlots(const Slot1, Slot2: Integer): Boolean;
+ * function SelectTarget(const Target: TPoint; const LeftClick: Boolean): Boolean;
+
+ CURRENTLY BROKEN
+ * function GetActionBar(): Integer;
+ * function GetActionBarSlotKeyBind(const Slot: Integer): string;
+
+With the introduction of the Evolution of Combat a new Action Bar has been
+introduced sitting just above the chat box. The action bar has 12 slots that can
+be loaded with various abilities/spells and assigned a hot key (keybind) for
+quick access. Non members get 1 action bar, members get 5 for a total of 60
+slots. Only 1 action bar can active at a time.
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsActionBarOpen(): Boolean;
+Contributors: Bixby Sayz
+Description: Returns true if action bar is open.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsActionBarOpen(): Boolean;
+begin
+  // Count length of silver border on left side of action bar (4 pixels when
+  // closed, 63 when open).
+  Result := ((CountColor(13224393, (MAX1 - 2), MAY1, (MAX1 - 2), MAY2)) > 60);
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleActionBar(const Open: Boolean): Boolean;
+Contributors: Bixby Sayz
+Description: Opens/closes the action bar.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleActionBar(const Open: Boolean): Boolean;
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+    
+  if Open then
+  begin
+    Result := IsActionBarOpen();
+    if not Result then
+    begin
+      MouseBox((MAX2 - 12), (MAY2 - 3), MAX2, MAY2, ClickLeft);
+      Result := WaitFunc(@IsActionBarOpen, True, 25, 50, 7500, 10000);
+    end; 
+  end
+  else
+  begin
+    Result := (not IsActionBarOpen());
+    if not Result then
+    begin
+      MouseBox((MAX2 - 12), MAY1, MAX2, (MAY1 + 8), ClickLeft);
+      Result := WaitFunc(@IsActionBarOpen, False, 25, 50, 7500, 10000);
+    end; 
+  end; 
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsActionBarLocked(): Boolean;
+Contributors: Bixby Sayz
+Description: Returns true if action bar is locked.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsActionBarLocked(): Boolean;
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+    
+  // Check if left side of lock is solid (locked). Color is a lighter yellow if
+  // mouse is over lock so check for that too.
+  Result := TIAContains([5410986, 9764350], GetColor((MAX1 + 15), (MAY1 + 29)));
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleActionBarLock(const Lock: Boolean): Boolean;
+Contributors: Bixby Sayz
+Description: Locks/unlocks action bar.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleActionBarLock(const Lock: Boolean): Boolean;
+var
+  T: Integer;  // Time counter.
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+  
+  // Check if action bar already locked/unlocked.
+  Result := (IsActionBarLocked() = Lock); 
+  if Result then
+    Exit;
+     
+  // Click on lock button to lock/unlock action bar and wait for it to toggle.
+  MouseCircle(8, (MAX1 + 17), (MAY1 + 31), ClickLeft);
+  
+  // Wait for lock to toggle.
+  T := GetSystemTime() + RR(7500, 10000);
+  repeat
+    WaitRR(25, 50);
+    if (GetSystemTime() > T) then
+      Exit;
+    Result := (IsActionBarLocked() = Lock);
+  until Result;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetActionBar(): Integer;
+Contributors: Bixby Sayz
+Description: Returns current action bar (1 through 5).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Note: Currently broken. OSI lacks the proper font.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetActionBar(): Integer;
+begin
+// TO DO: Implement once OSI has a working font.
+  Result := 0;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function function SetActionBar(const ActionBar: Integer; const UseKeyboard: Boolean): Boolean;
+Contributors: Bixby Sayz
+Description: Sets current action bar (1 through 5).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Note: Non members are restricted to action bar 1. Members get all 5.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetActionBar(const ActionBar: Integer; const UseKeyboard: Boolean): Boolean;
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+  
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+
+  // Check if action bar is already current.
+  Result := (GetActionBar() = ActionBar);
+  if Result then
+    Exit;
+  
+  // Use keyboard shortcut to select action bar?
+  if UseKeyboard then
+  begin
+    VKeyDown(VK_SHIFT);
+    WaitRR(75, 100);
+    TypeSendEx(IntToStr(ActionBar), False);
+    WaitRR(25, 50);
+    VKeyUp(VK_SHIFT);
+  end
+   
+  // Otherwise right click on button and select desired action bar.
+  else
+  begin
+    MouseCircle(8, (MAX2 - 17), (MAY2 - 27), ClickRight);
+    ChooseOption(IntToStr(ActionBar));
+    if not WaitFunc(@OptionBoxExists, False, 25, 50, 1750, 2250) then
+      ChooseOption(IntToStr(ActionBar));
+  end;
+
+// TO DO: Change this once GetActionBar() is fixed.
+  // We will get the message "You can only use the 1st of the 5 action-bars on
+  // a non-members server." if this a non member account. We really should be
+  // reading the action bar number directly to see if we succeeded.
+  Result := (Pos('can only', GetChatTextEx(7, clBlack)) = 0);
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetActionBarSlotBounds(const Slot: Integer): TBox;
+Contributors: Bixby Sayz
+Description: Returns bounds of action bar slot (0 through 11).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetActionBarSlotBounds(const Slot: Integer): TBox;
+begin
+  Result := Box(0, 0, 0, 0);
+  if not InRange(Slot, 0, 11) then
+    Exit;
+  
+  Result.X1 := ((MAX1 + 42) + (Slot * 36));
+  Result.Y1 := (MAY1 + 30);
+  Result.X2 := ((MAX1 + 74) + (Slot * 36));
+  Result.Y2 := (MAY1 + 61);
+end;
+
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsActionBarSlotEmpty(const Slot: Integer): Boolean;
+Contributors: Bixby Sayz
+Description: Returns true if action bar slot (0 through 11) is empty.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsActionBarSlotEmpty(const Slot: Integer): Boolean;
+var
+  SlotBounds: TBox;  // Bounds of ability bar slot.
+begin
+  Result := False;
+  if not InRange(Slot, 0, 11) then
+    Exit;
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+    
+  // Count dots of red X present in empty slots.
+  SlotBounds := GetActionBarSlotBounds(Slot);
+  Result := (CountColor(59, SlotBounds.X1, SlotBounds.Y1, SlotBounds.X2, SlotBounds.Y2) = 20);
+end;
+
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsActionBarSlotReady(const Slot: Integer): Boolean;
+Contributors: Bixby Sayz
+Description: Returns true if action bar slot (0 through 11) is enabled and ready
+             to go.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsActionBarSlotReady(const Slot: Integer): Boolean;
+var
+  SlotBounds: TBox;  // Bounds of ability bar slot.
+begin
+  Result := False;
+  if not InRange(Slot, 0, 11) then
+    Exit;
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+    
+  // Check if icon is enabled. Inactive icons will be darkened out.
+  SlotBounds := GetActionBarSlotBounds(Slot);
+  Result := (CountColorTol(1644847, SlotBounds.X1, SlotBounds.Y1, SlotBounds.X2, SlotBounds.Y2, 59) < 1000)
+end;
+
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindEmptyActionBarSlot(): Integer;
+Contributors: Bixby Sayz
+Description: Finds first empty action bar slot (0 through 11). Returns -1 on not
+             found. 
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindEmptyActionBarSlot(): Integer;
+var
+  Slot: Integer;  // Loop counter.
+begin
+  Result := (-1);
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+  
+  // Loop through action bar slots until an empty one is found.
+  for Slot := 0 to 11 do
+    if IsActionBarSlotEmpty(Slot) then
+    begin
+      Result := Slot;
+      Exit;
+    end;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function EmptyActionBarSlot(const Slot: Integer): Boolean;
+Contributors: Bixby Sayz
+Description: Clears the contents of action bar slot (0 through 11) by dragging
+             item to trash button.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function EmptyActionBarSlot(const Slot: Integer): Boolean;
+var
+  SlotBounds: TBox;  // Bounds of ability bar slot.
+  T: Integer;        // Time counter.
+begin
+  Result := False;
+  if not InRange(Slot, 0, 11) then
+    Exit;
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+  
+  // Is slot already empty?
+  Result := IsActionBarSlotEmpty(Slot);
+  if Result then
+    Exit;
+  
+  // You cannot clear a slot when action bar is locked.
+  if IsActionBarLocked() then
+    Exit;
+      
+  // Left click on slot and drag to trash button.
+  SlotBounds := GetActionBarSlotBounds(Slot);
+  DragMouseBox(SlotBounds.X1, SlotBounds.Y1, SlotBounds.X2, SlotBounds.Y2, (MAX1 + 12), (MAY1 + 49), (MAX1 + 24), (MAY1 + 61), True);
+  
+  // Wait for slot to empty.
+  T := GetSystemTime() + RR(7500, 10000);
+  repeat
+    WaitRR(25, 50);
+    if (GetSystemTime() > T) then
+      Exit;
+    Result := IsActionBarSlotEmpty(Slot);
+  until Result;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickActionBarSlot(const Slot: Integer; const ClickType: ClickActions): Boolean;
+Contributors: Bixby Sayz
+Description: Click on action bar slot (0 through 11).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickActionBarSlot(const Slot: Integer; const ClickType: ClickActions): Boolean;
+var
+  SlotBounds: TBox;  // Bounds of ability bar slot.
+begin
+  Result := False;
+  if not InRange(Slot, 0, 11) then
+    Exit;
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+  
+  // Check if slot is empty.
+  if IsActionBarSlotEmpty(Slot) then
+    Exit;
+    
+  // Click on slot.
+  SlotBounds := GetActionBarSlotBounds(Slot);
+  MouseBox(SlotBounds.X1, SlotBounds.Y1, SlotBounds.X2, SlotBounds.Y2, ClickType);
+  Result := True;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetActionBarSlotKeyBind(const Slot: Integer): string;
+Contributors: Bixby Sayz
+Description: Returns key assigned to action bar slot (0 through 11).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Note: Currently broken. OSI lacks the proper font.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetActionBarSlotKeyBind(const Slot: Integer): string;
+var
+  KeyBinds: string;  // Default keybinds.
+begin
+  Result := '';
+  if not InRange(Slot, 0, 11) then
+    Exit;
+    
+// TO DO: Implement once OSI has a working font.
+  
+  // For now return the default keybinds.
+  KeyBinds := '1234567890-=';
+  Result := KeyBinds[Slot];
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetActionBarSlotKeyBind(const Slot: Integer; const Key: string): Boolean;
+Contributors: Bixby Sayz
+Description: Sets the key assigned to action bar slot (0 through 11).
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Note: If you select a key that is already bound to another slot it will succeed
+      and remove the keybinding from the other slot without warning.
+Note2: Valid keys: abcdefghijklmnopqrstuvwxyz
+                   ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                   1234567890-=/\[]#';,. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetActionBarSlotKeyBind(const Slot: Integer; const Key: string): Boolean;
+var
+  T: Integer;  // Time counter.  
+begin
+  Result := False;
+  if not InRange(Slot, 0, 11) then
+    Exit;
+  if (Pos(Key, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=/\[]#'';,.') = 0) then
+    Exit;
+    
+  // Right click on slot and select "Customise Keybind"
+  ClickActionBarSlot(Slot, ClickRight);
+  ChooseOptionMulti(['ustomise', 'ustom', 'eybind']);
+  if not WaitFunc(@OptionBoxExists, False, 25, 50, 1750, 2250) then
+    ChooseOptionMulti(['ustomise', 'ustom', 'eybind']);
+  
+  // Wait for prompt.
+  T := GetSystemTime() + RR(7500, 10000);
+  repeat
+    WaitRR(25, 50);
+    if (GetSystemTime() > T) then
+      Exit;
+  until (Pos('press', GetChatTextEx(7, clBlack)) > 0);
+
+  // Press key we wish to bind.
+  TypeSendEx(Key, False);
+  
+  // Wait for success message.
+  T := GetSystemTime() + RR(7500, 10000);
+  repeat
+    WaitRR(25, 50);
+    if (GetSystemTime() > T) then
+      Exit;
+    Result := (Pos('Success', GetChatTextEx(7, clBlack)) > 0);
+  until Result;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetActionBarSlotInvItem(const Slot, InvSlot: Integer): Boolean;
+Contributors: Bixby Sayz
+Description: Sets the contents of action bar slot (0 through 11) by dragging
+             inventory item to slot.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetActionBarSlotInvItem(const Slot, InvSlot: Integer): Boolean;
+var
+  SlotBounds: TBox;  // Bounds of ability bar slot.
+  ItemBounds: TBox;  // Bounds of inventory slot.
+begin
+  Result := False;
+  if not InRange(Slot, 0, 11) then
+    Exit;
+  if not InRange(InvSlot, 0, 27) then
+    Exit;
+  if not LoggedIn() then
+    Exit;
+    
+  // Get bounds of item and action bar slots.
+  SlotBounds := GetActionBarSlotBounds(Slot);
+  ItemBounds := GetItemBounds(InvSlot); 
+  
+  // Make sure action bar and inventory open.
+  if not ToggleActionBar(True) then
+    Exit;
+  if not SetGameTab(Tab_Inv) then
+    Exit;
+    
+  // Drag mouse from inventory item to action bar slot.
+  DragMouseBox(ItemBounds.X1, ItemBounds.Y1, ItemBounds.X2, ItemBounds.Y2, SlotBounds.X1, SlotBounds.Y1, SlotBounds.X2, SlotBounds.Y2, True);
+  Result := True;
+end;
+
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetActionBarSlotAbility(const Slot, AbilitySlot: Integer): Boolean;
+Contributors: Bixby Sayz
+Description: Sets the contents of action bar slot (0 through 11) by dragging
+             ability/spell to slot.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetActionBarSlotAbility(const Slot, AbilitySlot: Integer): Boolean;
+var
+  SlotBounds: TBox;      // Bounds of ability bar slot.
+  IconBounds: TBox;      // Bounds of ability/spell icon.
+  CombatSpell: Boolean;  // Is this a combat spell?
+begin
+  Result := False;
+  if not InRange(Slot, 0, 11) then
+    Exit;
+  if not LoggedIn() then
+    Exit;
+    
+  // Get bounds of item and action bar slots.
+  SlotBounds := GetActionBarSlotBounds(Slot);
+  CombatSpell := ((GetAbilityBook() = 2) and (GetAbilityTab() = 1)); 
+  IconBounds := GetAbilityIconBounds(Slot, CombatSpell);
+  if (IconBounds = Box(0, 0, 0, 0)) then
+    Exit;
+  
+  // Make sure action bar and ability book open.
+  if not ToggleActionBar(True) then
+    Exit;
+  if not OpenAbilityBook() then
+    Exit;
+
+  // Drag mouse from ability/spell to action bar slot.
+  DragMouseBox(IconBounds.X1, IconBounds.Y1, IconBounds.X2, IconBounds.Y2, SlotBounds.X1, SlotBounds.Y1, SlotBounds.X2, SlotBounds.Y2, True);
+  Result := True;
+end;
+
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SwapActionBarSlots(const Slot1, Slot2: Integer): Boolean;
+Contributors: Bixby Sayz
+Description: Swap contents of action bar slots.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SwapActionBarSlots(const Slot1, Slot2: Integer): Boolean;
+var
+  Slot1Bounds: TBox;   // Bounds of slot 1.
+  Slot2Bounds: TBox;   // Bounds of slot 2.
+  FirstSlot: Boolean;  // Drag from 1st slot to 2nd slot or vice versa?
+begin
+  Result := False;
+  if not (InRange(Slot1, 0, 11) and InRange(Slot2, 0, 11)) then
+    Exit;
+  if not LoggedIn() then
+    Exit;
+
+  // Make sure action bar is open.
+  if not ToggleActionBar(True) then
+    Exit;
+  
+  // Figure out whether to drag from 1st slot to 2nd slot, or the other way
+  // round. You can drag from an occupied slot to an empty slot, but not from an
+  // empty slot to an occupied slot. And of course they can't both be empty.
+  if IsActionBarSlotEmpty(Slot1) then
+    if IsActionBarSlotEmpty(Slot2) then
+      Exit
+    else
+      FirstSlot := False
+  else
+    FirstSlot := True;
+  
+  // You cannot swap slots when action bar is locked.
+  if IsActionBarLocked() then
+    Exit;
+      
+  // Drag from one slot to the other.
+  Slot1Bounds := GetActionBarSlotBounds(Slot1);
+  Slot2Bounds := GetActionBarSlotBounds(Slot2);
+  if FirstSlot then
+    DragMouseBox(Slot1Bounds.X1, Slot1Bounds.Y1, Slot1Bounds.X2, Slot1Bounds.Y2, Slot2Bounds.X1, Slot2Bounds.Y1, Slot2Bounds.X2, Slot2Bounds.Y2, True)
+  else
+    DragMouseBox(Slot2Bounds.X1, Slot2Bounds.Y1, Slot2Bounds.X2, Slot2Bounds.Y2, Slot1Bounds.X1, Slot1Bounds.Y1, Slot1Bounds.X2, Slot1Bounds.Y2, True);
+  Result := True;
+end;
+
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SelectTarget(const Target: TPoint; const LeftClick: Boolean): Boolean;
+Contributors: Bixby Sayz
+Description: Selects a combat target.
+Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SelectTarget(const Target: TPoint; const LeftClick: Boolean): Boolean;
+begin
+  Result := False;
+  if not LoggedIn() then
+    Exit;
+  if not PointInBox(Target, Box(MSX1, MSY1, MSX2, MSY2)) then
+    Exit;
+
+  // Click select target button.  
+  if IsActionBarOpen() then
+    MouseBox(MAX1, MAY1, (MAX1 + 12), (MAY1 + 8), ClickLeft)
+  else
+    MouseBox(MAX1, (MAY2 - 3), (MAX1 + 12), MAY2, ClickLeft);
+
+  // Click on target.
+  Mouse(Target.X, Target.Y, 0, 0, LeftClick);
+  if LeftClick then
+  begin
+    Result := True;
+    Exit;
+  end; 
+  
+  // Select "Select-target" from popup menu.
+  Wait(RandomRange(225, 275));
+  ChooseOption('-target');
+  if not WaitFunc(@OptionBoxExists, False, 25, 50, 1750, 2250) then
+    ChooseOption('-target');
+  Result := True;
+end;

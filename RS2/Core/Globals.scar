@@ -181,6 +181,25 @@ Explanation:
   MDPH = MDY2 - MDY1 + 1;         // Deposit Box Height         // 6/23/2012    LordJashin   718  
   MDPA = MDPW * MDPH;             // Deposit Box Area           // 6/23/2012    LordJashin   718
 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               Action Bar Constants 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  MAX1 = 4;                          // Action Bar Edge Points   // 11/18/2012  Bixby Sayz   742
+  MAY1 = 266;                                                    // 11/18/2012  Bixby Sayz   742
+  MAX2 = 514;                                                    // 11/18/2012  Bixby Sayz   742
+  MAY2 = 334;                                                    // 11/18/2012  Bixby Sayz   742
+  MACX = ((MAX1 + MAX2) div 2 + 1);  // Action Bar Center Point  // 11/18/2012  Bixby Sayz   742
+  MACY = ((MAY1 + MAY2) div 2 + 1);  // Rounded                  // 11/18/2012  Bixby Sayz   742
+  MACXe = ((MAX1 + MAX2) / 2);       // Action Bar Center Point  // 11/18/2012  Bixby Sayz   742
+  MACYe = ((MAY1 + MAY2) / 2);       // Not Rounded              // 11/18/2012  Bixby Sayz   742
+  MAPW = (MAX2 - MAX1 + 1);          // Action Bar Width         // 11/18/2012  Bixby Sayz   742
+  MAPH = (MAY2 - MAY1 + 1);          // Action Bar Height        // 11/18/2012  Bixby Sayz   742
+  MAPA = (MAPW * MSPH);              // Action Bar Pixel Area    // 11/18/2012  Bixby Sayz   742
+
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Skill_ Indexes
 Contributors: Wanted
@@ -243,7 +262,7 @@ const Game Tab Indexes
 Contributors: Dynamite, Wanted.
 Description: Index handles for Game RS2 tabs.
 Date Created: August 31st, 2011. By Dynamite & Wanted. RS2 Build 662.
-Last Modified: November 17th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -254,7 +273,8 @@ const
   Tab_Inv               = 4;
   Tab_Equip             = 5;
   Tab_Prayer            = 6;
-  Tab_Magic             = 7;
+  Tab_Magic             = 7;   // Legacy - Left in to avoid breaking scripts
+  Tab_Ability           = 7;   // Ability Book               // 11/18/2012  Bixby Sayz  742  
   Tab_Objectives        = 8;   // Legacy - Left in to avoid breaking scripts
   Tab_Store             = 8;   // Squeal of Fortune & Store  // 11/17/2012  Bixby Sayz  742
   Tab_Friends           = 9;
