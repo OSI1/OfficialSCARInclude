@@ -1,0 +1,77 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                           Speed of Functions Testing
+--------------------------------------------------------------------------------
+                       
+  Last Modified: November 22nd, 2012. By LordJashin. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$DEFINE OSIDEBUG}
+{$I ../../OSI.scar}
+
+var
+  functIndex: Integer; // For Function Speed Testing
+  functHigh: Integer;
+  functName: string;  
+                
+procedure DebugBitmapAndSetAsClient(Bmp: TSCARBitmap; Interval: Integer);
+begin
+  DebugBitmap(Bmp);
+  SetBitmapAsClient(Bmp);                                              
+  wait(Interval);
+end;
+  
+// Time a function in seconds or if below 1 second in milliseconds and return in string the time it took to run Funct
+function TimeFunct(Func: function: Boolean): string;
+var
+  i: Integer;
+begin
+  i := GetSystemTime;
+  Func();
+  i := GetSystemTime - i;   
+  if (i < 1000) then
+    Result := IntToStr(i) + ' msc'
+  else 
+    Result := IntToStr((i div 1000)) + ' secs';
+  Result := functName + ' ' + Result;
+end;
+
+// Small operations, and functions
+function SmallOperationsTest: Boolean;
+var
+  x, y: Integer;
+begin
+  case functIndex of
+    0: begin GetColor(50, 50); 
+             functName := 'GetColor(50, 50)                        :'; end;
+    1: begin CountColor(ClRed, 0, 0, 50, 50); 
+             functName := 'CountColor(ClRed, 0, 0, 50, 50)         :'; end;
+    2: begin FindColor(x, y, ClRed, 0, 0, 50, 50);
+             functName := 'FindColor(x, y, ClRed, 0, 0, 50, 50)    :'; end;
+    3: begin SimilarColors(ClRed, 300, 0); 
+             functName := 'SimilarColors(ClRed, 300, 0)            :'; end;
+    4: begin GetClosestColor(ClRed, [257, 254, 256]);               
+             functName := 'GetClosestColor(ClRed, [257, 254, 256]) :'; end;
+  end;                                                                     
+  Result := True;
+end;
+
+procedure TestSpeed;
+var
+  Bmp: TSCARBitmap;          
+begin
+  Bmp := TSCARBitmap.Create('');
+  Bmp.SetSize(51, 51);
+  Bmp.Clear(ClRed);
+  DebugBitmapAndSetAsClient(Bmp, 0);  
+  functHigh := 4;
+  for functIndex := 0 to functHigh do
+    WriteLn(TimeFunct(@SmallOperationsTest));      
+  HideDebugImgWindow;
+  Bmp.Free;   
+end;  
+
+begin
+  ClearDebug;           
+  TestSpeed;        
+end.

@@ -1,4 +1,13 @@
-﻿Bixby Says - 11\20\2012:
+﻿LordJashin - 11\22\2012:
+
+Worth checking out, the TPA functions testing :D
+
+- Split Extreme testing file into:
+  - TPA Testing
+  - SpeedOfFunctions testing
+  - All inside the Divi\Testing folder
+
+Bixby Says - 11\20\2012:
 
 Support for Evolution of Combat changes
 

@@ -1,28 +1,25 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                              Official SCAR Include
-              ___________         __                                 
-              \_   _____/__  ____/  |________   ____   _____   ____  
-              |    __)_\  \/  /\   __\_  __ \_/ __ \ /     \_/ __ \ 
-              |        \>    <  |  |  |  | \/\  ___/|  Y Y  \  ___/ 
-              /_______  /__/\_ \ |__|  |__|    \___  >__|_|  /\___  >
-                      \/      \/                   \/      \/     \/                              
-                                Function Testing
+                              Official SCAR Include                              
+                               TPA Function Testing
 --------------------------------------------------------------------------------
-   About: This is it folks, Jashin has decided to get down and dirty with all
-          of it. And to even speed test. Anyway feel free to GAWK at everything.
-          Things covered will be about just every search/other functions using
-          Color, TPA, ColorArr, DTM, Bitmap, TIA, TEA, etc.                       
 
-   Last Modified: November 18th, 2012. By LordJashin. 
+   Last Modified: November 22nd, 2012. By LordJashin. 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$DEFINE OSIDEBUG}
 {$I ../../OSI.scar}
 
+const
+  RedFlashAmount = 2; // how many times the red dots flash when running 
+  
+function TPASwap(TPA: TPointArray): TPointArray;
 var
-  functIndex: Integer; // For Function Speed Testing
-  functHigh: Integer;
-  functName: string;  
+  i: Integer;
+begin
+  Result := CopyTPA(TPA);
+  for i := 0 to high(Result) do
+    Result[i] := Point(Result[i].Y, Result[i].X);
+end;
                       
 procedure DebugBitmapAndSetAsClient(Bmp: TSCARBitmap; Interval: Integer);
 begin
@@ -30,68 +27,10 @@ begin
   SetBitmapAsClient(Bmp);                                              
   wait(Interval);
 end;
-  
-// Time a function in seconds or if below 1 second in milliseconds and return in string the time it took to run Funct
-function TimeFunct(Func: function: Boolean): string;
-var
-  i: Integer;
-begin
-  i := GetSystemTime;
-  Func();
-  i := GetSystemTime - i;   
-  if (i < 1000) then
-    Result := IntToStr(i) + ' msc'
-  else 
-    Result := IntToStr((i div 1000)) + ' secs';
-  Result := functName + ' ' + Result;
-end;
-
-// Small operations, and functions
-function SmallOperationsTest: Boolean;
-var
-  x, y: Integer;
-begin
-  case functIndex of
-    0: begin GetColor(50, 50); 
-             functName := 'GetColor(50, 50)                        :'; end;
-    1: begin CountColor(ClRed, 0, 0, 50, 50); 
-             functName := 'CountColor(ClRed, 0, 0, 50, 50)         :'; end;
-    2: begin FindColor(x, y, ClRed, 0, 0, 50, 50);
-             functName := 'FindColor(x, y, ClRed, 0, 0, 50, 50)    :'; end;
-    3: begin SimilarColors(ClRed, 300, 0); 
-             functName := 'SimilarColors(ClRed, 300, 0)            :'; end;
-    4: begin GetClosestColor(ClRed, [257, 254, 256]);               
-             functName := 'GetClosestColor(ClRed, [257, 254, 256]) :'; end;
-  end;                                                                     
-  Result := True;
-end;
-
-procedure TestSpeed;
-var
-  Bmp: TSCARBitmap;          
-begin
-  Bmp := TSCARBitmap.Create('');
-  Bmp.SetSize(51, 51);
-  Bmp.Clear(ClRed);
-  DebugBitmapAndSetAsClient(Bmp, 0);  
-  functHigh := 4;
-  for functIndex := 0 to functHigh do
-    WriteLn(TimeFunct(@SmallOperationsTest));      
-  HideDebugImgWindow;
-  Bmp.Free;   
-end;
-
-{
-Before, and after bitmaps of everything
--------------------------------------------
-TPA sorting, tolerance, finding, everything
-
-
-}
 
 function OffsetTPA2(TPA: TPointArray; XOffset, YOffset: Integer): TPointArray;
 begin
-  Result := TPA;
+  Result := CopyTPA(TPA);
   OffsetTPA(Result, XOffset, YOffset);
 end;
 
@@ -136,24 +75,49 @@ begin
   BlinkDebugBitmap(Bmp, TPA, Text, Color, Times, Interval);
 end;
 
-procedure TestStuff;
+procedure TestTPAFunctions;
 var
   Bmp, Bmp2: TSCARBitmap;                   
-  TPA, TPA2: TPointArray;
+  TPA, TPA2: TPointArray;    
 begin
   Bmp := TSCARBitmap.Create('deNrt3LGN2zAUgGH1GSDdASkyQJob6DKI1/AmGSBImXGCw1VO6lCAH54fKVL+frA9nyB/jR8p/dp+bDdJkiRJkqTnaIvlRgkn4SScJJyEk6al8uf7S2QhJ5yEk3DCCSechJNmplK1kMMJJ+EknHDCCSeccFLcyXgqI8lRhxNOOOGEE07CCSeccDofp5/fPrdrUU4fv7+2CyeccMIJJ5xwEk444YQTTjjpwbnTrrFjye1SuSvH3AknnHDCCSechBNOOOH0DO1SGUyukAo8OOGEE07CSTjhhBNOTzgo2GXwtn36b+UOZrefnKZyaQqOQXzpOOGEE0444SSccMIJp6WpRB7vDQ4K2j9sybUr+HxxZObQImyBGR3ghBNOOOGEE0444YQTTks7Sb+UKcgpQiV9kRGZEXLBCcNgcrN5xgknnHDCCSeccMIJJ5zm2aXNrTSnqtJv3M3NJXb/Y9eZQ+Rm4oQTTjjhhBNOOOGEE0444YRTHE/kvqVXUN379cvdNZjT4FdORR5M3j3ljhNOOOGEE0444YQTTjjh1JtTobocufRZ8UIqkStPq8sBqzrVgBNOOOGEE0444YQTTjhNy+mSbUJyhSraWxdxUnsNuaFH8A1XOOGEE0444YQTTjjhhNO6nNJ4XpuWIBccAuReQjXYSfAacMIJJ5xwwgknnHDCCafTc3qNNZLcJOr6cer3+qxHzhIngOGEE0444YQTTjjhhBNOOOH0DJyue/Ujt8oIq/AR465UIocccMIJJ5xwwgknnHDCCaelObUFv8ocsDORK9zi70olgid98AAnnHDCCSeccMIJJ5xwmpNTcFM4ByyN8PAd58h7kw53EqdStVN8VxdOOOGEE0444YQTTjjhdAinCLDdcirS+8uDZw6FnKqcFFJJT0JKnhTGCSeccMIJJ5xwwgknnAZwKlRXuL88+LxxmtPhv+7Tm9e3Q8MJJ5xwwgknnHDCCSeccMJpdU4TjrDSA6uqSdS/NSGV21nCCSeccMIJJ5xwwgknnFZXVwis3+ggfYD8xL/uccIJJ5yEE0444YQTTnqQXHpQsGVrgfl1jxNOOOEknHDCCSeccFL5jnPXbxMVnHASTsIJJ5xwwgknSZIkSZIkSZIkSZIkSZIkSZIk6Rz9BYCmQ9M=');
   Bmp2 := Bmp.Clone;       
-  SetBitmapAsClient(Bmp);
+  SetBitmapAsClient(Bmp);    
   FindColorsEx(TPA, [2477561], 0, 0, Bmp.Width, Bmp.Height);
   TPA2 := CopyTPA(TPA);
-  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'FindColorsEx(TPA, [2477561], 0, 0, Bmp.Width, Bmp.Height)', clRed, 10, 500, False);    
-  TPAEdge(TPA2);
-  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA2, Bmp.Width, 0), 'TPAEdge(TPA)', clRed, 10, 500, False);            
-  Bmp.Free;  
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'FindColorsEx(TPA, [2477561], 0, 0, Bmp.Width, Bmp.Height)', clRed, RedFlashAmount, 500, False);    
+  TPAEdge(TPA);
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'TPAEdge(TPA)', clRed, RedFlashAmount, 500, False);
+  TPA := CopyTPA(TPA2);
+  InvertTPA(TPA);
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'InvertTPA(TPA)', clRed, RedFlashAmount, 500, False);
+  TaskMessageDlg('TPASwap:', 'Swapped x''s and y''s in the TPA', mtInformation, [mbClose]);
+  TPA := CopyTPA(TPA2);
+  DebugTPA(TPASwap(TPA));          
+  wait(3000);                 
+  TPA := TPAFromBox(Box(0, 0, Bmp.Width - 1, Bmp.Height - 1));                
+  TPA2 := CopyTPA(TPA);       
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'TPAFromBox(Box(0, 0, Bmp.Width - 1, Bmp.Height - 1))', clRed, RedFlashAmount, 500, False);
+  TPAExtractBoxes(TPA, [Box(25, 25, 50, 50), Box(75, 75, 100, 100)]);                                                                                                               
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'TPAExtractBoxes(TPA, [Box(25, 25, 50, 50), Box(75, 75, 100, 100)])', clRed, RedFlashAmount, 500, False);
+  TPA := CopyTPA(TPA2);
+  TPAExtractCircle(TPA, Point(100, 80), 50);                                                                                                                                     
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'TPAExtractCircle(TPA, Point(100, 80), 50)', clRed, RedFlashAmount, 500, False);
+  TPA := CopyTPA(TPA2);                                             
+  TPAExtractTriangle(TPA, 50, 50, 100, 100, 150, 50);
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'TPAExtractTriangle(TPA, 50, 50, 100, 100, 50, 50)', clRed, RedFlashAmount, 500, False);
+  TPA := CopyTPA(TPA2);    
+  TPAExtractPie(TPA, Point(120, 100), 75, 360, 0.5, 5); 
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'TPAExtractPie(TPA, Point(120, 100), 75, 360, 0.5, 5)', clRed, RedFlashAmount, 500, False);
+  TPA := CopyTPA(TPA2);                                                                                                                       
+  TPAFilterPoints(TPA, TPAFromBox(Box(50, 50, 100, 100)));
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'TPAFilterPoints(TPA, TPAFromBox(Box(50, 50, 100, 100)))', clRed, RedFlashAmount, 500, False);
+  TPA := RandomTPA(800, Bmp.Width, Bmp.Height);
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'RandomTPA(200, Bmp.Width, Bmp.Height)', clRed, RedFlashAmount, 500, False);  
+  Bmp.Free;                           
 end;
 
 begin
   ClearDebug;           
-  TestSpeed;         
-  TestStuff;
+  TestTPAFunctions;      
 end.

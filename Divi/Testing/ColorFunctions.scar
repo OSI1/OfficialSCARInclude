@@ -8,26 +8,68 @@
 
 {$I ../../OSI.scar}
 
+const
+  RedFlashAmount = 2; // how many times the red dots flash when running 
+
+function OffsetTPA2(TPA: TPointArray; XOffset, YOffset: Integer): TPointArray;
+begin
+  Result := CopyTPA(TPA);
+  OffsetTPA(Result, XOffset, YOffset);
+end;
+
+procedure BlinkDebugBitmap(Bmp: TSCARBitmap; TPA: TPointArray; Text: string; Color, Times, Interval: Integer);
+var
+  i, h, Verdana: Integer;
+  Bmp2, Bmp3: TSCARBitmap;
+  TPA2: TPointArray;
+begin
+  if not BitmapExists(Bmp) then Exit;
+  TPA2 := TPA;                                                               
+  if (Text <> '') then
+  begin 
+    Verdana := LoadCharsFromFont2('Verdana', 8, false, false, false, false);
+    Bmp3 := CreateBitmapFromText(Text, Verdana, ClWhite);
+    h := Bmp3.Height;
+    OffsetTPA(TPA2, 0, h);    
+  end;
+  repeat                              
+    Bmp2 := TSCARBitmap.Create('');
+    Bmp2.SetSize(Bmp.Width, Bmp.Height + h);
+    if (Text <> '') then
+      Bmp3.DrawTo(Bmp2, 0, 0);
+    Bmp.DrawTo(Bmp2, 0, h);
+    DebugBitmap(Bmp2);
+    Bmp2.SetPixels(TPA2, Color);        
+    wait(Interval);     
+    DebugBitmap(Bmp2);                                 
+    wait(Interval);
+    Bmp2.Free;            
+    Inc(i);
+  until (i = Times);
+  if (Text <> '') then        
+    Bmp3.Free;
+end;
+
+procedure BlinkDebugBitmaps(BmpArr: array of TSCARBitmap; TPA: TPointArray; Text: string; Color, Times, Interval: Integer; Vertical: Boolean);
+var
+  Bmp: TSCARBitmap;
+begin
+  Bmp := BitmapLine(BmpArr, Vertical);
+  BlinkDebugBitmap(Bmp, TPA, Text, Color, Times, Interval);
+end;
+
 procedure TestColorFunctions;
 var
-  R, G, B, Color1, Color2: Integer;
-  Bmp: TSCARBitmap;      
+  x, y, R, G, B, Color1, Color2: Integer;
+  Bmp, Bmp2: TSCARBitmap;      
 begin
-  Bmp := TSCARBitmap.Create('');
-  Bmp.SetSize(100, 100);
-  Color1 := clRed;
-  ColorToRGB(Color1, R, G, B);
-  Color2 := RGBToColor(255 - R, 255 - G, 255 - B);
-  Bmp.Clear(Color1);
-  DebugBitmap(Bmp);
-  wait(3000);
-  Bmp.Clear(Color2);
-  DebugBitmap(Bmp);
-  WriteLn('GetColor: Color1 at (50, 50) either in bmp or in client: ' + IntToStr(GetColor(50, 50)));
-  WriteLn('CountColor: Color2: ' + IntToStr(Color2) + '; Was found this many times: ' + IntToStr(CountColor(Color2, 0, 0, 200, 200)));
-  wait(3000);       
-  PickColor(Color1, r, g);
-  WriteLn('PickColor: Picked color at (' + IntToStr(r) + ', ' + IntToStr(g) + '): ' + IntToStr(Color1));
+  Bmp := TSCARBitmap.Create('deNrt3LGN2zAUgGH1GSDdASkyQJob6DKI1/AmGSBImXGCw1VO6lCAH54fKVL+frA9nyB/jR8p/dp+bDdJkiRJkqTnaIvlRgkn4SScJJyEk6al8uf7S2QhJ5yEk3DCCSechJNmplK1kMMJJ+EknHDCCSeccFLcyXgqI8lRhxNOOOGEE07CCSeccDofp5/fPrdrUU4fv7+2CyeccMIJJ5xwEk444YQTTjjpwbnTrrFjye1SuSvH3AknnHDCCSechBNOOOH0DO1SGUyukAo8OOGEE07CSTjhhBNOTzgo2GXwtn36b+UOZrefnKZyaQqOQXzpOOGEE0444SSccMIJp6WpRB7vDQ4K2j9sybUr+HxxZObQImyBGR3ghBNOOOGEE0444YQTTks7Sb+UKcgpQiV9kRGZEXLBCcNgcrN5xgknnHDCCSeccMIJJ5zm2aXNrTSnqtJv3M3NJXb/Y9eZQ+Rm4oQTTjjhhBNOOOGEE0444YRTHE/kvqVXUN379cvdNZjT4FdORR5M3j3ljhNOOOGEE0444YQTTjjh1JtTobocufRZ8UIqkStPq8sBqzrVgBNOOOGEE0444YQTTjhNy+mSbUJyhSraWxdxUnsNuaFH8A1XOOGEE0444YQTTjjhhNO6nNJ4XpuWIBccAuReQjXYSfAacMIJJ5xwwgknnHDCCafTc3qNNZLcJOr6cer3+qxHzhIngOGEE0444YQTTjjhhBNOOOH0DJyue/Ujt8oIq/AR465UIocccMIJJ5xwwgknnHDCCaelObUFv8ocsDORK9zi70olgid98AAnnHDCCSeccMIJJ5xwmpNTcFM4ByyN8PAd58h7kw53EqdStVN8VxdOOOGEE0444YQTTjjhdAinCLDdcirS+8uDZw6FnKqcFFJJT0JKnhTGCSeccMIJJ5xwwgknnAZwKlRXuL88+LxxmtPhv+7Tm9e3Q8MJJ5xwwgknnHDCCSeccMJpdU4TjrDSA6uqSdS/NSGV21nCCSeccMIJJ5xwwgknnFZXVwis3+ggfYD8xL/uccIJJ5yEE0444YQTTnqQXHpQsGVrgfl1jxNOOOEknHDCCSeccFL5jnPXbxMVnHASTsIJJ5xwwgknSZIkSZIkSZIkSZIkSZIkSZIk6Rz9BYCmQ9M=');
+  Bmp2 := Bmp.Clone; 
+  Bmp := BitmapLine([Bmp, Bmp2], false)
+  SetBitmapAsClient(Bmp);
+  FindColor(x, y, 2477561, 0, 0, Bmp2.Width - 1, Bmp2.Height - 1);
+  BlinkDebugBitmap(Bmp, [Point(x + Bmp2.Width, y)], 'FindColor(x, y, 2477561, 0, 0, Bmp.Width - 1, Bmp.Height - 1)', clRed, RedFlashAmount + 30, 100);
+  
   HideDebugImgWindow;     
   Bmp.Free;
 end;
