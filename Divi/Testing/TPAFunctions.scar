@@ -10,7 +10,7 @@
 {$I ../../OSI.scar}
 
 const
-  RedFlashAmount = 2; // how many times the red dots flash when running 
+  RedFlashAmount = 3; // how many times the red dots flash when running 
   
 function TPASwap(TPA: TPointArray): TPointArray;
 var
@@ -113,7 +113,8 @@ begin
   TPAFilterPoints(TPA, TPAFromBox(Box(50, 50, 100, 100)));
   BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'TPAFilterPoints(TPA, TPAFromBox(Box(50, 50, 100, 100)))', clRed, RedFlashAmount, 500, False);
   TPA := RandomTPA(800, Bmp.Width, Bmp.Height);
-  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'RandomTPA(200, Bmp.Width, Bmp.Height)', clRed, RedFlashAmount, 500, False);  
+  BlinkDebugBitmaps([Bmp, Bmp2], OffsetTPA2(TPA, Bmp.Width, 0), 'RandomTPA(200, Bmp.Width, Bmp.Height)', clRed, RedFlashAmount, 500, False);
+  HideDebugImgWindow;    
   Bmp.Free;                           
 end;
 
