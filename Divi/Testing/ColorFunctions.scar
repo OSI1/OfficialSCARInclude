@@ -61,15 +61,21 @@ end;
 procedure TestColorFunctions;
 var
   x, y, R, G, B, Color1, Color2: Integer;
-  Bmp, Bmp2: TSCARBitmap;      
+  Bmp, Bmp2: TSCARBitmap;                                            
+  TPA: TPointArray;
 begin
   Bmp := TSCARBitmap.Create('deNrt3LGN2zAUgGH1GSDdASkyQJob6DKI1/AmGSBImXGCw1VO6lCAH54fKVL+frA9nyB/jR8p/dp+bDdJkiRJkqTnaIvlRgkn4SScJJyEk6al8uf7S2QhJ5yEk3DCCSechJNmplK1kMMJJ+EknHDCCSeccFLcyXgqI8lRhxNOOOGEE07CCSeccDofp5/fPrdrUU4fv7+2CyeccMIJJ5xwEk444YQTTjjpwbnTrrFjye1SuSvH3AknnHDCCSechBNOOOH0DO1SGUyukAo8OOGEE07CSTjhhBNOTzgo2GXwtn36b+UOZrefnKZyaQqOQXzpOOGEE0444SSccMIJp6WpRB7vDQ4K2j9sybUr+HxxZObQImyBGR3ghBNOOOGEE0444YQTTks7Sb+UKcgpQiV9kRGZEXLBCcNgcrN5xgknnHDCCSeccMIJJ5zm2aXNrTSnqtJv3M3NJXb/Y9eZQ+Rm4oQTTjjhhBNOOOGEE0444YRTHE/kvqVXUN379cvdNZjT4FdORR5M3j3ljhNOOOGEE0444YQTTjjh1JtTobocufRZ8UIqkStPq8sBqzrVgBNOOOGEE0444YQTTjhNy+mSbUJyhSraWxdxUnsNuaFH8A1XOOGEE0444YQTTjjhhNO6nNJ4XpuWIBccAuReQjXYSfAacMIJJ5xwwgknnHDCCafTc3qNNZLcJOr6cer3+qxHzhIngOGEE0444YQTTjjhhBNOOOH0DJyue/Ujt8oIq/AR465UIocccMIJJ5xwwgknnHDCCaelObUFv8ocsDORK9zi70olgid98AAnnHDCCSeccMIJJ5xwmpNTcFM4ByyN8PAd58h7kw53EqdStVN8VxdOOOGEE0444YQTTjjhdAinCLDdcirS+8uDZw6FnKqcFFJJT0JKnhTGCSeccMIJJ5xwwgknnAZwKlRXuL88+LxxmtPhv+7Tm9e3Q8MJJ5xwwgknnHDCCSeccMJpdU4TjrDSA6uqSdS/NSGV21nCCSeccMIJJ5xwwgknnFZXVwis3+ggfYD8xL/uccIJJ5yEE0444YQTTnqQXHpQsGVrgfl1jxNOOOEknHDCCSeccFL5jnPXbxMVnHASTsIJJ5xwwgknSZIkSZIkSZIkSZIkSZIkSZIk6Rz9BYCmQ9M=');
   Bmp2 := Bmp.Clone; 
   Bmp := BitmapLine([Bmp, Bmp2], false)
-  SetBitmapAsClient(Bmp);
+  SetBitmapAsClient(Bmp2);
   FindColor(x, y, 2477561, 0, 0, Bmp2.Width - 1, Bmp2.Height - 1);
   BlinkDebugBitmap(Bmp, [Point(x + Bmp2.Width, y)], 'FindColor(x, y, 2477561, 0, 0, Bmp.Width - 1, Bmp.Height - 1)', clRed, RedFlashAmount + 30, 100);
-  
+  FindColoredArea(x, y, 2477561, 0, 0, Bmp2.Width - 1, Bmp2.Height - 1, 50);
+  BlinkDebugBitmap(Bmp, [Point(x + Bmp2.Width, y)], 'FindColoredArea(x, y, 2477561, 0, 0, Bmp.Width, Bmp.Height, 50)', clRed, RedFlashAmount + 30, 100);
+  FindColorSpiral(0, 0, x, y, 2477561, 0, 0, Bmp2.Width - 1, Bmp2.Height - 1);
+  BlinkDebugBitmap(Bmp, [Point(x + Bmp2.Width, y)], 'FindColorSpiral(0, 0, x, y, 2477561, 0, 0, Bmp.Width, Bmp.Height)', clRed, RedFlashAmount + 30, 100);
+  FindColorSpiralEx(0, 0, TPA, 2477561, 0, 0, Bmp2.Width - 1, Bmp2.Height - 1);
+  BlinkDebugBitmap(Bmp, OffsetTPA2(TPA, Bmp2.Width, 0), 'FindColorSpiralEx(0, 0, TPA, 2477561, 0, 0, Bmp.Width, Bmp.Height)', clRed, RedFlashAmount + 30, 100);
   HideDebugImgWindow;     
   Bmp.Free;
 end;
