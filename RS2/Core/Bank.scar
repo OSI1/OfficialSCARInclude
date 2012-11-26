@@ -314,19 +314,45 @@ Contributors: Wanted
 Description: Returns true if at bankscreen and CheckBS.
 Searches for SearchText using the in bank search glass.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SearchBank(SearchText: string; CheckBS: Boolean): Boolean;
+var
+  T: Integer;  // Time counter
 begin
   Result := False;
+  // Check bank screen.
   if (CheckBS) then
     if (not (BankScreen)) then
       Exit
     else
       Result := True;
-  MouseBox(70, 297, 100, 319, ClickLeft);
-  WaitRR(250, 500);
+  // If search dialog already open toggle it closed to clear any pre-existing
+  // search text.
+  if (GetColor((MBX1 + 42), (MBY2 + 11)) = 2634813) then
+  begin
+    MouseBox((MBX1 + 39), (MBY2 + 8), (MBX1 + 69), (MBY2 + 29), ClickLeft);
+    T := GetSystemTime() + RR(2500, 3500);
+    while (GetColor((MBX1 + 42), (MBY2 + 11)) = 2634813) do
+    begin
+      WaitRR(75, 125);
+      if (GetSystemTime() > T) then
+        Exit;
+    end;
+    WaitRR(625, 875);
+  end;
+  // Click search button and what for "Enter the name" prompt to appear.
+  MouseBox((MBX1 + 39), (MBY2 + 8), (MBX1 + 69), (MBY2 + 29), ClickLeft);
+  T := GetSystemTime() + RR(2500, 3500);
+  repeat
+    WaitRR(75, 125);
+    if (GetSystemTime() > T) then
+      Exit;
+WriteLn(IntToStr(CountColor(clBlack, (MCX1 + 84), (MCY1 + 47), (MCX1 + 186), (MCY1 + 65))));
+  until (CountColor(clBlack, (MCX1 + 84), (MCY1 + 47), (MCX1 + 186), (MCY1 + 65)) = 307);
+  WaitRR(625, 875);
+  // Type in search text.
   TypeSend(SearchText);
 end;
 

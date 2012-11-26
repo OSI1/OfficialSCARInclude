@@ -1,7 +1,7 @@
 ﻿Bixby Says - 11\26\2012:
 
 - Added support for SCAR 3.38.
-
+- Fix SearchBank to click button properly, added failsafes.
 
 LordJashin - 11\22\2012:
 
