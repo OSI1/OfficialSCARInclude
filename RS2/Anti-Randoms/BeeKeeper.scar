@@ -34,7 +34,7 @@ function BeeKeeper_TalkToKeeper: Boolean;
 Contributors: Wanted, Freddy
 Description: Finds and clicks talk to on the bee keeper.
 Date Created: January 12th, 2012. By Wanted. RS2 Build 696.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BeeKeeper_TalkToKeeper: Boolean;
@@ -53,13 +53,21 @@ begin
   if (Length(TPA) < 1) then
     Exit;
   ATPA := GroupTPAEx(TPA, 20, 20);
-  SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
+  {$IFDEF SCAR338_UP}
+    SortATPAByMeanEx(ATPA, Point(MSCX, MSCY));
+  {$ELSE}
+    SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
+  {$ENDIF}
   H := High(ATPA);
   for I := 0 to High(ATPA) do
   begin
     if (Length(ATPA[I]) < 30) then
       Continue;
-    P := TPAMiddle(ATPA[I]);
+    {$IFDEF SCAR338_UP}
+      P := TPAMean(ATPA[I]);
+    {$ELSE}
+      P := TPAMiddle(ATPA[I]);
+    {$ENDIF}
     if (Distance(P.X, P.Y, MSCX, MSCY) < 10) then
       Continue;
     MMouse(P.X, P.Y, 0, 0);

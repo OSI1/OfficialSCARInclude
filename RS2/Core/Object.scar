@@ -43,7 +43,7 @@ function FindObjSpiral(var X, Y: Integer; Color, Tol, Width, Height: Integer; Up
 Contributors: Wanted, Freddy
 Description: Finds an object from the center out. Checks for uptext. Use pixel width and height of object.
 Date Created: December 6th, 2011. By Wanted. RS2 Build 688.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindObjSpiral(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStrArray): Boolean;
@@ -62,10 +62,18 @@ begin
   H := High(ATPA);
   if (H < 0) then
     Exit;
-  SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
+  {$IFDEF SCAR338_UP}
+    SortATPAByMeanEx(ATPA, Point(MSCX, MSCY));
+  {$ELSE}
+    SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
+  {$ENDIF}
   for I := 0 to H do
   begin
-    P := TPAMiddle(ATPA[I]);
+    {$IFDEF SCAR338_UP}
+      P := TPAMean(ATPA[I]);
+    {$ELSE}
+      P := TPAMiddle(ATPA[I]);
+    {$ENDIF}
     MMouse(P.X, P.Y, 0, 0);
     if (not (IsUpTextMulti(UpText))) then
       Continue;
@@ -80,7 +88,7 @@ function FindObjSize(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpTe
 Contributors: Wanted, Freddy
 Description: Finds an object based on biggest. Checks for uptext. Use pixel width and height of object.
 Date Created: December 6th, 2011. By Wanted. RS2 Build 688.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindObjSize(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStrArray): Boolean;
@@ -102,7 +110,11 @@ begin
   SortATPASize(ATPA, True);
   for I := 0 to H do
   begin
-    P := TPAMiddle(ATPA[I]);
+    {$IFDEF SCAR338_UP}
+      P := TPAMean(ATPA[I]);
+    {$ELSE}
+      P := TPAMiddle(ATPA[I]);
+    {$ENDIF}
     MMouse(P.X, P.Y, 0, 0);
     if (not (IsUpTextMulti(UpText))) then
       Continue;

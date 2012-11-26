@@ -727,7 +727,7 @@ function OpenBankBooth(Loc: Integer): Boolean;
 Contributors: Wanted, Freddy
 Description: Opens a booth, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 14th, 2011. By Wanted. RS2 Build 688.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankBooth(Loc: Integer): Boolean;
@@ -768,7 +768,11 @@ begin
   end;
   if (Length(ATPA) < 1) then
     Exit;
-  SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
+  {$IFDEF SCAR338_UP}
+    SortATPAByMeanEx(ATPA, Point(MSCX, MSCY));
+  {$ELSE}
+    SortATPAByMiddleEx(ATPA, Point(MSCX, MSCY));
+  {$ENDIF}
   //DebugATPABounds(ATPA);
   H := High(ATPA);
   //for I := 0 to High(ATPA) do
@@ -776,7 +780,11 @@ begin
   for I := 0 to High(ATPA) do
     if (InRange(Length(ATPA[I]), BankInfo[8], BankInfo[9])) then
     begin
-      P := TPAMiddle(ATPA[I]);
+      {$IFDEF SCAR338_UP}
+        P := TPAMean(ATPA[I]);
+      {$ELSE}
+        P := TPAMiddle(ATPA[I]);
+      {$ENDIF}
       MMouse(P.X, P.Y, 2, 2);
       if ((Loc = Loc_DYB) or (Loc = Loc_EVB)) then
       begin
@@ -820,7 +828,7 @@ function OpenBankNPC(Loc: Integer): Boolean;
 Contributors: Wanted, Freddy
 Description: Opens a bank via Banker, true if bankscreen found. Use Loc_VEB etc.
 Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OpenBankNPC(Loc: Integer): Boolean;
@@ -868,7 +876,11 @@ begin
     if (Length(ATPA) < 1) then
       Continue;
     SortATPASize(ATPA, True);
-    P := TPAMiddle(ATPA[0]);
+    {$IFDEF SCAR338_UP}
+      P := TPAMean(ATPA[0]);
+    {$ELSE}
+      P := TPAMiddle(ATPA[0]);
+    {$ENDIF}
     MMouse(P.X, P.Y, 0, 0);
     if (not (IsUpTextMulti(['to B', 'anker']))) then
       Continue;

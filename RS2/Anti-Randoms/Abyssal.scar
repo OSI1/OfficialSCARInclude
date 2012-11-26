@@ -44,7 +44,7 @@ procedure Abyss_WalkToCenter;
 Contributors: Wanted, Freddy
 Description: Walks to the center of the abyssal random.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure Abyss_WalkToCenter;
@@ -53,7 +53,11 @@ var
   P: TPoint;
 begin
   FindMMColorTolEx(TPA, clWhite, 421);
-  P := TPAMiddle(TPA);
+  {$IFDEF SCAR338_UP}
+    P := TPAMean(TPA);
+  {$ELSE}
+    P := TPAMiddle(TPA);
+  {$ENDIF}
   MouseFlag(P.X + 1, P.Y + 2, 1, 1);
   WaitRR(1000, 2000);
 end;
@@ -124,7 +128,7 @@ function Abyss_SolveRandom: Boolean;
 Contributors: Wanted, Freddy
 Description: Solves the abyssal random.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Abyss_SolveRandom: Boolean;
@@ -149,7 +153,11 @@ begin
         if (Length(ATPA) > 0) then
         begin
           Dir := I;
-          P := TPAMiddle(ATPA[I]);
+          {$IFDEF SCAR338_UP}
+            P := TPAMean(ATPA[I]);
+          {$ELSE}
+            P := TPAMiddle(ATPA[I]);
+          {$ENDIF}
           Break;
         end;
       if (I > 3) then
@@ -157,7 +165,11 @@ begin
     end
     else
       if (Length(ATPA[Dir]) > 0) then
-        P := TPAMiddle(ATPA[Dir]);
+        {$IFDEF SCAR338_UP}
+          P := TPAMean(ATPA[Dir]);
+        {$ELSE}
+          P := TPAMiddle(ATPA[Dir]);
+        {$ENDIF}
     if (FindObjSpiralMouse(P, 15, 1, TBA[Dir].X1, TBA[Dir].Y1, TBA[Dir].X2, TBA[Dir].Y2, 14342657, 75, 40, 200, ['perate', 'ppendag', 'te Ap'])) then
       Mouse(P.X, P.Y, 0, 0, True)
     else

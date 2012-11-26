@@ -138,7 +138,7 @@ procedure OrderWorlds(By: Integer; Descending: Boolean);
 Contributors: Wanted, Naum, Freddy.
 Description: Sorts world By (WS_ Indexes)
 Date Created: August 18th, 2011. By Wanted & Naum. RS2 Build 662.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure OrderWorlds(By: Integer; Descending: Boolean);
@@ -155,7 +155,11 @@ begin
   TB := IntToBox(TIA[By], 123, TIA[By] + 22, 133);
   FindColorEx(TPA, clWSArrow, TB.X1, TB.Y1, TB.X2, TB.Y2);
   ATPA := SplitTPA(TPA, 2);
-  SortATPAByMiddleEx(ATPA, Point(95, 131));
+  {$IFDEF SCAR338_UP}
+    SortATPAByMeanEx(ATPA, Point(95, 131));
+  {$ELSE}
+    SortATPAByMiddleEx(ATPA, Point(95, 131));
+  {$ENDIF}
   P := ATPA[Integer(not (Descending))][Random(Length(ATPA[Integer(not (Descending))]))];
   Mouse(P.X, P.Y, 0, 0, True);
 end;

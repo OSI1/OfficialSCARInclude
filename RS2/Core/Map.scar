@@ -171,7 +171,7 @@ function GetCompassAngleRadians: Extended;
 Contributors: Wanted, Wizzup, Freddy.
 Description: Gets the compass angle in radians.
 Date Created: November 22nd, 2011. By Wanted. RS2 Build 682.
-Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCompassAngleRadians: Extended;
@@ -181,7 +181,11 @@ var
 begin
   FindColorEx(TPA, 65536, 528, 9, 559, 41);
   FilterPointsDist(TPA, 0, 16, 543.5, 25);
-  P := TPAMiddle(TPA);
+  {$IFDEF SCAR338_UP}
+    P := TPAMean(TPA);
+  {$ELSE}
+    P := TPAMiddle(TPA);
+  {$ENDIF}
   Result := (ArcTan2(-(P.Y - 23.5), P.X - 542.5) - (Pi / 2));
   if (Result < 0) then
     Result := Result + Radians(360);
@@ -631,7 +635,7 @@ Contributors: Wanted
 Description: Turns a road TPA into a pie slice, finds the middle and offsets,
 and finally walks to it. See the online manual and forums for help using correctly.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
@@ -646,7 +650,11 @@ begin
   if (Length(ATPA) < 1) then
     Exit;
   TPA := ATPA[0];
-  P := TPAMiddle(TPA);
+  {$IFDEF SCAR338_UP}
+    P := TPAMean(TPA);
+  {$ELSE}
+    P := TPAMiddle(TPA);
+  {$ENDIF}
   IncEx(P.X, XOffset);
   IncEx(P.Y, YOffset);
   Result := MouseFlagEx(P.X, P.Y, RX, RY, FlagD);

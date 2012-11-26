@@ -1,4 +1,9 @@
-﻿LordJashin - 11\22\2012:
+﻿Bixby Says - 11\26\2012:
+
+- Added support for SCAR 3.38.
+
+
+LordJashin - 11\22\2012:
 
 Worth checking out, the TPA functions testing :D
 
