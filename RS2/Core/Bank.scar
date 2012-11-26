@@ -342,7 +342,7 @@ begin
     end;
     WaitRR(625, 875);
   end;
-  // Click search button and what for "Enter the name" prompt to appear.
+  // Click search button and wait for "Enter the name" prompt to appear.
   MouseBox((MBX1 + 39), (MBY2 + 8), (MBX1 + 69), (MBY2 + 29), ClickLeft);
   T := GetSystemTime() + RR(2500, 3500);
   repeat
