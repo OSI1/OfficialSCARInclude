@@ -314,7 +314,7 @@ Contributors: Wanted
 Description: Returns true if at bankscreen and CheckBS.
 Searches for SearchText using the in bank search glass.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: November 26th, 2012. By Bixby Sayz. RS2 Build 743.
+Last Modified: November 27th, 2012. By Bixby Sayz. RS2 Build 743.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SearchBank(SearchText: string; CheckBS: Boolean): Boolean;
@@ -349,7 +349,6 @@ begin
     WaitRR(75, 125);
     if (GetSystemTime() > T) then
       Exit;
-WriteLn(IntToStr(CountColor(clBlack, (MCX1 + 84), (MCY1 + 47), (MCX1 + 186), (MCY1 + 65))));
   until (CountColor(clBlack, (MCX1 + 84), (MCY1 + 47), (MCX1 + 186), (MCY1 + 65)) = 307);
   WaitRR(625, 875);
   // Type in search text.
