@@ -90,7 +90,7 @@ function InitSMART: Boolean;
 Contributors: Wanted, Freddy, LordJashin
 Description: Initiates SMART more simply.
 Date Created: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modified: October 1st, 2012. By LordJashin. RS2 Build 735.
+Last Modified: November 28th, 2012. By LordJashin. RS2 Build 745.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function InitiateSMART: Boolean;
@@ -109,16 +109,24 @@ begin
   end;
   if (SMART_Client = nil) then
     Exit;
-  SetClient(SMART_Client).Free;        
-  OSI_WriteAndLog('RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...10-25secs');                         
-  if not WaitFunc(@RSReady, True, 100, 250, 10000, 25000) then
-    if not FixLoginScreen then
-      begin      
-        OSI_WriteAndLog('RS2: SMART may be loading slow or updating!' + #13#10 +
-                        'RS2: Failed to find RS2 screens (Login, Lobby, or LoggedIn)' + #13#10 +
-                        'RS2: Close any popups, if SMART cannot load (Black Screen) try moving the refresh slider!' + #13#10 +
-                        'RS2: If you still can''t get it to work try Restarting SCAR Divi!' + #13#10 +
-                        'RS2: If you still cannot get SMART to work post a thread at the forums at www.scar-divi.com');          
-      end;
-  Result := WaitFunc(@RSReady, True, 100, 250, 15000, 20000);
+  SetClient(SMART_Client).Free;                                                              
+  if not RS2_SkipSetupRSReady then
+  begin
+    OSI_WriteAndLog('RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...10-25secs');                         
+    if not WaitFunc(@RSReady, True, 100, 250, 10000, 25000) then
+      if not FixLoginScreen then
+        begin      
+          OSI_WriteAndLog('RS2: SMART may be loading slow or updating!' + #13#10 +
+                          'RS2: Failed to find RS2 screens (Login, Lobby, or LoggedIn)' + #13#10 +
+                          'RS2: Close any popups, if SMART cannot load (Black Screen) try moving the refresh slider!' + #13#10 +
+                          'RS2: If you still can''t get it to work try Restarting SCAR Divi!' + #13#10 +
+                          'RS2: If you still cannot get SMART to work post a thread at the forums at www.scar-divi.com');          
+        end;
+    Result := WaitFunc(@RSReady, True, 100, 250, 15000, 20000);          
+  end
+  else
+  begin            
+    OSI_WriteAndLog('RS2: Skipping check for (Login Screen, Lobby Screen, or LoggedIn)!');
+    Result := True;
+  end;
 end;

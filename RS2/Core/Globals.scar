@@ -5,6 +5,8 @@
 -------------------------------------------------------------------------------
  * var   Useful Global Variables to alter if needed
  * var   RS2_CheckForUpdates
+ * var   RS2_SkipToolbarUpdates: Boolean;                                  
+ * var   RS2_SkipSetupRSReady: Boolean;
  * const Useful in game boundaries, points, areas, widths, etc. etc.
  * const Skill_ Indexes
  * const Lobby_Tab_ Indexes
@@ -81,6 +83,28 @@ Last Modified: October 14th, 2012. By LordJashin. RS2 Build 735.
 
 var
   RS2_CheckForUpdates: Boolean;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var RS2_SkipToolbarUpdates: Boolean;
+Contributors: LordJashin 
+Description: If set to true, will skip changing of Clients for the toolbar in RS2 
+Date Created: November 27th, 2012. By LordJashin. RS2 Build 745.
+Last Modified: November 27th, 2012. By LordJashin. RS2 Build 745.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+var  
+  RS2_SkipToolbarUpdates: Boolean;                                  
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var RS2_SkipSetupRSReady: Boolean;
+Contributors: LordJashin 
+Description: If set to true, will skip checking for RSReady when you SetupOSI. 
+Date Created: November 27th, 2012. By LordJashin. RS2 Build 745.
+Last Modified: November 27th, 2012. By LordJashin. RS2 Build 745.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+var  
+  RS2_SkipSetupRSReady: Boolean;  
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game boundaries, points, areas, widths, etc. etc.
@@ -765,7 +789,7 @@ procedure UpdateRSClient;
 Contributors: Freddy, LordJashin
 Description: Updates the client/SMART, excludes the toolbar from the client area
 Date Created: July 21th 2012. By Freddy. RS2 Build 725.
-Last Modified: November 12th, 2012. By LordJashin. RS2 Build 735.
+Last Modified: November 28th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure UpdateRSClient;
@@ -774,6 +798,7 @@ var
   Client: TSCARClient;
 {$ENDIF} 
 begin
+  if RS2_SkipToolbarUpdates then Exit;
 {$IFDEF SMART}
   if SMART_Client <> nil then
     begin                           
@@ -801,7 +826,7 @@ procedure RevertRSClient;
 Contributors: LordJashin
 Description: Reverts the client back to original image area for SMART/browser
 Date Created: September 30th 2012. By LordJashin. RS2 Build 735.
-Last Modified: November 12th 2012. By LordJashin. RS2 Build 735.
+Last Modified: November 28th 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure RevertRSClient;
@@ -811,6 +836,7 @@ var
 {$ENDIF} 
   B, B1: TBox;
 begin
+  if RS2_SkipToolbarUpdates then Exit;
   with RSClientOriginalImageArea do                              
     B := Box(X1, Y1 + RSClientY1Offset, X2, Y2 {$IFNDEF SMART} + RSClientY1Offset{$ENDIF} );
   with RSClientOriginalInputArea do                              

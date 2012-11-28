@@ -1,4 +1,25 @@
-﻿Bixby Says - 11\26\2012:
+﻿------------------------
+Name - Date:
+------------------------
+
+- 
+- 
+- 
+
+------------------------
+LordJashin - 11\28\2012:
+------------------------
+
+- New RS2_SkipSetupRSReady variable
+- New RS2_SkipToolbarUpdates variable 
+- Allows you to skip the checking of RSReady in SetupOSI for SMART & clients
+- This allows you to load RS2's fonts and everything w/out having the rsready check
+- Allows to skip over all changes to the client through UpdateRSClient RevertRSClient functions
+- Allows so OSI doesn't update SMART or client for Toolbar changes in OSI.scar
+
+------------------------
+
+Bixby Says - 11\26\2012:
 
 - Added support for SCAR 3.38.
 - Fix SearchBank to click button properly, added failsafes.

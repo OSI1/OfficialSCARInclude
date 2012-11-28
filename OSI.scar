@@ -122,7 +122,7 @@
 procedure FreeOSI;
 Contributors: Wanted, LordJashin
 Description: Frees things that are loaded into memory upon OSI setup. Save logs
-Date Created: August 8th, 2011. By Wanted
+Date Created: August 8th, 2011. By Wanted.
 Last Modified: October 30th, 2012. By LordJashin. RS2 Build 735.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -143,8 +143,8 @@ end;
 procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin.
 Description: Sets up OSI.
-Date Created: August 7th, 2011. By Wanted
-Last Modified: October 14th, 2012. By LordJashin. RS2 Build 735.
+Date Created: August 7th, 2011. By Wanted.
+Last Modified: November 28th, 2012. By LordJashin. RS2 Build 745.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -219,13 +219,18 @@ begin
         if (not (NonAutomaticSMART)) then
           InitiateSMART;
       {$ELSE}                                                         
-        GetClient.Activate; 
+        GetClient.Activate;  
         RSClientOriginalImageArea := GetClient.ImageArea;
         RSClientOriginalInputArea := GetClient.InputArea;
-        UpdateRSClient;                                                
-        OSI_WriteAndLog('RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...8-13secs');
-        if not WaitFunc(@RSReady, True, 100, 250, 8000, 13000) then
-          FixLoginScreen;
+        UpdateRSClient;                                  
+        if not RS2_SkipSetupRSReady then
+        begin              
+          OSI_WriteAndLog('RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...8-13secs');
+          if not WaitFunc(@RSReady, True, 100, 250, 8000, 13000) then
+            FixLoginScreen;          
+        end
+        else
+          OSI_WriteAndLog('RS2: Skipping check for (Login Screen, Lobby Screen, or LoggedIn)!');  
       {$ENDIF}
       PlayerStartTime := GetSystemTime; 
     {$ENDIF}
