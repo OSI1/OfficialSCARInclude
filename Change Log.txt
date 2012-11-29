@@ -1,15 +1,10 @@
-﻿------------------------
-Name - Date:
-------------------------
-
-- 
-- 
-- 
-
+﻿
 ------------------------
 LordJashin - 11\28\2012:
 ------------------------
 
+- New procedure ATPAExtractSizeEx(var ATPA: T2DPointArray; minSize, maxSize: Integer);
+- New procedure ATPAExtractDimensionsEx(var ATPA: T2DPointArray; minWidth, minHeight, maxWidth, maxHeight: Integer);
 - New RS2_SkipSetupRSReady variable
 - New RS2_SkipToolbarUpdates variable 
 - Allows you to skip the checking of RSReady in SetupOSI for SMART & clients

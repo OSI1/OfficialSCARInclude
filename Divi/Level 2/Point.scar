@@ -2,7 +2,9 @@
                               Official SCAR Include
                                   Point Routines
 --------------------------------------------------------------------------------
- * procedure PointToCoord(P: TPoint; var X, Y: Integer);
+ * procedure PointToCoord(P: TPoint; var X, Y: Integer);                        
+ * procedure ATPAExtractSizeEx(var ATPA: T2DPointArray; minSize, maxSize: Integer);
+ * procedure ATPAExtractDimensionsEx(var ATPA: T2DPointArray; minWidth, minHeight, maxWidth, maxHeight: Integer);
  * function  PointsNotInTPA(TPA: TPointArray): TPointArray;
  * procedure RemoveTPAFromATPA(var ATPA: T2DPointArray; Index: Integer);
  * function  LoadTextTPA(Text: string; Chars: Integer): TPointArray;
@@ -25,6 +27,52 @@ begin
   X := P.X;
   Y := P.Y;
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ATPAExtractSizeEx(var ATPA: T2DPointArray; minSize, maxSize: Integer);
+Contributors: Janilabo
+Description: Removes all TPAs from ATPA that fall outside minSize / maxSize.
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: November 23rd, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ATPAExtractSizeEx(var ATPA: T2DPointArray; minSize, maxSize: Integer);
+var
+  h, i, l: Integer;
+begin
+  if (minSize > maxSize) then
+    Exit;
+  h := High(ATPA);
+  for i := h downto 0 do
+  begin
+    l := Length(ATPA[i]);  
+    if ((l < minSize) or (l > maxSize)) then
+      Delete(ATPA, i, 1);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ATPAExtractDimensionsEx(var ATPA: T2DPointArray; minWidth, minHeight, maxWidth, maxHeight: Integer);
+Contributors: Janilabo
+Description: Removes all TPAs from ATPA that fall outside minimum / maximum dimensions.
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: November 23rd, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ATPAExtractDimensionsEx(var ATPA: T2DPointArray; minWidth, minHeight, maxWidth, maxHeight: Integer);
+var
+  width, height, h, i: Integer;
+begin
+  if ((minWidth > maxWidth) or (minHeight > maxHeight)) then
+    Exit;
+  h := High(ATPA);
+  for i := h downto 0 do
+  begin
+    TPADimensions(ATPA[i], width, height);
+    if ((width < minWidth) or (width > maxWidth) or (height < minHeight) or (height > maxHeight)) then 
+      Delete(ATPA, i, 1);
+  end;
+end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function PointsNotInTPA(TPA: TPointArray): TPointArray;
