@@ -346,6 +346,33 @@ Last Modified: September 1st, 2011. By Wanted. RS2 Build 662.
   Tab_Equip_Ring        = 11;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Ability Book Indexes
+Contributors: Bixby Sayz
+Description: Ability book indexes.
+Date Created: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
+Last Modified: December 5th, 201s. By Bixby Sayz. RS2 Build 744.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+  Book_Ability_None = (-1);      // Invalid ability book
+  Book_Ability_Melee = 0;        // Melee abilities
+  Book_Ability_Ranged = 1;       // Ranged abilities
+  Book_Ability_Magic = 2;        // Magic spells/abilities
+  Book_Ability_Defence = 3;      // Defence & Constitution abilities
+  Book_Ability_Defense = 3;      // Defense & Constitution abilities (US spelling)
+  
+  Tab_Ability_None = (-1);       // Invalid ability tab
+  Tab_Ability_Attack = 0;        // Melee book - Attack abilities
+  Tab_Ability_Strength = 1;      // Melee book - Strength abilities
+  Tab_Ability_Ranged = 0;        // Ranged book - Ranged abilities
+  Tab_Ability_Magic = 0;         // Magic book - Magic abilities
+  Tab_Ability_Combat = 1;        // Magic book - Combat spells
+  Tab_Ability_Teleport = 2;      // Magic book - Teleport spells
+  Tab_Ability_Skilling = 3;      // Magic book - Skilling spells
+  Tab_Ability_Defence = 0;       // Defence & Constitution book - Defence abilities
+  Tab_Ability_Defense = 0;       // Defense & Constitution book - Defense abilities (US spelling)
+  Tab_Ability_Constitution = 1;  // Defence & Constitution book - Constitution abilities
+       
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const World Switcher Indexes
 Contributors: Wanted
 Description: Index handles for various worldswitcher routines.

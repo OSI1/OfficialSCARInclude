@@ -411,8 +411,9 @@ function GetActionBarSlotKeyBind(const Slot: Integer): string;
 Contributors: Bixby Sayz
 Description: Returns key assigned to action bar slot (0 through 11).
 Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
-Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
-Note: Currently broken. OSI lacks the proper font.
+Last Modified: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
+Note: Currently broken. OSI lacks the proper font. For now returns the default
+      key without checking if that is correct.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetActionBarSlotKeyBind(const Slot: Integer): string;
@@ -427,7 +428,8 @@ begin
   
   // For now return the default keybinds.
   KeyBinds := '1234567890-=';
-  Result := KeyBinds[Slot];
+//  Result := Copy(KeyBinds, (Slot + 1), 1);
+  Result := KeyBinds[(Slot + 1)];
 end;
 
 
@@ -526,25 +528,25 @@ Contributors: Bixby Sayz
 Description: Sets the contents of action bar slot (0 through 11) by dragging
              ability/spell to slot.
 Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
-Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
+Last Modified: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function SetActionBarSlotAbility(const Slot, AbilitySlot: Integer): Boolean;
+function SetActionBarSlotAbility(const ActionBarSlot, AbilitySlot: Integer): Boolean;
 var
   SlotBounds: TBox;      // Bounds of ability bar slot.
   IconBounds: TBox;      // Bounds of ability/spell icon.
   CombatSpell: Boolean;  // Is this a combat spell?
 begin
   Result := False;
-  if not InRange(Slot, 0, 11) then
+  if not InRange(ActionBarSlot, 0, 11) then
     Exit;
   if not LoggedIn() then
     Exit;
     
   // Get bounds of item and action bar slots.
-  SlotBounds := GetActionBarSlotBounds(Slot);
-  CombatSpell := ((GetAbilityBook() = 2) and (GetAbilityTab() = 1)); 
-  IconBounds := GetAbilityIconBounds(Slot, CombatSpell);
+  SlotBounds := GetActionBarSlotBounds(ActionBarSlot);
+  CombatSpell := ((GetAbilityBook() = Book_Ability_Magic) and (GetAbilityTab() = Tab_Ability_Combat)); 
+  IconBounds := GetAbilitySlotBounds(AbilitySlot, CombatSpell);
   if (IconBounds = Box(0, 0, 0, 0)) then
     Exit;
   

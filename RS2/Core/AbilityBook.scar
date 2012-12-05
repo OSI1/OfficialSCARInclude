@@ -7,12 +7,13 @@
  * function OpenAbilityBook(): Boolean;
  * function GetAbilityBookTabBounds(const Book: Integer): TBox;
  * function GetAbilityTabBounds(const Tab: Integer): TBox;
- * function GetAbilityIconBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
+ * function GetAbilitySlotBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
+ * function PointToAbilitySlot(const P: TPoint; const CombatSpell: Boolean): Integer;
  * function GetAbilityBook(): Integer;
  * function SetAbilityBook(const Book: Integer): Boolean;
  * function GetAbilityTab(): Integer;
  * function SetAbilityTab(const Tab: Integer): Boolean;
- * function ClickAbilityIcon(const Slot: Integer; const ClickType: ClickActions): Boolean;
+ * function ClickAbilitySlot(const Slot: Integer; const ClickType: ClickActions): Boolean;
 
 With the introduction of the Evolution of Combat weapons have lost their special
 attacks. These have been replaced with abilities. These new abilities have been
@@ -76,9 +77,9 @@ end;
 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetAbilityIconBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
+function GetAbilitySlotBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
 Contributors: Bixby Sayz
-Description: Calculates bounds of ability/spell icon.
+Description: Calculates bounds of ability/spell slot.
 Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
 Last Modified: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
 Note: This is only accurate if the ability book is scrolled all the way up.
@@ -86,7 +87,7 @@ Note2: Every ability book/tab is the same except for combat spells. A different
        calculation is required for them.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetAbilityIconBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
+function GetAbilitySlotBounds(const Slot: Integer; const CombatSpell: Boolean): TBox;
 var
   XTmp: Integer;  // Used for calculations.
   YTmp: Integer;  // Used for calculations.
@@ -110,13 +111,49 @@ begin
   end;  
 end;
 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PointToAbilitySlot(const P: TPoint; const CombatSpell: Boolean): Integer;
+Contributors: Bixby Sayz
+Description: Converts screen coordinate to ability book slot. Returns (-1) for
+             coordinates that do not map to a slot.
+Date Created: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
+Last Modified: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PointToAbilitySlot(const P: TPoint; const CombatSpell: Boolean): Integer;
+var
+  Row: Integer;  // Slot row position.
+  Col: Integer;  // Slot column position.
+begin
+  Result := (-1);
+  if not PointInBox(P, Box(MIX1, MIY1, MIX2, MIY2)) then
+    Exit;
     
+  case CombatSpell of
+    True: begin
+            Row := (P.Y - MIY1 - 76) div 33;
+            Col := (P.X - MIX1 - 1) div 41;
+            Result := (Row * 4) + Col;
+            if not InRange(Result, 0, 23) then
+              Result := (-1);
+          end;
+    False: begin
+             Row := (P.Y - MIY1 - 80) div 36;
+             Col := (P.X - MIX1 - 5) div 44;
+             Result := (Row * 4) + Col;
+             if not InRange(Result, 0, 19) then
+               Result := (-1);
+           end;
+  end;
+end;
+  
+  
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetAbilityBook(): Integer;
 Contributors: Bixby Sayz
 Description: Returns active ability book (1st row of tabs).
 Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
-Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+Last Modified: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
     
 function GetAbilityBook(): Integer;
@@ -124,7 +161,7 @@ var
   TabBounds: TBox;  // Bounds of current tab.
   Book: Integer;    // Loop counter.
 begin
-  Result := (-1);
+  Result := Book_Ability_None;
   if not LoggedIn() then
     Exit;
   
@@ -133,7 +170,7 @@ begin
     Exit;
     
   // Loop through ability books checking color to find active one.
-  for Book := 0 to 3 do
+  for Book := Book_Ability_Melee to Book_Ability_Defence do
   begin
     TabBounds := GetAbilityBookTabBounds(Book);
 
@@ -153,7 +190,7 @@ function SetAbilityBook(const Book: Integer): Boolean;
 Contributors: Bixby Sayz
 Description: Sets active ability book (1st row of tabs).
 Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
-Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+Last Modified: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
     
 function SetAbilityBook(const Book: Integer): Boolean;
@@ -164,7 +201,7 @@ begin
   Result := False;
   if not LoggedIn() then
     Exit;
-  if not InRange(Book, 0, 3) then
+  if not InRange(Book, Book_Ability_Melee, Book_Ability_Defence) then
     Exit;
     
   // Make sure ability book is open.
@@ -196,7 +233,7 @@ function GetAbilityTab(): Integer;
 Contributors: Bixby Sayz
 Description: Gets active ability tab (2nd row of tabs).
 Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
-Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+Last Modified: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
     
 function GetAbilityTab(): Integer;
@@ -206,7 +243,7 @@ var
   TabBounds: TBox;  // Bounds of current tab.
   Tab: Integer;     // Loop counter.
 begin
-  Result := (-1);
+  Result := Tab_Ability_None;
   if not LoggedIn() then
     Exit;
   
@@ -217,16 +254,16 @@ begin
   // Get the active ability book and determine border color of tab.
   Book := GetAbilityBook();
   case Book of
-    0: Border := 6872061;
-    1: Border := 2804853;
-    2: Border := 16695068;
-    3: Border := 2044876;
+    Book_Ability_Melee: Border := 6872061;
+    Book_Ability_Ranged: Border := 2804853;
+    Book_Ability_Magic: Border := 16695068;
+    Book_Ability_Defence: Border := 2044876;
   else
     Exit; 
   end;  
 
   // Loop through tabs checking for border color to find active one.
-  for Tab := 0 to 3 do
+  for Tab := Book_Ability_Melee to Book_Ability_Defence do
   begin
     TabBounds := GetAbilityTabBounds(Tab);
 
@@ -287,18 +324,18 @@ end;
 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ClickAbilityIcon(const Slot: Integer; const ClickType: ClickActions): Boolean;
+function ClickAbilitySlot(const Slot: Integer; const ClickType: ClickActions): Boolean;
 Contributors: Bixby Sayz
-Description: Clicks on ability/spell icon.
+Description: Clicks on ability/spell slot.
 Date Created: November 18th, 2012. By Bixby Sayz. RS2 Build 742.
-Last Modified: November 20th, 2012. By Bixby Sayz. RS2 Build 743.
+Last Modified: December 5th, 2012. By Bixby Sayz. RS2 Build 744.
 Note: This is only accurate if the ability book is scrolled all the way up.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ClickAbilityIcon(const Slot: Integer; const ClickType: ClickActions): Boolean;
+function ClickAbilitySlot(const Slot: Integer; const ClickType: ClickActions): Boolean;
 var
   CombatSpell: Boolean;  // Is this a combat spell?
-  SlotBounds: TBox;      // Bounds of ability/spell icon.
+  SlotBounds: TBox;      // Bounds of ability/spell slot.
   MousePos: TPoint;      // Current mouse position.
 begin
   Result := False;
@@ -310,8 +347,8 @@ begin
     Exit;
   
   // Click on ability/spell.
-  CombatSpell := ((GetAbilityBook() = 2) and (GetAbilityTab() = 1)); 
-  SlotBounds := GetAbilityIconBounds(Slot, CombatSpell);
+  CombatSpell := ((GetAbilityBook() = Book_Ability_Magic) and (GetAbilityTab() = Tab_Ability_Combat)); 
+  SlotBounds := GetAbilitySlotBounds(Slot, CombatSpell);
   if MouseInBox(SlotBounds) then
   begin
     GetMousePos(MousePos.X, MousePos.Y);

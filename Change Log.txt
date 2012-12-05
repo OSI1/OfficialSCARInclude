@@ -1,5 +1,16 @@
 ﻿
 ------------------------
+Bixby Sayz - 12\05\2012:
+------------------------
+
+- Added: Ability Book constants in Globals.scar
+- Added: function PointToAbilitySlot() in AbilityBook.scar
+- Renamed: GetAbilityIconBounds() to GetAbilitySlotBounds()
+- Renamed: ClickAblityIcon() to ClickAbilitySlot()
+- MOdified: AbilityBook.scar now uses new contants internally
+- Modified: GetActionBarSlotKeyBind() in ActionBar.scar returns default keybind (for now)
+
+------------------------
 LordJashin - 11\28\2012:
 ------------------------
 
