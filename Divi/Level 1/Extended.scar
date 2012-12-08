@@ -5,7 +5,6 @@
  * function  StrIsExt(s: string): Boolean;
  * function  TEASum(x: TExtArray): Extended;
  * procedure TEAReverse(var arr: TExtArray);
- * function  TEAPos(arr: TExtArray; ext: Extended): Integer;
  * function  TEAPositions(arr: TExtArray; ext: Extended): TIntArray;
  * function  TEAGetItems(arr: TExtArray; IDs: TIntArray): TExtArray;
  * function  TEAAllValuesSame(arr: TExtArray): Boolean;
@@ -66,28 +65,6 @@ begin
   g := (l div 2);
   for i := 0 to g do
     Swap(arr[i], arr[(l - i)]);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TEAPos(arr: TExtArray; ext: Extended): Integer;
-Contributors: Janilabo
-Description: Returns the position of ext in arr. Returns -1 if ext is not in arr.                                                                                                         
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function TEAPos(arr: TExtArray; ext: Extended): Integer;
-var
-  i, h: Integer;
-begin
-  h := High(arr);
-  for i := 0 to h do
-    if (arr[i] = ext) then
-    begin
-      Result := i;
-      Exit;
-    end;
-  Result := -1;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

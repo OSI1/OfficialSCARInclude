@@ -1,5 +1,13 @@
 ﻿
 ------------------------
+LordJashin - 12\08\2012:
+------------------------
+
+- Removed Duplicate TEA functions from OSI
+- Removed them from Array.scar and Extended.scar
+- Removed Even & Odd functions because they are duplicates
+
+------------------------
 Bixby Sayz - 12\05\2012:
 ------------------------
 
