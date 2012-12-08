@@ -8,9 +8,11 @@
  * procedure TBoAInsert(var arr: TBoolArray; index: Integer; bool: Boolean);
  * procedure TVAInsert(var arr: TVariantArray; index: Integer; item: Variant);
  * function  TSAContains(arr: TStrArray; x: string): Boolean;
+ * function  TEAContains(arr: TExtArray; x: Extended): Boolean;
  * function  TBAContains(TBA: TBoxArray; bx: TBox): Boolean;           
  * function  TBoAContains(arr: TBoolArray; x: Boolean): Boolean;
- * procedure TSAAppend(var arr: TStrArray; x: string);                           
+ * procedure TSAAppend(var arr: TStrArray; x: string);                 
+ * procedure TEAAppend(x: Extended; var arr: TExtArray);          
  * procedure TBoAAppend(var arr: TBoolArray; x: Boolean);                 
  * procedure TVAAppend(var arr: TVariantArray; x: Variant);
  * function  TSADelete(var arr: TStrArray; x: Integer): Boolean;
@@ -28,9 +30,11 @@
  * function  TBoACopyEx(arr: TBoolArray; pos1, pos2: Integer): TBoolArray;
  * procedure TVACopy(source: TVariantArray; var target: TVariantArray; resetTarget: Boolean);
  * function  TVACopyEx(arr: TVariantArray; pos1, pos2: Integer): TVariantArray; 
- * procedure TSAUnique(var arr: TStrArray);                                           
+ * procedure TSAUnique(var arr: TStrArray);                                 
+ * procedure TEAUnique(var arr: TExtArray);          
  * procedure TBAUnique(var TBA: TBoxArray);      
  * function  TSASame(arr1, arr2: TStrArray): Boolean;                       
+ * function  TEASame(arr1, arr2: TExtArray): Boolean;
  * function  TBASame(TBA1, TBA2: TBoxArray): Boolean;
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
              
@@ -177,6 +181,27 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAContains(arr: TExtArray; x: Extended): Boolean;
+Contributors: Janilabo
+Description: Returns true if arr (TExtendedArray) contains x value.                                                                                
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAContains(arr: TExtArray; x: Extended): Boolean;
+var
+  i, h: Integer;
+begin
+  h := High(arr);
+  for i := 0 to h do
+  begin
+    Result := (x = arr[i]);
+    if Result then
+      Exit;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function TBAContains(TBA: TBoxArray; bx: TBox): Boolean;
 Contributors: Janilabo
 Description: Returns true if TBA contains bx.                 
@@ -228,6 +253,23 @@ Last Modified: September 30th, 2012. By Janilabo
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TSAAppend(var arr: TStrArray; x: string);
+var
+  aL: Integer;
+begin
+  aL := (Length(arr) + 1);
+  SetLength(arr, aL);
+  arr[(aL - 1)] := x;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TEAAppend(x: Extended; var arr: TExtArray);
+Contributors: Janilabo
+Description: Appends x (Extended) to arr (TExtendedArray)                                                                                
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TEAAppend(x: Extended; var arr: TExtArray);
 var
   aL: Integer;
 begin
@@ -306,6 +348,21 @@ begin
         Delete(arr, x[i], 1);
         Dec(h);
       end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEADelete(var arr: TExtArray; x: Integer): Boolean;
+Contributors: Janilabo, LordJashin
+Description: Deletes index (x) in arr (TExtendedArray). Returns true if successful                                                                                 
+Date Created: October 5th, 2012. By Janilabo.
+Last Modified: October 5th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEADelete(var arr: TExtArray; x: Integer): Boolean;
+begin
+  Result := ((x < (High(arr) + 1)) and (x > -1));
+  if Result then
+    Delete(arr, x, 1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -621,6 +678,31 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TEAUnique(var arr: TExtArray);
+Contributors: Janilabo
+Description: Makes each value in arr (TExtendedArray) unique                                                                                                            
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TEAUnique(var arr: TExtArray);
+var
+  h, i2, i, d: Integer; 
+begin
+  h := High(arr);   
+  if (h < 1) then
+    Exit;         
+  for i := (h - d) downto 1 do
+    for i2 := (i - 1) downto 0 do
+      if (arr[i] = arr[i2]) then
+      begin
+        Delete(arr, i, 1);
+        Inc(d);
+        Break;  
+      end;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TBAUnique(var TBA: TBoxArray);
 Contributors: Janilabo
 Description: Removes any and all duplicates from TBA.
@@ -654,6 +736,27 @@ Last Modified: September 30th, 2012. By Janilabo
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TSASame(arr1, arr2: TStrArray): Boolean;
+var
+  h, i: Integer;
+begin
+  h := High(arr1);
+  if ((h < 0) or (h <> High(arr2))) then
+    Exit;
+  for i := 0 to h do
+    if (arr1[i] <> arr2[i]) then
+      Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEASame(arr1, arr2: TExtArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if arr1 and arr2 are identical.                                                                                
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEASame(arr1, arr2: TExtArray): Boolean;
 var
   h, i: Integer;
 begin
