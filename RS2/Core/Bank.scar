@@ -561,13 +561,13 @@ function GetCurrentBankTab: Integer;
 Contributors: Wanted
 Description: Returns the current bank tab open.
 Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
-Last Modified: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: January 20th, 2013. By Bixby Sayz. RS2 Build 745.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetCurrentBankTab: Integer;
 begin
   for Result := 0 to 8 do
-    if (GetColor(37 + (48 * Result), 82) = 2896954) then
+    if (GetColor(37 + (48 * Result), 82) = 2831161) then
       Exit;
   Result := -1;
 end;
