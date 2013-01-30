@@ -14,10 +14,11 @@ const Item database indexes
 Contributors: Bixby Sayz, Wanted.
 Description: Indexes of all the mining related database items.
 Date Created: November 11th, 2011. By Bixby Sayz & Wanted. RS2 Build 678.
-Last Modified: November 14th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modified: January 30th, 2013. By Bixby Sayz. RS2 Build 747.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
+  dtmMining_Count = 20;          // January 30th, 2013  Bixby Sayz      747
 {$IFNDEF Smithing}
   dtmOre = 0;                    // November 13, 2011   Bixby Sayz      679
   dtmOre_Copper = 1;             // November 13, 2011   Bixby Sayz      679
@@ -46,16 +47,22 @@ function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
 Contributors: Bixby Sayz & Wanted
 Description: Loads the Item into memory as result and returns recommended tolerance.
 Date Created: November 11th, 2011. By Bixby Sayz & Wanted. RS2 Build 678.
-Last Modified: January 8th, 2012. By Bixby Sayz. RS2 Build 696.
+Last Modified: January 29th, 2013. By Bixby Sayz. RS2 Build 747.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoadMiningItem(Item: Integer; var Tolerance: Integer): Integer;
 begin
-  Result := -1;
   case Item of
-    dtmPickaxe: Result := DTMFromString('78DA63746562603064644006FD4B9319FE036' +
-                        '990E87F2060B406AA514655C3C0C0042661A28C1E40BE12013541' +
-                        '40BE3A01358E40BE2D01352E40BE1D7E350021FA0972');
+    dtmPickaxe: // Due to graphical update there is no generic pickaxe shape.
+                // Load bronze pickaxe instead.
+                Result := DTMFromString('78DA638C60606028654001B941060CFC409A1188FF0301630E9051C4800698C0242394C79800D248400DC8AE02026AC28044037E350098F60923');
+    dtmPickaxe_Bronze: Result := DTMFromString('78DA638C60606028654001B941060CFC409A1188FF0301630E9051C4800698C0242394C79800D248400DC8AE02026AC28044037E350098F60923');
+    dtmPickaxe_Iron: Result := DTMFromString('78DA634C616060C8614001EE6E2E0CAC409A1188FF0301632E9091CF800698C0242394C7980E247209A84902120504D484038906FC6A008703090E');
+    dtmPickaxe_Steel: Result := DTMFromString('78DA63CC646060286240014DAD1D0C5C409A1188FF0301630E9051C1800698C0242394C7980524CA08A849C7B40B434D2890A8C3AF0600124909F3');
+    dtmPickaxe_Mithril: Result := DTMFromString('78DA638C636060286640018989050C5C409A1188FF0301630A9091C3800698C0242394C7180F248A8850534D400DC83D75F8D50000C1990973');
+    dtmPickaxe_Adamant: Result := DTMFromString('78DA638C646060C863400101B1410C5C409A1188FF030163349091C3800698C0242394C7980A242A08A8C905123504D40403897CFC6A009BC7092E');
+    dtmPickaxe_Rune: Result := DTMFromString('78DA638C67606028634001DEF9ED0C5C409A1188FF030163129051C4800698C0242394C7980D24EA08A8C902124D04D4C402890AFC6A00DD7E09AD');
+    dtmPickaxe_Dragon: Result := DTMFromString('78DA634C64606028644001CB94C419B880342310FF0702C61C20A39C010D30814946288F310D481411501301246A09A8090612CDF8D500009A720930');
     dtmOre: Result := DTMFromString('78DA63B4606060C8664001C78A6C19FE03694' +
                     '620FE0F048C0E986A181898C0242394C7E808240A09A8B10712C5' +
                     '04D498018902026A8C804416013506402213BF1A00312D0B18');
@@ -92,5 +99,7 @@ begin
     dtmOre_Elemental: Result := DTMFromString('78DA637467606098CB800242046B19F881342' +
                               '310FF0702467F4C350C0C4C609211CA630C00128B09A8F103124B' +
                               '09A87105128B08A87104127308A8B10712B3F1AB0100CEB80B5C');
+  else
+    Result := 0;
   end;
 end;

@@ -17,10 +17,11 @@ const Item database indexes
 Contributors: Bixby Sayz
 Description: Indexes of all the smithing related database items.
 Date Created: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
-Last Modified: November 13th, 2011. By Bixby Sayz. RS2 Build 679.
+Last Modified: January 30th, 2013. By Bixby Sayz. RS2 Build 747.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                            // Modified            By              Build #
+  dtmSmithing_Count = 24;        // January 30th, 2013  Bixby Sayz      747
 {$IFNDEF Mining}
   dtmOre = 0;                    // November 13, 2011   Bixby Sayz      687
   dtmOre_Copper = 1;             // November 13, 2011   Bixby Sayz      679
