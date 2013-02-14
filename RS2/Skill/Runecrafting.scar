@@ -115,7 +115,7 @@ function FindPouch(const Pouch: Integer; out Slot: Integer; const CheckIT: Boole
 Contributors: Wanted, Freddy, Bixby Sayz
 Description: If found pouch returns true and slot where found.
 Date Created: November 12th, 2011. By Wanted. RS2 Build 678.
-Last Modified: January 29th, 2013. By Bixby Sayz. RS2 Build 747.
+Last Modified: February 14th, 2013. By Bixby Sayz. RS2 Build 749.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindPouch(const Pouch: Integer; out Slot: Integer; const CheckIT: Boolean): Boolean;
@@ -130,8 +130,8 @@ begin
   if (CheckIT) then
     if (not (SetGameTab(Tab_Inv))) then
       Exit;
-  ItemPouch := LoadRunecraftingItem(Pouch, Tol);
-  Result := FindDtm(P.X, P.Y, ItemPouch, MIX1, MIY1, MIX2, MIY2);
+  ItemPouch := LoadRunecraftingItem(Pouch, Tol); 
+  Result := FindDtm(ItemPouch, P.X, P.Y, MIX1, MIY1, MIX2, MIY2);
   FreeDTM(ItemPouch);
   if Result then
     Slot := CordsToItemSlot(P);
