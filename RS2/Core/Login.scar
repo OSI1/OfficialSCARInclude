@@ -105,14 +105,32 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LobbyScreen: Boolean;
-Contributors: Wanted
+Contributors: Wanted, Bixby Sayz
 Description: Returns true if at lobby screen.
 Date Created: August 11th, 2011. By Wanted. RS2 Build 662.
-Last Modified: August 11th, 2011. By Wanted. RS2 Build 662.
+Last Modified: February 15th, 2013. By Bixby Sayz. RS2 Build 749.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LobbyScreen: Boolean;
+var
+  B1, B2, B3: Boolean;
 begin
+  // The confirm/validate your email dialogs prevent detection of lobby screen.
+  // (Older accounts that haven't registered an email get this) Put detection
+  // in here to avoid spamming this same code across 4 different functions. 
+  B1 := (CountColor(5353701, 496, 421, 560, 439) = 59);       // Validate your email
+  B2 := (CountColor(5353701, 493, 338, 558, 356) = 59);       // Confirm your email
+  B3 := (CountColor(12566463, 201, 153, 262, 164) = 117);     // Thank you
+  if B1 then
+    MouseBox(496, 421, 560, 439, ClickLeft)
+  else
+    if B2 then
+      MouseBox(493, 338, 558, 356, ClickLeft)
+    else
+      if B3 then
+        MouseBox(334, 397, 429, 427, ClickLeft);
+  if (B1 or B2 or B3) then
+    WaitRR(750, 1250);
   Result := InRange(CurrentLobbyTab, 0, 5);
 end;
 
@@ -313,10 +331,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function LoginToLobby: Boolean;
-Contributors: Wanted, Anonymous, Freddy.
+Contributors: Wanted, Anonymous, Freddy, Bixby Sayz.
 Description: Logins in current active player to lobby.
 Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modified: July 21th, 2012. By Freddy. RS2 Build 725.
+Last Modified: February 15th, 2013. By Bixby Sayz. RS2 Build 749.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoginToLobby: Boolean;
@@ -421,12 +439,13 @@ begin
   T := GetSystemTime + RR(50000, 70000);
   repeat
     SetLength(Actions, 0);
-    if (GetSystemTime > T) then // Response                            Wait  Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
+    if (GetSystemTime > T) then // Response                    Wait     Retrys  Action         [CurrentPlayer].Loc       Modified            By              Build #  Status
       Actions :=       ['RS2: About one minute has passed...',    0,    0,      'PlayerFalse', 'Login Failed']        // August 10, 2011     Wanted          661      confirmed
     else
     case (CountColor(clLoginText, 260, 140, 506, 395)) of
-      364: Actions :=  ['RS2: Error connecting',              20000,    9,      'Exit',        'Error Connecting'];   // August 7, 2011      Anonymous       660      unconfirmed
-      732: Actions :=  ['RS2: Runescape has been updated',        0,    0,      'Exit',        'RS updated'];         // August 7, 2011      Anonymous       660      unconfirmed
+      364: Actions :=  ['RS2: Error connecting',              20000,    9,      'Exit',        'Error Connecting'];   // February 15th, 2013 Bixby Sayz      749      confirmed
+      732, 894:
+            Actions := ['RS2: Runescape has been updated',        0,    0,      'Exit',        'RS updated'];         // August 7, 2011      Anonymous       660      unconfirmed
       763, 2348, 2299:
             Actions := ['RS2: Invalid username / password',       0,    2,      'PlayerFalse', 'Wrong User/Pass'];    // August 10, 2011     Wanted          661      confirmed
       777: Actions :=  ['RS2: Login limit exceeded',          20000,   10,      '',            'Waiting for login.']; // August 7, 2011      Anonymous       660      unconfirmed
@@ -436,6 +455,7 @@ begin
       1535: Actions := ['RS2: Your account has been locked',      0,    0,      'PlayerFalse', 'Acc Locked'];         // August 10, 2011     Wanted          661      confirmed 
       1606: Actions := ['RS2: Game session has ended',            0,    0,      'Exit',        'RS updated'];         // July 26, 2012       Bixby Sayz      727      confirmed
     end;
+    
     if (Length(Actions) > 0) then
     begin
       WaitRR(500, 1500);
