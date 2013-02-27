@@ -8,10 +8,11 @@
  * function  VKSendKeyUp(VKey: Byte): Boolean;
 --------------------------------------------------------------------------------
 
-                        Last Modified: October 30th, 2012
+                        Last Modified: February 26th, 2013
 
  These functions are for VK_ or VKey Codes only!!! example: VK_F1 or VK_DELETE
-
+           Has worked with VKeyToChar before though in some games
+      Some of these functions "might" work in games, where SCAR's didn't
 
                                     About: 
 
