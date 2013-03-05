@@ -1,0 +1,71 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             Variant Array Routines
+--------------------------------------------------------------------------------
+ * function CopyTVA(TVA: TVariantArray): TVariantArray; 
+     By: Wanted    
+ * function TVADelete(var TVA: TVariantArray; Index: Integer): Variant;
+     By: Wanted
+ * procedure TVAInsert(var TVA: TVariantArray; Index: Integer; V: Variant); 
+     By: Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ 
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CopyTVA(TVA: TVariantArray): TVariantArray;
+Contributors: Wanted
+Description: Creates a new TVariantArray with a copy of every element in the given array TVA.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CopyTVA(TVA: TVariantArray): TVariantArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TVA);
+  SetLength(Result, H + 1);     
+  for I := 0 to H do 
+    Result[I] := TVA[I];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVADelete(var TVA: TVariantArray; Index: Integer): Variant;
+Contributors: Wanted
+Description: Removes a variant by Index from an TVA.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVADelete(var TVA: TVariantArray; Index: Integer): Variant;
+begin
+  if (not (InRange(Index, -1, High(TVA) + 1))) then
+    Exit;
+  Result := TVA[Index];
+  Delete(TVA, Index, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TVAInsert(var TVA: TVariantArray; Index: Integer; V: Variant);
+Contributors: Janilabo
+Description: Inserts V at Index in TVA.    
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TVAInsert(var TVA: TVariantArray; Index: Integer; V: Variant);
+var
+  I, L: Integer;
+begin
+  L := Length(TVA);
+  SetLength(TVA, (L + 1));    
+  if (Index < 0) then
+    Index := 0;
+  if (Index > L) then
+    Index := L;
+  if (L > Index) then
+    for I := (L - 1) downto Index do
+      TVA[(I + 1)] := TVA[I];
+  TVA[Index] := V;
+end;
+
+

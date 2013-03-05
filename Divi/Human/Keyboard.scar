@@ -1,0 +1,54 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                Keyboard Routines
+--------------------------------------------------------------------------------
+ * procedure HoldVKey(B: Byte; MinTime, MaxTime: Integer);
+     By: Wanted
+ * procedure TypeSendEx(Text: string; PressEnter: Boolean);
+     By: Wanted
+ * procedure TypeSend(Text: string);
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure HoldVKey(B: Byte; MinTime, MaxTime: Integer);
+Contributors: Wanted
+Description: Holds vkey down for random amount of time between Min and MaxTime.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 4th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure HoldVKey(B: Byte; MinTime, MaxTime: Integer);
+begin
+  VKeyDown(B);
+  WaitRR(MinTime, MaxTime);
+  VKeyUp(B);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TypeSendEx(Text: string; PressEnter: Boolean);
+Contributors: Wanted, Freddy
+Description: Types human like, presses enter if chosen.
+Date Created: August 26th, 2011. By Wanted
+Last Modified: July 21th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TypeSendEx(Text: string; PressEnter: Boolean);
+begin
+  TypeTextEx(Text, True, True); // TypeText(Ex) is not bound to a keyboard layout
+  if (PressEnter) then
+    TypeTextEx(Chr(13), True, True);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TypeSend(Text: string);
+Contributors: Wanted
+Description: Types human like, presses enter.
+Date Created: August 7th, 2011. By Wanted
+Last Modified: August 26th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TypeSend(Text: string);
+begin
+  TypeSendEx(Text, True);
+end;

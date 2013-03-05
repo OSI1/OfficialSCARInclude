@@ -1,0 +1,66 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                               Point Type Routines
+--------------------------------------------------------------------------------
+ * function GetPointAngleDegrees(P1, P2: TPoint): Extended;
+     By: Wanted
+ * function RCirclePoint(CX, CY, Radius: Integer): TPoint;
+     By: Freddy & Wanted.
+ * function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
+     By: Freddy & Wanted.                     
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetPointAngleDegrees(P1, P2: TPoint): Extended;
+Contributors: Wanted, Janilabo.
+Description: Calculates the relative angle between two points in degrees.
+Date Created: October 28th, 2011. By Wanted
+Last Modified: February 26th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetPointAngleDegrees(P1, P2: TPoint): Extended;
+begin
+  Result := Degrees(ArcTan2(P1.Y - P2.Y, P1.X - P2.X));   
+  if (Result < 0.0) then
+    IncE(Result, 360.0);
+  {$IFDEF RS2}  
+    IncE(Result, 90.0);
+  {$ENDIF}
+  {$IFDEF RS07}  
+    IncE(Result, 90.0);
+  {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RCirclePoint(CX, CY, Radius: Integer): TPoint;
+Contributors: Freddy, Wanted.
+Description: Outputs a random point within a circle.
+Date Created: September 4th, 2011. By Freddy & Wanted.
+Last Modified: September 22nd, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RCirclePoint(CX, CY, Radius: Integer): TPoint;
+begin
+  {$IFDEF NoVariance}
+    Result := RndCirclePoint(CX, CY, Radius);
+  {$ELSE}
+    Result := RndCirclePointG(CX, CY, Radius, OSI_Variance);
+  {$ENDIF}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
+Contributors: Freddy, Wanted.
+Description: Outputs a random point within a rectangle.
+Date Created: September 18th, 2011. By Freddy & Wanted.
+Last Modified: September 27th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
+begin
+  {$IFDEF NoVariance}
+    Result := RndBoxPoint(Box(X1, Y1, X2, Y2));
+  {$ELSE}
+    Result := RndBoxPointG(Box(X1, Y1, X2, Y2), OSI_Variance);
+  {$ENDIF}
+end;

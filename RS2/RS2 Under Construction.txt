@@ -1,0 +1,3 @@
+To save time and release the RS07 include section as soon as possible this entire seciton of OSI will temporarily replaced by a place holder.
+
+check https://github.com/OSI1/OSI1 for OSI1 RS2 functions

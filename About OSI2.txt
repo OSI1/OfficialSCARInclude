@@ -1,0 +1,60 @@
+﻿OSI - The Official SCAR Include is licensed under BSD. http://en.wikipedia.org/wiki/BSD_licenses
+
+The official documentation/manual/wiki of OSI can be found http://wiki.scar-divi.com/osi/index.php?title=OSI_Manual
+The official project location of OSI is https://github.com/OfficialSCARInclude/OSI2
+The official homepage of OSI is http://scar-divi.com
+The official forums of OSI are http://forums.scar-divi.com/
+
+
+OSI is credited to a selected group of developers under the lead of James Bolduc (alias Wanted) and Frédéric Hannes (alias Freddy1990).
+
+including 
+
+Developers: Bixby Sayz, c0de, Demise, Home, iroki, Janilabo, Naum, Olly, pyroryan, Timer, & TRiLeZ.
+
+Contributors Camaro, Drags111, Dynamite, fuzz357, LordJashin, Main, ScreamingIsMyAir, ti.teg.tnod.I, tlsdude, & wundertüte.
+
+
+
+Special thanks to 
+
+
+The testing group
+
+including
+
+Testers: footballjds, Jakkle, Janilabo, King of the Nites, King Kong, Matt Grumbles, mormonman, Neron, rsutton, shadowrecon, wyn10, YoHoJo, & zippoxer.
+
+... and the Legends of the past for their inspirations and ideas that will carry on in OSI into the future.
+
+Specifically thanks to all the people that have influenced OSI and who have never backstabbed me.
+
+From SRL
+
+Azeroth, BenLand100, benleegt, Boreas, Cheesehunk, dakota, Dankness, driger1592, EvilChicken!, Flyboy, Hobbit, inferno, Kernel Klink, Knightstreak, Krazy_Meerkat, Krichevskoy, Liquid, Lorax, Mad Cow, masquerader, moparisthebest, Mutant Squirrle, n3ss3s, N1ke, NCDS, nielsie95, phantombmx, pups, Pyro, RAM, Rasta Magician, realrune, Renax, Ron, RsN, SKy Scripter, solemn wishes, Spky, Stupid3ooo, Sumilion, tarajunky, The_Rs_Monkey, WT-Fakawi, XxKanexX, Yakman, ZephyrsFury, & _ChArMz.
+
+Else where
+
+Kaitnieks, Solarwind, rulereric, GenoDemon, almost, cause, AWKWARDSAW, squig.
+
+
+
+<3 Odie5533
+
+
+New qualifying recruits welcome in all areas. See official forums for details.
+
+
+
+
+Sincerly,
+
+OSI lead developer
+
+-Wanted
+
+
+
+---------------
+
+ACA is by nielsie95

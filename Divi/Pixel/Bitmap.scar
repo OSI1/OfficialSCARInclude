@@ -1,0 +1,67 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                 Bitmap Routines
+--------------------------------------------------------------------------------
+ * function  BitmapExists(bmp: TSCARBitmap): Boolean; 
+     By: Janilabo                   
+ * procedure CreateBitmap(var bmp: TSCARBitmap; W, H: Integer; S: string);     
+     By: Janilabo
+ * function  GetBitmapSize(bmp: TSCARBitmap; var Width, Height: Integer): Boolean;
+     By: Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BitmapExists(bmp: TSCARBitmap): Boolean;
+Contributors: LordJashin, Bixby Sayz
+Description: Checks if Bitmap Exists by using Assigned and checking the width & height.
+Date Created: November 19th, 2012. By LordJashin.
+Last Modified: November 19th, 2012. By Bixby Sayz.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BitmapExists(bmp: TSCARBitmap): Boolean;
+begin
+  Result := False;             
+  if (Assigned(bmp)) then
+    Result := ((bmp.Width > 0) and (bmp.Height > 0));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure CreateBitmap(var bmp: TSCARBitmap; W, H: Integer; S: string);
+Contributors: LordJashin
+Description: Creates the bmp, sets its size, and loads it from a string.
+Date Created: October 13th, 2012. By LordJashin.
+Last Modified: October 13th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure CreateBitmap(var bmp: TSCARBitmap; W, H: Integer; S: string);
+begin
+  try
+    bmp := TSCARBitmap.Create('');
+    bmp.SetSize(W, H);
+    bmp.LoadFromStr(S);    
+  except
+    WriteLn('Failed to create bitmap');
+  end;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBitmapSize(bmp: TSCARBitmap; var Width, Height: Integer): Boolean;
+Contributors: Janilabo
+Description: Gets width and height of a bitmap and returns them in var Width & Height
+             Returns false if it failed to do this.
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: September 30th, 2012. By Janilabo.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBitmapSize(bmp: TSCARBitmap; var Width, Height: Integer): Boolean;
+begin
+  try
+    Width := bmp.Width;
+    Height := bmp.Height;
+    Result := True;
+  except
+    Width := 0;
+    Height := 0;
+    Result := False;
+  end;
+end;                                                          

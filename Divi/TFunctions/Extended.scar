@@ -1,0 +1,163 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             Extended Type Routines
+--------------------------------------------------------------------------------
+ * procedure IncE(var X: Extended; N: Extended);
+     By: Janilabo
+ * procedure DecE(var X: Extended; N: Extended);
+     By: Janilabo
+ * function  DecAcc(X: Extended; A: Integer): Extended;
+     By: Janilabo
+ * function  DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
+     By: Wanted
+ * function  InRangeE(Value, Min, Max: Extended): Boolean;
+     By: Janilabo 
+ * function  NegativeE(E: Extended): Extended;
+     By: Janilabo
+ * function  OppositeE(E: Extended): Extended;
+     By: Janilabo
+ * function  Percent(Given, Total: Extended): Extended;
+     By: Wanted
+ * function  PercentOf(Percent, Total: Extended): Extended;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure IncE(var X: Extended; N: Extended);
+Contributors: Janilabo
+Description: Increases the X value by N.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure IncE(var X: Extended; N: Extended);
+begin
+  X := X + N;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure DecE(var X: Extended; N: Extended);
+Contributors: Janilabo
+Description: Decreases the X value by N.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure DecE(var X: Extended; N: Extended);
+begin
+  if (SameValue(x, N)) then
+  begin         
+    X := 0.0;
+    Exit;
+  end;
+  X := (X - N);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DecAcc(X: Extended; A: Integer): Extended;
+Contributors: Janilabo, Wanted.
+Description: Returns an extended limited to significant digits.
+Date Created: October 11th, 2012. By Janilabo
+Last Modified: March 4th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DecAcc(X: Extended; A: Integer): Extended;
+var
+  D: Extended;
+  Z: Boolean;
+begin
+  Result := Int(X);
+  if (A > 0) then
+  begin
+    D := DecRet(X);
+    Z := (D < 0.1);
+    if (Z) then 
+      IncE(D, 0.1);
+    try
+      IncE(Result, StrToFloat('.' + Copy(FloatToStr(D), 3, A)));
+    finally
+    end;     
+    if (Z) then
+      DecE(Result, 0.1); 
+  end;   
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
+Contributors: Wanted
+Description: Returns the exact distance
+Date Created: September 30th, 2012. By Wanted
+Last Modified: September 30th, 2012. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DistanceEx(X1, Y1, X2, Y2: Extended): Extended;
+begin
+  Result := (Sqrt(Sqr(X1 - X2) + Sqr(Y1 - Y2)));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InRangeE(Value, Min, Max: Extended): Boolean;
+Contributors: Janilabo
+Description: Returns true if value is equal-to/betw. minimum and maximum extended.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InRangeE(Value, Min, Max: Extended): Boolean;
+begin
+  Result := ((Value >= Min) and (Value <= Max));        
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function NegativeE(E: Extended): Extended;
+Contributors: Janilabo
+Description: Always Returns the negative number of E, even if E is negative.
+Date Created: October 11th, 2012. By Janilabo
+Last Modified: October 11th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NegativeE(E: Extended): Extended;
+begin
+  Result := (Abs(E) * -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OppositeE(E: Extended): Extended;
+Contributors: Janilabo
+Description: Returns extended number with the opposite sign. -1.1 to 1.1, 1.1 to -1.1
+Date Created: October 11th, 2012. By Janilabo
+Last Modified: October 11th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OppositeE(E: Extended): Extended;
+begin
+  Result := (E * -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Percent(Given, Total: Extended): Extended;
+Contributors: Wanted, Janilabo.
+Description: Returns percentage of given into total.     
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 26th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Percent(Given, Total: Extended): Extended;
+begin
+  Result := 0;
+  if (Total <> 0) then
+    Result := ((Given / Total) * 100);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PercentOf(Percent, Total: Extended): Extended;
+Contributors: Wanted, Janilabo.
+Description: Returns percentage of Total.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 26th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PercentOf(Percent, Total: Extended): Extended;
+begin
+  Result := ((Percent / 100) * Total);
+end;   

@@ -1,5 +1,0 @@
-program New;
-begin
-  SendInterSCARMessage('awaa', 'Hello there');
-  Writeln(ReadInterSCARMessage('awaa'));
-end.

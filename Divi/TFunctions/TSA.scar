@@ -1,0 +1,364 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              String Array Routines
+--------------------------------------------------------------------------------
+ * function CopyTSA(TSA: TStringArray): TStringArray;
+     By: Wanted
+ * function  InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+     By: Wanted        
+ * procedure TSACapitalize(var TSA: TStrArray);
+     By: Janilabo    
+ * function TSADelete(var TSA: TStringArray; Index: Integer): string;
+     By: Wanted
+ * procedure TSAGetLetters(var TSA: TStrArray);
+     By: Wanted
+ * procedure TSAGetNumbers(var TSA: TStrArray);
+     By: Wanted
+ * procedure TSAInsert(var TSA: TStrArray; Index: Integer; S: string);
+     By: Janilabo
+ * procedure TSALowercase(var TSA: TStrArray);
+     By: Janilabo
+ * procedure TSAReverse(var TSA: TStrArray);
+     By: Janilabo
+ * function  TSASame(TSA1, TSA2: TStrArray): Boolean;
+     By: Janilabo
+ * procedure TSATrim(var TSA: TStrArray);
+     By: Wanted
+ * procedure TSATrimEx(Delimiter: AnsiString; var TSA: TStrArray);
+     By: Wanted
+ * procedure TSATrimLetters(var TSA: TStrArray);
+     By: Wanted
+ * procedure TSATrimNumbers(var TSA: TStrArray);
+     By: Wanted
+ * procedure TSATrimOthers(var TSA: TStrArray);
+     By: Wanted
+ * procedure TSAUnique(var TSA: TStrArray);
+     By: Janilabo
+ * procedure TSAUppercase(var TSA: TStrArray);
+     By: Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CopyTSA(TSA: TStringArray): TStringArray;
+Contributors: Wanted
+Description: Returns copy of TSA.   
+Date Created: March 4th, 2013. By Wanted
+Last Modified: March 4th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CopyTSA(TSA: TStringArray): TStringArray;
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  if (H < 0) then
+    Exit;         
+  SetLength(Result, (H + 1));
+  for I := 0 to H do
+    Result[I] := TSA[I];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+Contributors: Wanted, Freddy.
+Description: Returns true if the string is in the array and returns position.
+Date Created: October 10th, 2011. By Wanted
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
+var
+  H, L: Integer;
+  SS: string;
+begin
+  Result := True;
+  H := High(Arr);
+  L := Low(Arr);
+  if (not (CaseSenstive)) then
+  begin
+    SS := LowerCase(S);
+    for Pos := L to H do
+      if (SS = LowerCase(Arr[Pos])) then
+        Exit;
+  end
+  else
+    for Pos := L to H do
+      if (S = Arr[Pos]) then
+        Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSACapitalize(var TSA: TStrArray);
+Contributors: Janilabo 
+Description: Capitalizes all strings in TSA.
+Date Created: January 5th, 2013. By Janilabo
+Last Modified: January 5th, 2013. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSACapitalize(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := Capitalize(TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSADelete(var TSA: TStringArray; Index: Integer): string;
+Contributors: Wanted
+Description: Removes a sring by index from an TSA.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSADelete(var TSA: TStringArray; Index: Integer): string;
+begin
+  if (not (InRange(Index, -1, High(TSA) + 1))) then
+    Exit;
+  Result := TSA[Index];
+  Delete(TSA, Index, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSAGetLetters(var TSA: TStrArray);
+Contributors: Wanted
+Description: Only leaves letters in TSA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSAGetLetters(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := GetLetters(TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSAGetNumbers(var TSA: TStrArray);
+Contributors: Wanted
+Description: Only leaves numbers in TSA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSAGetNumbers(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := GetNumbers(TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSAInsert(var TSA: TStrArray; Index: Integer; S: string);
+Contributors: Janilabo
+Description: Inserts S at Index in TSA.             
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSAInsert(var TSA: TStrArray; Index: Integer; S: string);
+var
+  I, L: Integer;
+begin
+  L := Length(TSA);
+  SetLength(TSA, (L + 1));
+  if (Index < 0) then
+    Index := 0;
+  if (Index > l) then
+    Index := L;
+  if (L > Index) then
+    for I := (L - 1) downto Index do
+      TSA[(I + 1)] := TSA[I];
+  TSA[Index] := S;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSALowercase(var TSA: TStrArray);
+Contributors: Janilabo 
+Description: Lowerscases all strings in TSA.
+Date Created: January 5th, 2013. By Janilabo
+Last Modified: January 5th, 2013. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSALowercase(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := Lowercase(TSA[I]);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSAReverse(var TSA: TStrArray);
+Contributors: Janilabo 
+Description: Reverses the order of indexes in TSA.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSAReverse(var TSA: TStrArray);
+var
+  G, I, L: Integer;
+begin
+  L := (Length(TSA) - 1);
+  if (L < 1) then
+    Exit;
+  G := (L div 2);
+  for I := 0 to G do
+    Swap(TSA[I], TSA[(L - I)]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSASame(TSA1, TSA2: TStrArray): Boolean;
+Contributors: Janilabo
+Description: Returns true if TSA1 and TSA2 are identical.                    
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSASame(TSA1, TSA2: TStrArray): Boolean;
+var
+  H, I: Integer;
+begin
+  H := High(TSA1);
+  if ((H < 0) or (H <> High(TSA2))) then
+    Exit;
+  for I := 0 to H do
+    if (TSA1[I] <> TSA2[I]) then
+      Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSATrim(var TSA: TStrArray);
+Contributors: Wanted 
+Description: Trims all white spaces at begin/end of strings in TSA. 
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSATrim(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := Trim(TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSATrimEx(Delimiter: AnsiString; var TSA: TStrArray);
+Contributors: Wanted 
+Description: Trims a string delimiter at the beginning and ending of all strings in TSA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSATrimEx(Delimiter: AnsiString; var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := TrimEx(Delimiter, TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSATrimLetters(var TSA: TStrArray);
+Contributors: Wanted 
+Description: Removes all letters from TSA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSATrimLetters(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := TrimLetters(TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSATrimNumbers(var TSA: TStrArray);
+Contributors: Wanted 
+Description: Removes all numbers from TSA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSATrimNumbers(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := TrimNumbers(TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSATrimOthers(var TSA: TStrArray);
+Contributors: Wanted 
+Description: Removes all characters that are not letters or numbers from TSA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSATrimOthers(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := TrimOthers(TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSAUnique(var TSA: TStrArray);
+Contributors: Janilabo
+Description: Deletes any duplicates in TSA.          
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: October 12th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TSAUnique(var TSA: TStrArray);
+var
+  H, II, I, D: Integer; 
+begin
+  H := High(TSA);   
+  if (H > 0) then         
+  for I := (H - D) downto 1 do
+    for II := (I - 1) downto 0 do
+      if (TSA[II] = TSA[II]) then
+      begin
+        TSADelete(TSA, I);
+        Inc(D);
+        Break;  
+      end;  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TSAUppercase(var TSA: TStrArray);
+Contributors: Janilabo 
+Description: Uppercases all strings in TSA.
+Date Created: January 5th, 2013. By Janilabo
+Last Modified: January 5th, 2013. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure TSAUppercase(var TSA: TStrArray);
+var
+  H, I: Integer;
+begin
+  H := High(TSA);
+  for I := H downto 0 do
+    TSA[I] := Uppercase(TSA[I]);
+end;

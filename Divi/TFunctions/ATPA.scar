@@ -1,0 +1,175 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                           Point 2D Array Type Routines
+--------------------------------------------------------------------------------
+ * function  CopyATPA(ATPA: T2DPointArray): T2DPointArray;
+     By: Janilabo
+ * function  ATPAAllBounds(ATPA: T2DPointArray): TBoxArray;
+     By: Janilabo
+ * function  ATPABounds(ATPA: T2DPointArray): TBox;
+     By: Wanted
+ * procedure ATPADelete(var ATPA: T2DPointArray; Index: Integer);
+     By: Wanted
+ * procedure ATPADeleteByLength(var ATPA: T2DPointArray; Min, Max: Integer);
+     By: Janilabo
+ * procedure ATPADeleteBySize(var ATPA: T2DPointArray; MinW, MinH, MaxW, MaxH: Integer);
+     By: Janilabo 
+ * procedure ATPAInsert(var ATPA: T2DPointArray; Index: Integer; TPA: TPointArray);
+     By: Wanted
+ * procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CopyATPA(ATPA: T2DPointArray): T2DPointArray;
+Contributors: Wanted
+Description: Returns copy of ATPA.   
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CopyATPA(ATPA: T2DPointArray): T2DPointArray;
+var
+  H, I: Integer;
+begin
+  H := High(ATPA);
+  if (H < 0) then
+    Exit;         
+  SetLength(Result, (H + 1));
+  for I := 0 to H do
+    Result[I] := CopyTPA(ATPA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ATPAAllBounds(ATPA: T2DPointArray): TBoxArray;
+Contributors: Janilabo
+Description: Returns all the bounds of TPAs in ATPA.      
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ATPAAllBounds(ATPA: T2DPointArray): TBoxArray;
+var
+  H, I: Integer;
+begin
+  H := High(ATPA);
+  if (H < 0) then
+    Exit;
+  SetLength(Result, (H + 1));
+  for I := 0 to H do
+    Result[I] := TPABounds(ATPA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ATPABounds(ATPA: T2DPointArray): TBox;
+Contributors: Wanted
+Description: Returns outer bounds of all TPAs in ATPA.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 28th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ATPABounds(ATPA: T2DPointArray): TBox;
+begin
+  Result := TBABounds(ATPAAllBounds(ATPA));  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ATPADelete(var ATPA: T2DPointArray; Index: Integer): TPointArray;
+Contributors: Wanted
+Description: Removes a TPA by index from an ATPA.
+Date Created: February 28th, 2013. By Wanted
+Last Modified: February 28th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ATPADelete(var ATPA: T2DPointArray; Index: Integer): TPointArray;
+begin
+  if (not (InRange(Index, -1, High(ATPA) + 1))) then
+    Exit;
+  Result := ATPA[Index];
+  Delete(ATPA, Index, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ATPADeleteByLength(var ATPA: T2DPointArray; Min, Max: Integer);
+Contributors: Janilabo, Wanted.
+Description: Removes all TPAs from ATPA that fall outside minSize / maxSize.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 28th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ATPADeleteByLength(var ATPA: T2DPointArray; Min, Max: Integer);
+var
+  H, I, L: Integer;
+begin
+  if (Min > Max) then
+    Exit;
+  H := High(ATPA);
+  for I := H downto 0 do
+  begin
+    L := Length(ATPA[I]);  
+    if (not (InRange(L, Min, Max))) then
+      ATPADelete(ATPA, I);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ATPADeleteBySize(var ATPA: T2DPointArray; MinW, MinH, MaxW, MaxH: Integer);
+Contributors: Janilabo, Wanted.
+Description: Removes all TPAs from ATPA that fall outside minimum / maximum dimensions.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 28th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ATPADeleteBySize(var ATPA: T2DPointArray; MinW, MinH, MaxW, MaxH: Integer);
+var
+  W, H, I: Integer;
+begin
+  if ((MinW > MaxW) or (MinH > MaxH)) then
+    Exit;
+  H := High(ATPA);
+  for I := H downto 0 do
+  begin
+    TPADimensions(ATPA[I], W, H);
+    if (not ((InRange(W, MinW, MaxW)) and (InRange(H, MinH, MaxH)))) then
+      ATPADelete(ATPA, I);
+  end;
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ATPAInsert(var ATPA: T2DPointArray; Index: Integer; TPA: TPointArray);
+Contributors: Wanted
+Description: Inserts TPA to index position of ATPA.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted   
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ATPAInsert(var ATPA: T2DPointArray; Index: Integer; TPA: TPointArray);
+var
+  I, L: Integer;
+begin
+  L := Length(ATPA);
+  SetLength(ATPA, (L + 1));    
+  if (Index < 0) then
+    Index := 0;
+  if (Index > l) then
+    Index := L;
+  if (L > Index) then
+    for I := (L - 1) downto Index do
+      ATPA[(I + 1)] := ATPA[I];
+  ATPA[Index] := TPA; 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+Contributors: Wanted, Freddy.
+Description: Sorts ATPAs based in their TPA lengths.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: September 10th, 2012. By Bixby Sayz
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
+begin
+  SortATPABySize(ATPA);
+  if (BigFirst) then
+    ReverseATPA(ATPA);
+end;

@@ -1,0 +1,94 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                Box Type Routines
+--------------------------------------------------------------------------------
+ * function  ValidBox(TB: TBox): Boolean; 
+     By: Janilabo
+ * function  BoxContains(Inner_TB, Outer_TB: TBox): Boolean;
+     By: Janilabo
+ * procedure BoxDimensions(TB: TBox; var W, H: Integer);
+     By: Janilabo
+ * procedure ConstrainBox(var TB: TBox; MB: TBox);
+     By: Wanted
+ * procedure FixBox(var TB: TBox);
+     By: Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ValidBox(TB: TBox): Boolean;
+Contributors: Janilabo
+Description: Returns true if TB is valid (X1 <= X2 AND Y1 <= Y2).
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo      
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ValidBox(TB: TBox): Boolean;
+begin
+  Result := ((TB.X1 <= TB.X2) and (TB.Y1 <= TB.Y2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BoxContains(Inner_TB, Outer_TB: TBox): Boolean;
+Contributors: Janilabo, Wanted.
+Description: Returns true if Inner_TB is inside Outer_TB.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 27th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BoxContains(Inner_TB, Outer_TB: TBox): Boolean;
+begin
+  Result := False;
+  if ((ValidBox(Inner_TB)) and (ValidBox(Outer_TB))) then
+    Result := ((Inner_TB.X1 >= Outer_TB.X1) and (Inner_TB.X1 <= Outer_TB.X2) and (Inner_TB.X2 >= Outer_TB.X1) and (Inner_TB.X2 <= Outer_TB.X2) and
+               (Inner_TB.Y1 >= Outer_TB.Y1) and (Inner_TB.Y1 <= Outer_TB.Y2) and (Inner_TB.Y2 >= Outer_TB.Y1) and (Inner_TB.Y2 <= Outer_TB.Y2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure BoxDimensions(TB: TBox; var W, H: Integer);
+Contributors: Janilabo
+Description: Stores TB dimensions to W (Width) and H (Height) variables.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo      
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure BoxDimensions(TB: TBox; var W, H: Integer);
+begin
+  W := ((TB.X2 - TB.X1) + 1);
+  H := ((TB.Y2 - TB.Y1) + 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ConstrainBox(var TB: TBox; MB: TBox);
+Contributors: Wanted
+Description: Makes the edges of your box within the edges of another box.
+Date Created: December 6th, 2011. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ConstrainBox(var TB: TBox; MB: TBox);
+begin
+  if (TB.X1 < MB.X1) then
+    TB.X1 := MB.X1;
+  if (TB.Y1 < MB.Y1) then
+    TB.Y1 := MB.Y1;
+  if (TB.X2 > MB.X2) then
+    TB.X2 := MB.X2;
+  if (TB.Y2 > MB.Y2) then
+    TB.Y2 := MB.Y2;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure FixBox(var TB: TBox);
+Contributors: Janilabo
+Description: Fixes the TB. Swaps incorrectly set values (X1-Y1 > X2-Y2).
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo    
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure FixBox(var TB: TBox);
+begin
+  if (TB.X1 > TB.X2) then
+    Swap(TB.X1, TB.X2);
+  if (TB.Y1 > TB.Y2) then
+    Swap(TB.Y1, TB.Y2);
+end;

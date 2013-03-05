@@ -1,249 +1,74 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Official SCAR Include
-                                  Include File
+                                Main Include File
 --------------------------------------------------------------------------------
- * procedure SetUpOSI;
- * procedure FreeOSI;
+ * procedure SetUpOSI;       
+     By: Wanted
+ * procedure FreeOSI;  
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{$I Divi\Misc\Forms\UpdateSCAR.scar}
-
-// Check if SCAR Divi is version 3.37 or higher
-{$IFNDEF SCAR337_UP}
+{$IFNDEF SCAR338_UP}
   begin
-    OSI_SafeShowUpdateSCARMsg;  
+    WriteLn('Update to SCAR Divi 3.38 or newer at http://scar-divi.com');
   end.
 {$ENDIF}
 
-// SMART in OSI uses RS2, thus RS2 must be defined if SMART is defined!
-{$IFDEF SMART}
-  {$DEFINE RS2}
-{$ENDIF}
-
-// Disables variance if RS2 is not defined, unless you define OverrideVariance
 {$IFNDEF RS2}
-  {$IFNDEF OverrideVariance}
-    {$DEFINE NoVariance}
+  {$IFNDEF RS07}
+    {$IFNDEF UseVariance}
+      {$DEFINE NoVariance}
+    {$ENDIF}     
   {$ENDIF}
 {$ENDIF}
 
-// Libraries for OSI
-{$I Divi\Libraries\Libraries.scar}
-
-// OSI Include files
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                                 Level 1 Includes                                                            
-                           Basic SCAR Types & functions                       
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-{$I Divi\Level 1\Globals.scar}
-{$I Divi\Level 1\Integer.scar}
-{$I Divi\Level 1\Boolean.scar}
-{$I Divi\Level 1\String.scar}
-{$I Divi\Level 1\Extended.scar}
-{$I Divi\Level 1\Variant.scar}
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                                 Level 2 Includes
-                         Complex SCAR Types & functions
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-{$I Divi\Level 2\Math.scar}
-{$I Divi\Level 2\Box.scar}
-{$I Divi\Level 2\StringArray.scar}
-{$I Divi\Level 2\Array.scar}
-{$I Divi\Level 2\Point.scar}
-{$I Divi\Level 2\Color.scar}
-{$I Divi\Level 2\Bitmap.scar}
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                                 Level 3 Includes
-                       Input/Client/Math/Timing functions
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-{$I Divi\Level 3\Timing.scar}
-{$I Divi\Level 3\Client.scar}
-{$I Divi\Level 3\Mouse.scar}
-{$I Divi\Level 3\Keyboard.scar}
-{$I Divi\Level 3\Multi.scar}
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                                  RS2 Includes
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-// RS2 Globals includes (needs to be included before SMART, keyboard/mouse) 
-{$IFDEF RS2}
-  {$I RS2\Core\Globals.scar} 
-  {$I RS2\Core\Constants.scar} 
-  {$I RS2\Misc\Updater.scar}  
-{$ENDIF} 
-
-// RS2 SMART Include for using SMART
-{$IFDEF SMART}
-  {$I RS2\Misc\SMART.scar}
-{$ENDIF}
-
-// RS2 Includes!
-{$IFDEF RS2}
-  {$I RS2\Core\Text.scar}
-  {$I RS2\Core\GameTabs.scar}
-  {$I RS2\Core\Chat.scar}
-  {$I RS2\Core\Login.scar}
-  {$I RS2\Core\WorldSwitcher.scar}
-  {$I RS2\Core\Inventory.scar}
-  {$I RS2\Core\Object.scar}
-  {$I RS2\Core\Map.scar}
-  {$I RS2\Core\Bank.scar}
-  {$I RS2\Core\DepositBox.scar}
-  {$I RS2\Core\Amount.scar}     
-  {$I RS2\Core\NPC.scar}  
-  {$I RS2\Misc\Trading.scar}
-  {$I RS2\Core\AbilityBook.scar}
-  {$I RS2\Core\ActionBar.scar}              
-  
-// RS2 Include Anit-Randoms, if def OSI_Color_Anti_Randoms
-  {$IFDEF OSI_Color_Anti_Randoms}
-    {$I RS2\Anti-Randoms\Anti-Randoms.scar}
-  {$ENDIF}                       
-  
-// RS2 SMART Debug Functions
-  {$IFDEF SMART}
-    {$IFDEF RS2Debug}
-      {$I RS2\Misc\DebugSMART.scar}
-    {$ENDIF}    
-  {$ENDIF}
-{$ENDIF}
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                         OSI Debug Includes and Misc
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-{$I Divi\Misc\Logging.scar}
-{$IFDEF OSIDebug}
-  {$I Divi\Misc\Debug.scar}
-{$ENDIF}
-{$I Divi\Misc\Forms.scar}
+{$I Divi\Globals.scar}
+{$I Divi\TFunctions\String.scar}
+{$I Divi\TFunctions\Conversion.scar}
+{$I Divi\TFunctions\Boolean.scar}
+{$I Divi\TFunctions\Box.scar}
+{$I Divi\TFunctions\Extended.scar}
+{$I Divi\TFunctions\Integer.scar}
+{$I Divi\TFunctions\Point.scar}
+{$I Divi\TFunctions\TBA.scar}
+{$I Divi\TFunctions\TBLA.scar}
+{$I Divi\TFunctions\TEA.scar}
+{$I Divi\TFunctions\TIA.scar}
+{$I Divi\TFunctions\TPA.scar}
+{$I Divi\TFunctions\TSA.scar}
+{$I Divi\TFunctions\TVA.scar}
+{$I Divi\TFunctions\ATPA.scar}
+{$I Divi\Human\Timing.scar}
+{$I Divi\Human\Keyboard.scar}
+{$I Divi\Human\Mouse.scar}
+{$I Divi\Pixel\Bitmap.scar}
+{$I Divi\Pixel\Color.scar}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FreeOSI;
-Contributors: Wanted, LordJashin
+Contributors: Wanted, LordJashin.
 Description: Frees things that are loaded into memory upon OSI setup. Save logs
-Date Created: August 8th, 2011. By Wanted.
-Last Modified: October 30th, 2012. By LordJashin. RS2 Build 735.
+Date Created: August 8th, 2011. By Wanted
+Last Modified: March 4th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeOSI;
 begin
-  if not IsOSISetup then Exit;
-  {$IFDEF RS2}
-    FreeRS2Fonts;           
-    if (PlayerStartTime <> 0) then
-      OSI_WriteAndLog('RS2: Player(s) Successfully Ran For: (' + IntToStr(GetSystemTime - PlayerStartTime) + ' ms)');
-  {$ENDIF} 
-  OSI_WriteAndLog('Successfully Ran For: (' + STimeRunning + ')');
-  if OSI_Log.AutoScreen then OSI_WriteAndLog('Saved Screenshots to: ' + OSI_Log.AutoScreenFolderPath + OSI_Log.AutoScreenNewFolder);  
-  OSI_AutoSaveLog;                
+  //FreeFonts      
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin.
 Description: Sets up OSI.
-Date Created: August 7th, 2011. By Wanted.
-Last Modified: November 28th, 2012. By LordJashin. RS2 Build 745.
+Date Created: August 7th, 2011. By Wanted
+Last Modified: March 4th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
-{$IFDEF RS2}
-var
-  RS2FontFolder: string;
-{$ENDIF}
-{$IFDEF SMART}
-  i: Integer;
-{$ENDIF}
 begin
-  try
-    OSI_Variance := 3.0;
-    OSI_WriteAndLog('Routines Enabled');  
-    {$IFDEF BASS}
-      Lib_Bass_Init('Divi\Libraries\Bass.dll');
-    {$ENDIF}
-    {$IFDEF RS2}    
-      FriendChars := 0;
-      RS2GlobalVars; 
-      if RS2_CheckForUpdates then
-        RSupdateGlobals;
-      RS2FontFolder := '';
-      OSI_WriteAndLog('RS2: Routines Enabled');
-      {$IFDEF OSI_Color_Anti_Randoms}
-        OSI_WriteAndLog('RS2: Color Random Detection and Solving Enabled');
-        InitiateAntiRandoms;
-      {$ELSE}
-        OSI_WriteAndLog('RS2: Color Random Detection and Solving Disabled');
-      {$ENDIF}
-      {$IFNDEF DisableRS2Fonts}
-        RS2FontFolder := IncludesPath + 'OSI\RS2\Fonts\';
-        if (not (DirectoryExists(RS2FontFolder))) then
-          RS2FontFolder := FontsPath;
-        OptionChars := rs_LoadChars(RS2FontFolder + 'ScreenChars\');
-        UpChars := rs_LoadChars(RS2FontFolder + 'UpChars\');
-        ScreenChars := LoadChars2(RS2FontFolder + 'ScreenChars\');
-        NPCChars := LoadChars2(RS2FontFolder + 'NPCChars\');
-        SmallChars := LoadChars2(RS2FontFolder + 'SmallChars\');
-        StatChars := LoadChars2(RS2FontFolder + 'StatChars\');
-        FriendChars := LoadChars2(RS2FontFolder + 'FriendChars\');
-        LoginChars := LoadChars2(RS2FontFolder + 'LoginChars\');
-        XPChars := LoadChars2(RS2FontFolder + 'UpChars\');
-        OSI_WriteAndLog('RS2: Loaded Fonts: OptionChars, ScreenChars, NPCChars, UpChars, SmallChars, StatChars, FriendChars, LoginChars, XPChars');
-      {$ELSE}
-        OSI_WriteAndLog('RS2: Font Loading Disabled.');
-      {$ENDIF}
-      SetLength(Players, 1);
-      LoadRS2WorldArray;
-      AllowQuickChat := True;
-      AllowLootShare := True;                 
-      {$IFDEF SMART}                      
-        if (SMART_Server = 0) and (Length(Players[CurrentPlayer].WorldInfo) > 1) then
-          for i := 0 to high(RS2WorldArray) do
-            if Players[CurrentPlayer].WorldInfo[1] = i + 1 then
-              SMART_Server := i + 1;
-        if (SMART_Server = 0) then 
-          SMART_Server := RandomWorld(false);
-        if InitSmartLib(IncludesPath + 'OSI\RS2\Misc\libsmartremote32.dll') then
-          SMART_Path := IncludesPath + 'OSI\RS2\Misc\'
-        else if InitSmartLib(ScriptPath + 'OSI\RS2\Misc\libsmartremote32.dll') then   
-          SMART_Path := ScriptPath + 'OSI\RS2\Misc\'    
-        else if InitSmartLib(ScriptPath + 'RS2\Misc\libsmartremote32.dll') then   
-          SMART_Path := ScriptPath + 'RS2\Misc\'  
-        else
-        begin
-          OSI_WriteAndLog('RS2: Couldn''t load SMART (libsmartremote32.dll)' + #13#10 +
-                          'RS2: Try restarting SCAR Divi, SMART, or Re-installing OSI' + #13#10 +
-                          'RS2: If problems persist post a thread on the forums at www.scar-divi.com');
-          TerminateScript;
-        end;
-        if (not (NonAutomaticSMART)) then
-          InitiateSMART;
-      {$ELSE}                                                         
-        GetClient.Activate;  
-        RSClientOriginalImageArea := GetClient.ImageArea;
-        RSClientOriginalInputArea := GetClient.InputArea;
-        UpdateRSClient;                                  
-        if not RS2_SkipSetupRSReady then
-        begin              
-          OSI_WriteAndLog('RS2: Looking for (Login Screen, Lobby Screen, or LoggedIn)...8-13secs');
-          if not WaitFunc(@RSReady, True, 100, 250, 8000, 13000) then
-            FixLoginScreen;          
-        end
-        else
-          OSI_WriteAndLog('RS2: Skipping check for (Login Screen, Lobby Screen, or LoggedIn)!');  
-      {$ENDIF}
-      PlayerStartTime := GetSystemTime; 
-    {$ENDIF}
-    MouseSpeed := 15;
-    SetColorSpeed2Modifiers(0.2, 0.2);
-    ColorToleranceSpeed(1);
-  except
-    HandleOSIException; 
-  finally   
-    if not OSIExceptionThrown then
-      begin
-        IsOSISetup := True; 
-        OSI_WriteAndLog('Successfully Setup!');        
-      end;    
-  end; 
+  OSI_Variance := 3.0;
+  MouseSpeed := 15;
+  SetColorSpeed2Modifiers(0.2, 0.2);
+  ColorToleranceSpeed(1);
 end;

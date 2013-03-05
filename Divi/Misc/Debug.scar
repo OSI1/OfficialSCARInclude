@@ -3,12 +3,17 @@
                                Debugging Routines
 --------------------------------------------------------------------------------
  * procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
- * procedure DebugATPABounds(ATPA: T2DPointArray);
- * procedure DebugATPA(ATPA: T2DPointArray);
+     By: Wanted
+ * procedure DebugATPABounds(ATPA: T2DPointArray);      
+     By: Wanted
+ * procedure DebugATPA(ATPA: T2DPointArray);   
+     By: Wanted
  * procedure DebugTPA(TPA: TPointArray);
- * procedure DebugTBA(TBA: TBoxArray);
- * procedure DebugTB(TB: TBox);
- * procedure DebugBitmaps(BmpArr: array of TSCARBitmap; Interval: Integer; HideDebugWndAfter: Boolean);
+     By: Wanted
+ * procedure DebugTBA(TBA: TBoxArray);     
+     By: Wanted
+ * procedure DebugTB(TB: TBox);      
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -16,7 +21,7 @@ procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPAB
 Contributors: Wanted, Freddy
 Description: Debugs an ATPA to the debug window with tons of options.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: July 20th, 2012. By Freddy
+Last Modified: March 4th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
@@ -30,12 +35,8 @@ var
     Arial: Integer;
   {$ENDIF}
 begin
-  H := High(ATPA);
-  SetLength(ATPA2, H + 1);
-  for I := 0 to H do
-    ATPA2[I] := CopyTPA(ATPA[I]);
-  mTPA := MergeATPA(ATPA2);
-  B := TPABounds(mTPA);
+  ATPA2 := CopyATPA(ATPA);
+  B := ATPABounds(ATPA2);
   TPADimensions(mTPA, Width, Height);
   DecEx(B.X1, Round(Width * 0.25));
   if (B.X1 < 0) then
@@ -69,7 +70,7 @@ begin
           Col := Random(clWhite + 1);
         if (ShowTPABorders) then
         begin
-          TPA := TBOutlineToTPA(TPABounds(ATPA2[I]));
+          TPA := BoxToTPA(TPABounds(ATPA2[I]), False);
           HH := High(TPA);
             for II := 0 to HH do
               bmpDebug.Pixels[TPA[II].X, TPA[II].Y] := Col;
@@ -80,7 +81,7 @@ begin
             TPA := LoadTextTPA(IntToStr(I), StatChars);
           {$ELSE}
             Arial := LoadCharsFromFont2('Arial', 8, True, False, False, False);
-            TPA := LoadTextTPA(IntToStr(I), Arial);
+            TPA := TextToTPA(IntToStr(I), Arial);
           {$ENDIF}
           BB := TPABounds(ATPA2[I]);
           OffsetTPA(TPA, BB.X1 + 2, BB.Y1 + 2);
@@ -94,7 +95,7 @@ begin
       end;
       if (ShowATPABorder) then
       begin
-        TPA := TBOutlineToTPA(ATPABounds(ATPA2));
+        TPA := BoxToTPA(ATPABounds(ATPA2), False);
         H := High(TPA);
         for I := 0 to H do    
           bmpDebug.Pixels[TPA[I].X, TPA[I].Y] := clBlue;
@@ -157,19 +158,12 @@ procedure DebugTBA(TBA: TBoxArray);
 Contributors: Wanted
 Description: Debugs a TBoxArray
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: October 22nd, 2011. By Wanted
+Last Modified: March 4th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DebugTBA(TBA: TBoxArray);
-var
-  ATPA: T2DPointArray;
-  I, H: LongInt;
 begin
-  H := High(TBA);
-  SetLength(ATPA, H + 1);
-  for I := 0 to H do
-    ATPA[I] := [Point(TBA[I].X1, TBA[I].Y1), Point(TBA[I].X2, TBA[I].Y2)];
-  DebugATPABoundsEx(ATPA, True, False, False, True, True, '');
+  DebugATPABoundsEx(TBAToATPA(TBA, False), True, False, False, False, True, '');
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -183,29 +177,4 @@ Last Modified: October 22nd, 2011. By Wanted
 procedure DebugTB(TB: TBox);
 begin
   DebugTBA([TB]);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure DebugBitmaps(BmpArr: array of TSCARBitmap; Interval: Integer; HideDebugWndAfter: Boolean);
-Contributors: LordJashin
-Description: Debugs multiple Bitmaps at a certain interval. Allows to hide Debug window afterwards
-Date Created: November 19th, 2012. By LordJashin.
-Last Modified: November 19th, 2012. By LordJashin.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure DebugBitmaps(BmpArr: array of TSCARBitmap; Interval: Integer; HideDebugWndAfter: Boolean);
-var
-  i, h: Integer;
-begin
-  h := high(BmpArr);
-  if (h < 0) then Exit;
-  for i := 0 to h do
-    if BitmapExists(BmpArr[i]) then
-    begin
-      DebugBitmap(BmpArr[i]);
-      wait(Interval);
-      if i = h then
-        if HideDebugWndAfter then                                                 
-          HideDebugImgWindow;
-    end;                                                                                            
 end;

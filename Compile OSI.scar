@@ -2,56 +2,37 @@
                               Official SCAR Include
                            Include Compile Testing File
 --------------------------------------------------------------------------------
- * procedure TestCompileOSI;
+ * procedure TestCompileOSI;        
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-                                           
-// OSI Defines                     // Test all combinations in-depth.
-//{$DEFINE OverrideVariance}       // Comment in in-depth testing   
-//{$DEFINE NoVariance}             // Comment in in-depth testing
-//{$DEFINE DisableRS2Fonts}        // Comment in in-depth testing
-{$DEFINE OSIDebug}                 // Comment out in in-depth testing
-//{$DEFINE RS2}                    // Comment in in-depth testing
-{$IFDEF RS2}
-  {$DEFINE RS2Debug}               // Comment out in in-depth testing
-  {$DEFINE OSI_Color_Anti_Randoms} // Comment out in in-depth testing
-  {$DEFINE SMART}                  // Comment out in in-depth testing
-{$ENDIF}
+                                      
+// OSI Defines                     // Comment out or in, test all combinations
+//{$DEFINE UseVariance}            
+//{$DEFINE NoVariance}           
+//{$DEFINE RS2}                   
+//{$DEFINE RS07}                 
 
-//Main OSI Include file
-{$I OSI.scar}
-
-//RS2 Includes
-{$IFDEF RS2}
-  {$I RS2\Skill\Mining.scar}       // Comment out in in-depth testing
-  {$I RS2\Skill\Runecrafting.scar} // Comment out in in-depth testing
-  {$I RS2\Skill\Smithing.scar}     // Comment out in in-depth testing
-  {$I RS2\Skill\Woodcutting.scar}  // Comment out in in-depth testing
-  {$I RS2\Misc\Anti-Ban.scar}      // Comment out in in-depth testing
-  {$I RS2\Misc\Symbols.scar}       // Comment out in in-depth testing
-{$ENDIF}
+{$I OSI.scar}                      // Required*
+{$I Divi\Misc\Debug.scar}          // Comment out or in, test all combinations.
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TestCompileOSI;
-Contributors: Wanted, LordJashin
+Contributors: Wanted
 Description: Test compiles all of OSI. Comment out every combination of defines.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: October 12th, 2012. By LordJashin
+Last Modified: August 8th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TestCompileOSI;
 var
-  T: Integer;
+  T: LongInt;
 begin
   T := GetSystemTime;
   SetUpOSI;
-  OSI_WriteAndLog('Successfully Set Up In: (' + IntToStr(GetSystemTime - T) + ' ms)');
+  WriteLn('OSI succefully set up (' + IntToStr(GetSystemTime - T) + ' ms)');
 end;
 
-procedure ScriptTerminate;
 begin
+  TestCompileOSI;
   FreeOSI;
-end;
-
-begin
-  TestCompileOSI; 
 end.

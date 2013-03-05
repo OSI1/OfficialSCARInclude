@@ -1,0 +1,145 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                            Point Array Type Routines
+--------------------------------------------------------------------------------
+ * function  FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+      By: Wanted  
+ * function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
+      By: Wanted
+ * procedure TPAExtractDist(var TPA: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+      By: Wanted
+ * procedure TPAExtractSlice(var TPA: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+      By: Wanted         
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindTextTPAInTPA(TextTPA, SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+Contributors: Wanted, Freddy.
+Description: Checks a TPA to see if contains the a line of text using its TPA.
+Date Created: October 20th, 2011. By Wanted
+Last Modified: November 28th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+var
+  TextTPA, TPA: TPointArray;
+begin
+  Result := False;
+  TextTPA := TextToTPA(Text, Chars);
+  try
+    if (not (TPAInTPARelEx(TextTPA, SearchTPA, TPA))) then
+      Exit;
+  except
+    Exit;
+  end;
+  X := TPA[0].X;
+  Y := TPA[0].Y;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
+Contributors: Wanted
+Description: Out puts some of the pixels in a spiral incrementing based on AngStep and DistStep.
+Date Created: November 28th, 2011. By Wanted
+Last Modified: December 1st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; X1, Y1, X2, Y2: Integer): TPointArray;
+var
+  Ang, Dist: Extended;
+  RP: TPoint;
+  L: Integer;
+begin
+  if (Center.X = 0) then
+    if (Center.Y = 0) then
+  Center := Point((X1 + X2) div 2, (Y1 + Y2) div 2);
+  Result := [];
+  L := 0;
+  Ang := 0;
+  Dist := 0;
+  repeat
+    RP := RotatePoint(Point(Round(Center.X + Dist), Center.Y), Center, Radians(Ang));
+    if (not (PointInBox(RP, Box(X1, Y1, X2, Y2)))) then
+      Break;
+    Inc(L);
+    SetLength(Result, L);
+    Result[L - 1] := RP;
+    Ang := Ang + AngStep;
+    Dist := Dist + DistStep;
+    if (Ang > 360) then
+      Ang := Ang - 360;
+  until (False);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TPAExtractDist(var TPA: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+Contributors: Wanted
+Description: Removes all points not within distance.
+Date Created: October 28th, 2011. By Wanted
+Last Modified: November 21st, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TPAExtractDist(var TPA: TPointArray; MinDist, MaxDist, CX, CY: Extended);
+var
+  H, L, I, HH: Integer;
+  NewTPA: TPointArray;
+  Dist: Extended;
+begin
+  H := High(TPA);
+  L := Low(TPA);
+  HH := 0;
+  for I := L to H do
+  begin
+    Dist := DistanceEx(TPA[I].X, TPA[I].Y, CX, CY);
+    if (Dist >= MinDist) then
+      if (Dist <= MaxDist) then
+      begin
+        SetLength(NewTPA, HH + 1);
+        NewTPA[HH] := TPA[I];
+        Inc(HH);
+      end;
+  end;
+  TPA := NewTPA;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TPAExtractSlice(var Points: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+Contributors: Freddy, Wanted.
+Description: Removes all points from a TPA except for a given slice.
+Date Created: November 3rd, 2011. By Wanted
+Last Modified: November 5th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TPAExtractSlice(var TPA: TPointArray; SRad, ERad, SAng, EAng: Extended; CX, CY: Integer);
+var
+  StartAngle, EndAngle, StartAngle2, EndAngle2: Extended;
+  TPA1, TPA2: TPointArray;
+begin
+  {$IFDEF RS2}
+    StartAngle := SAng - 90;
+    EndAngle := EAng - 90;
+  {$ELSE}
+    StartAngle := SAng;
+    EndAngle := EAng;
+  {$ENDIF}
+  if (StartAngle < 0) then
+  begin
+    StartAngle2 := FixD(StartAngle);
+    if (EndAngle < 0) then
+    begin
+      EndAngle2 := FixD(EndAngle);
+      TPAExtractPie(TPA, Point(CX, CY), SRad, ERad, Radians(StartAngle2), Radians(EndAngle2));
+      Exit;
+    end;
+    StartAngle := 0;
+    EndAngle2 := 360;
+    TPA1 := CopyTPA(TPA);
+    TPA2 := CopyTPA(TPA);
+    TPAExtractPie(TPA1, Point(CX, CY), SRad, ERad, Radians(StartAngle2), Radians(EndAngle2));
+    TPAExtractPie(TPA2, Point(CX, CY), SRad, ERad, Radians(StartAngle), Radians(EndAngle));
+    TPA := CombineTPA(TPA1, TPA2);
+    Exit;
+  end;
+  TPAExtractPie(TPA, Point(CX, CY), SRad, ERad, Radians(StartAngle), Radians(EndAngle));
+end;

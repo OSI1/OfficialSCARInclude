@@ -187,7 +187,6 @@ const
 
 var // total of 23 global vars
   // miscellaneous vars
-  FormCreateTime : Integer;
   LastFileLoc : String;
   DFMToSCAR : Boolean;
   Status : Array [0..1] of Array [0..2] of String;

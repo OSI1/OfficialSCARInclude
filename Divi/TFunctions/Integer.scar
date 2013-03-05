@@ -1,0 +1,114 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              Integer Type Routines
+--------------------------------------------------------------------------------
+ * procedure ConstrainInt(var Value: Integer; Min, Max: Integer);
+     By: Janilabo
+ * function  Negative(I: Integer): Integer;
+     By: Janilabo
+ * function  Opposite(I: Integer): Integer;
+     By: Janilabo
+ * function  RandomAbs(Range: Integer): Integer;
+     By: Janilabo
+ * function  RR(Min, Max: Integer): Integer;
+     By: Freddy & Wanted.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}       
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ConstrainInt(var Value: Integer; Min, Max: Integer);
+Contributors: Janilabo
+Description: Sets Value inside range (Min = minimum, Max = maximum)                                                              
+Date Created: October 6th, 2012. By Janilabo
+Last Modified: October 6th, 2012. By Janilabo 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ConstrainInt(var Value: Integer; Min, Max: Integer);
+begin
+  if (Min > Max) then
+    Swap(Min, Max);
+  if (Min <> Max) then
+  begin         
+    if (Value < Min) then
+      Value := Min;
+    if (Value > Max) then
+      Value := Max; 
+  end 
+  else    
+    if ((Value < Min) or (Value > Max)) then
+      Value := Min;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Negative(I: Integer): Integer;
+Contributors: Janilabo
+Description: Always returns the negative number of I, even if I is negative.
+Date Created: October 11th, 2012. By Janilabo
+Last Modified: October 11th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Negative(I: Integer): Integer;
+begin
+  Result := (IAbs(I) * -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Opposite(I: Integer): Integer;
+Contributors: Janilabo
+Description: Returns the number with the opposite sign. e.g. -1 to 1, 1 to -1
+Date Created: October 11th, 2012. By Janilabo
+Last Modified: October 11th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Opposite(I: Integer): Integer;
+begin
+  Result := (I * -1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomAbs(Range: Integer): Integer;
+Contributors: Janilabo, Wanted.
+Description: Random() with support for negative Range.
+Date Created: October 21st, 2012. By Janilabo
+Last Modified: February 26th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomAbs(Range: Integer): Integer;
+begin
+  if (Range <> 0) then
+    if (Range > 0) then 
+    {$IFDEF NoVariance}
+        Result := Random(Range)
+      else
+        Result := (Random(IAbs(Range)) * -1); 
+    {$ELSE}
+        Result := RandomG(Range, OSI_Variance)
+      else
+        Result := (RandomG(IAbs(Range)) * -1, OSI_Variance);  
+    {$ENDIF}  
+end;  
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RR(Min, Max: Integer): Integer;
+Contributors: Freddy, Wanted.
+Description: Outputs a value within a range centralized according to variance, supports negatives.
+Date Created: September 22nd, 2011. By Freddy & Wanted.
+Last Modified: February 26th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RR(Min, Max: Integer): Integer;
+{$IFDEF NoVariance}
+  begin
+    Result := RandomRange(Min, Max);
+  end;
+{$ELSE}
+  var
+    Origin, Rand: Integer;
+  begin
+    Origin := ((Min + Max) div 2);
+    Rand := RandomG(IAbs(Max - Origin), OSI_Variance);
+    case (Random(2)) of
+      0: Result := Origin - Rand;
+      1: Result := Origin + Rand;
+    end;
+  end;
+{$ENDIF}

@@ -1,0 +1,192 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             Box Array Type Routines
+--------------------------------------------------------------------------------
+ * function CopyTBA(TBA: TBoxArray): TBoxArray;
+     By: Wanted
+ * procedure ConstrainBoxes(var TBA: TBoxArray; MB: TBox);
+     By: Wanted
+ * function  TBABounds(TBA: TBoxArray): TBox;
+     By: Janilabo
+ * function  TBAContains(TBA: TBoxArray; TB: TBox): Boolean;
+     By: Janilabo
+ * function  TBADelete(var TBA: TBoxArray; Index: Integer): TBox;
+     By: Wanted
+ * procedure TBAInsert(var TBA: TBoxArray; Index: Integer; TB: TBox);
+     By: Janilabo
+ * function  TBASame(TBA1, TBA2: TBoxArray): Boolean;
+     By: Janilabo
+ * procedure TBAUnique(var TBA: TBoxArray);
+     By: Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CopyTBA(TBA: TBoxArray): TBoxArray;
+Contributors: Wanted
+Description: Creates a new TBoxArray with a copy of every element in the given array TBA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CopyTBA(TBA: TBoxArray): TBoxArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TBA);
+  SetLength(Result, H + 1);     
+  for I := 0 to H do 
+    Result[I] := TBA[I];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ConstrainBoxes(var TBA: TBoxArray; MB: TBox);
+Contributors: Wanted
+Description: Makes the edges of your boxes within the edges of another box.
+Date Created: December 6th, 2011. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ConstrainBoxes(var TBA: TBoxArray; MB: TBox);
+var
+  I, H: Integer;
+begin
+  H := High(TBA);
+  for I := 0 to H do
+    ConstrainBox(TBA[I], MB);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBABounds(TBA: TBoxArray): TBox;
+Contributors: Janilabo
+Description: Returns the bounds of TBA.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBABounds(TBA: TBoxArray): TBox;
+var
+  H, I: Integer;
+begin
+  H := High(TBA);
+  if (H < 0) then
+    Exit;
+  Result := TBA[0];
+  for I := 0 to H do
+  begin
+    if (Result.X1 > TBA[I].X1) then
+      Result.X1 := TBA[I].X1;
+    if (Result.Y1 > TBA[I].Y1) then
+      Result.Y1 := TBA[I].Y1;
+    if (Result.X2 < TBA[I].X2) then
+      Result.X2 := TBA[I].X2;
+    if (Result.Y2 < TBA[I].Y2) then
+      Result.Y2 := TBA[I].Y2;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBAContains(TBA: TBoxArray; TB: TBox): Boolean;
+Contributors: Janilabo, Wanted.
+Description: Returns true if TBA contains TB.                 
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: March 2nd, 2013. By Wanted    
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBAContains(TBA: TBoxArray; TB: TBox): Boolean;
+var
+  I, H: Integer;
+begin
+  H := High(TBA);
+  for I := 0 to H do
+    if (TBA[I] = TB) then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBADelete(var TBA: TBoxArray; Index: Integer): TBox;
+Contributors: Wanted
+Description: Removes a TBox by index from a TBoxArray.
+Date Created: November 14th, 2011. By Wanted
+Last Modified: February 28th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBADelete(var TBA: TBoxArray; Index: Integer): TBox;
+begin
+  if (not (InRange(Index, -1, High(TBA) + 1))) then
+    Exit;
+  Result := TBA[Index];
+  Delete(TBA, Index, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TBAInsert(var TBA: TBoxArray; Index: Integer; TB: TBox);
+Contributors: Janilabo
+Description: Inserts TB to index position of TBA.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TBAInsert(var TBA: TBoxArray; Index: Integer; TB: TBox);
+var
+  I, L: Integer;
+begin
+  L := Length(TBA);
+  SetLength(TBA, (L + 1));    
+  if (Index < 0) then
+    Index := 0;
+  if (Index > l) then
+    Index := L;
+  if (L > Index) then
+    for I := (L - 1) downto Index do
+      TBA[(I + 1)] := TBA[I];
+  TBA[Index] := TB; 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBASame(TBA1, TBA2: TBoxArray): Boolean;
+Contributors: Janilabo, Wanted.
+Description: Returns true if TBA1 and TBA2 are identical.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: March 2nd, 2013. By Wanted       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBASame(TBA1, TBA2: TBoxArray): Boolean;
+var
+  H, I: Integer;
+begin
+  H := High(TBA1);
+  if ((H < 0) or (H <> High(TBA2))) then
+    Exit;
+  for I := 0 to H do
+    if (TBA1[I] <> TBA2[I]) then
+      Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TBAUnique(var TBA: TBoxArray);
+Contributors: Janilabo
+Description: Removes all duplicates from TBA.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TBAUnique(var TBA: TBoxArray);
+var
+  H, I, II, D: Integer; 
+begin
+  H := High(TBA);   
+  if (H < 1) then
+    Exit;         
+  for I := (H - D) downto 1 do
+    for II := (I - 1) downto 0 do
+      if (TBA[I] = TBA[II]) then
+      begin
+        TBADelete(TBA, I);
+        Inc(D);
+        Break;  
+      end;  
+end;

@@ -1,0 +1,476 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                             Type Conversion Routines
+--------------------------------------------------------------------------------
+ * function  BinToInt(Value: string): Integer;             
+     By: Freddy
+ * function  BoxToString(TB: TBox): string;
+     By: Wanted
+ * function  BoxToTPA(TB: TBox; FillBox: Boolean): TPointArray;
+     By: Wanted
+ * function  IntToBin(Value: Integer): string;
+     By: Freddy
+ * procedure PointToInteger(P: TPoint; var X, Y: Integer);
+     By: LordJashin
+ * function  PointToString(P: TPoint): string;
+     By: Wanted
+ * function  TBAToATPA(TBA: TBoxArray; FillBoxes: Boolean): T2DPointArray;
+     By: Wanted
+ * function  TBAToTSA(TBA: TBoxArray): TStringArray;
+     By: Wanted
+ * function  TSAToString(TSA: TStringArray): string;
+     By: Wanted
+ * function  TBAToString(TBA: TBoxArray): string;
+     By: Wanted
+ * function  TBLAToTSA(TBLA: TBooleanArray): TStringArray;
+     By: Wanted
+ * function  TBLAToString(TBLA: TBooleanArray): string;
+     By: Wanted
+ * function  TEAToTIA(TEA: TExtendedArray): TIntegerArray;
+     By: Wanted
+ * function  TEAToTIAFloor(TEA: TExtendedArray): TIntegerArray;
+     By: Wanted
+ * function  TEAToTIATrunc(TEA: TExtendedArray): TIntegerArray;
+     By: Wanted
+ * function  TEAToTSA(TEA: TExtendedArray): TStringArray;
+     By: Wanted
+ * function  TEAToString(TEA: TExtendedArray): string;
+     By: Wanted
+ * function  TextToTPA(Text: string; Chars: Integer): TPointArray;
+     By: Wanted & Freddy.
+ * function  TIAToTSA(TIA: TIntegerArray): TStringArray;
+     By: Wanted
+ * function  TIAToString(TIA: TIntegerArray): string;
+     By: Wanted
+ * function  TPAToTSA(TPA: TPointArray): TStringArray;
+     By: Wanted
+ * function TPAToString(TPA: TPointArray): string;
+     By: Wanted
+ * function VariantToString(V: Variant): string;
+     By: Wanted
+ * function TVAToTSA(TVA: TVariantArray): TStringArray;
+     By: Wanted
+ * function TVAToString(TVA: TVariantArray): string;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BinToInt(Value: string): Integer;
+Contributors: Freddy
+Description: Translates a string of binary numbers to its Integer equivalent
+Date Created: September 9th, 2012. By Freddy.
+Last Modified: September 9th, 2012. By Freddy.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ 
+function BinToInt(Value: string): Integer;
+var
+  I, L: Integer;
+begin
+  Result := 0;
+  L := Length(Value);
+  for I := 1 to L do
+  begin
+    Result := Result shl 1;
+    if Value[I] = '1' then
+      Result := Result or 1;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BoxToString(TB: TBox): string;
+Contributors: Wanted
+Description: Converts a TBox to string. Box(0, 0, 0, 0) -> 'Box(0, 0, 0, 0)'
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BoxToString(TB: TBox): string;
+begin
+  Result := 'Box(' + IntToStr(TB.X1) + ', ' + IntToStr(TB.Y1) + 
+            ', ' + IntToStr(TB.X2) + ', ' + IntToStr(TB.Y2) + ')';
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BoxToTPA(TB: TBox; FillBox: Boolean): TPointArray;
+Contributors: Wanted, Janilabo.
+Description: Turns TBox into TPA, if not FillBox then only returns outline.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: February 28th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BoxToTPA(TB: TBox; FillBox: Boolean): TPointArray;
+begin
+  Result := TPAFromBox(TB);
+  if (not (FillBox)) then
+    TPAEdge(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IntToBin(Value: Integer): string;
+Contributors: Freddy
+Description: Translates an integer into its Binary bit equivalent
+Date Created: September 9th, 2012. By Freddy.
+Last Modified: September 9th, 2012. By Freddy.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IntToBin(Value: Integer): string;
+begin
+  Result := '';
+  while Value > 0 do
+  begin           
+    if Boolean(Value and 1) then
+      Result := '1' + Result
+    else
+      Result := '0' + Result;     
+    Value := Value shr 1;
+  end; 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure PointToInteger(P: TPoint; var X, Y: Integer);
+Contributors: LordJashin
+Description: Sets X, and Y variables to P.X, and P.Y values
+Date Created: November 8th, 2012. By LordJashin.
+Last Modified: November 8th, 2012. By LordJashin.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure PointToInteger(P: TPoint; var X, Y: Integer);
+begin
+  X := P.X;
+  Y := P.Y;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PointToString(P: TPoint): string;
+Contributors: Wanted
+Description: Point(1, 1) -> 'Point (1, 1)'
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PointToString(P: TPoint): string;
+begin
+  Result := 'Point(' + IntToStr(P.X) + ', ' + IntToStr(P.Y) + ')';
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBAToATPA(TBA: TBoxArray; FillBoxes: Boolean): T2DPointArray;
+Contributors: Wanted
+Description: Turns TBoxArray into ATPA, if not FillBox then only returns outlines.
+Date Created: October 22nd, 2011. By Wanted
+Last Modified: February 28th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBAToATPA(TBA: TBoxArray; FillBoxes: Boolean): T2DPointArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TBA);
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := BoxToTPA(TBA[I], FillBoxes);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBAToTSA(TBA: TBoxArray): TStringArray;
+Contributors: Wanted
+Description: Converts a TBA into TSA. [Box(0, 0, 0, 0)] -> ['Box(0, 0, 0, 0)']
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBAToTSA(TBA: TBoxArray): TStringArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TBA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do
+    Result[I] := BoxToString(TBA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAToString(TSA: TStringArray): string;
+Contributors: Wanted
+Description: Converts a TSA into a string. ['Point (0, 1)'] -> '[0] Point (0, 1), '
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAToString(TSA: TStringArray): string;
+var
+  I, H: LongInt;
+begin
+  H := High(TSA);
+  for I := 0 to H do
+    AddToStr(Result, '[' + IntToStr(I) + '] ' + TSA[I] + ', '); 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBAToString(TBA: TBoxArray): string;
+Contributors: Wanted
+Description: Converts a TBA into string. [Box(0, 0, 0, 0)] -> '[0] Box(0, 0, 0, 0)'
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBAToString(TBA: TBoxArray): string;
+begin
+  Result := TSAToString(TBAToTSA(TBA));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBLAToTSA(TBLA: TBooleanArray): TStringArray;
+Contributors: Wanted
+Description: Converts a TBLA into TSA. [True, False] -> ['True', 'False'];
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBLAToTSA(TBLA: TBooleanArray): TStringArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TBLA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do
+    Result[I] := BoolToStr(TBLA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBLAToString(TBLA: TBooleanArray): string;
+Contributors: Wanted
+Description: Converts a TBLA into string. [True, False] -> '[0] True, [1] False '
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBLAToString(TBLA: TBooleanArray): string;
+begin
+  Result := TSAToString(TBLAToTSA(TBLA));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAToTIA(TEA: TExtendedArray): TIntegerArray;
+Contributors: Wanted
+Description: Converts a TEA into TIA by rounding.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAToTIA(TEA: TExtendedArray): TIntegerArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TEA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do
+    Result[I] := Round(TEA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAToTIAFloor(TEA: TExtendedArray): TIntegerArray;
+Contributors: Wanted
+Description: Converts a TEA into TIA by flooring.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAToTIAFloor(TEA: TExtendedArray): TIntegerArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TEA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do
+    Result[I] := Floor(TEA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAToTIATrunc(TEA: TExtendedArray): TIntegerArray;
+Contributors: Wanted
+Description: Converts a TEA into TIA by truncating.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAToTIATrunc(TEA: TExtendedArray): TIntegerArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TEA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do          
+    Result[I] := Trunc(TEA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAToTSA(TEA: TExtendedArray): TStringArray;
+Contributors: Wanted
+Description: Converts a TEA into TSA. [2.1, 3.14] -> ['2.1', '3.14'];
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAToTSA(TEA: TExtendedArray): TStringArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TEA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do
+    Result[I] := FloatToStr(TEA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TEAToString(TEA: TExtendedArray): string;
+Contributors: Wanted
+Description: Converts a TEA into string. [2.1, 3.14] -> '[0] 2.1, [1] 3.14 '
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TEAToString(TEA: TExtendedArray): string;
+begin
+  Result := TSAToString(TEAToTSA(TEA));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TextToTPA(Text: string; Chars: Integer): TPointArray;
+Contributors: Wanted, Freddy.
+Description: Turns a line of text into an array of points.
+Date Created: August 7th, 2011. By Wanted & Freddy.
+Last Modified: July 20th, 2012. By Freddy
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TextToTPA(Text: string; Chars: Integer): TPointArray;
+var      
+  BmpText: TSCARBitmap; 
+  Client: TSCARClient;
+begin
+  Result := [];
+  if (Length(Text) < 1) then
+    Exit;
+  BmpText := CreateBitmapMaskFromText(Text, Chars);  
+  Client := SetClient(TSCARBitmapClient.Create(BmpText));    
+  try                              
+    FindColorEx(Result, clWhite, 0, 0, BmpText.Width - 1, BmpText.Height - 1);
+  finally      
+    SetClient(Client).Free;
+    BmpText.Free;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TIAToTSA(TIA: TIntegerArray): TStringArray;
+Contributors: Wanted
+Description: Converts a TIA into TSA. [2, 3] -> ['2', '3'];
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TIAToTSA(TIA: TIntegerArray): TStringArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TIA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do
+    Result[I] := IntToStr(TIA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TIAToString(TIA: TIntegerArray): string;
+Contributors: Wanted
+Description: Converts a TIA into string. [2, 3] -> '[0] 2, [1] 3 '
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TIAToString(TIA: TIntegerArray): string;
+begin
+  Result := TSAToString(TIAToTSA(TIA));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TPAToTSA(TPA: TPointArray): TStringArray;
+Contributors: Wanted
+Description: Converts a TPA into TSA. [Point(0, 0)] -> ['Point(0, 0)']
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TPAToTSA(TPA: TPointArray): TStringArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TPA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do
+    Result[I] := PointToString(TPA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TPAToString(TPA: TPointArray): string;
+Contributors: Wanted
+Description: Converts a TPA into string. [Point(0, 0)] -> '[0] Point(0, 0)'
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TPAToString(TPA: TPointArray): string;
+begin
+  Result := TSAToString(TPAToTSA(TPA));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function VariantToString(V: Variant): string;
+Contributors: Wanted
+Description: Converts a variant to string.
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function VariantToString(V: Variant): string;
+begin
+  try
+    case VarType(V) of
+      varBoolean: Result := BoolToStr(V);  
+      varDouble: Result := FloatToStr(V);
+      varInteger: Result := IntToStr(V);
+      varString: Result := V;
+    end;       
+  finally
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVAToTSA(TVA: TVariantArray): TStringArray;
+Contributors: Wanted
+Description: Converts a TVA into a TSA. [True, 1] -> ['True', '1']
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVAToTSA(TVA: TVariantArray): TStringArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TVA);
+  SetLength(Result, H + 1);   
+  for I := 0 to H do
+    Result[I] := VariantToString(TVA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TVAToString(TVA: TVariantArray): string;
+Contributors: Wanted
+Description: Converts a TVA into a string. [True, 1] -> '[0] True, [1] 1'
+Date Created: March 3rd, 2013. By Wanted
+Last Modified: March 3rd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TVAToString(TVA: TVariantArray): string;
+begin
+  Result := TSAToString(TVAToTSA(TVA));
+end;

@@ -1,0 +1,38 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                  Runescape 07
+                       Strange Box Random Solving Routines
+--------------------------------------------------------------------------------
+ * function  Box_InRandom: Boolean;
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Box_InRandom: Boolean;
+Contributors: Wanted
+Description: Finds the strange box random in inventory.
+Date Created: February 25th, 2013. By Wanted. RS07 Build ???.
+Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Box_InRandom: Boolean;
+var
+  dtmStrange_Box: Integer;  
+  P: TPoint;
+begin
+  dtmStrange_Box := DTMFromString('78DA637460626078C680027A9B9B19FE03694' + 
+                  '620FE0F048C6640350F19D000231209A4FD806AEE12A1E6290135' + 
+                  '20BBDE1050E30A54F301BF1A001DE50D9E');
+  Result := FindDTM(dtmStrange_Box, P.X, P.Y, MIX1, MIY1, MIX2, MIY2);
+  FreeDTM(dtmStrange_Box);
+  if (not (Result)) then
+    Exit;
+  WriteLn('Found strange box!');  
+  WriteLn('Unfortunately there is no solver implemented for this yet!');
+  WriteLn('Please contact an OSI developer http://forums.scar-divi.com');  
+  WriteLn('Player stuck with strange box random.');
+  Players[CurrentPlayer].Active := False;
+  Logout;
+  Exit;
+end;
+
+// Box_SolveRandom

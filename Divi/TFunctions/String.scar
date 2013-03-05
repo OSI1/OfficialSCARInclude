@@ -1,0 +1,192 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                              String Type Routines
+--------------------------------------------------------------------------------
+ * procedure AddToStr(var S: string; A: string);
+     By: Wanted
+ * function StrContains(SubStr, s: string): Boolean;
+     By: Janilabo
+ * function StrContainsChar(C: Char; S: string): Boolean;
+     By: Janilabo   
+ * function StrContainsCount(SubStr, S: string; Overlap: Boolean): Integer;
+     By: Janilabo
+ * function StrContainsMulti(SubStrs: TStringArray; S: string): Boolean;  
+     By: Wanted     
+ * function StrCopy(S: string; Pos1, Pos2: Integer): string;
+     By: Janilabo
+ * function StrIsBool(S: string): Boolean;
+     By: Janilabo
+ * function StrIsExt(S: string): Boolean;
+     By: Janilabo
+ * function StrIsInt(S: string): Boolean;
+     By: Janilabo   
+ * function StrReverse(S: string): string;
+     By: Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure AddToStr(var S: string; A: string);
+Contributors: Wanted
+Description: Adds A string onto the end of S string.                                          
+Date Created: February 26th, 2013. By Wanted
+Last Modified: February 26th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure AddToStr(var S: string; A: string);
+begin
+  S := S + A;
+end;         
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrContains(SubStr, S: string): Boolean;
+Contributors: Janilabo
+Description: Returns true if text (S) contains string (SubStr).
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: October 12th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrContains(SubStr, S: string): Boolean;
+begin
+  Result := (Pos(SubStr, S) > 0);
+end;     
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrContainsChar(C: Char; S: string): Boolean;
+Contributors: Janilabo
+Description: Returns true if text (S) contains char (C).
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: October 12th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrContainsChar(C: Char; S: string): Boolean;
+begin
+  Result := (Pos(C, S) > 0);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrContainsCount(SubStr, S: string; Overlap: Boolean): Integer;
+Contributors: Janilabo       
+Description: Counts all strings (SubStr) in text (S). If Overlap is set to true, 
+             strings can overlap. EX: ('test', 'testestest', True) => 3                                                       
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: October 12th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrContainsCount(SubStr, S: string; Overlap: Boolean): Integer;
+var
+  P, O: Integer;
+begin
+  if (not (Overlap)) then
+  begin      
+    O := Length(SubStr);
+    P := (P - (O - 1));
+  end
+  else      
+    O := 1;     
+  repeat
+    P := PosEx(SubStr, S, (P + O));
+    if (P > 0) then
+      Inc(Result);
+  until (P <= 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrContainsMulti(SubStrs: TStringArray; S: string): Boolean;
+Contributors: Wanted
+Description: Results true if any strings are inside a string.
+Date Created: December 31st, 2011. By Wanted
+Last Modified: March 4th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrContainsMulti(SubStrs: TStringArray; S: string): Boolean;
+var
+  I, H: Integer;
+begin
+  H := High(SubStrs);
+  Result := True;
+  for I := 0 to H do
+    if (StrContains(SubStrs[I], S)) then
+      Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrCopy(S: string; Pos1, Pos2: Integer): string;
+Contributors: Wanted, Janilabo.
+Description: Copies s from Pos1 to Pos2.                                                              
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 27th, 2013. By Wanted 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrCopy(S: string; Pos1, Pos2: Integer): string;
+begin
+  Result := Copy(S, Pos1, (Pos2 - Pos1) + 1);  
+end; 
+    
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrIsBool(S: string): Boolean;
+Contributors: Janilabo
+Description: Returns true if S is a Boolean.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrIsBool(S: string): Boolean;
+begin
+  S := Lowercase(S);
+  Result := ((S = 'true') or (S = 'false')); 
+end;
+    
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrIsExt(S: string): Boolean;
+Contributors: Janilabo
+Description: Returns true if S is an extended value.                                                              
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrIsExt(S: string): Boolean;
+begin
+  try
+    StrToFloat(S);
+    Result := True;
+  except
+    Result := False;
+  end;
+end;    
+    
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrIsInt(S: string): Boolean;
+Contributors: Janilabo
+Description: Returns true if S is an integer value.                                                              
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrIsInt(S: string): Boolean;
+begin
+  try
+    StrToInt(S);
+    Result := True;
+  except
+    Result := False;
+  end;
+end;     
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function StrReverse(S: string): string;
+Contributors: Janilabo
+Description: Returns reversed str.                                                              
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function StrReverse(S: string): string;
+var
+  I, L: Integer;
+begin
+  L := Length(S);
+  SetLength(Result, L);
+  for I := L downto 1 do    
+    Result[I] := S[((L - I) + 1)];
+end;       

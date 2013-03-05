@@ -1,0 +1,114 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                           Boolean Array Type Routines
+--------------------------------------------------------------------------------
+ * function CopyTBLA(TBLA: TBooleanArray): TBooleanArray;
+     By: Wanted
+ * function  TBLAContains(TBLA: TBoolArray; B: Boolean): Boolean;
+     By: Janilabo
+ * function  TBLACount(TBLA: TBooleanArray; B: Boolean): Integer;
+     By: Wanted  
+ * function  TBLADelete(var TBLA: TBooleanArray; Index: Integer): Boolean;
+     By: Wanted
+ * procedure TBLAInsert(var TBLA: TBoolArray; Index: Integer; B: Boolean);
+     By: Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CopyTBLA(TBLA: TBooleanArray): TBooleanArray;
+Contributors: Wanted
+Description: Creates a new TBooleanArray with a copy of every element in the given array TBLA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CopyTBLA(TBLA: TBooleanArray): TBooleanArray;
+var
+  I, H: LongInt;
+begin
+  H := High(TBLA);
+  SetLength(Result, H + 1);     
+  for I := 0 to H do 
+    Result[I] := TBLA[I];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBLAContains(TBLA: TBoolArray; B: Boolean): Boolean;
+Contributors: Janilabo, Wanted.
+Description: Returns true if B is found in TBLA.        
+Date Created: September 30th, 2012. By Janilabo.
+Last Modified: March 1st, 2013. By Wanted     
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBLAContains(TBLA: TBoolArray; B: Boolean): Boolean;
+var
+  I, H: Integer;
+begin
+  Result := True;
+  H := High(TBLA);
+  for I := 0 to H do
+    if (TBLA[I] = B) then
+      Exit;
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBLACount(TBLA: TBooleanArray; B: Boolean): Integer;
+Contributors: Wanted
+Description: Results the amount of booleans matched in boolean array.
+Date Created: December 12th, 2011. By Wanted
+Last Modified: March 1st, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBLACount(TBLA: TBooleanArray; B: Boolean): Integer;
+var
+  I, H: Integer;
+begin
+  Result := 0;
+  H := High(TBLA);
+  for I := 0 to H do
+    if (TBLA[I] = B) then
+      Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TBLADelete(var TBLA: TBooleanArray; Index: Integer): Boolean;
+Contributors: Wanted
+Description: Removes a Boolean by index from an TBLA.
+Date Created: March 2nd, 2013. By Wanted
+Last Modified: March 2nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TBLADelete(var TBLA: TBooleanArray; Index: Integer): Boolean;
+begin
+  if (not (InRange(Index, -1, High(TBLA) + 1))) then
+    Exit;
+  Result := TBLA[Index];
+  Delete(TBLA, Index, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TBLAInsert(var TBLA: TBoolArray; Index: Integer; B: Boolean);
+Contributors: Janilabo
+Description: Inserts B to TBLA using index as the position.          
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo       
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TBLAInsert(var TBLA: TBoolArray; Index: Integer; B: Boolean);
+var                     
+  I, L: Integer;
+begin
+  L := Length(TBLA);
+  SetLength(TBLA, (L + 1));    
+  if (Index < 0) then
+    Index := 0;
+  if (Index > l) then
+    Index := L;
+  if (L > Index) then
+  for I := (L - 1) downto Index do
+    TBLA[(I + 1)] := TBLA[I];
+  TBLA[Index] := B; 
+end;
+
+ 
