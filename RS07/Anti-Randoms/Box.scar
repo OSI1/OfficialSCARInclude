@@ -31,7 +31,7 @@ begin
   WriteLn('Please contact an OSI developer http://forums.scar-divi.com');  
   WriteLn('Player stuck with strange box random.');
   Players[CurrentPlayer].Active := False;
-  Logout;
+  //Logout;                                           // FIX
   Exit;
 end;
 

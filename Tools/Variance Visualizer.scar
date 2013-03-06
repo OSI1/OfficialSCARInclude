@@ -14,7 +14,8 @@ begin
       b.SetSize(501, 501);
       for i := 0 to 9999 do
         begin
-          p := RndBoxPointG(Box(0, 0, 500, 500), 3);
+          //p := RndBoxPointG(Box(0, 0, 500, 500), 3);   
+          p := RndCirclePointG(250, 250, 249, 3);
           b.Pixels[p.X, p.Y] := 255;
         end;
       DebugBitmap(b);

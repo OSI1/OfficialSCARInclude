@@ -11,6 +11,8 @@
  * function  RandomAbs(Range: Integer): Integer;
      By: Janilabo
  * function  RR(Min, Max: Integer): Integer;
+     By: Freddy & Wanted.      
+ * function  RandomV(Range: LongInt): LongInt;
      By: Freddy & Wanted.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}       
 
@@ -83,7 +85,7 @@ begin
     {$ELSE}
         Result := RandomG(Range, OSI_Variance)
       else
-        Result := (RandomG(IAbs(Range)) * -1, OSI_Variance);  
+        Result := (RandomG(IAbs(Range) * -1, OSI_Variance));  
     {$ENDIF}  
 end;  
 
@@ -112,3 +114,20 @@ function RR(Min, Max: Integer): Integer;
     end;
   end;
 {$ENDIF}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomV(Range: LongInt): LongInt;
+Contributors: Freddy, Wanted.
+Description: Outputs a value like Random only according to variance, supports negatives.
+Date Created: March 5th, 2013. By Freddy & Wanted.
+Last Modified: March 5th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomV(Range: LongInt): LongInt;
+begin
+ {$IFDEF NoVariance}
+   Result := Random(Range);
+ {$ELSE}
+   Result := RandomG(Range, OSI_Variance);
+ {$ENDIF} 
+end;

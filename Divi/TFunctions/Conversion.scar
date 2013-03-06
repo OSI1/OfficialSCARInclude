@@ -19,6 +19,8 @@
  * function  TBAToTSA(TBA: TBoxArray): TStringArray;
      By: Wanted
  * function  TSAToString(TSA: TStringArray): string;
+     By: Wanted                                 
+ * function TSAToString2(TSA: TStringArray; IndentEvery: Integer): string;
      By: Wanted
  * function  TBAToString(TBA: TBoxArray): string;
      By: Wanted
@@ -192,9 +194,9 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function TSAToString(TSA: TStringArray): string;
 Contributors: Wanted
-Description: Converts a TSA into a string. ['Point (0, 1)'] -> '[0] Point (0, 1), '
+Description: Converts a TSA into a string. ['Point(0, 1)'] -> '[0] Point(0, 1), '
 Date Created: March 2nd, 2013. By Wanted
-Last Modified: March 2nd, 2013. By Wanted
+Last Modified: March 5th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TSAToString(TSA: TStringArray): string;
@@ -202,8 +204,33 @@ var
   I, H: LongInt;
 begin
   H := High(TSA);
+  for I := 0 to H do      
+  begin
+    AddToStr(Result, '[' + IntToStr(I) + '] ' + TSA[I] + ', ');    
+    if ((I mod 4) = 0) then  
+      AddToStr(Result, Chr(13));
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAToString2(TSA: TStringArray; IndentEvery: Integer): string;
+Contributors: Wanted
+Description: Converts a TSA into a string. ['Point(0, 1)'] -> 'Point(0, 1), '
+Date Created: March 5th, 2013. By Wanted
+Last Modified: March 5th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAToString2(TSA: TStringArray; IndentEvery: Integer): string;
+var
+  I, H: LongInt;
+begin
+  H := High(TSA);
   for I := 0 to H do
-    AddToStr(Result, '[' + IntToStr(I) + '] ' + TSA[I] + ', '); 
+  begin
+    AddToStr(Result, TSA[I] + ', ');   
+    if ((I mod IndentEvery) = 0) then  
+      AddToStr(Result, Chr(13));
+  end;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

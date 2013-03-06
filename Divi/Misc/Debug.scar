@@ -12,7 +12,7 @@
      By: Wanted
  * procedure DebugTBA(TBA: TBoxArray);     
      By: Wanted
- * procedure DebugTB(TB: TBox);      
+ * procedure DebugBox(B: TBox);    
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -29,7 +29,7 @@ var
   bmpDebug: TSCARBitmap;
   Width, Height, I, II, H, HH, Col: Integer;
   ATPA2: T2DPointArray;
-  mTPA, TPA: TPointArray;
+  TPA: TPointArray;
   B, BB: TBox;
   {$IFNDEF RS2}
     Arial: Integer;
@@ -37,7 +37,7 @@ var
 begin
   ATPA2 := CopyATPA(ATPA);
   B := ATPABounds(ATPA2);
-  TPADimensions(mTPA, Width, Height);
+  ATPADimensions(ATPA, Width, Height);  
   DecEx(B.X1, Round(Width * 0.25));
   if (B.X1 < 0) then
     B.X1 := 0;
@@ -163,18 +163,18 @@ Last Modified: March 4th, 2013. By Wanted
 
 procedure DebugTBA(TBA: TBoxArray);
 begin
-  DebugATPABoundsEx(TBAToATPA(TBA, False), True, False, False, False, True, '');
-end;
+  DebugATPABoundsEx(TBAToATPA(TBA, False), True, False, False, True, True, '');
+end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure DebugTB(TB: TBox);
+procedure DebugBox(B: TBox);
 Contributors: Wanted
 Description: Debugs a TBox.
 Date Created: October 22nd, 2011. By Wanted
 Last Modified: October 22nd, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure DebugTB(TB: TBox);
+procedure DebugBox(B: TBox);
 begin
-  DebugTBA([TB]);
+  DebugTBA([B]);
 end;

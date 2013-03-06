@@ -63,7 +63,7 @@ type
     TabsMissing: TIntArray;
     InRandom, SolveRandom: function: Boolean;
   end;
-  TRS07RandomArray = array of TRS2Random;
+  TRS07RandomArray = array of TRS07Random;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var RS07Randoms: TRS07RandomArray;
@@ -74,7 +74,7 @@ Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  RS07Randoms: TRS2RandomArray;
+  RS07Randoms: TRS07RandomArray;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var OverideRandInvTab: Boolean;
@@ -84,8 +84,8 @@ Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
 Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-var
-  OverideRandInvTab: Boolean;
+//var
+  //OverideRandInvTab: Boolean;                   FIX
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindRandomEventItems: Boolean;
@@ -98,10 +98,10 @@ Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
 function FindRandomEventItems: Boolean;
 begin
   Result := False;
-  if (not (OverideRandInvTab)) then
-    SetGameTab(Tab_Inv);
-  if (GetCurrentTab <> Tab_Inv) then
-    Exit;
+  //if (not (OverideRandInvTab)) then          FIX
+    //SetGameTab(Tab_Inv);                     FIX
+  //if (GetCurrentTab <> Tab_Inv) then         FIX
+    //Exit;                                    FIX
   Result := Box_InRandom;
 end;
 
@@ -115,106 +115,106 @@ Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
 
 procedure InitiateAntiRandoms;
 begin
-  SetLength(RS2Randoms, 15);
-  with RS2Randoms[0] do
+  SetLength(RS07Randoms, 15);
+  with RS07Randoms[0] do
   begin
     Name := 'Abyssal';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[Tab_Magic] do
+  with RS07Randoms[Tab_Magic] do
   begin
     Name := 'Cap''n Arnav';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;  
-  with RS2Randoms[2] do
+  with RS07Randoms[2] do
   begin
     Name := 'Certer';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[3] do
+  with RS07Randoms[3] do
   begin
-    Name := 'Demon';
+    Name := 'Demon';       //all top row, all bottom except for clan, friends, ignore, logout, and music
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[4] do
+  with RS07Randoms[4] do
   begin
     Name := 'Evil Bob';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[5] do
+  with RS07Randoms[5] do
   begin
     Name := 'Freaky Forester';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[6] do
+  with RS07Randoms[6] do
   begin
     Name := 'Frog';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[7] do
+  with RS07Randoms[7] do
   begin
     Name := 'Leo the Grave Digger';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[8] do
+  with RS07Randoms[8] do
   begin
     Name := 'Maze';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[9] do
+  with RS07Randoms[9] do
   begin
     Name := 'Mime';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[10] do
+  with RS07Randoms[10] do
   begin
     Name := 'Mordaut Surprise Exam';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[11] do
+  with RS07Randoms[11] do
   begin
     Name := 'Pinball';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[12] do
+  with RS07Randoms[12] do
   begin
     Name := 'Prison Pete';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[13] do
+  with RS07Randoms[13] do
   begin
     Name := 'Quiz';
     TabsMissing := [Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
-  with RS2Randoms[14] do
+  with RS07Randoms[14] do
   begin
     Name := 'Sandwich Lady';
     TabsMissing := [Tab_Magic];
@@ -239,7 +239,8 @@ begin
   L := 0;    
   H := Tab_Count - 1;
   for I := 0 to H do
-    if (not (TabExists(I))) then
+    Wait(1); // FIX
+  {  if (not (TabExists(I))) then
     begin
       Inc(L);
       SetLength(Result, L);
@@ -247,7 +248,7 @@ begin
     end;
   if (Length(Result) > 0) then
     if (BankScreen) then
-      Result := [];
+      Result := [];                          FIX }
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -260,7 +261,7 @@ Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
 
 function OSIFindRandoms: Boolean;
 var
-  InitCompassAngle: Extended;
+  //InitCompassAngle: Extended;                      FIX
   MissingTabs: TIntArray;
   RandomSolved, B: Boolean;
   I, H: Integer;
@@ -276,18 +277,18 @@ begin
         Result := RS07Randoms[I].InRandom();
         if (Result) then
         begin
-          Players[CurrentPlayer].Rand := RS2Randoms[I].Name;
-          OSI_WriteAndLog(RS07Randoms[I].Name + ' random detected!');
+          Players[CurrentPlayer].Rand := RS07Randoms[I].Name;
+          WriteLn(RS07Randoms[I].Name + ' random detected!');
           if (RS07Randoms[I].SolveRandom <> nil) then
           begin
-            InitCompassAngle := GetCompassAngleDegrees;
+            //InitCompassAngle := GetCompassAngleDegrees;         FIX
             if (not (RS07Randoms[I].SolveRandom())) then
             begin
               WriteLn(RS07Randoms[I].Name + ' random solver failed! Needs fixing by an expert!');
               WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
               WriteLn('Player stuck in ' + RS07Randoms[I].Name + ' random.');
               Players[CurrentPlayer].Active := False;
-              Logout;
+              //Logout;                                          FIX
               Exit;
             end
             else
@@ -302,7 +303,7 @@ begin
             WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
             WriteLn('Player stuck in ' + RS07Randoms[I].Name + ' random.');
             Players[CurrentPlayer].Active := False;
-            Logout;
+            //Logout;                                          FIX
             Exit;
           end;
         end;
@@ -316,15 +317,15 @@ begin
       WriteLn('Player stuck in unknown random.');
       Players[CurrentPlayer].Rand := 'Unknown random';
       Players[CurrentPlayer].Active := False;
-      Logout;
+      //Logout;                                                 FIX
       Exit;
     end;
   if (RandomSolved) then
   begin
     WaitRR(2000, 3000);
-    MakeCompass(InitCompassAngle);
+    //MakeCompass(InitCompassAngle);                           FIX
   end;
-  ClickContinueEx(True, True);
+  //ClickContinueEx(True, True);                               FIX
   B := FindRandomEventItems;
   if (not (Result)) then
     Result := B;

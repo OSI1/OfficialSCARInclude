@@ -3,6 +3,673 @@
                                   Runescape 07
                       Global Constants, Variables, & Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * const Useful in game boundaries, points, areas, widths, etc. etc.
+     By: Wanted, LordJashin, & Janilabo.
+ * function RSCP: TPoint;
+     By: Wanted
+ * function RSB: TBox;
+     By: Wanted
+ * function MSCP: TPoint;
+     By: Wanted
+ * function MSB: TBox;
+     By: Wanted
+ * function MMCP: TPoint;
+     By: Wanted
+ * function MMB: TBox;
+     By: Wanted
+ * function MICP: TPoint;
+     By: Wanted
+ * function MIB: TBox;
+     By: Wanted
+ * function MCCP: TPoint;
+     By: Wanted
+ * function MCB: TBox;
+     By: Wanted
+ * function MBCP: TPoint;
+     By: Wanted
+ * function MBB: TBox;
+     By: Wanted
+ * function MDCP: TPoint;
+     By: Wanted
+ * function MDB: TBox;
+     By: Wanted
+ * const Skill_ Indexes
+     By: Wanted       
+ * const Game Tab Indexes
+     By: Wanted & Dynamite.
+ * const RS2 direction/angle Indexes
+     By: Wanted
+ * const Useful in game colors
+     By: Wanted
+ * type TRS2Player = record
+     By: Wanted
+ * var Players: array of TRS2Player;
+     By: Wanted
+ * var CurrentPlayer: LongInt; & PlayerStartTime
+     By: Wanted
+ * var RS07FontsLoaded: Boolean;      
+     By: Wanted
+ * var Font Variables
+     By: Wanted & Janilabo.
+ * procedure LoadRS07Fonts;
+     By: Wanted
+ * procedure FreeRS07Fonts;
+     By: Wanted
+ * function ActivePlayers: Integer;
+     By: Wanted
+ * function AllPlayersInActive: Boolean;
+     By: Wanted
+ * function NextPlayerIndex: Integer;
+     By: Wanted
+ * function NextActivePlayerIndex: Integer;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Useful in game boundaries, points, areas, widths, etc. etc.
+Contributors: Wanted, LordJashin, Janilabo.
+Description: MMX1, MSCX, etc. etc.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const             // Description                      Modified            By              Build #
+
+  RSCX = 382;     // RS07 Client Center Points     // March 5, 2013       Wanted          ???
+  RSCY = 251;                                      // March 5, 2013       Wanted          ???
+  RSX1 = 0;       // RS07 Client Edge Points       // March 5, 2013       Wanted          ???
+  RSY1 = 0;                                        // March 5, 2013       Wanted          ???
+  RSX2 = 764;                                      // March 5, 2013       Wanted          ???
+  RSY2 = 502;                                      // March 5, 2013       Wanted          ???
+  RSPW = (RSX2 - RSX1) + 1; // RS07 Client Width   // October 6, 2012     LordJashin      735
+  RSPH = (RSY2 - RSY1) + 1; // RS07 Client Height  // October 6, 2012     LordJashin      735
+  RSPA = RSPW * RSPH; // RS07 Client Pixel Area    // September 17, 2012  LordJashin      718
+
+  MSCX  = 260;    // Main Screen Center Points     // August 7, 2011      Wanted          660
+  MSCY  = 171;                                     // August 7, 2011      Wanted          660
+  MSX1  = 4;      // Main Screen Edge Points       // August 7, 2011      Wanted          660
+  MSY1  = 4;                                       // August 7, 2011      Wanted          660
+  MSX2  = 515;                                     // August 7, 2011      Wanted          660
+  MSY2  = 337;                                     // August 7, 2011      Wanted          660
+  MSPW  = (MSX2 - MSX1) + 1; // Main Screen Width  // June 23, 2012       LordJashin      718
+  MSPH  = (MSY2 - MSY1) + 1; // Main Screen Height // June 23, 2012       LordJashin      718
+  MSPA  = MSPW * MSPH; // Main Screen Pixel Area   // June 23, 2012       LordJashin      718
+  MSCXe = (MSX1 + MSX2) / 2;                       // June 23, 2012       LordJashin      718
+  MSCYe = (MSY1 + MSY2) / 2;                       // June 23, 2012       LordJashin      718   
+
+  MMCX  = 643;    // Map Center Points             // March 5, 2013       Wanted          ???
+  MMCY  = 83;                                      // March 5, 2013       Wanted          ???
+  MMX1  = 570;    // Map Edge Points               // March 5, 2013       Wanted          ???
+  MMY1  = 9;                                       // March 5, 2013       Wanted          ???
+  MMX2  = 714;                                     // March 5, 2013       Wanted          ???
+  MMY2  = 159;                                     // March 5, 2013       Wanted          ???
+  MMRD  = 70;     // Map Radius                    // March 5, 2013       Wanted          ???
+  MMPW  = (MMX2 - MMX1) + 1; // Map Width          // March 5, 2013       Wanted          ???
+  MMPH  = (MMY2 - MMY1) + 1; // Map Height         // March 5, 2013       Wanted          ???
+  MMPA  = 15742;  // Pixel Area (Pixel Count)      // March 5, 2013       Janilabo        ???
+
+  MICX = 644;     // Inventory Center Points       // March 5, 2013       Wanted          ???
+  MICY = 337;                                      // March 5, 2013       Wanted          ???
+  MIX1 = 547;     // Inventory Edge Points         // March 5, 2013       Wanted          ???
+  MIY1 = 205;                                      // March 5, 2013       Wanted          ???
+  MIX2 = 736;                                      // March 5, 2013       Wanted          ???
+  MIY2 = 465;                                      // March 5, 2013       Wanted          ???
+  MIPW = (MIX2 - MIX1) + 1; // Inventory Width     // June 23, 2012       LordJashin      718   
+  MIPH = (MIY2 - MIY1) + 1; // Inventory Height    // June 23, 2012       LordJashin      718   
+  MIPA = MIPW * MIPH; // Pixel Area                // June 23, 2012       LordJashin      718
+  MICXe = (MIX1 + MIX2) / 2;                       // June 23, 2012       LordJashin      718
+  MICYe = (MIY1 + MIY2) / 2;                       // June 23, 2012       LordJashin      718
+                                                  
+  MCCX = 176;     // Chat Box Center Points        // March 5, 2013       Wanted          ???
+  MCCY = 409;                                      // March 5, 2013       Wanted          ???
+  MCX1 = 7;       // Chat Box Edge Points          // August 8, 2011      Wanted          660
+  MCY1 = 345;                                      // August 8, 2011      Wanted          660
+  MCX2 = 496;                                      // March 5, 2013       Wanted          ???
+  MCY2 = 473;                                      // March 5, 2013       Wanted          ???
+  MCPW = (MCX2 - MCX1) + 1; // Chat Box Width      // June 23, 2012       LordJashin      718
+  MCPH = (MCY2 - MCY1) + 1; // Chat Box Height     // June 23, 2012       LordJashin      718
+  MCPA = MIPW * MIPH; // Chat Box Area             // June 23, 2012       LordJashin      718
+
+  MBCX = 254;     // Bank Screen Center Points     // March 5, 2013       Wanted          ???
+  MBCY = 173;                                      // March 5, 2013       Wanted          ???
+  MBX1 = 41;      // Bank Screen Edge Points       // March 5, 2013       Wanted          ???
+  MBY1 = 59;                                       // March 5, 2013       Wanted          ???
+  MBX2 = 467;                                      // March 5, 2013       Wanted          ???
+  MBY2 = 287;                                      // March 5, 2013       Wanted          ???
+  MBPW = (MBX2 - MBX1) + 1; // Bank Screen Width   // June 23, 2012       LordJashin      718
+  MBPH = (MBY2 - MBY1) + 1;// Bank Screen Height   // June 23, 2012       LordJashin      718
+  MBPA = MBPW * MBPH; // Pixel Area                // June 23, 2012       LordJashin      718
+
+  MDCX = 269;     // Deposit Box Center Points    // August 8, 2011       Wanted          660
+  MDCY = 162;                                     // August 8, 2011       Wanted          660
+  MDX1 = 130;     // Deposit Box Edge Points      // March 5, 2013        Wanted          ???
+  MDY1 = 74;                                      // March 6, 2013        Wanted          ???
+  MDX2 = 402;                                     // March 6, 2013        Wanted          ???
+  MDY2 = 232;                                     // March 6, 2013        Wanted          ???
+  MDPH = (MDX2 - MDX1) + 1; // Deposit Box Width  // June 23, 2012        LordJashin      718
+  MDPW = (MDY2 - MDY1) + 1; // Deposit Box Height // June 23, 2012        LordJashin      718
+  MDPA = MDPW * MDPH; // Deposit Box Area         // June 23, 2012        LordJashin      718
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RSCP: TPoint;
+Contributors: Wanted
+Description: Runescape center point.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RSCP: TPoint;
+begin
+  Result := Point(RSCX, RSCY);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RSB: TBox;
+Contributors: Wanted
+Description: Runescape client bounds.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ 
+function RSB: TBox;
+begin
+  Result := Box(RSX1, RSY1, RSX2, RSY2);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MSCP: TPoint;
+Contributors: Wanted
+Description: Main screen center point.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ 
+function MSCP: TPoint;
+begin
+  Result := Point(MSCX, MSCY);
+end;  
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MSB: TBox;
+Contributors: Wanted
+Description: Main screen bounds.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+function MSB: TBox;
+begin
+  Result := Box(MSX1, MSY1, MSX2, MSY2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMCP: TPoint;
+Contributors: Wanted
+Description: Mini-Map center point.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+function MMCP: TPoint;
+begin
+  Result := Point(MMCX, MMCY);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMB: TBox;
+Contributors: Wanted
+Description: Mini-Map bounds.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+function MMB: TBox;
+begin
+  Result := Box(MMX1, MMY1, MMX2, MMY2);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MICP: TPoint;
+Contributors: Wanted
+Description: Inventory center point.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MICP: TPoint;
+begin
+  Result := Point(MICX, MICY);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MIB: TBox;
+Contributors: Wanted
+Description: Inventory bounds.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MIB: TBox;
+begin
+  Result := Box(MIX1, MIY1, MIX2, MIY2);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MCCP: TPoint;
+Contributors: Wanted
+Description: Chat box center point.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MCCP: TPoint;
+begin
+  Result := Point(MCCX, MCCY);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MCB: TBox;
+Contributors: Wanted
+Description: Chat box bounds.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ 
+function MCB: TBox;
+begin
+  Result := Box(MCX1, MCY1, MCX2, MCY2);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MBCP: TPoint;
+Contributors: Wanted
+Description: Bank screen center point.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MBCP: TPoint;
+begin
+  Result := Point(MBCX, MBCY);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MBB: TBox;
+Contributors: Wanted
+Description: Bank screen bounds.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ 
+function MBB: TBox;
+begin
+  Result := Box(MBX1, MBY1, MBX2, MBY2);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MDCP: TPoint;
+Contributors: Wanted
+Description: Deposit box screen center point.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MDCP: TPoint;
+begin
+  Result := Point(MDCX, MDCY);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MDB: TBox;
+Contributors: Wanted
+Description: Deposit box screen bounds.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+ 
+function MDB: TBox;
+begin
+  Result := Box(MDX1, MDY1, MDX2, MDY2);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Skill_ Indexes
+Contributors: Wanted
+Description: Index handles for various RS07 skills.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Skill_Count         = 23;
+  Skill_Attack        = 0;
+  Skill_Hitpoints     = 1;
+  Skill_Mining        = 2;
+  Skill_Strength      = 3;
+  Skill_Agility       = 4;
+  Skill_Smithing      = 5;
+  Skill_Defence       = 6;
+  Skill_Herblore      = 7;
+  Skill_Fishing       = 8;
+  Skill_Range         = 9;
+  Skill_Thieving      = 10;
+  Skill_Cooking       = 11;
+  Skill_Prayer        = 12;
+  Skill_Crafting      = 13;
+  Skill_Firemaking    = 14;
+  Skill_Magic         = 15;
+  Skill_Fletching     = 16;
+  Skill_Woodcutting   = 17;
+  Skill_Runecrafting  = 18;
+  Skill_Slayer        = 19;
+  Skill_Farming       = 20;
+  Skill_Construction  = 21;
+  Skill_Hunter        = 22;  
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Game Tab Indexes
+Contributors: Wanted, Dynamite.
+Description: Index handles for Game RS2 tabs.
+Date Created: August 31st, 2011. By Dynamite & Wanted. RS2 Build 662.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Tab_Count             = 14;
+  Tab_Combat            = 0;
+  Tab_Stats             = 1;    
+  Tab_Quest             = 2;
+  Tab_Inv               = 3;
+  Tab_Equip             = 4;
+  Tab_Prayer            = 5;
+  Tab_Magic             = 6;
+  Tab_Clan              = 7;
+  Tab_Friends           = 8; 
+  Tab_Ignore            = 9;
+  Tab_LogOut            = 10;
+  Tab_Options           = 11;
+  Tab_Emotes            = 12;
+  Tab_Music             = 13;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Equip Tab Indexes
+Contributors: Wanted
+Description: Index handles for Game RS2 tabs.
+Date Created: September 1st, 2011. By Wanted. RS2 Build 662.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+  Tab_Equip_Count       = 11;
+  Tab_Equip_Head        = 0;
+  Tab_Equip_Cape        = 1;
+  Tab_Equip_Neck        = 2;
+  Tab_Equip_Quiver      = 3;
+  Tab_Equip_Weapon      = 4;
+  Tab_Equip_Body        = 5;
+  Tab_Equip_Shield      = 6;
+  Tab_Equip_Legs        = 7;
+  Tab_Equip_Gloves      = 8;
+  Tab_Equip_Boots       = 9;
+  Tab_Equip_Ring        = 10;  
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const RS2 direction/angle Indexes
+Contributors: Wanted
+Description: Index handles for MakeCompass and all runescape directions.
+Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Dir_North             = 0;
+  Dir_NorthEast         = 45;
+  Dir_East              = 90;
+  Dir_SouthEast         = 135;
+  Dir_South             = 180;
+  Dir_SouthWest         = 225;
+  Dir_West              = 270;
+  Dir_NorthWest         = 315; 
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Useful in game colors
+Contributors: Wanted
+Description: Static useful in game colors
+Date Created: August 7th, 2011. By Wanted. RS2 Build 661.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const                             // Modified            By              Build #
+  clMessage       = clBlack;      // August 7, 2011      Wanted          660
+  clChat          = clBlue;       // August 7, 2011      Wanted          660
+  clTrade         = clPurple;     // August 7, 2011      Wanted          660
+  clFriend        = 128;          // August 7, 2011      Wanted          660
+
+  clNPCOption     = clYellow;     // October 20, 2011    Wanted          668
+  clObjectOption  = clAqua;       // October 20, 2011    Wanted          668
+  clPlayerOption  = clWhite;      // October 20, 2011    Wanted          668
+  clItemOption    = 4231423;      // October 20, 2011    Wanted          668
+
+  clObjectOutline = 65536;        // March 6, 2013       Wanted          ???
+  clOptionsBox    = clBlack;      // March 6, 2013       Wanted          ???
+  clOptionsBox2   = 4674653;      // March 6, 2013       Wanted          ???
+  clSkillInfoBox  = 10551295;     // March 6, 2013       Wanted          ???  
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+type TRS2Player = record
+Contributors: Wanted
+Description: Handles all of player related info and variables.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+type
+  TRS2Player = record
+    Name: string;                   // In-game handle
+    Login: string;                  // Login handle
+    Pass: string;                   // Login password
+    Pin: string;                    // Bank Pin
+    Loc: string;                    // Player location
+    Status: string;                 // Player status
+    LampSkill: string;              // Skill for lamp/exp randoms
+    Rand: string;                   // Current Random
+    Worked: Integer;                // Time player has worked
+    Banked: Integer;                // Number of times player banked 
+    Trips: Integer;                 // Number of trips player has made 
+    World: Integer;                 // Preferred world
+    Level: array[0..Skill_Count] of Integer; // Levels of all skills
+    Active: Boolean;                // Player active
+    Booleans: array of Boolean;     // Boolean records
+    Integers: array of Integer;     // Integer records
+    Strings: array of string;       // String records
+    Extendeds: array of Extended;   // Extended records
+    Arrays: array of TVariantArray; // Custom records
+    TIA: T2DIntArray;           // TIA records
+  end;       
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var Players: array of TRS2Player;
+Contributors: Wanted
+Description: Handles all of player related info and variables.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  Players: array of TRS2Player;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var CurrentPlayer: LongInt; & PlayerStartTime
+Contributors: Wanted
+Description: Variable used to keep track of your current RS2 player index.
+PlayerStartTime is for keeping track of Players[].Worked
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  CurrentPlayer, PlayerStartTime: LongInt;   
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var RS07FontsLoaded: Boolean;      
+Contributors: Wanted
+Description: True if RS07 fonts are loaded.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+  
+var
+  RS07FontsLoaded: Boolean;      
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var Font Variables
+Contributors: Wanted, Janilabo.
+Description: Variables for RS07 fonts memory handles.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars: LongInt;  
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure LoadRS07Fonts;
+Contributors: Wanted
+Description: Loads RS07 fonts into memory.
+Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure LoadRS07Fonts;
+var
+  RS07FontFolder: string;
+  T: LongInt;
+begin
+  T := GetSystemTime;
+  if (RS07FontsLoaded) then  
+  begin
+    WriteLn('RS07 Fonts already loaded!');
+    Exit;   
+  end;   
+  try
+    RS07FontFolder := OSI_Path + 'RS07\Fonts\';
+    if (not (DirectoryExists(RS07FontFolder))) then
+    RS07FontFolder := FontsPath; 
+    UpChars := rs_LoadChars(RS07FontFolder + 'UpChars\');
+    OptionChars := LoadChars2(RS07FontFolder + 'OptionChars\');
+    ScreenChars := LoadChars2(RS07FontFolder + 'ScreenChars\');
+    NPCChars := LoadChars2(RS07FontFolder + 'NPCChars\');
+    SmallChars := LoadChars2(RS07FontFolder + 'SmallChars\');
+    StatChars := LoadChars2(RS07FontFolder + 'StatChars\');
+    TradeChars := LoadChars2(RS07FontFolder + 'StatChars\');
+  except
+    WriteLn('Failed to load RS07 fonts!');
+    Exit;
+  end;  
+  WriteLn('Loaded RS2 Fonts: UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars (' + IntToStr(GetSystemTime - T) + ' ms)');
+  RS07FontsLoaded := True;  
+end;  
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure FreeRS07Fonts;
+Contributors: Wanted
+Description: Frees RS07 fonts from memory.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure FreeRS07Fonts;
+begin
+  if (not (RS07FontsLoaded)) then     
+  begin 
+    WriteLn('Can not free RS07 fonts because they are not loaded!')
+    Exit;   
+  end;
+  try
+    FreeChars2(OptionChars);
+    FreeChars2(ScreenChars);
+    FreeChars2(NPCChars);
+    FreeChars2(SmallChars);
+    FreeChars2(StatChars);  
+    FreeChars2(TradeChars);            
+  except
+    WriteLn('Failed to free RS07 fonts!');   
+    Exit;
+  end;
+  RS07FontsLoaded := False; 
+  WriteLn('Freed RS2 Fonts');
+end;  
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ActivePlayers: Integer;
+Contributors: Wanted
+Description: Returns the number of active players.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ActivePlayers: Integer;
+var
+  I, H: Integer;
+begin
+  Result := 0;
+  H := High(Players);
+  for I := 0 to H do
+    if (Players[I].Active) then
+      Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function AllPlayersInActive: Boolean;
+Contributors: Wanted
+Description: Returns true if all players are in-active.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function AllPlayersInActive: Boolean;
+begin
+  Result := (ActivePlayers = 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function NextPlayerIndex: Integer;
+Contributors: Wanted
+Description: Returns next player index after CurrentPlayer.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 661.
+Last Modified: August 10th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NextPlayerIndex: Integer;
+begin
+  Result := CurrentPlayer;
+  if (Result < High(Players)) then
+    Inc(Result)
+  else
+    Result := 0;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function NextActivePlayerIndex: Integer;
+Contributors: Wanted
+Description: Returns next active player index after CurrentPlayer.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NextActivePlayerIndex: Integer;
+var
+  H: LongInt;
+begin
+  Result := 0;
+  if (AllPlayersInActive) then
+    Exit;
+  H := High(Players);
+  Result := NextPlayerIndex;
+  repeat
+    if (not (Players[Result].Active)) then
+      if (Result < H) then
+        Inc(Result)
+      else
+        Result := 0;
+  until (Players[Result].Active);
+end;

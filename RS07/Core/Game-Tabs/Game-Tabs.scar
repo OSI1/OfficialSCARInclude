@@ -6,3 +6,15 @@
  * function Sample: string;
      By: Sample
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$I Tab0-Combat.scar}
+{$I Tab1-Stats.scar}
+{$I Tab3-Inventory.scar}
+{$I Tab4-Equipment.scar}
+{$I Tab10-Log-Out.scar}
+{$I Tab11-Options.scar}
+
+procedure what;
+begin
+  
+end;

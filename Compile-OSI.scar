@@ -1,0 +1,72 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                           Include Compile Testing File
+--------------------------------------------------------------------------------
+ * procedure TestCompileOSI;        
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+                                      
+// OSI Defines                     // Comment out or in, test all combinations
+//{$DEFINE UseVariance}            
+//{$DEFINE NoVariance}           
+//{$DEFINE RS2}                   
+{$DEFINE RS07}
+{$DEFINE OSI_RS07_Color_Anti_Randoms}  
+//{$DEFINE DisableRS07Fonts}            
+
+{$I OSI.scar}                      // Required*
+{$I Divi\Misc\Debug.scar}          // Comment out or in, test all combinations.
+{$IFDEF RS07}
+  {$I RS07\Misc\Game-Tabs\Tab2-Quest.scar}
+  {$I RS07\Misc\Game-Tabs\Tab7-Clan.scar}
+  {$I RS07\Misc\Game-Tabs\Tab8-Friends.scar}
+  {$I RS07\Misc\Game-Tabs\Tab9-Ignore.scar}
+  {$I RS07\Misc\Game-Tabs\Tab12-Emotes.scar}
+  {$I RS07\Misc\Game-Tabs\Tab13-Music.scar}    
+  {$I RS07\Skill\Fighting.scar}
+  {$I RS07\Skill\Mining.scar} 
+  {$I RS07\Skill\Agility.scar}
+  {$I RS07\Skill\Smithing.scar} 
+  {$I RS07\Skill\Herblore.scar}   
+  {$I RS07\Skill\Fishing.scar}
+  {$I RS07\Skill\Ranging.scar}  
+  {$I RS07\Skill\Thieving.scar}  
+  {$I RS07\Skill\Cooking.scar}
+  {$I RS07\Skill\Prayer.scar}     
+  {$I RS07\Skill\Crafting.scar}     
+  {$I RS07\Skill\Firemaking.scar}  
+  {$I RS07\Skill\Magic.scar}       
+  {$I RS07\Skill\Fletching.scar}     
+  {$I RS07\Skill\Woodcutting.scar}  
+  {$I RS07\Skill\Runecrafting.scar}  
+  {$I RS07\Skill\Slayer.scar}      
+  {$I RS07\Skill\Farming.scar}      
+  {$I RS07\Skill\Construction.scar}  
+  {$I RS07\Skill\Hunting.scar}       
+{$ENDIF}
+
+procedure ScriptTerminate;
+begin
+  FreeOSI;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TestCompileOSI;
+Contributors: Wanted
+Description: Test compiles all of OSI. Comment out every combination of defines.
+Date Created: August 7th, 2011. By Wanted
+Last Modified: August 8th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TestCompileOSI;
+var
+  T: LongInt;
+begin
+  T := GetSystemTime;
+  SetUpOSI;
+  WriteLn('OSI succefully set up (' + IntToStr(GetSystemTime - T) + ' ms)');
+end;
+
+begin
+  SetUpOSI;   
+end.
