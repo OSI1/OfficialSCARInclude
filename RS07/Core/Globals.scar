@@ -41,9 +41,9 @@
      By: Wanted
  * const Useful in game colors
      By: Wanted
- * type TRS2Player = record
+ * type TRS07Player = record
      By: Wanted
- * var Players: array of TRS2Player;
+ * var Players: array of TRS07Player;
      By: Wanted
  * var CurrentPlayer: LongInt; & PlayerStartTime
      By: Wanted
@@ -455,7 +455,7 @@ const                             // Modified            By              Build #
   clSkillInfoBox  = 10551295;     // March 6, 2013       Wanted          ???  
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-type TRS2Player = record
+type TRS07Player = record
 Contributors: Wanted
 Description: Handles all of player related info and variables.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
@@ -463,7 +463,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
-  TRS2Player = record
+  TRS07Player = record
     Name: string;                   // In-game handle
     Login: string;                  // Login handle
     Pass: string;                   // Login password
@@ -487,15 +487,15 @@ type
   end;       
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-var Players: array of TRS2Player;
+var Players: array of TRS07Player;
 Contributors: Wanted
 Description: Handles all of player related info and variables.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  Players: array of TRS2Player;
+  Players: array of TRS07Player;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var CurrentPlayer: LongInt; & PlayerStartTime
