@@ -1,0 +1,35 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                  DTM Routines
+--------------------------------------------------------------------------------
+ * function FindDTMP(DTM: LongInt; var P: TPoint; B: TBox): Boolean;
+     By: Wanted     
+ * function FindDTMRotatedP(DTM: LongInt; var P: TPoint; B: TBox; StartAngle, EndAngle, AngleStep: Extended; var Angle: Extended): Boolean;
+     By: Wanted          
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindDTMP(DTM: LongInt; var P: TPoint; B: TBox): Boolean;
+Contributors: Wanted
+Description: Wrapper for FindDTM with points and boxes.
+Date Created: March 8th, 2013. By Wanted
+Last Modified: March 8th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+                                                    
+function FindDTMP(DTM: LongInt; var P: TPoint; B: TBox): Boolean;
+begin
+  Result := FindDTM(DTM, P.X, P.Y, B.X1, B.Y1, B.X2, B.Y2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindDTMRotatedP(DTM: LongInt; var P: TPoint; B: TBox; StartAngle, EndAngle, AngleStep: Extended; var Angle: Extended): Boolean;
+Contributors: Wanted
+Description: Wrapper for FindDTMRotated with points and boxes.
+Date Created: March 8th, 2013. By Wanted
+Last Modified: March 8th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+                                                    
+function FindDTMRotatedP(DTM: LongInt; var P: TPoint; B: TBox; StartAngle, EndAngle, AngleStep: Extended; var Angle: Extended): Boolean;
+begin
+  Result := FindDTMRotated(DTM, P.X, P.Y, B.X1, B.Y1, B.X2, B.Y2, StartAngle, EndAngle, AngleStep, Angle);
+end;

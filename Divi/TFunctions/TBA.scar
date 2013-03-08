@@ -8,11 +8,13 @@
      By: Wanted
  * function  TBABounds(TBA: TBoxArray): TBox;
      By: Janilabo
- * function  TBAContains(TBA: TBoxArray; TB: TBox): Boolean;
+ * function  TBAContains(TBA: TBoxArray; B: TBox): Boolean;
      By: Janilabo
  * function  TBADelete(var TBA: TBoxArray; Index: Integer): TBox;
      By: Wanted
- * procedure TBAInsert(var TBA: TBoxArray; Index: Integer; TB: TBox);
+ * function TBAFromGrid(P: TPoint; Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
+     By: Wanted
+ * procedure TBAInsert(var TBA: TBoxArray; Index: Integer; B: TBox);
      By: Janilabo
  * function  TBASame(TBA1, TBA2: TBoxArray): Boolean;
      By: Janilabo
@@ -33,7 +35,7 @@ var
   I, H: LongInt;
 begin
   H := High(TBA);
-  SetLength(Result, H + 1);     
+  SetLength(Result, H + 1);
   for I := 0 to H do 
     Result[I] := TBA[I];
 end;
@@ -85,20 +87,20 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBAContains(TBA: TBoxArray; TB: TBox): Boolean;
+function TBAContains(TBA: TBoxArray; B: TBox): Boolean;
 Contributors: Janilabo, Wanted.
-Description: Returns true if TBA contains TB.                 
+Description: Returns true if TBA contains B.
 Date Created: September 30th, 2012. By Janilabo
-Last Modified: March 2nd, 2013. By Wanted    
+Last Modified: March 2nd, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function TBAContains(TBA: TBoxArray; TB: TBox): Boolean;
+function TBAContains(TBA: TBoxArray; B: TBox): Boolean;
 var
   I, H: Integer;
 begin
   H := High(TBA);
   for I := 0 to H do
-    if (TBA[I] = TB) then
+    if (TBA[I] = B) then
     begin
       Result := True;
       Exit;
@@ -122,19 +124,38 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure TBAInsert(var TBA: TBoxArray; Index: Integer; TB: TBox);
-Contributors: Janilabo
-Description: Inserts TB to index position of TBA.
-Date Created: September 30th, 2012. By Janilabo
-Last Modified: September 30th, 2012. By Janilabo       
+function TBAFromGrid(P: TPoint; Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
+Contributors: Wanted, Janilabo.
+Description: Creates TBAs arranged in rows and columns. 
+Date Created: March 7th, 2013. By Wanted
+Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure TBAInsert(var TBA: TBoxArray; Index: Integer; TB: TBox);
+function TBAFromGrid(P: TPoint; Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
+var
+  I, H: LongInt;
+begin
+  Result := [];
+  H := (Rows * Columns) - 1;
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := BoxFromGrid(P, I, Width, Height, Rows, Columns, RowSpace, ColumnSpace);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TBAInsert(var TBA: TBoxArray; Index: Integer; B: TBox);
+Contributors: Janilabo
+Description: Inserts B to index position of TBA.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TBAInsert(var TBA: TBoxArray; Index: Integer; B: TBox);
 var
   I, L: Integer;
 begin
   L := Length(TBA);
-  SetLength(TBA, (L + 1));    
+  SetLength(TBA, (L + 1));
   if (Index < 0) then
     Index := 0;
   if (Index > l) then
@@ -142,7 +163,7 @@ begin
   if (L > Index) then
     for I := (L - 1) downto Index do
       TBA[(I + 1)] := TBA[I];
-  TBA[Index] := TB; 
+  TBA[Index] := B; 
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -150,7 +171,7 @@ function TBASame(TBA1, TBA2: TBoxArray): Boolean;
 Contributors: Janilabo, Wanted.
 Description: Returns true if TBA1 and TBA2 are identical.
 Date Created: September 30th, 2012. By Janilabo
-Last Modified: March 2nd, 2013. By Wanted       
+Last Modified: March 2nd, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TBASame(TBA1, TBA2: TBoxArray): Boolean;
@@ -171,22 +192,22 @@ procedure TBAUnique(var TBA: TBoxArray);
 Contributors: Janilabo
 Description: Removes all duplicates from TBA.
 Date Created: September 30th, 2012. By Janilabo
-Last Modified: September 30th, 2012. By Janilabo       
+Last Modified: September 30th, 2012. By Janilabo
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TBAUnique(var TBA: TBoxArray);
 var
   H, I, II, D: Integer; 
 begin
-  H := High(TBA);   
+  H := High(TBA);
   if (H < 1) then
-    Exit;         
+    Exit;
   for I := (H - D) downto 1 do
     for II := (I - 1) downto 0 do
       if (TBA[I] = TBA[II]) then
       begin
         TBADelete(TBA, I);
         Inc(D);
-        Break;  
-      end;  
+        Break;
+      end;
 end;

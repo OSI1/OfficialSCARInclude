@@ -133,7 +133,7 @@ begin
   with RS07Randoms[2] do
   begin
     Name := 'Certer';
-    TabsMissing := [Tab_Magic];
+    TabsMissing := [Tab_Magic]; //all top row, all bottom except for clan, friends, ignore, logout, and music
     InRandom := nil;
     SolveRandom := nil;
   end;
@@ -175,7 +175,7 @@ begin
   with RS07Randoms[8] do
   begin
     Name := 'Maze';
-    TabsMissing := [Tab_Magic];
+    TabsMissing := [Tab_Magic];       //all top row, all bottom except for clan, friends, ignore, logout, and music
     InRandom := nil;
     SolveRandom := nil;
   end;
@@ -196,7 +196,7 @@ begin
   with RS07Randoms[11] do
   begin
     Name := 'Pinball';
-    TabsMissing := [Tab_Magic];
+    TabsMissing := [Tab_Magic];  //Enitre top row, none bottom
     InRandom := nil;
     SolveRandom := nil;
   end;
@@ -210,7 +210,7 @@ begin
   with RS07Randoms[13] do
   begin
     Name := 'Quiz';
-    TabsMissing := [Tab_Magic];
+    TabsMissing := [Tab_Magic];  //all top row, all bottom except for clan, friends, ignore, logout, and music
     InRandom := nil;
     SolveRandom := nil;
   end;

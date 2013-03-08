@@ -4,9 +4,9 @@
 --------------------------------------------------------------------------------
  * function  BinToInt(Value: string): Integer;             
      By: Freddy
- * function  BoxToString(TB: TBox): string;
+ * function  BoxToString(B: TBox): string;
      By: Wanted
- * function  BoxToTPA(TB: TBox; FillBox: Boolean): TPointArray;
+ * function  BoxToTPA(B: TBox; FillBox: Boolean): TPointArray;
      By: Wanted
  * function  IntToBin(Value: Integer): string;
      By: Freddy
@@ -79,30 +79,30 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function BoxToString(TB: TBox): string;
+function BoxToString(B: TBox): string;
 Contributors: Wanted
 Description: Converts a TBox to string. Box(0, 0, 0, 0) -> 'Box(0, 0, 0, 0)'
 Date Created: March 2nd, 2013. By Wanted
 Last Modified: March 2nd, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function BoxToString(TB: TBox): string;
+function BoxToString(B: TBox): string;
 begin
-  Result := 'Box(' + IntToStr(TB.X1) + ', ' + IntToStr(TB.Y1) + 
-            ', ' + IntToStr(TB.X2) + ', ' + IntToStr(TB.Y2) + ')';
+  Result := 'Box(' + IntToStr(B.X1) + ', ' + IntToStr(B.Y1) + 
+            ', ' + IntToStr(B.X2) + ', ' + IntToStr(B.Y2) + ')';
 end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function BoxToTPA(TB: TBox; FillBox: Boolean): TPointArray;
+function BoxToTPA(B: TBox; FillBox: Boolean): TPointArray;
 Contributors: Wanted, Janilabo.
 Description: Turns TBox into TPA, if not FillBox then only returns outline.
 Date Created: October 22nd, 2011. By Wanted
 Last Modified: February 28th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function BoxToTPA(TB: TBox; FillBox: Boolean): TPointArray;
+function BoxToTPA(B: TBox; FillBox: Boolean): TPointArray;
 begin
-  Result := TPAFromBox(TB);
+  Result := TPAFromBox(B);
   if (not (FillBox)) then
     TPAEdge(Result);
 end;
@@ -186,7 +186,7 @@ var
   I, H: LongInt;
 begin
   H := High(TBA);
-  SetLength(Result, H + 1);   
+  SetLength(Result, H + 1);
   for I := 0 to H do
     Result[I] := BoxToString(TBA[I]);
 end;
@@ -196,7 +196,7 @@ function TSAToString(TSA: TStringArray): string;
 Contributors: Wanted
 Description: Converts a TSA into a string. ['Point(0, 1)'] -> '[0] Point(0, 1), '
 Date Created: March 2nd, 2013. By Wanted
-Last Modified: March 5th, 2013. By Wanted
+Last Modified: March 6th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TSAToString(TSA: TStringArray): string;
@@ -204,10 +204,10 @@ var
   I, H: LongInt;
 begin
   H := High(TSA);
-  for I := 0 to H do      
+  for I := 0 to H do
   begin
-    AddToStr(Result, '[' + IntToStr(I) + '] ' + TSA[I] + ', ');    
-    if ((I mod 4) = 0) then  
+    AddToStr(Result, '[' + IntToStr(I) + '] ' + TSA[I] + ', ');
+    if (((I + 1) mod 4) = 0) then  
       AddToStr(Result, Chr(13));
   end;
 end;
@@ -217,7 +217,7 @@ function TSAToString2(TSA: TStringArray; IndentEvery: Integer): string;
 Contributors: Wanted
 Description: Converts a TSA into a string. ['Point(0, 1)'] -> 'Point(0, 1), '
 Date Created: March 5th, 2013. By Wanted
-Last Modified: March 5th, 2013. By Wanted
+Last Modified: March 6th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TSAToString2(TSA: TStringArray; IndentEvery: Integer): string;
@@ -227,8 +227,8 @@ begin
   H := High(TSA);
   for I := 0 to H do
   begin
-    AddToStr(Result, TSA[I] + ', ');   
-    if ((I mod IndentEvery) = 0) then  
+    AddToStr(Result, TSA[I] + ', ');
+    if (((I + 1) mod IndentEvery) = 0) then  
       AddToStr(Result, Chr(13));
   end;
 end;
@@ -259,7 +259,7 @@ var
   I, H: LongInt;
 begin
   H := High(TBLA);
-  SetLength(Result, H + 1);   
+  SetLength(Result, H + 1);
   for I := 0 to H do
     Result[I] := BoolToStr(TBLA[I]);
 end;
@@ -290,7 +290,7 @@ var
   I, H: LongInt;
 begin
   H := High(TEA);
-  SetLength(Result, H + 1);   
+  SetLength(Result, H + 1);
   for I := 0 to H do
     Result[I] := Round(TEA[I]);
 end;
@@ -308,7 +308,7 @@ var
   I, H: LongInt;
 begin
   H := High(TEA);
-  SetLength(Result, H + 1);   
+  SetLength(Result, H + 1);
   for I := 0 to H do
     Result[I] := Floor(TEA[I]);
 end;
@@ -326,8 +326,8 @@ var
   I, H: LongInt;
 begin
   H := High(TEA);
-  SetLength(Result, H + 1);   
-  for I := 0 to H do          
+  SetLength(Result, H + 1);
+  for I := 0 to H do
     Result[I] := Trunc(TEA[I]);
 end;
 
@@ -344,7 +344,7 @@ var
   I, H: LongInt;
 begin
   H := High(TEA);
-  SetLength(Result, H + 1);   
+  SetLength(Result, H + 1);
   for I := 0 to H do
     Result[I] := FloatToStr(TEA[I]);
 end;
@@ -378,11 +378,11 @@ begin
   Result := [];
   if (Length(Text) < 1) then
     Exit;
-  BmpText := CreateBitmapMaskFromText(Text, Chars);  
-  Client := SetClient(TSCARBitmapClient.Create(BmpText));    
-  try                              
+  BmpText := CreateBitmapMaskFromText(Text, Chars);
+  Client := SetClient(TSCARBitmapClient.Create(BmpText));
+  try
     FindColorEx(Result, clWhite, 0, 0, BmpText.Width - 1, BmpText.Height - 1);
-  finally      
+  finally
     SetClient(Client).Free;
     BmpText.Free;
   end;
@@ -401,7 +401,7 @@ var
   I, H: LongInt;
 begin
   H := High(TIA);
-  SetLength(Result, H + 1);   
+  SetLength(Result, H + 1);
   for I := 0 to H do
     Result[I] := IntToStr(TIA[I]);
 end;
@@ -432,7 +432,7 @@ var
   I, H: LongInt;
 begin
   H := High(TPA);
-  SetLength(Result, H + 1);   
+  SetLength(Result, H + 1);
   for I := 0 to H do
     Result[I] := PointToString(TPA[I]);
 end;
@@ -462,11 +462,11 @@ function VariantToString(V: Variant): string;
 begin
   try
     case VarType(V) of
-      varBoolean: Result := BoolToStr(V);  
+      varBoolean: Result := BoolToStr(V);
       varDouble: Result := FloatToStr(V);
       varInteger: Result := IntToStr(V);
       varString: Result := V;
-    end;       
+    end;
   finally
   end;
 end;
@@ -484,7 +484,7 @@ var
   I, H: LongInt;
 begin
   H := High(TVA);
-  SetLength(Result, H + 1);   
+  SetLength(Result, H + 1);
   for I := 0 to H do
     Result[I] := VariantToString(TVA[I]);
 end;

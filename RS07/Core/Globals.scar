@@ -5,33 +5,41 @@
 --------------------------------------------------------------------------------
  * const Useful in game boundaries, points, areas, widths, etc. etc.
      By: Wanted, LordJashin, & Janilabo.
- * function RSCP: TPoint;
+ * function  RSCP: TPoint;
      By: Wanted
- * function RSB: TBox;
+ * function  RSB: TBox;
      By: Wanted
- * function MSCP: TPoint;
+ * function  MSCP: TPoint;
      By: Wanted
- * function MSB: TBox;
+ * function  MSB: TBox;
      By: Wanted
- * function MMCP: TPoint;
+ * function  MMCP: TPoint;
      By: Wanted
- * function MMB: TBox;
+ * function  MMB: TBox;
      By: Wanted
- * function MICP: TPoint;
+ * var MMTPA variables
      By: Wanted
- * function MIB: TBox;
+ * procedure LoadMMTPA;
      By: Wanted
- * function MCCP: TPoint;
+ * function MMTPA: TPointArray; 
      By: Wanted
- * function MCB: TBox;
+ * function MMPA: LongInt;
      By: Wanted
- * function MBCP: TPoint;
+ * function  MICP: TPoint;
      By: Wanted
- * function MBB: TBox;
+ * function  MIB: TBox;
      By: Wanted
- * function MDCP: TPoint;
+ * function  MCCP: TPoint;
      By: Wanted
- * function MDB: TBox;
+ * function  MCB: TBox;
+     By: Wanted
+ * function  MBCP: TPoint;
+     By: Wanted
+ * function  MBB: TBox;
+     By: Wanted
+ * function  MDCP: TPoint;
+     By: Wanted
+ * function  MDB: TBox;
      By: Wanted
  * const Skill_ Indexes
      By: Wanted       
@@ -55,13 +63,13 @@
      By: Wanted
  * procedure FreeRS07Fonts;
      By: Wanted
- * function ActivePlayers: Integer;
+ * function  ActivePlayers: Integer;
      By: Wanted
- * function AllPlayersInActive: Boolean;
+ * function  AllPlayersInActive: Boolean;
      By: Wanted
- * function NextPlayerIndex: Integer;
+ * function  NextPlayerIndex: Integer;
      By: Wanted
- * function NextActivePlayerIndex: Integer;
+ * function  NextActivePlayerIndex: Integer;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -70,7 +78,7 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Wanted, LordJashin, Janilabo.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const             // Description                      Modified            By              Build #
@@ -103,10 +111,9 @@ const             // Description                      Modified            By    
   MMY1  = 9;                                       // March 5, 2013       Wanted          ???
   MMX2  = 714;                                     // March 5, 2013       Wanted          ???
   MMY2  = 159;                                     // March 5, 2013       Wanted          ???
-  MMRD  = 70;     // Map Radius                    // March 5, 2013       Wanted          ???
   MMPW  = (MMX2 - MMX1) + 1; // Map Width          // March 5, 2013       Wanted          ???
   MMPH  = (MMY2 - MMY1) + 1; // Map Height         // March 5, 2013       Wanted          ???
-  MMPA  = 15742;  // Pixel Area (Pixel Count)      // March 5, 2013       Janilabo        ???
+  MMPAe = 15742;  // Pixel Area (Pixel Count)      // March 5, 2013       Janilabo        ???
 
   MICX = 644;     // Inventory Center Points       // March 5, 2013       Wanted          ???
   MICY = 337;                                      // March 5, 2013       Wanted          ???
@@ -114,8 +121,8 @@ const             // Description                      Modified            By    
   MIY1 = 205;                                      // March 5, 2013       Wanted          ???
   MIX2 = 736;                                      // March 5, 2013       Wanted          ???
   MIY2 = 465;                                      // March 5, 2013       Wanted          ???
-  MIPW = (MIX2 - MIX1) + 1; // Inventory Width     // June 23, 2012       LordJashin      718   
-  MIPH = (MIY2 - MIY1) + 1; // Inventory Height    // June 23, 2012       LordJashin      718   
+  MIPW = (MIX2 - MIX1) + 1; // Inventory Width     // June 23, 2012       LordJashin      718
+  MIPH = (MIY2 - MIY1) + 1; // Inventory Height    // June 23, 2012       LordJashin      718
   MIPA = MIPW * MIPH; // Pixel Area                // June 23, 2012       LordJashin      718
   MICXe = (MIX1 + MIX2) / 2;                       // June 23, 2012       LordJashin      718
   MICYe = (MIY1 + MIY2) / 2;                       // June 23, 2012       LordJashin      718
@@ -173,7 +180,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
  
 function RSB: TBox;
 begin
-  Result := Box(RSX1, RSY1, RSX2, RSY2);  
+  Result := Box(RSX1, RSY1, RSX2, RSY2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -227,6 +234,107 @@ function MMB: TBox;
 begin
   Result := Box(MMX1, MMY1, MMX2, MMY2);
 end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+var MMTPA variables
+Contributors: Wanted
+Description: So we don't have to keep loading MMTPA and MMPA into memory, and so
+             we don't have to pretend like variables are globals we can use these
+             in function MMTPA and function MMPA which serve as much better constants.
+Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+var
+  MMTPAv: TPointArray;
+  MMPAv: LongInt;
+  MMTPALoaded: Boolean;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure LoadMMTPA;
+Contributors: Wanted
+Description: Loads all points of the minimap and count of that for use in MMTPA
+             and MMPA by using a Blank Map and reverting to 6 pie slices if failed.
+Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure LoadMMTPA;
+var
+  bmpBlankMap: TSCARBitmap;
+  ATPA: T2DPointArray; 
+  I: Integer;
+begin      
+  bmpBlankMap := TSCARBitmap.Create('deNrt1TESAjEMBEH/PyPiuUdKBAHlK0bu' +
+    '/YGmAz3Wc03a9XHL/g/ll2lbkWLXlWLXlWLXlWLXlWKXxjoW7ho0XtRggYM1Hu' +
+    '46cryo8aIGKw3HqKVGp6XGJaSGowVHoaWmf0tN+Zaa5i01tVtqOufURG6RKdxS' +
+    '07alpmpLTc+cmpgtMiVbahq21NTLqUnXItMtpyZai0yxnJpcLTKtWmoq5dQkap' +
+    'Hpk1MTp0WmTE5NFmS2lUyTnJogyGwrmRo5NSmQGTJ7J9MhpyYCMjMzM4/MkCEz' +
+    'ZIYMmSEzZMgMmSFDZshsExm1nBcyZIbMkCEzZPaVjFrOCxkyQ2bIkBky+0pGLe' +
+    'eFDJndQEYt54UMmd1ARi3nhQyZ3UBGLeeFrEhGLeeFrEhGLeeFrEhGLedFrehF' +
+    'reiFrEhGLedFrehFregFrohFLepFregFrohFLerFrigFrotFLeoFrohFLep1LN' +
+    'waMV7gYIGDdY7aOmmwqPECB2uAGqmWGqOWGp2WGpeWGpGWGouWGoWWmv4tNeVb' +
+    'apojQ4aMGi9khowarxlqCofgVG2p6YnM9sFp2FJTL4E45swXg+jNaA==');
+  if (FindBitmapColorEx(MMTPAv, clWhite, bmpBlankMap)) then
+  begin                                                       
+    OffsetTPA(MMTPAv, MMX1, MMY1);
+    MMPAv := Length(MMTPAv);
+  end
+  else
+  begin
+    WriteLn('Failed to load bmpBlankMap!'); 
+    WriteLn('Reverting to backup MMTPA/MMPA...'); 
+    SetLength(ATPA, 6);
+    for I := 0 to 5 do
+      ATPA[I] := TPAFromBox(MMB);
+    TPAExtractSlice(ATPA[0], 0, 72, -75, 75, MMCP);
+    TPAExtractSlice(ATPA[1], 0, 67, 245, 285, MMCP);
+    TPAExtractSlice(ATPA[2], 0, 67, 75, 115, MMCP);
+    TPAExtractSlice(ATPA[3], 0, 58, 115, 245, MMCP);
+    TPAExtractSlice(ATPA[4], 58, 68, 168, 195, MMCP);
+    TPAExtractSlice(ATPA[5], 68, 73, 173, 190, MMCP);
+    MMTPAv := MergeATPA(ATPA);
+    TPAUnique(MMTPAv);
+    MMPAv := Length(MMTPAv);
+  end;
+  try
+    bmpBlankMap.Free;      
+  except
+  end;
+  WriteLn('Loaded MMTPA/MMPA');
+  MMTPALoaded := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMTPA: TPointArray;
+Contributors: Wanted
+Description: All MiniMap dynamic points.
+Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MMTPA: TPointArray;
+begin
+  if (not (MMTPALoaded)) then
+    LoadMMTPA;
+  Result := MMTPAv;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMPA: LongInt;
+Contributors: Wanted
+Description: MiniMap TPA search are pixel count. Like this because if it reverts 
+             or ever changes this has to be dynamically changable.
+Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MMPA: LongInt;
+begin
+  if (not (MMTPALoaded)) then
+    LoadMMTPA;
+  Result := MMPAv;
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function MICP: TPoint;
@@ -553,7 +661,7 @@ begin
   try
     RS07FontFolder := OSI_Path + 'RS07\Fonts\';
     if (not (DirectoryExists(RS07FontFolder))) then
-    RS07FontFolder := FontsPath; 
+      RS07FontFolder := FontsPath; 
     UpChars := rs_LoadChars(RS07FontFolder + 'UpChars\');
     OptionChars := LoadChars2(RS07FontFolder + 'OptionChars\');
     ScreenChars := LoadChars2(RS07FontFolder + 'ScreenChars\');

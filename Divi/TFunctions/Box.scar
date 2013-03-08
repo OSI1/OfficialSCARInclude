@@ -2,29 +2,47 @@
                               Official SCAR Include
                                 Box Type Routines
 --------------------------------------------------------------------------------
- * function  ValidBox(TB: TBox): Boolean; 
+ * function BoxFromGrid(P: TPoint; Index, Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBox;
+     By: Wanted
+ * function  ValidBox(B: TBox): Boolean; 
      By: Janilabo
  * function  BoxContains(Inner_TB, Outer_TB: TBox): Boolean;
      By: Janilabo
- * procedure BoxDimensions(TB: TBox; var W, H: Integer);
+ * procedure BoxDimensions(B: TBox; var W, H: Integer);
      By: Janilabo
- * procedure ConstrainBox(var TB: TBox; MB: TBox);
+ * procedure ConstrainBox(var B: TBox; MB: TBox);
      By: Wanted
- * procedure FixBox(var TB: TBox);
+ * procedure FixBox(var B: TBox);
      By: Janilabo
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ValidBox(TB: TBox): Boolean;
+function BoxFromGrid(P: TPoint; Index, Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBox;
+Contributors: Wanted, Janilabo.
+Description: Creates box from indexes of boxes arranged in rows and columns. 
+Date Created: March 7th, 2013. By Wanted
+Last Modified: March 7th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BoxFromGrid(P: TPoint; Index, Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBox;
+var  
+  TP: TPoint;
+begin
+  TP := Point(P.X + ((Index mod Columns) * ColumnSpace), P.Y + ((Index div Columns) * RowSpace));
+  Result := Box(TP.X, TP.Y, TP.X + (Width - 1), TP.Y + (Height - 1));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ValidBox(B: TBox): Boolean;
 Contributors: Janilabo
-Description: Returns true if TB is valid (X1 <= X2 AND Y1 <= Y2).
+Description: Returns true if B is valid (X1 <= X2 AND Y1 <= Y2).
 Date Created: September 30th, 2012. By Janilabo
 Last Modified: September 30th, 2012. By Janilabo      
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ValidBox(TB: TBox): Boolean;
+function ValidBox(B: TBox): Boolean;
 begin
-  Result := ((TB.X1 <= TB.X2) and (TB.Y1 <= TB.Y2));
+  Result := ((B.X1 <= B.X2) and (B.Y1 <= B.Y2));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -44,51 +62,51 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure BoxDimensions(TB: TBox; var W, H: Integer);
+procedure BoxDimensions(B: TBox; var W, H: Integer);
 Contributors: Janilabo
-Description: Stores TB dimensions to W (Width) and H (Height) variables.
+Description: Stores B dimensions to W (Width) and H (Height) variables.
 Date Created: September 30th, 2012. By Janilabo
 Last Modified: September 30th, 2012. By Janilabo      
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure BoxDimensions(TB: TBox; var W, H: Integer);
+procedure BoxDimensions(B: TBox; var W, H: Integer);
 begin
-  W := ((TB.X2 - TB.X1) + 1);
-  H := ((TB.Y2 - TB.Y1) + 1);
+  W := ((B.X2 - B.X1) + 1);
+  H := ((B.Y2 - B.Y1) + 1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure ConstrainBox(var TB: TBox; MB: TBox);
+procedure ConstrainBox(var B: TBox; MB: TBox);
 Contributors: Wanted
 Description: Makes the edges of your box within the edges of another box.
 Date Created: December 6th, 2011. By Wanted
 Last Modified: March 2nd, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure ConstrainBox(var TB: TBox; MB: TBox);
+procedure ConstrainBox(var B: TBox; MB: TBox);
 begin
-  if (TB.X1 < MB.X1) then
-    TB.X1 := MB.X1;
-  if (TB.Y1 < MB.Y1) then
-    TB.Y1 := MB.Y1;
-  if (TB.X2 > MB.X2) then
-    TB.X2 := MB.X2;
-  if (TB.Y2 > MB.Y2) then
-    TB.Y2 := MB.Y2;
+  if (B.X1 < MB.X1) then
+    B.X1 := MB.X1;
+  if (B.Y1 < MB.Y1) then
+    B.Y1 := MB.Y1;
+  if (B.X2 > MB.X2) then
+    B.X2 := MB.X2;
+  if (B.Y2 > MB.Y2) then
+    B.Y2 := MB.Y2;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure FixBox(var TB: TBox);
+procedure FixBox(var B: TBox);
 Contributors: Janilabo
-Description: Fixes the TB. Swaps incorrectly set values (X1-Y1 > X2-Y2).
+Description: Fixes the Box. Swaps incorrectly set values (X1-Y1 > X2-Y2).
 Date Created: September 30th, 2012. By Janilabo
 Last Modified: September 30th, 2012. By Janilabo    
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure FixBox(var TB: TBox);
+procedure FixBox(var B: TBox);
 begin
-  if (TB.X1 > TB.X2) then
-    Swap(TB.X1, TB.X2);
-  if (TB.Y1 > TB.Y2) then
-    Swap(TB.Y1, TB.Y2);
+  if (B.X1 > B.X2) then
+    Swap(B.X1, B.X2);
+  if (B.Y1 > B.Y2) then
+    Swap(B.Y1, B.Y2);
 end;

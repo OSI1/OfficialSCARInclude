@@ -2,9 +2,9 @@
                               Official SCAR Include
                                 Main Include File
 --------------------------------------------------------------------------------
- * procedure SetUpOSI;       
+ * procedure SetUpOSI;
      By: Wanted
- * procedure FreeOSI;  
+ * procedure FreeOSI;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -18,7 +18,7 @@
   {$IFNDEF RS07}
     {$IFNDEF UseVariance}
       {$DEFINE NoVariance}
-    {$ENDIF}     
+    {$ENDIF}
   {$ENDIF}
 {$ENDIF}
 
@@ -41,20 +41,27 @@
 {$I Divi\Human\Timing.scar}
 {$I Divi\Human\Keyboard.scar}
 {$I Divi\Human\Mouse.scar}
-{$I Divi\Pixel\Bitmap.scar}
 {$I Divi\Pixel\Color.scar}
+{$I Divi\Pixel\Bitmap.scar}
+{$I Divi\Pixel\DTM.scar}
 {$IFDEF RS07}
-  {$I RS07\Core\Globals.scar}  
-  {$I RS07\Core\OCR.scar}  
-  {$I RS07\Core\Game-Tabs\Game-Tabs.scar}  
-  {$I RS07\Core\Chat.scar}  
-  {$I RS07\Core\Login.scar}  
-  {$I RS07\Core\Object.scar}  
-  {$I RS07\Core\Map.scar}  
+  {$I RS07\Core\Globals.scar}
+  {$I RS07\Core\OCR.scar}   
+  {$I RS07\Core\Game-Tabs\Game-Tabs.scar}
+  {$I RS07\Core\Game-Tabs\Tab0-Combat.scar}
+  {$I RS07\Core\Game-Tabs\Tab1-Stats.scar}
+  {$I RS07\Core\Game-Tabs\Tab3-Inventory.scar}
+  {$I RS07\Core\Game-Tabs\Tab4-Equipment.scar}
+  {$I RS07\Core\Game-Tabs\Tab10-Log-Out.scar}
+  {$I RS07\Core\Game-Tabs\Tab11-Options.scar}
+  {$I RS07\Core\Chat.scar}
+  {$I RS07\Core\Login.scar}
+  {$I RS07\Core\Object.scar}
+  {$I RS07\Core\Map.scar}
   {$I RS07\Core\Bank.scar}
   {$IFDEF OSI_RS07_Color_Anti_Randoms}
     {$I RS07\Anti-Randoms\Anti-Randoms.scar}
-  {$ENDIF}  
+  {$ENDIF}
 {$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -67,12 +74,12 @@ Last Modified: March 6th, 2013. By Wanted
 
 procedure FreeOSI;
 begin
-  {$IFDEF RS07}  
-    {$IFNDEF DisableRS07Fonts}  
-      FreeRS07Fonts;    
+  {$IFDEF RS07}
+    {$IFNDEF DisableRS07Fonts}
+      FreeRS07Fonts;
     {$ENDIF}
-  {$ENDIF}   
-  WriteLn('Freed OSI'); 
+  {$ENDIF}
+  WriteLn('Freed OSI');
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -88,20 +95,20 @@ begin
   OSI_Variance := 3.0;
   MouseSpeed := 15;
   SetColorSpeed2Modifiers(0.2, 0.2);
-  ColorToleranceSpeed(1);   
-  {$IFDEF RS07} 
+  ColorToleranceSpeed(1);
+  {$IFDEF RS07}
     WriteLn('OSI RS07 routines enabled.');
     {$IFDEF OSI_RS07_Color_Anti_Randoms}
       WriteLn('OSI RS07 color random detection and solving enabled.');
       InitiateAntiRandoms;
     {$ELSE}
       WriteLn('OSI RS2 color random detection and solving disabled.');
-    {$ENDIF}    
-    {$IFNDEF DisableRS07Fonts}        
-      LoadRS07Fonts;    
+    {$ENDIF}
+    {$IFNDEF DisableRS07Fonts}
+      LoadRS07Fonts;
     {$ELSE}
       WriteLn('Auto font loading disabled.');
     {$ENDIF}
-    PlayerStartTime := GetSystemTime;          
-  {$ENDIF}   
+    PlayerStartTime := GetSystemTime;
+  {$ENDIF}
 end;

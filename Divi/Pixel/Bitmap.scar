@@ -2,66 +2,97 @@
                               Official SCAR Include
                                  Bitmap Routines
 --------------------------------------------------------------------------------
- * function  BitmapExists(bmp: TSCARBitmap): Boolean; 
-     By: Janilabo                   
- * procedure CreateBitmap(var bmp: TSCARBitmap; W, H: Integer; S: string);     
-     By: Janilabo
- * function  GetBitmapSize(bmp: TSCARBitmap; var Width, Height: Integer): Boolean;
-     By: Janilabo
+ * function FindBitmapColorIn(var P: TPoint; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
+     By: Wanted
+ * function FindBitmapColor(var P: TPoint; Color: LongInt; bmp: TSCARBitmap): Boolean;
+     By: Wanted
+ * function FindBitmapColorExIn(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
+     By: Wanted
+ * function FindBitmapColorEx(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap): Boolean;
+     By: Wanted        
+ * function FindBitmapTolExP(var TPA: TPointArray; bmp: TSCARBitmap; B: TBox; Tol: LongInt): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function BitmapExists(bmp: TSCARBitmap): Boolean;
-Contributors: LordJashin, Bixby Sayz
-Description: Checks if Bitmap Exists by using Assigned and checking the width & height.
-Date Created: November 19th, 2012. By LordJashin.
-Last Modified: November 19th, 2012. By Bixby Sayz.
+function FindBitmapColorIn(var P: TPoint; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
+Contributors: Wanted, Janilabo.
+Description: Finds color on bitmap inside area.
+Date Created: March 7th, 2013. By Wanted
+Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function BitmapExists(bmp: TSCARBitmap): Boolean;
+                                                    
+function FindBitmapColorIn(var P: TPoint; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
+var
+  Client: TSCARClient;
 begin
-  Result := False;             
-  if (Assigned(bmp)) then
-    Result := ((bmp.Width > 0) and (bmp.Height > 0));
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure CreateBitmap(var bmp: TSCARBitmap; W, H: Integer; S: string);
-Contributors: LordJashin
-Description: Creates the bmp, sets its size, and loads it from a string.
-Date Created: October 13th, 2012. By LordJashin.
-Last Modified: October 13th, 2012. By LordJashin.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure CreateBitmap(var bmp: TSCARBitmap; W, H: Integer; S: string);
-begin
+  Result := False;
+  Client := SetClient(TSCARBitmapClient.Create(bmp));
   try
-    bmp := TSCARBitmap.Create('');
-    bmp.SetSize(W, H);
-    bmp.LoadFromStr(S);    
+    Result := FindColorP(P, Color, B);
   except
-    WriteLn('Failed to create bitmap');
-  end;  
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetBitmapSize(bmp: TSCARBitmap; var Width, Height: Integer): Boolean;
-Contributors: Janilabo
-Description: Gets width and height of a bitmap and returns them in var Width & Height
-             Returns false if it failed to do this.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function GetBitmapSize(bmp: TSCARBitmap; var Width, Height: Integer): Boolean;
-begin
-  try
-    Width := bmp.Width;
-    Height := bmp.Height;
-    Result := True;
-  except
-    Width := 0;
-    Height := 0;
-    Result := False;
+  finally
+    SetClient(Client).Free;
   end;
-end;                                                          
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindBitmapColor(var P: TPoint; Color: LongInt; bmp: TSCARBitmap): Boolean;
+Contributors: Wanted, Janilabo.
+Description: Finds color on bitmap.
+Date Created: March 7th, 2013. By Wanted
+Last Modified: March 7th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindBitmapColor(var P: TPoint; Color: LongInt; bmp: TSCARBitmap): Boolean;
+begin
+  Result := FindBitmapColorIn(P, Color, bmp, Box(0, 0, bmp.Width - 1, bmp.Height - 1));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindBitmapColorExIn(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
+Contributors: Wanted, Janilabo.
+Description: Finds colors on bitmap inside area.
+Date Created: March 7th, 2013. By Wanted
+Last Modified: March 7th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindBitmapColorExIn(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
+var
+  Client: TSCARClient;
+begin
+  Result := False;
+  Client := SetClient(TSCARBitmapClient.Create(bmp));
+  try
+    Result := FindColorExP(TPA, Color, B);
+  except
+  finally
+    SetClient(Client).Free;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindBitmapColorEx(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap): Boolean;
+Contributors: Wanted, Janilabo.
+Description: Finds colors on bitmap.
+Date Created: March 7th, 2013. By Wanted
+Last Modified: March 7th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindBitmapColorEx(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap): Boolean;
+begin
+  Result := FindBitmapColorExIn(TPA, Color, bmp, Box(0, 0, bmp.Width - 1, bmp.Height - 1));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindBitmapTolExP(var TPA: TPointArray; bmp: TSCARBitmap; B: TBox; Tol: LongInt): Boolean;
+Contributors: Wanted
+Description: Wrapper for FindBitmapTolEx with points and boxes.
+Date Created: March 7th, 2013. By Wanted
+Last Modified: March 7th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindBitmapTolExP(var TPA: TPointArray; bmp: TSCARBitmap; B: TBox; Tol: LongInt): Boolean;
+begin
+  Result := FindBitmapTolEx(TPA, bmp, B.X1, B.Y1, B.X2, B.Y2, Tol);
+end;

@@ -3,18 +3,103 @@
                                   Runescape 07
                                Game Tab Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function GetAllTabBounds: TBoxArray;
+     By: Wanted
+ * function GetTabBounds(Tab: Integer): TBox;
+     By: Wanted
+ * function TabExists(Tab: Integer): Integer;
+     By: Wanted
+ * function GetCurrentTab: Integer;
+     By: Wanted
+ * function SetGameTab(Tab: Integer): Integer;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-{$I Tab0-Combat.scar}
-{$I Tab1-Stats.scar}
-{$I Tab3-Inventory.scar}
-{$I Tab4-Equipment.scar}
-{$I Tab10-Log-Out.scar}
-{$I Tab11-Options.scar}
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAllTabBounds: TBoxArray;
+Contributors: Wanted
+Description: Returns all tab boundries.
+Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure what;
+function GetAllTabBounds: TBoxArray;
 begin
-  
+  Result := TBAFromGrid(Point(527, 168), 33, 35, 2, 7, 298, 33);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetTabBounds(Tab: Integer): TBox;
+Contributors: Wanted
+Description: Returns tab boundries.
+Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetTabBounds(Tab: Integer): TBox;
+begin
+  Result := BoxFromGrid(Point(527, 168), Tab, 33, 35, 2, 7, 298, 33);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TabExists(Tab: Integer): Integer;
+Contributors: Wanted, Dynamite, Freddy.
+Description: Returns True if the Tab exists.
+Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TabExists(Tab: Integer): Boolean;
+begin
+  Result := InRange(CountColorTolP(clBlack, GetTabBounds(Tab), 36), 80, 350);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCurrentTab: Integer;
+Contributors: Wanted
+Description: Returns current tab.
+Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCurrentTab: Integer;
+var
+  P: TPoint;
+  H: Integer;
+begin
+  H := Tab_Count - 1;
+  for Result := 0 to H do
+    if (FindColorTolP(P, 2107770, GetTabBounds(Result), 21)) then
+      Exit;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetGameTab(Tab: Integer): Integer;
+Contributors: Wanted, Dynamite.
+Description: Switches to a specific game tab.
+Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetGameTab(Tab: Integer): Boolean;
+var
+  T: Integer; 
+  B: TBox;
+begin
+  Result := (GetCurrentTab = Tab);
+  if (Result) then
+    Exit;
+  if (not (TabExists(Tab))) then
+    Exit;
+  B := GetTabBounds(Tab)
+  MouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, ClickLeft);
+  T := GetSystemTime + RR(2500, 3500);
+  repeat
+    if (GetCurrentTab = Tab) then
+    begin
+      Result := True;
+      Exit;
+    end;
+    WaitRR(50, 150);
+  until (T > GetSystemTime);
 end;

@@ -3,6 +3,282 @@
                                   Runescape 07
                              Inventory Tab 3 Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function GetAllInvSlotBounds: TBoxArray;
+     By: Wanted
+ * function InvSlotsBounds: TBox;
+     By: Wanted
+ * function GetInvSlotBounds(Slot: Integer): TBox;
+     By: Wanted
+ * function CordsToInvSlot(P: TPoint): Integer;
+     By: Wanted
+ * function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
+     By: Wanted
+ * function InvCount(CheckIT: Boolean): Integer;
+     By: Wanted
+ * function InvFull(CheckIT: Boolean): Boolean;
+     By: Wanted
+ * function InvEmpty(CheckIT: Boolean): Boolean;
+     By: Wanted
+ * function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
+     By: Wanted
+ * function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
+     By: Wanted
+ * function FindInvItemsDTM(dtm: Integer; CheckIT: Boolean): TIntegerArray;
+     By: Wanted
+ * function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
+     By: Wanted
+ * function FindInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): TIntegerArray;
+     By: Wanted
+ * function CountInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): Integer;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAllInvSlotBounds: TBoxArray;
+Contributors: Wanted
+Description: Returns all item boundries.
+Date Created: March 8th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAllInvSlotBounds: TBoxArray;
+begin
+  Result := TBAFromGrid(Point(563, 213), 31, 31, 7, 4, 36, 42);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InvSlotsBounds: TBox;
+Contributors: Wanted
+Description: Returns all box around all itmes.
+Date Created: March 8th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InvSlotsBounds: TBox;
+begin
+  Result := TBABounds(GetAllInvSlotBounds);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetInvSlotBounds(Slot: Integer): TBox;
+Contributors: Wanted
+Description: Returns the bounds of an item in the inventory.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetInvSlotBounds(Slot: Integer): TBox;
+begin
+  Result := BoxFromGrid(Point(563, 213), Slot, 31, 31, 7, 4, 36, 42);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CordsToInvSlot(P: TPoint): Integer;
+Contributors: Wanted
+Description: Returns the slot of a point in the inventory.
+Date Created: November 9th, 2011. By Wanted. RS2 Build 677.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CordsToInvSlot(P: TPoint): Integer;
+var
+  I: Integer;
+begin
+  Result := 0;
+  for I := 0 to 27 do
+    if (PointInBox(P, GetInvSlotBounds(I))) then
+    begin
+      Result := I;
+      Exit;
+    end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if there's an item in the given inventory slot.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
+var
+  P: TPoint;
+begin
+  Result := False;
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;
+  Result := FindColorP(P, clObjectOutline, GetInvSlotBounds(Slot));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InvCount(CheckIT: Boolean): Integer;
+Contributors: Wanted
+Description: Returns the number of occupied spots by items in your inventory.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InvCount(CheckIT: Boolean): Integer;
+var
+  I: Integer;
+begin
+  Result := 0; 
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;
+  for I := 0 to 27 do
+    if (InvItemExists(I, False)) then
+      Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InvFull(CheckIT: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if all 28 spots are full.
+Date Created: November 18th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InvFull(CheckIT: Boolean): Boolean;
+begin
+  Result := (InvCount(CheckIT) = 28);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InvEmpty(CheckIT: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if inventory is empty, slightly faster than InvCount = 0;
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InvEmpty(CheckIT: Boolean): Boolean;
+var
+  P: TPoint;    
+begin
+  Result := False;  
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;    
+  Result := (not (FindColorP(P, clObjectOutline, InvSlotsBounds)));  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks on an item.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
+var
+  B: TBox;
+begin
+  Result := InvItemExists(Slot, CheckIT);
+  if (not (Result)) then
+    Exit;
+  B := GetInvSlotBounds(Slot);
+  MouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, TypeC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
+Contributors: Wanted
+Description: Drags an item from one slot to another.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
+var
+  B, B2: TBox;
+begin
+  Result := InvItemExists(FromSlot, CheckIT);
+  if (not (Result)) then
+    Exit;
+  B := GetInvSlotBounds(FromSlot);
+  B2 := GetInvSlotBounds(ToSlot);
+  DragMouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, B2.X1 + 2, B2.Y1 + 2, B2.X2 - 2, B2.Y2 - 2, True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindInvItemsDTM(dtm: Integer; CheckIT: Boolean): TIntegerArray;
+Contributors: Wanted
+Description: Returns all the slots where a dtm is found.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindInvItemsDTM(dtm: Integer; CheckIT: Boolean): TIntegerArray;
+var
+  I, L: Integer;
+  P: TPoint;
+begin
+  Result := [];  
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;
+  for I := 0 to 27 do
+    if (InvItemExists(I, False)) then
+      if (FindDTMP(dtm, P, GetInvSlotBounds(I))) then
+      begin
+        Inc(L);
+        SetLength(Result, L);
+        Result[L - 1] := I;
+      end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
+Contributors: Wanted
+Description: Returns the number of times an inventory dtm is found.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountInvItemsDTM(dtm: Integer; CheckIT: Boolean): Integer;
+begin
+  Result := Length(FindInvItemsDTM(dtm, CheckIT));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): TIntegerArray;
+Contributors: Wanted
+Description: Returns all the slots where a bmp is found.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): TIntegerArray;
+var
+  TPA: TPointArray;
+  I, H: Integer;
+begin
+  Result := [];
+  if (CheckIT) then
+    if (not (SetGameTab(Tab_Inv))) then
+      Exit;
+  FindBitmapTolExP(TPA, bmp, MIB, Tol);
+  H := High(TPA);
+  if (H < 0) then
+    Exit;
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := CordsToInvSlot(TPA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CountInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): Integer;
+Contributors: Wanted
+Description: Returns the number of times an inventory bmp is found.
+Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CountInvItemsBMP(bmp, Tol: Integer; CheckIT: Boolean): Integer;
+begin
+  Result := Length(FindInvItemsBMP(bmp, Tol, CheckIT));
+end;

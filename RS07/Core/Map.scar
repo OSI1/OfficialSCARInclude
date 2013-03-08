@@ -3,6 +3,206 @@
                                   Runescape 07
                                Mini-Map Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function OnMM(P: TPoint): Boolean;
+     By: Wanted
+ * function TPAOnMM(TPA: TPointArray): Boolean;
+     By: Wanted
+ * procedure TPAExtractMMPoints(var TPA: TPointArray);
+     By: Wanted
+ * function MMToMSEx(MM: TPoint; Height: Extended): TPoint;
+     By: Wanted
+ * function MMToMS(MM: TPoint): TPoint;
+     By: Wanted
+ * function MMOnMS(MM: TPoint): Boolean;
+     By: Wanted
+ * function MMsToMSs(TPA: TPointArray): TPointArray;
+     By: Wanted
+ * function FilterMMPointsMS(TPA: TPointArray): TPointArray;
+     By: Wanted
+ * function FindMMColorTol(var P: TPoint; Color, Tol: Integer): Boolean;
+     By: Wanted
+ * function FindMMColorsTolerance(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+     By: Wanted
+ * procedure SetAngle(Highest: Boolean);
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OnMM(P: TPoint): Boolean;
+Contributors: Wanted
+Description: Returns true if point is on the minimap.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+function OnMM(P: TPoint): Boolean;
+begin
+  Result := TPAContains(MMTPA, P);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TPAOnMM(TPA: TPointArray): Boolean;
+Contributors: Wanted
+Description: Returns true if all points are on the minimap.
+Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+function TPAOnMM(TPA: TPointArray): Boolean;
+var
+  I, H: LongInt;
+begin
+  Result := False;
+  H := High(TPA);
+  for I := 0 to H do
+    if (not (TPAContains(MMTPA, TPA[I]))) then
+      Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure TPAExtractMMPoints(var TPA: TPointArray);
+Contributors: Wanted
+Description: Removes all points from TPA not on MM.
+Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure TPAExtractMMPoints(var TPA: TPointArray);
+begin
+  TPAExtractPoints(TPA, MMTPA);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMToMSEx(MM: TPoint; Height: Extended): TPoint;
+Contributors: Home, Wanted.
+Description: Transforms a point on the minimap to where it would be on the mainscreen.
+Date Created: December 5th, 2011. By Home. RS2 Build 688.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MMToMSEx(MM: TPoint; Height: Extended): TPoint;
+var
+  X, Y: Extended;
+begin
+  X := (((MM.X - MMCX) * 6.375) + MSCX);
+  Y := (((MM.Y - MMCY) * 6.2857142857142857142857142857143) + MSCY);
+  Result := Point(Round(X), Round(Y - Height));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMToMS(MM: TPoint): TPoint;
+Contributors: Home
+Description: Transforms a point on the minimap to where it would be on the mainscreen.
+Date Created: December 5th, 2011. By Home. RS2 Build 688.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MMToMS(MM: TPoint): TPoint;
+begin
+ Result := MMToMSEx(MM, 0);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMOnMS(MM: TPoint): Boolean;
+Contributors: Wanted
+Description: Returns true if a MM point would be on the MS.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modified: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MMOnMS(MM: TPoint): Boolean;
+begin
+  Result := PointInBox(MMToMS(MM), MSB);
+end;  
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MMsToMSs(TPA: TPointArray): TPointArray;
+Contributors: Wanted
+Description: Outputs MM points that are on MS as MS points.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modified: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MMsToMSs(TPA: TPointArray): TPointArray;
+var
+  I, H, L: Integer;
+  P: TPoint;
+begin
+  H := High(TPA);
+  L := 0;
+  for I := 0 to H do
+  begin
+    P := MMToMS(TPA[I]);
+    if (not (PointInBox(P, MSB))) then
+      Continue;
+    Inc(L);
+    SetLength(Result, L);
+    Result[L - 1] := P;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FilterMMPointsMS(TPA: TPointArray): TPointArray;
+Contributors: Wanted
+Description: Filters out points that would not be on the main screen. Returns MM points.
+Date Created: December 22nd, 2011. By Wanted. RS2 Build 690.
+Last Modified: December 22nd, 2011. By Wanted. RS2 Build 690.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FilterMMPointsMS(TPA: TPointArray): TPointArray;
+var
+  I, H, L: Integer;
+begin
+  Result := [];
+  H := High(TPA);
+  L := 0;
+  for I := 0 to H do
+  begin
+    if (not (MMOnMS(TPA[I]))) then
+      Continue;
+    Inc(L);
+    SetLength(Result, L);
+    Result[L - 1] := TPA[I];
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindMMColorTol(var P: TPoint; Color, Tol: Integer): Boolean;
+Contributors: Wanted
+Description: Finds color within minimap circle.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindMMColorTol(var P: TPoint; Color, Tol: Integer): Boolean;
+begin
+  Result := FindColorTPATolP(P, Color, MMTPA, Tol);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindMMColorsTolerance(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+Contributors: Wanted
+Description: Finds colors within minimap circle.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindMMColorsTolerance(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+begin
+  Result := FindColorTPATolExP(TPA, Color, MMTPA, Tol);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SetAngle(Highest: Boolean);
+Contributors: Naum, Wanted, Freddy.
+Description: Tilts the camera angle.
+Date Created: August 6th, 2011. By Naum. RS2 Build 660.
+Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure SetAngle(Highest: Boolean);
+begin
+  HoldVKey((Integer(not Highest) * 2) + 38, 1000, 1500);
+  WaitRR(400, 600);
+end;

@@ -1,10 +1,9 @@
 program New;
 
-{$DEFINE RS07}
+{$DEFINE RS07}                         // V - Bright Settings
 {$DEFINE OSI_RS07_Color_Anti_Randoms}
 
 {$I OSI\OSI.scar}
-{$I OSI\Divi\Misc\Debug.scar}
 
 procedure ScriptTerminate;
 begin
@@ -12,5 +11,5 @@ begin
 end;
 
 begin
-  SetUpOSI;       
+  SetUpOSI;
 end.
