@@ -55,7 +55,7 @@
      By: Wanted
  * var CurrentPlayer: LongInt; & PlayerStartTime
      By: Wanted
- * var RS07FontsLoaded: Boolean;      
+ * var RS07FontsLoaded: Boolean;
      By: Wanted
  * var Font Variables
      By: Wanted & Janilabo.
@@ -78,7 +78,7 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Wanted, LordJashin, Janilabo.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const             // Description                      Modified            By              Build #
@@ -103,7 +103,7 @@ const             // Description                      Modified            By    
   MSPH  = (MSY2 - MSY1) + 1; // Main Screen Height // June 23, 2012       LordJashin      718
   MSPA  = MSPW * MSPH; // Main Screen Pixel Area   // June 23, 2012       LordJashin      718
   MSCXe = (MSX1 + MSX2) / 2;                       // June 23, 2012       LordJashin      718
-  MSCYe = (MSY1 + MSY2) / 2;                       // June 23, 2012       LordJashin      718   
+  MSCYe = (MSY1 + MSY2) / 2;                       // June 23, 2012       LordJashin      718
 
   MMCX  = 643;    // Map Center Points             // March 5, 2013       Wanted          ???
   MMCY  = 83;                                      // March 5, 2013       Wanted          ???
@@ -156,6 +156,9 @@ const             // Description                      Modified            By    
   MDPH = (MDX2 - MDX1) + 1; // Deposit Box Width  // June 23, 2012        LordJashin      718
   MDPW = (MDY2 - MDY1) + 1; // Deposit Box Height // June 23, 2012        LordJashin      718
   MDPA = MDPW * MDPH; // Deposit Box Area         // June 23, 2012        LordJashin      718
+
+  UpTextX = 7; // Up Text capture X               // March 9, 2013        Wanted          ???
+  UpTextY = 7; // Up Text capture Y               // March 9, 2013        Wanted          ???
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RSCP: TPoint;
@@ -276,14 +279,14 @@ begin
     'waMV7gYIGDdY7aOmmwqPECB2uAGqmWGqOWGp2WGpeWGpGWGouWGoWWmv4tNeVb' +
     'apojQ4aMGi9khowarxlqCofgVG2p6YnM9sFp2FJTL4E45swXg+jNaA==');
   if (FindBitmapColorEx(MMTPAv, clWhite, bmpBlankMap)) then
-  begin                                                       
+  begin
     OffsetTPA(MMTPAv, MMX1, MMY1);
     MMPAv := Length(MMTPAv);
   end
   else
   begin
-    WriteLn('Failed to load bmpBlankMap!'); 
-    WriteLn('Reverting to backup MMTPA/MMPA...'); 
+    WriteLn('Failed to load bmpBlankMap!');
+    WriteLn('Reverting to backup MMTPA/MMPA...');
     SetLength(ATPA, 6);
     for I := 0 to 5 do
       ATPA[I] := TPAFromBox(MMB);
@@ -298,7 +301,7 @@ begin
     MMPAv := Length(MMTPAv);
   end;
   try
-    bmpBlankMap.Free;      
+    bmpBlankMap.Free;
   except
   end;
   WriteLn('Loaded MMTPA/MMPA');
@@ -359,7 +362,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
 
 function MIB: TBox;
 begin
-  Result := Box(MIX1, MIY1, MIX2, MIY2);  
+  Result := Box(MIX1, MIY1, MIX2, MIY2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -385,7 +388,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
  
 function MCB: TBox;
 begin
-  Result := Box(MCX1, MCY1, MCX2, MCY2);  
+  Result := Box(MCX1, MCY1, MCX2, MCY2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -411,7 +414,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
  
 function MBB: TBox;
 begin
-  Result := Box(MBX1, MBY1, MBX2, MBY2);  
+  Result := Box(MBX1, MBY1, MBX2, MBY2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -437,7 +440,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
  
 function MDB: TBox;
 begin
-  Result := Box(MDX1, MDY1, MDX2, MDY2);  
+  Result := Box(MDX1, MDY1, MDX2, MDY2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -472,7 +475,7 @@ const
   Skill_Slayer        = 19;
   Skill_Farming       = 20;
   Skill_Construction  = 21;
-  Skill_Hunter        = 22;  
+  Skill_Hunter        = 22;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Game Tab Indexes
@@ -485,14 +488,14 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
 const
   Tab_Count             = 14;
   Tab_Combat            = 0;
-  Tab_Stats             = 1;    
+  Tab_Stats             = 1;
   Tab_Quest             = 2;
   Tab_Inv               = 3;
   Tab_Equip             = 4;
   Tab_Prayer            = 5;
   Tab_Magic             = 6;
   Tab_Clan              = 7;
-  Tab_Friends           = 8; 
+  Tab_Friends           = 8;
   Tab_Ignore            = 9;
   Tab_LogOut            = 10;
   Tab_Options           = 11;
@@ -518,7 +521,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
   Tab_Equip_Legs        = 7;
   Tab_Equip_Gloves      = 8;
   Tab_Equip_Boots       = 9;
-  Tab_Equip_Ring        = 10;  
+  Tab_Equip_Ring        = 10;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const RS2 direction/angle Indexes
@@ -536,14 +539,14 @@ const
   Dir_South             = 180;
   Dir_SouthWest         = 225;
   Dir_West              = 270;
-  Dir_NorthWest         = 315; 
+  Dir_NorthWest         = 315;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors
 Contributors: Wanted
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Wanted. RS2 Build 661.
-Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                             // Modified            By              Build #
@@ -558,9 +561,8 @@ const                             // Modified            By              Build #
   clItemOption    = 4231423;      // October 20, 2011    Wanted          668
 
   clObjectOutline = 65536;        // March 6, 2013       Wanted          ???
-  clOptionsBox    = clBlack;      // March 6, 2013       Wanted          ???
-  clOptionsBox2   = 4674653;      // March 6, 2013       Wanted          ???
-  clSkillInfoBox  = 10551295;     // March 6, 2013       Wanted          ???  
+  clOptionsBox    = 4674653;      // March 9, 2013       Wanted          ???
+  clSkillInfoBox  = 10551295;     // March 6, 2013       Wanted          ???
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS07Player = record
@@ -615,10 +617,10 @@ Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  CurrentPlayer, PlayerStartTime: LongInt;   
+  CurrentPlayer, PlayerStartTime: LongInt;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-var RS07FontsLoaded: Boolean;      
+var RS07FontsLoaded: Boolean;
 Contributors: Wanted
 Description: True if RS07 fonts are loaded.
 Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
@@ -626,7 +628,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
   
 var
-  RS07FontsLoaded: Boolean;      
+  RS07FontsLoaded: Boolean;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Font Variables
@@ -637,7 +639,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
-  UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars: LongInt;  
+  UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars: LongInt;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure LoadRS07Fonts;
@@ -653,7 +655,7 @@ var
   T: LongInt;
 begin
   T := GetSystemTime;
-  if (RS07FontsLoaded) then  
+  if (RS07FontsLoaded) then
   begin
     WriteLn('RS07 Fonts already loaded!');
     Exit;   
@@ -672,7 +674,7 @@ begin
   except
     WriteLn('Failed to load RS07 fonts!');
     Exit;
-  end;  
+  end;
   WriteLn('Loaded RS2 Fonts: UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars (' + IntToStr(GetSystemTime - T) + ' ms)');
   RS07FontsLoaded := True;  
 end;  
@@ -687,20 +689,20 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
 
 procedure FreeRS07Fonts;
 begin
-  if (not (RS07FontsLoaded)) then     
+  if (not (RS07FontsLoaded)) then
   begin 
     WriteLn('Can not free RS07 fonts because they are not loaded!')
-    Exit;   
+    Exit;
   end;
   try
     FreeChars2(OptionChars);
     FreeChars2(ScreenChars);
     FreeChars2(NPCChars);
     FreeChars2(SmallChars);
-    FreeChars2(StatChars);  
-    FreeChars2(TradeChars);            
+    FreeChars2(StatChars);
+    FreeChars2(TradeChars);
   except
-    WriteLn('Failed to free RS07 fonts!');   
+    WriteLn('Failed to free RS07 fonts!');
     Exit;
   end;
   RS07FontsLoaded := False; 

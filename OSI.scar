@@ -38,12 +38,12 @@
 {$I Divi\TFunctions\TSA.scar}
 {$I Divi\TFunctions\TVA.scar}
 {$I Divi\TFunctions\ATPA.scar}
-{$I Divi\Human\Timing.scar}
-{$I Divi\Human\Keyboard.scar}
-{$I Divi\Human\Mouse.scar}
 {$I Divi\Pixel\Color.scar}
 {$I Divi\Pixel\Bitmap.scar}
 {$I Divi\Pixel\DTM.scar}
+{$I Divi\Human\Timing.scar}
+{$I Divi\Human\Keyboard.scar}
+{$I Divi\Human\Mouse.scar}
 {$IFDEF RS07}
   {$I RS07\Core\Globals.scar}
   {$I RS07\Core\OCR.scar}   

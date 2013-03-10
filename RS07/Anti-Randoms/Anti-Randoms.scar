@@ -154,7 +154,7 @@ begin
   with RS07Randoms[5] do
   begin
     Name := 'Freaky Forester';
-    TabsMissing := [Tab_Magic];
+    TabsMissing := [Tab_Magic];  //none
     InRandom := nil;
     SolveRandom := nil;
   end;

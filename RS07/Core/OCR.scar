@@ -3,6 +3,346 @@
                                   Runescape 07
                                   OCR Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function GetUpText: String;
+     By: Freddy
+ * function UpTextContainsMulti(Text: TStringArray): Boolean;
+     By: Freddy & Wanted.
+ * function UpTextContains(Text: string): Boolean;
+     By: Freddy & Wanted.
+ * function FindOptionsBox(var OptionsBox: TBox): Boolean;
+     By: Wanted
+ * function OptionBoxExists: Boolean;
+     By: Wanted
+ * function GetAllOptionsBox: TBox;
+     By: Wanted
+ * function GetNumberOptions(AllOptionsBox: TBox): Integer;
+     By: Wanted
+ * function GetOptionBox(Index: Integer; AllOptionsBox: TBox): TBox;
+     By: Wanted
+ * function GetOptionBoxMulti(Indexes: TIntegerArray; AllOptionsBox: TBox): TBoxArray;
+     By: Wanted
+ * function GetAllOptionBoxes(AllOptionsBox: TBox): TBoxArray;
+     By: Wanted
+ * function GetOption(Index: Integer; AllOptionsBox: TBox): string;
+     By: Wanted
+ * function GetAllOptions(AllOptionsBox: TBox): TStrArray;
+     By: Wanted
+ * function OptionsContainsMulti(Options: TStrArray; AllOptionsBox: TBox): TBoolArray;
+     By: Wanted
+ * function OptionsContains(Option: string; AllOptionsBox: TBox): Boolean;
+     By: Wanted
+ * function ChooseOptionMultiEx(Options: TStrArray; TypeC: ClickActions): Boolean;
+     By: Wanted
+ * function ChooseOptionMulti(Options: TStrArray): Boolean;
+     By: Wanted
+ * function ChooseOption(Option: string): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetUpText: String;
+Contributors: Freddy, Wanted.
+Description: Returns text in upperleft corner.
+Date Created: August 7th, 2011. By Freddy. RS2 Build 660.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetUpText: string;
+begin
+  try
+    Result := rs_GetTextAt(UpChars, UpTextX, UpTextY);
+  except
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function UpTextContainsMulti(Text: TStringArray): Boolean;
+Contributors: Freddy, Wanted.
+Description: Checks for the occurance of any of the strings in the array.
+Date Created: August 7th, 2011. By Freddy & Wanted. RS2 Build 660.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function UpTextContainsMulti(Text: TStringArray): Boolean;
+var
+  T: LongInt;
+begin
+  Result := True;
+  T := GetSystemTime + RR(1000, 2000);
+  while (GetSystemTime < T) do
+    if (StrContainsMulti(Text, GetUpText)) then
+      Exit
+    else
+      WaitRR(50, 80);
+  Result := False;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function UpTextContains(Text: string): Boolean;
+Contributors: Freddy, Wanted.
+Description: Returns true if uptext is found.
+Date Created: August 7th, 2011. By Freddy & Wanted. RS2 Build 660.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function UpTextContains(Text: string): Boolean;
+begin
+  Result := UpTextContainsMulti([Text]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindOptionsBox(var OptionsBox: TBox): Boolean;
+Contributors: Wanted
+Description: Returns true if the box that contains the ChooseOptions is up.
+OptionBoxTPA contains all the points within that match clOptionsBox.
+Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindOptionsBox(var OptionsBox: TBox): Boolean;
+var
+  TPA: TPointArray;
+begin
+  Result := False;
+  OptionsBox := Box(0, 0, 0, 0);
+  if (not (WaitFindColorEx(TPA, clOptionsBox, RSB, 80, True, 50, 150, 1500, 2500))) then
+    Exit;
+  OptionsBox := TPABounds(TPA);
+  Result := True; 
+  ConstrainBox(OptionsBox, Box(OptionsBox.X1, OptionsBox.Y1 + 19, OptionsBox.X2, OptionsBox.Y2 - 3));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OptionBoxExists: Boolean;
+Contributors: Wanted
+Description: Returns true if the box that contains the ChooseOptions is up.
+OptionBoxTPA contains all the points within that match clOptionsBox.
+Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OptionBoxExists: Boolean;
+var
+  B: TBox;
+begin
+  Result := FindOptionsBox(B);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAllOptionsBox: TBox;
+Contributors: Wanted
+Description: Returns the options box if found.
+Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAllOptionsBox: TBox;
+begin
+  FindOptionsBox(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetNumberOptions(AllOptionsBox: TBox): Integer;
+Contributors: Wanted
+Description: Returns the number of options available.
+Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetNumberOptions(AllOptionsBox: TBox): Integer;
+begin
+  Result := ((AllOptionsBox.Y2 - AllOptionsBox.Y1) + 5) div 15;
+end;                              //+1 for width, +5 incase it's on the edge ;) 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetOptionBox(Index: Integer; AllOptionsBox: TBox): TBox;
+Contributors: Wanted
+Description: Returns the box of the option starting from the top [0].
+Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetOptionBox(Index: Integer; AllOptionsBox: TBox): TBox;
+begin                                
+  Result := Box(AllOptionsBox.X1, AllOptionsBox.Y1 + (Index * 15), AllOptionsBox.X2, AllOptionsBox.Y1 + ((Index * 15) + 14));  
+  ConstrainBox(Result, RSB);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetOptionBoxMulti(Indexes: TIntegerArray; AllOptionsBox: TBox): TBoxArray;
+Contributors: Wanted
+Description: Returns the boxes of the options starting from the top [0].
+Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetOptionBoxMulti(Indexes: TIntegerArray; AllOptionsBox: TBox): TBoxArray;
+var
+  I, H: Integer;
+begin
+  Result := [];
+  SetLength(Result, Length(Indexes)); 
+  H := High(Result);
+  for I := 0 to H do
+    Result[I] := GetOptionBox(Indexes[I], AllOptionsBox);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAllOptionBoxes(AllOptionsBox: TBox): TBoxArray;
+Contributors: Wanted
+Description: Returns all of option boxes of the AllOptionsBox.
+Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAllOptionBoxes(AllOptionsBox: TBox): TBoxArray;
+var
+  I, H: Integer;
+begin
+  Result := [];
+  SetLength(Result, GetNumberOptions(AllOptionsBox)); 
+  H := High(Result);
+  for I := 0 to H do
+    Result[I] := GetOptionBox(I, AllOptionsBox);  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetOption(Index: Integer; AllOptionsBox: TBox): string;
+Contributors: Wanted, Freddy.
+Description: Gets option text from box index in AllOptionsBox.
+Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetOption(Index: Integer; AllOptionsBox: TBox): string;
+var
+  B: TBox;
+begin
+  B := GetOptionBox(Index, AllOptionsBox);
+  Result := rs_GetTextAt(UpChars, B.X1, B.Y1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAllOptions(AllOptionsBox: TBox): TStrArray;
+Contributors: Wanted, Freddy.
+Description: Gets option text from all option boxes index in AllOptionsBox.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAllOptions(AllOptionsBox: TBox): TStrArray;
+var
+  I, H: Integer;
+begin  
+  Result := [];
+  SetLength(Result, GetNumberOptions(AllOptionsBox));
+  H := High(Result);
+  for I := 0 to H do
+    Result[I] := GetOption(I, AllOptionsBox);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OptionsContainsMulti(Options: TStrArray; AllOptionsBox: TBox): TBoolArray;
+Contributors: Wanted, Freddy.
+Description: Checks if options exist within the options box.
+Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OptionsContainsMulti(Options: TStrArray; AllOptionsBox: TBox): TBoolArray;
+var
+  AvailableOptions: TStrArray;
+  I, H: LongInt;
+begin
+  Result := [];
+  AvailableOptions := GetAllOptions(AllOptionsBox);
+  H := High(AvailableOptions);
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+      Result[I] := StrContainsMulti(Options, AvailableOptions[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function OptionsContains(Option: string; AllOptionsBox: TBox): Boolean;
+Contributors: Wanted, Freddy.
+Description: Checks if option exists within the options box.
+Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function OptionsContains(Option: string; AllOptionsBox: TBox): Boolean;
+begin
+  Result := TBLAContains(OptionsContainsMulti([Option], AllOptionsBox), True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ChooseOptionMultiEx(Options: TStrArray; TypeC: ClickActions): Boolean;
+Contributors: Wanted, Freddy.
+Description: Finds the first option in Options from the top that exists and clicks it.
+Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ChooseOptionMultiEx(Options: TStrArray; TypeC: ClickActions): Boolean;
+var
+  TBLA: TBooleanArray; 
+  TPA: TPointArray;  
+  I, H: LongInt;  
+  B, MB: TBox;   
+  P: TPoint;
+begin
+  Result := False;
+  if (not (FindOptionsBox(B))) then
+    Exit;
+  TBLA := OptionsContainsMulti(Options, B);
+  H := High(TBLA);
+  for I := 0 to H do
+    if (TBLA[I]) then
+    begin 
+      MB := GetOptionBox(I, B);
+      MouseBox(MB.X1 + 2, MB.Y1 + 2, MB.X2 - 2, MB.Y2 - 2, TypeC);
+      Result := True;
+      Exit;
+    end;  
+  if ((B.X1 - 30) < RSX1) then
+  begin
+    B := Box(B.X1, B.Y1, B.X2 + 20, B.Y2);
+    TPA := TPAFromBox(Box(B.X1, B.Y1, B.X2 + 30, B.Y2));
+  end
+  else
+  begin
+    B := Box(B.X1 - 20, B.Y1, B.X2, B.Y2);
+    TPA := TPAFromBox(Box(B.X1 - 30, B.Y1, B.X2, B.Y2));
+  end;
+  TPAFilterBoxes(TPA, [B]);
+  if (Length(TPA) < 1) then
+    Exit;
+  P := TPA[Random(Length(TPA))];
+  MMouse(P.X, P.Y, 0, 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ChooseOptionMulti(Options: TStrArray): Boolean;
+Contributors: Wanted, Freddy
+Description: Finds the first option in Option that exists and clicks it.
+Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ChooseOptionMulti(Options: TStrArray): Boolean;
+begin
+  Result := ChooseOptionMultiEx(Options, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ChooseOption(Option: string): Boolean;
+Contributors: Wanted
+Description: If Option exists clicks it.
+Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
+Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ChooseOption(Option: string): Boolean;
+begin
+  Result := ChooseOptionMulti([Option]);
+end;
