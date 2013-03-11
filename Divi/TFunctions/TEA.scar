@@ -2,10 +2,10 @@
                               Official SCAR Include
                            Extended Array Type Routines
 --------------------------------------------------------------------------------
- * function CopyTEA(TEA: TBooleanArray): TBooleanArray;                   
+ * function CopyTEA(TEA: TBooleanArray): TBooleanArray;
      By: Wanted
  * procedure TEAReverse(var TEA: TExtArray);
-     By: Janilabo                 
+     By: Janilabo
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -21,7 +21,7 @@ var
   I, H: LongInt;
 begin
   H := High(TEA);
-  SetLength(Result, H + 1);     
+  SetLength(Result, H + 1);
   for I := 0 to H do 
     Result[I] := TEA[I];
 end;
@@ -29,9 +29,9 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TEAReverse(var TEA: TExtArray);
 Contributors: Janilabo
-Description: Reverses TEA.                                                        
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: September 30th, 2012. By Janilabo. 
+Description: Reverses TEA.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: September 30th, 2012. By Janilabo 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TEAReverse(var TEA: TExtArray);

@@ -27,7 +27,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TypeSendEx(Text: string; PressEnter: Boolean);
-Contributors: Wanted, Freddy
+Contributors: Wanted, Freddy.
 Description: Types human like, presses enter if chosen.
 Date Created: August 26th, 2011. By Wanted
 Last Modified: July 21th, 2012. By Freddy

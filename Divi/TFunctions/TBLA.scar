@@ -27,7 +27,7 @@ var
   I, H: LongInt;
 begin
   H := High(TBLA);
-  SetLength(Result, H + 1);     
+  SetLength(Result, H + 1);
   for I := 0 to H do 
     Result[I] := TBLA[I];
 end;
@@ -35,9 +35,9 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function TBLAContains(TBLA: TBoolArray; B: Boolean): Boolean;
 Contributors: Janilabo, Wanted.
-Description: Returns true if B is found in TBLA.        
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: March 1st, 2013. By Wanted     
+Description: Returns true if B is found in TBLA.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: March 1st, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TBLAContains(TBLA: TBoolArray; B: Boolean): Boolean;
@@ -90,13 +90,13 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TBLAInsert(var TBLA: TBoolArray; Index: Integer; B: Boolean);
 Contributors: Janilabo
-Description: Inserts B to TBLA using index as the position.          
+Description: Inserts B to TBLA using index as the position.
 Date Created: September 30th, 2012. By Janilabo
-Last Modified: September 30th, 2012. By Janilabo       
+Last Modified: September 30th, 2012. By Janilabo
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TBLAInsert(var TBLA: TBoolArray; Index: Integer; B: Boolean);
-var                     
+var
   I, L: Integer;
 begin
   L := Length(TBLA);

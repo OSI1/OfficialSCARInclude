@@ -4,12 +4,19 @@
                              Random Solving Routines
 --------------------------------------------------------------------------------
  * type TRS07Random, TRS07RandomArray.
+     By: Wanted
  * var  TRS07Randoms: TRS07RandomArray;
+     By: Wanted
  * var  OverideRandInvTab: Boolean;
+     By: Wanted
  * function FindRandomEventItems: Boolean;
+     By: Wanted
  * function  GetMissingTabs: TIntegerArray;
+     By: Wanted
  * procedure InitiateAntiRandoms;
+     By: Wanted
  * function  OSIFindRandoms: Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$I Abyssal.scar}
@@ -51,7 +58,7 @@
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS07Random, TRS07RandomArray.
-Contributors: Wanted, Freddy
+Contributors: Wanted, Freddy.
 Description: Type used to store random information
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
 Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
@@ -84,24 +91,25 @@ Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
 Last Modified: December 1st, 2011. By Wanted. RS2 Build 687.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-//var
-  //OverideRandInvTab: Boolean;                   FIX
+var
+  OverideRandInvTab: Boolean;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindRandomEventItems: Boolean;
 Contributors: Wanted
 Description: Finds and solves random event gifts.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindRandomEventItems: Boolean;
 begin
   Result := False;
-  //if (not (OverideRandInvTab)) then          FIX
-    //SetGameTab(Tab_Inv);                     FIX
-  //if (GetCurrentTab <> Tab_Inv) then         FIX
-    //Exit;                                    FIX
+  if (not (OverideRandInvTab)) then
+    SetGameTab(Tab_Inv)
+  else
+    if (GetCurrentTab <> Tab_Inv) then
+      Exit;
   Result := Box_InRandom;
 end;
 
@@ -154,7 +162,7 @@ begin
   with RS07Randoms[5] do
   begin
     Name := 'Freaky Forester';
-    TabsMissing := [Tab_Magic];  //none
+    TabsMissing := [];
     InRandom := nil;
     SolveRandom := nil;
   end;
@@ -225,7 +233,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetMissingTabs: TIntArray;
-Contributors: Wanted, Freddy
+Contributors: Wanted, Freddy.
 Description: Used for counting missing tabs for comparison in OSIFindRandoms.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
 Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
@@ -240,20 +248,20 @@ begin
   H := Tab_Count - 1;
   for I := 0 to H do
     Wait(1); // FIX
-  {  if (not (TabExists(I))) then
+    if (not (TabExists(I))) then
     begin
       Inc(L);
       SetLength(Result, L);
       Result[L - 1] := I;
     end;
-  if (Length(Result) > 0) then
+  {if (Length(Result) > 0) then
     if (BankScreen) then
-      Result := [];                          FIX }
+      Result := [];                        FIX }
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OSIFindRandoms: Boolean;
-Contributors: Wanted, Freddy
+Contributors: Wanted, Freddy.
 Description: Handles all of OSI's RS07 anti-random rountines.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
 Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
@@ -288,7 +296,7 @@ begin
               WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
               WriteLn('Player stuck in ' + RS07Randoms[I].Name + ' random.');
               Players[CurrentPlayer].Active := False;
-              //Logout;                                          FIX
+              Logout;
               Exit;
             end
             else
@@ -303,7 +311,7 @@ begin
             WriteLn('Please contact an OSI developer http://forums.scar-divi.com');
             WriteLn('Player stuck in ' + RS07Randoms[I].Name + ' random.');
             Players[CurrentPlayer].Active := False;
-            //Logout;                                          FIX
+            Logout;
             Exit;
           end;
         end;
@@ -317,7 +325,7 @@ begin
       WriteLn('Player stuck in unknown random.');
       Players[CurrentPlayer].Rand := 'Unknown random';
       Players[CurrentPlayer].Active := False;
-      //Logout;                                                 FIX
+      Logout;
       Exit;
     end;
   if (RandomSolved) then

@@ -3,6 +3,699 @@
                                   Runescape 07
                                  Login Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function WelcomeScreen: Boolean;
+     By: Wanted
+ * function LoginScreen: Boolean;
+     By: Wanted
+ * function HowToPlayScreen: Boolean;
+     By: Wanted
+ * function MessageScreen: Boolean;
+     By: Wanted
+ * function LoggedIn: Boolean;
+     By: Wanted
+ * function RSReady: Boolean;
+     By: Wanted
+ * function LoginSoundDisabled: Boolean;
+     By: Wanted
+ * function ToggleLoginMusic(Enable: Boolean): Boolean;
+     By: Wanted
+ * function PressNewUser(CheckWS: Boolean): Boolean;
+     By: Wanted
+ * function PressCancelHowToPlay(CheckHTPS: Boolean): Boolean;
+     By: Wanted
+ * function PressExistingUser(CheckWS: Boolean): Boolean;
+     By: Wanted
+ * function PressLogin(CheckLS: Boolean): Boolean;
+     By: Wanted
+ * function PressCancelLogin(CheckLS: Boolean): Boolean;
+     By: Wanted
+ * function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
+     By: Wanted
+ * function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
+     By: Wanted
+ * function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
+     By: Wanted
+ * function FindLoginMessageText(Text: string): Boolean;
+     By: Wanted
+ * function ClickToPlay(CheckMS: Boolean): Boolean;
+     By: Wanted
+ * function ActivePlayers: Integer;
+     By: Wanted
+ * function AllPlayersInActive: Boolean;
+     By: Wanted
+ * function NextPlayerIndex: Integer;
+     By: Wanted
+ * function NextActivePlayerIndex: Integer;
+     By: Wanted
+ * function Login: Boolean;
+     By: Wanted
+ * function LogOut: Boolean;
+     By: Wanted
+ * function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
+     By: Wanted
+ * function NextPlayer(Active: Boolean): Boolean;
+     By: Wanted
+ * function RandomNextPlayer(Active: Boolean): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               Login.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NextPlayer(Active: Boolean): Boolean; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WelcomeScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the welcome screen.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WelcomeScreen: Boolean;
+begin
+  Result := (CountColor(clYellow, 304, 238, 464, 263) = 479); // Welcome to RuneScape
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoginScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the screen to type in user/pass.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoginScreen: Boolean;
+begin
+  Result := (CountColor(clWhite, 280, 310, 328, 337) = 123); // Login
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function HowToPlayScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the screen that tells you how to play.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function HowToPlayScreen: Boolean;
+begin
+  Result := (CountColor(clYellow, 342, 191, 424, 219) = 251); // How to Play
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MessageScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the screen that shows you your messages after you login.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MessageScreen: Boolean;
+begin
+  Result := (CountColor(clWhite, 356, 327, 488, 346) = 467); // CLICK HERE TO PLAY
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoggedIn: Boolean;
+Contributors: Wanted
+Description: Returns true if Logged In.
+Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoggedIn: Boolean;
+begin
+  Result := (CountColor(clWhite, 422, 483, 498, 501) = 134);   // Report button text
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RSReady: Boolean;
+Contributors: Wanted
+Description: Returns true when runescape isn't intially loading the game.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RSReady: Boolean;
+begin
+  Result := False;
+  if (not (WelcomeScreen)) then
+    if (not (LoginScreen)) then        
+      if (not (HowToPlayScreen)) then
+        if (not (LoggedIn)) then
+          if (not (MessageScreen)) then
+            Exit;
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LoginSoundDisabled: Boolean;
+Contributors: Wanted
+Description: Returns true if sound is enabled.
+Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LoginSoundDisabled: Boolean;
+begin
+  Result := GetColor(745, 480) = 1315974;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleLoginMusic(Enable: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if sound state was changed.
+Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleLoginMusic(Enable: Boolean): Boolean;
+begin
+  Result := ((LoginSoundDisabled) <> (not (Enable)));
+  if (not (Result)) then
+    Exit;
+  MouseBox(728, 466, 757, 496, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PressNewUser(CheckWS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if you make it to the HowToPlayScreen. Cancels if not at
+             WelcomeScreen and CheckWS is true.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PressNewUser(CheckWS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckWS) then
+    if (not (WelcomeScreen)) then
+      Exit;
+  MouseBox(233, 273, 371, 310, ClickLeft);
+  Result := WaitFunc(@HowToPlayScreen, True, 50, 150, 2500, 3500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PressCancelHowToPlay(CheckHTPS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if you make it to the WelcomeScreen. Cancels if not at
+             HowToPlayScreen and CheckHTPS is true.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PressCancelHowToPlay(CheckHTPS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckHTPS) then
+    if (not (HowToPlayScreen)) then
+      Exit;
+  MouseBox(312, 302, 453, 340, ClickLeft);
+  Result := WaitFunc(@WelcomeScreen, True, 50, 150, 2500, 3500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PressExistingUser(CheckWS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if you make it to the LoginScreen. Cancels if not at
+             WelcomeScreen and CheckWS is true.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PressExistingUser(CheckWS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckWS) then
+    if (not (WelcomeScreen)) then
+      Exit;
+  MouseBox(392, 273, 533, 310, ClickLeft);
+  Result := WaitFunc(@LoginScreen, True, 50, 150, 2500, 3500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PressLogin(CheckLS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if made it to MessageScreen.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PressLogin(CheckLS: Boolean): Boolean;
+var
+  T, C: LongInt;   
+begin
+  Result := False;
+  if (CheckLS) then  
+    if (not (LoginScreen)) then
+      if (not (PressExistingUser(True))) then
+        Exit;
+  C := CountColor(clYellow, 247, 214, 519, 231);
+  MouseBox(234, 304, 370, 340, ClickLeft);
+  T := GetSystemTime + RR(2000, 3000);
+  repeat
+    if (CountColor(clYellow, 247, 214, 519, 231) <> C) then
+      Break;  
+    WaitRR(10, 20);
+  until (T < GetSystemTime); 
+  T := GetSystemTime + RR(50000, 70000);
+  repeat    
+    if (not (TIAContains([0, 799, 407, 301], CountColor(clYellow, 247, 214, 519, 231)))) then
+      Exit;
+    if (MessageScreen) then
+    begin
+      Result := True;
+      Exit;
+    end;
+    WaitRR(50, 150);
+  until (T < GetSystemTime);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PressCancelLogin(CheckLS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if you make it to the WelcomeScreen. Cancels if not at
+             LoginScreen and CheckLS is true.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PressCancelLogin(CheckLS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckLS) then
+    if (not (LoginScreen)) then
+      Exit;
+  MouseBox(391, 304, 532, 341, ClickLeft);
+  Result := WaitFunc(@WelcomeScreen, True, 50, 150, 2500, 3500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if inputs username successfully.
+Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
+var
+  B: Boolean;
+  T: LongInt;
+begin
+  Result := False;
+  if (CheckLS) then
+    if (not (LoginScreen)) then
+      if (not (PressExistingUser(True))) then
+        Exit
+      else
+        WaitRR(100, 200);
+  if (CountColor(clWhite, 269, 252, 531, 269) <> 127) then // extra white chars
+    if (PressCancelLogin(not CheckLS)) then
+      if (not (PressExistingUser(True))) then
+        Exit
+      else
+        WaitRR(100, 200);
+  T := GetSystemTime + RR(1200, 1600);
+  repeat
+    B := (GetColor(313, 254) = clYellow);
+    WaitRR(10, 25); 
+  until ((B) or (T < GetSystemTime));
+  if (not (B)) then
+  begin
+    PressCancelLogin(False);
+    Result := TypeInUsername(Username, True);
+    Exit;
+  end; 
+  TypeSend(Username);
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if inputs password successfully.
+Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
+var
+  B: Boolean;
+  T: LongInt;
+begin
+  Result := False;
+  if (CheckLS) then
+    if (not (LoginScreen)) then
+      if (not (PressExistingUser(True))) then
+        Exit
+      else
+        WaitRR(100, 200);
+  if (CountColor(clWhite, 275, 274, 502, 289) <> 184) then // extra white chars
+    if (PressCancelLogin(not CheckLS)) then
+      if (not (PressExistingUser(True))) then              // clear extra chars
+        Exit
+      else
+      begin
+        WaitRR(100, 200);
+        TypeSend('');
+      end;
+  T := GetSystemTime + RR(1200, 1600);
+  repeat
+    B := (GetColor(346, 269) = clYellow);
+    WaitRR(10, 25); 
+  until ((B) or (T < GetSystemTime));
+  if (not (B)) then
+  begin
+    Mouse(346, 269, 0, 0, True);
+    WaitRR(250, 400);
+  end;
+  TypeSendEx(Password, HitEnter);
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
+Contributors: Wanted
+Description: Returns true if the yellow text is found on the login screen.
+Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
+var
+  P: TPoint;
+begin
+  Result := False;
+  if (Length(TPA) > 0) then
+    Result := FindTextTPAInTPA(Text, OptionChars, TPA, P);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindLoginMessageText(Text: string): Boolean;
+Contributors: Wanted
+Description: Returns true if the yellow text is found on the login screen.
+Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindLoginMessageText(Text: string): Boolean;
+var
+  TPA: TPointArray;
+begin
+  Result := False;
+  if (FindColorEx(TPA, clYellow, 218, 181, 548, 246)) then
+    Result := FindLoginMessageTextEx(Text, TPA);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickToPlay(CheckMS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if you get to LoggedIn. Cancels if not at
+             MessageScreen and CheckMS is true.
+Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickToPlay(CheckMS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckMS) then
+    if (not (MessageScreen)) then
+      Exit;
+  MouseBox(276, 295, 495, 378, ClickLeft);
+  Result := WaitFunc(@LoggedIn, True, 50, 150, 4500, 5500); 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ActivePlayers: Integer;
+Contributors: Wanted
+Description: Returns the number of active players.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ActivePlayers: Integer;
+var
+  I, H: Integer;
+begin
+  Result := 0;
+  H := High(Players);
+  for I := 0 to H do
+    if (Players[I].Active) then
+      Inc(Result);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function AllPlayersInActive: Boolean;
+Contributors: Wanted
+Description: Returns true if all players are in-active.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
+Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function AllPlayersInActive: Boolean;
+begin
+  Result := (ActivePlayers = 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function NextPlayerIndex: Integer;
+Contributors: Wanted
+Description: Returns next player index after CurrentPlayer.
+Date Created: August 7th, 2011. By Wanted. RS2 Build 661.
+Last Modified: August 10th, 2011. By Wanted. RS2 Build 661.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NextPlayerIndex: Integer;
+begin
+  Result := CurrentPlayer;
+  if (Result < High(Players)) then
+    Inc(Result)
+  else
+    Result := 0;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function NextActivePlayerIndex: Integer;
+Contributors: Wanted
+Description: Returns next active player index after CurrentPlayer.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NextActivePlayerIndex: Integer;
+var
+  H: LongInt;
+begin
+  Result := 0;
+  if (AllPlayersInActive) then
+    Exit;
+  H := High(Players);
+  Result := NextPlayerIndex;
+  repeat
+    if (not (Players[Result].Active)) then
+      if (Result < H) then
+        Inc(Result)
+      else
+        Result := 0;
+  until (Players[Result].Active);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Login: Boolean;
+Contributors: Wanted, Janilabo.
+Description: Logins in current active player.
+Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Login: Boolean;
+var
+  Actions: array of TVariantArray; 
+  I, H, Attempts: LongInt;  
+  ReTypeInfo: Boolean;
+  TPA: TPointArray; 
+begin
+  Result := False;
+  if (not (WaitFunc(@RSReady, True, 100, 250, 90000, 120000))) then
+    Exit;
+  if ((Trim(Players[CurrentPlayer].Name) = '') or (Players[CurrentPlayer].Pass = '')) then
+    Players[CurrentPlayer].Active := False;
+  if (AllPlayersInActive) then
+  begin
+    WriteLn('No active players to login!');
+    Exit;
+  end;  
+  if (not (Players[CurrentPlayer].Active)) then
+    CurrentPlayer := NextActivePlayerIndex; 
+  Result := LoggedIn;
+  if (Result) then
+  begin
+    WriteLn(Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + ' logged in');
+    PlayerStartTime := GetSystemTime;
+    Exit;
+  end; 
+  WriteLn('Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
+  if (ToggleLoginMusic(False)) then
+    WriteLn('Disabled annoying login music');
+  ReTypeInfo := True; 
+  Attempts := 0;
+  repeat
+    if (ReTypeInfo) then
+    begin
+      if (not (TypeInUsername(Players[CurrentPlayer].Name, True))) then 
+        Exit;
+      if (not (TypeInPassword(Players[CurrentPlayer].Pass, False, False))) then
+        Exit;
+      ReTypeInfo := False;
+    end;
+    if (PressLogin(False)) then
+    begin
+      if (ClickToPlay(False)) then
+        Result := True
+      else
+        Exit;
+    end
+    else
+    begin         //  Response                                           Wait     Trys    Action         [CurrentPlayer].Loc             Modified             By              Build #  Status
+      Inc(Attempts);
+      if (Attempts < 2) then
+      begin
+        SetLength(Actions, 9);
+        Actions[0] := ['Your account is already logged in.',               15000, 10,    'PlayerTrue',  'Already logged in'];         // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[1] := ['Error connecting to server.',                      20000, 10,    'Exit',        'Error Connecting'];          // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[2] := ['Invalid username/email or password.',                  0,  2,    'PlayerFalse', 'Wrong User/Pass'];           // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[3] := ['Your account has been disabled.',                      0,  1,    'PlayerFalse', 'Acc Disabled'];              // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[4] := ['You need to vote to play!',                            0,  1,    'PlayerFalse', 'Needs to vote before play']; // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[5] := ['Too many incorrect logins from your address.', 5 * 60500,  2,    'PlayerFalse', 'Too many incorrect logins']; // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[6] := ['The server is being updated.',                         0,  1,    'Exit',        'Server updated'];            // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[7] := ['RuneScape has been updated!',                          0,  1,    'Exit',        'RS updated'];                // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[8] := ['This world is full.',                               5000, 20,    'PlayerTrue',  'Desired world full'];        // March 11, 2013       Wanted          ???      Unconfirmed
+        H := High(Actions);    
+      end;
+      I := H + 1;
+      if (FindColorEx(TPA, clYellow, 218, 181, 548, 246)) then
+        for I := 0 to H do
+          if (FindLoginMessageTextEx(Actions[I][0], TPA)) then
+            Break;   
+      if (I <= H) then
+      begin
+        WriteLn(Actions[I][0]);
+        WaitRR(500, 1500);
+        if (I = 8) then
+          WriteLn('I should probably get to work on that world switcher eh?');
+        if (Actions[I][1] > 2100) then
+          WaitRR(Actions[I][1] - 2000, Actions[I][1] + 2000); 
+        if (Attempts < Actions[I][2]) then
+        begin
+          ReTypeInfo := TIAContains([2, 5], I);
+          WaitRR(2000, 3000);
+          Continue;
+        end;
+        if (Actions[I][4] <> '') then
+          Players[CurrentPlayer].Loc := Actions[I][4];
+        case Actions[I][3] of
+          'PlayerFalse': NextPlayer(False);
+          'PlayerTrue': NextPlayer(True);
+        end;
+      end
+      else
+      begin  
+        WriteLn('Unknown login error!');
+        Players[CurrentPlayer].Loc := 'Unknown login error'; 
+        SaveScreenShot(OSI_Path + 'RS07\Core\Database\Login\' + TheDate(1) + TheTime);
+        NextPlayer(False);
+        Exit;
+      end;
+      Exit;
+    end; 
+  until (Result);
+  WriteLn(Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + ' logged in');
+  PlayerStartTime := GetSystemTime;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LogOut: Boolean;
+Contributors: Wanted
+Description: Logs out current active player. Returns true if not LoggedIn.
+Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LogOut: Boolean;
+begin
+  Result := False;
+  IncEx(Players[CurrentPlayer].Worked, GetSystemTime - PlayerStartTime);
+  PlayerStartTime := GetSystemTime;
+  if (MessageScreen) then 
+  begin
+    Result := (not (ClickToPlay(False)));
+    WaitRR(400, 500);
+  end
+  else
+    Result := (not (LoggedIn));
+  repeat  
+    if (Result) then
+      Break;
+    if (not (SetGameTab(Tab_LogOut))) then
+      Exit;
+    WaitRR(200, 350);
+    MouseBox(574, 363, 707, 388, ClickLeft);
+    Result := WaitFunc(@LoggedIn, False, 250, 500, 3500, 4500);
+    if (not (Result)) then
+      Exit;
+  until (True);  
+  WriteLn('Logged out ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '.');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
+Contributors: Wanted
+Description: Switches to player, Sets CurrentPlayer to 'Active'. True if login successful.
+Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
+Last Modified: November 20th, 2011. By Wanted. RS2 Build 679.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SwitchToPlayer(Player: Integer; Active: Boolean): Boolean;
+begin
+  WriteLn('SwitchToPlayer(' + Players[Player].Name + ', ' + BoolToStr(Active) + ');');
+  Players[CurrentPlayer].Active := Active;
+  CurrentPlayer := Player;
+  Result := Login;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function NextPlayer(Active: Boolean): Boolean;
+Contributors: Wanted
+Description: Switches to next active player, Sets CurrentPlayer to 'Active'.
+True if login successful.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: September 25th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function NextPlayer(Active: Boolean): Boolean;
+begin
+  WriteLn('NextPlayer(' + BoolToStr(Active) + ');');
+  Logout;
+  Result := SwitchToPlayer(NextActivePlayerIndex, Active);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RandomNextPlayer(Active: Boolean): Boolean;
+Contributors: Wanted
+Description: Switches to a random active player, Sets CurrentPlayer to 'Active'.
+True if login successful.
+Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
+Last Modified: September 25th, 2011. By Wanted. RS2 Build 666.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RandomNextPlayer(Active: Boolean): Boolean;
+begin
+  WriteLn('NextPlayer(' + BoolToStr(Active) + ');');
+  Logout;
+  Result := SwitchToPlayer(Random(Length(Players)), Active);
+end;

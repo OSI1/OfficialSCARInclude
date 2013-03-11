@@ -2,7 +2,7 @@
                               Official SCAR Include
                            Integer Array Type Routines
 --------------------------------------------------------------------------------
- * function RandomTIA(Range, Count: Integer; Duplicates, Variance: Boolean): TIntArray;      
+ * function RandomTIA(Range, Count: Integer; Duplicates, Variance: Boolean): TIntArray;
       By: Janilabo
  * function RandomRangeTIAEx(Min, Max, Count: Integer; Duplicates, Variance: Boolean): TIntArray;
       By: Janilabo  
@@ -13,8 +13,8 @@ function RandomTIA(Range, Count: Integer; Duplicates, Variance: Boolean): TIntAr
 Contributors: Janilabo, Wanted.
 Description: Generates an array of random numbers. Count is the size of the array.
              If duplicates is set as true, duplicates are possible.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: February 26th, 2013. By Wanted.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 26th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RandomTIA(Range, Count: Integer; Duplicates, Variance: Boolean): TIntArray;
@@ -23,54 +23,54 @@ var
 begin
   Result := [];
   if (Count < 1) then
-    Exit;    
+    Exit;
   if (Variance) then
   begin 
     if (Duplicates) then
-    begin                           
-      SetLength(Result, Count);    
+    begin
+      SetLength(Result, Count);
       H := Count - 1;
       for I := 0 to H do
-        Result[I] := RandomG(Range, OSI_Variance);   
+        Result[I] := RandomG(Range, OSI_Variance);
     end
     else
       if ((Range <> 0) and (Range <> 1)) then
       begin  
         if (Range > 1) then
           if (Count > IAbs(Range)) then 
-            Count := IAbs(Range);   
+            Count := IAbs(Range);
         H := Count - 1;
         for R := 0 to H do
-        repeat                
-          N := RandomG(Range, OSI_Variance); 
+        repeat
+          N := RandomG(Range, OSI_Variance);
           if (not (TIAContains(Result, N))) then
             I := TIAAppend(Result, N);
-        until (I >= R);    
+        until (I >= R);
       end 
       else
         Result := [0];
     Exit;
   end;  
   if (Duplicates) then
-  begin                           
-    SetLength(Result, Count);    
+  begin
+    SetLength(Result, Count);
     H := Count - 1;
     for I := 0 to H do
-      Result[I] := Random(Range);   
+      Result[I] := Random(Range);
   end
   else
     if ((Range <> 0) and (Range <> 1)) then
     begin  
       if (Range > 1) then
-        if (Count > IAbs(Range)) then 
-          Count := IAbs(Range);   
+        if (Count > IAbs(Range)) then
+          Count := IAbs(Range);
       H := Count - 1;
       for R := 0 to H do
-      repeat                
+      repeat
         N := Random(Range); 
         if (not (TIAContains(Result, N))) then
           I := TIAAppend(Result, N);
-      until (I >= R);    
+      until (I >= R);
     end 
     else
       Result := [0];
@@ -81,8 +81,8 @@ function RandomRangeTIAEx(Min, Max, Count: Integer; Duplicates, Variance: Boolea
 Contributors: Janilabo, Wanted.
 Description: Generates an array of random numbers. Amount is the size of the array.
              If duplicates is set as true, the values wont be unique to each other.
-Date Created: September 30th, 2012. By Janilabo.
-Last Modified: February 26th, 2013. By Wanted.
+Date Created: September 30th, 2012. By Janilabo
+Last Modified: February 26th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RandomRangeTIAEx(Min, Max, Count: Integer; Duplicates, Variance: Boolean): TIntArray;
@@ -92,54 +92,54 @@ begin
   Result := [];
   if (Count < 1) then
     Exit;  
-  Range := IAbs(Max - Min);   
+  Range := IAbs(Max - Min);
   if (Variance) then
   begin
     if (Duplicates) then
-    begin                           
-      SetLength(Result, Count);    
+    begin
+      SetLength(Result, Count);
       H := Count - 1;
       for I := 0 to H do
-        Result[I] := RR(Min, Max);   
+        Result[I] := RR(Min, Max);
     end
     else
       if ((Range <> 0) and (Range <> 1)) then
       begin  
         if (Range > 1) then
-          if (Count > Range) then 
-            Count := Range;   
+          if (Count > Range) then
+            Count := Range;
         H := Count - 1;
         for R := 0 to H do
-        repeat                
-          N := RR(Min, Max);   
+        repeat
+          N := RR(Min, Max);
           if (not (TIAContains(Result, N))) then
             I := TIAAppend(Result, N);
-        until (I >= R);    
+        until (I >= R);
       end 
       else
-        Result := [0];         
+        Result := [0];
     Exit;
   end;      
   if (Duplicates) then
-  begin                           
-    SetLength(Result, Count);    
+  begin
+    SetLength(Result, Count);
     H := Count - 1;
     for I := 0 to H do
-      Result[I] := RandomRange(Min, Max);   
+      Result[I] := RandomRange(Min, Max);
   end
   else
     if ((Range <> 0) and (Range <> 1)) then
     begin  
       if (Range > 1) then
-        if (Count > Range) then 
-          Count := Range;   
+        if (Count > Range) then
+          Count := Range;
       H := Count - 1;
       for R := 0 to H do
-      repeat                
-        N := RandomRange(Min, Max);   
+      repeat
+        N := RandomRange(Min, Max);
         if (not (TIAContains(Result, N))) then
           I := TIAAppend(Result, N);
-      until (I >= R);    
+      until (I >= R);
     end 
     else
       Result := [0];

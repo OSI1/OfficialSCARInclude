@@ -78,7 +78,7 @@ function SetGameTab(Tab: Integer): Integer;
 Contributors: Wanted, Dynamite.
 Description: Switches to a specific game tab.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetGameTab(Tab: Integer): Boolean;
@@ -101,5 +101,5 @@ begin
       Exit;
     end;
     WaitRR(50, 150);
-  until (T > GetSystemTime);
+  until (T < GetSystemTime);
 end;

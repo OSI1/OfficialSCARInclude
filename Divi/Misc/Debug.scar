@@ -4,21 +4,21 @@
 --------------------------------------------------------------------------------
  * procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
      By: Wanted
- * procedure DebugATPABounds(ATPA: T2DPointArray);      
+ * procedure DebugATPABounds(ATPA: T2DPointArray);
      By: Wanted
- * procedure DebugATPA(ATPA: T2DPointArray);   
+ * procedure DebugATPA(ATPA: T2DPointArray);
      By: Wanted
  * procedure DebugTPA(TPA: TPointArray);
      By: Wanted
- * procedure DebugTBA(TBA: TBoxArray);     
+ * procedure DebugTBA(TBA: TBoxArray);
      By: Wanted
- * procedure DebugBox(B: TBox);    
+ * procedure DebugBox(B: TBox);
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
-Contributors: Wanted, Freddy
+Contributors: Wanted, Freddy.
 Description: Debugs an ATPA to the debug window with tons of options.
 Date Created: October 22nd, 2011. By Wanted
 Last Modified: March 4th, 2013. By Wanted
@@ -37,7 +37,7 @@ var
 begin
   ATPA2 := CopyATPA(ATPA);
   B := ATPABounds(ATPA2);
-  ATPADimensions(ATPA, Width, Height);  
+  ATPADimensions(ATPA, Width, Height);
   DecEx(B.X1, Round(Width * 0.25));
   if (B.X1 < 0) then
     B.X1 := 0;
@@ -97,7 +97,7 @@ begin
       begin
         TPA := BoxToTPA(ATPABounds(ATPA2), False);
         H := High(TPA);
-        for I := 0 to H do    
+        for I := 0 to H do
           bmpDebug.Pixels[TPA[I].X, TPA[I].Y] := clBlue;
       end;
     end;

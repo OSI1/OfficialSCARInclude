@@ -10,7 +10,7 @@
 
 {$IFNDEF SCAR338_UP}
   begin
-    WriteLn('Update to SCAR Divi 3.38 or newer at http://scar-divi.com');
+    WriteLn('Update to SCAR Divi 3.38.01 or newer at http://scar-divi.com');
   end.
 {$ENDIF}
 
@@ -52,10 +52,10 @@
   {$I RS07\Core\Game-Tabs\Tab1-Stats.scar}
   {$I RS07\Core\Game-Tabs\Tab3-Inventory.scar}
   {$I RS07\Core\Game-Tabs\Tab4-Equipment.scar}
-  {$I RS07\Core\Game-Tabs\Tab10-Log-Out.scar}
   {$I RS07\Core\Game-Tabs\Tab11-Options.scar}
   {$I RS07\Core\Chat.scar}
   {$I RS07\Core\Login.scar}
+  {$I RS07\Core\World-Switcher.scar}
   {$I RS07\Core\Object.scar}
   {$I RS07\Core\Map.scar}
   {$I RS07\Core\Bank.scar}
@@ -87,7 +87,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: March 6th, 2013. By Wanted
+Last Modified: March 10th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -98,6 +98,7 @@ begin
   ColorToleranceSpeed(1);
   {$IFDEF RS07}
     WriteLn('OSI RS07 routines enabled.');
+    SetLength(Players, 1);
     {$IFDEF OSI_RS07_Color_Anti_Randoms}
       WriteLn('OSI RS07 color random detection and solving enabled.');
       InitiateAntiRandoms;

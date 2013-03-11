@@ -2,27 +2,25 @@
                               Official SCAR Include
                             Point Array Type Routines
 --------------------------------------------------------------------------------
- * function  FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+ * function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var P: TPoint): Boolean;
       By: Wanted  
  * function  GenerateSpiral(Center: TPoint; AngStep, DistStep: Extended; B: TBox): TPointArray;
       By: Wanted
  * procedure TPAExtractDist(var TPA: TPointArray; MinDist, MaxDist, CX, CY: Extended);
-      By: Wanted    
- * procedure TPAExtractPoints(var TPA: TPointArray; WithinTPA: TPointArray);
       By: Wanted
  * procedure TPAExtractSlice(var TPA: TPointArray; SRad, ERad, SAng, EAng: Extended; C: TPoint);
-      By: Wanted         
+      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var P: TPoint): Boolean;
 Contributors: Wanted, Freddy.
 Description: Checks a TPA to see if contains the a line of text using its TPA.
 Date Created: October 20th, 2011. By Wanted
 Last Modified: November 28th, 2011. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var X, Y: LongInt): Boolean;
+function FindTextTPAInTPA(Text: string; Chars: Integer; SearchTPA: TPointArray; var P: TPoint): Boolean;
 var
   TextTPA, TPA: TPointArray;
 begin
@@ -34,8 +32,7 @@ begin
   except
     Exit;
   end;
-  X := TPA[0].X;
-  Y := TPA[0].Y;
+  P := TPA[0];
   Result := True;
 end;
 
@@ -106,29 +103,6 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure TPAExtractPoints(var TPA: TPointArray; WithinTPA: TPointArray);
-Contributors: Wanted
-Description: Removes all points in TPA not within the other TPA.
-Date Created: March 7th, 2013. By Wanted
-Last Modified: March 7th, 2013. By Wanted
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-procedure TPAExtractPoints(var TPA: TPointArray; WithinTPA: TPointArray);
-var
-  TBLA: TBooleanArray;
-  I, H: LongInt;
-begin
-  H := High(TPA); 
-  SetLength(TBLA, H + 1);
-  for I := 0 to H do
-    if (not (TPAContains(WithinTPA, TPA[I]))) then
-      TBLA[I] := True;
-  for I := 0 to H do
-    if (TBLA[I]) then
-      TPADelete(TPA, I);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TPAExtractSlice(var TPA: TPointArray; SRad, ERad, SAng, EAng: Extended; C: TPoint);
 Contributors: Freddy, Wanted.
 Description: Removes all points from a TPA except for a given slice.
@@ -150,7 +124,7 @@ begin
       EndAngle := EAng - 90;
     {$ELSE}
       StartAngle := SAng;
-      EndAngle := EAng;   
+      EndAngle := EAng;
     {$ENDIF}
   {$ENDIF}
   if (StartAngle < 0) then

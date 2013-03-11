@@ -63,22 +63,14 @@
      By: Wanted
  * procedure FreeRS07Fonts;
      By: Wanted
- * function  ActivePlayers: Integer;
-     By: Wanted
- * function  AllPlayersInActive: Boolean;
-     By: Wanted
- * function  NextPlayerIndex: Integer;
-     By: Wanted
- * function  NextActivePlayerIndex: Integer;
-     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game boundaries, points, areas, widths, etc. etc.
-Contributors: Wanted, LordJashin, Janilabo.
+Contributors: Wanted, LordJashin, Janilabo, Bixby Sayz.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const             // Description                      Modified            By              Build #
@@ -115,8 +107,8 @@ const             // Description                      Modified            By    
   MMPH  = (MMY2 - MMY1) + 1; // Map Height         // March 5, 2013       Wanted          ???
   MMPAe = 15742;  // Pixel Area (Pixel Count)      // March 5, 2013       Janilabo        ???
 
-  MICX = 644;     // Inventory Center Points       // March 5, 2013       Wanted          ???
-  MICY = 337;                                      // March 5, 2013       Wanted          ???
+  MICX = 642;     // Inventory Center Points       // March 11, 2013      Wanted          ???
+  MICY = 335;                                      // March 11, 2013      Wanted          ???
   MIX1 = 547;     // Inventory Edge Points         // March 5, 2013       Wanted          ???
   MIY1 = 205;                                      // March 5, 2013       Wanted          ???
   MIX2 = 736;                                      // March 5, 2013       Wanted          ???
@@ -127,7 +119,7 @@ const             // Description                      Modified            By    
   MICXe = (MIX1 + MIX2) / 2;                       // June 23, 2012       LordJashin      718
   MICYe = (MIY1 + MIY2) / 2;                       // June 23, 2012       LordJashin      718
                                                   
-  MCCX = 176;     // Chat Box Center Points        // March 5, 2013       Wanted          ???
+  MCCX = 252;     // Chat Box Center Points        // March 11, 2013      Wanted          ???
   MCCY = 409;                                      // March 5, 2013       Wanted          ???
   MCX1 = 7;       // Chat Box Edge Points          // August 8, 2011      Wanted          660
   MCY1 = 345;                                      // August 8, 2011      Wanted          660
@@ -147,8 +139,8 @@ const             // Description                      Modified            By    
   MBPH = (MBY2 - MBY1) + 1;// Bank Screen Height   // June 23, 2012       LordJashin      718
   MBPA = MBPW * MBPH; // Pixel Area                // June 23, 2012       LordJashin      718
 
-  MDCX = 269;     // Deposit Box Center Points    // August 8, 2011       Wanted          660
-  MDCY = 162;                                     // August 8, 2011       Wanted          660
+  MDCX = 266;     // Deposit Box Center Points    // March 11, 2013       Wanted          ???
+  MDCY = 153;                                     // March 11, 2013       Wanted          ???
   MDX1 = 130;     // Deposit Box Edge Points      // March 5, 2013        Wanted          ???
   MDY1 = 74;                                      // March 6, 2013        Wanted          ???
   MDX2 = 402;                                     // March 6, 2013        Wanted          ???
@@ -708,78 +700,3 @@ begin
   RS07FontsLoaded := False; 
   WriteLn('Freed RS2 Fonts');
 end;  
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ActivePlayers: Integer;
-Contributors: Wanted
-Description: Returns the number of active players.
-Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function ActivePlayers: Integer;
-var
-  I, H: Integer;
-begin
-  Result := 0;
-  H := High(Players);
-  for I := 0 to H do
-    if (Players[I].Active) then
-      Inc(Result);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function AllPlayersInActive: Boolean;
-Contributors: Wanted
-Description: Returns true if all players are in-active.
-Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: August 8th, 2011. By Wanted. RS2 Build 660.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function AllPlayersInActive: Boolean;
-begin
-  Result := (ActivePlayers = 0);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function NextPlayerIndex: Integer;
-Contributors: Wanted
-Description: Returns next player index after CurrentPlayer.
-Date Created: August 7th, 2011. By Wanted. RS2 Build 661.
-Last Modified: August 10th, 2011. By Wanted. RS2 Build 661.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function NextPlayerIndex: Integer;
-begin
-  Result := CurrentPlayer;
-  if (Result < High(Players)) then
-    Inc(Result)
-  else
-    Result := 0;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function NextActivePlayerIndex: Integer;
-Contributors: Wanted
-Description: Returns next active player index after CurrentPlayer.
-Date Created: August 10th, 2011. By Wanted. RS2 Build 661.
-Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function NextActivePlayerIndex: Integer;
-var
-  H: LongInt;
-begin
-  Result := 0;
-  if (AllPlayersInActive) then
-    Exit;
-  H := High(Players);
-  Result := NextPlayerIndex;
-  repeat
-    if (not (Players[Result].Active)) then
-      if (Result < H) then
-        Inc(Result)
-      else
-        Result := 0;
-  until (Players[Result].Active);
-end;
