@@ -24,6 +24,10 @@
  * function PressCancelHowToPlay(CheckHTPS: Boolean): Boolean;
      By: Wanted
  * function PressExistingUser(CheckWS: Boolean): Boolean;
+     By: Wanted  
+ * function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
+     By: Wanted
+ * function FindLoginMessageText(Text: string): Boolean;
      By: Wanted
  * function PressLogin(CheckLS: Boolean): Boolean;
      By: Wanted
@@ -32,10 +36,6 @@
  * function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
      By: Wanted
  * function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
-     By: Wanted
- * function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
-     By: Wanted
- * function FindLoginMessageText(Text: string): Boolean;
      By: Wanted
  * function ClickToPlay(CheckMS: Boolean): Boolean;
      By: Wanted
@@ -237,16 +237,50 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
+Contributors: Wanted
+Description: Returns true if the yellow text is found on the login screen.
+Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
+var
+  P: TPoint;
+begin
+  Result := False;
+  if (Length(TPA) > 0) then
+    Result := FindTextTPAInTPA(Text, OptionChars, TPA, P);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindLoginMessageText(Text: string): Boolean;
+Contributors: Wanted
+Description: Returns true if the yellow text is found on the login screen.
+Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindLoginMessageText(Text: string): Boolean;
+var
+  TPA: TPointArray;
+begin
+  Result := False;
+  if (FindColorEx(TPA, clYellow, 218, 181, 548, 246)) then
+    Result := FindLoginMessageTextEx(Text, TPA);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function PressLogin(CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if made it to MessageScreen.
 Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PressLogin(CheckLS: Boolean): Boolean;
 var
-  T, C: LongInt;   
+  T, TT, C: LongInt;   
 begin
   Result := False;
   if (CheckLS) then  
@@ -262,9 +296,17 @@ begin
     WaitRR(10, 20);
   until (T < GetSystemTime); 
   T := GetSystemTime + RR(50000, 70000);
-  repeat    
+  repeat  
+    TT := GetSystemTime + RR(35000, 40000);  
     if (not (TIAContains([0, 799, 407, 301], CountColor(clYellow, 247, 214, 519, 231)))) then
-      Exit;
+      if (not (FindLoginMessageText('Your profile will be transferred'))) then
+        Exit
+      else
+      begin
+        WriteLn('Your profile is being transferred...');
+        while ((TT > GetSystemTime) and (T > GetSystemTime) and (not (MessageScreen))) do
+          WaitRR(150, 300);
+      end;
     if (MessageScreen) then
     begin
       Result := True;
@@ -375,40 +417,6 @@ begin
   end;
   TypeSendEx(Password, HitEnter);
   Result := True;
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
-Contributors: Wanted
-Description: Returns true if the yellow text is found on the login screen.
-Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function FindLoginMessageTextEx(Text: string; TPA: TPointArray): Boolean;
-var
-  P: TPoint;
-begin
-  Result := False;
-  if (Length(TPA) > 0) then
-    Result := FindTextTPAInTPA(Text, OptionChars, TPA, P);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindLoginMessageText(Text: string): Boolean;
-Contributors: Wanted
-Description: Returns true if the yellow text is found on the login screen.
-Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function FindLoginMessageText(Text: string): Boolean;
-var
-  TPA: TPointArray;
-begin
-  Result := False;
-  if (FindColorEx(TPA, clYellow, 218, 181, 548, 246)) then
-    Result := FindLoginMessageTextEx(Text, TPA);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -561,17 +569,17 @@ begin
         Exit;
     end
     else
-    begin         //  Response                                           Wait     Trys    Action         [CurrentPlayer].Loc             Modified             By              Build #  Status
+    begin           //  Response                                           Wait   Trys    Action         [CurrentPlayer].Loc             Modified             By              Build #  Status
       Inc(Attempts);
       if (Attempts < 2) then
       begin
         SetLength(Actions, 9);
         Actions[0] := ['Your account is already logged in.',               15000, 10,    'PlayerTrue',  'Already logged in'];         // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[1] := ['Error connecting to server.',                      20000, 10,    'Exit',        'Error Connecting'];          // March 11, 2013       Wanted          ???      Unconfirmed
-        Actions[2] := ['Invalid username/email or password.',                  0,  2,    'PlayerFalse', 'Wrong User/Pass'];           // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[2] := ['Invalid username/email or password.',                  0,  2,    'PlayerFalse', 'Wrong User/Pass'];           // March 11, 2013       Wanted          ???      Confirmed
         Actions[3] := ['Your account has been disabled.',                      0,  1,    'PlayerFalse', 'Acc Disabled'];              // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[4] := ['You need to vote to play!',                            0,  1,    'PlayerFalse', 'Needs to vote before play']; // March 11, 2013       Wanted          ???      Unconfirmed
-        Actions[5] := ['Too many incorrect logins from your address.', 5 * 60500,  2,    'PlayerFalse', 'Too many incorrect logins']; // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[5] := ['Too many incorrect logins from your address.', 5 * 60500,  2,    'PlayerFalse', 'Too many incorrect logins']; // March 11, 2013       Wanted          ???      Confirmed
         Actions[6] := ['The server is being updated.',                         0,  1,    'Exit',        'Server updated'];            // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[7] := ['RuneScape has been updated!',                          0,  1,    'Exit',        'RS updated'];                // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[8] := ['This world is full.',                               5000, 20,    'PlayerTrue',  'Desired world full'];        // March 11, 2013       Wanted          ???      Unconfirmed

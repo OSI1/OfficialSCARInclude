@@ -17,6 +17,10 @@
      By: Wanted
  * function  MMB: TBox;
      By: Wanted
+ * function CMCP: TPoint;
+     By: Wanted
+ * function  CMB: TBox;
+     By: Wanted
  * var MMTPA variables
      By: Wanted
  * procedure LoadMMTPA;
@@ -42,7 +46,7 @@
  * function  MDB: TBox;
      By: Wanted
  * const Skill_ Indexes
-     By: Wanted       
+     By: Wanted
  * const Game Tab Indexes
      By: Wanted & Dynamite.
  * const RS2 direction/angle Indexes
@@ -70,7 +74,7 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Wanted, LordJashin, Janilabo, Bixby Sayz.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 12th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const             // Description                      Modified            By              Build #
@@ -106,6 +110,21 @@ const             // Description                      Modified            By    
   MMPW  = (MMX2 - MMX1) + 1; // Map Width          // March 5, 2013       Wanted          ???
   MMPH  = (MMY2 - MMY1) + 1; // Map Height         // March 5, 2013       Wanted          ???
   MMPAe = 15742;  // Pixel Area (Pixel Count)      // March 5, 2013       Janilabo        ???
+
+  CMCX  = 20;     // Compass Center Points         // March 12, 2013      Wanted          ???
+  CMCY  = 561;                                     // March 12, 2013      Wanted          ???
+  CMX1  = 545;    // Compass Edge Points           // March 12, 2013      Wanted          ???
+  CMY1  = 4;                                       // March 12, 2013      Wanted          ???
+  CMX2  = 576;                                     // March 12, 2013      Wanted          ???
+  CMY2  = 36;                                      // March 12, 2013      Wanted          ???
+  CMPR  = 15;     // Compass Pixel Radius          // March 12, 2013      Wanted          ???
+  CMPRe = 15.5;                                    // March 12, 2013      Wanted          ???
+  CMPA  = 754;    // Compass Pixel Area            // March 12, 2013      Wanted          ???
+  CMPW  = (CMX2 - CMX1) + 1; // Compass Width      // March 12, 2013      Wanted          ???
+  CMPH  = (CMY2 - CMY1) + 1; // Compass Height     // March 12, 2013      Wanted          ???
+  CMPAe = 754.7676350249478255406500728329;        // March 12, 2013      Wanted          ???
+  CMCXe = (CMX1 + CMX2) / 2;                       // March 12, 2013      Wanted          ???
+  CMCYe = (CMY1 + CMY2) / 2;                       // March 12, 2013      Wanted          ???
 
   MICX = 642;     // Inventory Center Points       // March 11, 2013      Wanted          ???
   MICY = 335;                                      // March 11, 2013      Wanted          ???
@@ -228,6 +247,32 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
 function MMB: TBox;
 begin
   Result := Box(MMX1, MMY1, MMX2, MMY2);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CMCP: TPoint;
+Contributors: Wanted
+Description: Compass center point.
+Date Created: March 12th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 12th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+function CMCP: TPoint;
+begin
+  Result := Point(CMCX, CMCY);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CMB: TBox;
+Contributors: Wanted
+Description: Compass bounds.
+Date Created: March 12th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 12th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+  
+function CMB: TBox;
+begin
+  Result := Box(CMX1, CMY1, CMX2, CMY2);
 end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -538,7 +583,7 @@ const Useful in game colors
 Contributors: Wanted
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Wanted. RS2 Build 661.
-Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                             // Modified            By              Build #
@@ -555,6 +600,9 @@ const                             // Modified            By              Build #
   clObjectOutline = 65536;        // March 6, 2013       Wanted          ???
   clOptionsBox    = 4674653;      // March 9, 2013       Wanted          ???
   clSkillInfoBox  = 10551295;     // March 6, 2013       Wanted          ???
+  
+  clCompassN      = 1911089;      // March 12, 2013      Wanted          ???
+  clFlag          = 1127261;      // March 13, 2013      Wanted          ???
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS07Player = record
@@ -585,8 +633,8 @@ type
     Strings: array of string;       // String records
     Extendeds: array of Extended;   // Extended records
     Arrays: array of TVariantArray; // Custom records
-    TIA: T2DIntArray;           // TIA records
-  end;       
+    TIA: T2DIntArray;               // TIA records
+  end;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Players: array of TRS07Player;

@@ -21,9 +21,41 @@
      By: Wanted
  * function FindMMColorTol(var P: TPoint; Color, Tol: Integer): Boolean;
      By: Wanted
- * function FindMMColorsTolerance(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+ * function FindMMColorsExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
      By: Wanted
- * procedure SetAngle(Highest: Boolean);
+ * function FindMMColorSpiral(SP: TPoint; var P: TPoint; Color: Integer): Boolean;
+     By: Wanted
+ * function GetCompassAngleRadians: Extended;
+     By: Wanted
+ * function GetCompassAngleDegrees: Extended;
+     By: Wanted
+ * function SetCompassAngleEx(Angle, Accuracy: Extended; AdjustHeight, Highest: Boolean): Boolean;
+     By: Wanted
+ * function SetCompassAngleAcc(Angle, Acc: Extended): Boolean;
+     By: Wanted
+ * function SetCompassAngle(Angle: Extended): Boolean;
+     By: Wanted
+ * function SetCompassAngleAndHeight(Angle: Extended; Highest: Boolean): Boolean;
+     By: Wanted
+ * procedure SetScreenHeight(Highest: Boolean);
+     By: Wanted
+ * function FindFlag(var P: TPoint): Boolean;
+     By: Wanted
+ * function FlagExists: Boolean;
+     By: Wanted
+ * function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
+     By: Wanted
+ * function GetFlagDistance: Extended;
+     By: Wanted
+ * function FlagEx(Distance: Extended): Boolean;
+     By: Wanted
+ * function Flag: Boolean;
+     By: Wanted
+ * function MouseFlagEx(P: TPoint; RX, RY: Integer; Distance: Extended): Boolean;
+     By: Wanted
+ * function MouseFlag(P: TPoint; RX, RY: Integer): Boolean;
+     By: Wanted
+ * function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
@@ -181,28 +213,359 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMMColorsTolerance(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+function FindMMColorsExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
 Contributors: Wanted
-Description: Finds colors within minimap circle.
+Description: Finds colors within minimap circle with tolerance.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
 Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindMMColorsTolerance(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+function FindMMColorsExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
 begin
   Result := FindColorTPATolExP(TPA, Color, MMTPA, Tol);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure SetAngle(Highest: Boolean);
+function FindMMColorSpiral(SP: TPoint; var P: TPoint; Color: Integer): Boolean;
+Contributors: Wanted
+Description: Finds color within minimap circle nearest SP.
+Date Created: March 14th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindMMColorSpiral(SP: TPoint; var P: TPoint; Color: Integer): Boolean;
+begin
+  Result := FindColorSpiralTPA(SP, P, Color, MMTPA);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCompassAngleRadians: Extended;
+Contributors: Wanted
+Description: Gets the compass angle in radians.
+Date Created: November 22nd, 2011. By Wanted. RS2 Build 682.
+Last Modified: March 12th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCompassAngleRadians: Extended;
+var
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  FindColorExP(TPA, clCompassN, CMB);  
+  TPAExtractDist(TPA, 0, CMPRe, CMCXe, CMCYe);
+  P := TPAMean(TPA);
+  Result := (ArcTan2(-(P.Y - CMCX), P.X - CMCY) - (Pi / 2));
+  if (Result < 0) then
+    IncE(Result, (Pi * 2));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCompassAngleDegrees: Extended;
+Contributors: Wanted
+Description: Gets the compass angle in degrees.
+Date Created: August 6th, 2011. By Wanted. RS2 Build 660.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCompassAngleDegrees: Extended;
+begin
+  Result := Degrees(GetCompassAngleRadians);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetCompassAngleEx(Angle, Accuracy: Extended; AdjustHeight, Highest: Boolean): Boolean;
+Contributors: Wanted, Naum. 
+Description: Rotates the compass using the arrow keys to the desired angle. If
+             AdjustHeight then it will  simultaneously do so while adjusting 
+             compass angle. Returns true if final angle is within Acc of Angle.
+Date Created: March 13th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetCompassAngleEx(Angle, Accuracy: Extended; AdjustHeight, Highest: Boolean): Boolean;
+var
+  CurrentAngle, PreviousDifference, CurrentDifference: Extended;
+  CounterClockwise, FirstAttempt, SKeyDown: Boolean;
+  T, AHT: LongInt;
+begin
+  FixD(Angle);
+  CurrentAngle := GetCompassAngleDegrees;
+  Result := ((MinE(Abs(CurrentAngle - Angle), MinE(Abs(CurrentAngle - (Angle + 360.0)), Abs((CurrentAngle + 360.0) - Angle)))) <= Accuracy);
+  T := GetSystemTime + RR(12000, 14000);
+  FirstAttempt := True;
+  SKeyDown := False;
+  repeat    
+    if (AdjustHeight) then
+      if (FirstAttempt) then
+      begin
+        FirstAttempt := False;
+        AHT := GetSystemTime + RR(1000, 1500);
+        VKeyDown((Integer(not Highest) * 2) + 38); 
+        SKeyDown := True;
+      end;
+    if (Result) then
+    begin
+      if (SKeyDown) then
+      begin
+        while (AHT > GetSystemTime) do
+          WaitRR(10, 35);
+        VKeyUp((Integer(not Highest) * 2) + 38);
+      end; 
+      Exit;
+    end;
+    CounterClockWise := (Round((360 - CurrentAngle) + Angle) mod 360 <= Round((CurrentAngle + 360) - Angle) mod 360);
+    PreviousDifference := 999999.9;       
+    VKeyDown((Integer(not CounterClockWise) * 2) + 37);
+    repeat
+      Wait(1);
+      if (SKeyDown) then
+        if (AHT < GetSystemTime) then
+        begin
+          VKeyUp((Integer(not Highest) * 2) + 38);
+          SKeyDown := False;
+        end;  
+      CurrentAngle := GetCompassAngleDegrees;
+      CurrentDifference := ((MinE(Abs(CurrentAngle - Angle), MinE(Abs(CurrentAngle - (Angle + 360.0)), Abs((CurrentAngle + 360.0) - Angle)))));
+      if (CurrentDifference <= Accuracy) then
+      begin
+        Result := True;
+        Break;
+      end;
+      if (CurrentDifference > PreviousDifference) then
+        Break;
+      PreviousDifference := CurrentDifference;
+    until (T < GetSystemTime);   
+    VKeyUp((Integer(not CounterClockWise) * 2) + 37);
+    if (SKeyDown) then
+      if (AHT < GetSystemTime) then
+      begin
+        VKeyUp((Integer(not Highest) * 2) + 38);
+        SKeyDown := False;
+      end;
+    WaitRR(300, 400);
+  until (T < GetSystemTime);
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetCompassAngleAcc(Angle, Acc: Extended): Boolean;
+Contributors: Wanted
+Description: Rotates the compass using the arrow keys to the desired angle.
+             Returns true if final angle is within Acc of Angle.
+Date Created: March 13th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetCompassAngleAcc(Angle, Acc: Extended): Boolean;
+begin
+  Result := SetCompassAngleEx(Angle, Acc, False, False);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetCompassAngle(Angle: Extended): Boolean;
+Contributors: Wanted, Janilabo, Slakcy.
+Description: Rotates the compass using the arrow keys to the desired angle.
+             Returns true if final angle is within 2.5 degrees of Angle.
+Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetCompassAngle(Angle: Extended): Boolean;
+begin
+  Result := SetCompassAngleEx(Angle, 2.5, False, False);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetCompassAngleAndHeight(Angle: Extended; Highest: Boolean): Boolean;
+Contributors: Wanted, Naum, Janilabo, Slakcy, Freddy.
+Description: Rotates the compass using the arrow keys to the desired angle.
+             Simultaneously adjusting screen hieght while adjusting compass angle.
+             Returns true if final angle is within 2.5 degrees of Angle.
+Date Created: March 13th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetCompassAngleAndHeight(Angle: Extended; Highest: Boolean): Boolean;
+begin
+  Result := SetCompassAngleEx(Angle, 2.5, True, Highest);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure SetScreenHeight(Highest: Boolean);
 Contributors: Naum, Wanted, Freddy.
 Description: Tilts the camera angle.
 Date Created: August 6th, 2011. By Naum. RS2 Build 660.
 Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure SetAngle(Highest: Boolean);
+procedure SetScreenHeight(Highest: Boolean);
 begin
   HoldVKey((Integer(not Highest) * 2) + 38, 1000, 1500);
   WaitRR(400, 600);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindFlag(var X, Y: Integer): Boolean;
+Contributors: Wanted
+Description: Returns true if flag exists and the cord of the lowest point.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindFlag(var P: TPoint): Boolean;
+begin
+  Result := FindMMColorSpiral(Point(MMCX, MMY2), P, clFlag);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FlagExists: Boolean;
+Contributors: Wanted
+Description: Returns true if flag exists.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: December 6th, 2011. By Wanted. RS2 Build 688.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FlagExists: Boolean;
+var
+  P: TPoint;
+begin
+  Result := FindFlag(P);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
+Contributors: Wanted
+Description: Returns flag distance from point.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetFlagDistanceEx(FromX, FromY: Extended): Extended;
+var
+  P: TPoint;
+begin
+  Result := 0.0;
+  if (not (FindFlag(P))) then
+  begin
+    Result := 0;
+    Exit;
+  end;
+  Result := DistanceEx(FromX, FromY, P.X, P.Y);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetFlagDistance: Extended;
+Contributors: Wanted
+Description: Returns flag distance from your location (MMCX, MMCY).
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetFlagDistance: Extended;
+begin
+  Result := GetFlagDistanceEx(MMCX, MMCY);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FlagEx(Distance: Extended): Boolean;
+Contributors: Wanted
+Description: Waits until your within Distance of flag. Returns true if it didn't time out.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FlagEx(Distance: Extended): Boolean;
+var
+  T: LongInt;
+begin
+  Result := False;
+  T := GetSystemTime + RR(35000, 45000);
+  while (GetFlagDistance > Distance) do
+  begin
+    if (GetSystemTime > T) then
+    begin  
+      MouseP(MMCP, 0, 0, True);
+      Exit;
+    end;
+    WaitRR(100, 200);
+  end;
+  Result := True;
+  if (Distance < 5) then 
+      WaitRR(700 - Round(Distance * 140), 800 - Round(Distance * 160));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Flag: Boolean;
+Contributors: Wanted
+Description: Waits until you're done moving. Returns true if it didn't time out.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Flag: Boolean;
+begin
+  Result := FlagEx(0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MouseFlagEx(P: TPoint; RX, RY: Integer; Distance: Extended): Boolean;
+Contributors: Wanted
+Description: If on minimap clicks and then waits for flag to exist then does FlagEx.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: November 21st, 2011. By Wanted. RS2 Build 681.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MouseFlagEx(P: TPoint; RX, RY: Integer; Distance: Extended): Boolean;
+var
+  MP: TPoint;
+begin
+  Result := False;
+  MP := RRectanglePoint(P.X - RX, P.Y - RY, P.X + RX, P.Y + RY);
+  if (PointInBox(MP, Box(MMCX - 1, MMCY - 1, MMCX + 1, MMCY + 2))) then
+    Exit;
+  if (not (OnMM(MP))) then
+    Exit;
+  MouseP(MP, 0, 0, True);
+  if (not (WaitFunc(@FlagExists, True, 100, 200, 4000, 5000))) then
+    Exit;
+  Result := FlagEx(Distance);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MouseFlag(P: TPoint; RX, RY: Integer): Boolean;
+Contributors: Wanted
+Description: If on minimap clicks and then waits for flag to exist then does Flag.
+Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
+Last Modified: October 31st, 2011. By Wanted. RS2 Build 672.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MouseFlag(P: TPoint; RX, RY: Integer): Boolean;
+begin
+  Result := MouseFlagEx(P, RX, RY, 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
+Contributors: Wanted
+Description: Turns a road TPA into a pie slice, finds the middle and offsets,
+and finally walks to it. See the online manual and forums for help using correctly.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: November 3rd, 2011. By Wanted. RS2 Build 674.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
+var
+  ATPA: T2DPointArray;
+  P: TPoint;
+begin
+  Result := False;
+  TPAExtractSlice(TPA, SRad, ERad, SAng, EAng, MMCP);  
+  ATPA := SplitTPA(TPA, 3);
+  SortATPASize(ATPA, True);
+  if (Length(ATPA) < 1) then
+    Exit;
+  TPA := ATPA[0];
+  P := TPAMean(TPA);
+  IncEx(P.X, XOffset);
+  IncEx(P.Y, YOffset);
+  Result := MouseFlagEx(P, RX, RY, FlagD);
 end;

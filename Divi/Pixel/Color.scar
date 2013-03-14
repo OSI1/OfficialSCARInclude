@@ -24,11 +24,21 @@
      By: Wanted
  * function FindColorTPATolP(var P: TPoint; Color: LongInt; TPA: TPointArray; Tol: LongInt): Boolean;
      By: Wanted
- * function FindColorTPATolExP(var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;  
+ * function FindColorTPATolExP(var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
+     By: Wanted   
+ * function FindColorSpiralTPA(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray): Boolean;
+     By: Wanted
+ * function FindColorSpiralTPAEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray): Boolean;
+     By: Wanted
+ * function FindColorSpiralTPATol(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray; Tol: LongInt): Boolean;
+     By: Wanted
+ * function FindColorSpiralTPATolEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
      By: Wanted
  * function FindColorCircleTol(var P: TPoint; Color, Tol: Integer; CP: TPoint; R: Integer): Boolean;
-     By: Freddy 
- * function FindColorCircleTolEx(var TPA: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;        
+     By: Freddy
+ * function FindColorCircleEx(var TPA: TPointArray; Color: Integer; CP: TPoint; R: Integer): Boolean;
+     By: Wanted
+ * function FindColorCircleTolEx(var TPA: TPointArray; Color, Tol, CX, CY, R: Integer): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -186,12 +196,95 @@ Last Modified: March 7th, 2013. By Wanted
 function FindColorTPATolExP(var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
 begin
   Result := FindColorTPATolEx(TPA, Color, SearchTPA, Tol);
-end;                            
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorSpiralTPA(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray): Boolean;
+Contributors:  Wanted
+Description: Wrapper for FindColorTPA with points and boxes. *Emulates* spiral.
+Date Created: March 14th, 2013. By Wanted
+Last Modified: March 14th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorSpiralTPA(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray): Boolean;
+var
+  FoundColors: TPointArray;
+begin
+  Result := FindColorTPAExP(FoundColors, Color, TPA);
+  if (not (Result)) then
+    Exit;
+  SortTPAEx(FoundColors, SP);
+  P := FoundColors[0];
+end;     
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorSpiralTPAEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray): Boolean;
+Contributors:  Wanted
+Description: Wrapper for FindColorTPAEx with points and boxes. *Emulates* spiral.
+Date Created: March 14th, 2013. By Wanted
+Last Modified: March 14th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorSpiralTPAEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray): Boolean;
+begin
+  Result := FindColorTPAEx(TPA, Color, SearchTPA); 
+  if (not (Result)) then
+    Exit;
+  SortTPAEx(TPA, SP);
+end;      
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorSpiralTPATol(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray; Tol: LongInt): Boolean;
+Contributors: Freddy, Wanted.
+Description: Wrapper for FindColorTPATol with points and boxes. *Emulates* spiral.
+Date Created: March 14th, 2013. By Wanted
+Last Modified: March 14th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorSpiralTPATol(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray; Tol: LongInt): Boolean;
+var
+  FoundColors: TPointArray;
+begin
+  Result := FindColorTPATolExP(FoundColors, Color, TPA, Tol);
+  if (not (Result)) then
+    Exit;
+  SortTPAEx(FoundColors, SP);
+  P := FoundColors[0];
+end;     
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorSpiralTPATolEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
+Contributors: Wanted
+Description: Wrapper for FindColorTPATolEx with points and boxes. *Emulates* spiral.
+Date Created: March 14th, 2013. By Wanted
+Last Modified: March 14th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorSpiralTPATolEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
+begin
+  Result := FindColorTPATolEx(TPA, Color, SearchTPA, Tol);
+  if (not (Result)) then
+    Exit;
+  SortTPAEx(TPA, SP);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorCircleEx(var TPA: TPointArray; Color: Integer; CP: TPoint; R: Integer): Boolean;
+Contributors: Wanted, Freddy.
+Description: Finds colors within circle.
+Date Created: March 12th, 2013. By Wanted
+Last Modified: March 12th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindColorCircleEx(var TPA: TPointArray; Color: Integer; CP: TPoint; R: Integer): Boolean;
+begin
+  Result := FindColorTPAEx(TPA, Color, TPAFromCircle(CP, R));
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorCircleTol(var P: TPoint; Color, Tol: Integer; CP: TPoint; R: Integer): Boolean;
 Contributors: Freddy, Wanted.
-Description: Finds a color within circle.
+Description: Finds a color with tolerance within circle.
 Date Created: July 20th, 2012. By Freddy
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -203,8 +296,8 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorCircleTolEx(var TPA: TPointArray; Color, Tol: Integer; CP: TPoint; R: Integer): Boolean;
-Contributors: Wanted, Freddy
-Description: Finds colors within circle.
+Contributors: Wanted, Freddy.
+Description: Finds colors with tolerance within circle.
 Date Created: October 28th, 2011. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
