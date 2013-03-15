@@ -135,11 +135,14 @@ function RSReady: Boolean;
 Contributors: Wanted
 Description: Returns true when runescape isn't intially loading the game.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RSReady: Boolean;
 begin
+{$IFDEF SMART}
+  SmartSetRefresh(Smart_Client, 50);
+{$ENDIF}
   Result := False;
   if (not (WelcomeScreen)) then
     if (not (LoginScreen)) then        
@@ -518,7 +521,7 @@ function Login: Boolean;
 Contributors: Wanted, Janilabo.
 Description: Logins in current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Login: Boolean;
@@ -574,7 +577,7 @@ begin
       if (Attempts < 2) then
       begin
         SetLength(Actions, 9);
-        Actions[0] := ['Your account is already logged in.',               15000, 10,    'PlayerTrue',  'Already logged in'];         // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[0] := ['Your account is already logged in.',               15000, 10,    'PlayerTrue',  'Already logged in'];         // March 11, 2013       Wanted          ???      Confirmed
         Actions[1] := ['Error connecting to server.',                      20000, 10,    'Exit',        'Error Connecting'];          // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[2] := ['Invalid username/email or password.',                  0,  2,    'PlayerFalse', 'Wrong User/Pass'];           // March 11, 2013       Wanted          ???      Confirmed
         Actions[3] := ['Your account has been disabled.',                      0,  1,    'PlayerFalse', 'Acc Disabled'];              // March 11, 2013       Wanted          ???      Unconfirmed

@@ -1,0 +1,88 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                   Runescape 2
+           S.M.A.R.T. Smart Minimizing Autoing Resource Thing Routines
+--------------------------------------------------------------------------------
+ * function InitSmartEx(Server: Integer; ForceNew: Boolean): TSCARClient;
+     By: Freddy & Wanted. 
+ * function InitSMART: Boolean;  
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{$L SmartRemote.dll}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               Login.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RSReady: Boolean; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InitSmartEx(Server: Integer; ForceNew: Boolean): TSCARClient;
+Contributors: Freddy, Wanted, BenLand100, LordJashin.
+Description: Initiates SMART.
+Date Created: March 14th, 2013. By Freddy & Wanted. RS07 Build ???.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InitSmartEx(Server: Integer; ForceNew: Boolean): TSCARClient;
+var
+  I, Count, ID: Integer; 
+begin       
+  WriteLn('Initating SMART on Runescape Server ' + IntToStr(Server) + '...');
+  try
+    if (not (ForceNew)) then
+    begin
+      Count := SmartGetClients(True);
+      if (Count > 0) then   
+        for I := 0 to Count do
+        begin
+          ID := SmartClientID(I); 
+          if (SmartPairClient(ID)) then 
+          begin    
+            WriteLn('Paired with existing SMART');              
+            Result := CreateSmartClient(ID); 
+            with Result.ImageArea do 
+              Result.ImageArea := Box(X1, Y1, X2, Y2);                
+            with Result.InputArea do
+              Result.InputArea := Box(X1, Y1, X2, Y2);
+            Exit;
+          end;
+        end;     
+    end;  
+    ID := SmartSpawnClient(SMART_Path, 'http://oldschool' + IntToStr(Server) + '.runescape.com/', ',f5', RSPW, RSPH, '', '', '', -1);
+    WriteLn('Initating SMART on Runescape Server ' + IntToStr(Server) + '...');
+    Result := CreateSmartClient(ID);
+    with Result.ImageArea do
+      Result.ImageArea := Box(X1, Y1, X2, Y2); 
+    with Result.InputArea do
+      Result.InputArea := Box(X1, Y1, X2, Y2); 
+  except
+    WriteLn('Failed to load SMART!');
+    TerminateScript;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function InitSMART: Boolean;
+Contributors: Wanted, Freddy, BenLand100, LordJashin.
+Description: Initiates SMART more simply.
+Date Created: September 18th, 2011. By Wanted. RS2 Build 666.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function InitiateSMART: Boolean;
+begin
+  Result := False;
+  if (SMART_Server = 0) then
+    SMART_Server := 11;
+  try
+    SMART_Client := InitSmartEx(SMART_Server, False);
+  except
+    WriteLn('Failed to load SMART!');
+  end;
+  if (SMART_Client = nil) then
+    Exit;
+  SetClient(SMART_Client).Free;
+  Result := WaitFunc(@RSReady, True, 100, 250, 90000, 120000); 
+end;

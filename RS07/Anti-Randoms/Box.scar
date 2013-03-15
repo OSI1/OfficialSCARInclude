@@ -11,7 +11,7 @@ function Box_InRandom: Boolean;
 Contributors: Wanted
 Description: Finds the strange box random in inventory.
 Date Created: February 25th, 2013. By Wanted. RS07 Build ???.
-Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Box_InRandom: Boolean;
@@ -31,7 +31,7 @@ begin
   WriteLn('Please contact an OSI developer http://forums.scar-divi.com');  
   WriteLn('Player stuck with strange box random.');
   Players[CurrentPlayer].Active := False;
-  //Logout;                                           // FIX
+  Logout;
   Exit;
 end;
 

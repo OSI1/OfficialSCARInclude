@@ -118,7 +118,7 @@ procedure InitiateAntiRandoms;
 Contributors: Wanted
 Description: Loads out all the antirandom information.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure InitiateAntiRandoms;
@@ -141,14 +141,14 @@ begin
   with RS07Randoms[2] do
   begin
     Name := 'Certer';
-    TabsMissing := [Tab_Magic]; //all top row, all bottom except for clan, friends, ignore, logout, and music
+    TabsMissing := [Tab_Combat, Tab_Stats, Tab_Quest, Tab_Inv, Tab_Equip, Tab_Prayer, Tab_Magic, Tab_Options, Tab_Emotes];
     InRandom := nil;
     SolveRandom := nil;
   end;
   with RS07Randoms[3] do
   begin
-    Name := 'Demon';       //all top row, all bottom except for clan, friends, ignore, logout, and music
-    TabsMissing := [Tab_Magic];
+    Name := 'Demon';
+    TabsMissing := [Tab_Combat, Tab_Stats, Tab_Quest, Tab_Inv, Tab_Equip, Tab_Prayer, Tab_Magic, Tab_Options, Tab_Emotes];
     InRandom := nil;
     SolveRandom := nil;
   end;
@@ -183,7 +183,7 @@ begin
   with RS07Randoms[8] do
   begin
     Name := 'Maze';
-    TabsMissing := [Tab_Magic];       //all top row, all bottom except for clan, friends, ignore, logout, and music
+    TabsMissing := [Tab_Combat, Tab_Stats, Tab_Quest, Tab_Inv, Tab_Equip, Tab_Prayer, Tab_Magic, Tab_Options, Tab_Emotes];
     InRandom := nil;
     SolveRandom := nil;
   end;
@@ -204,7 +204,7 @@ begin
   with RS07Randoms[11] do
   begin
     Name := 'Pinball';
-    TabsMissing := [Tab_Magic];  //Enitre top row, none bottom
+    TabsMissing := [Tab_Combat, Tab_Stats, Tab_Quest, Tab_Inv, Tab_Equip, Tab_Prayer, Tab_Magic];
     InRandom := nil;
     SolveRandom := nil;
   end;
@@ -218,7 +218,7 @@ begin
   with RS07Randoms[13] do
   begin
     Name := 'Quiz';
-    TabsMissing := [Tab_Magic];  //all top row, all bottom except for clan, friends, ignore, logout, and music
+    TabsMissing := [Tab_Combat, Tab_Stats, Tab_Quest, Tab_Inv, Tab_Equip, Tab_Prayer, Tab_Magic, Tab_Options, Tab_Emotes];
     InRandom := nil;
     SolveRandom := nil;
   end;
@@ -236,7 +236,7 @@ function GetMissingTabs: TIntArray;
 Contributors: Wanted, Freddy.
 Description: Used for counting missing tabs for comparison in OSIFindRandoms.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetMissingTabs: TIntArray;
@@ -247,7 +247,6 @@ begin
   L := 0;    
   H := Tab_Count - 1;
   for I := 0 to H do
-    Wait(1); // FIX
     if (not (TabExists(I))) then
     begin
       Inc(L);
@@ -264,12 +263,12 @@ function OSIFindRandoms: Boolean;
 Contributors: Wanted, Freddy.
 Description: Handles all of OSI's RS07 anti-random rountines.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: February 25th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function OSIFindRandoms: Boolean;
 var
-  //InitCompassAngle: Extended;                      FIX
+  InitCompassAngle: Extended;
   MissingTabs: TIntArray;
   RandomSolved, B: Boolean;
   I, H: Integer;
@@ -289,7 +288,7 @@ begin
           WriteLn(RS07Randoms[I].Name + ' random detected!');
           if (RS07Randoms[I].SolveRandom <> nil) then
           begin
-            //InitCompassAngle := GetCompassAngleDegrees;         FIX
+            InitCompassAngle := GetCompassAngleDegrees;
             if (not (RS07Randoms[I].SolveRandom())) then
             begin
               WriteLn(RS07Randoms[I].Name + ' random solver failed! Needs fixing by an expert!');
@@ -331,7 +330,7 @@ begin
   if (RandomSolved) then
   begin
     WaitRR(2000, 3000);
-    //MakeCompass(InitCompassAngle);                           FIX
+    SetCompassAngle(InitCompassAngle);
   end;
   //ClickContinueEx(True, True);                               FIX
   B := FindRandomEventItems;

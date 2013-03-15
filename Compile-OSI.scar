@@ -10,6 +10,8 @@
 //{$DEFINE UseVariance}
 //{$DEFINE NoVariance}
 
+{$DEFINE SMART}
+
 //{$DEFINE RS2}
 //{$DEFINE OSI_RS2_Color_Anti_Randoms}
 //{$DEFINE DisableRS2Fonts}

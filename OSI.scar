@@ -46,6 +46,9 @@
 {$I Divi\Human\Mouse.scar}
 {$IFDEF RS07}
   {$I RS07\Core\Globals.scar}
+  {$IFDEF SMART}
+    {$I OSI\RS07\Misc\SMART\SMART.scar}
+  {$ENDIF}
   {$I RS07\Core\OCR.scar}   
   {$I RS07\Core\Game-Tabs\Game-Tabs.scar}
   {$I RS07\Core\Game-Tabs\Tab0-Combat.scar}
@@ -87,7 +90,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: March 10th, 2013. By Wanted
+Last Modified: March 14th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -109,7 +112,18 @@ begin
       LoadRS07Fonts;
     {$ELSE}
       WriteLn('Auto font loading disabled.');
-    {$ENDIF}
+    {$ENDIF} 
+      {$IFDEF SMART}
+        if InitSmartLib(OSI_Path + 'RS07\Misc\SMART\libsmartremote32.dll') then
+          SMART_Path := OSI_Path + 'RS07\Misc\SMART\'
+        else
+        begin
+          WriteLn('Couldn''t load libsmartremote32.dll');
+          TerminateScript;
+        end;     
+        if (not (NonAutomaticSMART)) then
+          InitiateSMART;
+      {$ENDIF}
     PlayerStartTime := GetSystemTime;
   {$ENDIF}
 end;

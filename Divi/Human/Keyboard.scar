@@ -37,7 +37,7 @@ procedure TypeSendEx(Text: string; PressEnter: Boolean);
 begin
   TypeTextEx(Text, True, True); // TypeText(Ex) is not bound to a keyboard layout
   if (PressEnter) then
-    TypeTextEx(Chr(13), True, True);  
+    TypeTextEx(Chr(13), True, True);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
