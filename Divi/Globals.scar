@@ -7,8 +7,8 @@
  * type ClickActions = (ClickLeft, ClickRight, MoveTo, Nothing);
      By: Timer
  * var MouseSpeed: Integer;
-     By: Timer   
- * function OSIPath: string;  
+     By: Timer
+ * function OSIPath: string;
      By: LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
@@ -47,14 +47,14 @@ var
   MouseSpeed: Integer; 
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function OSI_Path: string;
+function OSIPath: string;
 Contributors: LordJashin
 Description: Returns the location of OSI based on Includes Path
 Date Created: November 19th, 2012. By LordJashin
 Last Modified: November 19th, 2012. By LordJashin
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function OSI_Path: string;
+function OSIPath: string;
 begin
   Result := IncludesPath + 'OSI\';
 end;

@@ -9,8 +9,10 @@
  * function FindBitmapColorExIn(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
      By: Wanted
  * function FindBitmapColorEx(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap): Boolean;
-     By: Wanted        
+     By: Wanted
  * function FindBitmapTolExP(var TPA: TPointArray; bmp: TSCARBitmap; B: TBox; Tol: LongInt): Boolean;
+     By: Wanted
+ * function FindBitmapColorTPAEx(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap; SearchTPA: TPointArray): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -21,7 +23,7 @@ Description: Finds color on bitmap inside area.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-                                                    
+
 function FindBitmapColorIn(var P: TPoint; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
 var
   Client: TSCARClient;
@@ -95,4 +97,26 @@ Last Modified: March 7th, 2013. By Wanted
 function FindBitmapTolExP(var TPA: TPointArray; bmp: TSCARBitmap; B: TBox; Tol: LongInt): Boolean;
 begin
   Result := FindBitmapTolEx(TPA, bmp, B.X1, B.Y1, B.X2, B.Y2, Tol);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindBitmapColorTPAEx(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap; SearchTPA: TPointArray): Boolean;
+Contributors: Wanted, Janilabo.
+Description: Finds colors on bitmap inside SearchTPA.
+Date Created: March 7th, 2013. By Wanted
+Last Modified: March 7th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindBitmapColorTPAEx(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap; SearchTPA: TPointArray): Boolean;
+var
+  Client: TSCARClient;
+begin
+  Result := False;
+  Client := SetClient(TSCARBitmapClient.Create(bmp));
+  try
+    Result := FindColorTPAExP(TPA, Color, SearchTPA);
+  except
+  finally
+    SetClient(Client).Free;
+  end;
 end;

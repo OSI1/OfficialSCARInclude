@@ -114,8 +114,8 @@ begin
       WriteLn('Auto font loading disabled.');
     {$ENDIF} 
       {$IFDEF SMART}
-        if InitSmartLib(OSI_Path + 'RS07\Misc\SMART\libsmartremote32.dll') then
-          SMART_Path := OSI_Path + 'RS07\Misc\SMART\'
+        if InitSmartLib(OSIPath + 'RS07\Misc\SMART\libsmartremote32.dll') then
+          SMARTPath := OSIPath + 'RS07\Misc\SMART\'
         else
         begin
           WriteLn('Couldn''t load libsmartremote32.dll');

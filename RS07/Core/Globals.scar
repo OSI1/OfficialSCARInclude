@@ -585,7 +585,7 @@ const Useful in game colors
 Contributors: Wanted
 Description: Static useful in game colors
 Date Created: August 7th, 2011. By Wanted. RS2 Build 661.
-Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const                             // Modified            By              Build #
@@ -606,12 +606,18 @@ const                             // Modified            By              Build #
   clCompassN      = 1911089;      // March 12, 2013      Wanted          ???
   clFlag          = 1127261;      // March 13, 2013      Wanted          ???
 
+  cldWhiteDot     = 1907997;      // December 8, 2011    Wanted          688
+  cldYellowDot    = 4369;         // December 8, 2011    Wanted          688
+  cldRedDot       = 29;           // March 14, 2013      Wanted          ???
+  cldGreenDot     = 4352;         // March 14, 2013      Wanted          ???
+  cldBlueDot      = 3412992;      // March 15, 2013      Wanted          ???
+
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 type TRS07Player = record
 Contributors: Wanted
 Description: Handles all of player related info and variables.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 type
@@ -622,13 +628,13 @@ type
     Pin: string;                    // Bank Pin
     Loc: string;                    // Player location
     Status: string;                 // Player status
-    LampSkill: string;              // Skill for lamp/exp randoms
+    LampSkill: Integer;             // Skill for lamp/exp randoms
     Rand: string;                   // Current Random
     Worked: Integer;                // Time player has worked
     Banked: Integer;                // Number of times player banked 
     Trips: Integer;                 // Number of trips player has made 
     World: Integer;                 // Preferred world
-    Level: array[0..Skill_Count] of Integer; // Levels of all skills
+    Level: array[0..(Skill_Count - 1)] of Integer; // Levels of all skills
     Active: Boolean;                // Player active
     Booleans: array of Boolean;     // Boolean records
     Integers: array of Integer;     // Integer records
@@ -674,7 +680,7 @@ var
   NonAutomaticSMART: Boolean;
   SMART_Client: TSCARClient;
   SMART_Server: Integer;
-  SMART_Path: string;
+  SMARTPath: string;
 {$ENDIF}
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -719,7 +725,7 @@ begin
     Exit;   
   end;   
   try
-    RS07FontFolder := OSI_Path + 'RS07\Fonts\';
+    RS07FontFolder := OSIPath + 'RS07\Fonts\';
     if (not (DirectoryExists(RS07FontFolder))) then
       RS07FontFolder := FontsPath; 
     UpChars := rs_LoadChars(RS07FontFolder + 'UpChars\');

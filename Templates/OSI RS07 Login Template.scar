@@ -1,0 +1,56 @@
+program New;
+
+{$DEFINE RS07}                         // V - Bright Settings
+{$DEFINE SMART}                        // Comment out to use normal browser
+{$DEFINE OSI_RS07_Color_Anti_Randoms}
+
+{$I OSI\OSI.scar}
+
+procedure DeclarePlayers;
+var
+  I, H: LongInt;
+begin
+  SetLength(Players, 2); 
+  H := High(Players);   
+  for I := 0 to H do
+  begin
+    SetLength(Players[I].Booleans, 1);
+    SetLength(Players[I].Integers, 1);   
+  end;
+  with Players[0] do
+  begin
+    Name := 'Zezima';                 // Username
+    Pass := 'runescape4life';         // Password
+    Pin := '0000';                    // Bank pin
+    Loc := 'Not logged in yet';  
+    LampSkill := Skill_Runecrafting;  // Genie Lamp
+    World := 11;                      // World to use
+    Integers[0] := 1000;              // How many trips?
+    Booleans[0] := True;              // Use pickaxe?
+    Active := True;                   // Player enabled?
+  end;
+  with Players[1] do
+  begin
+    Name := 'Sumoi';                  // Username
+    Pass := 'frunescape';             // Password
+    Pin := '0911';                    // Bank pin
+    Loc := 'Not logged in yet';  
+    LampSkill := Skill_Smithing;      // Genie Lamp
+    World := 11;                      // World to use
+    Integers[0] := 1000;              // How many trips?
+    Booleans[0] := False;             // Use pickaxe?
+    Active := True;                   // Player enabled?    
+  end;
+end;
+
+procedure ScriptTerminate;
+begin
+  FreeOSI;
+end;
+
+begin
+  SetUpOSI;  
+  DeclarePlayers;
+  Login;      
+  SetCompassAngleAndHeight(Dir_North, True);
+end.

@@ -578,7 +578,7 @@ begin
       begin
         SetLength(Actions, 9);
         Actions[0] := ['Your account is already logged in.',               15000, 10,    'PlayerTrue',  'Already logged in'];         // March 11, 2013       Wanted          ???      Confirmed
-        Actions[1] := ['Error connecting to server.',                      20000, 10,    'Exit',        'Error Connecting'];          // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[1] := ['Error connecting to server.',                      20000, 10,    'Exit',        'Error Connecting'];          // March 11, 2013       Wanted          ???      Confirmed
         Actions[2] := ['Invalid username/email or password.',                  0,  2,    'PlayerFalse', 'Wrong User/Pass'];           // March 11, 2013       Wanted          ???      Confirmed
         Actions[3] := ['Your account has been disabled.',                      0,  1,    'PlayerFalse', 'Acc Disabled'];              // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[4] := ['You need to vote to play!',                            0,  1,    'PlayerFalse', 'Needs to vote before play']; // March 11, 2013       Wanted          ???      Unconfirmed
@@ -618,7 +618,7 @@ begin
       begin  
         WriteLn('Unknown login error!');
         Players[CurrentPlayer].Loc := 'Unknown login error'; 
-        SaveScreenShot(OSI_Path + 'RS07\Core\Database\Login\' + TheDate(1) + TheTime);
+        SaveScreenShot(OSIPath + 'RS07\Core\Database\Login\' + TheDate(1) + TheTime);
         NextPlayer(False);
         Exit;
       end;

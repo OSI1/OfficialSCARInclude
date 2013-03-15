@@ -4,8 +4,8 @@
            S.M.A.R.T. Smart Minimizing Autoing Resource Thing Routines
 --------------------------------------------------------------------------------
  * function InitSmartEx(Server: Integer; ForceNew: Boolean): TSCARClient;
-     By: Freddy & Wanted. 
- * function InitSMART: Boolean;  
+     By: Freddy & Wanted.
+ * function InitSMART: Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -34,23 +34,23 @@ begin
     if (not (ForceNew)) then
     begin
       Count := SmartGetClients(True);
-      if (Count > 0) then   
+      if (Count > 0) then
         for I := 0 to Count do
         begin
-          ID := SmartClientID(I); 
+          ID := SmartClientID(I);
           if (SmartPairClient(ID)) then 
           begin    
-            WriteLn('Paired with existing SMART');              
+            WriteLn('Paired with existing SMART');
             Result := CreateSmartClient(ID); 
             with Result.ImageArea do 
-              Result.ImageArea := Box(X1, Y1, X2, Y2);                
+              Result.ImageArea := Box(X1, Y1, X2, Y2);
             with Result.InputArea do
               Result.InputArea := Box(X1, Y1, X2, Y2);
             Exit;
           end;
-        end;     
+        end;
     end;  
-    ID := SmartSpawnClient(SMART_Path, 'http://oldschool' + IntToStr(Server) + '.runescape.com/', ',f5', RSPW, RSPH, '', '', '', -1);
+    ID := SmartSpawnClient(SMARTPath, 'http://oldschool' + IntToStr(Server) + '.runescape.com/', ',f5', RSPW, RSPH, '', '', '', -1);
     WriteLn('Initating SMART on Runescape Server ' + IntToStr(Server) + '...');
     Result := CreateSmartClient(ID);
     with Result.ImageArea do
