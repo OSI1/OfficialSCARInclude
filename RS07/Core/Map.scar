@@ -559,19 +559,16 @@ end;
 function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
 Contributors: Wanted, Freddy.
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
-Uses overlapping checking but it still does tons of dots in about 50 ms.
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
 Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
 var
-  I, II, H, HH, C, O: Integer; 
+  I, II, H, HH, C: Integer; 
   bmpRunescape: TSCARBitmap;
-  Offset: T2DPointArray;
   TPA: TPointArray;
   L: TIntArray;
-  B: Boolean;
 begin
   Result := [TPointArray([])];
   HH := High(ColorDiffs); 
@@ -582,25 +579,19 @@ begin
   bmpRunescape := GetClient.CaptureEx(RSX1, RSY1, RSX2, RSY2);
   FindBitmapColorTPAEx(TPA, 65536, bmpRunescape, MMTPA);
   H := High(TPA);
-  Offset := [TPointArray([Point(-2, 0), Point(-1, 0)]), TPointArray([Point(0, -2), Point(0, -1)])];
     if (H > 0) then
       for I := 0 to H do
-        for O := 0 to 1 do
-        begin
-          C := (bmpRunescape.Pixels[TPA[I].X + Offset[O][0].X, TPA[I].Y + Offset[O][0].Y] - bmpRunescape.Pixels[TPA[I].X + Offset[O][1].X, TPA[I].Y + Offset[O][1].Y]);
-          B := False;
-          for II := 0 to HH do
-            if (C = ColorDiffs[II]) then
-            begin
-              B := True;
-              Inc(L[II]);
-              SetLength(Result[II], L[II]);
-              Result[II][L[II] - 1] := Point(TPA[I].X - 2, TPA[I].Y - 2);
-              Break;
-            end;
-          if (B) then
+      begin
+        C := (bmpRunescape.Pixels[TPA[I].X - 2, TPA[I].Y] - bmpRunescape.Pixels[TPA[I].X - 1, TPA[I].Y]);
+        for II := 0 to HH do
+          if (C = ColorDiffs[II]) then
+          begin
+            Inc(L[II]);
+            SetLength(Result[II], L[II]);
+            Result[II][L[II] - 1] := Point(TPA[I].X - 2, TPA[I].Y - 2);
             Break;
-        end;  
+          end;
+      end;  
   bmpRunescape.Free
 end;
 
