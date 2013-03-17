@@ -236,7 +236,7 @@ function GetMissingTabs: TIntArray;
 Contributors: Wanted, Freddy.
 Description: Used for counting missing tabs for comparison in OSIFindRandoms.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
-Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetMissingTabs: TIntArray;
@@ -253,9 +253,9 @@ begin
       SetLength(Result, L);
       Result[L - 1] := I;
     end;
-  {if (Length(Result) > 0) then
+  if (Length(Result) > 0) then
     if (BankScreen) then
-      Result := [];                        FIX }
+      Result := [];
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

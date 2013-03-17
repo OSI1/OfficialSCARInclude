@@ -9,9 +9,16 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {$IFNDEF SCAR338_UP}
-  begin
-    WriteLn('Update to SCAR Divi 3.38.01 or newer at http://scar-divi.com');
-  end.
+  {$ERROR Update to SCAR Divi 3.38.01 or newer at http://scar-divi.com}
+{$ENDIF}
+
+{$IFDEF SMART}
+  {$IFNDEF RS07}
+    {$IFNDEF RS2} 
+      {$ERROR You can not define SMART without defining RS07 or RS2}
+    {$ENDIF}   
+  {$ENDIF}   
+  {$L SMART\SmartRemote.dll}
 {$ENDIF}
 
 {$IFNDEF RS2}
@@ -47,7 +54,7 @@
 {$IFDEF RS07}
   {$I RS07\Core\Globals.scar}
   {$IFDEF SMART}
-    {$I OSI\RS07\Misc\SMART\SMART.scar}
+    {$I OSI\RS07\Misc\SMART.scar}
   {$ENDIF}
   {$I RS07\Core\OCR.scar}   
   {$I RS07\Core\Game-Tabs\Game-Tabs.scar}
@@ -90,7 +97,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: March 14th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -114,8 +121,8 @@ begin
       WriteLn('Auto font loading disabled.');
     {$ENDIF} 
       {$IFDEF SMART}
-        if InitSmartLib(OSIPath + 'RS07\Misc\SMART\libsmartremote32.dll') then
-          SMARTPath := OSIPath + 'RS07\Misc\SMART\'
+        if InitSmartLib(OSIPath + 'SMART\libsmartremote32.dll') then
+          SMARTPath := OSIPath + 'SMART\'
         else
         begin
           WriteLn('Couldn''t load libsmartremote32.dll');

@@ -13,6 +13,8 @@
      By: Wanted
  * function CordsToInvSlot(P: TPoint): Integer;
      By: Wanted
+ * function GetInvItemAmount(Slot: Integer): LongInt;
+     By: Wanted
  * function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
      By: Wanted
  * function InvCount(CheckIT: Boolean): Integer;
@@ -21,9 +23,9 @@
      By: Wanted
  * function InvEmpty(CheckIT: Boolean): Boolean;
      By: Wanted
- * function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
+ * function MouseInvItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
      By: Wanted
- * function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
+ * function DragInvItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
      By: Wanted  
  * function GetDropPattern(Which: Integer): TIntegerArray;
      By: Wanted
@@ -131,6 +133,19 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetInvItemAmount(Slot: Integer): LongInt;
+Contributors: Wanted
+Description: Returns the amount of item in inv taking into account text color within box.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetInvItemAmount(Slot: Integer): LongInt;
+begin
+  Result := GetAmount(GetInvSlotBounds(Slot));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function InvItemExists(Slot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if there's an item in the given inventory slot.
@@ -203,14 +218,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
+function MouseInvItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Clicks on an item.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function MouseItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
+function MouseInvItem(Slot: Integer; TypeC: ClickActions; CheckIT: Boolean): Boolean;
 var
   B: TBox;
 begin
@@ -218,18 +233,18 @@ begin
   if (not (Result)) then
     Exit;
   B := GetInvSlotBounds(Slot);
-  MouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, TypeC);
+  MouseBoxB(B, TypeC);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
+function DragInvItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
 Contributors: Wanted
 Description: Drags an item from one slot to another.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function DragItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
+function DragInvItem(FromSlot, ToSlot: Integer; CheckIT: Boolean): Boolean;
 var
   B, B2: TBox;
 begin
@@ -238,7 +253,7 @@ begin
     Exit;
   B := GetInvSlotBounds(FromSlot);
   B2 := GetInvSlotBounds(ToSlot);
-  DragMouseBox(B.X1 + 2, B.Y1 + 2, B.X2 - 2, B.Y2 - 2, B2.X1 + 2, B2.Y1 + 2, B2.X2 - 2, B2.Y2 - 2, True);
+  DragMouseBoxB(B, B2, True);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -274,7 +289,7 @@ Last Modified: March 30th, 2012. By Wanted. RS2 Build 710.
 function DropItem(Slot: Integer; CheckIT: Boolean): Boolean;
 begin
   Result := False;
-  if (not (MouseItem(Slot, ClickRight, CheckIT))) then
+  if (not (MouseInvItem(Slot, ClickRight, CheckIT))) then
     Exit;
   Result := ChooseOptionMulti(['Drop ', 'rop ', 'Drop', 'rop']);
 end;

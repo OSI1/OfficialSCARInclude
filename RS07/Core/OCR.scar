@@ -37,6 +37,8 @@
      By: Wanted
  * function ChooseOption(Option: string): Boolean;
      By: Wanted
+ * function GetAmount(B: TBox): LongInt;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -300,7 +302,7 @@ begin
     if (TBLA[I]) then
     begin 
       MB := GetOptionBox(I, B);
-      MouseBox(MB.X1 + 2, MB.Y1 + 2, MB.X2 - 2, MB.Y2 - 2, TypeC);
+      MouseBoxB(MB, TypeC);
       Result := True;
       Exit;
     end;  
@@ -345,4 +347,33 @@ Last Modified: October 20th, 2011. By Wanted. RS2 Build 668.
 function ChooseOption(Option: string): Boolean;
 begin
   Result := ChooseOptionMulti([Option]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAmount(B: TBox): LongInt;
+Contributors: Wanted
+Description: Returns the amount of something taking into account text color within box.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAmount(B: TBox): LongInt;
+var
+  TextColors: TIntegerArray;
+  TPA: TPointArray;
+  Text: string;
+  I: Integer;
+  SB: TBox;
+begin
+  Result := 0;
+  TextColors := [clYellow, clWhite, 8453888];
+  for I := 0 to 2 do
+    if (FindColorExP(TPA, TextColors[I], B)) then
+    begin
+      SB := TPABounds(TPA);
+      Text := GetTextAtEx(SB.X1 - 1, SB.Y1 - 1, 0, StatChars, False, False, 0, 2, TextColors[I], 5, False, tr_AllChars);
+      Result := StrToIntDef(GetNumbers(Text), -1);
+      if (Result > -1) then
+        Result := (Result * Floor(Pow(1000, I)));
+    end;
 end;

@@ -3,6 +3,252 @@
                                   Runescape 07
                                 Banking Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function BankScreen: Boolean;
+     By: Wanted
+ * function CloseBank(CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function DepositItems(Slots: TIntArray; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function DepositAllExclude(Exclude: TIntArray; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function DepositAll(CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function ToggleUseNotes(Use: Boolean): Boolean;
+     By: Wanted
+ * function ToggleSwapMode(Use: Boolean): Boolean;
+     By: Wanted
+ * function GetBankScrollBarPos: Extended;
+     By: Wanted
+ * function ScrollToBankToRow(Row: Integer): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BankScreen: Boolean;
+Contributors: Wanted
+Description: Returns true if at the bank screen.
+Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BankScreen: Boolean;
+var
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  Result := False;
+  FindColorEx(TPA, 2070783, 178, 31, 340, 54);
+  if (Length(TPA) > 20) then
+    Result := FindTextTPAInTPA('The Bank of RuneScape', ScreenChars, TPA, P);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CloseBank(CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if at the bank screen and then closes it if open.
+Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CloseBank(CheckBS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit
+    else
+      Result := True;
+  MouseBox(477, 32, 495, 50, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
+Contributors: Wanted, Freddy.
+Description: Deposits all inventory items except for excluded slots, or the other
+way around if Exclude is false. True if CheckBS is true and bankscreen is found.
+Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
+var
+  I, C, T: Integer;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit
+    else
+      Result := True;
+  for I := 0 to 27 do
+    if ((TIAContains(Slots, I)) xor (Exclude)) then
+      if (InvItemExists(I, False)) then
+      begin 
+        C := InvCount(False);
+        MouseInvItem(I, ClickRight, False);
+        ChooseOptionMulti(['re A', 'All']);
+        T := GetSystemTime + RR(1500, 2500);
+        while ((GetSystemTime < T) and (InvCount(False) = C)) do
+          WaitRR(100, 200);
+      end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DepositItems(Slots: TIntArray; CheckBS: Boolean): Boolean;
+Contributors: Wanted, Freddy
+Description: Deposits all inventory items in specified slots. True if CheckBS is
+true and bankscreen is found.
+Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DepositItems(Slots: TIntArray; CheckBS: Boolean): Boolean;
+begin
+  Result := DepositItemsEx(Slots, False, CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DepositAllExclude(Exclude: TIntArray; CheckBS: Boolean): Boolean;
+Contributors: Wanted, Freddy
+Description: Deposits all inventory items except for excluded slots. True if
+CheckBS is true and bankscreen is found.
+Date Created: November 13th, 2011. By Wanted. RS2 Build 679.
+Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DepositAllExclude(Exclude: TIntArray; CheckBS: Boolean): Boolean;
+begin
+  Result := DepositItemsEx(Exclude, True, CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DepositAll(CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if at the bank screen and then clicks deposit all.
+Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DepositAll(CheckBS: Boolean): Boolean;
+begin
+  Result := DepositAllExclude([], CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleUseNotes(Use: Boolean): Boolean;
+Contributors: Wanted
+Description: Enables or disables note usage. Returns true if toggle was needed.
+Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleUseNotes(Use: Boolean): Boolean;
+begin
+  Result := False;
+  case GetColor(410, 304) of
+    2303647: Result := (not (Use));
+    5334130: Result := Use;
+  else
+    Exit;
+  end;
+  if  (not (Result)) then
+    Exit;
+  if (Use) then
+    MouseBox(375, 306, 447, 320, ClickLeft)
+  else
+    MouseBox(290, 306, 362, 318, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleSwapMode(Use: Boolean): Boolean;
+Contributors: Wanted
+Description: Enables or disables note usage. Returns true if toggle was needed.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleSwapMode(Use: Boolean): Boolean;
+begin
+  Result := False;
+  case GetColor(109, 304) of
+    2303647: Result := (not (Use));
+    5334130: Result := Use;
+  else
+    Exit;
+  end;
+  if  (not (Result)) then
+    Exit;
+  if (Use) then
+    MouseBox(75, 306, 147, 320, ClickLeft)
+  else
+    MouseBox(160, 306, 230, 321, ClickLeft);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankScrollBarPosition: Extended;
+Contributors: Wanted
+Description: Returns the percentage of scroll bar height relative to max top.
+Date Created: March 16th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankScrollBarPos: Extended;
+var
+  TPA: TPointArray;
+begin
+  Result := 1.0; 
+  if (GetColor(474, 75) = 5531254) then
+    Exit;  
+  if (GetColor(474, 271) = 2436403) then
+  begin
+    Result := 0;
+    Exit;
+  end;   
+  FindColorEx(TPA, 1777699, 468, 75, 468, 271);
+  InvertTPA(TPA);
+  SortTPAEx(TPA, Point(468, 75));
+  Result := (249 - TPA[0].Y) / 175;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ScrollToBankToRow(Row: Integer): Boolean;
+Contributors: Wanted
+Description: Scrolls bank to which ever row you specify, true if adjusted.
+Date Created: March 16th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ScrollToBankToRow(Row: Integer): Boolean;
+var
+  Y, DY, CurrentPos: Extended;
+  B, DB: TBox;
+begin
+  Result := False;
+  DY := (Row * 3.5) + 75;
+  CurrentPos := GetBankScrollBarPos;
+  Y := 249 - (174 * CurrentPos);
+  B := Box(470, Round(Y) + 2, 481, Round(Y) + 20);
+  if (InRange(Row, 0, 5)) then
+  begin   
+    if (CurrentPos = 1.0) then
+      Exit;
+    DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, 470, 67, 481, 72, True);
+    Result := True;   
+    Exit;
+  end;  
+  if (InRange(Row, 45, 49)) then
+  begin     
+    if (CurrentPos = 0.0) then
+      Exit;
+    DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, 470, 273, 481, 277, True);
+    Result := True;
+    Exit;
+    end;
+  if (CurrentPos = ((249 - DY) / 175)) then
+    Exit;  
+  DB := Box(470, Round(DY + 12), 481, Round(DY + 12));
+  DragMouseBoxB(B, DB, True);
+  Result := True;
+end;

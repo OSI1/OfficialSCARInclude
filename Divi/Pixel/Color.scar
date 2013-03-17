@@ -201,9 +201,9 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralTPA(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray): Boolean;
 Contributors:  Wanted
-Description: Wrapper for FindColorTPA with points and boxes. *Emulates* spiral.
+Description: Wrapper for FindColorTPA with points and boxes.
 Date Created: March 14th, 2013. By Wanted
-Last Modified: March 14th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindColorSpiralTPA(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray): Boolean;
@@ -213,16 +213,16 @@ begin
   Result := FindColorTPAExP(FoundColors, Color, TPA);
   if (not (Result)) then
     Exit;
-  SortTPAEx(FoundColors, SP);
+  SortTPASpiralEx(FoundColors, SP);
   P := FoundColors[0];
 end;     
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralTPAEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray): Boolean;
 Contributors:  Wanted
-Description: Wrapper for FindColorTPAEx with points and boxes. *Emulates* spiral.
+Description: Wrapper for FindColorTPAEx with points and boxes.
 Date Created: March 14th, 2013. By Wanted
-Last Modified: March 14th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindColorSpiralTPAEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray): Boolean;
@@ -230,7 +230,7 @@ begin
   Result := FindColorTPAEx(TPA, Color, SearchTPA); 
   if (not (Result)) then
     Exit;
-  SortTPAEx(TPA, SP);
+  SortTPASpiralEx(TPA, SP);
 end;      
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -238,7 +238,7 @@ function FindColorSpiralTPATol(SP: TPoint; var P: TPoint; Color: LongInt; TPA: T
 Contributors: Freddy, Wanted.
 Description: Wrapper for FindColorTPATol with points and boxes. *Emulates* spiral.
 Date Created: March 14th, 2013. By Wanted
-Last Modified: March 14th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindColorSpiralTPATol(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray; Tol: LongInt): Boolean;
@@ -248,16 +248,16 @@ begin
   Result := FindColorTPATolExP(FoundColors, Color, TPA, Tol);
   if (not (Result)) then
     Exit;
-  SortTPAEx(FoundColors, SP);
+  SortTPASpiralEx(FoundColors, SP);
   P := FoundColors[0];
 end;     
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralTPATolEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColorTPATolEx with points and boxes. *Emulates* spiral.
+Description: Wrapper for FindColorTPATolEx with points and boxes.
 Date Created: March 14th, 2013. By Wanted
-Last Modified: March 14th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindColorSpiralTPATolEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
@@ -265,7 +265,7 @@ begin
   Result := FindColorTPATolEx(TPA, Color, SearchTPA, Tol);
   if (not (Result)) then
     Exit;
-  SortTPAEx(TPA, SP);
+  SortTPASpiralEx(TPA, SP);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

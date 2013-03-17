@@ -20,8 +20,12 @@
 {$DEFINE OSI_RS07_Color_Anti_Randoms}
 //{$DEFINE DisableRS07Fonts}
 
+// OSI Files
 {$I OSI.scar}                      // Required*
 {$I Divi\Misc\Debug.scar}          // Comment out or in, test all combinations.
+{$IFDEF SMART}
+  {$I SMART\DebugSMART.scar}
+{$ENDIF}
 {$IFDEF RS07}
   {$I RS07\Misc\Game-Tabs\Tab2-Quest.scar}
   {$I RS07\Misc\Game-Tabs\Tab7-Clan.scar}
@@ -50,6 +54,14 @@
   {$I RS07\Skill\Construction.scar}
   {$I RS07\Skill\Hunting.scar}
 {$ENDIF}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ScriptTerminate;
+Contributors: Wanted
+Description: Contains what needs to happen when script is terminated.
+Date Created: August 7th, 2011. By Wanted
+Last Modified: August 7th, 2011. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure ScriptTerminate;
 begin

@@ -521,7 +521,7 @@ function Login: Boolean;
 Contributors: Wanted, Janilabo.
 Description: Logins in current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Login: Boolean;
@@ -584,8 +584,8 @@ begin
         Actions[4] := ['You need to vote to play!',                            0,  1,    'PlayerFalse', 'Needs to vote before play']; // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[5] := ['Too many incorrect logins from your address.', 5 * 60500,  2,    'PlayerFalse', 'Too many incorrect logins']; // March 11, 2013       Wanted          ???      Confirmed
         Actions[6] := ['The server is being updated.',                         0,  1,    'Exit',        'Server updated'];            // March 11, 2013       Wanted          ???      Unconfirmed
-        Actions[7] := ['RuneScape has been updated!',                          0,  1,    'Exit',        'RS updated'];                // March 11, 2013       Wanted          ???      Unconfirmed
-        Actions[8] := ['This world is full.',                               5000, 20,    'PlayerTrue',  'Desired world full'];        // March 11, 2013       Wanted          ???      Unconfirmed
+        Actions[7] := ['RuneScape has been updated!',                          0,  1,    'Exit',        'RS updated'];                // March 11, 2013       Wanted          ???      Confirmed
+        Actions[8] := ['This world is full.',                               5000, 20,    'PlayerTrue',  'Desired world full'];        // March 11, 2013       Wanted          ???      Confirmed
         H := High(Actions);    
       end;
       I := H + 1;

@@ -2,6 +2,8 @@
                               Official SCAR Include
                                   Mouse Routines
 --------------------------------------------------------------------------------
+ * procedure GetMousePosP(var P: TPoint);
+     By: Wanted
  * procedure MMouse(X, Y, RX, RY: Integer); 
      By: Timer
  * procedure MMouseP(P: TPoint; RX, RY: Integer);  
@@ -37,24 +39,43 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure GetMousePosP(var P: TPoint);
+Contributors: Wanted
+Description: Wrapper for GetMousePos with point.
+Date Created: March 16th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure GetMousePosP(var P: TPoint);
+begin
+  GetMousePos(P.X, P.Y);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure MMouse(X, Y, RX, RY: Integer);
 Contributors: Timer, Wanted, Freddy, Bixby Sayz, LordJashin.
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modified: March 4th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(X, Y, RX, RY: Integer);
 var
-  P: TPoint;     
+  P: TPoint;
   B1: TBox;
 begin
   B1 := Box(X - RX, Y - RY, X + RX, Y + RY);  
-  P := RRectanglePoint(B1.X1, B1.Y1, B1.X2, B1.Y2);   
+  P := RRectanglePoint(B1.X1, B1.Y1, B1.X2, B1.Y2);
   if (MouseSpeed <> 0) then
     MoveMouseEx(P.X, P.Y, MouseSpeed)
   else
-    MoveMouse(P.X, P.Y);
+    MoveMouse(P.X, P.Y); 
+  GetMousePosP(P);
+  if (IAbs(P.X - X) > RX) then
+    SetMousePos(X, P.Y);
+  GetMousePosP(P);
+  if (IAbs(P.Y - Y) > RY) then
+    SetMousePos(P.X, Y);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

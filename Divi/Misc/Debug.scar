@@ -21,20 +21,19 @@ procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPAB
 Contributors: Wanted, Freddy.
 Description: Debugs an ATPA to the debug window with tons of options.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: March 4th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
 var
-  bmpDebug: TSCARBitmap;
   Width, Height, I, II, H, HH, Col: Integer;
+  bmpDebug: TSCARBitmap;
   ATPA2: T2DPointArray;
   TPA: TPointArray;
   B, BB: TBox;
-  {$IFNDEF RS2}
-    Arial: Integer;
-  {$ENDIF}
+  Arial: Integer;
 begin
+  Arial := LoadCharsFromFont2('Arial', 8, True, False, False, False);
   ATPA2 := CopyATPA(ATPA);
   B := ATPABounds(ATPA2);
   ATPADimensions(ATPA, Width, Height);
@@ -46,8 +45,7 @@ begin
     B.Y1 := 0;
   IncEx(B.X2, Round(Width * 0.25));
   IncEx(B.Y2, Round(Height * 0.25));
-  Width := B.X2 - B.X1 + 1;
-  Height := B.Y2 - B.Y1 + 1;
+  GetBoxSize(B, Width, Height);
   if (ShowClient) then 
     bmpDebug := GetClient.CaptureEx(B.X1, B.Y1, B.X2, B.Y2)
   else begin
@@ -77,14 +75,9 @@ begin
         end;
         if (ShowTPAIndexes) then
         begin
-          {$IFDEF RS2}
-            TPA := LoadTextTPA(IntToStr(I), StatChars);
-          {$ELSE}
-            Arial := LoadCharsFromFont2('Arial', 8, True, False, False, False);
-            TPA := TextToTPA(IntToStr(I), Arial);
-          {$ENDIF}
+          TPA := TextToTPA(IntToStr(I), Arial);
           BB := TPABounds(ATPA2[I]);
-          OffsetTPA(TPA, BB.X1 + 2, BB.Y1 + 2);
+          OffsetTPA(TPA, BB.X1 + 2, BB.Y1);
           HH := High(TPA);
           for II := 0 to HH do
             try
@@ -111,6 +104,10 @@ begin
     end;
   finally
     bmpDebug.Free;
+    try
+      FreeChars2(Arial);
+    finally
+    end;
   end;
 end;
 

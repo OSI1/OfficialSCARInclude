@@ -57,6 +57,12 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                               Box.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ValidBox(B: TBox): Boolean; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function BinToInt(Value: string): Integer;
 Contributors: Freddy
 Description: Translates a string of binary numbers to its Integer equivalent
@@ -97,11 +103,13 @@ function BoxToTPA(B: TBox; FillBox: Boolean): TPointArray;
 Contributors: Wanted, Janilabo.
 Description: Turns TBox into TPA, if not FillBox then only returns outline.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: February 28th, 2013. By Wanted
+Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BoxToTPA(B: TBox; FillBox: Boolean): TPointArray;
 begin
+  if (not (ValidBox(B))) then
+    Exit;
   Result := TPAFromBox(B);
   if (not (FillBox)) then
     TPAEdge(Result);

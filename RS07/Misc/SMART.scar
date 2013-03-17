@@ -1,6 +1,6 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                               Official SCAR Include
-                                   Runescape 2
+                                  Runescape 07
            S.M.A.R.T. Smart Minimizing Autoing Resource Thing Routines
 --------------------------------------------------------------------------------
  * function InitSmartEx(Server: Integer; ForceNew: Boolean): TSCARClient;
@@ -8,8 +8,6 @@
  * function InitSMART: Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-{$L SmartRemote.dll}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                                Login.scar forwards
