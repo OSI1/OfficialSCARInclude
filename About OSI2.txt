@@ -6,7 +6,7 @@ The official homepage of OSI is http://scar-divi.com
 The official forums of OSI are http://forums.scar-divi.com/
 
 
-OSI is credited to a selected group of developers under the lead of James Bolduc (alias Wanted) and Frédéric Hannes (alias Freddy1990).
+OSI is credited to a selected group of developers under the lead of Wanted and Frédéric Hannes (alias Freddy1990).
 
 including 
 
