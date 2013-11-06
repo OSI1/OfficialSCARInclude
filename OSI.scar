@@ -102,6 +102,7 @@ Last Modified: March 16th, 2013. By Wanted
 
 procedure SetUpOSI;
 begin
+  WriteLn('OSI BSD License https://github.com/Want3d/OfficialSCARInclude/blob/master/License.txt'); 
   OSI_Variance := 3.0;
   MouseSpeed := 15;
   SetColorSpeed2Modifiers(0.2, 0.2);
