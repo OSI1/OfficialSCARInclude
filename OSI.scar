@@ -94,15 +94,15 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure SetUpOSI;
-Contributors: Wanted, Timer, Freddy, LordJashin.
+Contributors: Wanted, Timer, Freddy, LordJashin, Tootoot222.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: March 16th, 2013. By Wanted
+Last Modified: November 5th, 2013. By Tootoot222
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
 begin
-  WriteLn('OSI BSD License https://github.com/Want3d/OfficialSCARInclude/blob/master/License.txt'); 
+  WriteLn('Copyright (c) 2011-2013, Official SCAR Include -  OSI - BSD License https://github.com/Want3d/OfficialSCARInclude/blob/master/License.txt'); 
   OSI_Variance := 3.0;
   MouseSpeed := 15;
   SetColorSpeed2Modifiers(0.2, 0.2);
