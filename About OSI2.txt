@@ -1,7 +1,7 @@
 ﻿OSI - The Official SCAR Include is licensed under BSD. http://en.wikipedia.org/wiki/BSD_licenses
 
 The official documentation/manual/wiki of OSI can be found http://wiki.scar-divi.com/osi/index.php?title=OSI_Manual
-The official project location of OSI is https://github.com/Want3d/OfficialSCARInclude/
+The official project location of OSI is https://github.com/OSI1/OfficialSCARInclude/
 The official homepage of OSI is http://scar-divi.com
 The official forums of OSI are http://forums.scar-divi.com/
 
