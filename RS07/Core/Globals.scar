@@ -728,7 +728,8 @@ begin
     RS07FontFolder := OSIPath + 'RS07\Fonts\';
     if (not (DirectoryExists(RS07FontFolder))) then
       RS07FontFolder := FontsPath; 
-    UpChars := rs_LoadChars(RS07FontFolder + 'UpChars\');
+    //UpChars := rs_LoadChars(RS07FontFolder + 'UpChars\');    FIX
+    UpChars := OptionChars; // WRONG FIX
     OptionChars := LoadChars2(RS07FontFolder + 'OptionChars\');
     ScreenChars := LoadChars2(RS07FontFolder + 'ScreenChars\');
     NPCChars := LoadChars2(RS07FontFolder + 'NPCChars\');

@@ -23,7 +23,7 @@ procedure SmartDebugText(Text: string; Chars, Color, X, Y: Integer);
 Contributors: Wanted
 Description: Debugs a line of text to the smart debug canvas.
 Date Created: January 22nd, 2012. By Wanted
-Last Modified: March 16th, 2013. By Wanted
+Last Modified: November 9th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SmartDebugText(Text: string; Chars, Color, X, Y: Integer);
@@ -39,7 +39,7 @@ begin
     TPA := TextToTPA(Text, Chars);  
     H := High(TPA);
     for I := 0 to H do
-      Bmp.Pixels[TPA[I].X, TPA[I].Y] := Color;  
+      Bmp.Pixel[TPA[I].X, TPA[I].Y] := Color;
     SmartDebugBitmapEx(SMART_Client, Bmp, X, Y);
   finally
     Bmp.Free;
@@ -51,12 +51,12 @@ procedure SmartDebugATPABoundsEx(ATPA: T2DPointArray; ShowTPAs, ShowATPABorder, 
 Contributors: Wanted
 Description: Debugs an ATPA to the smart debug canvas with tons of options.
 Date Created: January 22nd, 2012. By Wanted
-Last Modified: March 16th, 2013. By Wanted
+Last Modified: November 9th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SmartDebugATPABoundsEx(ATPA: T2DPointArray; ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean);
 var    
-  I, II, H, HH, Col, Arial: Integer;              
+  I, II, H, HH, Col, Arial: Integer;
   Bmp: TSCARBitmap;
   ATPA2: T2DPointArray;
   TPA: TPointArray;
@@ -78,16 +78,16 @@ begin
         Col := Random(clWhite + 1);
         HH := High(ATPA2[I]);
         if (ShowTPAs) then
-          for II := 0 to HH do   
-            Bmp.Pixels[ATPA2[I][II].X, ATPA2[I][II].Y] := Col;
+          for II := 0 to HH do
+            Bmp.Pixel[ATPA2[I][II].X, ATPA2[I][II].Y] := Col;
         if ((ShowTPABorders) or (ShowTPAIndexes)) then
           Col := Random(clWhite + 1);
         if (ShowTPABorders) then
         begin
           TPA := BoxToTPA(TPABounds(ATPA2[I]), False);
           HH := High(TPA);
-          for II := 0 to HH do                       
-            Bmp.Pixels[TPA[II].X, TPA[II].Y] := Col;
+          for II := 0 to HH do
+            Bmp.Pixel[TPA[II].X, TPA[II].Y] := Col;
         end;
         if (ShowTPAIndexes) then
         begin
@@ -97,7 +97,7 @@ begin
           HH := High(TPA);
           for II := 0 to HH do
             try     
-              Bmp.Pixels[TPA[II].X, TPA[II].Y] := Col;
+              Bmp.Pixel[TPA[II].X, TPA[II].Y] := Col;
             except
             end;
         end;
@@ -106,16 +106,16 @@ begin
       begin
         TPA := BoxToTPA(ATPABounds(ATPA2), False);
         H := High(TPA);
-        for I := 0 to H do   
-          Bmp.Pixels[TPA[I].X, TPA[I].Y] := clBlue;
+        for I := 0 to H do
+          Bmp.Pixel[TPA[I].X, TPA[I].Y] := clBlue;
       end;
     end;
     SmartDebugBitmap(SMART_Client, Bmp);
   finally
     Bmp.Free; 
     try
-      FreeChars2(Arial);             
-    finally      
+      FreeChars2(Arial);
+    finally
     end;
   end;
 end;

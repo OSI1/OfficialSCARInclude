@@ -560,7 +560,7 @@ function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
 Contributors: Wanted, Freddy.
 Description: Finds all MMDots you specify i.e. cldWhiteDot etc. see Global.scar
 Date Created: December 8th, 2011. By Wanted. RS2 Build 688.
-Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 9th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FindMMDotsEx(ColorDiffs: TIntArray): T2DPointArray;
@@ -582,7 +582,7 @@ begin
     if (H > 0) then
       for I := 0 to H do
       begin
-        C := (bmpRunescape.Pixels[TPA[I].X - 2, TPA[I].Y] - bmpRunescape.Pixels[TPA[I].X - 1, TPA[I].Y]);
+        C := (bmpRunescape.Pixel[TPA[I].X - 2, TPA[I].Y] - bmpRunescape.Pixel[TPA[I].X - 1, TPA[I].Y]);
         for II := 0 to HH do
           if (C = ColorDiffs[II]) then
           begin

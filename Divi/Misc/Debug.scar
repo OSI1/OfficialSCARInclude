@@ -21,7 +21,7 @@ procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPAB
 Contributors: Wanted, Freddy.
 Description: Debugs an ATPA to the debug window with tons of options.
 Date Created: October 22nd, 2011. By Wanted
-Last Modified: March 16th, 2013. By Wanted
+Last Modified: November 9th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure DebugATPABoundsEx(ATPA: T2DPointArray; ShowClient, ShowTPAs, ShowATPABorder, ShowTPABorders, ShowTPAIndexes: Boolean; FileName: string);
@@ -63,7 +63,7 @@ begin
         HH := High(ATPA2[I]);
         if (ShowTPAs) then
           for II := 0 to HH do
-            bmpDebug.Pixels[ATPA2[I][II].X, ATPA2[I][II].Y] := Col;
+            bmpDebug.Pixel[ATPA2[I][II].X, ATPA2[I][II].Y] := Col;
         if ((ShowTPABorders) or (ShowTPAIndexes)) then
           Col := Random(clWhite + 1);
         if (ShowTPABorders) then
@@ -71,7 +71,7 @@ begin
           TPA := BoxToTPA(TPABounds(ATPA2[I]), False);
           HH := High(TPA);
             for II := 0 to HH do
-              bmpDebug.Pixels[TPA[II].X, TPA[II].Y] := Col;
+              bmpDebug.Pixel[TPA[II].X, TPA[II].Y] := Col;
         end;
         if (ShowTPAIndexes) then
         begin
@@ -81,7 +81,7 @@ begin
           HH := High(TPA);
           for II := 0 to HH do
             try
-              bmpDebug.Pixels[TPA[II].X, TPA[II].Y] := Col;
+              bmpDebug.Pixel[TPA[II].X, TPA[II].Y] := Col;
             except
             end;
         end;
@@ -91,7 +91,7 @@ begin
         TPA := BoxToTPA(ATPABounds(ATPA2), False);
         H := High(TPA);
         for I := 0 to H do
-          bmpDebug.Pixels[TPA[I].X, TPA[I].Y] := clBlue;
+          bmpDebug.Pixel[TPA[I].X, TPA[I].Y] := clBlue;
       end;
     end;
     DebugBitmap(bmpDebug);

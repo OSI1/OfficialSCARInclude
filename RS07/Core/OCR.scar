@@ -52,9 +52,10 @@ Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
 function GetUpText: string;
 begin
   try
-    Result := rs_GetTextAt(UpChars, UpTextX, UpTextY);
+    //Result := rs_GetTextAt(UpChars, UpTextX, UpTextY);  FIX
   except
   end;
+  Result := '@#$!@$ OCR ERROR'; // FIX
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -221,7 +222,8 @@ var
   B: TBox;
 begin
   B := GetOptionBox(Index, AllOptionsBox);
-  Result := rs_GetTextAt(UpChars, B.X1, B.Y1);
+  //Result := rs_GetTextAt(UpChars, B.X1, B.Y1);
+  Result := '@#$!@$ OCR ERROR'; // FIX
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
