@@ -668,22 +668,6 @@ var
   CurrentPlayer, PlayerStartTime: LongInt;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-var SMART Related vars
-Contributors: Wanted
-Description: Handles all of SMART related info and variables.
-Last Modified: September 18th, 2011. By Wanted. RS2 Build 666.
-Last Modified: November 12th, 2012. By LordJashin. RS2 Build 735.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-{$IFDEF SMART}
-var
-  NonAutomaticSMART: Boolean;
-  SMART_Client: TSCARClient;
-  SMART_Server: Integer;
-  SMARTPath: string;
-{$ENDIF}
-  
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var RS07FontsLoaded: Boolean;
 Contributors: Wanted
 Description: True if RS07 fonts are loaded.

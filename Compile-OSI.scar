@@ -23,9 +23,6 @@
 // OSI Files
 {$I OSI.scar}                      // Required*
 {$I Divi\Misc\Debug.scar}          // Comment out or in, test all combinations.
-{$IFDEF SMART}
-  {$I SMART\DebugSMART.scar}
-{$ENDIF}
 {$IFDEF RS07}
   {$I RS07\Misc\Game-Tabs\Tab2-Quest.scar}
   {$I RS07\Misc\Game-Tabs\Tab7-Clan.scar}

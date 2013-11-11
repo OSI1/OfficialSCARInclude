@@ -18,7 +18,6 @@
       {$ERROR You can not define SMART without defining RS07 or RS2}
     {$ENDIF}   
   {$ENDIF}   
-  {$L SMART\SmartRemote.dll}
 {$ENDIF}
 
 {$IFNDEF RS2}
@@ -54,7 +53,6 @@
 {$IFDEF RS07}
   {$I RS07\Core\Globals.scar}
   {$IFDEF SMART}
-    {$I OSI\RS07\Misc\SMART.scar}
   {$ENDIF}
   {$I RS07\Core\OCR.scar}   
   {$I RS07\Core\Game-Tabs\Game-Tabs.scar}
@@ -121,17 +119,6 @@ begin
     {$ELSE}
       WriteLn('Auto font loading disabled.');
     {$ENDIF} 
-      {$IFDEF SMART}
-        if InitSmartLib(OSIPath + 'SMART\libsmartremote32.dll') then
-          SMARTPath := OSIPath + 'SMART\'
-        else
-        begin
-          WriteLn('Couldn''t load libsmartremote32.dll');
-          TerminateScript;
-        end;     
-        if (not (NonAutomaticSMART)) then
-          InitiateSMART;
-      {$ENDIF}
     PlayerStartTime := GetSystemTime;
   {$ENDIF}
 end;

@@ -140,9 +140,6 @@ Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
 
 function RSReady: Boolean;
 begin
-{$IFDEF SMART}
-  SmartSetRefresh(Smart_Client, 50);
-{$ENDIF}
   Result := False;
   if (not (WelcomeScreen)) then
     if (not (LoginScreen)) then        
