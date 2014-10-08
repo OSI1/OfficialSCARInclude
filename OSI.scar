@@ -68,7 +68,7 @@
   {$I RS07\Core\Map.scar}
   {$I RS07\Core\Bank.scar}
   {$IFDEF OSI_RS07_Color_Anti_Randoms}
-    {$I RS07\Anti-Randoms\Anti-Randoms.scar}
+    {$I RS07\Misc\Anti-Randoms\Anti-Randoms.scar}
   {$ENDIF}
 {$ENDIF}
 

@@ -30,7 +30,7 @@ function BankScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
@@ -39,9 +39,10 @@ var
   P: TPoint;
 begin
   Result := False;
-  FindColorEx(TPA, 2070783, 178, 31, 340, 54);
+  FindColorEx(TPA, 2070783, 178, 14, 340, 34);
   if (Length(TPA) > 20) then
-    Result := FindTextTPAInTPA('The Bank of RuneScape', ScreenChars, TPA, P);
+    Result := (FindTextTPAInTPA('The Bank of RuneScape', ScreenChars, TPA, P) or
+  FindTextTPAInTPA('Tab', ScreenChars, TPA, P));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

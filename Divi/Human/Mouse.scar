@@ -56,7 +56,7 @@ procedure MMouse(X, Y, RX, RY: Integer);
 Contributors: Timer, Wanted, Freddy, Bixby Sayz, LordJashin.
 Description: Moves the mouse humanly.
 Date Created: August 7th, 2011. By Timer
-Last Modified: March 16th, 2013. By Wanted
+Last Modified: October 7th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MMouse(X, Y, RX, RY: Integer);
@@ -67,7 +67,7 @@ begin
   B1 := Box(X - RX, Y - RY, X + RX, Y + RY);  
   P := RRectanglePoint(B1.X1, B1.Y1, B1.X2, B1.Y2);
   if (MouseSpeed <> 0) then
-    MoveMouseEx(P.X, P.Y, MouseSpeed)
+    MoveMouseEx(P.X, P.Y, RR(MouseSpeed - 3, MouseSpeed + 3))
   else
     MoveMouse(P.X, P.Y); 
   GetMousePosP(P);

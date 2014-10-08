@@ -38,6 +38,10 @@
  * function ChooseOption(Option: string): Boolean;
      By: Wanted
  * function GetAmount(B: TBox): LongInt;
+     By: Wanted         
+ * function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
+     By: Wanted
+ * function GetMMLevel(Skill: Integer): Integer;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -356,7 +360,7 @@ function GetAmount(B: TBox): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within box.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetAmount(B: TBox): LongInt;
@@ -368,7 +372,7 @@ var
   SB: TBox;
 begin
   Result := 0;
-  TextColors := [clYellow, clWhite, 8453888];
+  TextColors := [clYellow, clWhite, 8453888, 65280];
   for I := 0 to 2 do
     if (FindColorExP(TPA, TextColors[I], B)) then
     begin
@@ -379,3 +383,56 @@ begin
         Result := (Result * Floor(Pow(1000, I)));
     end;
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
+Contributors: Wanted
+Description: Returns the number from the skill level on the minimap.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: October 8th, 2014. By Wanted. RS2 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
+var
+  ColorsDec: TIntegerArray;
+  ColorsStr: TStringArray;
+  TPA: TPointArray;
+  I, C: Integer;
+  B: TBox;
+begin
+  Result := -1;
+  case Skill of
+    Skill_Hitpoints: B := Box(522, 54, 541, 70);
+    Skill_Prayer: B := Box(523, 100, 541, 115);
+    Skill_Run: B := Box(544, 134, 567, 150);
+  else
+    Exit;
+  end;
+  ColorsDec := [65280, 65535, 2070783, 255];
+  ColorsStr  := ['green', 'yellow', 'orange', 'red'];
+  for I := 0 to 3 do
+    if (FindColorTolExP(TPA, ColorsDec[I], B, 85)) then
+      Break;
+  if (I > 3) then      
+    Exit;
+  B := TPABounds(TPA);    
+  C := GetColor(TPA[0].X, TPA[0].Y);
+  Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, C, 3, False, tr_Digits)), -1);
+  ColorState := ColorsStr[I];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMMLevel(Skill: Integer): Integer;
+Contributors: Wanted
+Description: Returns the number from the skill level on the minimap.
+Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
+Last Modified: October 7th, 2014. By Wanted. RS2 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetMMLevel(Skill: Integer): Integer;
+var
+  S: string;
+begin
+  Result := GetMMLevelEx(Skill, S);
+end;
+

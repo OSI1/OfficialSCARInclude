@@ -76,41 +76,41 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Wanted, LordJashin, Janilabo, Bixby Sayz.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 12th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-const             // Description                      Modified            By              Build #
+const             // Description                      Modified/Confirmed  By              Build #
 
-  RSCX = 382;     // RS07 Client Center Points     // March 5, 2013       Wanted          ???
-  RSCY = 251;                                      // March 5, 2013       Wanted          ???
-  RSX1 = 0;       // RS07 Client Edge Points       // March 5, 2013       Wanted          ???
-  RSY1 = 0;                                        // March 5, 2013       Wanted          ???
-  RSX2 = 764;                                      // March 5, 2013       Wanted          ???
-  RSY2 = 502;                                      // March 5, 2013       Wanted          ???
-  RSPW = (RSX2 - RSX1) + 1; // RS07 Client Width   // October 6, 2012     LordJashin      735
-  RSPH = (RSY2 - RSY1) + 1; // RS07 Client Height  // October 6, 2012     LordJashin      735
-  RSPA = RSPW * RSPH; // RS07 Client Pixel Area    // September 17, 2012  LordJashin      718
+  RSCX = 382;     // RS07 Client Center Points     // October 7, 2014     Wanted          ???
+  RSCY = 251;                                      // October 7, 2014     Wanted          ???
+  RSX1 = 0;       // RS07 Client Edge Points       // October 7, 2014     Wanted          ???
+  RSY1 = 0;                                        // October 7, 2014     Wanted          ???
+  RSX2 = 764;                                      // October 7, 2014     Wanted          ???
+  RSY2 = 502;                                      // October 7, 2014     Wanted          ???
+  RSPW = (RSX2 - RSX1) + 1; // RS07 Client Width   // October 7, 2014     LordJashin      ???
+  RSPH = (RSY2 - RSY1) + 1; // RS07 Client Height  // October 7, 2014     LordJashin      ???
+  RSPA = RSPW * RSPH; // RS07 Client Pixel Area    // October 7, 2014     LordJashin      ???
 
-  MSCX  = 260;    // Main Screen Center Points     // August 7, 2011      Wanted          660
-  MSCY  = 171;                                     // August 7, 2011      Wanted          660
-  MSX1  = 4;      // Main Screen Edge Points       // August 7, 2011      Wanted          660
-  MSY1  = 4;                                       // August 7, 2011      Wanted          660
-  MSX2  = 515;                                     // August 7, 2011      Wanted          660
-  MSY2  = 337;                                     // August 7, 2011      Wanted          660
-  MSPW  = (MSX2 - MSX1) + 1; // Main Screen Width  // June 23, 2012       LordJashin      718
-  MSPH  = (MSY2 - MSY1) + 1; // Main Screen Height // June 23, 2012       LordJashin      718
-  MSPA  = MSPW * MSPH; // Main Screen Pixel Area   // June 23, 2012       LordJashin      718
-  MSCXe = (MSX1 + MSX2) / 2;                       // June 23, 2012       LordJashin      718
-  MSCYe = (MSY1 + MSY2) / 2;                       // June 23, 2012       LordJashin      718
+  MSCX  = 260;    // Main Screen Center Points     // October 7, 2014     Wanted          ???
+  MSCY  = 171;                                     // October 7, 2014     Wanted          ???
+  MSX1  = 4;      // Main Screen Edge Points       // October 7, 2014     Wanted          ???
+  MSY1  = 4;                                       // October 7, 2014     Wanted          ???
+  MSX2  = 515;                                     // October 7, 2014     Wanted          ???
+  MSY2  = 337;                                     // October 7, 2014     Wanted          ???
+  MSPW  = (MSX2 - MSX1) + 1; // Main Screen Width  // October 7, 2014     LordJashin      718
+  MSPH  = (MSY2 - MSY1) + 1; // Main Screen Height // October 7, 2014     LordJashin      718
+  MSPA  = MSPW * MSPH; // Main Screen Pixel Area   // October 7, 2014     LordJashin      718
+  MSCXe = (MSX1 + MSX2) / 2;                       // October 7, 2014     LordJashin      718
+  MSCYe = (MSY1 + MSY2) / 2;                       // October 7, 2014     LordJashin      718
 
-  MMCX  = 643;    // Map Center Points             // March 5, 2013       Wanted          ???
-  MMCY  = 83;                                      // March 5, 2013       Wanted          ???
-  MMX1  = 570;    // Map Edge Points               // March 5, 2013       Wanted          ???
-  MMY1  = 9;                                       // March 5, 2013       Wanted          ???
-  MMX2  = 714;                                     // March 5, 2013       Wanted          ???
-  MMY2  = 159;                                     // March 5, 2013       Wanted          ???
-  MMPW  = (MMX2 - MMX1) + 1; // Map Width          // March 5, 2013       Wanted          ???
-  MMPH  = (MMY2 - MMY1) + 1; // Map Height         // March 5, 2013       Wanted          ???
+  MMCX  = 643;    // Map Center Points             // October 7, 2014     Wanted          ???
+  MMCY  = 83;                                      // October 7, 2014     Wanted          ???
+  MMX1  = 570;    // Map Edge Points               // October 7, 2014     Wanted          ???
+  MMY1  = 9;                                       // October 7, 2014     Wanted          ???
+  MMX2  = 714;                                     // October 7, 2014     Wanted          ???
+  MMY2  = 159;                                     // October 7, 2014     Wanted          ???
+  MMPW  = (MMX2 - MMX1) + 1; // Map Width          // October 7, 2014     Wanted          ???
+  MMPH  = (MMY2 - MMY1) + 1; // Map Height         // October 7, 2014     Wanted          ???
   MMPAe = 15742;  // Pixel Area (Pixel Count)      // March 5, 2013       Janilabo        ???
 
   CMCX  = 20;     // Compass Center Points         // March 12, 2013      Wanted          ???
@@ -128,50 +128,50 @@ const             // Description                      Modified            By    
   CMCXe = (CMX1 + CMX2) / 2;                       // March 12, 2013      Wanted          ???
   CMCYe = (CMY1 + CMY2) / 2;                       // March 12, 2013      Wanted          ???
 
-  MICX = 642;     // Inventory Center Points       // March 11, 2013      Wanted          ???
-  MICY = 335;                                      // March 11, 2013      Wanted          ???
-  MIX1 = 547;     // Inventory Edge Points         // March 5, 2013       Wanted          ???
-  MIY1 = 205;                                      // March 5, 2013       Wanted          ???
-  MIX2 = 736;                                      // March 5, 2013       Wanted          ???
-  MIY2 = 465;                                      // March 5, 2013       Wanted          ???
-  MIPW = (MIX2 - MIX1) + 1; // Inventory Width     // June 23, 2012       LordJashin      718
-  MIPH = (MIY2 - MIY1) + 1; // Inventory Height    // June 23, 2012       LordJashin      718
-  MIPA = MIPW * MIPH; // Pixel Area                // June 23, 2012       LordJashin      718
-  MICXe = (MIX1 + MIX2) / 2;                       // June 23, 2012       LordJashin      718
-  MICYe = (MIY1 + MIY2) / 2;                       // June 23, 2012       LordJashin      718
+  MICX = 642;     // Inventory Center Points       // October 7, 2014     Wanted          ???
+  MICY = 335;                                      // October 7, 2014     Wanted          ???
+  MIX1 = 547;     // Inventory Edge Points         // October 7, 2014     Wanted          ???
+  MIY1 = 205;                                      // October 7, 2014     Wanted          ???
+  MIX2 = 736;                                      // October 7, 2014     Wanted          ???
+  MIY2 = 465;                                      // October 7, 2014     Wanted          ???
+  MIPW = (MIX2 - MIX1) + 1; // Inventory Width     // October 7, 2014     LordJashin      ???
+  MIPH = (MIY2 - MIY1) + 1; // Inventory Height    // October 7, 2014     LordJashin      ???
+  MIPA = MIPW * MIPH; // Pixel Area                // October 7, 2014     LordJashin      ???
+  MICXe = (MIX1 + MIX2) / 2;                       // October 7, 2014     LordJashin      ???
+  MICYe = (MIY1 + MIY2) / 2;                       // October 7, 2014     LordJashin      ???
                                                   
-  MCCX = 252;     // Chat Box Center Points        // March 11, 2013      Wanted          ???
-  MCCY = 409;                                      // March 5, 2013       Wanted          ???
-  MCX1 = 7;       // Chat Box Edge Points          // August 8, 2011      Wanted          660
-  MCY1 = 345;                                      // August 8, 2011      Wanted          660
-  MCX2 = 496;                                      // March 5, 2013       Wanted          ???
-  MCY2 = 473;                                      // March 5, 2013       Wanted          ???
-  MCPW = (MCX2 - MCX1) + 1; // Chat Box Width      // June 23, 2012       LordJashin      718
-  MCPH = (MCY2 - MCY1) + 1; // Chat Box Height     // June 23, 2012       LordJashin      718
-  MCPA = MIPW * MIPH; // Chat Box Area             // June 23, 2012       LordJashin      718
+  MCCX = 252;     // Chat Box Center Points        // October 7, 2014     Wanted          ???
+  MCCY = 409;                                      // October 7, 2014     Wanted          ???
+  MCX1 = 7;       // Chat Box Edge Points          // October 7, 2014     Wanted          ???
+  MCY1 = 345;                                      // October 7, 2014     Wanted          ???
+  MCX2 = 496;                                      // October 7, 2014     Wanted          ???
+  MCY2 = 474;                                      // October 7, 2014     Wanted          ???
+  MCPW = (MCX2 - MCX1) + 1; // Chat Box Width      // October 7, 2014     LordJashin      ???
+  MCPH = (MCY2 - MCY1) + 1; // Chat Box Height     // October 7, 2014     LordJashin      ???
+  MCPA = MIPW * MIPH; // Chat Box Area             // October 7, 2014     LordJashin      ???
 
-  MBCX = 254;     // Bank Screen Center Points     // March 5, 2013       Wanted          ???
-  MBCY = 173;                                      // March 5, 2013       Wanted          ???
-  MBX1 = 41;      // Bank Screen Edge Points       // March 5, 2013       Wanted          ???
-  MBY1 = 59;                                       // March 5, 2013       Wanted          ???
-  MBX2 = 467;                                      // March 5, 2013       Wanted          ???
-  MBY2 = 287;                                      // March 5, 2013       Wanted          ???
-  MBPW = (MBX2 - MBX1) + 1; // Bank Screen Width   // June 23, 2012       LordJashin      718
-  MBPH = (MBY2 - MBY1) + 1;// Bank Screen Height   // June 23, 2012       LordJashin      718
-  MBPA = MBPW * MBPH; // Pixel Area                // June 23, 2012       LordJashin      718
+  MBCX = 254;     // Bank Screen Center Points     // October 7, 2014     Wanted          ???
+  MBCY = 173;                                      // October 7, 2014     Wanted          ???
+  MBX1 = 62;      // Bank Screen Edge Points       // October 7, 2014     Wanted          ???
+  MBY1 = 84;                                       // October 7, 2014     Wanted          ???
+  MBX2 = 455;                                      // October 7, 2014     Wanted          ???
+  MBY2 = 294;                                      // October 7, 2014     Wanted          ???
+  MBPW = (MBX2 - MBX1) + 1; // Bank Screen Width   // October 7, 2014     LordJashin      ???
+  MBPH = (MBY2 - MBY1) + 1;// Bank Screen Height   // October 7, 2014     LordJashin      ???
+  MBPA = MBPW * MBPH; // Pixel Area                // October 7, 2014     LordJashin      ???
 
-  MDCX = 266;     // Deposit Box Center Points    // March 11, 2013       Wanted          ???
-  MDCY = 153;                                     // March 11, 2013       Wanted          ???
-  MDX1 = 130;     // Deposit Box Edge Points      // March 5, 2013        Wanted          ???
-  MDY1 = 74;                                      // March 6, 2013        Wanted          ???
-  MDX2 = 402;                                     // March 6, 2013        Wanted          ???
-  MDY2 = 232;                                     // March 6, 2013        Wanted          ???
-  MDPH = (MDX2 - MDX1) + 1; // Deposit Box Width  // June 23, 2012        LordJashin      718
-  MDPW = (MDY2 - MDY1) + 1; // Deposit Box Height // June 23, 2012        LordJashin      718
-  MDPA = MDPW * MDPH; // Deposit Box Area         // June 23, 2012        LordJashin      718
+  MDCX = 266;     // Deposit Box Center Points     // October 7, 2014     Wanted          ???
+  MDCY = 153;                                      // October 7, 2014     Wanted          ???
+  MDX1 = 130;     // Deposit Box Edge Points       // October 7, 2014     Wanted          ???
+  MDY1 = 74;                                       // October 7, 2014     Wanted          ???
+  MDX2 = 402;                                      // October 7, 2014     Wanted          ???
+  MDY2 = 232;                                      // October 7, 2014     Wanted          ???
+  MDPH = (MDX2 - MDX1) + 1; // Deposit Box Width   // October 7, 2014     LordJashin      ???
+  MDPW = (MDY2 - MDY1) + 1; // Deposit Box Height  // October 7, 2014     LordJashin      ???
+  MDPA = MDPW * MDPH; // Deposit Box Area          // October 7, 2014     LordJashin      ???
 
-  UpTextX = 7; // Up Text capture X               // March 9, 2013        Wanted          ???
-  UpTextY = 7; // Up Text capture Y               // March 9, 2013        Wanted          ???
+  UpTextX = 7; // Up Text capture X                // March 9, 2013       Wanted          ???
+  UpTextY = 7; // Up Text capture Y                // March 9, 2013       Wanted          ???
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RSCP: TPoint;
@@ -487,7 +487,7 @@ const Skill_ Indexes
 Contributors: Wanted
 Description: Index handles for various RS07 skills.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
@@ -496,7 +496,8 @@ const
   Skill_Hitpoints     = 1;
   Skill_Mining        = 2;
   Skill_Strength      = 3;
-  Skill_Agility       = 4;
+  Skill_Agility       = 4;  
+  Skill_Run           = 4; // For GetMMLvls
   Skill_Smithing      = 5;
   Skill_Defence       = 6;
   Skill_Herblore      = 7;

@@ -74,7 +74,7 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function SetGameTab(Tab: Integer): Integer;
+function SetGameTab(Tab: Integer): Boolean;
 Contributors: Wanted, Dynamite.
 Description: Switches to a specific game tab.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
