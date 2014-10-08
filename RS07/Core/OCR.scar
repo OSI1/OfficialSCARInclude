@@ -39,8 +39,6 @@
      By: Wanted
  * function GetAmount(B: TBox): LongInt;
      By: Wanted         
- * function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
-     By: Wanted
  * function GetMMLevel(Skill: Integer): Integer;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -385,19 +383,20 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
+function GetMMLevel(Skill: Integer): Integer;
 Contributors: Wanted
 Description: Returns the number from the skill level on the minimap.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: October 8th, 2014. By Wanted. RS2 Build ???.
+Last Modified: October 7th, 2014. By Wanted. RS2 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetMMLevelEx(Skill: Integer; var ColorState: string): Integer;
+function GetMMLevel(Skill: Integer): Integer;
 var
-  ColorsDec: TIntegerArray;
-  ColorsStr: TStringArray;
+  Client: TSCARClient;
+  bmp: TSCARBitmap;
   TPA: TPointArray;
-  I, C: Integer;
+  C: LongInt; 
+  P: TPoint;        
   B: TBox;
 begin
   Result := -1;
@@ -408,31 +407,21 @@ begin
   else
     Exit;
   end;
-  ColorsDec := [65280, 65535, 2070783, 255];
-  ColorsStr  := ['green', 'yellow', 'orange', 'red'];
-  for I := 0 to 3 do
-    if (FindColorTolExP(TPA, ColorsDec[I], B, 85)) then
-      Break;
-  if (I > 3) then      
-    Exit;
-  B := TPABounds(TPA);    
-  C := GetColor(TPA[0].X, TPA[0].Y);
-  Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, C, 3, False, tr_Digits)), -1);
-  ColorState := ColorsStr[I];
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetMMLevel(Skill: Integer): Integer;
-Contributors: Wanted
-Description: Returns the number from the skill level on the minimap.
-Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: October 7th, 2014. By Wanted. RS2 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function GetMMLevel(Skill: Integer): Integer;
-var
-  S: string;
-begin
-  Result := GetMMLevelEx(Skill, S);
+  bmp := GetClient.CaptureEx(B.X1, B.Y1, B.X2, B.Y2);  
+  Client := SetClient(TSCARBitmapClient.Create(bmp));  
+  try       
+    if ((FindColor(P.X, P.Y, clBlack, 0, 0, Bmp.Width - 1, Bmp.Height - 1)) and (P.X > 0) and (P.Y > 0)) then
+      C := GetColor(P.X - 1, P.Y - 1);
+    FindColorExP(TPA, C, Box(0, 0, Bmp.Width - 1, Bmp.Height - 1));  
+    B := TPABounds(TPA);
+    Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, C, 3, False, tr_Digits)), -1);
+  except  
+  finally 
+    SetClient(Client).Free;
+    try
+      bmp.Free; 
+    except   
+    end;
+  end;
 end;
 
