@@ -24,7 +24,9 @@
      By: Timer
  * function  MSToTime(MS: LongInt): string;
      By: Timer
- * function  STimeRunning: string;
+ * function MSToTimeEx(MS: LongInt): string;
+     By: Wanted    
+ * function STimeRunning: string;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -323,6 +325,66 @@ begin
       Result := Result + IntToStr(tS) + TheTimeRInfo[3][1]
     else
       Result := Result + IntToStr(tS) + TheTimeRInfo[3][0];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MSToTimeEx(MS: LongInt): string;
+By: Wanted
+Description: Returns MS in numbers Days:Hours:Minutes:Seconds:MiliSeconds
+Date Created: October 8th, 2014. By Wanted
+Last Modified:  October 19th, 2014. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MSToTimeEx(MS: LongInt): string;
+var
+  SDays, SHours, SMinutes, SSeconds, SMSeconds: string;
+  Days, Hours, Minutes, Seconds, Temp: LongInt;
+begin
+  Result := ''; 
+  SDays := '';
+  SHours := '';
+  SMinutes := '';
+  SSeconds := '';
+  SMSeconds := '';  
+  Days := (MS div 86400000); 
+  Temp := (MS mod 86400000);
+  if (Days > 0) then  
+    SDays := IntToStr(Days) + ':';    
+  Hours := (Temp div 3600000)                      
+  Temp := (Temp mod 3600000);
+  if (Hours > 0) then
+    SHours := IntToStr(Hours) + ':';       
+  Minutes := (Temp div 60000)                      
+  Temp := (Temp mod 60000);
+  if (Minutes > 0) then
+    SMinutes := IntToStr(Minutes) + ':';    
+  Seconds := (Temp div 1000)                      
+  Temp := (Temp mod 1000);
+  if (Seconds > 0) then
+    SSeconds := IntToStr(Seconds) + ':';    
+  if (SDays <> '') then
+    case Length(SHours) of
+      0: SHours := '00:';
+      2: SHours := '0' + SHours; 
+    end;      
+  if (SHours <> '') then
+    case Length(SMinutes) of
+      0: SMinutes := '00:';
+      2: SMinutes := '0' + SMinutes; 
+    end;  
+  if (SMinutes <> '') then
+    case Length(SSeconds) of
+      0: SSeconds := '00:';
+      2: SSeconds := '0' + SSeconds; 
+    end;      
+  SMSeconds := IntToStr(Temp); 
+  case Temp of
+    0..9: SMSeconds := '00' + IntToStr(Temp);
+    10..99: SMSeconds := '0' + IntToStr(Temp);   
+  end;  
+  Result := SDays + SHours + SMinutes + SSeconds + SMSeconds;
+  if (SSeconds = '') then
+    Result := Result + 'ms'            
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

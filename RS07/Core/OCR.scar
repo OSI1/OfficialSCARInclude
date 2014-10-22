@@ -387,7 +387,7 @@ function GetMMLevel(Skill: Integer): Integer;
 Contributors: Wanted
 Description: Returns the number from the skill level on the minimap.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: October 7th, 2014. By Wanted. RS2 Build ???.
+Last Modified: October 8th, 2014. By Wanted. RS2 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetMMLevel(Skill: Integer): Integer;
@@ -424,4 +424,3 @@ begin
     end;
   end;
 end;
-

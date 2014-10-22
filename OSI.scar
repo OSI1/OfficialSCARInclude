@@ -95,7 +95,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin, Tootoot222.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: January 2nd, 2014. By Wanted
+Last Modified: October 19th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
@@ -111,8 +111,6 @@ begin
     {$IFDEF OSI_RS07_Color_Anti_Randoms}
       WriteLn('OSI RS07 color random detection and solving enabled.');
       InitiateAntiRandoms;
-    {$ELSE}
-      WriteLn('OSI RS2 color random detection and solving disabled.');
     {$ENDIF}
     {$IFNDEF DisableRS07Fonts}
       LoadRS07Fonts;

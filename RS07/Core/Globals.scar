@@ -695,7 +695,7 @@ procedure LoadRS07Fonts;
 Contributors: Wanted
 Description: Loads RS07 fonts into memory.
 Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: Octover 22nd, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure LoadRS07Fonts;
@@ -725,7 +725,7 @@ begin
     WriteLn('Failed to load RS07 fonts!');
     Exit;
   end;
-  WriteLn('Loaded RS2 Fonts: UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars (' + IntToStr(GetSystemTime - T) + ' ms)');
+  WriteLn('Loaded RS07 Fonts: UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars (' + IntToStr(GetSystemTime - T) + ' ms)');
   RS07FontsLoaded := True;  
 end;  
 
@@ -734,7 +734,7 @@ procedure FreeRS07Fonts;
 Contributors: Wanted
 Description: Frees RS07 fonts from memory.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: Octover 22nd, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeRS07Fonts;
@@ -756,5 +756,5 @@ begin
     Exit;
   end;
   RS07FontsLoaded := False; 
-  WriteLn('Freed RS2 Fonts');
+  WriteLn('Freed RS07 Fonts');
 end;  
