@@ -1,8 +1,6 @@
 program New;
 
 {$DEFINE RS07}                         // V - Bright Settings
-{$DEFINE SMART}                        // Comment out to use normal browser
-{$DEFINE OSI_RS07_Color_Anti_Randoms}
 
 {$I OSI\OSI.scar}
 

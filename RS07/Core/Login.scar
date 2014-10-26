@@ -7,8 +7,6 @@
      By: Wanted
  * function LoginScreen: Boolean;
      By: Wanted
- * function HowToPlayScreen: Boolean;
-     By: Wanted
  * function MessageScreen: Boolean;
      By: Wanted
  * function LoggedIn: Boolean;
@@ -18,10 +16,6 @@
  * function LoginSoundDisabled: Boolean;
      By: Wanted
  * function ToggleLoginMusic(Enable: Boolean): Boolean;
-     By: Wanted
- * function PressNewUser(CheckWS: Boolean): Boolean;
-     By: Wanted
- * function PressCancelHowToPlay(CheckHTPS: Boolean): Boolean;
      By: Wanted
  * function PressExistingUser(CheckWS: Boolean): Boolean;
      By: Wanted  
@@ -92,19 +86,6 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function HowToPlayScreen: Boolean;
-Contributors: Wanted
-Description: Returns true if at the screen that tells you how to play.
-Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function HowToPlayScreen: Boolean;
-begin
-  Result := (CountColor(clYellow, 342, 191, 424, 219) = 251); // How to Play
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function MessageScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the screen that shows you your messages after you login.
@@ -135,7 +116,7 @@ function RSReady: Boolean;
 Contributors: Wanted
 Description: Returns true when runescape isn't intially loading the game.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+Last Modified: Octover 26th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function RSReady: Boolean;
@@ -143,10 +124,9 @@ begin
   Result := False;
   if (not (WelcomeScreen)) then
     if (not (LoginScreen)) then        
-      if (not (HowToPlayScreen)) then
-        if (not (LoggedIn)) then
-          if (not (MessageScreen)) then
-            Exit;
+      if (not (LoggedIn)) then
+        if (not (MessageScreen)) then
+          Exit;
   Result := True;
 end;
 
@@ -177,44 +157,6 @@ begin
   if (not (Result)) then
     Exit;
   MouseBox(728, 466, 757, 496, ClickLeft);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function PressNewUser(CheckWS: Boolean): Boolean;
-Contributors: Wanted
-Description: Returns true if you make it to the HowToPlayScreen. Cancels if not at
-             WelcomeScreen and CheckWS is true.
-Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function PressNewUser(CheckWS: Boolean): Boolean;
-begin
-  Result := False;
-  if (CheckWS) then
-    if (not (WelcomeScreen)) then
-      Exit;
-  MouseBox(233, 273, 371, 310, ClickLeft);
-  Result := WaitFunc(@HowToPlayScreen, True, 50, 150, 2500, 3500);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function PressCancelHowToPlay(CheckHTPS: Boolean): Boolean;
-Contributors: Wanted
-Description: Returns true if you make it to the WelcomeScreen. Cancels if not at
-             HowToPlayScreen and CheckHTPS is true.
-Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function PressCancelHowToPlay(CheckHTPS: Boolean): Boolean;
-begin
-  Result := False;
-  if (CheckHTPS) then
-    if (not (HowToPlayScreen)) then
-      Exit;
-  MouseBox(312, 302, 453, 340, ClickLeft);
-  Result := WaitFunc(@WelcomeScreen, True, 50, 150, 2500, 3500);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -299,14 +241,15 @@ begin
   repeat  
     TT := GetSystemTime + RR(35000, 40000);  
     if (not (TIAContains([0, 799, 407, 301], CountColor(clYellow, 247, 214, 519, 231)))) then
-      if (not (FindLoginMessageText('Your profile will be transferred'))) then
-        Exit
-      else
-      begin
-        WriteLn('Your profile is being transferred...');
-        while ((TT > GetSystemTime) and (T > GetSystemTime) and (not (MessageScreen))) do
-          WaitRR(150, 300);
-      end;
+      if (not (MessageScreen)) then
+        if (not (FindLoginMessageText('Your profile will be transferred'))) then
+          Exit
+        else
+        begin
+          WriteLn('Your profile is being transferred...');
+          while ((TT > GetSystemTime) and (T > GetSystemTime) and (not (MessageScreen))) do
+            WaitRR(150, 300);
+        end;
     if (MessageScreen) then
     begin
       Result := True;

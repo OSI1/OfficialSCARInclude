@@ -1,7 +1,6 @@
 program New;
 
 {$DEFINE RS07}                         // V - Bright Settings
-//{$DEFINE SMART}                      // Comment out to use normal browser
 
 {$I OSI\OSI.scar}
 
