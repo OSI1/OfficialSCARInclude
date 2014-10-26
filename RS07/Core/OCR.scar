@@ -3,12 +3,16 @@
                                   Runescape 07
                                   OCR Routines
 --------------------------------------------------------------------------------
+ * function RS_GetTextAtEx(x,y, width: Integer; Font:TCharsN; EndStr:String): String;
+     By: Slacky
+ * function rs_GetTextAt(Font: TCharsN; X, Y: Integer): string;
+     By: Slacky & Wanted.
  * function GetUpText: String;
-     By: Freddy
+     By: Slacky & Wanted.
  * function UpTextContainsMulti(Text: TStringArray): Boolean;
-     By: Freddy & Wanted.
+     By: Wanted & Slacky.
  * function UpTextContains(Text: string): Boolean;
-     By: Freddy & Wanted.
+     By: Wanted & Slacky.
  * function FindOptionsBox(var OptionsBox: TBox): Boolean;
      By: Wanted
  * function OptionBoxExists: Boolean;
@@ -44,27 +48,65 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RS_GetTextAtEx(x,y, width: Integer; Font:TCharsN; EndStr:String): String;
+Contributors: Slacky
+Description: Returns text on runescape screen.
+Date Created: October 26th, 2014. By Slacky. RS07 Build ???.
+Last Modified: October 26th, 2014. By Slacky. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RS_GetTextAtEx(x,y, width: Integer; Font:TCharsN; EndStr:String): String;
+var 
+  Client: T2DIntArray;
+  Height,i: Integer;
+  
+begin
+  Height := Font[32].Height;
+  Client := XT_Bmp2Matrix(XT_ClientBMP(x,y,x+width,y+Height), True);
+  
+  //OCR 
+  Result := RS_ReadText(Client, Font, 0,200, EndStr);
+  //Strip noise chars from start and end.
+  for i:=0 to 1 do
+  begin
+    Result := TrimEx('.', Result);   
+    Result := TrimEx(',', Result);
+    Result := TrimEx(':', Result);
+    Result := TrimEx('''', Result);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function rs_GetTextAt(Font: TCharsN; X, Y: Integer): string;
+Contributors: Slacky, Wanted.
+Description: Returns text on runescape screen.
+Date Created: October 26th, 2014. By Slacky. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function rs_GetTextAt(Font: TCharsN; X, Y: Integer): string;
+begin
+  Result := RS_GetTextAtEx(X, Y, 500, UpCharsShadow, '');
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetUpText: String;
-Contributors: Freddy, Wanted.
+Contributors: Slacky, Wanted.
 Description: Returns text in upperleft corner.
-Date Created: August 7th, 2011. By Freddy. RS2 Build 660.
-Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+Date Created: October 26th, 2014. By Slacky. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetUpText: string;
 begin
-  try
-    //Result := rs_GetTextAt(UpChars, UpTextX, UpTextY);  FIX
-  except
-  end;
-  Result := '@#$!@$ OCR ERROR'; // FIX
+  Result :=  RS_GetTextAtEx(UpTextX, UpTextY, 500, UpCharsShadow, 'mo*e opt**ns');
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function UpTextContainsMulti(Text: TStringArray): Boolean;
-Contributors: Freddy, Wanted.
+Contributors: Wanted & Slacky.
 Description: Checks for the occurance of any of the strings in the array.
-Date Created: August 7th, 2011. By Freddy & Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By  Wanted & Slacky. RS2 Build 660.
 Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -84,9 +126,9 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function UpTextContains(Text: string): Boolean;
-Contributors: Freddy, Wanted.
+Contributors: Wanted & Slacky.
 Description: Returns true if uptext is found.
-Date Created: August 7th, 2011. By Freddy & Wanted. RS2 Build 660.
+Date Created: August 7th, 2011. By Wanted & Slacky. RS2 Build 660.
 Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -213,10 +255,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetOption(Index: Integer; AllOptionsBox: TBox): string;
-Contributors: Wanted, Freddy.
+Contributors: Wanted, Slacky.
 Description: Gets option text from box index in AllOptionsBox.
 Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetOption(Index: Integer; AllOptionsBox: TBox): string;
@@ -224,13 +266,12 @@ var
   B: TBox;
 begin
   B := GetOptionBox(Index, AllOptionsBox);
-  //Result := rs_GetTextAt(UpChars, B.X1, B.Y1);
-  Result := '@#$!@$ OCR ERROR'; // FIX
+  Result := rs_GetTextAt(UpCharsShadow, B.X1, B.Y1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetAllOptions(AllOptionsBox: TBox): TStrArray;
-Contributors: Wanted, Freddy.
+Contributors: Wanted, Slacky.
 Description: Gets option text from all option boxes index in AllOptionsBox.
 Date Created: December 1st, 2011. By Wanted. RS2 Build 687.
 Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
@@ -249,7 +290,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OptionsContainsMulti(Options: TStrArray; AllOptionsBox: TBox): TBoolArray;
-Contributors: Wanted, Freddy.
+Contributors: Wanted, Slacky.
 Description: Checks if options exist within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
 Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
@@ -270,7 +311,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function OptionsContains(Option: string; AllOptionsBox: TBox): Boolean;
-Contributors: Wanted, Freddy.
+Contributors: Wanted, Slacky.
 Description: Checks if option exists within the options box.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
 Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
@@ -283,7 +324,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function ChooseOptionMultiEx(Options: TStrArray; TypeC: ClickActions): Boolean;
-Contributors: Wanted, Freddy.
+Contributors: Wanted, Slacky.
 Description: Finds the first option in Options from the top that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
 Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
@@ -329,7 +370,7 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function ChooseOptionMulti(Options: TStrArray): Boolean;
-Contributors: Wanted, Freddy
+Contributors: Wanted, Slacky
 Description: Finds the first option in Option that exists and clicks it.
 Date Created: October 20th, 2011. By Wanted. RS2 Build 668.
 Last Modified: July 20th, 2012. By Freddy. RS2 Build 725.

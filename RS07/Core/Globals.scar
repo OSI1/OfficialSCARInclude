@@ -49,7 +49,7 @@
      By: Wanted
  * const Game Tab Indexes
      By: Wanted & Dynamite.
- * const RS2 direction/angle Indexes
+ * const RS07 direction/angle Indexes
      By: Wanted
  * const Useful in game colors
      By: Wanted
@@ -58,17 +58,19 @@
  * var Players: array of TRS07Player;
      By: Wanted
  * var CurrentPlayer: LongInt; & PlayerStartTime
-     By: Wanted  
- * var SMART Related vars
      By: Wanted
  * var RS07FontsLoaded: Boolean;
      By: Wanted
  * var Font Variables
-     By: Wanted & Janilabo.
+     By: Wanted, Slacky & Janilabo.
+ * function RS_LoadFont(FontPath:String): TCharsN;
+     By: Slacky & Wanted.
+ * procedure RS_FreeFont(Font:TCharsN);
+     By: Slacky
  * procedure LoadRS07Fonts;
-     By: Wanted
+     By: Wanted & Slacky.
  * procedure FreeRS07Fonts;
-     By: Wanted
+     By: Wanted & Slacky.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -564,7 +566,7 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
   Tab_Equip_Ring        = 10;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const RS2 direction/angle Indexes
+const RS07 direction/angle Indexes
 Contributors: Wanted
 Description: Index handles for SetCompassAngle and all runescape directions.
 Date Created: November 4th, 2011. By Wanted. RS2 Build 675.
@@ -681,21 +683,85 @@ var
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 var Font Variables
-Contributors: Wanted, Janilabo.
+Contributors: Wanted, Janilabo, Slacky.
 Description: Variables for RS07 fonts memory handles.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 var
+  UpCharsShadow: TCharsN;
   UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars: LongInt;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RS_LoadFont(FontPath:String): TCharsN;
+Contributors: Slacky, Wanted.
+Description: Used for UpCharsShadow/GetUpText
+Date Created: October 26th, 2014. By Slacky. RS07 Build ???
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+  
+function RS_LoadFont(FontPath:String): TCharsN;
+var
+  path:String;
+  i:Integer;
+  tmp:TSCARBitmap;
+  Mat: T2DIntArray;  
+begin
+  tmp := TSCARBitmap.Create('');
+  SetLength(Result, 256);
+  if not(DirectoryExists(FontPath)) then
+  begin
+    WriteLn('UNABLE TO LOAD FONT: "' + FontPath + '". Path does not exist.'); 
+    Exit;
+  end;
+  for i:=0 to 255 do
+  begin      
+    path := FontPath+'\'+IntToStr(ord(i)) +'.bmp'; 
+    if FileExists(path) then
+    begin
+      if tmp.LoadFromBmp(path) then
+      begin
+        Mat := XT_Bmp2Matrix(tmp, False);
+        XT_ImFindColorTolEx(Mat, Result[i].Pts, $FFFFFF, 10);
+        XT_ImFindColorTolEx(Mat, Result[i].Shadows, 255, 10);
+        Result[i].Width  := Length(Mat[0]);
+        Result[i].Height := Length(Mat);
+        XT_SortTPAByColumn(Result[i].Pts);
+        XT_SortTPAByColumn(Result[i].Shadows);
+        SetLength(Mat, 0);
+      end;
+    end;
+  end;
+  Tmp.Free;
+  SetLength(Mat, 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure RS_FreeFont(Font:TCharsN);
+Contributors: Slacky
+Description: Used for UpCharsShadow/GetUpText
+Date Created: October 26th, 2014. By Slacky. RS07 Build ???
+Last Modified: October 26th, 2014. By Slacky. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+procedure RS_FreeFont(Font:TCharsN);
+var
+  i:Integer;
+begin
+  for i:=0 to 255 do
+  begin      
+    SetLength(Font[i].Shadows, 0);
+    SetLength(Font[i].Pts, 0);
+  end;
+end;  
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure LoadRS07Fonts;
-Contributors: Wanted
+Contributors: Wanted, Slacky
 Description: Loads RS07 fonts into memory.
 Date Created: March 6th, 2013. By Wanted. RS07 Build ???.
-Last Modified: Octover 22nd, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure LoadRS07Fonts;
@@ -713,14 +779,14 @@ begin
     RS07FontFolder := OSIPath + 'RS07\Fonts\';
     if (not (DirectoryExists(RS07FontFolder))) then
       RS07FontFolder := FontsPath; 
-    //UpChars := rs_LoadChars(RS07FontFolder + 'UpChars\');    FIX
-    UpChars := OptionChars; // WRONG FIX
+    UpChars := LoadChars2(RS07FontFolder + 'UpChars\');
     OptionChars := LoadChars2(RS07FontFolder + 'OptionChars\');
     ScreenChars := LoadChars2(RS07FontFolder + 'ScreenChars\');
     NPCChars := LoadChars2(RS07FontFolder + 'NPCChars\');
     SmallChars := LoadChars2(RS07FontFolder + 'SmallChars\');
     StatChars := LoadChars2(RS07FontFolder + 'StatChars\');
-    TradeChars := LoadChars2(RS07FontFolder + 'StatChars\');
+    TradeChars := LoadChars2(RS07FontFolder + 'TradeChars\');
+    UpCharsShadow := RS_LoadFont(RS07FontFolder + 'UpCharsShadow\');
   except
     WriteLn('Failed to load RS07 fonts!');
     Exit;
@@ -731,10 +797,10 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure FreeRS07Fonts;
-Contributors: Wanted
+Contributors: Wanted, Slacky.
 Description: Frees RS07 fonts from memory.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modified: Octover 22nd, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure FreeRS07Fonts;
@@ -745,12 +811,14 @@ begin
     Exit;
   end;
   try
+    FreeChars2(UpChars);
     FreeChars2(OptionChars);
     FreeChars2(ScreenChars);
     FreeChars2(NPCChars);
     FreeChars2(SmallChars);
     FreeChars2(StatChars);
     FreeChars2(TradeChars);
+    RS_FreeFont(UpCharsShadow);
   except
     WriteLn('Failed to free RS07 fonts!');
     Exit;

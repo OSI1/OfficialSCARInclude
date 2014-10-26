@@ -2,6 +2,10 @@
                               Official SCAR Include
                                  Bitmap Routines
 --------------------------------------------------------------------------------
+ * function XT_ClientBMP(XS,YS,XE,YE: Integer): TSCARBitmap;
+     By: Slacky
+ * function XT_Bmp2Matrix(bmp: TSCARBitmap; DoFree:Boolean): T2DIntArray;
+     By: Slacky     
  * function FindBitmapColorIn(var P: TPoint; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
      By: Wanted
  * function FindBitmapColor(var P: TPoint; Color: LongInt; bmp: TSCARBitmap): Boolean;
@@ -15,6 +19,40 @@
  * function FindBitmapColorTPAEx(var TPA: TPointArray; Color: LongInt; bmp: TSCARBitmap; SearchTPA: TPointArray): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function XT_ClientBMP(XS,YS,XE,YE: Integer): TSCARBitmap;
+Contributors: Slacky
+Description: Used for rs_GetTextAtEx
+Date Created: October 26th, 2014. By Slacky. RS07 Build ???
+Last Modified: October 26th, 2014. By Slacky. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=} 
+ 
+function XT_ClientBMP(XS,YS,XE,YE: Integer): TSCARBitmap;
+begin 
+  Result := GetClient.CaptureEx(XS,YS,XE,YE); 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function XT_Bmp2Matrix(bmp: TSCARBitmap; DoFree:Boolean): T2DIntArray;
+Contributors: Slacky
+Description: Used for rs_GetTextAtEx
+Date Created: October 26th, 2014. By Slacky. RS07 Build ???
+Last Modified: October 26th, 2014. By Slacky. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+function XT_Bmp2Matrix(bmp: TSCARBitmap; DoFree:Boolean): T2DIntArray;
+var
+  TIA: TIntArray;
+  TPA: TPointArray;
+begin  
+  TPA := TPAFromBox(Box(0, 0, BMP.Width-1, BMP.Height-1));
+  TIA := BMP.GetPixels(TPA);
+  SetLengthTPA(TPA, 0);
+  Result := XT_MatFromTIA(TIA, BMP.Width,  BMP.Height); 
+  SetLengthTIA(TIA, 0);
+  if DoFree then BMP.Free; 
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindBitmapColorIn(var P: TPoint; Color: LongInt; bmp: TSCARBitmap; B: TBox): Boolean;
