@@ -217,7 +217,7 @@ function PressLogin(CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if made it to MessageScreen.
 Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PressLogin(CheckLS: Boolean): Boolean;
@@ -231,15 +231,15 @@ begin
         Exit;
   C := CountColor(clYellow, 247, 214, 519, 231);
   MouseBox(234, 304, 370, 340, ClickLeft);
-  T := GetSystemTime + RR(2000, 3000);
+  SetTimer(T, 2000, 3000);
   repeat
     if (CountColor(clYellow, 247, 214, 519, 231) <> C) then
       Break;  
     WaitRR(10, 20);
-  until (T < GetSystemTime); 
-  T := GetSystemTime + RR(50000, 70000);
+  until (CheckTimer(T));
+  SetTimer(T, 50000, 70000);
   repeat  
-    TT := GetSystemTime + RR(35000, 40000);  
+    SetTimer(TT, 35000, 40000); 
     if (not (TIAContains([0, 799, 407, 301], CountColor(clYellow, 247, 214, 519, 231)))) then
       if (not (MessageScreen)) then
         if (not (FindLoginMessageText('Your profile will be transferred'))) then
@@ -247,7 +247,7 @@ begin
         else
         begin
           WriteLn('Your profile is being transferred...');
-          while ((TT > GetSystemTime) and (T > GetSystemTime) and (not (MessageScreen))) do
+          while ((not (CheckTimer(TT))) and (not (CheckTimer(T))) and (not (MessageScreen))) do
             WaitRR(150, 300);
         end;
     if (MessageScreen) then
@@ -256,7 +256,7 @@ begin
       Exit;
     end;
     WaitRR(50, 150);
-  until (T < GetSystemTime);
+  until (CheckTimer(T));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -283,7 +283,7 @@ function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if inputs username successfully.
 Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
@@ -304,11 +304,11 @@ begin
         Exit
       else
         WaitRR(100, 200);
-  T := GetSystemTime + RR(1200, 1600);
+  SetTimer(T, 1200, 1600);
   repeat
     B := (GetColor(313, 254) = clYellow);
     WaitRR(10, 25); 
-  until ((B) or (T < GetSystemTime));
+  until ((B) or (CheckTimer(T)));
   if (not (B)) then
   begin
     PressCancelLogin(False);
@@ -324,7 +324,7 @@ function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if inputs password successfully.
 Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
@@ -348,11 +348,11 @@ begin
         WaitRR(100, 200);
         TypeSend('');
       end;
-  T := GetSystemTime + RR(1200, 1600);
+  SetTimer(T, 1200, 1600);
   repeat
     B := (GetColor(346, 269) = clYellow);
     WaitRR(10, 25); 
-  until ((B) or (T < GetSystemTime));
+  until ((B) or (CheckTimer(T)));
   if (not (B)) then
   begin
     Mouse(346, 269, 0, 0, True);
@@ -461,7 +461,7 @@ function Login: Boolean;
 Contributors: Wanted, Janilabo.
 Description: Logins in current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Login: Boolean;
@@ -487,7 +487,7 @@ begin
   if (Result) then
   begin
     WriteLn(Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + ' logged in');
-    PlayerStartTime := GetSystemTime;
+    MarkTime(PlayerStartTime);
     Exit;
   end; 
   WriteLn('Logging in ' + Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + '...');
@@ -566,7 +566,7 @@ begin
     end; 
   until (Result);
   WriteLn(Copy(Capitalize(Players[CurrentPlayer].Name), 1, 4) + ' logged in');
-  PlayerStartTime := GetSystemTime;
+  MarkTime(PlayerStartTime);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -574,14 +574,14 @@ function LogOut: Boolean;
 Contributors: Wanted
 Description: Logs out current active player. Returns true if not LoggedIn.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LogOut: Boolean;
 begin
   Result := False;
-  IncEx(Players[CurrentPlayer].Worked, GetSystemTime - PlayerStartTime);
-  PlayerStartTime := GetSystemTime;
+  IncEx(Players[CurrentPlayer].Worked, TimeSinceMark(PlayerStartTime));
+  MarkTime(PlayerStartTime);
   if (MessageScreen) then 
   begin
     Result := (not (ClickToPlay(False)));

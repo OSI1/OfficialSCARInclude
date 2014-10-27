@@ -769,7 +769,7 @@ var
   RS07FontFolder: string;
   T: LongInt;
 begin
-  T := GetSystemTime;
+  MarkTime(T);
   if (RS07FontsLoaded) then
   begin
     WriteLn('RS07 Fonts already loaded!');
@@ -791,7 +791,7 @@ begin
     WriteLn('Failed to load RS07 fonts!');
     Exit;
   end;
-  WriteLn('Loaded RS07 Fonts: UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars (' + IntToStr(GetSystemTime - T) + ' ms)');
+  WriteLn('Loaded RS07 Fonts: UpChars, NPCChars, OptionChars, ScreenChars, SmallChars, StatChars, TradeChars (' + IntToStr(TimeSinceMark(T)) + ' ms)');
   RS07FontsLoaded := True;  
 end;  
 

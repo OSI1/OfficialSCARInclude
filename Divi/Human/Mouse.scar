@@ -16,6 +16,8 @@
      By: Wanted & Timer.
  * procedure MouseP(P: TPoint; RX, RY: Integer; Left: Boolean);   
      By: Wanted
+ * procedure MouseCurrentSpot(Left: Boolean);
+     By: Wanted
  * procedure HoldMouseWaitBox(X1, Y1, X2, Y2, MinTime, MaxTime: Integer; Left: Boolean); 
      By: Wanted
  * procedure HoldMouseWaitBoxB(B: TBox; MinTime, MaxTime: Integer; Left: Boolean);  
@@ -147,6 +149,22 @@ Last Modified: March 3rd, 2013. By Wanted
 procedure MouseP(P: TPoint; RX, RY: Integer; Left: Boolean);
 begin
   Mouse(P.X, P.Y, RX, RY, Left);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure MouseCurrentSpot(Left: Boolean);
+Contributors: Wanted
+Description: Clicks the mouse in the current position.
+Date Created: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure MouseCurrentSpot(Left: Boolean);
+var
+  P: TPoint;
+begin
+  GetMousePosP(P);
+  MouseP(P, 0, 0, Left);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

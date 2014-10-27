@@ -107,7 +107,7 @@ function UpTextContainsMulti(Text: TStringArray): Boolean;
 Contributors: Wanted & Slacky.
 Description: Checks for the occurance of any of the strings in the array.
 Date Created: August 7th, 2011. By  Wanted & Slacky. RS2 Build 660.
-Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function UpTextContainsMulti(Text: TStringArray): Boolean;
@@ -115,8 +115,8 @@ var
   T: LongInt;
 begin
   Result := True;
-  T := GetSystemTime + RR(1000, 2000);
-  while (GetSystemTime < T) do
+  SetTimer(T, 1000, 2000); 
+  while (not (CheckTimer(T))) do
     if (StrContainsMulti(Text, GetUpText)) then
       Exit
     else

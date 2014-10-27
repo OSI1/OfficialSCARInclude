@@ -291,7 +291,7 @@ Description: Rotates the compass using the arrow keys to the desired angle. If
              AdjustHeight then it will  simultaneously do so while adjusting 
              compass angle. Returns true if final angle is within Acc of Angle.
 Date Created: March 13th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 13th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetCompassAngleEx(Angle, Accuracy: Extended; AdjustHeight, Highest: Boolean): Boolean;
@@ -303,7 +303,7 @@ begin
   FixD(Angle);
   CurrentAngle := GetCompassAngleDegrees;
   Result := ((MinE(Abs(CurrentAngle - Angle), MinE(Abs(CurrentAngle - (Angle + 360.0)), Abs((CurrentAngle + 360.0) - Angle)))) <= Accuracy);
-  T := GetSystemTime + RR(12000, 14000);
+  SetTimer(T, 12000, 14000); 
   FirstAttempt := True;
   SKeyDown := False;
   repeat    
@@ -311,7 +311,7 @@ begin
       if (FirstAttempt) then
       begin
         FirstAttempt := False;
-        AHT := GetSystemTime + RR(1000, 1500);
+        SetTimer(AHT, 1000, 1500); 
         VKeyDown((Integer(not Highest) * 2) + 38); 
         SKeyDown := True;
       end;
@@ -319,7 +319,7 @@ begin
     begin
       if (SKeyDown) then
       begin
-        while (AHT > GetSystemTime) do
+        while (not (CheckTimer(AHT))) do
           WaitRR(10, 35);
         VKeyUp((Integer(not Highest) * 2) + 38);
       end; 
@@ -331,7 +331,7 @@ begin
     repeat
       Wait(1);
       if (SKeyDown) then
-        if (AHT < GetSystemTime) then
+        if (CheckTimer(AHT)) then
         begin
           VKeyUp((Integer(not Highest) * 2) + 38);
           SKeyDown := False;
@@ -346,16 +346,16 @@ begin
       if (CurrentDifference > PreviousDifference) then
         Break;
       PreviousDifference := CurrentDifference;
-    until (T < GetSystemTime);   
+    until (CheckTimer(T));
     VKeyUp((Integer(not CounterClockWise) * 2) + 37);
     if (SKeyDown) then
-      if (AHT < GetSystemTime) then
+      if (CheckTimer(AHT)) then
       begin
         VKeyUp((Integer(not Highest) * 2) + 38);
         SKeyDown := False;
       end;
     WaitRR(300, 400);
-  until (T < GetSystemTime);
+  until (CheckTimer(T));
 end; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -482,7 +482,7 @@ function FlagEx(Distance: Extended): Boolean;
 Contributors: Wanted
 Description: Waits until your within Distance of flag. Returns true if it didn't time out.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FlagEx(Distance: Extended): Boolean;
@@ -490,10 +490,10 @@ var
   T: LongInt;
 begin
   Result := False;
-  T := GetSystemTime + RR(35000, 45000);
+  SetTimer(T, 35000, 45000); 
   while (GetFlagDistance > Distance) do
   begin
-    if (GetSystemTime > T) then
+    if (CheckTimer(T)) then
     begin  
       MouseP(MMCP, 0, 0, True);
       Exit;

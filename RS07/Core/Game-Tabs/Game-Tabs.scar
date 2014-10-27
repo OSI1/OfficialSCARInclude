@@ -78,7 +78,7 @@ function SetGameTab(Tab: Integer): Boolean;
 Contributors: Wanted, Dynamite.
 Description: Switches to a specific game tab.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetGameTab(Tab: Integer): Boolean;
@@ -93,7 +93,7 @@ begin
     Exit;
   B := GetTabBounds(Tab)
   MouseBoxB(B, ClickLeft);
-  T := GetSystemTime + RR(2500, 3500);
+  SetTimer(T, 2500, 3500); 
   repeat
     if (GetCurrentTab = Tab) then
     begin
@@ -101,5 +101,5 @@ begin
       Exit;
     end;
     WaitRR(50, 150);
-  until (T < GetSystemTime);
+  until (CheckTimer(T));
 end;

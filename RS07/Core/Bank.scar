@@ -70,7 +70,7 @@ Contributors: Wanted, Freddy.
 Description: Deposits all inventory items except for excluded slots, or the other
 way around if Exclude is false. True if CheckBS is true and bankscreen is found.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
@@ -90,8 +90,8 @@ begin
         C := InvCount(False);
         MouseInvItem(I, ClickRight, False);
         ChooseOptionMulti(['re A', 'All']);
-        T := GetSystemTime + RR(1500, 2500);
-        while ((GetSystemTime < T) and (InvCount(False) = C)) do
+        SetTimer(T, 1500, 2500);
+        while ((not (CheckTimer(T))) and (InvCount(False) = C)) do
           WaitRR(100, 200);
       end;
 end;
