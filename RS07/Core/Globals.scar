@@ -49,7 +49,15 @@
      By: Wanted
  * const Game Tab Indexes
      By: Wanted & Dynamite.
+ * const Equip Tab Indexes
+     By: Wanted
+ * const Chat Tab Indexes
+     By: Wanted
  * const RS07 direction/angle Indexes
+     By: Wanted
+ * const Withdraw function indexes
+     By: Wanted  
+*  const Area_ indexes
      By: Wanted
  * const Useful in game colors
      By: Wanted
@@ -493,7 +501,7 @@ Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
-  Skill_Count         = 23;
+  Skill_Count         = 25;
   Skill_Attack        = 0;
   Skill_Hitpoints     = 1;
   Skill_Mining        = 2;
@@ -518,6 +526,8 @@ const
   Skill_Farming       = 20;
   Skill_Construction  = 21;
   Skill_Hunter        = 22;
+  Skill_Total         = 23;
+  Skill_Combat        = 24; 
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Game Tab Indexes
@@ -566,6 +576,31 @@ Last Modified: March 6th, 2013. By Wanted. RS07 Build ???.
   Tab_Equip_Ring        = 10;
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Chat function indexes
+Contributors: Wanted
+Description: Index handles for various chat routines.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Chat_State_Count      = 6;
+  Chat_On               = 0;
+  Chat_Friends          = 1;
+  Chat_Filter           = 1;
+  Chat_Off              = 2;
+  Chat_Hide             = 3;
+  Chat_Autochat         = 4;
+  Chat_SwitchTab        = 5;
+  Tab_Chat_Count        = 6;
+  Tab_Chat_All          = 0;
+  Tab_Chat_Game         = 1;
+  Tab_Chat_Public       = 2;
+  Tab_Chat_Private      = 3;
+  Tab_Chat_Clan         = 4;
+  Tab_Chat_Trade        = 5;  
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const RS07 direction/angle Indexes
 Contributors: Wanted
 Description: Index handles for SetCompassAngle and all runescape directions.
@@ -582,6 +617,36 @@ const
   Dir_SouthWest         = 225;
   Dir_West              = 270;
   Dir_NorthWest         = 315;
+  
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Withdraw function indexes
+Contributors: Wanted
+Description: Index handles for withdrawing routines.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Withdraw_1 = 1;
+  Withdraw_5 = 5;
+  Withdraw_10 = 10;
+  Withdraw_All = -1337;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+const Area_ indexes
+Contributors: Wanted
+Description: Index handles for the different screen ares within RS that contain items.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+const
+  Area_Inv              = 0;
+  Area_Bank             = 1;
+  Area_Deposit          = 2;
+  Area_Trade_You        = 3;
+  Area_Trade_Them       = 4;
+  Area_Shop             = 5;  
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Useful in game colors

@@ -12,7 +12,7 @@
      By: Janilabo
  * function  TBADelete(var TBA: TBoxArray; Index: Integer): TBox;
      By: Wanted
- * function TBAFromGrid(P: TPoint; Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
+ * function TBAFromGrid(P: TPoint; Width, Height, Boxes, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
      By: Wanted
  * procedure TBAInsert(var TBA: TBoxArray; Index: Integer; B: TBox);
      By: Janilabo
@@ -124,22 +124,22 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function TBAFromGrid(P: TPoint; Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
+function TBAFromGrid(P: TPoint; Width, Height, Boxes, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
 Contributors: Wanted, Janilabo.
 Description: Creates TBAs arranged in rows and columns. 
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function TBAFromGrid(P: TPoint; Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
+function TBAFromGrid(P: TPoint; Width, Height, Boxes, Columns, RowSpace, ColumnSpace: LongInt): TBoxArray;
 var
   I, H: LongInt;
 begin
   Result := [];
-  H := (Rows * Columns) - 1;
-  SetLength(Result, H + 1);
+  H := Boxes - 1;
+  SetLength(Result, Boxes);
   for I := 0 to H do
-    Result[I] := BoxFromGrid(P, I, Width, Height, Rows, Columns, RowSpace, ColumnSpace);
+    Result[I] := BoxFromGrid(P, I, Width, Height, Columns, RowSpace, ColumnSpace);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -56,12 +56,12 @@ function GetAllInvSlotBounds: TBoxArray;
 Contributors: Wanted
 Description: Returns all item boundries.
 Date Created: March 8th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 8th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetAllInvSlotBounds: TBoxArray;
 begin
-  Result := TBAFromGrid(Point(563, 213), 31, 31, 7, 4, 36, 42);
+  Result := TBAFromGrid(Point(563, 213), 31, 31, 28, 4, 36, 42);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -92,7 +92,7 @@ begin
   SetLength(Result, Length(Slots));
   H := High(Slots);
   for I := 0 to H do
-    Result[I] := BoxFromGrid(Point(563, 213), Slots[I], 31, 31, 7, 4, 36, 42);
+    Result[I] := BoxFromGrid(Point(563, 213), Slots[I], 31, 31, 4, 36, 42);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

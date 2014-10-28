@@ -2,13 +2,28 @@
                               Official SCAR Include
                                Point Type Routines
 --------------------------------------------------------------------------------
+ * function DistanceP(P1, P2: TPoint): Extended;
+     By: Wanted
  * function GetPointAngleDegrees(P1, P2: TPoint): Extended;
      By: Wanted
  * function RCirclePoint(CX, CY, Radius: Integer): TPoint;
      By: Freddy & Wanted.
  * function RRectanglePoint(X1, Y1, X2, Y2: Integer): TPoint;
-     By: Freddy & Wanted.                     
+     By: Freddy & Wanted.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DistanceP(P1, P2: TPoint): Extended;
+Contributors: Wanted, Janilabo.
+Description: Wrapper for Distance with points.
+Date Created: October 28th, 2011. By Wanted
+Last Modified: February 26th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DistanceP(P1, P2: TPoint): Extended;
+begin
+  Result := Distance(P1.X, P1.Y, P2.X, P2.Y);
+end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetPointAngleDegrees(P1, P2: TPoint): Extended;

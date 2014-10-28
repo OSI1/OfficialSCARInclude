@@ -3,6 +3,82 @@
                                   Runescape 07
                              Equipment Tab 4 Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function GetEquipmentBounds(Slot: Integer): TBox;
+     By: Wanted
+ * function IsSlotEquipped(Slot: Integer; CheckET: Boolean): Boolean;
+     By: Home & Wanted.
+ * function MouseEquipedItem(Slot: Integer; TypeC: ClickActions; CheckET: Boolean): Boolean;
+     By: Wanted & Home.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetEquipmentBounds(Slot: Integer): TBox;
+Contributors: Wanted
+Description: Returns any Tab_Equip slot boundries.
+Date Created: January 9th, 2012. By Wanted. RS2 Build 695.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetEquipmentBounds(Slot: Integer): TBox;
+var
+  TBA: TBoxArray;
+begin
+  TBA := [                         Box(625, 209, 660, 244),
+          Box(584, 248, 619, 283), Box(625, 248, 660, 283), Box(667, 248, 700, 283),
+       Box(569, 287, 604, 322),    Box(625, 287, 660, 322),    Box(681, 287, 716, 322),
+                                   Box(625, 327, 660, 362),
+       Box(569, 367, 604, 402),    Box(625, 367, 660, 402),    Box(681, 367, 716, 402)];
+  Result := TBA[Slot];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsSlotEquipped(Slot: Integer; CheckET: Boolean): Boolean;
+Contributors: Home, Wanted.
+Description: Returns true if a Tab_Equip_ slot is equipped with something.
+Date Created: September 1st, 2011. By Home & Wanted. RS2 Build 662.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsSlotEquipped(Slot: Integer; CheckET: Boolean): Boolean;
+var
+  P: TPoint;
+  TB: TBox;
+begin
+  Result := False;
+  if (CheckET) then
+    if (not (SetGameTab(Tab_Equip))) then
+      Exit;
+  TB := GetEquipmentBounds(Slot);
+  Result := FindColorP(P, clObjectOutline, TB);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MouseEquipedItem(Slot: Integer; TypeC: ClickActions; CheckET: Boolean): Boolean;
+Contributors: Wanted, Home.
+Description: Clicks a Tab_Equip_ slot.
+Date Created: September 1st, 2011. By Wanted & Home. RS2 Build 662.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MouseEquipedItem(Slot: Integer; TypeC: ClickActions; CheckET: Boolean): Boolean;
+var
+  T: Integer;
+  B : TBox;
+begin
+  Result := False;
+  B := GetEquipmentBounds(Slot);
+  if (not (IsSlotEquipped(Slot, CheckET))) then
+    Exit;
+  MouseBoxB(B, TypeC);
+  SetTimer(T, 1500, 2500); 
+  Result := (TypeC = MoveTo);
+  repeat
+    WaitRR(50, 150);
+    case TypeC of
+      ClickLeft: Result := (not (IsSlotEquipped(Slot, False)));
+      ClickRight: Result := OptionBoxExists;
+    end;
+    if (Result) then
+      Exit;
+  until (CheckTimer(T));
+end;

@@ -2,7 +2,7 @@
                               Official SCAR Include
                                 Box Type Routines
 --------------------------------------------------------------------------------
- * function BoxFromGrid(P: TPoint; Index, Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBox;
+ * function BoxFromGrid(P: TPoint; Index, Width, Height, Columns, RowSpace, ColumnSpace: LongInt): TBox;
      By: Wanted
  * function  ValidBox(B: TBox): Boolean; 
      By: Janilabo
@@ -10,21 +10,21 @@
      By: Janilabo
  * procedure BoxDimensions(B: TBox; var W, H: Integer);
      By: Janilabo
- * procedure ConstrainBox(var B: TBox; MB: TBox);
+ * function ConstrainBox(var B: TBox; MB: TBox): Boolean;
      By: Wanted
  * procedure FixBox(var B: TBox);
      By: Janilabo
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function BoxFromGrid(P: TPoint; Index, Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBox;
+function BoxFromGrid(P: TPoint; Index, Width, Height, Columns, RowSpace, ColumnSpace: LongInt): TBox;
 Contributors: Wanted, Janilabo.
 Description: Creates box from indexes of boxes arranged in rows and columns. 
 Date Created: March 7th, 2013. By Wanted
-Last Modified: March 7th, 2013. By Wanted
+Last Modified: October 27th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function BoxFromGrid(P: TPoint; Index, Width, Height, Rows, Columns, RowSpace, ColumnSpace: LongInt): TBox;
+function BoxFromGrid(P: TPoint; Index, Width, Height, Columns, RowSpace, ColumnSpace: LongInt): TBox;
 var  
   TP: TPoint;
 begin
@@ -76,23 +76,39 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure ConstrainBox(var B: TBox; MB: TBox);
-Contributors: Wanted
+function ConstrainBox(var B: TBox; MB: TBox): Boolean;
+Contributors: Wanted, Janilabo.
 Description: Makes the edges of your box within the edges of another box.
+Returns true if constrained.
 Date Created: December 6th, 2011. By Wanted
-Last Modified: March 2nd, 2013. By Wanted
+Last Modified: March 19th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure ConstrainBox(var B: TBox; MB: TBox);
+function ConstrainBox(var B: TBox; MB: TBox): Boolean;
+var
+  TB: TBox;
 begin
+  Result := False;
+  if (not (ValidBox(B))) then
+    Exit;
+  TB := B;
   if (B.X1 < MB.X1) then
     B.X1 := MB.X1;
+  if (B.X1 > MB.X2) then
+    B.X1 := MB.X2;
   if (B.Y1 < MB.Y1) then
     B.Y1 := MB.Y1;
+  if (B.Y1 > MB.Y2) then
+    B.Y1 := MB.Y2;
   if (B.X2 > MB.X2) then
     B.X2 := MB.X2;
+  if (B.X2 < MB.X1) then
+    B.X2 := MB.X1;
   if (B.Y2 > MB.Y2) then
     B.Y2 := MB.Y2;
+  if (B.Y2 < MB.Y1) then
+    B.Y2 := MB.Y1;
+  Result := (TB <> B);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

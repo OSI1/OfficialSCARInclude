@@ -7,7 +7,9 @@
  * function  InStrArrPos(S: string; Arr: TStrArray; var Pos: Integer; CaseSenstive: Boolean): Boolean;
      By: Wanted        
  * procedure TSACapitalize(var TSA: TStrArray);
-     By: Janilabo    
+     By: Janilabo
+ * function TSAContainsMulti(SubStrs: TStringArray; TSA: TStringArray): TBooleanArray;
+     By: Wanted    
  * function TSADelete(var TSA: TStringArray; Index: Integer): string;
      By: Wanted
  * procedure TSAGetLetters(var TSA: TStrArray);
@@ -103,6 +105,24 @@ begin
   H := High(TSA);
   for I := H downto 0 do
     TSA[I] := Capitalize(TSA[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TSAContainsMulti(SubStrs: TStringArray; TSA: TStringArray): TBooleanArray;
+Contributors: Wanted
+Description: Results true if any strings are inside each string of TSA.
+Date Created: March 20th, 2013. By Wanted
+Last Modified: March 20th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TSAContainsMulti(SubStrs: TStringArray; TSA: TStringArray): TBooleanArray;
+var
+  I, H: Integer;
+begin
+  H := High(TSA);
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := StrContainsMulti(SubStrs, TSA[I]);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

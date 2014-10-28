@@ -1,0 +1,84 @@
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                              Official SCAR Include
+                                  Runescape 07
+                         Extended Object Finding Routines
+--------------------------------------------------------------------------------
+ * function FindObjSpiral(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStringArray): Boolean;
+     By: Wanted
+ * function FindObjSize(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStringArray): Boolean;
+     By: Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindObjSpiral(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStringArray): Boolean;
+Contributors: Wanted
+Description: Finds an object from the center out. Checks for uptext. Use pixel width and height of object.
+Date Created: December 6th, 2011. By Wanted. RS2 Build 688.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindObjSpiral(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStringArray): Boolean;
+var
+  ATPA: T2DPointArray;
+  TPA: TPointArray;
+  I, H: Integer;
+  P: TPoint;
+begin
+  Result := False;
+  FindColorSpiralTolP(MSCP, P, Color, MSB, Tol);
+  H := High(TPA);
+  if (H < 0) then
+    Exit;
+  ATPA := GroupTPAEx(TPA, Width, Height);
+  H := High(ATPA);
+  if (H < 0) then
+    Exit;
+  SortATPAByMeanEx(ATPA, Point(MSCX, MSCY));
+  for I := 0 to H do
+  begin
+    P := TPAMean(ATPA[I]);
+    MMouse(P.X, P.Y, 0, 0);
+    if (not (UpTextContainsMulti(UpText))) then
+      Continue;
+    GetMousePos(X, Y);
+    Result := True
+    Exit;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindObjSize(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStringArray): Boolean;
+Contributors: Wanted
+Description: Finds an object based on biggest. Checks for uptext. Use pixel width and height of object.
+Date Created: December 6th, 2011. By Wanted. RS2 Build 688.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindObjSize(var X, Y: Integer; Color, Tol, Width, Height: Integer; UpText: TStringArray): Boolean;
+var
+  ATPA: T2DPointArray;
+  TPA: TPointArray;
+  I, H: Integer;
+  P: TPoint;
+begin
+  Result := False;
+  FindColorTolExP(TPA, Color, MSB, Tol);
+  H := High(TPA);
+  if (H < 0) then
+    Exit;
+  ATPA := GroupTPAEx(TPA, Width, Height);
+  H := High(ATPA);
+  if (H < 0) then
+    Exit;
+  SortATPASize(ATPA, True);
+  for I := 0 to H do
+  begin
+    P := TPAMean(ATPA[I]);
+    MMouse(P.X, P.Y, 0, 0);
+    if (not (UpTextContainsMulti(UpText))) then
+      Continue;
+    GetMousePos(X, Y);
+    Result := True
+    Exit;
+  end;
+end;

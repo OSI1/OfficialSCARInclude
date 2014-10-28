@@ -23,7 +23,7 @@
      By: Wanted
  * function FindLoginMessageText(Text: string): Boolean;
      By: Wanted
- * function PressLogin(CheckLS: Boolean): Boolean;
+ * function PressLogin(UseEnterKey, CheckLS: Boolean): Boolean;
      By: Wanted
  * function PressCancelLogin(CheckLS: Boolean): Boolean;
      By: Wanted
@@ -148,7 +148,7 @@ function ToggleLoginMusic(Enable: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if sound state was changed.
 Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 11th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ToggleLoginMusic(Enable: Boolean): Boolean;
@@ -156,9 +156,9 @@ begin
   Result := ((LoginSoundDisabled) <> (not (Enable)));
   if (not (Result)) then
     Exit;
-  MouseBox(728, 466, 757, 496, ClickLeft);
+  MouseBox(728, 466, 757, 496, ClickLeft);       
+  Result := WaitFunc(@LoginSoundDisabled, (not (Enable)), 50, 150, 1500, 2500);
 end;
-
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function PressExistingUser(CheckWS: Boolean): Boolean;
 Contributors: Wanted
@@ -213,14 +213,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function PressLogin(CheckLS: Boolean): Boolean;
+function PressLogin(UseEnterKey, CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if made it to MessageScreen.
 Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function PressLogin(CheckLS: Boolean): Boolean;
+function PressLogin(UseEnterKey, CheckLS: Boolean): Boolean;
 var
   T, TT, C: LongInt;   
 begin
@@ -230,7 +230,10 @@ begin
       if (not (PressExistingUser(True))) then
         Exit;
   C := CountColor(clYellow, 247, 214, 519, 231);
-  MouseBox(234, 304, 370, 340, ClickLeft);
+  if (UseEnterKey) then
+    TypeSend('')
+  else
+    MouseBox(234, 304, 370, 340, ClickLeft);
   SetTimer(T, 2000, 3000);
   repeat
     if (CountColor(clYellow, 247, 214, 519, 231) <> C) then
@@ -239,8 +242,8 @@ begin
   until (CheckTimer(T));
   SetTimer(T, 50000, 70000);
   repeat  
-    SetTimer(TT, 35000, 40000); 
-    if (not (TIAContains([0, 799, 407, 301], CountColor(clYellow, 247, 214, 519, 231)))) then
+    SetTimer(TT, 35000, 40000);
+    if (not (TIAContains([0, 799, 407, 301, 302, 199], CountColor(clYellow, 247, 214, 519, 231)))) then
       if (not (MessageScreen)) then
         if (not (FindLoginMessageText('Your profile will be transferred'))) then
           Exit
@@ -283,7 +286,7 @@ function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if inputs username successfully.
 Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
@@ -324,7 +327,7 @@ function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if inputs password successfully.
 Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
@@ -461,7 +464,7 @@ function Login: Boolean;
 Contributors: Wanted, Janilabo.
 Description: Logins in current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Login: Boolean;
@@ -504,7 +507,7 @@ begin
         Exit;
       ReTypeInfo := False;
     end;
-    if (PressLogin(False)) then
+    if (PressLogin(True, False)) then
     begin
       if (ClickToPlay(False)) then
         Result := True
@@ -574,7 +577,7 @@ function LogOut: Boolean;
 Contributors: Wanted
 Description: Logs out current active player. Returns true if not LoggedIn.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LogOut: Boolean;

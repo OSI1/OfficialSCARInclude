@@ -42,10 +42,18 @@
  * function ChooseOption(Option: string): Boolean;
      By: Wanted
  * function GetAmount(B: TBox): LongInt;
-     By: Wanted         
+     By: Wanted
+ * function GetItemAmount(Area, Slot: Integer): LongInt;
+     By: Wanted             
  * function GetMMLevel(Skill: Integer): Integer;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                          Tab3-Inventory.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetInvSlotBounds(Slot: Integer): TBox; forward; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RS_GetTextAtEx(x,y, width: Integer; Font:TCharsN; EndStr:String): String;
@@ -107,7 +115,7 @@ function UpTextContainsMulti(Text: TStringArray): Boolean;
 Contributors: Wanted & Slacky.
 Description: Checks for the occurance of any of the strings in the array.
 Date Created: August 7th, 2011. By  Wanted & Slacky. RS2 Build 660.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function UpTextContainsMulti(Text: TStringArray): Boolean;
@@ -421,6 +429,32 @@ begin
       if (Result > -1) then
         Result := (Result * Floor(Pow(1000, I)));
     end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetItemAmount(Area, Slot: Integer): LongInt;
+Contributors: Wanted
+Description: Returns the amount of something taking into account text color within Area_Index.
+Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
+Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetItemAmount(Area, Slot: Integer): LongInt;
+var
+  B: TBox;
+begin
+  Result := 0;
+  case Area of
+    Area_Inv: B := GetInvSlotBounds(Slot);
+    //Area_Bank: B := GetBankSlotBounds(Slot);
+    //{$IFDEF TRADING}
+    //  Area_Trade_You: B := GetTradeItemBounds(Slot, True);
+    //  Area_Trade_Them: B := GetTradeItemBounds(Slot, False);
+    //{$ENDIF}
+  else
+    Exit; // FIX ADD MORE AREAS
+  end;
+  Result := GetAmount(B);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

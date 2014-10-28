@@ -44,6 +44,7 @@
   {$I RS07\Skill\Farming.scar}
   {$I RS07\Skill\Construction.scar}
   {$I RS07\Skill\Hunting.scar}
+  {$I RS07\Extended\Object.scar}
 {$ENDIF}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -64,7 +65,7 @@ procedure TestCompileOSI;
 Contributors: Wanted
 Description: Test compiles all of OSI. Comment out every combination of defines.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TestCompileOSI;

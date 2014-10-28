@@ -79,7 +79,7 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin, Tootoot222.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;

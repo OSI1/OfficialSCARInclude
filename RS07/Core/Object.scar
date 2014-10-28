@@ -3,6 +3,36 @@
                                   Runescape 07
                              Object Finding Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; AreaB: TBox; TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; AreaB: TBox; TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
+Contributors: Wanted
+Description: Spirals mouse around until it finds the object. See GenerateSpiral in Divi\Math.scar
+Date Created: November 28th, 2011. By Wanted. RS2 Build 686.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FindObjSpiralMouse(var P: TPoint; AngStep, DistStep: Extended; AreaB: TBox; TextColor, Tol, MinC, MaxC: Integer; Text: TStringArray): Boolean;
+var
+  TPA: TPointArray;
+  I, H: Integer;
+begin
+  Result := False;
+  TPA := GenerateSpiral(P, AngStep, DistStep, AreaB);
+  H := High(TPA);
+  for I := 0 to H do
+  begin
+    MMouse(TPA[I].X, TPA[I].Y, 0, 0);
+    WaitRR(100, 150);
+    if (not (InRange(CountColorTol(TextColor, MSX1, MSY1, MSX2, 27, Tol), MinC, MaxC))) then
+      Continue;
+    if (not (UpTextContainsMulti(Text))) then
+      Continue;
+    GetMousePos(P.X, P.Y);
+    Result := True;
+    Exit;
+  end;
+end;

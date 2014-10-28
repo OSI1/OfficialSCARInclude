@@ -18,14 +18,14 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function GetAllTabBounds: TBoxArray;
 Contributors: Wanted
-Description: Returns all tab boundries.
+Description: Returns all tab boundaries.
 Date Created: March 7th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetAllTabBounds: TBoxArray;
 begin
-  Result := TBAFromGrid(Point(527, 168), 33, 35, 2, 7, 298, 33);
+  Result := TBAFromGrid(Point(527, 168), 33, 35, 14, 7, 298, 33);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -38,7 +38,7 @@ Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
 
 function GetTabBounds(Tab: Integer): TBox;
 begin
-  Result := BoxFromGrid(Point(527, 168), Tab, 33, 35, 2, 7, 298, 33);
+  Result := BoxFromGrid(Point(527, 168), Tab, 33, 35, 7, 298, 33);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -46,12 +46,12 @@ function TabExists(Tab: Integer): Integer;
 Contributors: Wanted, Dynamite, Freddy.
 Description: Returns True if the Tab exists.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TabExists(Tab: Integer): Boolean;
 begin
-  Result := InRange(CountColorTolP(clBlack, GetTabBounds(Tab), 36), 80, 350);
+  Result := InRange(CountColorTolB(clBlack, GetTabBounds(Tab), 36), 80, 350);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -78,7 +78,7 @@ function SetGameTab(Tab: Integer): Boolean;
 Contributors: Wanted, Dynamite.
 Description: Switches to a specific game tab.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetGameTab(Tab: Integer): Boolean;

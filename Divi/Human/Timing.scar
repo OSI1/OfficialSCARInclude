@@ -56,8 +56,8 @@ procedure SetTimer(var Timer: LongInt; MinMS, MaxMS: Integer);
 Contributors: Wanted
 Description: Begins counting timer, will expire when the time is up set random 
              from Min/Max. Check by using CheckTimer(Timer).
-Date Created: November 26th, 2014. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Date Created: October 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetTimer(var Timer: LongInt; MinMS, MaxMS: Integer);
@@ -69,8 +69,8 @@ end;
 function CheckTimer(Timer: LongInt): Boolean;
 Contributors: Wanted
 Description: Returns true if the amount of time has passed since SetTimer.
-Date Created: November 26th, 2014. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Date Created: October 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CheckTimer(Timer: LongInt): Boolean;
@@ -82,8 +82,8 @@ end;
 procedure MarkTime(var Marker: LongInt);
 Contributors: Wanted
 Description: Begins marking time.
-Date Created: November 26th, 2014. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Date Created: October 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure MarkTime(var Marker: LongInt);
@@ -95,8 +95,8 @@ end;
 function TimeSinceMark(Marker: LongInt): LongInt;
 Contributors: Wanted
 Description: Returns amount of time that has passed since marker.
-Date Created: November 26th, 2014. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Date Created: October 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TimeSinceMark(Marker: LongInt): LongInt;
@@ -109,7 +109,7 @@ function WaitFunc(Func: function: Boolean; DesiredResult: Boolean; MinWait, MaxW
 Contributors: Wanted
 Description: Repeats a function until DesiredResult.
 Date Created: August 10th, 2011. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WaitFunc(Func: function: Boolean; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
@@ -131,7 +131,7 @@ function WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Bool
 Contributors: Wanted
 Description: Repeats a function until DesiredResult.
 Date Created: September 26th, 2011. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WaitFuncEx(Func: string; Parameters: TVariantArray; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
@@ -153,7 +153,7 @@ function WaitFindColorEx(var TPA: TPointArray; Color: Integer; B: TBox; DesiredC
 Contributors: Wanted, Freddy.
 Description: Repeats FindColorEx until greater or less than Count.
 Date Created: March 9th, 2013. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WaitFindColorEx(var TPA: TPointArray; Color: Integer; B: TBox; DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
@@ -184,7 +184,7 @@ function WaitFindColorTol(var P: TPoint; Color: Integer; B: TBox; Tol: Integer; 
 Contributors: Wanted, Freddy.
 Description: Repeats FindColorTol until DesiredResult.
 Date Created: September 26th, 2011. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WaitFindColorTol(var P: TPoint; Color: Integer; B: TBox; Tol: Integer; DesiredResult: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;
@@ -206,7 +206,7 @@ function WaitFindColorTolEx(var TPA: TPointArray; Color: Integer; B: TBox; Tol, 
 Contributors: Wanted, Freddy.
 Description: Repeats FindColorTolEx until greater or less than Count.
 Date Created: October 28th, 2011. By Wanted
-Last Modified: November 26th, 2014. By Wanted
+Last Modified: October 26th, 2014. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function WaitFindColorTolEx(var TPA: TPointArray; Color: Integer; B: TBox; Tol, DesiredCount: Integer; GreaterThan: Boolean; MinWait, MaxWait, MinTotalWait, MaxTotalWait: LongInt): Boolean;

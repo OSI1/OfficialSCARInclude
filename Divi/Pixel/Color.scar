@@ -2,9 +2,9 @@
                               Official SCAR Include
                                   Color Routines
 --------------------------------------------------------------------------------
- * function CountColorP(Color: LongInt; B: TBox): LongInt;   
+ * function CountColorB(Color: LongInt; B: TBox): LongInt;   
      By: Wanted
- * function CountColorTolP(Color: LongInt; B: TBox; Tol: Integer): LongInt; 
+ * function CountColorTolB(Color: LongInt; B: TBox; Tol: Integer): LongInt; 
      By: Wanted
  * function FindColorP(var P: TPoint; Color: LongInt; B: TBox): Boolean;
      By: Wanted
@@ -13,6 +13,10 @@
  * function FindColorTolP(var P: TPoint; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
      By: Wanted  
  * function FindColorTolExP(var TPA: TPointArray; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
+     By: Wanted
+ * function FindColorsExP(var TPA: TPointArray; Colors: TIntArray; B: TBox): Boolean;
+     By: Wanted
+ * function FindColorsTolP(var P: TPoint; Colors: TIntArray; B: TBox; Tol: LongInt): Boolean;
      By: Wanted
  * function FindColorSpiralP(SP: TPoint; var P: TPoint; Color: LongInt; B: TBox): Boolean;
      By: Wanted
@@ -43,27 +47,27 @@
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CountColorP(Color: LongInt; B: TBox): LongInt;
+function CountColorB(Color: LongInt; B: TBox): LongInt;
 Contributors: Wanted
 Description: Wrapper for CountColor with points and boxes.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CountColorP(Color: LongInt; B: TBox): LongInt;
+function CountColorB(Color: LongInt; B: TBox): LongInt;
 begin
   Result := CountColor(Color, B.X1, B.Y1, B.X2, B.Y2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CountColorTolP(Color: LongInt; B: TBox; Tol: Integer): LongInt;
+function CountColorTolB(Color: LongInt; B: TBox; Tol: Integer): LongInt;
 Contributors: Wanted
 Description: Wrapper for CountColorTol with points and boxes.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function CountColorTolP(Color: LongInt; B: TBox; Tol: Integer): LongInt;
+function CountColorTolB(Color: LongInt; B: TBox; Tol: Integer): LongInt;
 begin
   Result := CountColorTol(Color, B.X1, B.Y1, B.X2, B.Y2, Tol);
 end;
@@ -119,6 +123,32 @@ function FindColorTolExP(var TPA: TPointArray; Color: LongInt; B: TBox; Tol: Lon
 begin
   Result := FindColorTolEx(TPA, Color, B.X1, B.Y1, B.X2, B.Y2, Tol);
 end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorsExP(var TPA: TPointArray; Colors: TIntArray; B: TBox): Boolean;
+Contributors:  Wanted
+Description: Wrapper for FindColorsEx with points and boxes.
+Date Created: March 19th, 2013. By Wanted
+Last Modified: March 19th, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}    
+
+function FindColorsExP(var TPA: TPointArray; Colors: TIntArray; B: TBox): Boolean;
+begin
+  Result := FindColorsEx(TPA, Colors, B.X1, B.Y1, B.X2, B.Y2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorsTolP(var P: TPoint; Colors: TIntArray; B: TBox; Tol: LongInt): Boolean;
+Contributors:  Wanted
+Description: Wrapper for FindColorsTol with points and boxes.
+Date Created: March 22nd, 2013. By Wanted
+Last Modified: March 22nd, 2013. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}    
+
+function FindColorsTolP(var P: TPoint; Colors: TIntArray; B: TBox; Tol: LongInt): Boolean;
+begin
+  Result := FindColorsTol(P.X, P.Y, Colors, B.X1, B.Y1, B.X2, B.Y2, Tol);
+end;  
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralP(SP: TPoint; var P: TPoint; Color: LongInt; B: TBox): Boolean;

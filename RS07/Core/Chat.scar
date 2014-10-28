@@ -3,6 +3,394 @@
                                   Runescape 07
                                  Chat Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function GetChatTabBounds(ChatTab: Integer): TBox;
+     By: Wanted
+ * function GetCurrentChat: Integer;
+     By: Wanted
+ * function GetChatStatus(Chat: Integer): Integer;
+     By: Wanted
+ * function SetChatStatuses(Chats, States: TIntArray): TBoolArray;
+     By: Wanted
+ * function SetupAutoChat(S: string): Boolean;
+     By: Wanted
+ * function ToggleAutoChat(Resume: Boolean): Boolean;
+     By: Wanted
+ * function SetupPublicChatFilter(S: string): Boolean;
+     By: Wanted
+ * function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
+     By: Wanted
+ * function ClickContinue: Boolean;
+     By: Wanted
+ * function FixChat: Boolean;
+     By: Wanted
+ * function GetChatLineBounds(Line: Integer): TBox;
+     By: Wanted
+ * function GetChatTextEx(Line, TextColor: Integer): string;
+     By: Wanted
+ * function LeveledUpEx(Click, UntilGone: Boolean): Boolean;
+     By: Wanted
+ * function LeveledUp: Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatTabBounds(ChatTab: Integer): TBox;
+Contributors: Wanted
+Description: Returns the boundries of the chat tab you want.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatTabBounds(ChatTab: Integer): TBox;
+begin
+  Result := BoxFromGrid(Point(4, 480), ChatTab, 57, 22, 6, 0, 66)
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCurrentChat: Integer;
+Contributors: Wanted
+Description: Returns the current chat you have open. -1 if failed.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCurrentChat: Integer;
+var
+  H: Integer;
+  B: TBox;
+begin
+  H := Tab_Chat_Count - 1;
+  for Result := 0 to H do
+  begin
+    B := GetChatTabBounds(Result);
+    if (CountColorsTol([2378594, 1452342], B.X1, B.Y1, B.X2, B.Y2, 14) > 45) then
+      Exit;
+  end;    
+  Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetCurrentChat(Chat: Integer): Boolean;
+Contributors: Wanted, Freddy.
+Description: Sets current chat to chat. True if successful.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetCurrentChat(Chat: Integer): Boolean;
+var
+  T: Integer;
+begin
+  Result := (GetCurrentChat = Chat);
+  if (Result) then
+    Exit;
+  MouseBoxB(GetChatTabBounds(Chat), ClickLeft);
+  SetTimer(T, 1012, 1431);
+  repeat
+     WaitRR(10, 15);
+     Result := (GetCurrentChat = Chat); 
+  until (CheckTimer(T) or (Result));  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatStatus(Chat: Integer): Integer;
+Contributors: Wanted, Freddy.
+Description: Returns the status of the chat you enter. -1 if failed.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatStatus(Chat: Integer): Integer;
+var
+  Colors: TIntArray;
+  P: TPoint;
+begin
+  if (Chat = Tab_Chat_All) then
+  begin
+    if (GetCurrentChat = Tab_Chat_All) then 
+      Result := Chat_SwitchTab
+    else
+      Result := Chat_Off;
+    Exit;
+  end;
+  Colors := [65280, 65535, 255, 16776960, 16756480];
+  for Result := 0 to 3 + Integer(Chat = Tab_Chat_Public) do
+    if (FindColorP(P, Colors[Result], GetChatTabBounds(Chat))) then
+      Exit; 
+  Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetChatStatus(Chat, State: Integer): Boolean;
+Contributors: Wanted, Freddy
+Description: Sets the desired chat to the desired state. True if successful.
+Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetChatStatus(Chat, State: Integer): Boolean;
+var
+  ChatOptions: T2DStrArray;
+  T: Integer; 
+begin
+  Result := (State = GetChatStatus(Chat));
+  if (Result) then
+    Exit;
+  if (((Chat = Tab_Chat_All) and (State = Chat_On)) or (State = Chat_SwitchTab)) then
+  begin
+    Result := SetCurrentChat(Chat);
+    Exit;
+  end;
+  if (Chat = Tab_Chat_All) then
+    Exit;  
+  if (not (InRange(Chat, 0, Tab_Chat_Count))) then
+    Exit;
+  if (not (InRange(State, 0, Chat_State_Count))) then 
+    Exit;
+  ChatOptions := [TStrArray(['w al', 'all', 'ame', 'w st', 'andard']), TStrArray(['w fr', 'riend']), TStrArray([': O', 'ff']), TStrArray([': H', 'ide']), TStrArray(['w au', 'utoch']), TStrArray(['Swit', 'ch Tab'])];
+  if (Chat = Tab_Chat_Game) then
+    ChatOptions[Chat_Filter] := ['ilter'];
+  MouseBoxB(GetChatTabBounds(Chat), ClickRight);
+  if (not (ChooseOptionMulti(ChatOptions[State]))) then
+    Exit;
+  SetTimer(T, 1012, 1431);
+  repeat
+     WaitRR(10, 15);
+     Result := (GetChatStatus(Chat) = State); 
+  until (CheckTimer(T) or (Result));  
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetChatStatuses(Chats, States: TIntArray): TBoolArray;
+Contributors: Wanted, Freddy.
+Description: Sets the desired chats to the desired states. True if successful.
+Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetChatStatuses(Chats, States: TIntArray): TBoolArray;
+var
+  I, H: Integer;
+begin
+  H := High(Chats);
+  SetLength(Result, H + 1);
+  for I := 0 to H do
+    Result[I] := SetChatStatus(Chats[I], States[I]);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetupAutoChat(S: string): Boolean;
+Contributors: Wanted
+Description: Enters desired auto chat. True if successful.
+Date Created: October 28th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetupAutoChat(S: string): Boolean;
+var
+  T: LongInt;
+begin
+  Result := False;
+  MouseBoxB(GetChatTabBounds(Tab_Chat_Public), ClickRight);
+  if (not (ChooseOptionMulti(['Setup', 'etup y', 'r aut']))) then
+    Exit;
+  SetTimer(T, 1221, 1541);
+  repeat
+     WaitRR(10, 15);
+     Result := (CountColorB(0, MCB) = 305);
+  until (CheckTimer(T) or (Result));
+  if (not (Result)) then
+    Exit;
+  TypeSend(S);    
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleAutoChat(Resume: Boolean): Boolean;
+Contributors: Wanted
+Description: Resumes or Pauses autochat. True if changed.
+Date Created: October 28th, 2014. By Wanted. RS07 Build ???.
+Last Modified: OOctober 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleAutoChat(Resume: Boolean): Boolean;
+begin
+  MouseBoxB(GetChatTabBounds(Tab_Chat_Public), ClickRight);
+  if (Resume) then
+    Result := ChooseOptionMulti(['Resume', 'esume', 'me au'])
+  else
+    Result := ChooseOptionMulti(['Pause', 'ause', 'use au'])
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SetupPublicChatFilter(S: string): Boolean;
+Contributors: Wanted
+Description: Enters desired public chat filter. True if successful.
+Date Created: October 28th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SetupPublicChatFilter(S: string): Boolean;
+var
+  T: LongInt;
+begin
+  Result := False;
+  MouseBoxB(GetChatTabBounds(Tab_Chat_Public), ClickRight);
+  if (not (ChooseOptionMulti(['Filter', 'ilter', 'lter p']))) then
+    Exit;
+  SetTimer(T, 1221, 1541);
+  repeat
+     WaitRR(10, 15);
+     Result := (CountColorB(0, MCB) = 357);
+  until (CheckTimer(T) or (Result));
+  if (not (Result)) then
+    Exit;
+  TypeSend(S);    
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks to continue, true if found.
+Date Created: December 20th, 2011. By Wanted. RS2 Build 690.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
+var
+  TPA: TPointArray;
+  T, C, I: LongInt;
+begin
+  Result := False;
+  FindColorsEx(TPA, [clWhite, 16711680], 106, 427, 505, 472);
+  Result := (Length(TPA) = 285); 
+  if ((not (Result)) or (not (Click))) then
+    Exit;
+  Result := CountColor(16711680, 106, 427, 505, 472) = 285;
+  if (not (Result)) then
+    Exit;
+  I := 0;
+  repeat
+    C := CountColorB(clBlack, MCB);
+    if (I = 0) then
+      MouseBoxB(TPABounds(TPA), ClickLeft)
+    else
+    begin
+      if (not (ClickContinueEx(False, False))) then
+        Exit;
+      MouseCurrentPos(True);
+    end;
+    SetTimer(T, 9981, 15312);
+    while ((CountColorB(clBlack, MCB) = C) and (not (CheckTimer(T)))) do
+      WaitRR(200, 400);
+    Inc(I);
+  until (not (UntilGone));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ClickContinue: Boolean;
+Contributors: Wanted
+Description: Clicks to continue, true if found.
+Date Created: December 20th, 2011. By Wanted. RS2 Build 690.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ClickContinue: Boolean;
+begin
+  Result := ClickContinueEx(True, True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FixChat: Boolean;
+Contributors: Wanted
+Description: Scrolls the chat bar all the way down, if needed true.
+Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
+Last Modified: Octver 28th, 2011. By Wanted. R207 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function FixChat: Boolean;
+var
+  TPA: TPointArray;
+  B: TBox;
+begin
+  Result := False;
+  if (GetColor(505, 441) = 3096136) then
+    Exit;
+  Result := True;
+  FindColorEx(TPA, 65536, 498, 361, 511, 442);
+  if (Length(TPA) < 1) then
+    Exit;
+  B := TPABounds(TPA);
+  DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, 493, 442, 515, 470, True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatLineBounds(Line: Integer): TBox;
+Contributors: Wanted
+Description: Returns the box around the chat line.
+Date Created: November 5th, 2011. By Wanted. RS2 Build 675.
+Last Modified: October 28th, 2011. By Wanted. R207 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatLineBounds(Line: Integer): TBox;
+begin
+  Result := BoxFromGrid(Point(MCX1, MCY1 + 2), Line, MCPW, 14, 1, 14, 0);  
+  if (Line = 8) then
+  begin
+    IncEx(Result.Y1, 2);
+    IncEx(Result.Y2, 2);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetChatTextEx(Line, TextColor: Integer): string;
+Contributors: Wanted
+Description: Returns chat text on a given line. -1 for all colors.
+Date Created: November 5th, 2011. By Wanted. RS2 Build 675.
+Last Modified: October 28th, 2011. By Wanted. R207 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetChatTextEx(Line, TextColor: Integer): string;
+var
+  B: TBox;
+begin
+  Result := '';
+  if (FixChat) then
+    WaitRR(500, 1000);
+  B := GetChatLineBounds(Line);
+  Result := Trim(GetTextAtEx(B.X1, B.Y1 - 2, 0, SmallChars, False, False, 0, 2, TextColor, 70, False, tr_AllChars));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LeveledUpEx(Click, UntilGone: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if leveled up. ClickContinueEx after.
+Date Created: October 28th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LeveledUpEx(Click, UntilGone: Boolean): Boolean;
+var
+  TPA: TPointArray;
+  P: TPoint;
+begin
+  Result := False;
+  FindColorEx(TPA, 8388608, 66, 365, 501, 404);
+  if (Length(TPA) < 25) then
+    Exit;
+  Result := FindTextTPAInTPA('ongratulations', NPCChars, TPA, P);
+  if (Click) then
+    ClickContinueEx(True, UntilGone);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function LeveledUp: Boolean;
+Contributors: Wanted
+Description: Returns true if leveled up. ClickContinue after.
+Date Created: October 28th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function LeveledUp: Boolean;
+begin
+  Result := LeveledUpEx(True, True);
+end;

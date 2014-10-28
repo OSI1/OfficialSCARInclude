@@ -67,6 +67,12 @@
      By: Wanted
  * function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
      By: Wanted
+ * function IsRunning: Boolean;
+     By: Wanted
+ * function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
+     By: Wanted
+ * function ToggleRun(Run: Boolean): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -291,7 +297,7 @@ Description: Rotates the compass using the arrow keys to the desired angle. If
              AdjustHeight then it will  simultaneously do so while adjusting 
              compass angle. Returns true if final angle is within Acc of Angle.
 Date Created: March 13th, 2013. By Wanted. RS07 Build ???.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function SetCompassAngleEx(Angle, Accuracy: Extended; AdjustHeight, Highest: Boolean): Boolean;
@@ -311,7 +317,7 @@ begin
       if (FirstAttempt) then
       begin
         FirstAttempt := False;
-        SetTimer(AHT, 1000, 1500); 
+        SetTimer(AHT, 1351, 1621) 
         VKeyDown((Integer(not Highest) * 2) + 38); 
         SKeyDown := True;
       end;
@@ -344,7 +350,8 @@ begin
         Break;
       end;
       if (CurrentDifference > PreviousDifference) then
-        Break;
+        if (Abs(CurrentDifference - PreviousDifference) > (Accuracy * 2)) then  
+          Break;
       PreviousDifference := CurrentDifference;
     until (CheckTimer(T));
     VKeyUp((Integer(not CounterClockWise) * 2) + 37);
@@ -406,12 +413,12 @@ procedure SetScreenHeight(Highest: Boolean);
 Contributors: Naum, Wanted, Freddy.
 Description: Tilts the camera angle.
 Date Created: August 6th, 2011. By Naum. RS2 Build 660.
-Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetScreenHeight(Highest: Boolean);
 begin
-  HoldVKey((Integer(not Highest) * 2) + 38, 1000, 1500);
+  HoldVKey((Integer(not Highest) * 2) + 38, 1351, 1621);
   WaitRR(400, 600);
 end;
 
@@ -482,7 +489,7 @@ function FlagEx(Distance: Extended): Boolean;
 Contributors: Wanted
 Description: Waits until your within Distance of flag. Returns true if it didn't time out.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FlagEx(Distance: Extended): Boolean;
@@ -690,4 +697,52 @@ begin
   IncEx(P.X, XOffset);
   IncEx(P.Y, YOffset);
   Result := MouseFlagEx(P, RX, RY, FlagD);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsRunning: Boolean;
+Contributors: Wanted
+Description: Returns true if running.
+Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsRunning: Boolean;
+begin
+  Result := SimilarColors(6806252, GetColor(581, 141), 10);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
+Contributors: Wanted
+Description: Sets run to desired state. True if state was changed.
+Date Created: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
+begin
+  Result := False;
+  if (GetMMLevel(Skill_Run) < MinEnergy) then
+    Exit;
+  Result := ((IsRunning) xor (Run));
+  if (Result) then
+    if (Random(2) = 1) then
+      MouseCircle(9, 581, 139, ClickLeft)
+    else
+      MouseBox(547, 135, 573, 148, ClickLeft);
+  WaitFunc(@IsRunning, False, 50, 150, 1500, 2500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleRun(Run: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets run to desired state. True if state was changed.
+Date Created: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleRun(Run: Boolean): Boolean;
+begin
+  Result := ToggleRunEx(Run, 1);
 end;

@@ -2,29 +2,9 @@
                               Official SCAR Include
                            Extended Array Type Routines
 --------------------------------------------------------------------------------
- * function CopyTEA(TEA: TBooleanArray): TBooleanArray;
-     By: Wanted
  * procedure TEAReverse(var TEA: TExtArray);
      By: Janilabo
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function CopyTEA(TEA: TBooleanArray): TBooleanArray;
-Contributors: Wanted
-Description: Creates a new TExtendedArray with a copy of every element in the given array TEA.
-Date Created: March 3rd, 2013. By Wanted
-Last Modified: March 3rd, 2013. By Wanted
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function CopyTEA(TEA: TBooleanArray): TBooleanArray;
-var
-  I, H: LongInt;
-begin
-  H := High(TEA);
-  SetLength(Result, H + 1);
-  for I := 0 to H do 
-    Result[I] := TEA[I];
-end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TEAReverse(var TEA: TExtArray);
