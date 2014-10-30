@@ -17,6 +17,8 @@
      By: Wanted
  * function GetAllLevels(CheckST: Boolean): Boolean;
      By: Wanted
+ * function ConvertXPToLevel(xp: Integer): Integer;
+     By Brak & Flyboy
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -170,4 +172,28 @@ begin
   H := Skill_Count - 1;
   for I := 0 to H do
     Players[CurrentPlayer].Level[I] := GetSkillLevel(I, False);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ConvertXPToLevel(xp: Integer): Integer;
+Contributors: Brak, Flyboy.
+Description: Returns skill level based on experience points.
+Date Created: August 7th, 2011. By Brak & Flyboy. RS2 Build 660.
+Last Modified: August 7th, 2011. By Brak & Flyboy. RS2 Build 660.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ConvertXPToLevel(xp: Integer): Integer;
+var
+  level, exp: Integer;
+begin
+  for level := 1 to 99 do
+  begin
+    exp := exp + Trunc(level + 300 * Pow(2, level / 7));
+    if ((exp / 4) > xp) then
+    begin
+      Result := level;
+      Exit;
+    end;
+  end;
+  Result := 99;
 end;
