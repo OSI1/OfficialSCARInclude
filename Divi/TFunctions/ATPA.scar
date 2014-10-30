@@ -16,6 +16,8 @@
      By: Janilabo 
  * procedure ATPAInsert(var ATPA: T2DPointArray; Index: Integer; TPA: TPointArray);
      By: Wanted
+ * procedure ReverseATPA(var ATPA: T2DPointArray);
+     By: Wanted
  * procedure SortATPASize(var ATPA: T2DPointArray; BigFirst: Boolean);
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -157,6 +159,27 @@ begin
     for I := (L - 1) downto Index do
       ATPA[(I + 1)] := ATPA[I];
   ATPA[Index] := TPA; 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure ReverseATPA(var ATPA: T2DPointArray);
+Contributors: Wanted
+Description: Reverses the order for TPAs in ATPA. Override as SCAR's seems to be broken.
+Date Created: October 29th, 2014. By Wanted
+Last Modified: October 29th, 2014. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure ReverseATPA(var ATPA: T2DPointArray);
+var
+  Temp: T2DPointArray;
+  I, L, H: LongInt;
+begin
+  L := Low(ATPA);
+  H := High(ATPA);
+  SetLength(Temp, Length(ATPA));
+  for I := L to H do
+    Temp[I] := ATPA[H - I];
+  ATPA := CopyATPA(Temp);  
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

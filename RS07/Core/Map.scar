@@ -21,9 +21,11 @@
      By: Wanted
  * function FindMMColorTol(var P: TPoint; Color, Tol: Integer): Boolean;
      By: Wanted
- * function FindMMColorsExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+ * function FindMMColorExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
      By: Wanted
  * function FindMMColorSpiral(SP: TPoint; var P: TPoint; Color: Integer): Boolean;
+     By: Wanted
+ * function PercentMMBlack: Extended;
      By: Wanted
  * function GetCompassAngleRadians: Extended;
      By: Wanted
@@ -38,6 +40,12 @@
  * function SetCompassAngleAndHeight(Angle: Extended; Highest: Boolean): Boolean;
      By: Wanted
  * procedure SetScreenHeight(Highest: Boolean);
+     By: Wanted
+ * function IsRunning: Boolean;
+     By: Wanted
+ * function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
+     By: Wanted
+ * function ToggleRun(Run: Boolean): Boolean;
      By: Wanted
  * function FindFlag(var P: TPoint): Boolean;
      By: Wanted
@@ -66,12 +74,6 @@
  * function CountMMDots(cldDot: Integer): Integer;
      By: Wanted
  * function RadarRoadWalk(var TPA: TPointArray; SRad, ERad, SAng, EAng, FlagD: Extended; XOffset, YOffset, RX, RY: Integer): Boolean;
-     By: Wanted
- * function IsRunning: Boolean;
-     By: Wanted
- * function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
-     By: Wanted
- * function ToggleRun(Run: Boolean): Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
   
@@ -229,14 +231,14 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function FindMMColorsExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+function FindMMColorExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
 Contributors: Wanted
 Description: Finds colors within minimap circle with tolerance.
 Date Created: October 28th, 2011. By Wanted. RS2 Build 671.
 Last Modified: March 7th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function FindMMColorsExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
+function FindMMColorExTol(var TPA: TPointArray; Color, Tol: Integer): Boolean;
 begin
   Result := FindColorTPATolExP(TPA, Color, MMTPA, Tol);
 end;
@@ -252,6 +254,22 @@ Last Modified: March 14th, 2013. By Wanted. RS07 Build ???.
 function FindMMColorSpiral(SP: TPoint; var P: TPoint; Color: Integer): Boolean;
 begin
   Result := FindColorSpiralTPA(SP, P, Color, MMTPA);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PercentMMBlack: Extended;
+Contributors: Wanted
+Description: Returns pecentage of minimap that is black.
+Date Created: October 29th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 29th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PercentMMBlack: Extended;
+var
+  TPA: TPointArray;
+begin
+  FindMMColorExTol(TPA, clBlack, 35);
+  Result := (Length(TPA) / Length(MMTPA));
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -423,6 +441,54 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function IsRunning: Boolean;
+Contributors: Wanted
+Description: Returns true if running.
+Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function IsRunning: Boolean;
+begin
+  Result := SimilarColors(6806252, GetColor(581, 141), 10);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
+Contributors: Wanted
+Description: Sets run to desired state. True if state was changed.
+Date Created: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
+begin
+  Result := False;
+  if (GetMMLevel(Skill_Run) < MinEnergy) then
+    Exit;
+  Result := ((IsRunning) xor (Run));
+  if (Result) then
+    if (Random(2) = 1) then
+      MouseCircle(9, 581, 139, ClickLeft)
+    else
+      MouseBox(547, 135, 573, 148, ClickLeft);
+  WaitFunc(@IsRunning, False, 50, 150, 1500, 2500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleRun(Run: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets run to desired state. True if state was changed.
+Date Created: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleRun(Run: Boolean): Boolean;
+begin
+  Result := ToggleRunEx(Run, 1);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindFlag(var X, Y: Integer): Boolean;
 Contributors: Wanted
 Description: Returns true if flag exists and the cord of the lowest point.
@@ -489,7 +555,7 @@ function FlagEx(Distance: Extended): Boolean;
 Contributors: Wanted
 Description: Waits until your within Distance of flag. Returns true if it didn't time out.
 Date Created: October 31st, 2011. By Wanted. RS2 Build 672.
-Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 29th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function FlagEx(Distance: Extended): Boolean;
@@ -508,8 +574,11 @@ begin
     WaitRR(100, 200);
   end;
   Result := True;
-  if (Distance < 5) then 
-      WaitRR(700 - Round(Distance * 140), 800 - Round(Distance * 160));
+  if (Distance < 5) then
+    if (IsRunning) then 
+      WaitRR(1500 - Round(Distance * 300), 1600 - Round(Distance * 320))
+    else
+      WaitRR(1700 - Round(Distance * 340), 1800 - Round(Distance * 360));  
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -697,52 +766,4 @@ begin
   IncEx(P.X, XOffset);
   IncEx(P.Y, YOffset);
   Result := MouseFlagEx(P, RX, RY, FlagD);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function IsRunning: Boolean;
-Contributors: Wanted
-Description: Returns true if running.
-Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function IsRunning: Boolean;
-begin
-  Result := SimilarColors(6806252, GetColor(581, 141), 10);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
-Contributors: Wanted
-Description: Sets run to desired state. True if state was changed.
-Date Created: October 27th, 2014. By Wanted. RS07 Build ???.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function ToggleRunEx(Run: Boolean; MinEnergy: Integer): Boolean;
-begin
-  Result := False;
-  if (GetMMLevel(Skill_Run) < MinEnergy) then
-    Exit;
-  Result := ((IsRunning) xor (Run));
-  if (Result) then
-    if (Random(2) = 1) then
-      MouseCircle(9, 581, 139, ClickLeft)
-    else
-      MouseBox(547, 135, 573, 148, ClickLeft);
-  WaitFunc(@IsRunning, False, 50, 150, 1500, 2500);
-end;
-
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ToggleRun(Run: Boolean): Boolean;
-Contributors: Wanted
-Description: Sets run to desired state. True if state was changed.
-Date Created: October 27th, 2014. By Wanted. RS07 Build ???.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-
-function ToggleRun(Run: Boolean): Boolean;
-begin
-  Result := ToggleRunEx(Run, 1);
 end;
