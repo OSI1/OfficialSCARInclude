@@ -252,7 +252,7 @@ function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
 Contributors: Wanted
 Description: Clicks to continue, true if found.
 Date Created: December 20th, 2011. By Wanted. RS2 Build 690.
-Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+Last Modified: October 30th, 2014. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickContinueEx(Click, UntilGone: Boolean): Boolean;
@@ -274,11 +274,8 @@ begin
     if (I = 0) then
       MouseBoxB(TPABounds(TPA), ClickLeft)
     else
-    begin
-      if (not (ClickContinueEx(False, False))) then
+      if (not (ClickContinueEx(True, False))) then
         Exit;
-      MouseCurrentPos(True);
-    end;
     SetTimer(T, 9981, 15312);
     while ((CountColorB(clBlack, MCB) = C) and (not (CheckTimer(T)))) do
       WaitRR(200, 400);
