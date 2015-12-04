@@ -3,6 +3,58 @@
                                   Runescape 07
                               Combat Tab 0 Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function AutoRetaliateEnabled: Boolean;
+     By: Wanted
+ * function ToggleAutoRetaliate(Enable, CheckCT: Boolean): Boolean;
+     By: Wanted
+ * function GetCombatLevel: LongInt;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function AutoRetaliateEnabled: Boolean;
+Contributors: Wanted
+Description: Returns true if auto retaliate is on.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function AutoRetaliateEnabled: Boolean;
+begin
+  Result := GetColor(645, 358) = 987203;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleAutoRetaliate(Enable, CheckCT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets auto retaliate to desired state. Returns true if changed.
+Exits if CheckCT true and can't get to Tab_Combat.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleAutoRetaliate(Enable, CheckCT: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckCT) then
+    if (not (SetGameTab(Tab_Combat))) then
+      Exit;
+  Result := (AutoRetaliateEnabled <> Enable);
+  if (not (Result)) then
+    Exit;
+  MouseBox(573, 361, 710, 397, ClickLeft);
+  Result := WaitFunc(@AutoRetaliateEnabled, Enable, 50, 150, 1500, 2500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetCombatLevel: LongInt;
+Contributors: Wanted
+Description: Returns combat level. Returns -1 if failed.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetCombatLevel: LongInt;
+begin
+  Result := StrToIntDef(GetNumbers(GetTextAtEx(606, 230, 0, StatChars, False, False, 0, 2, 2070783, 20, False, tr_AllChars)), -1);
+end;

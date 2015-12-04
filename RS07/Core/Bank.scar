@@ -5,6 +5,10 @@
 --------------------------------------------------------------------------------
  * function BankScreen: Boolean;
      By: Wanted
+ * function PinScreen: Boolean;
+     By: Wanted
+ * function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
+     By: Wanted
  * function CloseBank(CheckBS: Boolean): Boolean;
      By: Wanted
  * function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
@@ -19,9 +23,49 @@
      By: Wanted
  * function ToggleSwapMode(Use: Boolean): Boolean;
      By: Wanted
+ * function GetBankSlotIndex(Row, Column: Integer): Integer;
+     By: Wanted
+ * function GetBankSlotRow(Index: Integer): Integer;
+     By: Wanted
+ * procedure GetBankSlotRowAndColumn(Index: Integer; var Row, Column: Integer);
+     By: Wanted
  * function GetBankScrollBarPos: Extended;
      By: Wanted
- * function ScrollToBankToRow(Row: Integer): Boolean;
+ * function ScrollToBankRow(Row: Integer): Boolean;
+     By: Wanted
+ * function ScrollBankToIndex(Index: Integer): Boolean;
+     By: Wanted
+ * procedure OffsetPointBankScrollPos(var P: TPoint; Pos: Extended);
+     By: Wanted
+ * procedure OffsetBoxBankScrollPos(var B: TBox; Pos: Extended);
+     By: Wanted
+ * function GetBankSlotsSearchBounds(Slots: TIntegerArray; Pos: Extended): TBoxArray;
+     By: Wanted
+ * function GetBankSlotSearchBounds(Slot: Integer; Pos: Extended): TBox;
+     By: Wanted
+ * function GetBankSlotsBounds(Slots: TIntegerArray): TBoxArray;
+     By: Wanted
+ * function GetBankSlotBounds(Slot: Integer): TBox;
+     By: Wanted
+ * function GetBankItemAmount(Slot: Integer): LongInt;
+     By: Wanted
+ * function CordsToBankSlot(P: TPoint): Integer;
+     By: Wanted
+ * function BankItemExists(Slot: Integer; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+     By: Wanted
+ * function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
+     By: Wanted   
+ * function HandlePendingPINScreen: Boolean;
      By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
@@ -30,19 +74,85 @@ function BankScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
+Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
+//var
+//  TPA: TPointArray;
+//  P: TPoint;
+begin
+  Result := (CountColor(2070783, 251, 296, 326, 310) = 155);
+  {Result := False;
+  FindColorEx(TPA, 2070783, 178, 31, 340, 54);
+  if (Length(TPA) > 20) then
+    Result := FindTextTPAInTPA('The Bank of RuneScape', ScreenChars, TPA, P);}
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function PinScreen: Boolean;
+Contributors: Wanted, Freddy.
+Description: Returns true if at the pin screen.
+Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
+Last Modified: April 7th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function PinScreen: Boolean;
 var
   TPA: TPointArray;
   P: TPoint;
 begin
   Result := False;
-  FindColorEx(TPA, 2070783, 178, 14, 340, 34);
-  if (Length(TPA) > 20) then
-    Result := (FindTextTPAInTPA('The Bank of RuneScape', ScreenChars, TPA, P) or
-  FindTextTPAInTPA('Tab', ScreenChars, TPA, P));
+  FindColorEx(TPA, 2070783, 96, 56, 430, 84);
+  if (Length(TPA) > 50) then
+     Result := FindTextTPAInTPA('enter your', ScreenChars, TPA, P);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
+Contributors: Wanted, Freddy
+Description: Enters bank pin and returns true if succesfully entered pin and at bank screen.
+Date Created: November 8th, 2011. By Wanted. RS2 Build 676.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function EnterBankPin(Pin: string; CheckPS: Boolean): Boolean;
+var
+  I, II, C, T, H: Integer;
+  TPA: TPointArray;
+  TBA: TBoxArray;
+  P: TPoint;
+begin
+  Result := False;
+  if (Length(Pin) <> 4) then
+    Exit;
+  if (CheckPS) then
+    if (not (PinScreen)) then
+      Exit;
+  TBA := TBAFromGrid(Point(41, 111), 56, 56, 9, 3, 72, 94);
+  TBAInsert(TBA, Length(TBA), Box(313, 111, 368, 166)); 
+  for I := 0 to 3 do
+  begin
+    FindColorEx(TPA, 32767, 33, 104, 390, 321);
+    if (Length(TPA) < 250) then
+      Exit;
+    if (not (FindTextTPAInTPA(Copy(Pin, I + 1, 1), ScreenChars, TPA, P))) then
+      GetMousePosP(P);
+    H := High(TBA);
+    for II := 0 to H do
+      if (PointInBox(P, TBA[II])) then
+        Break;
+    if (II > H) then
+      Exit;
+    C := CountColor(clWhite, 77, 78, 452, 103);
+    T := GetSystemTime + RR(5000, 7000);
+    MouseBoxB(TBA[II], ClickLeft);
+    while ((CountColor(clWhite, 77, 78, 452, 103) = C) and (GetSystemTime < T)) do
+      WaitRR(250, 400);
+    WaitRR(250, 400);
+  end;
+  Result := WaitFunc(@BankScreen, True, 250, 400, 5000, 7000);
+  // FIX ClickContinue and retrys would be a good idea
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -70,7 +180,7 @@ Contributors: Wanted, Freddy.
 Description: Deposits all inventory items except for excluded slots, or the other
 way around if Exclude is false. True if CheckBS is true and bankscreen is found.
 Date Created: December 9th, 2011. By Wanted. RS2 Build 688.
-Last Modified: November 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function DepositItemsEx(Slots: TIntArray; Exclude, CheckBS: Boolean): Boolean;
@@ -90,8 +200,8 @@ begin
         C := InvCount(False);
         MouseInvItem(I, ClickRight, False);
         ChooseOptionMulti(['re A', 'All']);
-        SetTimer(T, 1500, 2500);
-        while ((not (CheckTimer(T))) and (InvCount(False) = C)) do
+        T := GetSystemTime + RR(1500, 2500);
+        while ((GetSystemTime < T) and (InvCount(False) = C)) do
           WaitRR(100, 200);
       end;
 end;
@@ -188,68 +298,555 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function GetBankScrollBarPosition: Extended;
+function GetBankSlotIndex(Row, Column: Integer): Integer;
 Contributors: Wanted
-Description: Returns the percentage of scroll bar height relative to max top.
+Description: Returns index of an bank slot based on row and column position.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 18th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotIndex(Row, Column: Integer): Integer;
+begin
+  Result := ((Row  * 8) + Column);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankSlotRow(Index: Integer): Integer;
+Contributors: Wanted
+Description: Returns row of a bank index.
+Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 18th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotRow(Index: Integer): Integer;
+begin
+  Result := Index div 8;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure GetBankSlotRowAndColumn(Index: Integer; var Row, Column: Integer);
+Contributors: Wanted
+Description: Returns row and column of a bank index.
+Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 18th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure GetBankSlotRowAndColumn(Index: Integer; var Row, Column: Integer);
+begin
+  Row := Index div 8;
+  Column := Index mod 8;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankScrollBarPos: Extended;
+Contributors: Wanted, Slacky.
+Description: Returns the percentage of scroll bar height relative to max bottom.
 Date Created: March 16th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 19th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetBankScrollBarPos: Extended;
 var
   TPA: TPointArray;
 begin
-  Result := 1.0; 
+  Result := 0.0; 
   if (GetColor(474, 75) = 5531254) then
     Exit;  
   if (GetColor(474, 271) = 2436403) then
   begin
-    Result := 0;
+    Result := 1.0;
     Exit;
   end;   
   FindColorEx(TPA, 1777699, 468, 75, 468, 271);
+  if (Length(TPA) < 1) then
+    Exit;
   InvertTPA(TPA);
   SortTPAEx(TPA, Point(468, 75));
-  Result := (249 - TPA[0].Y) / 175;
+  Result := (TPA[0].Y - 75) / 175;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ScrollToBankToRow(Row: Integer): Boolean;
-Contributors: Wanted
+function ScrollToBankRow(Row: Integer): Boolean;
+Contributors: Wanted, Slacky.
 Description: Scrolls bank to which ever row you specify, true if adjusted.
 Date Created: March 16th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 16th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 19th, 2013. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ScrollToBankToRow(Row: Integer): Boolean;
+function ScrollToBankRow(Row: Integer): Boolean;
 var
   Y, DY, CurrentPos: Extended;
   B, DB: TBox;
 begin
   Result := False;
-  DY := (Row * 3.5) + 75;
+  DY := ((Row * (1/45)) * 175) + 86;
   CurrentPos := GetBankScrollBarPos;
-  Y := 249 - (174 * CurrentPos);
-  B := Box(470, Round(Y) + 2, 481, Round(Y) + 20);
+  Y := 86 + (175 * CurrentPos);
+  B := Box(470, Round(Y) + 2, 481, Round(Y));
   if (InRange(Row, 0, 5)) then
-  begin   
-    if (CurrentPos = 1.0) then
+  begin
+    if (CurrentPos = 0.0) then
       Exit;
     DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, 470, 67, 481, 72, True);
-    Result := True;   
+    Result := True;
     Exit;
-  end;  
+  end;
   if (InRange(Row, 45, 49)) then
-  begin     
-    if (CurrentPos = 0.0) then
+  begin
+    if (CurrentPos = 1.0) then
       Exit;
     DragMouseBox(B.X1, B.Y1, B.X2, B.Y2, 470, 273, 481, 277, True);
     Result := True;
     Exit;
     end;
-  if (CurrentPos = ((249 - DY) / 175)) then
-    Exit;  
-  DB := Box(470, Round(DY + 12), 481, Round(DY + 12));
+  if (Abs(CurrentPos - (Row * (1 / 45))) < 0.01) then
+    Exit;
+  DB := Box(470, Round(DY), 481, Round(DY));
   DragMouseBoxB(B, DB, True);
   Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ScrollBankToIndex(Index: Integer): Boolean;
+Contributors: Wanted
+Description: Scrolls bank to which ever index you specify, true if adjusted.
+Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ScrollBankToIndex(Index: Integer): Boolean;
+begin
+  Result := ScrollToBankRow(GetBankSlotRow(Index));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure OffsetPointBankScrollPos(var P: TPoint; Pos: Extended);
+Contributors: Wanted
+Description: Offsets a point from where it would be if visble without scroll bar.
+Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 18th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure OffsetPointBankScrollPos(var P: TPoint; Pos: Extended);
+begin
+  P := Point(P.X, P.Y - Round(Pos * 1676)); 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+procedure OffsetBoxBankScrollPos(var B: TBox; Pos: Extended);
+Contributors: Wanted
+Description: Offsets a box from where it would be if visble without scroll bar.
+Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 18th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+procedure OffsetBoxBankScrollPos(var B: TBox; Pos: Extended);
+var
+  P1, P2: TPoint;
+begin
+  P1 := Point(B.X1, B.Y1);
+  P2 := Point(B.X2, B.Y2);
+  OffsetPointBankScrollPos(P1, Pos);
+  OffsetPointBankScrollPos(P2, Pos);
+  B := PointToBox(P1, P2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankSlotsSearchBounds(Slots: TIntegerArray; Pos: Extended): TBoxArray;
+Contributors: Wanted
+Description: Returns the oversized search bounds of banks slots.
+Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotsSearchBounds(Slots: TIntegerArray; Pos: Extended): TBoxArray;
+var
+  I, H: Integer;
+begin
+  SetLength(Result, Length(Slots));
+  H := High(Slots);
+  for I := 0 to H do
+  begin
+    Result[I] := BoxFromGrid(Point(79, 43), Slots[I], 32, 70, 8, 38, 47); 
+    OffsetBoxBankScrollPos(Result[I], Pos);
+    ConstrainBox(Result[I], MBB);
+    if ((Result[I].Y2 - Result[I].Y1) < 1) then
+      Result[I] := Box(0, 0, 0, 0);
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankSlotSearchBounds(Slot: Integer; Pos: Extended): TBox;
+Contributors: Wanted
+Description: Returns the oversized search bounds of a bank slot.
+Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 18th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotSearchBounds(Slot: Integer; Pos: Extended): TBox;
+var
+  TBA: TBoxArray;
+begin
+  TBA := GetBankSlotsSearchBounds([Slot], Pos);
+  Result := TBA[0];
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankSlotsBounds(Slots: TIntegerArray): TBoxArray;
+Contributors: Wanted
+Description: Returns the bounds of items in the bank slots.
+Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
+Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotsBounds(Slots: TIntegerArray): TBoxArray;
+var
+  ATPA, ATPA2: T2DPointArray;
+  TPA, TPA2: TPointArray;
+  I, H, II, HH: Integer;
+  CurrentPos: Extended;
+  TBA: TBoxArray;
+  B, BB: TBox;
+  P: TPoint;
+begin
+  H := High(Slots);
+  SetLength(Result, H + 1);
+  CurrentPos := GetBankScrollBarPos;
+  if (CurrentPos = 0.0) then
+  begin   
+    for I := 0 to H do
+    begin
+      Result[I] := BoxFromGrid(Point(79, 62), Slots[I], 32, 32, 8, 38, 47);
+      ConstrainBox(Result[I], MBB);
+      if ((Result[I].Y2 - Result[I].Y1) < 1) then
+        Result[I] := Box(0, 0, 0, 0)
+      else
+        if (not (FindColorP(P, clObjectOutline, Result[I]))) then
+          Result[I] := Box(0, 0, 0, 0);
+    end;
+    Exit;
+  end;
+  if (H < 0) then
+    Exit;
+  TBA := GetBankSlotsSearchBounds(Slots, CurrentPos);
+  for I := 0 to H do
+  begin
+    Result[I] := Box(0, 0, 0, 0);
+    if (TBA[I] = Result[I]) then
+      Continue;
+    FindColorTolExP(TPA, 3358280, TBA[I], 10);
+    InvertTPA(TPA);
+    if (Length(TPA) < 20) then
+      Continue;   
+    FindColorsExP(TPA2, [clYellow, clWhite, 8453888], TBA[I]);
+    TPAFilterPoints(TPA, TPA2);
+    ATPA := SplitTPA(TPA, 4);
+    ATPA2 := SplitTPA(TPA2, 4);
+    SortATPABySize(ATPA);
+    HH := High(ATPA); 
+    if (Length(ATPA2) > 0) then
+      for II := 0 to HH do
+      begin
+        B := TPABounds(ATPA[II]);
+        SortATPAEx(ATPA2, Point(B.X1, B.Y1));
+        BB := TPABounds(ATPA2[0]); 
+        if (Distance(B.X1, B.Y1, BB.X1, BB.Y1) > 16) then
+          Continue;
+        ATPA[II] := CombineTPA(ATPA[II], ATPA2[0]);
+      end;
+    P := BoxCenter(TBA[I]);
+    P.Y := TBA[I].Y1;
+    for II := 0 to HH do
+    begin
+      if (Length(ATPA[II]) < 106) then
+        Continue;
+      B := TPABounds(ATPA[II]);
+      if (not (InRangeE(DistanceP(BoxCenter(B), P), 10.2, 37))) then
+        Continue;
+      Break;
+    end;
+    if (II > HH) then
+      Continue;
+    Result[I] := B;
+  end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankSlotBounds(Slot: Integer): TBox;
+Contributors: Wanted
+Description: Returns the bounds of an item in the bank slot.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 18th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotBounds(Slot: Integer): TBox;
+var
+  TBA: TBoxArray;
+begin
+  TBA := GetBankSlotsBounds([Slot]);
+  Result := TBA[0];
+end; 
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBankItemAmount(Slot: Integer): LongInt;
+Contributors: Wanted
+Description: Returns the amount of item in bank taking into account text color within box.
+Date Created: March 19th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 19th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankItemAmount(Slot: Integer): LongInt;
+begin
+  Result := GetAmount(GetBankSlotBounds(Slot));
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function CordsToBankSlot(P: TPoint): Integer;
+Contributors: Wanted
+Description: Returns the bank slot of a point. -1 if not any boxes.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 19th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function CordsToBankSlot(P: TPoint): Integer;
+var
+  TIA: TIntegerArray;
+  TBA: TBoxArray;
+  I: Integer;
+begin
+  Result := -1;
+  SetLength(TIA, 400);
+  for I := 0 to 399 do
+    TIA[I] := I;
+  TBA := GetBankSlotsBounds(TIA);
+  for I := 0 to 399 do
+    if (TBA[I] <> Box(0, 0, 0, 0)) then
+      if (PointInBox(P, TBA[I])) then
+      begin
+        Result := I;
+        Exit;
+      end;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function BankItemExists(Slot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Returns true if there's an item in the given bank slot
+Exits if not at bankscreen and CheckBS is True.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 18th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function BankItemExists(Slot: Integer; CheckBS: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit;
+  Result := GetBankSlotBounds(Slot) <> Box(0, 0, 0, 0);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Clicks on an item in bank. Exits if not at bankscreen and CheckBS is True.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 19th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function MouseBankItem(Slot: Integer; TypeC: ClickActions; CheckBS: Boolean): Boolean;
+var
+  B: TBox;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit;
+  Result := True;
+  B := GetBankSlotBounds(Slot);
+  if (B = Box(0, 0, 0, 0)) then
+    Exit;
+  MouseBoxB(B, TypeC);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Drags an item from one bank slot to another.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 19th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function DragBankItem(FromSlot, ToSlot: Integer; CheckBS: Boolean): Boolean;
+var
+  TBA: TBoxArray;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit;
+  TBA := GetBankSlotsBounds([FromSlot, ToSlot]);
+  if (TBA[0] = Box(0, 0, 0, 0)) then
+    Exit;
+  if (TBA[1] = Box(0, 0, 0, 0)) then
+  begin
+    TBA[1] := GetBankSlotSearchBounds(ToSlot, GetBankScrollBarPos);
+    if (TBA[1] = Box(0, 0, 0, 0)) then
+      Exit;
+    TBA[1] := PointToBox(BoxCenter(TBA[1]), BoxCenter(TBA[1]));
+  end;
+  Result := True;
+  DragMouseBoxB(TBA[0], TBA[1], True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Withdraws by using MouseBox on B. Searches for your Options in ChooseOption
+if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
+use ['-1 '] it will withdraw by left clicking one time to get one item out.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WithdrawEx2(Options: TStringArray; B: TBox; CheckBS: Boolean): Boolean;
+var
+  AllOptions: TStringArray;
+  I, H, C, CT, T: Integer;
+  AllOptionsBox: TBox;
+  TBLA: TBooleanArray;
+  WX: Boolean;
+begin
+  Result := False;
+  if (CheckBS) then
+    if (not (BankScreen)) then
+      Exit;
+  H := High(Options);
+  if (H < 0) then
+    Exit;  
+  C := InvCount(False);
+  if (not (StrContains('-1 ', Options[0]))) then
+  begin
+    MouseBoxB(B, ClickRight);
+    if (not (FindOptionsBox(AllOptionsBox))) then
+      Exit;
+    WX := False;
+    if (InStrArr('X', Options, False)) then
+      WX := True;
+    AllOptions := GetAllOptions(AllOptionsBox);
+    TBLA := TSAContainsMulti(Options, AllOptions);
+    if (TBLACount(TBLA, True) < 1) then
+    begin
+      TBLA := TSAContainsMulti(['w X', ' X '], AllOptions);
+      if (TBLACount(TBLA, True) < 1) then
+        Exit
+      else
+        WX := True;
+    end;
+    H := High(TBLA);
+    for I := 0 to H do
+      if (TBLA[I]) then
+        Break;
+    MouseBoxB(GetOptionBox(I, AllOptionsBox), ClickLeft);
+    if (WX) then
+    begin
+      T := GetSystemTime + RR(4000, 5000);
+      repeat
+        CT := CountColorB(clBlack, MCB)
+        if (CT = 277) then
+          Break;
+      until (GetSystemTime > T);
+      if (CT <> 277) then
+        Exit;
+      TypeSend(GetNumbers(Options[0]));
+    end;
+  end
+  else
+    MouseBoxB(B, ClickLeft);
+  T := GetSystemTime + RR(2000, 3000);
+  while ((GetSystemTime < T) and (InvCount(False) = C)) do
+    WaitRR(100, 200);
+  Result := True;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Withdraws by using MouseBox on B. Converts your desired amount into
+the appropriate options text, uses Withdraw-X if needed. Withdraw_All etc indexes.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WithdrawEx(Amount: Integer; B: TBox; CheckBS: Boolean): Boolean;
+var
+  Options: TStringArray;
+begin
+  case Amount of
+    Withdraw_1: Options := ['1 ', ' 1 ', 'w 1 '];
+    Withdraw_5: Options := ['5', ' 5 ', 'w 5'];
+    Withdraw_10: Options := ['10 ', ' 10 ', 'w 10'];
+    Withdraw_All: Options := ['All ', ' All ', 'w Al'];
+  else
+    Options := [IntToStr(Amount)];
+  end;
+  Result := WithdrawEx2(Options, B, CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Withdraws by using MouseBox on slot. Searches for your Options in ChooseOption
+if it can't find it pulls the numbers out and uses them with Withdraw-X. If you
+use ['-1 '] it will withdraw by left clicking one time to get one item out.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function WithdrawSlotEx(Options: TStringArray; Slot: Integer; CheckBS: Boolean): Boolean;
+var
+  B: TBox;
+begin
+  Result := False;
+  B := GetBankSlotBounds(Slot); 
+  if (B = Box(0, 0, 0, 0)) then
+    Exit;
+  Result := WithdrawEx2(Options, B, CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
+Contributors: Wanted
+Description: Withdraws by using MouseBox on slot. Converts your desired amount into
+the appropriate options text, uses Withdraw-X if needed. Withdraw_All etc indexes.
+Date Created: December 11th, 2011. By Wanted. RS2 Build 688.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function Withdraw(Amount, Slot: Integer; CheckBS: Boolean): Boolean;
+var
+  B: TBox;
+begin
+  Result := False;
+  B := GetBankSlotBounds(Slot);
+  if (B = Box(0, 0, 0, 0)) then
+    Exit;
+  Result := WithdrawEx(Amount, B, CheckBS);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function HandlePendingPINScreen: Boolean;
+Contributors: Wanted
+Description: Handles Pending PIN screen, result true if had to handle.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function HandlePendingPINScreen: Boolean;
+begin
+  Result := CountColor(clYellow, 84, 135, 428, 160) = 512;
+  if (not (Result)) then
+    Exit;
+  MouseBox(97, 135, 393, 160, ClickLeft);
+  WaitFunc(@Bankscreen, True, 50, 150, 4500, 5500);
 end;

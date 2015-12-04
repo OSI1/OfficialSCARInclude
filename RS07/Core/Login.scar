@@ -108,7 +108,7 @@ Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
 
 function LoggedIn: Boolean;
 begin
-  Result := (CountColor(clWhite, 422, 483, 498, 501) = 134);   // Report button text
+  Result := (CountColor(clWhite, 422, 483, 498, 501) = 70);   // Report button text
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

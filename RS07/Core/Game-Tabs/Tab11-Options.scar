@@ -3,6 +3,342 @@
                                   Runescape 07
                              Options Tab 11 Routines
 --------------------------------------------------------------------------------
- * function Sample: string;
-     By: Sample
+ * function GetBrightness: LongInt;
+     By: Wanted
+ * function ToggleBrightness(Brightness: Integer; CheckOT: Boolean): Boolean;
+     By: Wanted
+ * function GetMusicVolume: LongInt;
+     By: Wanted
+ * function ToggleMusicVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+     By: Wanted
+ * function GetEffectsVolume: LongInt;
+     By: Wanted
+ * function ToggleEffectsVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+     By: Wanted
+ * function GetAreaEffectsVolume: LongInt;
+     By: Wanted
+ * function ToggleAreaEffectsVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+     By: Wanted
+ * function TwoMouseButtonsEnabled: Boolean;
+     By: Wanted
+ * function ToggleTwoMouseButtons(Enable, CheckOT: Boolean): Boolean;
+     By: Wanted
+ * function ChatEffectsEnabled: Boolean;
+     By: Wanted
+ * function ToggleChatEffects(Enable, CheckOT: Boolean): Boolean;
+     By: Wanted
+ * function SplitChatEnabled: Boolean;
+     By: Wanted
+ * function ToggleSplitChat(Enable, CheckOT: Boolean): Boolean;
+     By: Wanted
+ * function AidEnabled: Boolean;
+     By: Wanted
+ * function ToggleAid(Enable, CheckOT: Boolean): Boolean;
+     By: Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetBrightness: LongInt;
+Contributors: Wanted
+Description: Returns brightness. VBright being 3, dark being 0. -1 if failed.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBrightness: LongInt;
+begin
+  for Result := 0 to 3 do
+    if (GetColor(610 + (Result * 31) + ((Result div 3) * 3), 226) = clWhite) then
+      Exit;   
+  Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleBrightness(Brightness: Integer; CheckOT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets screen brightness to desired state. Returns true if changed.
+Exits if CheckOT true and can't get to Tab_Options.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleBrightness(Brightness: Integer; CheckOT: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckOT) then
+    if (not (SetGameTab(Tab_Options))) then
+      Exit;
+  Result := (Brightness <> GetBrightness);
+  if (not (Result)) then
+    Exit;
+  Mouse(610 + (Brightness * 31), 226, 1, 1, True);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetMusicVolume: LongInt;
+Contributors: Wanted
+Description: Returns music volume. Off being 0, Loud being 4. -1 if failed.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetMusicVolume: LongInt;
+var
+  TIA: TIntegerArray;
+begin
+  TIA := [607, 631, 658, 684, 709];
+  for Result := 0 to 4 do
+    if (GetColor(TIA[Result], 263) = clWhite) then
+      Exit;   
+  Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleMusicVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets music volume to desired state. Returns true if changed.
+Exits if CheckOT true and can't get to Tab_Options.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleMusicVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+var
+  TIA: TIntegerArray;
+begin
+  Result := False;
+  if (CheckOT) then
+    if (not (SetGameTab(Tab_Options))) then
+      Exit;
+  Result := (Volume <> GetMusicVolume);
+  if (not (Result)) then
+    Exit;   
+  TIA := [607, 631, 658, 684, 709];
+  Mouse(TIA[Volume], 263, 1, 1, True); 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetEffectsVolume: LongInt;
+Contributors: Wanted
+Description: Returns sound effects volume. Off being 0, Loud being 4. -1 if failed.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetEffectsVolume: LongInt;
+var
+  TIA: TIntegerArray;
+begin
+  TIA := [607, 631, 658, 684, 709];
+  for Result := 0 to 4 do
+    if (GetColor(TIA[Result], 299) = clWhite) then
+      Exit;   
+  Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleEffectsVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets sound effects volume to desired state. Returns true if changed.
+Exits if CheckOT true and can't get to Tab_Options.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleEffectsVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+var
+  TIA: TIntegerArray;
+begin
+  Result := False;
+  if (CheckOT) then
+    if (not (SetGameTab(Tab_Options))) then
+      Exit;
+  Result := (Volume <> GetEffectsVolume);
+  if (not (Result)) then
+    Exit;   
+  TIA := [607, 631, 658, 684, 709];
+  Mouse(TIA[Volume], 299, 1, 1, True); 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function GetAreaEffectsVolume: LongInt;
+Contributors: Wanted
+Description: Returns sound area effects volume. Off being 0, Loud being 4. -1 if failed.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetAreaEffectsVolume: LongInt;
+var
+  TIA: TIntegerArray;
+begin
+  TIA := [607, 631, 658, 684, 709];
+  for Result := 0 to 4 do
+    if (GetColor(TIA[Result], 336) = clWhite) then
+      Exit;   
+  Result := -1;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleAreaEffectsVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets sound area effects volume to desired state. Returns true if changed.
+Exits if CheckOT true and can't get to Tab_Options.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleAreaEffectsVolume(Volume: Integer; CheckOT: Boolean): Boolean;
+var
+  TIA: TIntegerArray;
+begin
+  Result := False;
+  if (CheckOT) then
+    if (not (SetGameTab(Tab_Options))) then
+      Exit;
+  Result := (Volume <> GetAreaEffectsVolume);
+  if (not (Result)) then
+    Exit;   
+  TIA := [607, 631, 658, 684, 709];
+  Mouse(TIA[Volume], 336, 1, 1, True); 
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function TwoMouseButtonsEnabled: Boolean;
+Contributors: Wanted
+Description: Returns true if using two mouse buttons.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function TwoMouseButtonsEnabled: Boolean;
+begin
+  Result := GetColor(589, 357) = 987203;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleTwoMouseButtons(Enable, CheckOT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets TwoMouseButtons to desired state. Returns true if changed.
+Exits if CheckOT true and can't get to Tab_Options.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleTwoMouseButtons(Enable, CheckOT: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckOT) then
+    if (not (SetGameTab(Tab_Options))) then
+      Exit;
+  Result := (TwoMouseButtonsEnabled <> Enable);
+  if (not (Result)) then
+    Exit;
+  MouseBox(571, 362, 601, 394, ClickLeft);
+  Result := WaitFunc(@TwoMouseButtonsEnabled, Enable, 50, 150, 1500, 2500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ChatEffectsEnabled: Boolean;
+Contributors: Wanted
+Description: Returns true if chat effects enabled.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ChatEffectsEnabled: Boolean;
+begin
+  Result := GetColor(639, 357) = 987203;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleChatEffects(Enable, CheckOT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets chat effects to desired state. Returns true if changed.
+Exits if CheckOT true and can't get to Tab_Options.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleChatEffects(Enable, CheckOT: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckOT) then
+    if (not (SetGameTab(Tab_Options))) then
+      Exit;
+  Result := (ChatEffectsEnabled <> Enable);
+  if (not (Result)) then
+    Exit;
+  MouseBox(629, 361, 658, 392, ClickLeft);
+  Result := WaitFunc(@ChatEffectsEnabled, Enable, 50, 150, 1500, 2500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function SplitChatEnabled: Boolean;
+Contributors: Wanted
+Description: Returns true if split chat enabled.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function SplitChatEnabled: Boolean;
+begin
+  Result := GetColor(701, 357) = 987203;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleSplitChat(Enable, CheckOT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets split chat to desired state. Returns true if changed.
+Exits if CheckOT true and can't get to Tab_Options.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleSplitChat(Enable, CheckOT: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckOT) then
+    if (not (SetGameTab(Tab_Options))) then
+      Exit;
+  Result := (SplitChatEnabled <> Enable);
+  if (not (Result)) then
+    Exit;
+  MouseBox(683, 361, 715, 393, ClickLeft);
+  Result := WaitFunc(@SplitChatEnabled, Enable, 50, 150, 1500, 2500);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function AidEnabled: Boolean;
+Contributors: Wanted
+Description: Returns true if aid is enabled.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function AidEnabled: Boolean;
+begin
+  Result := GetColor(586, 411) = 987203;
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ToggleAid(Enable, CheckOT: Boolean): Boolean;
+Contributors: Wanted
+Description: Sets accept aid to desired state. Returns true if changed.
+Exits if CheckOT true and can't get to Tab_Options.
+Date Created: March 20th, 2013. By Wanted. RS07 Build ???.
+Last Modified: March 20th, 2013. By Wanted. RS07 Build ???.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ToggleAid(Enable, CheckOT: Boolean): Boolean;
+begin
+  Result := False;
+  if (CheckOT) then
+    if (not (SetGameTab(Tab_Options))) then
+      Exit;
+  Result := (AidEnabled <> Enable);
+  if (not (Result)) then
+    Exit;
+  MouseBox(571, 415, 602, 447, ClickLeft);
+  Result := WaitFunc(@AidEnabled, Enable, 50, 150, 1500, 2500);
+end;

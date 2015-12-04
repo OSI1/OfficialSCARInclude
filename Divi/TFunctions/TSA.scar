@@ -344,21 +344,22 @@ end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 procedure TSAUnique(var TSA: TStrArray);
-Contributors: Janilabo
+Contributors: Janilabo, Wanted
 Description: Deletes any duplicates in TSA.          
 Date Created: September 30th, 2012. By Janilabo
-Last Modified: October 12th, 2012. By Janilabo
+Last Modified: December 4th, 2015. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure TSAUnique(var TSA: TStrArray);
 var
   H, II, I, D: Integer; 
 begin
-  H := High(TSA);   
+  H := High(TSA);
+  D := 0;   
   if (H > 0) then         
   for I := (H - D) downto 1 do
     for II := (I - 1) downto 0 do
-      if (TSA[II] = TSA[II]) then
+      if (TSA[I] = TSA[II]) then
       begin
         TSADelete(TSA, I);
         Inc(D);
