@@ -11,7 +11,7 @@ OSI BSD LIMITED LICENSE: APPLICABLE ONLY TO THE INTELLECTUAL PROPERTY CREATED BY
 
 
 
-Copyright (c) 2011-2014, Official SCAR Include
+Copyright (c) 2011-2020, Official SCAR Include
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

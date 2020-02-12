@@ -79,12 +79,12 @@ procedure SetUpOSI;
 Contributors: Wanted, Timer, Freddy, LordJashin, Tootoot222.
 Description: Sets up OSI.
 Date Created: August 7th, 2011. By Wanted
-Last Modified: October 26th, 2014. By Wanted
+Last Modified: February 12th, 2020. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 procedure SetUpOSI;
 begin
-  WriteLn('Copyright (c) 2011-2014, Official SCAR Include -  OSI - BSD License https://github.com/Want3d/OfficialSCARInclude/blob/master/License.txt'); 
+  WriteLn('Copyright (c) 2011-2020, Official SCAR Include -  OSI - BSD License https://github.com/Want3d/OfficialSCARInclude/blob/master/License.txt'); 
   OSI_Variance := 3.0;
   MouseSpeed := 15;
   SetColorSpeed2Modifiers(0.2, 0.2);

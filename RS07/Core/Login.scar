@@ -90,12 +90,12 @@ function MessageScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the screen that shows you your messages after you login.
 Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: February 11th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function MessageScreen: Boolean;
 begin
-  Result := (CountColor(clWhite, 356, 327, 488, 346) = 467); // CLICK HERE TO PLAY
+  Result := (CountColor(clWhite, 350, 327, 484, 346) = 467); // CLICK HERE TO PLAY
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -103,12 +103,12 @@ function LoggedIn: Boolean;
 Contributors: Wanted
 Description: Returns true if Logged In.
 Date Created: August 8th, 2011. By Wanted. RS2 Build 660.
-Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: February 11th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LoggedIn: Boolean;
 begin
-  Result := (CountColor(clWhite, 422, 483, 498, 501) = 70);   // Report button text
+  Result := (CountColor(clWhite, 27, 486, 37, 493) = 34);   // 'All' chats text
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -217,7 +217,7 @@ function PressLogin(UseEnterKey, CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if made it to MessageScreen.
 Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 11th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function PressLogin(UseEnterKey, CheckLS: Boolean): Boolean;
@@ -229,21 +229,21 @@ begin
     if (not (LoginScreen)) then
       if (not (PressExistingUser(True))) then
         Exit;
-  C := CountColor(clYellow, 247, 214, 519, 231);
+  C := CountColor(clYellow, 217, 203, 548, 219);
   if (UseEnterKey) then
     TypeSend('')
   else
-    MouseBox(234, 304, 370, 340, ClickLeft);
+    MouseBox(234, 304, 370, 336, ClickLeft);
   SetTimer(T, 2000, 3000);
   repeat
-    if (CountColor(clYellow, 247, 214, 519, 231) <> C) then
+    if (CountColor(clYellow, 217, 203, 548, 219) <> C) then
       Break;  
     WaitRR(10, 20);
   until (CheckTimer(T));
   SetTimer(T, 50000, 70000);
   repeat  
     SetTimer(TT, 35000, 40000);
-    if (not (TIAContains([0, 799, 407, 301, 302, 199], CountColor(clYellow, 247, 214, 519, 231)))) then
+    if (not (TIAContains([863, 0, 799, 407, 301, 302, 199], CountColor(clYellow, 217, 203, 548, 219)))) then
       if (not (MessageScreen)) then
         if (not (FindLoginMessageText('Your profile will be transferred'))) then
           Exit
@@ -286,7 +286,7 @@ function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if inputs username successfully.
 Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 11th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TypeInUsername(Username: string; CheckLS: Boolean): Boolean;
@@ -301,19 +301,20 @@ begin
         Exit
       else
         WaitRR(100, 200);
-  if (CountColor(clWhite, 269, 252, 531, 269) <> 127) then // extra white chars
+  if (CountColor(clWhite, 273, 243, 511, 257) <> 127) then // extra white chars
     if (PressCancelLogin(not CheckLS)) then
-      if (not (PressExistingUser(True))) then
+      if (not (PressExistingUser(True))) then              // clear extra chars
         Exit
       else
         WaitRR(100, 200);
   SetTimer(T, 1200, 1600);
   repeat
-    B := (GetColor(313, 254) = clYellow);
+    B := (GetColor(314, 246) = clYellow);
     WaitRR(10, 25); 
   until ((B) or (CheckTimer(T)));
   if (not (B)) then
   begin
+    writeln('c'); // remove
     PressCancelLogin(False);
     Result := TypeInUsername(Username, True);
     Exit;
@@ -327,7 +328,7 @@ function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if inputs password successfully.
 Date Created: March 11th, 2013. By Wanted. RS07 Build ???.
-Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 11th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TypeInPassword(Password: string; HitEnter, CheckLS: Boolean): Boolean;
@@ -342,7 +343,7 @@ begin
         Exit
       else
         WaitRR(100, 200);
-  if (CountColor(clWhite, 275, 274, 502, 289) <> 184) then // extra white chars
+  if (CountColor(clWhite, 275, 258, 543, 267) <> 202) then // extra white chars
     if (PressCancelLogin(not CheckLS)) then
       if (not (PressExistingUser(True))) then              // clear extra chars
         Exit
@@ -353,7 +354,7 @@ begin
       end;
   SetTimer(T, 1200, 1600);
   repeat
-    B := (GetColor(346, 269) = clYellow);
+    B := (GetColor(346, 263) = clYellow);
     WaitRR(10, 25); 
   until ((B) or (CheckTimer(T)));
   if (not (B)) then
@@ -371,7 +372,7 @@ Contributors: Wanted
 Description: Returns true if you get to LoggedIn. Cancels if not at
              MessageScreen and CheckMS is true.
 Date Created: March 10th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 10th, 2013. By Wanted. RS07 Build ???.
+Last Modified: February 11th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function ClickToPlay(CheckMS: Boolean): Boolean;
@@ -380,7 +381,7 @@ begin
   if (CheckMS) then
     if (not (MessageScreen)) then
       Exit;
-  MouseBox(276, 295, 495, 378, ClickLeft);
+  MouseBox(272, 296, 493, 377, ClickLeft);
   Result := WaitFunc(@LoggedIn, True, 50, 150, 4500, 5500); 
 end;
 
@@ -464,7 +465,7 @@ function Login: Boolean;
 Contributors: Wanted, Janilabo.
 Description: Logins in current active player.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 12th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function Login: Boolean;
@@ -499,6 +500,12 @@ begin
   ReTypeInfo := True; 
   Attempts := 0;
   repeat
+    if (CountColor(clWhite, 318, 261, 449, 292) = 117) then // Try Again
+    begin
+      MouseBox(318, 261, 449, 292, ClickLeft);
+      if (not (WaitFunc(@LoginScreen, True, 50, 150, 5500, 7500))) then
+      Exit;
+    end;
     if (ReTypeInfo) then
     begin
       if (not (TypeInUsername(Players[CurrentPlayer].Name, True))) then 
@@ -522,7 +529,7 @@ begin
         SetLength(Actions, 9);
         Actions[0] := ['Your account is already logged in.',               15000, 10,    'PlayerTrue',  'Already logged in'];         // March 11, 2013       Wanted          ???      Confirmed
         Actions[1] := ['Error connecting to server.',                      20000, 10,    'Exit',        'Error Connecting'];          // March 11, 2013       Wanted          ???      Confirmed
-        Actions[2] := ['Invalid username/email or password.',                  0,  2,    'PlayerFalse', 'Wrong User/Pass'];           // March 11, 2013       Wanted          ???      Confirmed
+        Actions[2] := ['Invalid credentials.',                                 0,  2,    'PlayerFalse', 'Wrong User/Pass'];           // February 11, 2020    Wanted          ???      Confirmed
         Actions[3] := ['Your account has been disabled.',                      0,  1,    'PlayerFalse', 'Acc Disabled'];              // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[4] := ['You need to vote to play!',                            0,  1,    'PlayerFalse', 'Needs to vote before play']; // March 11, 2013       Wanted          ???      Unconfirmed
         Actions[5] := ['Too many incorrect logins from your address.', 5 * 60500,  2,    'PlayerFalse', 'Too many incorrect logins']; // March 11, 2013       Wanted          ???      Confirmed
@@ -577,7 +584,7 @@ function LogOut: Boolean;
 Contributors: Wanted
 Description: Logs out current active player. Returns true if not LoggedIn.
 Date Created: September 25th, 2011. By Wanted. RS2 Build 666.
-Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 11th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function LogOut: Boolean;
@@ -598,7 +605,10 @@ begin
     if (not (SetGameTab(Tab_LogOut))) then
       Exit;
     WaitRR(200, 350);
-    MouseBox(574, 363, 707, 388, ClickLeft);
+    if (GetColor(717, 226) = 65536) then     // world switcher close box outline
+      MouseBox(716, 437, 733, 463, ClickLeft) // world switcher logout
+    else
+      MouseBox(576, 418, 708, 444, ClickLeft);
     Result := WaitFunc(@LoggedIn, False, 250, 500, 3500, 4500);
     if (not (Result)) then
       Exit;
