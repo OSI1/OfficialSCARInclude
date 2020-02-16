@@ -74,7 +74,7 @@ function BankScreen: Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
+Last Modified: February 15th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function BankScreen: Boolean;
@@ -82,7 +82,7 @@ function BankScreen: Boolean;
 //  TPA: TPointArray;
 //  P: TPoint;
 begin
-  Result := (CountColor(2070783, 251, 296, 326, 310) = 155);
+  Result := (CountColor(2070783, 251, 296, 326, 310) = 116); // Quantity:
   {Result := False;
   FindColorEx(TPA, 2070783, 178, 31, 340, 54);
   if (Length(TPA) > 20) then
