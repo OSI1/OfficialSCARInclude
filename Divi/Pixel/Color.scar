@@ -21,7 +21,11 @@
  * function FindColorSpiralP(SP: TPoint; var P: TPoint; Color: LongInt; B: TBox): Boolean;
      By: Wanted
  * function FindColorSpiralTolP(SP: TPoint; var P: TPoint; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
-     By: Wanted
+     By: Wanted 
+ * function FindColorSpiralExP(SP: TPoint; var TPA: TPointArray; Color: LongInt; B: TBox): Boolean;
+     By: Wanted 
+ * function FindColorSpiralTolExP(SP: TPoint; var TPA: TPointArray; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
+     By: Wanted          
  * function FindColorTPAP(var P: TPoint; Color: LongInt; TPA: TPointArray): Boolean;
      By: Wanted
  * function FindColorTPAExP(var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray): Boolean;
@@ -49,7 +53,8 @@
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function CountColorB(Color: LongInt; B: TBox): LongInt;
 Contributors: Wanted
-Description: Wrapper for CountColor with points and boxes.
+Description: Wrapper for CountColor with points and boxes. Counds the amount of 
+pixels of a color in a box.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -62,7 +67,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function CountColorTolB(Color: LongInt; B: TBox; Tol: Integer): LongInt;
 Contributors: Wanted
-Description: Wrapper for CountColorTol with points and boxes.
+Description: Wrapper for CountColorTol with points and boxes. Counts the amount
+of color pixel instances in a box with color tolerance.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -75,7 +81,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorP(var P: TPoint; Color: LongInt; B: TBox): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColor with points and boxes.
+Description: Wrapper for FindColor with points and boxes. Returns the point at 
+which a color is found in a box. True if found.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -88,7 +95,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorExP(var TPA: TPointArray; Color: LongInt; B: TBox): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColorEx with points and boxes.
+Description: Wrapper for FindColorEx with points and boxes. Finds all color
+instances in a box, stores to TPA. True if found any.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -101,7 +109,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorTolP(var P: TPoint; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColorTol with points and boxes.
+Description: Wrapper for FindColorTol with points and boxes. Find a color in a box
+with a color tolerance. True if found.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -114,7 +123,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorTolExP(var TPA: TPointArray; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColorTolEx with points and boxes.
+Description: Wrapper for FindColorTolEx with points and boxes. Find all color 
+instances in a box with a color tolerance. Store in TPA. True if found any.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -127,7 +137,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorsExP(var TPA: TPointArray; Colors: TIntArray; B: TBox): Boolean;
 Contributors:  Wanted
-Description: Wrapper for FindColorsEx with points and boxes.
+Description: Wrapper for FindColorsEx with points and boxes. Find all colors
+that are listed, store locations in TPA. True if found any colors listed.
 Date Created: March 19th, 2013. By Wanted
 Last Modified: March 19th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}    
@@ -140,7 +151,9 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorsTolP(var P: TPoint; Colors: TIntArray; B: TBox; Tol: LongInt): Boolean;
 Contributors:  Wanted
-Description: Wrapper for FindColorsTol with points and boxes.
+Description: Wrapper for FindColorsTol with points and boxes. Find all colors
+that are listed with color tolerance, store locations in TPA. True if found any 
+colors listed.
 Date Created: March 22nd, 2013. By Wanted
 Last Modified: March 22nd, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}    
@@ -153,7 +166,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralP(SP: TPoint; var P: TPoint; Color: LongInt; B: TBox): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColorSpiral with points and boxes.
+Description: Wrapper for FindColorSpiral with points and boxes. Find a color 
+in a spiral from a point in a box. True if found.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -166,7 +180,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralTolP(SP: TPoint; var P: TPoint; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColorSpiralTol with points and boxes.
+Description: Wrapper for FindColorSpiralTol with points and boxes. Find a color 
+in a spiral from a point in a box with color tolerance. True if found. 
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -177,9 +192,39 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorSpiralExP(SP: TPoint; var TPA: TPointArray; Color: LongInt; B: TBox): Boolean;
+Contributors: Wanted
+Description: Wrapper for FindColorSpiralEx with points and boxes. Find all instances 
+of a color in a spiral from a point in a box with color tolerance. True if found. 
+Date Created: February 16th, 2020. By Wanted
+Last Modified: February 16th, 2020. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+function FindColorSpiralExP(SP: TPoint; var TPA: TPointArray; Color: LongInt; B: TBox): Boolean;
+begin
+  Result := FindColorSpiralEx(SP.X, SP.Y, TPA, Color, B.X1, B.Y1, B.X2, B.Y2);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function FindColorSpiralTolExP(SP: TPoint; var TPA: TPointArray; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
+Contributors: Wanted
+Description: Wrapper for FindColorSpiralTolEx with points and boxes. Find all 
+instances  of a color in a spiral from a point in a box with color tolerance. 
+True if found. Uses Color tolerance. 
+Date Created: February 16th, 2020. By Wanted
+Last Modified: February 16th, 2020. By Wanted
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}  
+
+function FindColorSpiralTolExP(SP: TPoint; var TPA: TPointArray; Color: LongInt; B: TBox; Tol: LongInt): Boolean;
+begin
+  Result := FindColorSpiralTolEx(SP.X, SP.Y, TPA, Color, B.X1, B.Y1, B.X2, B.Y2, Tol);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorTPAP(var P: TPoint; Color: LongInt; TPA: TPointArray): Boolean;
 Contributors:  Wanted
-Description: Wrapper for FindColorTPA with points and boxes.
+Description: Wrapper for FindColorTPA with points and boxes. Find a color in
+a TPA. True if found. 
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -192,7 +237,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorTPAExP(var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray): Boolean;
 Contributors:  Wanted
-Description: Wrapper for FindColorTPAEx with points and boxes.
+Description: Wrapper for FindColorTPAEx with points and boxes. Finds all color
+instances in a SearchTPA. True if found any.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -205,7 +251,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorTPATolP(var P: TPoint; Color: LongInt; TPA: TPointArray; Tol: LongInt): Boolean;
 Contributors: Freddy, Wanted.
-Description: Wrapper for FindColorTPATol with points and boxes.
+Description: Wrapper for FindColorTPATol with points and boxes. Finds a color
+in a TPA. True if found. Returns point P of the color. Uses tolerance.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -218,7 +265,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorTPATolExP(var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColorTPATolEx with points and boxes.
+Description: Wrapper for FindColorTPATolEx with points and boxes. Find all color
+instances in a SearchTPA, stores in an output TPA. True if found any. Uses tolerance.
 Date Created: March 7th, 2013. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -231,7 +279,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralTPA(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray): Boolean;
 Contributors:  Wanted
-Description: Wrapper for FindColorTPA with points and boxes.
+Description: Wrapper for FindColorTPA with points and boxes. Find a color spiraling
+from a point, inside of a TPA. True if found.
 Date Created: March 14th, 2013. By Wanted
 Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -250,7 +299,8 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralTPAEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray): Boolean;
 Contributors:  Wanted
-Description: Wrapper for FindColorTPAEx with points and boxes.
+Description: Wrapper for FindColorTPAEx with points and boxes. Find all instances
+of a color in a SearchTPA, store in a TPA. True if found one.
 Date Created: March 14th, 2013. By Wanted
 Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -267,6 +317,7 @@ end;
 function FindColorSpiralTPATol(SP: TPoint; var P: TPoint; Color: LongInt; TPA: TPointArray; Tol: LongInt): Boolean;
 Contributors: Freddy, Wanted.
 Description: Wrapper for FindColorTPATol with points and boxes. *Emulates* spiral.
+Find a color in a TPA spiraling from a point. True if found. Uses color tolerance.
 Date Created: March 14th, 2013. By Wanted
 Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -285,7 +336,9 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorSpiralTPATolEx(SP: TPoint; var TPA: TPointArray; Color: LongInt; SearchTPA: TPointArray; Tol: LongInt): Boolean;
 Contributors: Wanted
-Description: Wrapper for FindColorTPATolEx with points and boxes.
+Description: Wrapper for FindColorTPATolEx with points and boxes. Find all 
+instances of a color in a Search TPA, stores in a TPA. Emulates spirals from a point.
+Uses color tolerance. True if found one.
 Date Created: March 14th, 2013. By Wanted
 Last Modified: March 16th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -301,7 +354,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorCircleEx(var TPA: TPointArray; Color: Integer; CP: TPoint; R: Integer): Boolean;
 Contributors: Wanted, Freddy.
-Description: Finds colors within circle.
+Description: Finds color instances within circle.
 Date Created: March 12th, 2013. By Wanted
 Last Modified: March 12th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
@@ -327,7 +380,7 @@ end;
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function FindColorCircleTolEx(var TPA: TPointArray; Color, Tol: Integer; CP: TPoint; R: Integer): Boolean;
 Contributors: Wanted, Freddy.
-Description: Finds colors with tolerance within circle.
+Description: Finds color instances with color tolerance within circle.
 Date Created: October 28th, 2011. By Wanted
 Last Modified: March 7th, 2013. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}

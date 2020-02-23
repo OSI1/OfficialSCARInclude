@@ -4,16 +4,20 @@
 --------------------------------------------------------------------------------
  * function BoxFromGrid(P: TPoint; Index, Width, Height, Columns, RowSpace, ColumnSpace: LongInt): TBox;
      By: Wanted
- * function  ValidBox(B: TBox): Boolean; 
+ * function ValidBox(B: TBox): Boolean; 
      By: Janilabo
- * function  BoxContains(Inner_TB, Outer_TB: TBox): Boolean;
+ * function BoxContains(Inner_TB, Outer_TB: TBox): Boolean;
      By: Janilabo
  * procedure BoxDimensions(B: TBox; var W, H: Integer);
      By: Janilabo
- * function ConstrainBox(var B: TBox; MB: TBox): Boolean;
+ * function ConstrainBox(B: TBox; MB: TBox): TBox;
      By: Wanted
- * procedure FixBox(var B: TBox);
-     By: Janilabo
+ * function FixBox(B: TBox): TBox;
+     By: Janilabo        
+ * function ShrinkBoxEx(B: TBox; XL, YT, XR, YB: LongInt): TBox;
+     By: Wanted        
+ * function RescaleBox(B: TBox; Percent: Extended): TBox;
+     By: Wanted         
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -76,53 +80,85 @@ begin
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function ConstrainBox(var B: TBox; MB: TBox): Boolean;
+function ConstrainBox(B: TBox; MB: TBox): TBox;
 Contributors: Wanted, Janilabo.
 Description: Makes the edges of your box within the edges of another box.
-Returns true if constrained.
 Date Created: December 6th, 2011. By Wanted
-Last Modified: March 19th, 2013. By Wanted
+Last Modified: February 16th, 2020. By Wanted
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function ConstrainBox(var B: TBox; MB: TBox): Boolean;
-var
-  TB: TBox;
+function ConstrainBox(B: TBox; MB: TBox): TBox;
 begin
-  Result := False;
-  if (not (ValidBox(B))) then
+  Result := B;
+  if (not (ValidBox(Result))) then
     Exit;
-  TB := B;
   if (B.X1 < MB.X1) then
-    B.X1 := MB.X1;
+    Result.X1 := MB.X1;
   if (B.X1 > MB.X2) then
-    B.X1 := MB.X2;
+    Result.X1 := MB.X2;
   if (B.Y1 < MB.Y1) then
-    B.Y1 := MB.Y1;
+    Result.Y1 := MB.Y1;
   if (B.Y1 > MB.Y2) then
-    B.Y1 := MB.Y2;
+    Result.Y1 := MB.Y2;
   if (B.X2 > MB.X2) then
-    B.X2 := MB.X2;
+    Result.X2 := MB.X2;
   if (B.X2 < MB.X1) then
-    B.X2 := MB.X1;
+    Result.X2 := MB.X1;
   if (B.Y2 > MB.Y2) then
-    B.Y2 := MB.Y2;
+    Result.Y2 := MB.Y2;
   if (B.Y2 < MB.Y1) then
-    B.Y2 := MB.Y1;
-  Result := (TB <> B);
+    Result.Y2 := MB.Y1;
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-procedure FixBox(var B: TBox);
+function FixBox(B: TBox): TBox;
 Contributors: Janilabo
 Description: Fixes the Box. Swaps incorrectly set values (X1-Y1 > X2-Y2).
 Date Created: September 30th, 2012. By Janilabo
-Last Modified: September 30th, 2012. By Janilabo    
+Last Modified: February 16th, 2020. By Wanted    
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-procedure FixBox(var B: TBox);
+function FixBox(B: TBox): TBox;
 begin
-  if (B.X1 > B.X2) then
-    Swap(B.X1, B.X2);
-  if (B.Y1 > B.Y2) then
-    Swap(B.Y1, B.Y2);
+  Result := B;
+  if (Result.X1 > Result.X2) then
+    Swap(Result.X1, Result.X2);
+  if (Result.Y1 > Result.Y2) then
+    Swap(Result.Y1, Result.Y2);
+end;
+   
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function ShrinkBoxEx(B: TBox; XL, YT, XR, YB: LongInt): TBox;
+Contributors: Wanted
+Description: Makes a box smaller by removing given pixels from each side.
+Date Created: February 16th, 2020. By Wanted  
+Last Modified: February 16th, 2020. By Wanted    
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function ShrinkBoxEx(B: TBox; XL, YT, XR, YB: LongInt): TBox;
+begin
+  Result := IntToBox(B.X1 + XL, B.Y1 + YT, B.X2 - XR, B.Y2 - YB);
+end;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+function RescaleBox(B: TBox; Percent: Extended): TBox;
+Contributors: Wanted
+Description: Makes a box smaller or larger. Maintains aspect ratio. Percent %/100
+Example: NewBox := RescaleBox(B, 0.80); // 20% smaller (100-80)
+NewBox2 := RescaleBox(B, 1.20); // 20% larger (100+20)
+Date Created: February 16th, 2020. By Wanted  
+Last Modified: February 16th, 2020. By Wanted    
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function RescaleBox(B: TBox; Percent: Extended): TBox;
+var
+  Cx, Cy, Rx, Ry: Extended;
+  W, H: LongInt;
+begin
+  BoxDimensions(B, W, H);
+  Cx := (B.X1 + B.X2) / 2
+  Cy := (B.Y1 + B.Y2) / 2;
+  Rx := (W / 2) * Percent;
+  Ry := (H / 2) * Percent;
+  Result := IntToBox(Round(Cx - Rx), Round(Cy - Ry), Round(Cx + Rx), Round(Cy + Ry)); 
 end;
