@@ -5,21 +5,21 @@
 --------------------------------------------------------------------------------
  * const Useful in game boundaries, points, areas, widths, etc. etc.
      By: Wanted, LordJashin, & Janilabo.
- * function  RSCP: TPoint;
+ * function RSCP: TPoint;
      By: Wanted
- * function  RSB: TBox;
+ * function RSB: TBox;
      By: Wanted
  * function  MSCP: TPoint;
      By: Wanted
  * function  MSB: TBox;
      By: Wanted
- * function  MMCP: TPoint;
+ * function MMCP: TPoint;
      By: Wanted
- * function  MMB: TBox;
+ * function MMB: TBox;
      By: Wanted
  * function CMCP: TPoint;
      By: Wanted
- * function  CMB: TBox;
+ * function CMB: TBox;
      By: Wanted
  * var MMTPA variables
      By: Wanted
@@ -29,21 +29,21 @@
      By: Wanted
  * function MMPA: LongInt;
      By: Wanted
- * function  MICP: TPoint;
+ * function MICP: TPoint;
      By: Wanted
- * function  MIB: TBox;
+ * function MIB: TBox;
      By: Wanted
- * function  MCCP: TPoint;
+ * function MCCP: TPoint;
      By: Wanted
- * function  MCB: TBox;
+ * function MCB: TBox;
      By: Wanted
- * function  MBCP: TPoint;
+ * function MBCP: TPoint;
      By: Wanted
- * function  MBB: TBox;
+ * function MBB: TBox;
      By: Wanted
- * function  MDCP: TPoint;
+ * function MDCP: TPoint;
      By: Wanted
- * function  MDB: TBox;
+ * function MDB: TBox;
      By: Wanted
  * const Skill_ Indexes
      By: Wanted
@@ -86,7 +86,7 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Wanted, LordJashin, Janilabo, Bixby Sayz.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 24th, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const             // Description                      Modified/Confirmed  By              Build #
@@ -162,10 +162,10 @@ const             // Description                      Modified/Confirmed  By    
 
   MBCX = 254;     // Bank Screen Center Points     // October 7, 2014     Wanted          ???
   MBCY = 173;                                      // October 7, 2014     Wanted          ???
-  MBX1 = 62;      // Bank Screen Edge Points       // October 7, 2014     Wanted          ???
-  MBY1 = 84;                                       // October 7, 2014     Wanted          ???
-  MBX2 = 455;                                      // October 7, 2014     Wanted          ???
-  MBY2 = 294;                                      // October 7, 2014     Wanted          ???
+  MBX1 = 73;      // Bank Screen Edge Points       // February 23, 2020   Wanted          ???
+  MBY1 = 83;                                       // February 23, 2020   Wanted          ???
+  MBX2 = 440;                                      // February 23, 2020   Wanted          ???
+  MBY2 = 292;                                      // February 23, 2020   Wanted          ???
   MBPW = (MBX2 - MBX1) + 1; // Bank Screen Width   // October 7, 2014     LordJashin      ???
   MBPH = (MBY2 - MBY1) + 1;// Bank Screen Height   // October 7, 2014     LordJashin      ???
   MBPA = MBPW * MBPH; // Pixel Area                // October 7, 2014     LordJashin      ???
@@ -497,37 +497,41 @@ const Skill_ Indexes
 Contributors: Wanted
 Description: Index handles for various RS07 skills.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const
-  Skill_Count         = 25;
-  Skill_Attack        = 0;
-  Skill_Hitpoints     = 1;
-  Skill_Mining        = 2;
-  Skill_Strength      = 3;
-  Skill_Agility       = 4;  
-  Skill_Run           = 4; // For GetMMLvls
-  Skill_Smithing      = 5;
-  Skill_Defence       = 6;
-  Skill_Herblore      = 7;
-  Skill_Fishing       = 8;
-  Skill_Range         = 9;
-  Skill_Thieving      = 10;
-  Skill_Cooking       = 11;
-  Skill_Prayer        = 12;
-  Skill_Crafting      = 13;
-  Skill_Firemaking    = 14;
-  Skill_Magic         = 15;
-  Skill_Fletching     = 16;
-  Skill_Woodcutting   = 17;
-  Skill_Runecrafting  = 18;
-  Skill_Slayer        = 19;
-  Skill_Farming       = 20;
-  Skill_Construction  = 21;
-  Skill_Hunter        = 22;
-  Skill_Total         = 23;
-  Skill_Combat        = 24; 
+  Skill_Count          = 25;
+  Skill_Attack         = 0;
+  Skill_Hitpoints      = 1; 
+  Skill_HP             = 1;
+  Skill_Mining         = 2;
+  Skill_Strength       = 3;
+  Skill_Agility        = 4;  
+  Skill_Run            = 4; // For GetMMLevel
+  Skill_Energy         = 4; // For GetMMLevel
+  Skill_Smithing       = 5;
+  Skill_Defence        = 6;
+  Skill_Herblore       = 7;
+  Skill_Fishing        = 8;
+  Skill_Range          = 9;
+  Skill_Thieving       = 10;
+  Skill_Cooking        = 11;
+  Skill_Prayer         = 12;
+  Skill_Crafting       = 13;
+  Skill_Firemaking     = 14;
+  Skill_Magic          = 15;
+  Skill_Fletching      = 16;
+  Skill_Woodcutting    = 17;
+  Skill_Runecrafting   = 18;
+  Skill_Slayer         = 19;
+  Skill_Farming        = 20;
+  Skill_Construction   = 21;
+  Skill_Hunter         = 22;
+  Skill_Total          = 23;
+  Skill_Combat         = 24;
+  Skill_Special_Attack = 25; // For GetMMLevel 
+  Skill_Spec           = 25; // For GetMMLevel
   
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 const Game Tab Indexes

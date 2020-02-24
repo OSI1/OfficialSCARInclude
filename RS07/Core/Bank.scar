@@ -160,7 +160,7 @@ function CloseBank(CheckBS: Boolean): Boolean;
 Contributors: Wanted
 Description: Returns true if at the bank screen and then closes it if open.
 Date Created: October 30th, 2011. By Wanted. RS2 Build 671.
-Last Modified: March 15th, 2013. By Wanted. RS07 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function CloseBank(CheckBS: Boolean): Boolean;
@@ -171,7 +171,7 @@ begin
       Exit
     else
       Result := True;
-  MouseBox(477, 32, 495, 50, ClickLeft);
+  MouseBox(476, 13, 496, 33, ClickLeft);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -456,7 +456,7 @@ function GetBankSlotsSearchBounds(Slots: TIntegerArray; Pos: Extended): TBoxArra
 Contributors: Wanted
 Description: Returns the oversized search bounds of banks slots.
 Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetBankSlotsSearchBounds(Slots: TIntegerArray; Pos: Extended): TBoxArray;
@@ -465,9 +465,9 @@ var
 begin
   SetLength(Result, Length(Slots));
   H := High(Slots);
-  for I := 0 to H do
-  begin
-    Result[I] := BoxFromGrid(Point(79, 43), Slots[I], 32, 70, 8, 38, 47); 
+  for I := 0 to H do    // Point(563, 213), Slots[I], 31, 31, 4, 36, 42);     inventory slots
+  begin                 //   Point(74, 83), Slots[I], 31, 31, 8, 36, 48);     no oversize bank slots
+    Result[I] := BoxFromGrid(Point(74, 83), Slots[I], 31, 31, 8, 36, 48); 
     OffsetBoxBankScrollPos(Result[I], Pos);
     ConstrainBox(Result[I], MBB);
     if ((Result[I].Y2 - Result[I].Y1) < 1) then
@@ -496,7 +496,7 @@ function GetBankSlotsBounds(Slots: TIntegerArray): TBoxArray;
 Contributors: Wanted
 Description: Returns the bounds of items in the bank slots.
 Date Created: March 18th, 2013. By Wanted. RS07 Build ???.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetBankSlotsBounds(Slots: TIntegerArray): TBoxArray;
@@ -515,8 +515,8 @@ begin
   if (CurrentPos = 0.0) then
   begin   
     for I := 0 to H do
-    begin
-      Result[I] := BoxFromGrid(Point(79, 62), Slots[I], 32, 32, 8, 38, 47);
+    begin                 //   Point(74, 83), Slots[I], 31, 31, 8, 36, 48);     no oversize bank slots
+      Result[I] := BoxFromGrid(Point(74, 83), Slots[I], 31, 31, 8, 36, 48);
       ConstrainBox(Result[I], MBB);
       if ((Result[I].Y2 - Result[I].Y1) < 1) then
         Result[I] := Box(0, 0, 0, 0)

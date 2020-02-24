@@ -445,12 +445,12 @@ function IsRunning: Boolean;
 Contributors: Wanted
 Description: Returns true if running.
 Date Created: September 5th, 2011. By Wanted. RS2 Build 663.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function IsRunning: Boolean;
 begin
-  Result := SimilarColors(6806252, GetColor(581, 141), 10);
+  Result := SimilarColors(6806252, GetColor(568, 127), 10);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

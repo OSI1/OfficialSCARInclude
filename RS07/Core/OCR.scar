@@ -53,7 +53,13 @@
                           Tab3-Inventory.scar forwards
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
-function GetInvSlotBounds(Slot: Integer): TBox; forward; 
+function GetInvSlotBounds(Slot: Integer): TBox; forward;
+
+{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                          Bank.scar forwards
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+
+function GetBankSlotBounds(Slot: Integer): TBox; forward; 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RS_GetTextAtEx(x,y, width: Integer; Font:TCharsN; EndStr:String): String;
@@ -201,12 +207,12 @@ function GetNumberOptions(AllOptionsBox: TBox): Integer;
 Contributors: Wanted
 Description: Returns the number of options available.
 Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetNumberOptions(AllOptionsBox: TBox): Integer;
 begin
-  Result := ((AllOptionsBox.Y2 - AllOptionsBox.Y1) + 5) div 15;
+  Result := ((AllOptionsBox.Y2 - AllOptionsBox.Y1) + 5) div 15 - 1;
 end;                              //+1 for width, +5 incase it's on the edge ;) 
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -214,12 +220,12 @@ function GetOptionBox(Index: Integer; AllOptionsBox: TBox): TBox;
 Contributors: Wanted
 Description: Returns the box of the option starting from the top [0].
 Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
-Last Modified: March 9th, 2013. By Wanted. RS07 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetOptionBox(Index: Integer; AllOptionsBox: TBox): TBox;
 begin                                
-  Result := Box(AllOptionsBox.X1, AllOptionsBox.Y1 + (Index * 15), AllOptionsBox.X2, AllOptionsBox.Y1 + ((Index * 15) + 14));  
+  Result := Box(AllOptionsBox.X1, AllOptionsBox.Y1 + (Index * 15) + 21, AllOptionsBox.X2, AllOptionsBox.Y1 + ((Index * 15) + 35));  
   ConstrainBox(Result, RSB);
 end;
 
@@ -266,7 +272,7 @@ function GetOption(Index: Integer; AllOptionsBox: TBox): string;
 Contributors: Wanted, Slacky.
 Description: Gets option text from box index in AllOptionsBox.
 Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
-Last Modified: October 26th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetOption(Index: Integer; AllOptionsBox: TBox): string;
@@ -274,7 +280,7 @@ var
   B: TBox;
 begin
   B := GetOptionBox(Index, AllOptionsBox);
-  Result := rs_GetTextAt(UpCharsShadow, B.X1, B.Y1);
+  Result := rs_GetTextAt(UpCharsShadow, B.X1, B.Y1 - 2);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -436,7 +442,7 @@ function GetItemAmount(Area, Slot: Integer): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within Area_Index.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: February 8th, 2012. By Wanted. RS2 Build 700.
+Last Modified: February 23rd, 2020. By Wanted. RS2 Build 700.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetItemAmount(Area, Slot: Integer): LongInt;
@@ -446,7 +452,7 @@ begin
   Result := 0;
   case Area of
     Area_Inv: B := GetInvSlotBounds(Slot);
-    //Area_Bank: B := GetBankSlotBounds(Slot);
+    Area_Bank: B := GetBankSlotBounds(Slot);
     //{$IFDEF TRADING}
     //  Area_Trade_You: B := GetTradeItemBounds(Slot, True);
     //  Area_Trade_Them: B := GetTradeItemBounds(Slot, False);
@@ -462,7 +468,7 @@ function GetMMLevel(Skill: Integer): Integer;
 Contributors: Wanted
 Description: Returns the number from the skill level on the minimap.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: October 8th, 2014. By Wanted. RS2 Build ???.
+Last Modified: February 23rd, 2020. By Wanted. RS2 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetMMLevel(Skill: Integer): Integer;
@@ -477,8 +483,9 @@ begin
   Result := -1;
   case Skill of
     Skill_Hitpoints: B := Box(522, 54, 541, 70);
-    Skill_Prayer: B := Box(523, 100, 541, 115);
-    Skill_Run: B := Box(544, 134, 567, 150);
+    Skill_Prayer: B := Box(524, 90, 539, 103);
+    Skill_Run: B := Box(530, 122, 552, 136);
+    Skill_Spec: B := Box(553, 147, 574, 160);
   else
     Exit;
   end;
