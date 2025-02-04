@@ -26,14 +26,14 @@ function GetSkillBounds(Skill: Integer): TBox;
 Contributors: Wanted
 Description: Returns the box of the skill on the stats tab.
 Date Created: November 1st, 2011. By Wanted. RS2 Build 672.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 3rd, 2025. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetSkillBounds(Skill: Integer): TBox;
 begin
-  Result := BoxFromGrid(Point(548, 206), Skill, 62, 31, 3, 31, 63);
+    Result := BoxFromGrid(Point(548, 206), Skill, 62, 32, 3, 32, 63);
   if (Skill = Skill_Total) then
-    Result := Box(676, 429, 734, 455);
+    Result := Box(675, 431, 734, 460);
   if (Skill = Skill_Combat) then
     Result := Box(600, 230, 690, 244); 
 end;
@@ -43,7 +43,7 @@ function GetSkillLevelEx(Skill: Integer; BottomNumber, CheckST: Boolean): Intege
 Contributors: Wanted
 Description: Returns the number from the skill level in skill tabs.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: January 30th, 2025. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetSkillLevelEx(Skill: Integer; BottomNumber, CheckST: Boolean): Integer;
@@ -62,7 +62,7 @@ begin
     B2 := Box(B.X1 + 25, B.Y1, B.X2, B.Y1 + 13);
   FindColorExP(TPA, 65535, B2);
   B := TPABounds(TPA);
-  Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, 65535, 10, False, tr_Digits)), -1);
+  Result := StrToIntDef(GetNumbers(GetTextAtEx(B.X1 - 1, B.Y1 - 1, 0, StatChars, False, False, 0, 2, 65535, 5, False, tr_Digits)), -1);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -108,7 +108,7 @@ function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, C
 Contributors: Wanted
 Description: Returns the information by hovering the skill.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: October 27th, 2014. By Wanted. RS07 Build ???.
+Last Modified: January 30th, 2025. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetSkillInfo(Skill: Integer; CurrentCheck, NextCheck, RemainderCheck, CheckST: Boolean): TIntegerArray;
@@ -123,16 +123,25 @@ begin
   Result := [-1, -1, -1];
   if (not (HoverSkill(Skill, CheckST))) then
     Exit;
-  if (not (WaitFindColorTolEx(TPA, clSkillInfoBox, MIB, 0, 50, True, 100, 200, 1500, 2500))) then
-    Exit;
+  {$IFDEF CClient}
+    if (not (WaitFindColorTolEx(TPA, clWhite, Box(MIX1, MIY1, RSX2, RSY2), 0, 50, True, 100, 200, 1500, 2500))) then
+  {$ELSE}
+    if (not (WaitFindColorTolEx(TPA, clSkillInfoBox, MIB, 0, 50, True, 100, 200, 1500, 2500))) then
+  {$ENDIF}
+      Exit;
   B := TPABounds(TPA);
   B.Y1 := B.Y1 - 1;
   TSA := ['XP', 'ext', 'aining'];
   TBoA := [CurrentCheck, NextCheck, RemainderCheck];
   for I := 0 to 2 do
     if (TBoA[I]) then
-      if (IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, TSA[I], 0, SmallChars, False, False, 0, 2, clBlack)) then
-        Result[I] := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 0, SmallChars, False, False, 0, 2, clBlack, 50, False, tr_AllChars)), -1);
+      {$IFDEF CClient}
+        if (IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, TSA[I], 0, SmallChars, False, False, 0, 2, clWhite)) then
+          Result[I] := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 0, SmallChars, False, False, 0, 2, clWhite, 50, False, tr_AllChars)), -1);
+      {$ELSE}
+        if (IsTextInAreaEx(B.X1, B.Y1, B.X2, B.Y2, P.X, P.Y, TSA[I], 0, SmallChars, False, False, 0, 2, clBlack)) then
+          Result[I] := StrToIntDef(GetNumbers(GetTextAtEx(P.X, P.Y, 0, SmallChars, False, False, 0, 2, clBlack, 50, False, tr_AllChars)), -1);
+      {$ENDIF}
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

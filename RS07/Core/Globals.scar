@@ -86,7 +86,7 @@ const Useful in game boundaries, points, areas, widths, etc. etc.
 Contributors: Wanted, LordJashin, Janilabo, Bixby Sayz.
 Description: MMX1, MSCX, etc. etc.
 Date Created: August 7th, 2011. By Wanted. RS2 Build 660.
-Last Modified: February 24th, 2020. By Wanted. RS07 Build ???.
+Last Modified: January 30th, 2025. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 const             // Description                      Modified/Confirmed  By              Build #
@@ -180,9 +180,14 @@ const             // Description                      Modified/Confirmed  By    
   MDPW = (MDY2 - MDY1) + 1; // Deposit Box Height  // October 7, 2014     LordJashin      ???
   MDPA = MDPW * MDPH; // Deposit Box Area          // October 7, 2014     LordJashin      ???
 
-  UpTextX = 7; // Up Text capture X                // March 9, 2013       Wanted          ???
-  UpTextY = 7; // Up Text capture Y                // March 9, 2013       Wanted          ???
-
+  {$IFDEF CClient}
+    UpTextX = 0; // Up Text capture X              // January 30, 2025    Wanted          ???
+    UpTextY = 5; // Up Text capture Y              // January 30, 2025    Wanted          ???
+  {$ELSE}
+    UpTextX = 7; // Up Text capture X              // March 9, 2013       Wanted          ???
+    UpTextY = 7; // Up Text capture Y              // March 9, 2013       Wanted          ???
+  {$ENDIF}
+  
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 function RSCP: TPoint;
 Contributors: Wanted

@@ -46,12 +46,12 @@ function TabExists(Tab: Integer): Integer;
 Contributors: Wanted, Dynamite, Freddy.
 Description: Returns True if the Tab exists.
 Date Created: August 31st, 2011. By Wanted. RS2 Build 662.
-Last Modified: October 28th, 2014. By Wanted. RS07 Build ???.
+Last Modified: February 3rd, 2025. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function TabExists(Tab: Integer): Boolean;
 begin
-  Result := InRange(CountColorTolB(clBlack, GetTabBounds(Tab), 36), 80, 350);
+  Result := InRange(CountColorTolB(clBlack, GetTabBounds(Tab), 36), 80, 400);
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

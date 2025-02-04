@@ -272,7 +272,7 @@ function GetOption(Index: Integer; AllOptionsBox: TBox): string;
 Contributors: Wanted, Slacky.
 Description: Gets option text from box index in AllOptionsBox.
 Date Created: March 9th, 2013. By Wanted. RS07 Build ???.
-Last Modified: February 23rd, 2020. By Wanted. RS07 Build ???.
+Last Modified: January 31st, 2025. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetOption(Index: Integer; AllOptionsBox: TBox): string;
@@ -280,7 +280,11 @@ var
   B: TBox;
 begin
   B := GetOptionBox(Index, AllOptionsBox);
-  Result := rs_GetTextAt(UpCharsShadow, B.X1, B.Y1 - 2);
+  {$IFDEF CClient} 
+    Result := rs_GetTextAt(UpCharsShadow, B.X1, B.Y1);
+  {$ELSE}
+    Result := rs_GetTextAt(UpCharsShadow, B.X1, B.Y1 - 2);
+  {$ENDIF}
 end;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -413,7 +417,7 @@ function GetAmount(B: TBox): LongInt;
 Contributors: Wanted
 Description: Returns the amount of something taking into account text color within box.
 Date Created: November 6th, 2011. By Wanted. RS2 Build 675.
-Last Modified: October 7th, 2014. By Wanted. RS07 Build ???.
+Last Modified: January 31st, 2025. By Wanted. RS07 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetAmount(B: TBox): LongInt;
@@ -425,7 +429,11 @@ var
   SB: TBox;
 begin
   Result := 0;
-  TextColors := [clYellow, clWhite, 8453888, 65280];
+  {$IFDEF CClient}
+    TextColors := [65278, 16711422, clLime];
+  {$ELSE}
+    TextColors := [clYellow, clWhite, 8453888];
+  {$ENDIF}
   for I := 0 to 2 do
     if (FindColorExP(TPA, TextColors[I], B)) then
     begin
@@ -468,7 +476,7 @@ function GetMMLevel(Skill: Integer): Integer;
 Contributors: Wanted
 Description: Returns the number from the skill level on the minimap.
 Date Created: November 3rd, 2011. By Wanted. RS2 Build 674.
-Last Modified: February 23rd, 2020. By Wanted. RS2 Build ???.
+Last Modified: January 30th, 2025. By Wanted. RS2 Build ???.
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
 
 function GetMMLevel(Skill: Integer): Integer;
@@ -491,8 +499,12 @@ begin
   end;
   bmp := GetClient.CaptureEx(B.X1, B.Y1, B.X2, B.Y2);  
   Client := SetClient(TSCARBitmapClient.Create(bmp));  
-  try       
-    if ((FindColor(P.X, P.Y, clBlack, 0, 0, Bmp.Width - 1, Bmp.Height - 1)) and (P.X > 0) and (P.Y > 0)) then
+  try
+    {$IFDEF CClient}
+      if ((FindColor(P.X, P.Y, 65536, 0, 0, Bmp.Width - 1, Bmp.Height - 1)) and (P.X > 0) and (P.Y > 0)) then
+    {$ELSE}
+      if ((FindColor(P.X, P.Y, clBlack, 0, 0, Bmp.Width - 1, Bmp.Height - 1)) and (P.X > 0) and (P.Y > 0)) then
+    {$ENDIF}
       C := GetColor(P.X - 1, P.Y - 1);
     FindColorExP(TPA, C, Box(0, 0, Bmp.Width - 1, Bmp.Height - 1));  
     B := TPABounds(TPA);

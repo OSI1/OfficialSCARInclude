@@ -11,6 +11,7 @@
 //{$DEFINE NoVariance}
 
 {$DEFINE RS07}
+//{$DEFINE CClient}                // Comment out or in, test all combinations (official C++ client)
 {$DEFINE OSI_RS07_Color_Anti_Randoms}
 //{$DEFINE DisableRS07Fonts}
 
